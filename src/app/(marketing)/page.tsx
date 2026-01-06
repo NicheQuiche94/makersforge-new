@@ -47,14 +47,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="relative bg-brand-orange py-6">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <p className="text-center text-lg font-medium text-white">
-            We work exclusively with mobile gaming studios. No PC. No console. Just mobile.
-          </p>
-        </div>
-      </section>
-
       <section className="section-padding bg-brand-black-light relative overflow-hidden">
         <GradientBlur position="top-left" size="md" color="orange" intensity="low" />
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
@@ -141,7 +133,7 @@ export default function HomePage() {
                 Lets get to know each other.
               </p>
               <div className="mt-10">
-                <Link href="/for-talent" className="btn-secondary text-lg inline-flex items-center gap-2">
+                <Link href="/for-talent" className="btn-primary text-lg inline-flex items-center gap-2">
                   Create account
                   <ArrowRight className="w-5 h-5" />
                 </Link>

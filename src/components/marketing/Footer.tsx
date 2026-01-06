@@ -11,7 +11,7 @@ export function Footer() {
               <img
                 src="/images/mf-icon-white.png"
                 alt="MakersForge"
-                className="h-8"
+                className="h-10"
               />
             </Link>
             <p className="mt-4 text-brand-white-muted max-w-md">
@@ -44,11 +44,16 @@ export function Footer() {
             </ul>
           </div>
         </div>
-        <div className="mt-12 pt-8 border-t border-white/10 flex justify-between items-center">
-          <p className="text-brand-white-muted text-sm">MakersForge Ltd.</p>
-          <a href="https://www.linkedin.com/company/makers-forge/" target="_blank" rel="noopener noreferrer" className="text-brand-white-muted hover:text-white transition-colors">
-            <Linkedin className="h-5 w-5" />
-          </a>
+        <div className="mt-12 pt-8 border-t border-white/10">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-brand-white-muted text-sm">MakersForge Ltd.</p>
+            <a href="https://www.linkedin.com/company/makers-forge/" target="_blank" rel="noopener noreferrer" className="text-brand-white-muted hover:text-white transition-colors">
+              <Linkedin className="h-5 w-5" />
+            </a>
+          </div>
+          <p className="text-center text-sm text-white/40 mt-6">
+            Supported by SSG Recruitment Partnerships. Technology by SeedCraft Ventures.
+          </p>
         </div>
       </div>
     </footer>

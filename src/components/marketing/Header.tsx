@@ -23,7 +23,7 @@ export function Header() {
               <img
                 src="/images/mf-icon-white.png"
                 alt="MakersForge"
-                className="h-8"
+                className="h-12"
               />
             </Link>
             <div className="hidden md:flex items-center gap-8">
