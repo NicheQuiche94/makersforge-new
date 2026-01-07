@@ -1,542 +1,340 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import { useUser } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 import Link from "next/link";
+import { createClient } from "@/lib/supabase/server";
+import { HexagonBackground } from "@/components/marketing/HexagonBackground";
+import { GradientBlur } from "@/components/marketing/GradientBlur";
+import { FeedbackThread } from "@/components/app/FeedbackThread";
 import { 
-  ArrowRight, 
-  Loader2, 
-  Check, 
   Phone, 
   FileText, 
   Send, 
   Users, 
   Gift, 
   Star,
-  Sparkles,
+  MessageSquare,
   Target,
   Lightbulb,
+  Sparkles,
   Rocket,
-  MessageCircle,
-  Calendar,
   ChevronRight
 } from "lucide-react";
-import { supabase } from "@/lib/supabase/client";
-import { HexagonBackgroundSubtle } from "@/components/app/HexagonBackgroundSubtle";
-import { GradientBlur } from "@/components/marketing/GradientBlur";
 
-const PROCESS_STAGES = [
-  { id: "contacted", label: "Contacted", icon: Phone },
-  { id: "screening", label: "Screening", icon: FileText },
-  { id: "submitted", label: "Submitted", icon: Send },
-  { id: "interviewing", label: "Interviewing", icon: Users },
-  { id: "offer", label: "Offer", icon: Gift },
-  { id: "placed", label: "Placed", icon: Star },
+const STATUSES = [
+  { key: "contacted", label: "Contacted", icon: Phone },
+  { key: "screening", label: "Screening", icon: FileText },
+  { key: "submitted", label: "Submitted", icon: Send },
+  { key: "interviewing", label: "Interviewing", icon: Users },
+  { key: "offer", label: "Offer", icon: Gift },
+  { key: "placed", label: "Placed", icon: Star },
 ];
 
-const PROFILE_QUESTIONS = [
-  { 
-    id: "dream_role", 
-    label: "Dream Role", 
-    icon: Target,
-    description: "What's your ideal next role?",
-    placeholder: "Describe your dream position..."
-  },
-  { 
-    id: "if_not_working", 
-    label: "If Not In Games", 
-    icon: Lightbulb,
-    description: "What would you do if not in games?",
-    placeholder: "Another industry, hobby, passion..."
-  },
-  { 
-    id: "weird_obsession", 
-    label: "Weird Obsession", 
-    icon: Sparkles,
-    description: "What's something you're weirdly passionate about?",
-    placeholder: "That thing you can't stop talking about..."
-  },
-  { 
-    id: "personal_projects", 
-    label: "Personal Projects", 
-    icon: Rocket,
-    description: "Any side projects or games you're working on?",
-    placeholder: "Game jams, mods, indie projects..."
-  },
-];
+export default async function DashboardPage() {
+  const user = await currentUser();
+  if (!user) redirect("/sign-in");
 
-interface CandidateProcess {
-  id: string;
-  status: string;
-  current_interview_stage: string;
-  feedback_received: boolean;
-  process: {
-    role_title: string;
-    company_name: string;
-    location: string;
-    interview_stages: string[];
-  };
-}
-
-interface Profile {
-  id: string;
-  clerk_id: string;
-  first_name: string;
-  discipline: string;
-  speciality: string;
-  experience_level: string;
-  looking_status: string;
-  profile_complete: boolean;
-  dream_role?: string;
-  if_not_working?: string;
-  weird_obsession?: string;
-  personal_projects?: string;
-}
-
-export default function DashboardPage() {
-  const { user, isLoaded } = useUser();
-  const [profile, setProfile] = useState<Profile | null>(null);
-  const [processes, setProcesses] = useState<CandidateProcess[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [editingQuestion, setEditingQuestion] = useState<string | null>(null);
-  const [questionValue, setQuestionValue] = useState("");
-  const [saving, setSaving] = useState(false);
-
-  useEffect(() => {
-    if (isLoaded && user) {
-      loadData();
-    }
-  }, [isLoaded, user]);
-
-  async function loadData() {
-    if (!user) return;
-
-    // Load profile
-    const { data: profileData } = await supabase
-      .from("candidate_profiles")
-      .select("*")
-      .eq("clerk_id", user.id)
-      .single();
-
-    if (profileData) {
-      setProfile(profileData);
-
-      // Load active processes - join with processes table
-      const { data: processData } = await supabase
-        .from("candidate_processes")
-        .select(`
-          id,
-          status,
-          current_interview_stage,
-          feedback_received,
-          process:processes (
-            role_title,
-            company_name,
-            location,
-            interview_stages
-          )
-        `)
-        .eq("candidate_id", profileData.id)
-        .neq("status", "rejected")
-        .neq("status", "withdrawn")
-        .order("updated_at", { ascending: false });
-
-      if (processData) {
-        setProcesses(processData as any);
-      }
-    }
-
-    setLoading(false);
-  }
-
-  async function saveProfileQuestion(questionId: string, value: string) {
-    if (!user || !profile) return;
-    setSaving(true);
-
-    await supabase
-      .from("candidate_profiles")
-      .update({ [questionId]: value, updated_at: new Date().toISOString() })
-      .eq("clerk_id", user.id);
-
-    setProfile({ ...profile, [questionId]: value });
-    setEditingQuestion(null);
-    setQuestionValue("");
-    setSaving(false);
-  }
-
-  const completedQuestions = PROFILE_QUESTIONS.filter(
-    q => profile && profile[q.id as keyof Profile]
-  ).length;
-
-  if (!isLoaded || loading) {
-    return (
-      <div className="min-h-screen bg-brand-black flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-brand-orange" />
-      </div>
-    );
-  }
+  const supabase = createClient();
+  
+  const { data: profile } = await supabase
+    .from("candidate_profiles")
+    .select("*")
+    .eq("clerk_id", user.id)
+    .single();
 
   if (!profile?.profile_complete) {
-    return (
-      <div className="min-h-screen bg-brand-black">
-        <div className="relative py-12 min-h-screen">
-          <HexagonBackgroundSubtle />
-          <GradientBlur position="top-right" size="lg" color="orange" intensity="low" />
-          <div className="relative mx-auto max-w-3xl px-6 lg:px-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-white font-heading mb-2">
-              Welcome, {user?.firstName || "there"}
-            </h1>
-            <p className="text-white/60 mb-8">
-              Let's get your profile set up so we can start finding you opportunities.
-            </p>
-
-            <div className="card-highlight p-8">
-              <h2 className="text-2xl font-bold text-white font-heading mb-4">
-                Complete your profile
-              </h2>
-              <p className="text-white/60 mb-6">
-                Tell us about your experience and what you're looking for so we can match you with the right opportunities at mobile gaming studios.
-              </p>
-              <Link
-                href="/onboarding"
-                className="btn-primary inline-flex items-center gap-2"
-              >
-                Get started
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-            </div>
-
-            <div className="mt-12">
-              <h2 className="text-xl font-bold text-white font-heading mb-6">
-                How it works
-              </h2>
-              <div className="grid gap-4">
-                <div className="card p-6 flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-brand-orange/20 flex items-center justify-center flex-shrink-0">
-                    <span className="text-brand-orange font-bold">1</span>
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-white mb-1">Complete your profile</h3>
-                    <p className="text-white/60 text-sm">
-                      Share your experience, skills, and what you're looking for in your next role.
-                    </p>
-                  </div>
-                </div>
-                <div className="card p-6 flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-brand-orange/20 flex items-center justify-center flex-shrink-0">
-                    <span className="text-brand-orange font-bold">2</span>
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-white mb-1">We find the right match</h3>
-                    <p className="text-white/60 text-sm">
-                      We connect you with opportunities at funded mobile gaming studios that match your goals.
-                    </p>
-                  </div>
-                </div>
-                <div className="card p-6 flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-brand-orange/20 flex items-center justify-center flex-shrink-0">
-                    <span className="text-brand-orange font-bold">3</span>
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-white mb-1">Track your progress</h3>
-                    <p className="text-white/60 text-sm">
-                      Follow your application journey and receive feedback at every stage.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+    redirect("/onboarding");
   }
+
+  // Get candidate's active processes with feedback AND replies
+  const { data: candidateProcesses } = await supabase
+    .from("candidate_processes")
+    .select(`
+      id,
+      status,
+      current_interview_stage,
+      feedback_received,
+      created_at,
+      updated_at,
+      process:processes (
+        id,
+        role_title,
+        company_name,
+        location,
+        role_type
+      ),
+      feedback:process_feedback (
+        id,
+        stage,
+        feedback_text,
+        created_at,
+        replies:feedback_replies (
+          id,
+          message,
+          is_from_admin,
+          created_at
+        )
+      )
+    `)
+    .eq("candidate_id", profile.id)
+    .order("updated_at", { ascending: false });
+
+  const activeProcesses = candidateProcesses || [];
+
+  // Calculate profile questions completion
+  const profileQuestions = [
+    { key: "dream_role", label: "Dream Role", icon: Target, value: profile.dream_role },
+    { key: "if_not_working", label: "If Not In Games", icon: Lightbulb, value: profile.if_not_working },
+    { key: "weird_obsession", label: "Weird Obsession", icon: Sparkles, value: profile.weird_obsession },
+    { key: "personal_projects", label: "Personal Projects", icon: Rocket, value: profile.personal_projects },
+  ];
+  const completedQuestions = profileQuestions.filter(q => q.value).length;
 
   return (
     <div className="min-h-screen bg-brand-black">
       <div className="relative py-12">
-        <HexagonBackgroundSubtle />
+        <HexagonBackground />
         <GradientBlur position="top-right" size="lg" color="orange" intensity="low" />
-        <div className="relative mx-auto max-w-5xl px-6 lg:px-8">
-          <div className="mb-10">
-            <h1 className="text-3xl md:text-4xl font-bold text-white font-heading mb-2">
-              Welcome back, {profile.first_name || user?.firstName || "there"}
-            </h1>
-            <p className="text-white/60">
-              {processes.length > 0 
-                ? `You have ${processes.length} active ${processes.length === 1 ? 'process' : 'processes'}`
-                : "We're looking for the perfect match for you"
-              }
-            </p>
-          </div>
+        <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
+          <h1 className="text-3xl md:text-4xl font-bold text-white font-heading">
+            Welcome back, {profile.first_name}
+          </h1>
+          <p className="text-white/60 mt-2">
+            {activeProcesses.length > 0 
+              ? `You have ${activeProcesses.length} active process${activeProcesses.length > 1 ? 'es' : ''}`
+              : "No active processes yet"
+            }
+          </p>
+        </div>
+      </div>
 
-          <div className="grid lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-2 space-y-8">
-              {processes.length > 0 ? (
-                <div className="space-y-4">
-                  <h2 className="text-lg font-bold text-white font-heading">
-                    Active Processes
-                  </h2>
-                  {processes.map((cp) => (
-                    <ProcessCard key={cp.id} candidateProcess={cp} />
-                  ))}
-                </div>
-              ) : (
-                <div className="card p-8 text-center">
-                  <div className="w-16 h-16 rounded-full bg-brand-orange/20 flex items-center justify-center mx-auto mb-4">
-                    <Target className="w-8 h-8 text-brand-orange" />
-                  </div>
-                  <h2 className="text-xl font-bold text-white font-heading mb-2">
-                    No active processes yet
-                  </h2>
-                  <p className="text-white/60 mb-4 max-w-md mx-auto">
-                    We're reviewing your profile and searching for opportunities that match your experience and goals. We'll reach out when we find the right fit.
-                  </p>
-                  <p className="text-sm text-white/40">
-                    In the meantime, complete your profile questions below to help us understand you better.
-                  </p>
-                </div>
-              )}
-
-              <div className="card p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-lg font-bold text-white font-heading">
-                    Your Profile
-                  </h2>
-                  <Link 
-                    href="/profile" 
-                    className="text-brand-orange hover:text-brand-orange-light text-sm flex items-center gap-1"
-                  >
-                    View full profile
-                    <ChevronRight className="w-4 h-4" />
-                  </Link>
-                </div>
-                <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <span className="text-white/50">Discipline</span>
-                    <p className="text-white">{profile.discipline}</p>
-                  </div>
-                  <div>
-                    <span className="text-white/50">Speciality</span>
-                    <p className="text-white">{profile.speciality || "—"}</p>
-                  </div>
-                  <div>
-                    <span className="text-white/50">Experience</span>
-                    <p className="text-white">{profile.experience_level}</p>
-                  </div>
-                  <div>
-                    <span className="text-white/50">Status</span>
-                    <p className="text-white">
-                      {profile.looking_status === "yes" 
-                        ? "Actively looking" 
-                        : profile.looking_status === "passive" 
-                        ? "Open to opportunities" 
-                        : "Not looking"
-                      }
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-6">
-              <div className="card-highlight p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-lg font-bold text-white font-heading">
-                    Profile Questions
-                  </h2>
-                  <span className="text-sm text-white/50">
-                    {completedQuestions}/{PROFILE_QUESTIONS.length}
-                  </span>
-                </div>
-                
-                <div className="w-full bg-white/10 rounded-full h-2 mb-6">
-                  <div 
-                    className="bg-brand-orange h-2 rounded-full transition-all duration-300"
-                    style={{ width: `${(completedQuestions / PROFILE_QUESTIONS.length) * 100}%` }}
-                  />
-                </div>
-
-                <div className="space-y-3">
-                  {PROFILE_QUESTIONS.map((question) => {
-                    const isComplete = profile && profile[question.id as keyof Profile];
-                    const isEditing = editingQuestion === question.id;
-                    const Icon = question.icon;
-
+      <div className="mx-auto max-w-7xl px-6 lg:px-8 py-8">
+        <div className="grid lg:grid-cols-3 gap-8">
+          {/* Main Content */}
+          <div className="lg:col-span-2 space-y-8">
+            {/* Active Processes */}
+            <div>
+              <h2 className="text-xl font-bold text-white font-heading mb-4">
+                Active Processes
+              </h2>
+              
+              {activeProcesses.length > 0 ? (
+                <div className="space-y-6">
+                  {activeProcesses.map((cp: any) => {
+                    const currentStatusIndex = STATUSES.findIndex(s => s.key === cp.status);
+                    const hasFeedback = cp.feedback && cp.feedback.length > 0;
+                    const totalMessages = cp.feedback?.reduce((acc: number, fb: any) => 
+                      acc + 1 + (fb.replies?.length || 0), 0) || 0;
+                    
                     return (
-                      <div key={question.id}>
-                        {isEditing ? (
-                          <div className="p-4 bg-white/5 rounded-lg border border-brand-orange/30">
-                            <label className="block text-sm font-medium text-white mb-2">
-                              {question.description}
-                            </label>
-                            <textarea
-                              value={questionValue}
-                              onChange={(e) => setQuestionValue(e.target.value)}
-                              placeholder={question.placeholder}
-                              className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:border-brand-orange/50 resize-none"
-                              rows={3}
-                              autoFocus
-                            />
-                            <div className="flex gap-2 mt-3">
-                              <button
-                                onClick={() => saveProfileQuestion(question.id, questionValue)}
-                                disabled={saving || !questionValue.trim()}
-                                className="btn-primary text-sm py-2 px-4 disabled:opacity-50"
-                              >
-                                {saving ? (
-                                  <Loader2 className="w-4 h-4 animate-spin" />
-                                ) : (
-                                  "Save"
-                                )}
-                              </button>
-                              <button
-                                onClick={() => {
-                                  setEditingQuestion(null);
-                                  setQuestionValue("");
-                                }}
-                                className="btn-ghost text-sm py-2 px-4"
-                              >
-                                Cancel
-                              </button>
-                            </div>
+                      <div key={cp.id} className="card p-6">
+                        {/* Header */}
+                        <div className="flex items-start justify-between mb-4">
+                          <div>
+                            <h3 className="text-lg font-bold text-white">
+                              {cp.process?.role_title}
+                            </h3>
+                            <p className="text-white/60 text-sm">
+                              {cp.process?.company_name} • {cp.process?.location || "Remote"}
+                            </p>
                           </div>
-                        ) : (
-                          <button
-                            onClick={() => {
-                              setEditingQuestion(question.id);
-                              setQuestionValue(
-                                (profile?.[question.id as keyof Profile] as string) || ""
+                          {hasFeedback && (
+                            <span className="inline-flex items-center gap-1 px-3 py-1 bg-brand-orange/20 text-brand-orange text-sm rounded-full">
+                              <MessageSquare className="w-4 h-4" />
+                              {totalMessages} messages
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Status Progress Bar */}
+                        <div className="mb-4">
+                          <div className="flex items-center justify-between mb-2">
+                            {STATUSES.map((status, index) => {
+                              const Icon = status.icon;
+                              const isCompleted = index < currentStatusIndex;
+                              const isCurrent = index === currentStatusIndex;
+                              
+                              return (
+                                <div key={status.key} className="flex flex-col items-center flex-1">
+                                  <div className={`w-full h-1 ${index === 0 ? 'rounded-l' : ''} ${index === STATUSES.length - 1 ? 'rounded-r' : ''} ${
+                                    isCompleted 
+                                      ? 'bg-brand-orange' 
+                                      : isCurrent 
+                                        ? 'bg-brand-orange' 
+                                        : 'bg-white/10'
+                                  }`} />
+                                  <div className={`mt-2 p-2 rounded-lg ${
+                                    isCurrent 
+                                      ? 'bg-brand-orange/20 text-brand-orange' 
+                                      : isCompleted
+                                        ? 'text-brand-orange/60'
+                                        : 'text-white/30'
+                                  }`}>
+                                    <Icon className="w-4 h-4" />
+                                  </div>
+                                  <span className={`text-xs mt-1 ${
+                                    isCurrent ? 'text-white' : 'text-white/40'
+                                  }`}>
+                                    {status.label}
+                                  </span>
+                                </div>
                               );
-                            }}
-                            className={`w-full flex items-center gap-3 p-4 rounded-lg border transition-colors text-left ${
-                              isComplete
-                                ? "bg-brand-orange/10 border-brand-orange/30 hover:border-brand-orange/50"
-                                : "bg-white/5 border-white/10 hover:border-white/30"
-                            }`}
-                          >
-                            <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-                              isComplete ? "bg-brand-orange/30" : "bg-white/10"
-                            }`}>
-                              {isComplete ? (
-                                <Check className="w-4 h-4 text-brand-orange" />
-                              ) : (
-                                <Icon className="w-4 h-4 text-white/50" />
-                              )}
-                            </div>
-                            <div className="flex-1 min-w-0">
-                              <span className={`block text-sm font-medium ${
-                                isComplete ? "text-white" : "text-white/70"
-                              }`}>
-                                {question.label}
-                              </span>
-                              {isComplete && (
-                                <p className="text-xs text-white/50 truncate">
-                                  {profile?.[question.id as keyof Profile] as string}
-                                </p>
-                              )}
-                            </div>
-                            <ChevronRight className={`w-4 h-4 flex-shrink-0 ${
-                              isComplete ? "text-brand-orange" : "text-white/30"
-                            }`} />
-                          </button>
+                            })}
+                          </div>
+                        </div>
+
+                        {/* Interview Stage (if in Interviewing) */}
+                        {cp.status === "interviewing" && cp.current_interview_stage && (
+                          <div className="bg-brand-orange/10 border border-brand-orange/20 rounded-lg p-3 mb-4">
+                            <p className="text-sm text-brand-orange">
+                              Currently at: <span className="font-semibold">{cp.current_interview_stage} Interview</span>
+                            </p>
+                          </div>
                         )}
+
+                        {/* Feedback Thread */}
+                        <FeedbackThread 
+                          feedback={cp.feedback || []} 
+                          candidateProcessId={cp.id}
+                          candidateName={profile.first_name}
+                          candidateEmail={profile.email}
+                          roleTitle={cp.process?.role_title || ""}
+                          companyName={cp.process?.company_name || ""}
+                        />
+
+                        {/* Last updated */}
+                        <p className="text-xs text-white/30 mt-4">
+                          Updated {new Date(cp.updated_at).toLocaleDateString()}
+                        </p>
                       </div>
                     );
                   })}
                 </div>
+              ) : (
+                <div className="card p-8 text-center">
+                  <p className="text-white/40 mb-2">No active processes yet</p>
+                  <p className="text-white/60 text-sm">
+                    When you're matched with opportunities, they'll appear here.
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Your Profile Summary */}
+            <div className="card p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg font-bold text-white font-heading">Your Profile</h2>
+                <Link 
+                  href="/profile" 
+                  className="text-sm text-brand-orange hover:text-brand-orange/80 inline-flex items-center gap-1"
+                >
+                  View full profile
+                  <ChevronRight className="w-4 h-4" />
+                </Link>
+              </div>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm text-white/50">Discipline</p>
+                  <p className="text-white">{profile.discipline || "—"}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-white/50">Speciality</p>
+                  <p className="text-white">{profile.speciality || "—"}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-white/50">Experience</p>
+                  <p className="text-white">{profile.experience_level || "—"}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-white/50">Status</p>
+                  <p className="text-white">
+                    {profile.looking_status === "yes"
+                      ? "Actively looking"
+                      : profile.looking_status === "passive"
+                      ? "Open to opportunities"
+                      : "Not looking"}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Sidebar */}
+          <div className="space-y-8">
+            {/* Profile Questions */}
+            <div className="card p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-bold text-white font-heading">Profile Questions</h3>
+                <span className="text-sm text-white/40">{completedQuestions}/4</span>
+              </div>
+              
+              {/* Progress bar */}
+              <div className="h-1 bg-white/10 rounded-full mb-4">
+                <div 
+                  className="h-full bg-brand-orange rounded-full transition-all"
+                  style={{ width: `${(completedQuestions / 4) * 100}%` }}
+                />
               </div>
 
-              <div className="card p-6">
-                <h2 className="text-lg font-bold text-white font-heading mb-4">
-                  How it works
-                </h2>
-                <div className="space-y-4 text-sm">
-                  <div className="flex gap-3">
-                    <div className="w-6 h-6 rounded-full bg-brand-orange/20 flex items-center justify-center flex-shrink-0">
-                      <span className="text-brand-orange text-xs font-bold">1</span>
-                    </div>
-                    <p className="text-white/60">We match you with relevant opportunities</p>
-                  </div>
-                  <div className="flex gap-3">
-                    <div className="w-6 h-6 rounded-full bg-brand-orange/20 flex items-center justify-center flex-shrink-0">
-                      <span className="text-brand-orange text-xs font-bold">2</span>
-                    </div>
-                    <p className="text-white/60">Track your progress at each stage</p>
-                  </div>
-                  <div className="flex gap-3">
-                    <div className="w-6 h-6 rounded-full bg-brand-orange/20 flex items-center justify-center flex-shrink-0">
-                      <span className="text-brand-orange text-xs font-bold">3</span>
-                    </div>
-                    <p className="text-white/60">Receive feedback throughout the process</p>
-                  </div>
+              <div className="space-y-2">
+                {profileQuestions.map((question) => {
+                  const Icon = question.icon;
+                  const isCompleted = !!question.value;
+                  
+                  return (
+                    <Link
+                      key={question.key}
+                      href="/onboarding"
+                      className={`flex items-center gap-3 p-3 rounded-lg transition-colors ${
+                        isCompleted
+                          ? "bg-white/5 text-white/60"
+                          : "bg-white/5 hover:bg-white/10 text-white"
+                      }`}
+                    >
+                      <Icon className={`w-5 h-5 ${isCompleted ? "text-green-400" : "text-white/40"}`} />
+                      <span className="flex-1 text-sm">{question.label}</span>
+                      {isCompleted ? (
+                        <span className="text-xs text-green-400">✓</span>
+                      ) : (
+                        <ChevronRight className="w-4 h-4 text-white/30" />
+                      )}
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* How It Works */}
+            <div className="card p-6">
+              <h3 className="text-lg font-bold text-white font-heading mb-4">How It Works</h3>
+              <div className="space-y-4">
+                <div className="flex gap-3">
+                  <span className="w-6 h-6 rounded-full bg-brand-orange/20 text-brand-orange flex items-center justify-center text-xs font-bold shrink-0">
+                    1
+                  </span>
+                  <p className="text-sm text-white/60">
+                    We match you with relevant opportunities
+                  </p>
+                </div>
+                <div className="flex gap-3">
+                  <span className="w-6 h-6 rounded-full bg-brand-orange/20 text-brand-orange flex items-center justify-center text-xs font-bold shrink-0">
+                    2
+                  </span>
+                  <p className="text-sm text-white/60">
+                    Track your progress at each stage
+                  </p>
+                </div>
+                <div className="flex gap-3">
+                  <span className="w-6 h-6 rounded-full bg-brand-orange/20 text-brand-orange flex items-center justify-center text-xs font-bold shrink-0">
+                    3
+                  </span>
+                  <p className="text-sm text-white/60">
+                    Receive feedback after each interview
+                  </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  );
-}
-
-function ProcessCard({ candidateProcess }: { candidateProcess: CandidateProcess }) {
-  const process = candidateProcess.process;
-  const currentStage = candidateProcess.current_interview_stage || candidateProcess.status;
-  const currentStageIndex = PROCESS_STAGES.findIndex(s => s.id === currentStage);
-
-  return (
-    <div className="card-highlight p-6">
-      <div className="flex items-start justify-between mb-4">
-        <div>
-          <h3 className="font-bold text-white text-lg">{process?.role_title || "Role"}</h3>
-          <p className="text-white/60 text-sm">
-            {process?.company_name || "Company"} • {process?.location || "Location TBC"}
-          </p>
-        </div>
-        {candidateProcess.feedback_received && (
-          <div className="flex items-center gap-2 bg-brand-orange/20 text-brand-orange px-3 py-1.5 rounded-full text-sm">
-            <MessageCircle className="w-4 h-4" />
-            Feedback Received
-          </div>
-        )}
-      </div>
-
-      <div className="flex items-center gap-1 mb-4">
-        {PROCESS_STAGES.map((stage, index) => {
-          const isPast = index < currentStageIndex;
-          const isCurrent = index === currentStageIndex;
-
-          return (
-            <div key={stage.id} className="flex-1">
-              <div 
-                className={`h-2 rounded-full transition-colors ${
-                  isPast || isCurrent ? "bg-brand-orange" : "bg-white/10"
-                }`}
-              />
-            </div>
-          );
-        })}
-      </div>
-
-      <div className="flex justify-between text-xs">
-        {PROCESS_STAGES.map((stage, index) => {
-          const isPast = index < currentStageIndex;
-          const isCurrent = index === currentStageIndex;
-          const Icon = stage.icon;
-
-          return (
-            <div 
-              key={stage.id} 
-              className={`flex flex-col items-center ${
-                isCurrent ? "text-brand-orange" : isPast ? "text-white/70" : "text-white/30"
-              }`}
-            >
-              <Icon className="w-4 h-4 mb-1" />
-              <span className="hidden sm:block">{stage.label}</span>
-            </div>
-          );
-        })}
       </div>
     </div>
   );

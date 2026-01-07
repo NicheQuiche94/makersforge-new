@@ -3,6 +3,9 @@ import { SignUp } from "@clerk/nextjs";
 export default function SignUpPage() {
   return (
     <SignUp
+      routing="hash"
+      signInUrl="/sign-in"
+      forceRedirectUrl="/onboarding"
       appearance={{
         elements: {
           rootBox: "mx-auto",
@@ -16,8 +19,6 @@ export default function SignUpPage() {
           formButtonPrimary: "bg-brand-orange hover:bg-brand-orange/90",
         },
       }}
-      signInUrl="/sign-in"
-      forceRedirectUrl="/onboarding"
     />
   );
 }
