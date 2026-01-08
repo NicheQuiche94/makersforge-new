@@ -53,7 +53,7 @@ export default function HomePage() {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight font-heading">
-                Hiring in mobile games is about<span className="text-brand-orange">specificity</span>
+                Hiring in mobile games is about <span className="text-brand-orange">specificity</span>
               </h2>
               <div className="mt-8 space-y-6 text-lg text-white/70">
                 <p>

@@ -5,6 +5,7 @@ import { ArrowLeft, Linkedin, Globe, FileText, Pencil } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { HexagonBackground } from "@/components/marketing/HexagonBackground";
 import { GradientBlur } from "@/components/marketing/GradientBlur";
+import { AboutYouSection } from "@/components/app/AboutYouSection";
 
 export default async function ProfilePage() {
   const user = await currentUser();
@@ -187,6 +188,9 @@ export default async function ProfilePage() {
                 </div>
               </div>
             </div>
+
+            {/* About You Section with modals */}
+            <AboutYouSection clerkId={user.id} profile={profile} />
           </div>
 
           {/* Sidebar */}
