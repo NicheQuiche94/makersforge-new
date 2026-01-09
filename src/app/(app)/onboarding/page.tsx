@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
-import { ArrowRight, ArrowLeft, Loader2, Check } from "lucide-react";
+import { ArrowRight, ArrowLeft, Loader2, Check, Search, Plus, X, Building2 } from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
 import { HexagonBackground } from "@/components/marketing/HexagonBackground";
 import { GradientBlur } from "@/components/marketing/GradientBlur";
@@ -60,6 +60,117 @@ const LOOKING_STATUS = [
   { value: "no", label: "Not looking right now" },
 ];
 
+// Company Search Component
+function CompanySearch({ 
+  value, 
+  selectedCompany,
+  onSelect 
+}: { 
+  value: string;
+  selectedCompany: { id: string; name: string } | null;
+  onSelect: (company: { id: string; name: string } | null, textValue: string) => void;
+}) {
+  const [search, setSearch] = useState(value);
+  const [results, setResults] = useState<{ id: string; name: string }[]>([]);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    async function searchCompanies() {
+      if (search.length < 2) {
+        setResults([]);
+        return;
+      }
+      setLoading(true);
+      const { data } = await supabase
+        .from("companies")
+        .select("id, name")
+        .ilike("name", `%${search}%`)
+        .order("name")
+        .limit(6);
+      setResults(data || []);
+      setLoading(false);
+    }
+    const timeout = setTimeout(searchCompanies, 300);
+    return () => clearTimeout(timeout);
+  }, [search]);
+
+  if (selectedCompany) {
+    return (
+      <div className="flex items-center gap-2 px-4 py-3 bg-white/5 border border-white/10 rounded-lg">
+        <Building2 className="w-4 h-4 text-white/40" />
+        <span className="text-white flex-1">{selectedCompany.name}</span>
+        <button
+          type="button"
+          onClick={() => {
+            onSelect(null, "");
+            setSearch("");
+          }}
+          className="text-white/40 hover:text-white transition-colors"
+        >
+          <X className="w-4 h-4" />
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative">
+      <div className="relative">
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => {
+            setSearch(e.target.value);
+            onSelect(null, e.target.value);
+            setShowDropdown(true);
+          }}
+          onFocus={() => setShowDropdown(true)}
+          className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder:text-white/30 focus:outline-none focus:border-brand-orange/50"
+          placeholder="Search or type company name..."
+        />
+        {loading && (
+          <Loader2 className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40 animate-spin" />
+        )}
+      </div>
+
+      {showDropdown && search.length >= 2 && (
+        <div className="absolute top-full left-0 right-0 mt-2 bg-brand-black border border-white/10 rounded-lg shadow-xl z-20 overflow-hidden max-h-48 overflow-y-auto">
+          {results.map((company) => (
+            <button
+              key={company.id}
+              type="button"
+              onClick={() => {
+                onSelect(company, company.name);
+                setSearch(company.name);
+                setShowDropdown(false);
+              }}
+              className="w-full px-4 py-3 text-left text-white/70 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-3"
+            >
+              <Building2 className="w-4 h-4 text-white/40" />
+              {company.name}
+            </button>
+          ))}
+          
+          {results.length === 0 && !loading && (
+            <div className="px-4 py-3 text-white/40 text-sm">
+              No companies found - we'll create "{search}" when you submit
+            </div>
+          )}
+        </div>
+      )}
+
+      {showDropdown && (
+        <div 
+          className="fixed inset-0 z-10" 
+          onClick={() => setShowDropdown(false)}
+        />
+      )}
+    </div>
+  );
+}
+
 export default function OnboardingPage() {
   const { user, isLoaded } = useUser();
   const router = useRouter();
@@ -67,6 +178,10 @@ export default function OnboardingPage() {
   const [loading, setLoading] = useState(false);
   const [checkingProfile, setCheckingProfile] = useState(true);
   const [existingProfile, setExistingProfile] = useState<any>(null);
+
+  // Company selection state
+  const [selectedCompany, setSelectedCompany] = useState<{ id: string; name: string } | null>(null);
+  const [companyText, setCompanyText] = useState("");
 
   const [formData, setFormData] = useState({
     discipline: "",
@@ -99,7 +214,10 @@ export default function OnboardingPage() {
     
     const { data } = await supabase
       .from("candidate_profiles")
-      .select("*")
+      .select(`
+        *,
+        current_company_record:companies (id, name)
+      `)
       .eq("clerk_id", user.id)
       .single();
 
@@ -130,6 +248,14 @@ export default function OnboardingPage() {
         portfolio_url: data.portfolio_url || "",
         cv_url: data.cv_url || "",
       });
+      
+      // Set company if exists
+      if (data.current_company_record) {
+        setSelectedCompany(data.current_company_record);
+        setCompanyText(data.current_company_record.name);
+      } else if (data.current_company) {
+        setCompanyText(data.current_company);
+      }
     }
     setCheckingProfile(false);
   }
@@ -152,45 +278,145 @@ export default function OnboardingPage() {
     });
   }
 
+  function handleCompanySelect(company: { id: string; name: string } | null, textValue: string) {
+    setSelectedCompany(company);
+    setCompanyText(textValue);
+    setFormData(prev => ({ ...prev, current_company: textValue }));
+  }
+
   async function handleSubmit() {
     if (!user) return;
     setLoading(true);
 
-    const profileData = {
-      clerk_id: user.id,
-      email: user.emailAddresses[0]?.emailAddress,
-      first_name: user.firstName,
-      last_name: user.lastName,
-      discipline: formData.discipline,
-      speciality: formData.speciality,
-      experience_level: formData.experience_level,
-      years_experience: parseInt(formData.years_experience) || null,
-      current_title: formData.current_title,
-      current_company: formData.current_company,
-      game_categories: formData.game_categories,
-      genres: formData.genres,
-      job_types: formData.job_types,
-      workplace_preferences: formData.workplace_preferences,
-      looking_status: formData.looking_status,
-      available_from: formData.available_from,
-      salary_minimum: formData.salary_minimum,
-      salary_ideal: formData.salary_ideal,
-      linkedin_url: formData.linkedin_url,
-      portfolio_url: formData.portfolio_url,
-      cv_url: formData.cv_url,
-      profile_complete: true,
-      updated_at: new Date().toISOString(),
-    };
-
     try {
+      let companyId: string | null = null;
+      const companyName = companyText.trim();
+
+      // Handle company linking
+      if (companyName) {
+        if (selectedCompany) {
+          // User selected an existing company
+          companyId = selectedCompany.id;
+        } else {
+          // User typed a company name - find or create it
+          const { data: existingCompany } = await supabase
+            .from("companies")
+            .select("id")
+            .ilike("name", companyName)
+            .single();
+
+          if (existingCompany) {
+            companyId = existingCompany.id;
+          } else {
+            // Create new company
+            const { data: newCompany } = await supabase
+              .from("companies")
+              .insert({ 
+                name: companyName,
+                industry: "Mobile Gaming"
+              })
+              .select("id")
+              .single();
+
+            if (newCompany) {
+              companyId = newCompany.id;
+            }
+          }
+        }
+      }
+
+      const profileData = {
+        clerk_id: user.id,
+        email: user.emailAddresses[0]?.emailAddress,
+        first_name: user.firstName,
+        last_name: user.lastName,
+        discipline: formData.discipline,
+        speciality: formData.speciality,
+        experience_level: formData.experience_level,
+        years_experience: parseInt(formData.years_experience) || null,
+        current_title: formData.current_title,
+        current_company: companyName, // Keep text for display
+        current_company_id: companyId, // Add the link
+        game_categories: formData.game_categories,
+        genres: formData.genres,
+        job_types: formData.job_types,
+        workplace_preferences: formData.workplace_preferences,
+        looking_status: formData.looking_status,
+        available_from: formData.available_from,
+        salary_minimum: formData.salary_minimum,
+        salary_ideal: formData.salary_ideal,
+        linkedin_url: formData.linkedin_url,
+        portfolio_url: formData.portfolio_url,
+        cv_url: formData.cv_url,
+        profile_complete: true,
+        updated_at: new Date().toISOString(),
+      };
+
+      let candidateId: string;
+
       if (existingProfile) {
         await supabase
           .from("candidate_profiles")
           .update(profileData)
           .eq("clerk_id", user.id);
+        candidateId = existingProfile.id;
+
+        // Update work history if company changed
+        if (companyId && companyId !== existingProfile.current_company_id) {
+          // Mark old company as not current
+          if (existingProfile.current_company_id) {
+            await supabase
+              .from("candidate_companies")
+              .update({ 
+                is_current: false, 
+                end_date: new Date().toISOString().split('T')[0] 
+              })
+              .eq("candidate_id", candidateId)
+              .eq("company_id", existingProfile.current_company_id)
+              .eq("is_current", true);
+          }
+
+          // Add new company link
+          const { data: existingLink } = await supabase
+            .from("candidate_companies")
+            .select("id")
+            .eq("candidate_id", candidateId)
+            .eq("company_id", companyId)
+            .eq("is_current", true)
+            .single();
+
+          if (!existingLink) {
+            await supabase.from("candidate_companies").insert({
+              candidate_id: candidateId,
+              company_id: companyId,
+              is_current: true,
+              job_title: formData.current_title,
+              start_date: new Date().toISOString().split('T')[0],
+            });
+          }
+        }
       } else {
-        await supabase.from("candidate_profiles").insert([profileData]);
+        const { data: newProfile } = await supabase
+          .from("candidate_profiles")
+          .insert([profileData])
+          .select("id")
+          .single();
+
+        if (!newProfile) throw new Error("Failed to create profile");
+        candidateId = newProfile.id;
+
+        // Create work history entry if company exists
+        if (companyId) {
+          await supabase.from("candidate_companies").insert({
+            candidate_id: candidateId,
+            company_id: companyId,
+            is_current: true,
+            job_title: formData.current_title,
+            start_date: new Date().toISOString().split('T')[0],
+          });
+        }
       }
+
       router.push("/dashboard");
     } catch (error) {
       console.error("Error saving profile:", error);
@@ -336,13 +562,14 @@ export default function OnboardingPage() {
                   <label className="block text-sm font-medium text-white mb-2">
                     Current Company
                   </label>
-                  <input
-                    type="text"
-                    value={formData.current_company}
-                    onChange={(e) => updateField("current_company", e.target.value)}
-                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:border-brand-orange/50"
-                    placeholder="e.g. Supercell"
+                  <CompanySearch
+                    value={companyText}
+                    selectedCompany={selectedCompany}
+                    onSelect={handleCompanySelect}
                   />
+                  <p className="text-white/40 text-xs mt-2">
+                    Search for your company or type to add a new one
+                  </p>
                 </div>
               </div>
             </div>

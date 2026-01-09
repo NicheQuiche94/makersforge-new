@@ -7,8 +7,9 @@ import { CandidateForm } from "@/components/admin/CandidateForm";
 export default async function EditCandidatePage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = await params;
   const supabase = await createClient();
 
   const { data: candidate, error } = await supabase
@@ -17,7 +18,7 @@ export default async function EditCandidatePage({
       *,
       current_company:companies (id, name)
     `)
-    .eq("id", params.id)
+    .eq("id", id)
     .single();
 
   if (error || !candidate) {
@@ -25,17 +26,19 @@ export default async function EditCandidatePage({
   }
 
   return (
-    <div className="p-8 max-w-4xl">
-      <Link
-        href={`/admin/candidates/${params.id}`}
-        className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors mb-6"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        Back to Candidate
-      </Link>
-
-      <h1 className="text-3xl font-bold text-white font-heading mb-2">Edit Candidate</h1>
-      <p className="text-white/60 mb-8">Update candidate information.</p>
+    <div className="p-8">
+      <div className="mb-8">
+        <Link
+          href={`/admin/candidates/${id}`}
+          className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors mb-4"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back to Candidate
+        </Link>
+        <h1 className="text-3xl font-bold text-white font-heading">
+          Edit {candidate.first_name} {candidate.last_name}
+        </h1>
+      </div>
 
       <CandidateForm candidate={candidate} />
     </div>

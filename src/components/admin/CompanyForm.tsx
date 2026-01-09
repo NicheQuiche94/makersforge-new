@@ -5,29 +5,20 @@ import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase/client";
 import { Loader2 } from "lucide-react";
 
+const REMOTE_POLICIES = [
+  { key: "remote", label: "Remote" },
+  { key: "hybrid", label: "Hybrid" },
+  { key: "onsite", label: "On-site" },
+  { key: "flexible", label: "Flexible" },
+];
+
 const COMPANY_SIZES = [
   "1-10",
   "11-50",
   "51-200",
   "201-500",
-  "500+",
-];
-
-const BD_STATUSES = [
-  { key: "lead", label: "Lead" },
-  { key: "contacted", label: "Contacted" },
-  { key: "meeting", label: "Meeting" },
-  { key: "proposal", label: "Proposal" },
-  { key: "client", label: "Client" },
-  { key: "churned", label: "Churned" },
-  { key: "not_interested", label: "Not Interested" },
-];
-
-const REMOTE_POLICIES = [
-  { key: "remote", label: "Fully Remote" },
-  { key: "hybrid", label: "Hybrid" },
-  { key: "onsite", label: "On-site Only" },
-  { key: "flexible", label: "Flexible" },
+  "501-1000",
+  "1000+",
 ];
 
 interface CompanyFormProps {
@@ -41,22 +32,20 @@ export function CompanyForm({ company }: CompanyFormProps) {
 
   const [formData, setFormData] = useState({
     name: company?.name || "",
+    location: company?.location || "",
     website: company?.website || "",
     linkedin_url: company?.linkedin_url || "",
     size: company?.size || "",
-    location: company?.location || "",
-    industry: company?.industry || "Mobile Gaming",
+    industry: company?.industry || "",
     game_categories: company?.game_categories || "",
     remote_policy: company?.remote_policy || "",
-    actively_hiring: company?.actively_hiring || false,
-    is_lead: company?.is_lead || false,
-    bd_status: company?.bd_status || "lead",
     point_of_contact: company?.point_of_contact || "",
     poc_email: company?.poc_email || "",
     poc_phone: company?.poc_phone || "",
-    poc_linkedin: company?.poc_linkedin || "",
+    actively_hiring: company?.actively_hiring || false,
     is_client: company?.is_client || false,
-    notes: company?.notes || "",
+    is_lead: company?.is_lead || false,
+    bd_status: company?.bd_status || "lead",
   });
 
   async function handleSubmit(e: React.FormEvent) {
@@ -67,55 +56,60 @@ export function CompanyForm({ company }: CompanyFormProps) {
     try {
       const payload = {
         ...formData,
-        // Only set bd_status if it's a lead
-        bd_status: formData.is_lead ? formData.bd_status : null,
         updated_at: new Date().toISOString(),
       };
 
+      let companyId = company?.id;
+
       if (company?.id) {
-        const { error } = await supabase
+        // Update existing
+        const { error: updateError } = await supabase
           .from("companies")
           .update(payload)
           .eq("id", company.id);
 
-        if (error) throw error;
+        if (updateError) throw updateError;
 
+        // Log activity
         await supabase.from("activity_log").insert({
           entity_type: "company",
           entity_id: company.id,
           activity_type: "updated",
           description: `Updated company: ${formData.name}`,
         });
-
-        router.push(`/admin/companies/${company.id}`);
       } else {
-        const { data, error } = await supabase
+        // Create new
+        const { data, error: insertError } = await supabase
           .from("companies")
           .insert(payload)
           .select()
           .single();
 
-        if (error) throw error;
+        if (insertError) throw insertError;
+        if (!data) throw new Error("No data returned from insert");
 
+        companyId = data.id;
+
+        // Log activity
         await supabase.from("activity_log").insert({
           entity_type: "company",
           entity_id: data.id,
           activity_type: "created",
           description: `Created company: ${formData.name}`,
         });
-
-        router.push(`/admin/companies/${data.id}`);
       }
 
+      router.push(`/admin/companies/${companyId}`);
       router.refresh();
     } catch (err: any) {
+      console.error("Company save error:", err);
       setError(err.message || "Something went wrong");
       setSaving(false);
     }
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8">
+    <form onSubmit={handleSubmit} className="space-y-8 max-w-3xl">
       {error && (
         <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm">
           {error}
@@ -124,7 +118,7 @@ export function CompanyForm({ company }: CompanyFormProps) {
 
       {/* Basic Info */}
       <div className="bg-white/5 border border-white/10 rounded-xl p-6">
-        <h2 className="text-lg font-bold text-white mb-4">Basic Information</h2>
+        <h2 className="text-lg font-bold text-white mb-4">Company Information</h2>
         <div className="grid sm:grid-cols-2 gap-4">
           <div className="sm:col-span-2">
             <label className="block text-white/60 text-sm mb-2">Company Name *</label>
@@ -138,47 +132,37 @@ export function CompanyForm({ company }: CompanyFormProps) {
             />
           </div>
           <div>
-            <label className="block text-white/60 text-sm mb-2">Website</label>
-            <input
-              type="url"
-              value={formData.website}
-              onChange={(e) => setFormData({ ...formData, website: e.target.value })}
-              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-brand-orange/50"
-              placeholder="https://supercell.com"
-            />
-          </div>
-          <div>
-            <label className="block text-white/60 text-sm mb-2">LinkedIn</label>
-            <input
-              type="url"
-              value={formData.linkedin_url}
-              onChange={(e) => setFormData({ ...formData, linkedin_url: e.target.value })}
-              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-brand-orange/50"
-              placeholder="https://linkedin.com/company/..."
-            />
-          </div>
-          <div>
             <label className="block text-white/60 text-sm mb-2">Location</label>
             <input
               type="text"
               value={formData.location}
               onChange={(e) => setFormData({ ...formData, location: e.target.value })}
               className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-brand-orange/50"
-              placeholder="Helsinki, Finland"
+              placeholder="e.g. Helsinki, Finland"
             />
           </div>
           <div>
-            <label className="block text-white/60 text-sm mb-2">Headcount</label>
+            <label className="block text-white/60 text-sm mb-2">Company Size</label>
             <select
               value={formData.size}
               onChange={(e) => setFormData({ ...formData, size: e.target.value })}
               className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-brand-orange/50"
             >
               <option value="">Select size</option>
-              {COMPANY_SIZES.map((size) => (
-                <option key={size} value={size}>{size} employees</option>
+              {COMPANY_SIZES.map((s) => (
+                <option key={s} value={s}>{s}</option>
               ))}
             </select>
+          </div>
+          <div>
+            <label className="block text-white/60 text-sm mb-2">Industry</label>
+            <input
+              type="text"
+              value={formData.industry}
+              onChange={(e) => setFormData({ ...formData, industry: e.target.value })}
+              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-brand-orange/50"
+              placeholder="e.g. Mobile Gaming"
+            />
           </div>
           <div>
             <label className="block text-white/60 text-sm mb-2">Game Categories</label>
@@ -187,7 +171,7 @@ export function CompanyForm({ company }: CompanyFormProps) {
               value={formData.game_categories}
               onChange={(e) => setFormData({ ...formData, game_categories: e.target.value })}
               className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-brand-orange/50"
-              placeholder="e.g. Puzzle, RPG, Strategy"
+              placeholder="e.g. F2P, Puzzle, Strategy"
             />
           </div>
           <div>
@@ -204,61 +188,36 @@ export function CompanyForm({ company }: CompanyFormProps) {
             </select>
           </div>
         </div>
+      </div>
 
-        {/* Checkboxes */}
-        <div className="flex flex-wrap gap-6 mt-6 pt-6 border-t border-white/10">
-          <label className="flex items-center gap-3 cursor-pointer">
+      {/* Links */}
+      <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+        <h2 className="text-lg font-bold text-white mb-4">Links</h2>
+        <div className="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-white/60 text-sm mb-2">Website</label>
             <input
-              type="checkbox"
-              checked={formData.actively_hiring}
-              onChange={(e) => setFormData({ ...formData, actively_hiring: e.target.checked })}
-              className="w-5 h-5 rounded border-white/20 bg-white/5 text-brand-orange focus:ring-brand-orange"
+              type="url"
+              value={formData.website}
+              onChange={(e) => setFormData({ ...formData, website: e.target.value })}
+              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-brand-orange/50"
+              placeholder="https://..."
             />
-            <span className="text-white">Actively Hiring</span>
-          </label>
-          <label className="flex items-center gap-3 cursor-pointer">
+          </div>
+          <div>
+            <label className="block text-white/60 text-sm mb-2">LinkedIn URL</label>
             <input
-              type="checkbox"
-              checked={formData.is_client}
-              onChange={(e) => setFormData({ ...formData, is_client: e.target.checked })}
-              className="w-5 h-5 rounded border-white/20 bg-white/5 text-brand-orange focus:ring-brand-orange"
+              type="url"
+              value={formData.linkedin_url}
+              onChange={(e) => setFormData({ ...formData, linkedin_url: e.target.value })}
+              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-brand-orange/50"
+              placeholder="https://linkedin.com/company/..."
             />
-            <span className="text-white">Active Client</span>
-          </label>
+          </div>
         </div>
       </div>
 
-      {/* BD Info */}
-      <div className="bg-white/5 border border-white/10 rounded-xl p-6">
-        <h2 className="text-lg font-bold text-white mb-4">Business Development</h2>
-        
-        <label className="flex items-center gap-3 cursor-pointer mb-4">
-          <input
-            type="checkbox"
-            checked={formData.is_lead}
-            onChange={(e) => setFormData({ ...formData, is_lead: e.target.checked })}
-            className="w-5 h-5 rounded border-white/20 bg-white/5 text-brand-orange focus:ring-brand-orange"
-          />
-          <span className="text-white">This is an active BD lead</span>
-        </label>
-
-        {formData.is_lead && (
-          <div>
-            <label className="block text-white/60 text-sm mb-2">BD Stage</label>
-            <select
-              value={formData.bd_status}
-              onChange={(e) => setFormData({ ...formData, bd_status: e.target.value })}
-              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-brand-orange/50"
-            >
-              {BD_STATUSES.map((status) => (
-                <option key={status.key} value={status.key}>{status.label}</option>
-              ))}
-            </select>
-          </div>
-        )}
-      </div>
-
-      {/* Contact Info */}
+      {/* Point of Contact */}
       <div className="bg-white/5 border border-white/10 rounded-xl p-6">
         <h2 className="text-lg font-bold text-white mb-4">Point of Contact</h2>
         <div className="grid sm:grid-cols-2 gap-4">
@@ -269,11 +228,11 @@ export function CompanyForm({ company }: CompanyFormProps) {
               value={formData.point_of_contact}
               onChange={(e) => setFormData({ ...formData, point_of_contact: e.target.value })}
               className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-brand-orange/50"
-              placeholder="John Smith"
+              placeholder="e.g. John Smith"
             />
           </div>
           <div>
-            <label className="block text-white/60 text-sm mb-2">Email</label>
+            <label className="block text-white/60 text-sm mb-2">Contact Email</label>
             <input
               type="email"
               value={formData.poc_email}
@@ -283,38 +242,50 @@ export function CompanyForm({ company }: CompanyFormProps) {
             />
           </div>
           <div>
-            <label className="block text-white/60 text-sm mb-2">Phone</label>
+            <label className="block text-white/60 text-sm mb-2">Contact Phone</label>
             <input
               type="tel"
               value={formData.poc_phone}
               onChange={(e) => setFormData({ ...formData, poc_phone: e.target.value })}
               className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-brand-orange/50"
-              placeholder="+44 123 456 7890"
-            />
-          </div>
-          <div>
-            <label className="block text-white/60 text-sm mb-2">LinkedIn Profile</label>
-            <input
-              type="url"
-              value={formData.poc_linkedin}
-              onChange={(e) => setFormData({ ...formData, poc_linkedin: e.target.value })}
-              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-brand-orange/50"
-              placeholder="https://linkedin.com/in/..."
+              placeholder="+1 234 567 8900"
             />
           </div>
         </div>
       </div>
 
-      {/* Notes */}
+      {/* Status Flags */}
       <div className="bg-white/5 border border-white/10 rounded-xl p-6">
-        <h2 className="text-lg font-bold text-white mb-4">Notes</h2>
-        <textarea
-          value={formData.notes}
-          onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-          rows={4}
-          className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-brand-orange/50 resize-none"
-          placeholder="Any additional notes about this company..."
-        />
+        <h2 className="text-lg font-bold text-white mb-4">Status</h2>
+        <div className="space-y-4">
+          <label className="flex items-center gap-3 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={formData.actively_hiring}
+              onChange={(e) => setFormData({ ...formData, actively_hiring: e.target.checked })}
+              className="w-5 h-5 rounded bg-white/5 border-white/20 text-brand-orange focus:ring-brand-orange/50"
+            />
+            <span className="text-white">Actively Hiring</span>
+          </label>
+          <label className="flex items-center gap-3 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={formData.is_client}
+              onChange={(e) => setFormData({ ...formData, is_client: e.target.checked })}
+              className="w-5 h-5 rounded bg-white/5 border-white/20 text-brand-orange focus:ring-brand-orange/50"
+            />
+            <span className="text-white">Is Client</span>
+          </label>
+          <label className="flex items-center gap-3 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={formData.is_lead}
+              onChange={(e) => setFormData({ ...formData, is_lead: e.target.checked })}
+              className="w-5 h-5 rounded bg-white/5 border-white/20 text-brand-orange focus:ring-brand-orange/50"
+            />
+            <span className="text-white">Is Lead (BD Pipeline)</span>
+          </label>
+        </div>
       </div>
 
       {/* Actions */}
@@ -322,14 +293,14 @@ export function CompanyForm({ company }: CompanyFormProps) {
         <button
           type="button"
           onClick={() => router.back()}
-          className="btn-ghost"
+          className="px-6 py-3 bg-white/10 text-white rounded-xl hover:bg-white/20 transition-colors"
         >
           Cancel
         </button>
         <button
           type="submit"
           disabled={saving}
-          className="btn-primary flex items-center gap-2"
+          className="px-6 py-3 bg-brand-orange text-white rounded-xl hover:bg-brand-orange/90 transition-colors flex items-center gap-2 disabled:opacity-50"
         >
           {saving && <Loader2 className="w-4 h-4 animate-spin" />}
           {company?.id ? "Save Changes" : "Create Company"}
