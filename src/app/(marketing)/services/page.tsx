@@ -1,6 +1,7 @@
 import { ArrowRight, CheckCircle } from "lucide-react";
 import { HexagonBackground } from "@/components/marketing/HexagonBackground";
 import { GradientBlur } from "@/components/marketing/GradientBlur";
+import { TeamBuildSection } from "@/components/marketing/TeamBuildSection";
 
 const CALENDLY_URL = "https://calendly.com/andre-30y6/makersforge-headhunting-introduction";
 
@@ -97,10 +98,16 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      {/* Team Build Section */}
       <section className="section-padding bg-brand-black relative overflow-hidden">
-        <div className="opacity-50">
+        <div className="opacity-30">
           <HexagonBackground />
         </div>
+        <GradientBlur position="top-right" size="lg" color="orange" intensity="low" />
+        <TeamBuildSection />
+      </section>
+
+      <section className="section-padding bg-brand-black-light relative overflow-hidden">
         <GradientBlur position="bottom-right" size="md" color="orange" intensity="low" />
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
           <div className="max-w-3xl">
@@ -140,7 +147,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <section className="section-padding bg-brand-black-light relative overflow-hidden">
+      <section className="section-padding bg-brand-black relative overflow-hidden">
         <GradientBlur position="top-right" size="md" color="orange" intensity="low" />
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
           <div className="max-w-3xl">
@@ -149,7 +156,7 @@ export default function ServicesPage() {
             </h2>
             <div className="mt-8 space-y-6 text-lg text-white/70">
               <p>
-                Most recruitment agencies charge 15-25% of the candidate's first year salary. That creates a problem: they are incentivised to push candidates towards the highest possible salary, whether or not it is the right fit for your budget or the candidate's expectations.
+                Most recruitment agencies charge 15-25% of the candidate&apos;s first year salary. That creates a problem: they are incentivised to push candidates towards the highest possible salary, whether or not it is the right fit for your budget or the candidate&apos;s expectations.
               </p>
               <p>
                 Our fixed fee model removes that conflict. We charge the same whether you hire someone at £50k or £150k. That means we are focused entirely on finding the right person, not inflating offers.
@@ -177,19 +184,24 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <section className="section-padding bg-brand-black relative overflow-hidden">
+      <section className="section-padding bg-brand-black-light relative overflow-hidden">
         <HexagonBackground />
         <GradientBlur position="center" size="lg" color="orange" intensity="medium" />
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white font-heading">
-              Let's get <span className="text-brand-orange">started</span>
+              Let&apos;s get <span className="text-brand-orange">started</span>
             </h2>
             <p className="mt-6 text-xl text-white/70">
               Whether you have a role to fill right now or just want to understand how we could help, we are happy to chat.
             </p>
             <div className="mt-10">
-              <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className="btn-primary text-lg inline-flex items-center gap-2">
+              <a 
+                href={CALENDLY_URL} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="btn-primary text-lg inline-flex items-center gap-2"
+              >
                 Book a call
                 <ArrowRight className="w-5 h-5" />
               </a>
