@@ -75,13 +75,21 @@ export default async function CandidateDetailPage({
     .select("*")
     .eq("entity_type", "candidate");
 
+  // Status labels mapping - supports both new onboarding values and legacy values
   const statusLabels: Record<string, { label: string; color: string }> = {
+    // New values from onboarding (yes/passive/no)
+    yes: { label: "Actively Looking", color: "bg-green-500" },
+    passive: { label: "Open to Opportunities", color: "bg-yellow-500" },
+    no: { label: "Not Looking", color: "bg-gray-500" },
+    // Legacy values (in case old data exists)
     actively_looking: { label: "Actively Looking", color: "bg-green-500" },
     open_to_opportunities: { label: "Open to Opportunities", color: "bg-yellow-500" },
     not_looking: { label: "Not Looking", color: "bg-gray-500" },
   };
 
-  const currentStatus = statusLabels[candidate.looking_status] || statusLabels.not_looking;
+  const currentStatus = candidate.looking_status 
+    ? statusLabels[candidate.looking_status] || { label: candidate.looking_status, color: "bg-gray-500" }
+    : { label: "Unknown", color: "bg-gray-500" };
 
   return (
     <div className="p-8">
@@ -114,30 +122,54 @@ export default async function CandidateDetailPage({
               <p className="text-white/60 mt-1">
                 {candidate.current_title || "No title"}
                 {candidate.current_company && (
-                  <> at <Link href={`/admin/companies/${candidate.current_company.id}`} className="text-brand-orange hover:underline">{candidate.current_company.name}</Link></>
+                  <>
+                    {" "}at{" "}
+                    <Link 
+                      href={`/admin/companies/${candidate.current_company.id}`} 
+                      className="text-brand-orange hover:underline"
+                    >
+                      {candidate.current_company.name}
+                    </Link>
+                  </>
                 )}
               </p>
               <div className="flex items-center gap-4 mt-3">
                 {candidate.email && (
-                  <a href={`mailto:${candidate.email}`} className="inline-flex items-center gap-1 text-white/60 hover:text-white text-sm">
+                  <a 
+                    href={`mailto:${candidate.email}`} 
+                    className="inline-flex items-center gap-1 text-white/60 hover:text-white text-sm"
+                  >
                     <Mail className="w-4 h-4" />
                     {candidate.email}
                   </a>
                 )}
                 {candidate.phone && (
-                  <a href={`tel:${candidate.phone}`} className="inline-flex items-center gap-1 text-white/60 hover:text-white text-sm">
+                  <a 
+                    href={`tel:${candidate.phone}`} 
+                    className="inline-flex items-center gap-1 text-white/60 hover:text-white text-sm"
+                  >
                     <Phone className="w-4 h-4" />
                     {candidate.phone}
                   </a>
                 )}
                 {candidate.linkedin_url && (
-                  <a href={candidate.linkedin_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-white/60 hover:text-white text-sm">
+                  <a 
+                    href={candidate.linkedin_url} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="inline-flex items-center gap-1 text-white/60 hover:text-white text-sm"
+                  >
                     <Linkedin className="w-4 h-4" />
                     LinkedIn
                   </a>
                 )}
                 {candidate.portfolio_url && (
-                  <a href={candidate.portfolio_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-white/60 hover:text-white text-sm">
+                  <a 
+                    href={candidate.portfolio_url} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="inline-flex items-center gap-1 text-white/60 hover:text-white text-sm"
+                  >
                     <Globe className="w-4 h-4" />
                     Portfolio
                   </a>
@@ -184,7 +216,7 @@ export default async function CandidateDetailPage({
               </div>
               <div>
                 <p className="text-white/50 text-sm mb-1">Seniority</p>
-                <p className="text-white">{candidate.seniority_level || "—"}</p>
+                <p className="text-white">{candidate.experience_level || candidate.seniority_level || "—"}</p>
               </div>
               <div>
                 <p className="text-white/50 text-sm mb-1">Preferred Locations</p>
@@ -192,17 +224,64 @@ export default async function CandidateDetailPage({
               </div>
               <div>
                 <p className="text-white/50 text-sm mb-1">Work Preference</p>
-                <p className="text-white capitalize">{candidate.work_preference?.replace(/_/g, " ") || "—"}</p>
+                <p className="text-white">
+                  {candidate.workplace_preferences?.length 
+                    ? candidate.workplace_preferences.join(", ")
+                    : candidate.work_preference?.replace(/_/g, " ") || "—"}
+                </p>
               </div>
               <div>
                 <p className="text-white/50 text-sm mb-1">Salary Expectation</p>
-                <p className="text-white">{candidate.salary_expectation || "—"}</p>
+                <p className="text-white">
+                  {candidate.salary_minimum && candidate.salary_ideal 
+                    ? `${candidate.salary_minimum} - ${candidate.salary_ideal}`
+                    : candidate.salary_expectation || "—"}
+                </p>
               </div>
               <div>
                 <p className="text-white/50 text-sm mb-1">Notice Period</p>
-                <p className="text-white">{candidate.notice_period || "—"}</p>
+                <p className="text-white">{candidate.available_from || candidate.notice_period || "—"}</p>
               </div>
             </div>
+
+            {/* Game Experience */}
+            {(candidate.game_categories?.length > 0 || candidate.genres?.length > 0) && (
+              <div className="mt-6 pt-6 border-t border-white/10">
+                <h3 className="text-md font-semibold text-white mb-4">Game Experience</h3>
+                <div className="grid sm:grid-cols-2 gap-6">
+                  {candidate.game_categories?.length > 0 && (
+                    <div>
+                      <p className="text-white/50 text-sm mb-2">Categories</p>
+                      <div className="flex flex-wrap gap-2">
+                        {candidate.game_categories.map((cat: string) => (
+                          <span 
+                            key={cat}
+                            className="px-2 py-1 bg-white/10 rounded text-white/80 text-xs"
+                          >
+                            {cat}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {candidate.genres?.length > 0 && (
+                    <div>
+                      <p className="text-white/50 text-sm mb-2">Genres</p>
+                      <div className="flex flex-wrap gap-2">
+                        {candidate.genres.map((genre: string) => (
+                          <span 
+                            key={genre}
+                            className="px-2 py-1 bg-white/10 rounded text-white/80 text-xs"
+                          >
+                            {genre}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Work History */}
@@ -248,12 +327,14 @@ export default async function CandidateDetailPage({
                     <p className="text-white/60 text-sm">{cp.process.company_name}</p>
                     <div className="flex items-center justify-between mt-2">
                       <span className={`text-xs px-2 py-0.5 rounded-full ${
-                        cp.process.status === "active" ? "bg-green-500/20 text-green-400" : "bg-gray-500/20 text-gray-400"
+                        cp.process.status === "active" 
+                          ? "bg-green-500/20 text-green-400" 
+                          : "bg-gray-500/20 text-gray-400"
                       }`}>
                         {cp.process.status}
                       </span>
                       <span className="text-white/40 text-xs capitalize">
-                        {cp.stage?.replace(/_/g, " ")}
+                        {cp.status?.replace(/_/g, " ") || cp.stage?.replace(/_/g, " ")}
                       </span>
                     </div>
                   </Link>
@@ -302,6 +383,12 @@ export default async function CandidateDetailPage({
                     <ExternalLink className="w-4 h-4" />
                     View CV
                   </a>
+                </div>
+              )}
+              {candidate.job_types?.length > 0 && (
+                <div>
+                  <p className="text-white/50 text-sm mb-1">Job Types</p>
+                  <p className="text-white">{candidate.job_types.join(", ")}</p>
                 </div>
               )}
             </div>

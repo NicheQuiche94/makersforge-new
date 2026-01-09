@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
-import { ArrowRight, ArrowLeft, Loader2, Check, Search, Plus, X, Building2 } from "lucide-react";
+import { ArrowRight, ArrowLeft, Loader2, Check, Search, X, Building2 } from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
 import { HexagonBackground } from "@/components/marketing/HexagonBackground";
 import { GradientBlur } from "@/components/marketing/GradientBlur";
@@ -155,7 +155,7 @@ function CompanySearch({
           
           {results.length === 0 && !loading && (
             <div className="px-4 py-3 text-white/40 text-sm">
-              No companies found - we'll create "{search}" when you submit
+              No companies found - we&apos;ll create &quot;{search}&quot; when you submit
             </div>
           )}
         </div>
@@ -289,16 +289,25 @@ export default function OnboardingPage() {
     setLoading(true);
 
     try {
+      const userEmail = user.emailAddresses[0]?.emailAddress;
+      
+      // Check if there's an existing profile with this email but no clerk_id
+      // (created by admin before candidate signed up)
+      const { data: existingByEmail } = await supabase
+        .from("candidate_profiles")
+        .select("id, clerk_id, current_company_id")
+        .eq("email", userEmail)
+        .is("clerk_id", null)
+        .single();
+
       let companyId: string | null = null;
       const companyName = companyText.trim();
 
       // Handle company linking
       if (companyName) {
         if (selectedCompany) {
-          // User selected an existing company
           companyId = selectedCompany.id;
         } else {
-          // User typed a company name - find or create it
           const { data: existingCompany } = await supabase
             .from("companies")
             .select("id")
@@ -308,7 +317,6 @@ export default function OnboardingPage() {
           if (existingCompany) {
             companyId = existingCompany.id;
           } else {
-            // Create new company
             const { data: newCompany } = await supabase
               .from("companies")
               .insert({ 
@@ -327,7 +335,7 @@ export default function OnboardingPage() {
 
       const profileData = {
         clerk_id: user.id,
-        email: user.emailAddresses[0]?.emailAddress,
+        email: userEmail,
         first_name: user.firstName,
         last_name: user.lastName,
         discipline: formData.discipline,
@@ -335,8 +343,8 @@ export default function OnboardingPage() {
         experience_level: formData.experience_level,
         years_experience: parseInt(formData.years_experience) || null,
         current_title: formData.current_title,
-        current_company: companyName, // Keep text for display
-        current_company_id: companyId, // Add the link
+        current_company: companyName,
+        current_company_id: companyId,
         game_categories: formData.game_categories,
         genres: formData.genres,
         job_types: formData.job_types,
@@ -354,16 +362,64 @@ export default function OnboardingPage() {
 
       let candidateId: string;
 
-      if (existingProfile) {
+      if (existingByEmail) {
+        // MERGE: Admin created this profile, now candidate is claiming it
+        await supabase
+          .from("candidate_profiles")
+          .update(profileData)
+          .eq("id", existingByEmail.id);
+        candidateId = existingByEmail.id;
+
+        // Update work history if company changed
+        if (companyId && companyId !== existingByEmail.current_company_id) {
+          if (existingByEmail.current_company_id) {
+            await supabase
+              .from("candidate_companies")
+              .update({ 
+                is_current: false, 
+                end_date: new Date().toISOString().split('T')[0] 
+              })
+              .eq("candidate_id", candidateId)
+              .eq("company_id", existingByEmail.current_company_id)
+              .eq("is_current", true);
+          }
+
+          const { data: existingLink } = await supabase
+            .from("candidate_companies")
+            .select("id")
+            .eq("candidate_id", candidateId)
+            .eq("company_id", companyId)
+            .eq("is_current", true)
+            .single();
+
+          if (!existingLink) {
+            await supabase.from("candidate_companies").insert({
+              candidate_id: candidateId,
+              company_id: companyId,
+              is_current: true,
+              job_title: formData.current_title,
+              start_date: new Date().toISOString().split('T')[0],
+            });
+          }
+        }
+
+        // Log the merge
+        await supabase.from("activity_log").insert({
+          entity_type: "candidate",
+          entity_id: candidateId,
+          action: "profile_claimed",
+          details: { merged_by: user.id, email: userEmail },
+        });
+
+      } else if (existingProfile) {
+        // UPDATE: Candidate updating their own profile
         await supabase
           .from("candidate_profiles")
           .update(profileData)
           .eq("clerk_id", user.id);
         candidateId = existingProfile.id;
 
-        // Update work history if company changed
         if (companyId && companyId !== existingProfile.current_company_id) {
-          // Mark old company as not current
           if (existingProfile.current_company_id) {
             await supabase
               .from("candidate_companies")
@@ -376,7 +432,6 @@ export default function OnboardingPage() {
               .eq("is_current", true);
           }
 
-          // Add new company link
           const { data: existingLink } = await supabase
             .from("candidate_companies")
             .select("id")
@@ -396,6 +451,7 @@ export default function OnboardingPage() {
           }
         }
       } else {
+        // CREATE: Brand new candidate
         const { data: newProfile } = await supabase
           .from("candidate_profiles")
           .insert([profileData])
@@ -405,7 +461,6 @@ export default function OnboardingPage() {
         if (!newProfile) throw new Error("Failed to create profile");
         candidateId = newProfile.id;
 
-        // Create work history entry if company exists
         if (companyId) {
           await supabase.from("candidate_companies").insert({
             candidate_id: candidateId,
@@ -415,6 +470,14 @@ export default function OnboardingPage() {
             start_date: new Date().toISOString().split('T')[0],
           });
         }
+
+        // Log new profile
+        await supabase.from("activity_log").insert({
+          entity_type: "candidate",
+          entity_id: candidateId,
+          action: "profile_created",
+          details: { source: "onboarding" },
+        });
       }
 
       router.push("/dashboard");
