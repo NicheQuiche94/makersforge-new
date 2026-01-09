@@ -5,32 +5,32 @@ import { createClient } from "@/lib/supabase/server";
 import { HexagonBackground } from "@/components/marketing/HexagonBackground";
 import { GradientBlur } from "@/components/marketing/GradientBlur";
 import { ProfileQuestions } from "@/components/app/ProfileQuestions";
+import { FeedbackSection } from "@/components/app/FeedbackSection";
 import { 
-  Phone, 
-  FileText, 
-  Send, 
-  Users, 
-  Gift, 
-  Star,
-  MessageSquare,
-  ArrowRight,
-  Briefcase
+  Briefcase,
+  Building2,
+  MapPin,
+  Calendar,
+  CheckCircle2,
+  Circle,
+  Sparkles,
+  ArrowRight
 } from "lucide-react";
 
 const STATUSES = [
-  { key: "contacted", label: "Contacted", icon: Phone },
-  { key: "screening", label: "Screening", icon: FileText },
-  { key: "submitted", label: "Submitted", icon: Send },
-  { key: "interviewing", label: "Interviewing", icon: Users },
-  { key: "offer", label: "Offer", icon: Gift },
-  { key: "placed", label: "Placed", icon: Star },
+  { key: "contacted", label: "Contacted" },
+  { key: "screening", label: "Screening" },
+  { key: "submitted", label: "Submitted" },
+  { key: "interviewing", label: "Interviewing" },
+  { key: "offer", label: "Offer" },
+  { key: "placed", label: "Placed" },
 ];
 
 export default async function DashboardPage() {
   const user = await currentUser();
   if (!user) redirect("/sign-in");
 
-  const supabase = createClient();
+  const supabase = await createClient();
   
   const { data: profile } = await supabase
     .from("candidate_profiles")
@@ -64,6 +64,7 @@ export default async function DashboardPage() {
         id,
         stage,
         feedback_text,
+        is_from_candidate,
         created_at
       )
     `)
@@ -73,6 +74,26 @@ export default async function DashboardPage() {
   const activeProcesses = candidateProcesses?.filter(
     (p) => p.status !== "rejected" && p.status !== "withdrawn"
   ) || [];
+
+  // Get status message based on current stage
+  function getStatusMessage(status: string): string {
+    switch (status) {
+      case "contacted":
+        return "We've reached out to discuss this opportunity with you.";
+      case "screening":
+        return "We're reviewing your profile for this role.";
+      case "submitted":
+        return "Your profile has been submitted to the client.";
+      case "interviewing":
+        return "You're in the interview process with the client.";
+      case "offer":
+        return "Congratulations! An offer is being prepared.";
+      case "placed":
+        return "You've been successfully placed in this role!";
+      default:
+        return "Your application is being processed.";
+    }
+  }
 
   return (
     <div className="min-h-screen bg-brand-black">
@@ -93,119 +114,223 @@ export default async function DashboardPage() {
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
-            {/* Active Processes */}
-            <div className="card p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-bold text-white font-heading">
-                  Your Processes
-                </h2>
-                <span className="text-white/50 text-sm">
-                  {activeProcesses.length} active
-                </span>
+            {/* Active Processes Header */}
+            <div className="flex items-center gap-4 p-5 bg-white/5 border border-white/10 rounded-xl">
+              <div className="w-12 h-12 rounded-xl bg-brand-orange/20 flex items-center justify-center">
+                <Briefcase className="w-6 h-6 text-brand-orange" />
               </div>
+              <div>
+                <h2 className="text-xl font-bold text-white font-heading">
+                  Your Active Processes
+                </h2>
+                <p className="text-white/50 text-sm">
+                  Track where you are in each opportunity
+                </p>
+              </div>
+            </div>
 
-              {activeProcesses.length === 0 ? (
-                <div className="text-center py-12">
-                  <Briefcase className="w-12 h-12 text-white/20 mx-auto mb-4" />
-                  <p className="text-white/50 mb-2">No active processes yet</p>
-                  <p className="text-white/30 text-sm">
-                    When you&apos;re added to a hiring process, it will appear here.
-                  </p>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {activeProcesses.map((cp: any) => {
-                    const process = cp.process;
-                    const currentStatusIndex = STATUSES.findIndex(
-                      (s) => s.key === cp.status
-                    );
-                    const latestFeedback = cp.feedback?.sort(
-                      (a: any, b: any) =>
-                        new Date(b.created_at).getTime() -
-                        new Date(a.created_at).getTime()
-                    )[0];
+            {activeProcesses.length === 0 ? (
+              <div className="card p-12 text-center">
+                <Briefcase className="w-16 h-16 text-white/10 mx-auto mb-4" />
+                <p className="text-white/50 mb-2">No active processes yet</p>
+                <p className="text-white/30 text-sm">
+                  When you&apos;re added to a hiring process, it will appear here.
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-6">
+                {activeProcesses.map((cp: any) => {
+                  const process = cp.process;
+                  const currentStatusIndex = STATUSES.findIndex(
+                    (s) => s.key === cp.status
+                  );
+                  const feedback = cp.feedback?.sort(
+                    (a: any, b: any) =>
+                      new Date(b.created_at).getTime() -
+                      new Date(a.created_at).getTime()
+                  ) || [];
 
-                    return (
-                      <div
-                        key={cp.id}
-                        className="bg-white/5 border border-white/10 rounded-xl p-5"
-                      >
-                        <div className="flex items-start justify-between mb-4">
+                  return (
+                    <div
+                      key={cp.id}
+                      className="bg-white/5 border border-white/10 rounded-xl overflow-hidden"
+                    >
+                      {/* Process Header */}
+                      <div className="p-6 border-b border-white/10">
+                        <div className="flex items-start justify-between">
                           <div>
-                            <h3 className="text-lg font-bold text-white">
+                            <h3 className="text-xl font-bold text-white font-heading">
                               {process?.role_title}
                             </h3>
-                            <p className="text-white/60 text-sm">
-                              {process?.company_name}
-                              {process?.location && ` · ${process.location}`}
-                            </p>
+                            <div className="flex items-center gap-4 mt-2 text-white/50 text-sm">
+                              <span className="inline-flex items-center gap-1">
+                                <Building2 className="w-4 h-4" />
+                                {process?.company_name}
+                              </span>
+                              {process?.location && (
+                                <span className="inline-flex items-center gap-1">
+                                  <MapPin className="w-4 h-4" />
+                                  {process.location}
+                                </span>
+                              )}
+                            </div>
                           </div>
-                          <span
-                            className={`px-3 py-1 rounded-full text-xs font-medium ${
-                              cp.status === "placed"
-                                ? "bg-green-500/20 text-green-400"
-                                : cp.status === "offer"
-                                ? "bg-brand-orange/20 text-brand-orange"
-                                : "bg-white/10 text-white/70"
-                            }`}
-                          >
-                            {STATUSES.find((s) => s.key === cp.status)?.label ||
-                              cp.status}
-                          </span>
+                          <div className="text-right text-white/40 text-xs">
+                            Updated {new Date(cp.updated_at).toLocaleDateString()}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Progress Pipeline */}
+                      <div className="p-6 border-b border-white/10">
+                        <div className="flex items-center justify-between mb-2">
+                          {STATUSES.map((status, index) => {
+                            const isComplete = index < currentStatusIndex;
+                            const isCurrent = index === currentStatusIndex;
+                            const isPending = index > currentStatusIndex;
+
+                            return (
+                              <div
+                                key={status.key}
+                                className="flex flex-col items-center flex-1"
+                              >
+                                <span
+                                  className={`text-xs font-medium mb-2 ${
+                                    isComplete || isCurrent
+                                      ? "text-brand-orange"
+                                      : "text-white/30"
+                                  }`}
+                                >
+                                  {status.label}
+                                </span>
+                              </div>
+                            );
+                          })}
                         </div>
 
-                        {/* Progress bar */}
-                        <div className="flex gap-1 mb-4">
-                          {STATUSES.map((status, index) => (
-                            <div
-                              key={status.key}
-                              className={`h-1.5 flex-1 rounded-full ${
-                                index <= currentStatusIndex
-                                  ? "bg-brand-orange"
-                                  : "bg-white/10"
-                              }`}
-                            />
-                          ))}
+                        {/* Progress Bar */}
+                        <div className="flex gap-1">
+                          {STATUSES.map((status, index) => {
+                            const isComplete = index < currentStatusIndex;
+                            const isCurrent = index === currentStatusIndex;
+
+                            return (
+                              <div
+                                key={status.key}
+                                className="flex-1 relative"
+                              >
+                                <div
+                                  className={`h-2 rounded-full transition-all ${
+                                    isComplete
+                                      ? "bg-brand-orange"
+                                      : isCurrent
+                                      ? "bg-gradient-to-r from-brand-orange to-brand-orange/50"
+                                      : "bg-white/10"
+                                  }`}
+                                />
+                                {isCurrent && (
+                                  <div className="absolute -top-1 right-0 w-4 h-4 rounded-full bg-brand-orange border-2 border-brand-black animate-pulse" />
+                                )}
+                              </div>
+                            );
+                          })}
                         </div>
+
+                        {/* Status Message */}
+                        <p className="text-white/60 text-sm mt-4">
+                          {getStatusMessage(cp.status)}
+                        </p>
 
                         {/* Interview stage if applicable */}
                         {cp.status === "interviewing" &&
                           cp.current_interview_stage &&
                           process?.interview_stages && (
-                            <p className="text-white/50 text-sm mb-3">
-                              Stage: {cp.current_interview_stage} of{" "}
-                              {process.interview_stages.length} (
-                              {process.interview_stages[
-                                cp.current_interview_stage - 1
-                              ] || "Interview"}
-                              )
-                            </p>
-                          )}
-
-                        {/* Latest feedback */}
-                        {latestFeedback && (
-                          <div className="bg-white/5 rounded-lg p-3 mt-3">
-                            <div className="flex items-center gap-2 text-white/50 text-xs mb-1">
-                              <MessageSquare className="w-3 h-3" />
-                              Latest feedback
+                            <div className="mt-3 p-3 bg-brand-orange/10 rounded-lg border border-brand-orange/20">
+                              <p className="text-brand-orange text-sm font-medium">
+                                Interview Stage {cp.current_interview_stage} of{" "}
+                                {process.interview_stages.length}:{" "}
+                                {process.interview_stages[
+                                  cp.current_interview_stage - 1
+                                ] || "Interview"}
+                              </p>
                             </div>
-                            <p className="text-white/80 text-sm">
-                              {latestFeedback.feedback_text}
-                            </p>
-                          </div>
-                        )}
+                          )}
                       </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
+
+                      {/* Feedback Section */}
+                      <FeedbackSection 
+                        candidateProcessId={cp.id}
+                        feedback={feedback}
+                        candidateId={profile.id}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
           {/* Sidebar */}
           <div className="space-y-8">
-            {/* Profile Questions */}
-            <ProfileQuestions profile={profile} />
+            {/* About You / Profile Questions */}
+            <div className="card p-6">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-xl bg-purple-500/20 flex items-center justify-center">
+                  <Sparkles className="w-5 h-5 text-purple-400" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-white font-heading">
+                    About You
+                  </h3>
+                  <p className="text-white/50 text-xs">
+                    {profile.profile_questions_completed || 0}/4 completed
+                  </p>
+                </div>
+              </div>
+              <ProfileQuestions profile={profile} />
+            </div>
+
+            {/* How It Works */}
+            <div className="card p-6">
+              <h3 className="text-lg font-bold text-white font-heading mb-4">
+                How It Works
+              </h3>
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
+                    <CheckCircle2 className="w-4 h-4 text-green-400" />
+                  </div>
+                  <div>
+                    <p className="text-white font-medium text-sm">Complete your profile</p>
+                    <p className="text-white/40 text-xs">
+                      Tell us about your experience and what you're looking for.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
+                    <Circle className="w-4 h-4 text-white/40" />
+                  </div>
+                  <div>
+                    <p className="text-white/60 font-medium text-sm">Get matched</p>
+                    <p className="text-white/30 text-xs">
+                      We'll connect you with relevant opportunities.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
+                    <Circle className="w-4 h-4 text-white/40" />
+                  </div>
+                  <div>
+                    <p className="text-white/60 font-medium text-sm">Track progress</p>
+                    <p className="text-white/30 text-xs">
+                      Follow your applications and receive feedback here.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
 
             {/* Quick Links */}
             <div className="card p-6">
