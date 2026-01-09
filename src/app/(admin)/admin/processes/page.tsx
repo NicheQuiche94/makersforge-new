@@ -5,7 +5,7 @@ import { HexagonBackground } from "@/components/marketing/HexagonBackground";
 import { GradientBlur } from "@/components/marketing/GradientBlur";
 
 export default async function ProcessesPage() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data: processes } = await supabase
     .from("processes")
