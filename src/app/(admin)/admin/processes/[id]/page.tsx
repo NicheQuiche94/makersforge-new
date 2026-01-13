@@ -31,7 +31,8 @@ export default async function ProcessDetailPage({
       candidate:candidate_profiles(id, first_name, last_name, email, discipline, experience_level),
       feedback:process_feedback(
         *,
-        replies:feedback_replies(*)
+        replies:feedback_replies(*),
+        attachments:feedback_attachments(*)
       )
     `)
     .eq("process_id", id)
