@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { Plus, MessageSquare, Loader2, X, GripVertical, Send } from "lucide-react";
+import { Plus, MessageSquare, Loader2, X, GripVertical, Send, Paperclip, FileText, Download, Trash2 } from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
 
 interface Candidate {
@@ -21,12 +21,21 @@ interface Reply {
   created_at: string;
 }
 
+interface Attachment {
+  id: string;
+  file_name: string;
+  file_path: string;
+  file_size: number;
+  file_type: string;
+}
+
 interface Feedback {
   id: string;
   stage: string;
   feedback_text: string;
   created_at: string;
   replies?: Reply[];
+  attachments?: Attachment[];
 }
 
 interface CandidateProcess {
@@ -64,11 +73,13 @@ export function ProcessKanban({
   availableCandidates,
 }: Props) {
   const router = useRouter();
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showFeedbackModal, setShowFeedbackModal] = useState<CandidateProcess | null>(null);
   const [selectedCandidate, setSelectedCandidate] = useState("");
   const [feedbackText, setFeedbackText] = useState("");
   const [feedbackStage, setFeedbackStage] = useState("");
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [replyText, setReplyText] = useState("");
   const [replyingToFeedback, setReplyingToFeedback] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -86,7 +97,6 @@ export function ProcessKanban({
     interviewStage?: string | null
   ) {
     try {
-      // Map status to stage format expected by email system
       let stage = newStatus;
       if (newStatus === "interviewing" && interviewStage) {
         stage = `${interviewStage}_interview`;
@@ -141,7 +151,6 @@ export function ProcessKanban({
       },
     ]);
 
-    // Send notification to newly added candidate
     const candidate = availableCandidates.find((c) => c.id === selectedCandidate);
     if (candidate) {
       await sendStatusNotification(candidate, "contacted");
@@ -171,7 +180,6 @@ export function ProcessKanban({
       .update(updateData)
       .eq("id", candidateProcessId);
 
-    // Send notification
     if (cp.candidate) {
       await sendStatusNotification(
         cp.candidate,
@@ -191,7 +199,6 @@ export function ProcessKanban({
       .update({ current_interview_stage: stage })
       .eq("id", candidateProcessId);
 
-    // Send notification for interview stage change
     if (cp?.candidate) {
       await sendStatusNotification(cp.candidate, "interviewing", stage);
     }
@@ -199,24 +206,75 @@ export function ProcessKanban({
     router.refresh();
   }
 
+  function handleFileSelect(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.files) {
+      const newFiles = Array.from(e.target.files);
+      setSelectedFiles((prev) => [...prev, ...newFiles]);
+    }
+  }
+
+  function removeSelectedFile(index: number) {
+    setSelectedFiles((prev) => prev.filter((_, i) => i !== index));
+  }
+
+  async function uploadFiles(feedbackId: string): Promise<void> {
+    for (const file of selectedFiles) {
+      const fileExt = file.name.split(".").pop();
+      const filePath = `${processId}/${feedbackId}/${Date.now()}-${file.name}`;
+
+      // Upload to Supabase Storage
+      const { error: uploadError } = await supabase.storage
+        .from("feedback-files")
+        .upload(filePath, file);
+
+      if (uploadError) {
+        console.error("Upload error:", uploadError);
+        continue;
+      }
+
+      // Save attachment record
+      await supabase.from("feedback_attachments").insert({
+        feedback_id: feedbackId,
+        file_name: file.name,
+        file_path: filePath,
+        file_size: file.size,
+        file_type: file.type,
+      });
+    }
+  }
+
   async function addFeedback() {
     if (!feedbackText || !feedbackStage || !showFeedbackModal) return;
     setLoading(true);
 
-    await supabase.from("process_feedback").insert([
-      {
-        candidate_process_id: showFeedbackModal.id,
-        stage: feedbackStage,
-        feedback_text: feedbackText,
-      },
-    ]);
+    const { data: feedback, error } = await supabase
+      .from("process_feedback")
+      .insert([
+        {
+          candidate_process_id: showFeedbackModal.id,
+          stage: feedbackStage,
+          feedback_text: feedbackText,
+        },
+      ])
+      .select()
+      .single();
+
+    if (error || !feedback) {
+      console.error("Failed to create feedback:", error);
+      setLoading(false);
+      return;
+    }
+
+    // Upload files if any
+    if (selectedFiles.length > 0) {
+      await uploadFiles(feedback.id);
+    }
 
     await supabase
       .from("candidate_processes")
       .update({ feedback_received: true })
       .eq("id", showFeedbackModal.id);
 
-    // Send feedback notification
     if (showFeedbackModal.candidate) {
       await sendFeedbackNotification(
         showFeedbackModal.candidate,
@@ -227,6 +285,7 @@ export function ProcessKanban({
 
     setFeedbackText("");
     setFeedbackStage("");
+    setSelectedFiles([]);
     setShowFeedbackModal(null);
     setLoading(false);
     router.refresh();
@@ -256,6 +315,33 @@ export function ProcessKanban({
     await supabase.from("candidate_processes").delete().eq("id", candidateProcessId);
 
     router.refresh();
+  }
+
+  async function downloadFile(attachment: Attachment) {
+    const { data, error } = await supabase.storage
+      .from("feedback-files")
+      .download(attachment.file_path);
+
+    if (error || !data) {
+      console.error("Download error:", error);
+      return;
+    }
+
+    // Create download link
+    const url = URL.createObjectURL(data);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = attachment.file_name;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  function formatFileSize(bytes: number): string {
+    if (bytes < 1024) return bytes + " B";
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
+    return (bytes / (1024 * 1024)).toFixed(1) + " MB";
   }
 
   function handleDragStart(e: React.DragEvent, candidateProcessId: string) {
@@ -480,6 +566,7 @@ export function ProcessKanban({
                 onClick={() => {
                   setShowFeedbackModal(null);
                   setFeedbackText("");
+                  setSelectedFiles([]);
                   setReplyText("");
                   setReplyingToFeedback(null);
                 }}
@@ -517,6 +604,27 @@ export function ProcessKanban({
                         <p className="text-sm text-white/80 whitespace-pre-wrap">
                           {fb.feedback_text}
                         </p>
+
+                        {/* Attachments */}
+                        {fb.attachments && fb.attachments.length > 0 && (
+                          <div className="mt-3 space-y-2">
+                            <p className="text-xs text-white/50">Attachments:</p>
+                            {fb.attachments.map((att) => (
+                              <button
+                                key={att.id}
+                                onClick={() => downloadFile(att)}
+                                className="flex items-center gap-2 w-full p-2 bg-white/5 rounded-lg hover:bg-white/10 transition-colors text-left"
+                              >
+                                <FileText className="w-4 h-4 text-brand-orange" />
+                                <div className="flex-1 min-w-0">
+                                  <p className="text-xs text-white truncate">{att.file_name}</p>
+                                  <p className="text-xs text-white/40">{formatFileSize(att.file_size)}</p>
+                                </div>
+                                <Download className="w-3 h-3 text-white/40" />
+                              </button>
+                            ))}
+                          </div>
+                        )}
                       </div>
 
                       {/* Replies */}
@@ -639,11 +747,59 @@ export function ProcessKanban({
                 />
               </div>
 
+              {/* File Attachments */}
+              <div className="mb-3">
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleFileSelect}
+                  multiple
+                  className="hidden"
+                  accept=".pdf,.doc,.docx,.txt,.zip,.png,.jpg,.jpeg"
+                />
+                
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="inline-flex items-center gap-2 px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-sm text-white/70 hover:bg-white/10 hover:text-white transition-colors"
+                >
+                  <Paperclip className="w-4 h-4" />
+                  Attach Files
+                </button>
+
+                {/* Selected Files List */}
+                {selectedFiles.length > 0 && (
+                  <div className="mt-2 space-y-1">
+                    {selectedFiles.map((file, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center justify-between p-2 bg-white/5 rounded-lg"
+                      >
+                        <div className="flex items-center gap-2 min-w-0">
+                          <FileText className="w-4 h-4 text-brand-orange flex-shrink-0" />
+                          <span className="text-xs text-white truncate">{file.name}</span>
+                          <span className="text-xs text-white/40 flex-shrink-0">
+                            ({formatFileSize(file.size)})
+                          </span>
+                        </div>
+                        <button
+                          onClick={() => removeSelectedFile(index)}
+                          className="text-white/40 hover:text-red-400 flex-shrink-0"
+                        >
+                          <X className="w-3 h-3" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
               <div className="flex justify-end gap-3">
                 <button
                   onClick={() => {
                     setShowFeedbackModal(null);
                     setFeedbackText("");
+                    setSelectedFiles([]);
                     setReplyText("");
                     setReplyingToFeedback(null);
                   }}
