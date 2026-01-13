@@ -17,12 +17,16 @@ interface FeedbackSectionProps {
   candidateProcessId: string;
   feedback: Feedback[];
   candidateId: string;
+  candidateName: string;
+  candidateEmail: string;
 }
 
 export function FeedbackSection({ 
   candidateProcessId, 
   feedback, 
-  candidateId 
+  candidateId,
+  candidateName,
+  candidateEmail,
 }: FeedbackSectionProps) {
   const router = useRouter();
   const [message, setMessage] = useState("");
@@ -45,6 +49,22 @@ export function FeedbackSection({
         is_from_candidate: true,
         stage: "candidate_message",
       });
+
+      // Notify admin via email
+      try {
+        await fetch("/api/email/notify-admin", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            candidateName,
+            candidateEmail,
+            messagePreview: message.trim(),
+            candidateId,
+          }),
+        });
+      } catch (emailError) {
+        console.error("Failed to send admin notification:", emailError);
+      }
 
       setMessage("");
       router.refresh();
@@ -131,7 +151,7 @@ export function FeedbackSection({
             </div>
           ) : (
             <p className="text-white/40 text-sm text-center py-4">
-              No messages yet. We'll update you on your progress here.
+              No messages yet. We&apos;ll update you on your progress here.
             </p>
           )}
 

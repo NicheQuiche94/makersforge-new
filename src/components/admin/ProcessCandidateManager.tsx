@@ -34,6 +34,7 @@ interface Props {
   interviewStages: string[];
   candidateProcesses: CandidateProcess[];
   availableCandidates: Candidate[];
+  companyName: string; // Add this prop
 }
 
 export function ProcessCandidateManager({
@@ -41,6 +42,7 @@ export function ProcessCandidateManager({
   interviewStages,
   candidateProcesses,
   availableCandidates,
+  companyName,
 }: Props) {
   const router = useRouter();
   const [showAddModal, setShowAddModal] = useState(false);
@@ -69,16 +71,32 @@ export function ProcessCandidateManager({
     router.refresh();
   }
 
-  async function updateStage(candidateProcessId: string, stage: string) {
+  async function updateStage(candidateProcessId: string, stage: string, candidate: Candidate) {
     await supabase
       .from("candidate_processes")
       .update({ current_interview_stage: stage })
       .eq("id", candidateProcessId);
 
+    // Notify candidate of stage change
+    try {
+      await fetch("/api/email/notify-candidate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          candidateName: `${candidate.first_name} ${candidate.last_name}`,
+          candidateEmail: candidate.email,
+          companyName,
+          newStage: stage,
+        }),
+      });
+    } catch (emailError) {
+      console.error("Failed to send candidate notification:", emailError);
+    }
+
     router.refresh();
   }
 
-  async function addFeedback(candidateProcessId: string) {
+  async function addFeedback(candidateProcessId: string, candidate: Candidate) {
     if (!feedbackText || !feedbackStage) return;
     setLoading(true);
 
@@ -95,6 +113,22 @@ export function ProcessCandidateManager({
       .from("candidate_processes")
       .update({ feedback_received: true })
       .eq("id", candidateProcessId);
+
+    // Notify candidate of new feedback
+    try {
+      await fetch("/api/email/notify-candidate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          candidateName: `${candidate.first_name} ${candidate.last_name}`,
+          candidateEmail: candidate.email,
+          companyName,
+          newStage: `${feedbackStage}_feedback`, // Special stage to indicate feedback
+        }),
+      });
+    } catch (emailError) {
+      console.error("Failed to send candidate notification:", emailError);
+    }
 
     setFeedbackText("");
     setFeedbackStage("");
@@ -131,7 +165,7 @@ export function ProcessCandidateManager({
 
       {/* Candidates List */}
       <div className="space-y-4">
-        {candidateProcesses.map((cp: any) => (
+        {candidateProcesses.map((cp) => (
           <div key={cp.id} className="card p-6">
             <div className="flex items-start justify-between mb-4">
               <div>
@@ -155,7 +189,7 @@ export function ProcessCandidateManager({
               <label className="block text-sm text-white/50 mb-2">Current Stage</label>
               <select
                 value={cp.current_interview_stage || ""}
-                onChange={(e) => updateStage(cp.id, e.target.value)}
+                onChange={(e) => updateStage(cp.id, e.target.value, cp.candidate)}
                 className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:border-brand-orange/50"
               >
                 {interviewStages.map((stage) => (
@@ -317,7 +351,10 @@ export function ProcessCandidateManager({
                 Cancel
               </button>
               <button
-                onClick={() => addFeedback(showFeedbackModal)}
+                onClick={() => {
+                  const cp = candidateProcesses.find(c => c.id === showFeedbackModal);
+                  if (cp) addFeedback(showFeedbackModal, cp.candidate);
+                }}
                 disabled={!feedbackText || loading}
                 className="btn-primary inline-flex items-center gap-2 disabled:opacity-50"
               >

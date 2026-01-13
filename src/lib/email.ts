@@ -2,213 +2,222 @@ import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "andre@makersforge.co";
-const FROM_EMAIL = "MakersForge <notifications@makersforge.co>";
+const FROM_EMAIL = "MakersForge <team@makersforge.gg>";
+const ADMIN_EMAIL = "andre@makersforge.gg";
 
-export async function sendCandidateStatusUpdate({
-  candidateEmail,
+interface SendEmailOptions {
+  to: string;
+  subject: string;
+  html: string;
+  replyTo?: string;
+}
+
+export async function sendEmail({ to, subject, html, replyTo }: SendEmailOptions) {
+  try {
+    const { data, error } = await resend.emails.send({
+      from: FROM_EMAIL,
+      to,
+      subject,
+      html,
+      replyTo,
+    });
+
+    if (error) {
+      console.error("Email send error:", error);
+      return { success: false, error };
+    }
+
+    return { success: true, data };
+  } catch (error) {
+    console.error("Email exception:", error);
+    return { success: false, error };
+  }
+}
+
+// Notify admin when candidate sends a message
+export async function notifyAdminNewMessage({
   candidateName,
-  roleTitle,
-  companyName,
-  newStatus,
-  interviewStage,
+  candidateEmail,
+  messagePreview,
+  dashboardLink,
 }: {
-  candidateEmail: string;
   candidateName: string;
-  roleTitle: string;
-  companyName: string;
-  newStatus: string;
-  interviewStage?: string | null;
+  candidateEmail: string;
+  messagePreview: string;
+  dashboardLink: string;
 }) {
-  const statusLabels: Record<string, string> = {
-    contacted: "We've reached out to you",
-    screening: "You're now in the screening stage",
-    submitted: "Your profile has been submitted to the client",
-    interviewing: `You're now in the interview stage${interviewStage ? ` (${interviewStage} Interview)` : ""}`,
-    offer: "Great news! You have an offer",
-    placed: "Congratulations! You've been placed",
+  const html = `
+    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto;">
+      <div style="background: #1a1a1a; padding: 32px; border-radius: 12px;">
+        <h1 style="color: #ffffff; font-size: 24px; margin: 0 0 8px 0;">New Message from Candidate</h1>
+        <p style="color: #999999; font-size: 14px; margin: 0 0 24px 0;">Someone's trying to reach you</p>
+        
+        <div style="background: #252525; padding: 20px; border-radius: 8px; margin-bottom: 24px;">
+          <p style="color: #E8491F; font-size: 14px; font-weight: 600; margin: 0 0 4px 0;">${candidateName}</p>
+          <p style="color: #666666; font-size: 13px; margin: 0 0 16px 0;">${candidateEmail}</p>
+          <p style="color: #cccccc; font-size: 15px; margin: 0; line-height: 1.5;">"${messagePreview}"</p>
+        </div>
+        
+        <a href="${dashboardLink}" style="display: inline-block; background: #E8491F; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; font-size: 14px;">View & Reply</a>
+      </div>
+      
+      <p style="color: #666666; font-size: 12px; text-align: center; margin-top: 24px;">
+        MakersForge • Building World Class Teams in Mobile Games
+      </p>
+    </div>
+  `;
+
+  return sendEmail({
+    to: ADMIN_EMAIL,
+    subject: `💬 New message from ${candidateName}`,
+    html,
+    replyTo: candidateEmail,
+  });
+}
+
+// Notify candidate when their process is updated
+export async function notifyCandidateProcessUpdate({
+  candidateName,
+  candidateEmail,
+  companyName,
+  newStage,
+  dashboardLink,
+}: {
+  candidateName: string;
+  candidateEmail: string;
+  companyName: string;
+  newStage: string;
+  dashboardLink: string;
+}) {
+  const stageMessages: Record<string, string> = {
+    // Process stages
+    screening: "We're reviewing your profile for this opportunity.",
+    submitted: "Your profile has been submitted to the company.",
+    interviewing: "Great news! The company wants to interview you.",
+    interview: "Great news! The company wants to interview you.",
+    technical: "You've been invited to a technical assessment.",
+    offer: "Exciting times! There's an offer on the table.",
+    placed: "Congratulations! You've been placed. 🎉",
+    rejected: "Unfortunately, the company has decided not to proceed.",
+    withdrawn: "This process has been withdrawn.",
+    // Feedback stages
+    screening_feedback: "You've received feedback from the screening stage.",
+    interviewing_feedback: "You've received interview feedback.",
+    interview_feedback: "You've received interview feedback.",
+    technical_feedback: "You've received technical assessment feedback.",
+    offer_feedback: "You've received feedback regarding your offer.",
   };
 
-  const statusMessage = statusLabels[newStatus] || `Your status has been updated to ${newStatus}`;
+  // Get message or create a generic one
+  const stageLower = newStage.toLowerCase().replace(" ", "_");
+  const stageMessage = stageMessages[stageLower] || "There's been an update to your process.";
+  
+  // Check if this is a feedback notification
+  const isFeedback = stageLower.includes("_feedback");
+  const displayStage = isFeedback 
+    ? stageLower.replace("_feedback", "") 
+    : stageLower;
 
-  try {
-    await resend.emails.send({
-      from: FROM_EMAIL,
-      to: candidateEmail,
-      subject: `Update on your application: ${roleTitle} at ${companyName}`,
-      html: `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <style>
-            body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #0a0a0a; color: #ffffff; margin: 0; padding: 0; }
-            .container { max-width: 600px; margin: 0 auto; padding: 40px 20px; }
-            .card { background-color: #1a1a1a; border-radius: 12px; padding: 32px; border: 1px solid rgba(255,255,255,0.1); }
-            .logo { color: #E8491F; font-size: 24px; font-weight: bold; margin-bottom: 24px; }
-            h1 { font-size: 24px; margin: 0 0 16px 0; color: #ffffff; }
-            .status { background-color: rgba(232, 73, 31, 0.1); border: 1px solid rgba(232, 73, 31, 0.3); color: #E8491F; padding: 12px 16px; border-radius: 8px; margin: 24px 0; }
-            p { color: rgba(255,255,255,0.7); line-height: 1.6; margin: 0 0 16px 0; }
-            .button { display: inline-block; background-color: #E8491F; color: #ffffff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 500; margin-top: 16px; }
-            .footer { margin-top: 32px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.4); font-size: 14px; }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <div class="card">
-              <div class="logo">MAKERSFORGE</div>
-              <h1>Hi ${candidateName},</h1>
-              <p>There's an update on your application for <strong>${roleTitle}</strong> at <strong>${companyName}</strong>.</p>
-              <div class="status">${statusMessage}</div>
-              <p>Log in to your dashboard to see full details and any feedback.</p>
-              <a href="https://app.makersforge.co/dashboard" class="button">View Dashboard</a>
-              <div class="footer">
-                <p>You're receiving this because you're registered on MakersForge.</p>
-              </div>
-            </div>
-          </div>
-        </body>
-        </html>
-      `,
-    });
-    return { success: true };
-  } catch (error) {
-    console.error("Failed to send status update email:", error);
-    return { success: false, error };
+  const html = `
+    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto;">
+      <div style="background: #1a1a1a; padding: 32px; border-radius: 12px;">
+        <h1 style="color: #ffffff; font-size: 24px; margin: 0 0 8px 0;">${isFeedback ? "New Feedback" : "Process Update"}</h1>
+        <p style="color: #999999; font-size: 14px; margin: 0 0 24px 0;">Hi ${candidateName.split(" ")[0]}, there's news on your application</p>
+        
+        <div style="background: #252525; padding: 20px; border-radius: 8px; margin-bottom: 24px;">
+          <p style="color: #666666; font-size: 13px; margin: 0 0 4px 0;">Company</p>
+          <p style="color: #ffffff; font-size: 16px; font-weight: 600; margin: 0 0 16px 0;">${companyName}</p>
+          
+          <p style="color: #666666; font-size: 13px; margin: 0 0 4px 0;">${isFeedback ? "Feedback For" : "New Stage"}</p>
+          <p style="color: #E8491F; font-size: 16px; font-weight: 600; margin: 0 0 16px 0; text-transform: capitalize;">${displayStage.replace("_", " ")}</p>
+          
+          <p style="color: #cccccc; font-size: 14px; margin: 0; line-height: 1.5;">${stageMessage}</p>
+        </div>
+        
+        <a href="${dashboardLink}" style="display: inline-block; background: #E8491F; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; font-size: 14px;">View Details</a>
+      </div>
+      
+      <p style="color: #666666; font-size: 12px; text-align: center; margin-top: 24px;">
+        MakersForge • Building World Class Teams in Mobile Games
+      </p>
+    </div>
+  `;
+
+  // Don't email for certain stages
+  if (["withdrawn"].includes(stageLower)) {
+    return { success: true, skipped: true };
   }
+
+  return sendEmail({
+    to: candidateEmail,
+    subject: `${companyName} - ${isFeedback ? "New Feedback" : "Process Update"}`,
+    html,
+  });
 }
 
-export async function sendCandidateFeedbackNotification({
-  candidateEmail,
-  candidateName,
-  roleTitle,
+// Notify admin of new quote reservation
+export async function notifyAdminNewQuote({
   companyName,
-  stage,
-  feedbackPreview,
+  email,
+  permanentHires,
+  contractHires,
+  contractDuration,
+  totalQuote,
+  paymentPreference,
 }: {
-  candidateEmail: string;
-  candidateName: string;
-  roleTitle: string;
   companyName: string;
-  stage: string;
-  feedbackPreview: string;
+  email: string;
+  permanentHires: number;
+  contractHires: number;
+  contractDuration: number;
+  totalQuote: number;
+  paymentPreference: string;
 }) {
-  const stageLabel = stage === "Screening" || stage === "Offer" ? stage : `${stage} Interview`;
+  const teamComposition = [
+    permanentHires > 0 ? `${permanentHires} permanent` : null,
+    contractHires > 0 ? `${contractHires} contractors (${contractDuration}mo)` : null,
+  ].filter(Boolean).join(" + ");
 
-  try {
-    await resend.emails.send({
-      from: FROM_EMAIL,
-      to: candidateEmail,
-      subject: `New feedback: ${roleTitle} at ${companyName}`,
-      html: `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <style>
-            body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #0a0a0a; color: #ffffff; margin: 0; padding: 0; }
-            .container { max-width: 600px; margin: 0 auto; padding: 40px 20px; }
-            .card { background-color: #1a1a1a; border-radius: 12px; padding: 32px; border: 1px solid rgba(255,255,255,0.1); }
-            .logo { color: #E8491F; font-size: 24px; font-weight: bold; margin-bottom: 24px; }
-            h1 { font-size: 24px; margin: 0 0 16px 0; color: #ffffff; }
-            .stage { display: inline-block; background-color: rgba(232, 73, 31, 0.2); color: #E8491F; padding: 4px 12px; border-radius: 4px; font-size: 14px; font-weight: 500; margin-bottom: 16px; }
-            .feedback { background-color: rgba(255,255,255,0.05); border-left: 3px solid #E8491F; padding: 16px; margin: 16px 0; border-radius: 0 8px 8px 0; }
-            .feedback p { color: rgba(255,255,255,0.8); margin: 0; }
-            p { color: rgba(255,255,255,0.7); line-height: 1.6; margin: 0 0 16px 0; }
-            .button { display: inline-block; background-color: #E8491F; color: #ffffff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 500; margin-top: 16px; }
-            .footer { margin-top: 32px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.4); font-size: 14px; }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <div class="card">
-              <div class="logo">MAKERSFORGE</div>
-              <h1>Hi ${candidateName},</h1>
-              <p>You've received new feedback for your application to <strong>${roleTitle}</strong> at <strong>${companyName}</strong>.</p>
-              <span class="stage">${stageLabel}</span>
-              <div class="feedback">
-                <p>${feedbackPreview.length > 200 ? feedbackPreview.substring(0, 200) + "..." : feedbackPreview}</p>
-              </div>
-              <p>You can reply to this feedback directly in your dashboard.</p>
-              <a href="https://app.makersforge.co/dashboard" class="button">View & Reply</a>
-              <div class="footer">
-                <p>You're receiving this because you're registered on MakersForge.</p>
-              </div>
-            </div>
-          </div>
-        </body>
-        </html>
-      `,
-    });
-    return { success: true };
-  } catch (error) {
-    console.error("Failed to send feedback notification email:", error);
-    return { success: false, error };
-  }
-}
+  const formattedQuote = new Intl.NumberFormat("en-GB", {
+    style: "currency",
+    currency: "GBP",
+    minimumFractionDigits: 0,
+  }).format(totalQuote);
 
-export async function sendAdminReplyNotification({
-  candidateName,
-  candidateEmail,
-  roleTitle,
-  companyName,
-  stage,
-  replyPreview,
-}: {
-  candidateName: string;
-  candidateEmail: string;
-  roleTitle: string;
-  companyName: string;
-  stage: string;
-  replyPreview: string;
-}) {
-  const stageLabel = stage === "Screening" || stage === "Offer" ? stage : `${stage} Interview`;
+  const html = `
+    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto;">
+      <div style="background: #1a1a1a; padding: 32px; border-radius: 12px;">
+        <h1 style="color: #ffffff; font-size: 24px; margin: 0 0 8px 0;">🔥 New Quote Reserved</h1>
+        <p style="color: #999999; font-size: 14px; margin: 0 0 24px 0;">Someone's interested in building a team</p>
+        
+        <div style="background: #252525; padding: 20px; border-radius: 8px; margin-bottom: 24px;">
+          <p style="color: #666666; font-size: 13px; margin: 0 0 4px 0;">Company</p>
+          <p style="color: #ffffff; font-size: 18px; font-weight: 600; margin: 0 0 16px 0;">${companyName}</p>
+          
+          <p style="color: #666666; font-size: 13px; margin: 0 0 4px 0;">Contact</p>
+          <p style="color: #cccccc; font-size: 14px; margin: 0 0 16px 0;">${email}</p>
+          
+          <p style="color: #666666; font-size: 13px; margin: 0 0 4px 0;">Team</p>
+          <p style="color: #cccccc; font-size: 14px; margin: 0 0 16px 0;">${teamComposition}</p>
+          
+          <p style="color: #666666; font-size: 13px; margin: 0 0 4px 0;">Quote</p>
+          <p style="color: #E8491F; font-size: 24px; font-weight: 700; margin: 0 0 4px 0;">${formattedQuote}</p>
+          <p style="color: #666666; font-size: 12px; margin: 0;">${paymentPreference === "monthly" ? "Prefers monthly payments" : "Single payment"}</p>
+        </div>
+        
+        <a href="mailto:${email}" style="display: inline-block; background: #E8491F; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; font-size: 14px;">Reply to ${companyName}</a>
+      </div>
+      
+      <p style="color: #666666; font-size: 12px; text-align: center; margin-top: 24px;">
+        Quote valid for 30 days
+      </p>
+    </div>
+  `;
 
-  try {
-    await resend.emails.send({
-      from: FROM_EMAIL,
-      to: ADMIN_EMAIL,
-      subject: `💬 ${candidateName} replied - ${roleTitle}`,
-      html: `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <style>
-            body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #0a0a0a; color: #ffffff; margin: 0; padding: 0; }
-            .container { max-width: 600px; margin: 0 auto; padding: 40px 20px; }
-            .card { background-color: #1a1a1a; border-radius: 12px; padding: 32px; border: 1px solid rgba(255,255,255,0.1); }
-            .logo { color: #E8491F; font-size: 24px; font-weight: bold; margin-bottom: 24px; }
-            h1 { font-size: 24px; margin: 0 0 16px 0; color: #ffffff; }
-            .meta { color: rgba(255,255,255,0.5); font-size: 14px; margin-bottom: 16px; }
-            .stage { display: inline-block; background-color: rgba(34, 197, 94, 0.2); color: #22c55e; padding: 4px 12px; border-radius: 4px; font-size: 14px; font-weight: 500; margin-bottom: 16px; }
-            .reply { background-color: rgba(34, 197, 94, 0.1); border-left: 3px solid #22c55e; padding: 16px; margin: 16px 0; border-radius: 0 8px 8px 0; }
-            .reply p { color: rgba(255,255,255,0.8); margin: 0; }
-            p { color: rgba(255,255,255,0.7); line-height: 1.6; margin: 0 0 16px 0; }
-            .button { display: inline-block; background-color: #E8491F; color: #ffffff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 500; margin-top: 16px; }
-            .footer { margin-top: 32px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.4); font-size: 14px; }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <div class="card">
-              <div class="logo">MAKERSFORGE</div>
-              <h1>New Reply from ${candidateName}</h1>
-              <p class="meta">${roleTitle} at ${companyName} • ${candidateEmail}</p>
-              <span class="stage">${stageLabel}</span>
-              <div class="reply">
-                <p>${replyPreview}</p>
-              </div>
-              <a href="https://app.makersforge.co/admin/processes" class="button">View in Admin</a>
-              <div class="footer">
-                <p>MakersForge Admin Notification</p>
-              </div>
-            </div>
-          </div>
-        </body>
-        </html>
-      `,
-    });
-    return { success: true };
-  } catch (error) {
-    console.error("Failed to send admin reply notification:", error);
-    return { success: false, error };
-  }
+  return sendEmail({
+    to: ADMIN_EMAIL,
+    subject: `🔥 ${companyName} reserved a ${formattedQuote} team build quote`,
+    html,
+    replyTo: email,
+  });
 }

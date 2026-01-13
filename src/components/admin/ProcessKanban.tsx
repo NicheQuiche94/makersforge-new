@@ -86,16 +86,20 @@ export function ProcessKanban({
     interviewStage?: string | null
   ) {
     try {
-      await fetch("/api/notifications/status-update", {
+      // Map status to stage format expected by email system
+      let stage = newStatus;
+      if (newStatus === "interviewing" && interviewStage) {
+        stage = `${interviewStage}_interview`;
+      }
+      
+      await fetch("/api/email/notify-candidate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          candidateName: `${candidate.first_name} ${candidate.last_name}`,
           candidateEmail: candidate.email,
-          candidateName: candidate.first_name,
-          roleTitle: processTitle,
           companyName: companyName,
-          newStatus: newStatus,
-          interviewStage: interviewStage,
+          newStage: stage,
         }),
       });
     } catch (error) {
@@ -109,16 +113,14 @@ export function ProcessKanban({
     feedbackPreview: string
   ) {
     try {
-      await fetch("/api/notifications/feedback", {
+      await fetch("/api/email/notify-candidate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          candidateName: `${candidate.first_name} ${candidate.last_name}`,
           candidateEmail: candidate.email,
-          candidateName: candidate.first_name,
-          roleTitle: processTitle,
           companyName: companyName,
-          stage: stage,
-          feedbackPreview: feedbackPreview,
+          newStage: `${stage.toLowerCase().replace(" ", "_")}_feedback`,
         }),
       });
     } catch (error) {

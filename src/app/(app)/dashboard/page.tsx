@@ -262,6 +262,8 @@ export default async function DashboardPage() {
                         candidateProcessId={cp.id}
                         feedback={feedback}
                         candidateId={profile.id}
+                        candidateName={`${profile.first_name} ${profile.last_name}`}
+                        candidateEmail={profile.email}
                       />
                     </div>
                   );

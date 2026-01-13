@@ -1,243 +1,223 @@
-"use client";
+import { Resend } from "resend";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Send, Loader2, MessageSquare } from "lucide-react";
-import { supabase } from "@/lib/supabase/client";
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-interface Reply {
-  id: string;
-  message: string;
-  is_from_admin: boolean;
-  created_at: string;
+const FROM_EMAIL = "MakersForge <team@makersforge.gg>";
+const ADMIN_EMAIL = "andre@makersforge.gg";
+
+interface SendEmailOptions {
+  to: string;
+  subject: string;
+  html: string;
+  replyTo?: string;
 }
 
-interface Feedback {
-  id: string;
-  stage: string;
-  feedback_text: string;
-  created_at: string;
-  replies?: Reply[];
-}
+export async function sendEmail({ to, subject, html, replyTo }: SendEmailOptions) {
+  try {
+    const { data, error } = await resend.emails.send({
+      from: FROM_EMAIL,
+      to,
+      subject,
+      html,
+      replyTo,
+    });
 
-interface Props {
-  feedback: Feedback[];
-  candidateProcessId: string;
-  candidateName: string;
-  candidateEmail: string;
-  roleTitle: string;
-  companyName: string;
-}
-
-export function FeedbackThread({ 
-  feedback, 
-  candidateProcessId,
-  candidateName,
-  candidateEmail,
-  roleTitle,
-  companyName,
-}: Props) {
-  const router = useRouter();
-  const [replyingTo, setReplyingTo] = useState<string | null>(null);
-  const [replyText, setReplyText] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  function formatStageLabel(stage: string) {
-    if (stage === "Screening" || stage === "Offer") return stage;
-    return `${stage} Interview`;
-  }
-
-  async function sendReply(feedbackId: string, stage: string) {
-    if (!replyText.trim()) return;
-    setLoading(true);
-
-    const { error } = await supabase.from("feedback_replies").insert([
-      {
-        feedback_id: feedbackId,
-        message: replyText.trim(),
-        is_from_admin: false,
-      },
-    ]);
-
-    if (!error) {
-      // Notify admin of the reply
-      try {
-        await fetch("/api/notifications/reply", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            candidateName,
-            candidateEmail,
-            roleTitle,
-            companyName,
-            stage,
-            replyPreview: replyText.trim(),
-          }),
-        });
-      } catch (e) {
-        console.error("Failed to send admin notification:", e);
-      }
-
-      setReplyText("");
-      setReplyingTo(null);
-      router.refresh();
+    if (error) {
+      console.error("Email send error:", error);
+      return { success: false, error };
     }
 
-    setLoading(false);
+    return { success: true, data };
+  } catch (error) {
+    console.error("Email exception:", error);
+    return { success: false, error };
   }
+}
 
-  if (!feedback || feedback.length === 0) {
-    return (
-      <div className="border-t border-white/10 pt-4 mt-4">
-        <p className="text-sm text-white/40 flex items-center gap-2">
-          <MessageSquare className="w-4 h-4" />
-          Feedback will appear here after each stage
-        </p>
-      </div>
-    );
-  }
-
-  return (
-    <div className="border-t border-white/10 pt-4 mt-4">
-      <div className="flex items-center gap-2 mb-4">
-        <MessageSquare className="w-4 h-4 text-brand-orange" />
-        <h4 className="text-sm font-semibold text-white">Feedback & Messages</h4>
-      </div>
-
-      <div className="relative">
-        {/* Timeline line */}
-        <div className="absolute left-[7px] top-3 bottom-3 w-0.5 bg-white/10" />
-
-        <div className="space-y-4">
-          {feedback
-            .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
-            .map((fb, index) => (
-              <div key={fb.id} className="relative pl-6">
-                {/* Timeline dot */}
-                <div
-                  className={`absolute left-0 top-1.5 w-4 h-4 rounded-full border-2 ${
-                    index === 0
-                      ? "bg-brand-orange border-brand-orange"
-                      : "bg-brand-black border-white/30"
-                  }`}
-                />
-
-                <div className="space-y-2">
-                  {/* Original feedback */}
-                  <div
-                    className={`rounded-lg p-4 ${
-                      index === 0
-                        ? "bg-brand-orange/10 border border-brand-orange/20"
-                        : "bg-white/5"
-                    }`}
-                  >
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center gap-2">
-                        <span
-                          className={`text-xs font-semibold px-2 py-0.5 rounded ${
-                            index === 0
-                              ? "bg-brand-orange/20 text-brand-orange"
-                              : "bg-white/10 text-white/60"
-                          }`}
-                        >
-                          {formatStageLabel(fb.stage)}
-                        </span>
-                        <span className="text-xs text-white/40">MakersForge</span>
-                      </div>
-                      <span className="text-xs text-white/40">
-                        {new Date(fb.created_at).toLocaleDateString("en-GB", {
-                          day: "numeric",
-                          month: "short",
-                          year: "numeric",
-                        })}
-                      </span>
-                    </div>
-                    <p className="text-sm text-white/80 leading-relaxed whitespace-pre-wrap">
-                      {fb.feedback_text}
-                    </p>
-                  </div>
-
-                  {/* Replies */}
-                  {fb.replies && fb.replies.length > 0 && (
-                    <div className="space-y-2 ml-4">
-                      {fb.replies
-                        .sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime())
-                        .map((reply) => (
-                          <div
-                            key={reply.id}
-                            className={`rounded-lg p-3 ${
-                              reply.is_from_admin
-                                ? "bg-white/5 border-l-2 border-brand-orange/50"
-                                : "bg-green-500/10 border-l-2 border-green-500/50"
-                            }`}
-                          >
-                            <div className="flex items-center justify-between mb-1">
-                              <span className="text-xs text-white/50">
-                                {reply.is_from_admin ? "MakersForge" : "You"}
-                              </span>
-                              <span className="text-xs text-white/30">
-                                {new Date(reply.created_at).toLocaleDateString("en-GB", {
-                                  day: "numeric",
-                                  month: "short",
-                                  hour: "2-digit",
-                                  minute: "2-digit",
-                                })}
-                              </span>
-                            </div>
-                            <p className="text-sm text-white/70">{reply.message}</p>
-                          </div>
-                        ))}
-                    </div>
-                  )}
-
-                  {/* Reply input */}
-                  {replyingTo === fb.id ? (
-                    <div className="ml-4 space-y-2">
-                      <textarea
-                        value={replyText}
-                        onChange={(e) => setReplyText(e.target.value)}
-                        placeholder="Type your reply..."
-                        rows={3}
-                        className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-sm text-white placeholder-white/30 focus:outline-none focus:border-brand-orange/50 resize-none"
-                        autoFocus
-                      />
-                      <div className="flex justify-end gap-2">
-                        <button
-                          onClick={() => {
-                            setReplyingTo(null);
-                            setReplyText("");
-                          }}
-                          className="px-3 py-1.5 text-sm text-white/60 hover:text-white transition-colors"
-                        >
-                          Cancel
-                        </button>
-                        <button
-                          onClick={() => sendReply(fb.id, fb.stage)}
-                          disabled={!replyText.trim() || loading}
-                          className="px-3 py-1.5 bg-brand-orange text-white text-sm rounded-lg hover:bg-brand-orange/90 transition-colors disabled:opacity-50 inline-flex items-center gap-1"
-                        >
-                          {loading ? (
-                            <Loader2 className="w-3 h-3 animate-spin" />
-                          ) : (
-                            <Send className="w-3 h-3" />
-                          )}
-                          Send
-                        </button>
-                      </div>
-                    </div>
-                  ) : (
-                    <button
-                      onClick={() => setReplyingTo(fb.id)}
-                      className="ml-4 text-xs text-brand-orange hover:text-brand-orange/80 transition-colors"
-                    >
-                      Reply to this feedback
-                    </button>
-                  )}
-                </div>
-              </div>
-            ))}
+// Notify admin when candidate sends a message
+export async function notifyAdminNewMessage({
+  candidateName,
+  candidateEmail,
+  messagePreview,
+  dashboardLink,
+}: {
+  candidateName: string;
+  candidateEmail: string;
+  messagePreview: string;
+  dashboardLink: string;
+}) {
+  const html = `
+    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto;">
+      <div style="background: #1a1a1a; padding: 32px; border-radius: 12px;">
+        <h1 style="color: #ffffff; font-size: 24px; margin: 0 0 8px 0;">New Message from Candidate</h1>
+        <p style="color: #999999; font-size: 14px; margin: 0 0 24px 0;">Someone's trying to reach you</p>
+        
+        <div style="background: #252525; padding: 20px; border-radius: 8px; margin-bottom: 24px;">
+          <p style="color: #E8491F; font-size: 14px; font-weight: 600; margin: 0 0 4px 0;">${candidateName}</p>
+          <p style="color: #666666; font-size: 13px; margin: 0 0 16px 0;">${candidateEmail}</p>
+          <p style="color: #cccccc; font-size: 15px; margin: 0; line-height: 1.5;">"${messagePreview}"</p>
         </div>
+        
+        <a href="${dashboardLink}" style="display: inline-block; background: #E8491F; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; font-size: 14px;">View & Reply</a>
       </div>
+      
+      <p style="color: #666666; font-size: 12px; text-align: center; margin-top: 24px;">
+        MakersForge • Building World Class Teams in Mobile Games
+      </p>
     </div>
-  );
+  `;
+
+  return sendEmail({
+    to: ADMIN_EMAIL,
+    subject: `💬 New message from ${candidateName}`,
+    html,
+    replyTo: candidateEmail,
+  });
+}
+
+// Notify candidate when their process is updated
+export async function notifyCandidateProcessUpdate({
+  candidateName,
+  candidateEmail,
+  companyName,
+  newStage,
+  dashboardLink,
+}: {
+  candidateName: string;
+  candidateEmail: string;
+  companyName: string;
+  newStage: string;
+  dashboardLink: string;
+}) {
+  const stageMessages: Record<string, string> = {
+    // Process stages
+    screening: "We're reviewing your profile for this opportunity.",
+    submitted: "Your profile has been submitted to the company.",
+    interviewing: "Great news! The company wants to interview you.",
+    interview: "Great news! The company wants to interview you.",
+    technical: "You've been invited to a technical assessment.",
+    offer: "Exciting times! There's an offer on the table.",
+    placed: "Congratulations! You've been placed. 🎉",
+    rejected: "Unfortunately, the company has decided not to proceed.",
+    withdrawn: "This process has been withdrawn.",
+    // Feedback stages
+    screening_feedback: "You've received feedback from the screening stage.",
+    interviewing_feedback: "You've received interview feedback.",
+    interview_feedback: "You've received interview feedback.",
+    technical_feedback: "You've received technical assessment feedback.",
+    offer_feedback: "You've received feedback regarding your offer.",
+  };
+
+  // Get message or create a generic one
+  const stageLower = newStage.toLowerCase().replace(" ", "_");
+  const stageMessage = stageMessages[stageLower] || "There's been an update to your process.";
+  
+  // Check if this is a feedback notification
+  const isFeedback = stageLower.includes("_feedback");
+  const displayStage = isFeedback 
+    ? stageLower.replace("_feedback", "") 
+    : stageLower;
+
+  const html = `
+    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto;">
+      <div style="background: #1a1a1a; padding: 32px; border-radius: 12px;">
+        <h1 style="color: #ffffff; font-size: 24px; margin: 0 0 8px 0;">${isFeedback ? "New Feedback" : "Process Update"}</h1>
+        <p style="color: #999999; font-size: 14px; margin: 0 0 24px 0;">Hi ${candidateName.split(" ")[0]}, there's news on your application</p>
+        
+        <div style="background: #252525; padding: 20px; border-radius: 8px; margin-bottom: 24px;">
+          <p style="color: #666666; font-size: 13px; margin: 0 0 4px 0;">Company</p>
+          <p style="color: #ffffff; font-size: 16px; font-weight: 600; margin: 0 0 16px 0;">${companyName}</p>
+          
+          <p style="color: #666666; font-size: 13px; margin: 0 0 4px 0;">${isFeedback ? "Feedback For" : "New Stage"}</p>
+          <p style="color: #E8491F; font-size: 16px; font-weight: 600; margin: 0 0 16px 0; text-transform: capitalize;">${displayStage.replace("_", " ")}</p>
+          
+          <p style="color: #cccccc; font-size: 14px; margin: 0; line-height: 1.5;">${stageMessage}</p>
+        </div>
+        
+        <a href="${dashboardLink}" style="display: inline-block; background: #E8491F; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; font-size: 14px;">View Details</a>
+      </div>
+      
+      <p style="color: #666666; font-size: 12px; text-align: center; margin-top: 24px;">
+        MakersForge • Building World Class Teams in Mobile Games
+      </p>
+    </div>
+  `;
+
+  // Don't email for certain stages
+  if (["withdrawn"].includes(stageLower)) {
+    return { success: true, skipped: true };
+  }
+
+  return sendEmail({
+    to: candidateEmail,
+    subject: `${companyName} - ${isFeedback ? "New Feedback" : "Process Update"}`,
+    html,
+  });
+}
+
+// Notify admin of new quote reservation
+export async function notifyAdminNewQuote({
+  companyName,
+  email,
+  permanentHires,
+  contractHires,
+  contractDuration,
+  totalQuote,
+  paymentPreference,
+}: {
+  companyName: string;
+  email: string;
+  permanentHires: number;
+  contractHires: number;
+  contractDuration: number;
+  totalQuote: number;
+  paymentPreference: string;
+}) {
+  const teamComposition = [
+    permanentHires > 0 ? `${permanentHires} permanent` : null,
+    contractHires > 0 ? `${contractHires} contractors (${contractDuration}mo)` : null,
+  ].filter(Boolean).join(" + ");
+
+  const formattedQuote = new Intl.NumberFormat("en-GB", {
+    style: "currency",
+    currency: "GBP",
+    minimumFractionDigits: 0,
+  }).format(totalQuote);
+
+  const html = `
+    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto;">
+      <div style="background: #1a1a1a; padding: 32px; border-radius: 12px;">
+        <h1 style="color: #ffffff; font-size: 24px; margin: 0 0 8px 0;">🔥 New Quote Reserved</h1>
+        <p style="color: #999999; font-size: 14px; margin: 0 0 24px 0;">Someone's interested in building a team</p>
+        
+        <div style="background: #252525; padding: 20px; border-radius: 8px; margin-bottom: 24px;">
+          <p style="color: #666666; font-size: 13px; margin: 0 0 4px 0;">Company</p>
+          <p style="color: #ffffff; font-size: 18px; font-weight: 600; margin: 0 0 16px 0;">${companyName}</p>
+          
+          <p style="color: #666666; font-size: 13px; margin: 0 0 4px 0;">Contact</p>
+          <p style="color: #cccccc; font-size: 14px; margin: 0 0 16px 0;">${email}</p>
+          
+          <p style="color: #666666; font-size: 13px; margin: 0 0 4px 0;">Team</p>
+          <p style="color: #cccccc; font-size: 14px; margin: 0 0 16px 0;">${teamComposition}</p>
+          
+          <p style="color: #666666; font-size: 13px; margin: 0 0 4px 0;">Quote</p>
+          <p style="color: #E8491F; font-size: 24px; font-weight: 700; margin: 0 0 4px 0;">${formattedQuote}</p>
+          <p style="color: #666666; font-size: 12px; margin: 0;">${paymentPreference === "monthly" ? "Prefers monthly payments" : "Single payment"}</p>
+        </div>
+        
+        <a href="mailto:${email}" style="display: inline-block; background: #E8491F; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; font-size: 14px;">Reply to ${companyName}</a>
+      </div>
+      
+      <p style="color: #666666; font-size: 12px; text-align: center; margin-top: 24px;">
+        Quote valid for 30 days
+      </p>
+    </div>
+  `;
+
+  return sendEmail({
+    to: ADMIN_EMAIL,
+    subject: `🔥 ${companyName} reserved a ${formattedQuote} team build quote`,
+    html,
+    replyTo: email,
+  });
 }
