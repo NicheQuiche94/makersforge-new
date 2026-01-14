@@ -2,43 +2,44 @@ import { Metadata } from "next";
 import { HexagonBackground } from "@/components/marketing/HexagonBackground";
 import { GradientBlur } from "@/components/marketing/GradientBlur";
 import { TeamBuildCalculatorLead } from "@/components/marketing/TeamBuildCalculatorLead";
-import { Users, Zap, Shield, Calendar, CheckCircle } from "lucide-react";
+import { Users, Zap, Shield, CheckCircle, Target } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Team Build Calculator | MakersForge",
-  description: "Calculate exactly what it costs to build your mobile games team. No email required, no sales pitch. Just numbers.",
+  description: "Build your mobile games team now. Pay over 6 months. Fixed fees, not percentages.",
   openGraph: {
-    title: "What does it cost to build your mobile games team?",
-    description: "Find out in 30 seconds. No email required.",
+    title: "Less Netflix. More Klarna.",
+    description: "Build your team now. Pay over 6 months.",
   },
 };
 
 const BENEFITS = [
   {
+    icon: Target,
+    title: "Talent Strategy Session",
+    description: "We plan the build before we start hiring.",
+  },
+  {
     icon: Zap,
-    title: "Coordinated Hiring",
-    description: "We sequence your hires strategically so each new team member builds on the last.",
+    title: "Prioritised Roadmap",
+    description: "Your roles jump the queue. Sequenced for momentum.",
   },
   {
     icon: Users,
-    title: "Team Dynamics",
-    description: "We consider how candidates will work together, not just their individual skills.",
-  },
-  {
-    icon: Calendar,
-    title: "Dedicated Focus",
-    description: "Your team build gets prioritised sourcing until every role is filled.",
+    title: "Team Dynamics Mapping",
+    description: "We consider how they'll work together, not just individual CVs.",
   },
   {
     icon: Shield,
     title: "Replacement Guarantee",
-    description: "If any hire doesn't work out within 30 days, we replace them free of charge.",
+    description: "Any hire doesn't work out within 30 days? Replaced free.",
   },
 ];
 
 const VALUE_PROPS = [
   "Fixed fees, not percentages",
-  "Mobile games specialism",
+  "Mobile games specialists",
+  "Payments over 6 months",
 ];
 
 export default function TeamCalculatorPage() {
@@ -54,11 +55,11 @@ export default function TeamCalculatorPage() {
               <span className="text-sm text-brand-orange font-medium">Team Build Calculator</span>
             </span>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white font-heading">
-              What does it cost to build your{" "}
-              <span className="text-brand-orange">mobile games team?</span>
+              Less Netflix.{" "}
+              <span className="text-brand-orange">More Klarna.</span>
             </h1>
             <p className="mt-6 text-xl md:text-2xl text-white/70">
-              Find out in 30 seconds.
+              Build your team now. Pay over 6 months.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               {VALUE_PROPS.map((prop, index) => (
@@ -73,22 +74,55 @@ export default function TeamCalculatorPage() {
       </section>
 
       {/* Calculator Section */}
-      <section className="section-padding bg-brand-black-light relative overflow-hidden">
+      <section id="calculator" className="section-padding bg-brand-black-light relative overflow-hidden">
         <GradientBlur position="top-left" size="md" color="orange" intensity="low" />
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-white font-heading">
+              See your <span className="text-brand-orange">monthly cost</span>
+            </h2>
+          </div>
           <TeamBuildCalculatorLead />
         </div>
       </section>
 
-      {/* Benefits */}
+      {/* Positioning Section */}
       <section className="section-padding bg-brand-black relative overflow-hidden">
         <div className="opacity-30">
           <HexagonBackground />
         </div>
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-white font-heading mb-8">
+              Not a subscription.{" "}
+              <span className="text-brand-orange">A team build.</span>
+            </h2>
+            <div className="space-y-6 text-lg text-white/70 text-left">
+              <p>
+                Other agencies sell you access. Monthly retainers. Unlimited hires. 
+                Sounds good until you realise you&apos;re renting recruitment.
+              </p>
+              <p>
+                We do it differently.
+              </p>
+              <p>
+                You tell us who you need. We build your team. You pay over 6 months.
+              </p>
+              <p className="text-white">
+                No retainer. No percentages. Just your team, delivered.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Benefits */}
+      <section className="section-padding bg-brand-black-light relative overflow-hidden">
+        <GradientBlur position="bottom-left" size="md" color="orange" intensity="low" />
+        <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-white font-heading">
-              What&apos;s included in every <span className="text-brand-orange">team build</span>
+              Every team build <span className="text-brand-orange">includes</span>
             </h2>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -108,26 +142,24 @@ export default function TeamCalculatorPage() {
         </div>
       </section>
 
-      {/* Comparison Section */}
-      <section className="section-padding bg-brand-black-light relative overflow-hidden">
-        <GradientBlur position="bottom-right" size="md" color="orange" intensity="low" />
+      {/* Why Fixed Fees Section */}
+      <section className="section-padding bg-brand-black relative overflow-hidden">
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
           <div className="max-w-3xl">
             <h2 className="text-3xl md:text-4xl font-bold text-white font-heading mb-8">
-              Why teams choose <span className="text-brand-orange">fixed fees</span>
+              Why <span className="text-brand-orange">fixed fees</span> make sense
             </h2>
             <div className="space-y-6 text-lg text-white/70">
               <p>
-                Most agencies charge 15-25% of salary. For a 5-person team at £80k average, 
-                that&apos;s <span className="text-white">£60-100k in fees alone.</span>
+                Traditional agencies charge 15-25% of salary. A 5-person team at £80k average? 
+                That&apos;s <span className="text-white">£60-100k in fees.</span>
               </p>
               <p>
-                We charge fixed fees. Same 5 people? <span className="text-brand-orange">£40k with team pricing.</span> 
-                {" "}You keep the difference.
+                We charge fixed fees. Same team? <span className="text-brand-orange">£40k with team pricing.</span>
               </p>
               <p>
                 Better yet, we&apos;re not incentivised to push salaries up. We just want 
-                to find the right people.
+                the right people in the right seats.
               </p>
             </div>
           </div>
@@ -149,35 +181,56 @@ export default function TeamCalculatorPage() {
         </div>
       </section>
 
-      {/* FAQ/Caveats */}
-      <section className="section-padding bg-brand-black relative overflow-hidden">
+      {/* How It Works */}
+      <section className="section-padding bg-brand-black-light relative overflow-hidden">
+        <GradientBlur position="top-right" size="md" color="orange" intensity="low" />
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
           <div className="max-w-2xl mx-auto">
-            <h2 className="text-2xl font-bold text-white font-heading mb-8 text-center">
+            <h2 className="text-2xl md:text-3xl font-bold text-white font-heading mb-8 text-center">
               How it works
             </h2>
             <div className="space-y-6">
               <div className="p-6 bg-white/5 border border-white/10 rounded-xl">
-                <h3 className="text-white font-bold mb-2">Exclusivity required</h3>
+                <h3 className="text-white font-bold mb-2">One partner</h3>
                 <p className="text-white/60 text-sm">
-                  Team packages mean we become your sole recruitment partner for this build. 
-                  No competing agencies, no mixed signals to candidates.
+                  We become your sole recruiter for this build. No competing agencies. 
+                  No mixed signals. Full focus.
                 </p>
               </div>
               <div className="p-6 bg-white/5 border border-white/10 rounded-xl">
-                <h3 className="text-white font-bold mb-2">Timeline commitments</h3>
+                <h3 className="text-white font-bold mb-2">Clear timeline</h3>
                 <p className="text-white/60 text-sm">
-                  2-4 months for 4-6 hires, 4-6 months for 7-10 hires, custom for larger teams. 
+                  4-6 hires in 2-4 months. 7-10 hires in 4-6 months. 
                   We move fast, but building right takes time.
                 </p>
               </div>
               <div className="p-6 bg-white/5 border border-white/10 rounded-xl">
-                <h3 className="text-white font-bold mb-2">Quote validity</h3>
+                <h3 className="text-white font-bold mb-2">Payments split</h3>
                 <p className="text-white/60 text-sm">
-                  Reserve your quote and we will get in touch to get started.
+                  Your fee spreads over 6 months. Cash flow stays healthy.
                 </p>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="section-padding bg-brand-black relative overflow-hidden">
+        <div className="opacity-30">
+          <HexagonBackground />
+        </div>
+        <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="max-w-2xl mx-auto text-center">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white font-heading mb-6">
+              Ready to <span className="text-brand-orange">build?</span>
+            </h2>
+            <a
+              href="#calculator"
+              className="inline-flex items-center justify-center px-8 py-4 bg-brand-orange text-white font-bold rounded-lg hover:bg-brand-orange/90 transition-colors"
+            >
+              Get Your Quote
+            </a>
           </div>
         </div>
       </section>
