@@ -32,7 +32,7 @@ export default function ContactPage() {
               <Mail className="w-7 h-7 text-brand-orange" strokeWidth={1.5} />
             </div>
             <h2 className="mt-4 text-lg font-bold text-white font-heading">Email</h2>
-            <p className="mt-2 text-sm text-white/60">andre@makersforge.co</p>
+            <p className="mt-2 text-sm text-white/60">andre@makersforge.gg</p>
           </a>
           <a href="https://www.linkedin.com/in/yourusername/" target="_blank" rel="noopener noreferrer" className="group p-6 bg-brand-grey/30 rounded-xl border border-white/10 hover:border-brand-orange/50 transition-all text-center">
             <div className="w-14 h-14 rounded-xl bg-brand-orange/10 flex items-center justify-center mx-auto group-hover:bg-brand-orange/20 transition-colors">
