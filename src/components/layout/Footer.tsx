@@ -30,7 +30,7 @@ export function Footer() {
               Ventures.
             </p>
             <div className={styles.contact}>
-              <a href="mailto:andre@makersforge.io">andre@makersforge.io →</a>
+              <a href="mailto:andre@makersforge.gg">andre@makersforge.gg →</a>
               <a href="#">book a 20-min call →</a>
               <a href="#">linkedin →</a>
             </div>

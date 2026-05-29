@@ -2,8 +2,8 @@ import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-const FROM_EMAIL = "MakersForge <andre@makersforge.io>";
-export const ADMIN_EMAIL = "andre@makersforge.io";
+const FROM_EMAIL = "MakersForge <andre@makersforge.gg>";
+export const ADMIN_EMAIL = "andre@makersforge.gg";
 
 interface SendEmailOptions {
   to: string;
