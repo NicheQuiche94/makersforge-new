@@ -78,7 +78,7 @@ export function Logo({
           fill="none"
           stroke={stroke}
           strokeMiterlimit={10}
-          strokeWidth={12}
+          strokeWidth={9}
           points="193.25 157.74 193.25 55.23 98.38 3.98 3.5 55.23 3.5 157.74 98.38 209 193.25 157.74"
         />
       ) : (
@@ -86,7 +86,7 @@ export function Logo({
           fill="none"
           stroke={stroke}
           strokeMiterlimit={10}
-          strokeWidth={12}
+          strokeWidth={9}
           points="249.7 186.35 249.7 119.05 187.42 85.41 125.13 119.05 125.13 186.35 187.42 220 249.7 186.35"
         />
       )}

@@ -13,7 +13,7 @@ export function TopNav() {
   return (
     <nav className={styles.nav} aria-label="Primary">
       <Link href="/" className={styles.logoLink} aria-label="MakersForge home">
-        <Logo size={28} />
+        <Logo size={40} />
       </Link>
 
       <ul className={styles.links}>
