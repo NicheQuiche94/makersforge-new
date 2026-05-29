@@ -9,9 +9,11 @@ type LogoProps = {
   size?: number;
   /** "full" = hex + MF + MAKERSFORGE wordmark (default). "mark" = hex + MF only. */
   variant?: Variant;
-  /** Override the MF + wordmark fill. Default = currentColor. */
+  /** Override the wordmark fill. Default = currentColor. */
+  wordmarkColor?: string;
+  /** Override the MF inner mark fill. Default = white. */
   markColor?: string;
-  /** Bypass the Heat gradient on the hex stroke for a flat colour. */
+  /** Bypass the Heat gradient on the hex fill for a flat colour. */
   monochrome?: string;
   className?: string;
   title?: string;
@@ -21,11 +23,14 @@ type LogoProps = {
  * MakersForge logo — inlined from `Full Logo white.svg` (full variant) and
  * `Logo W.svg` (mark variant).
  *
- * - Hex stroke uses the locked Heat gradient (120° diagonal).
- * - MF mark + MAKERSFORGE wordmark use currentColor so they inherit the
- *   container's text colour (ink on light surfaces, white on dark).
- * - `useId()` gives each instance a unique gradient ID so multiple logos
- *   on the same page don't collide.
+ * Treatment:
+ * - Hex: full Heat gradient FILL (no stroke).
+ * - MF inner mark: white by default — sits on top of the gradient hex.
+ * - MAKERSFORGE wordmark: currentColor — sits outside the hex and inherits
+ *   the container's text colour (ink on light surfaces, white on dark).
+ *
+ * `useId()` gives each instance a unique gradient ID so multiple logos
+ * on the same page don't collide.
  *
  * Sizing is by HEIGHT (the wordmark makes width-based sizing awkward).
  * Default 24px.
@@ -33,14 +38,16 @@ type LogoProps = {
 export function Logo({
   size = 24,
   variant = "full",
+  wordmarkColor,
   markColor,
   monochrome,
   className,
   title = "MakersForge",
 }: LogoProps) {
   const gradientId = useId();
-  const stroke = monochrome ?? `url(#${gradientId})`;
-  const mark = markColor ?? monochrome ?? "currentColor";
+  const hexFill = monochrome ?? `url(#${gradientId})`;
+  const innerMark = markColor ?? "#fff";
+  const wordmark = wordmarkColor ?? "currentColor";
 
   const VB = {
     full: { x: 115, y: 75, w: 600, h: 155 },
@@ -69,37 +76,37 @@ export function Logo({
         </defs>
       )}
 
-      {variant === "mark" ? <MarkPaths fill={mark} /> : <FullPaths fill={mark} />}
-
-      {/* Hex outline — Heat gradient stroke. Width 12 (up from source 7) for
-          visual presence at nav scale. */}
+      {/* 1. Hex — full gradient fill, sits at the bottom of the stack */}
       {variant === "mark" ? (
         <polygon
-          fill="none"
-          stroke={stroke}
-          strokeMiterlimit={10}
-          strokeWidth={9}
+          fill={hexFill}
           points="193.25 157.74 193.25 55.23 98.38 3.98 3.5 55.23 3.5 157.74 98.38 209 193.25 157.74"
         />
       ) : (
         <polygon
-          fill="none"
-          stroke={stroke}
-          strokeMiterlimit={10}
-          strokeWidth={9}
+          fill={hexFill}
           points="249.7 186.35 249.7 119.05 187.42 85.41 125.13 119.05 125.13 186.35 187.42 220 249.7 186.35"
         />
       )}
+
+      {/* 2. MF inner mark — white on top of the gradient hex */}
+      {variant === "mark" ? (
+        <MarkInner fill={innerMark} />
+      ) : (
+        <MarkInnerFull fill={innerMark} />
+      )}
+
+      {/* 3. Wordmark — only in the full variant, outside the hex */}
+      {variant === "full" && <Wordmark fill={wordmark} />}
     </svg>
   );
 }
 
 /* ============================================================
-   Path data — inlined from the source SVGs. Kept in helper
-   components so the public Logo signature stays clean.
+   Path data — inlined from the source SVGs.
    ============================================================ */
 
-function MarkPaths({ fill }: { fill: string }) {
+function MarkInner({ fill }: { fill: string }) {
   return (
     <polygon
       fill={fill}
@@ -108,12 +115,18 @@ function MarkPaths({ fill }: { fill: string }) {
   );
 }
 
-function FullPaths({ fill }: { fill: string }) {
+function MarkInnerFull({ fill }: { fill: string }) {
+  return (
+    <polygon
+      fill={fill}
+      points="215.35 142.37 215.35 150.96 226.53 150.96 237.7 159.54 215.35 159.54 215.35 168.13 204.18 159.54 204.18 142.37 170.66 142.37 193.01 159.54 181.83 168.13 215.35 168.13 215.35 176.71 159.48 176.71 181.83 159.54 170.66 150.96 159.48 150.96 137.14 133.78 237.7 133.78 237.7 150.96 226.53 142.37 215.35 142.37"
+    />
+  );
+}
+
+function Wordmark({ fill }: { fill: string }) {
   return (
     <g fill={fill}>
-      {/* MF mark inside the hex */}
-      <polygon points="215.35 142.37 215.35 150.96 226.53 150.96 237.7 159.54 215.35 159.54 215.35 168.13 204.18 159.54 204.18 142.37 170.66 142.37 193.01 159.54 181.83 168.13 215.35 168.13 215.35 176.71 159.48 176.71 181.83 159.54 170.66 150.96 159.48 150.96 137.14 133.78 237.7 133.78 237.7 150.96 226.53 142.37 215.35 142.37" />
-
       {/* MAKERS letters */}
       <polygon points="264.14 132.97 264.14 173.18 269.75 173.18 269.75 150.6 284.83 172.58 299.91 150.6 299.91 173.18 305.52 173.18 305.52 132.97 284.83 163.12 264.14 132.97" />
       <polygon points="314.77 173.18 321.1 173.18 335.01 143.45 348.91 173.18 355.24 173.18 335.01 132.22 314.77 173.18" />
