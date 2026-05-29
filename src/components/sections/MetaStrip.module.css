@@ -1,0 +1,43 @@
+.wrap {
+  /* Sits inside the page flow; no own padding so the strip hugs the
+     section above/below. The hairlines do the visual work. */
+}
+
+.strip {
+  display: flex;
+  border-top: 1px solid var(--hair);
+  border-bottom: 1px solid var(--hair);
+}
+
+.cell {
+  flex: 1;
+  padding: 30px 0;
+}
+.cell:not(:last-child) {
+  border-right: 1px solid var(--hair);
+}
+
+.n {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 46px;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin: 0 0 6px;
+}
+
+@media (max-width: 700px) {
+  .strip {
+    flex-wrap: wrap;
+  }
+  .cell {
+    flex: 1 1 50%;
+    padding: 20px;
+  }
+  .cell:nth-child(2) {
+    border-right: none;
+  }
+  .n {
+    font-size: 34px;
+  }
+}

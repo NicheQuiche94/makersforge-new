@@ -1,0 +1,86 @@
+.hero {
+  padding: 150px 0 80px;
+  position: relative;
+}
+
+.inner {
+  position: relative;
+  min-height: 74vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.kicker {
+  position: absolute;
+  top: 30px;
+  left: 0;
+}
+
+.headline {
+  /* Page-load reveal — subtle rise + fade. Honours reduced-motion via global. */
+  animation: heroRise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.l1 {
+  display: inline-block;
+}
+.l2 {
+  margin-left: 1.1em;
+}
+
+@media (max-width: 700px) {
+  .kicker {
+    position: static;
+    margin-bottom: 24px;
+  }
+  .l2 {
+    margin-left: 0;
+  }
+}
+
+.foot {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 50px;
+  animation: heroRise 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+  opacity: 0;
+}
+@media (max-width: 700px) {
+  .foot {
+    justify-content: flex-start;
+  }
+}
+
+.box {
+  max-width: 430px;
+}
+
+.sub {
+  margin: 0 0 22px;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+@keyframes heroRise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .headline,
+  .foot {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
