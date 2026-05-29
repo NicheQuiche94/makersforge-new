@@ -6,10 +6,10 @@ const LINKS = [
   { href: "/roster", label: "the roster" },
   { href: "/#how", label: "how it works" },
   { href: "/pricing", label: "pricing" },
-  { href: "/#contact", label: "contact" },
+  { href: "/#about", label: "about" },
 ];
 
-export function TopNav() {
+export function TopNav({ activeHref }: { activeHref?: string }) {
   return (
     <nav className={styles.nav} aria-label="Primary">
       <Link href="/" className={styles.logoLink} aria-label="MakersForge home">
@@ -19,7 +19,12 @@ export function TopNav() {
       <ul className={styles.links}>
         {LINKS.map((link) => (
           <li key={link.href}>
-            <Link href={link.href}>{link.label}</Link>
+            <Link
+              href={link.href}
+              className={activeHref === link.href ? styles.activeLink : ""}
+            >
+              {link.label}
+            </Link>
           </li>
         ))}
       </ul>

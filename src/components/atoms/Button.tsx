@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ComponentProps, ReactNode } from "react";
 
-type Variant = "fill" | "outline" | "band";
+type Variant = "primary" | "light" | "ghost" | "on-dark";
 type Size = "default" | "sm";
 
 type CommonProps = {
@@ -24,7 +24,7 @@ type AsButton = CommonProps & {
 type ButtonProps = AsLink | AsButton;
 
 function classes({
-  variant = "fill",
+  variant = "primary",
   size = "default",
   className = "",
 }: {
@@ -42,7 +42,28 @@ function classes({
     .join(" ");
 }
 
-function Inner({ children, arrow }: { children: ReactNode; arrow?: boolean }) {
+function Inner({
+  variant,
+  children,
+  arrow,
+}: {
+  variant: Variant;
+  children: ReactNode;
+  arrow?: boolean;
+}) {
+  // Only the primary variant uses the gradient-clipped label spans.
+  if (variant === "primary") {
+    return (
+      <>
+        <span className="btn-label">{children}</span>
+        {arrow && (
+          <span className="btn-arrow" aria-hidden="true">
+            →
+          </span>
+        )}
+      </>
+    );
+  }
   return (
     <>
       <span>{children}</span>
@@ -56,9 +77,8 @@ function Inner({ children, arrow }: { children: ReactNode; arrow?: boolean }) {
 }
 
 export function Button(props: ButtonProps) {
-  const { variant, size, arrow, children, className } = props;
+  const { variant = "primary", size, arrow, children, className } = props;
   const cls = classes({ variant, size, className });
-  const inner = <Inner arrow={arrow}>{children}</Inner>;
 
   if ("href" in props && props.href) {
     const { href, external, ...rest } = props as AsLink;
@@ -71,13 +91,17 @@ export function Button(props: ButtonProps) {
           className={cls}
           {...(rest as ComponentProps<"a">)}
         >
-          {inner}
+          <Inner variant={variant} arrow={arrow}>
+            {children}
+          </Inner>
         </a>
       );
     }
     return (
       <Link href={href} className={cls}>
-        {inner}
+        <Inner variant={variant} arrow={arrow}>
+          {children}
+        </Inner>
       </Link>
     );
   }
@@ -85,7 +109,9 @@ export function Button(props: ButtonProps) {
   const { href: _ignored, ...rest } = props as AsButton & { href?: undefined };
   return (
     <button className={cls} {...(rest as ComponentProps<"button">)}>
-      {inner}
+      <Inner variant={variant} arrow={arrow}>
+        {children}
+      </Inner>
     </button>
   );
 }

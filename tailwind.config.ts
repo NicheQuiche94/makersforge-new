@@ -9,15 +9,19 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        bg: "var(--bg)",
-        surface: {
-          DEFAULT: "var(--surface)",
-          2: "var(--surface-2)",
+        bg: {
+          DEFAULT: "var(--bg)",
+          deep: "var(--bg-deep)",
+          card: "var(--bg-card)",
         },
-        ink: "var(--ink)",
+        paper: "var(--paper)",
+        ink: {
+          DEFAULT: "var(--ink)",
+          soft: "var(--ink-soft)",
+        },
+        charcoal: "var(--charcoal)",
         dim: "var(--dim)",
         mute: "var(--mute)",
-        orange: "var(--orange)",
         hair: {
           DEFAULT: "var(--hair)",
           strong: "var(--hair-strong)",
@@ -25,6 +29,9 @@ const config: Config = {
       },
       backgroundImage: {
         heat: "var(--heat)",
+        "heat-h": "var(--heat-h)",
+        "heat-deep": "var(--heat-deep)",
+        "heat-radial": "var(--heat-radial)",
         "heat-text": "var(--heat-text)",
       },
       fontFamily: {
@@ -38,8 +45,7 @@ const config: Config = {
         pill: "999px",
       },
       maxWidth: {
-        container: "1320px",
-        nav: "1340px",
+        container: "1340px",
       },
     },
   },
