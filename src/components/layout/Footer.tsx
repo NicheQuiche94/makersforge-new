@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Logo } from "@/components/atoms/Logo";
 import styles from "./Footer.module.css";
 
 const ROSTER_LINKS = [
@@ -21,8 +22,7 @@ export function Footer() {
         <div className={styles.main}>
           <div className={styles.brand}>
             <div className={styles.logo}>
-              <span className="hex-mark" aria-hidden="true" />
-              <span>makersforge</span>
+              <Logo size={36} />
             </div>
             <p className={styles.tagline}>
               Growth team contractors for mobile apps and games. Flat

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Logo } from "@/components/atoms/Logo";
 import styles from "./TopNav.module.css";
 
 const LINKS = [
@@ -11,9 +12,8 @@ const LINKS = [
 export function TopNav() {
   return (
     <nav className={styles.nav} aria-label="Primary">
-      <Link href="/" className={styles.logo} aria-label="MakersForge home">
-        <span className="hex-mark" aria-hidden="true" />
-        <span>makersforge</span>
+      <Link href="/" className={styles.logoLink} aria-label="MakersForge home">
+        <Logo size={28} />
       </Link>
 
       <ul className={styles.links}>

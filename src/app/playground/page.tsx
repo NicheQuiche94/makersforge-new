@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Button } from "@/components/atoms/Button";
+import { Logo } from "@/components/atoms/Logo";
 
 export const metadata: Metadata = {
   title: "Playground — MakersForge",
@@ -222,24 +223,45 @@ export default function PlaygroundPage() {
         </div>
       </Section>
 
-      {/* HEX MARK PLACEHOLDER */}
-      <Section eyebrow="08 · Hex mark (placeholder)" headline={<>CSS clip-path, <span className="gr">until SVG lands.</span></>}>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 32, alignItems: "center" }}>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
-            <span className="hex-mark" />
-            <span style={{ fontFamily: '"Cal Sans"', fontSize: 19, letterSpacing: "-0.02em", textTransform: "lowercase" }}>
-              makersforge
-            </span>
-          </span>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
-            <span className="hex-mark" style={{ width: 20, height: 20 }} />
-            <span style={{ fontFamily: '"Cal Sans"', fontSize: 24, letterSpacing: "-0.02em", textTransform: "lowercase" }}>
-              makersforge
-            </span>
-          </span>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
-            <span className="hex-mark" style={{ width: 32, height: 32 }} />
-            <span className="meta-label">larger sample</span>
+      {/* LOGO */}
+      <Section eyebrow="08 · Logo" headline={<>real wordmark, <span className="gr">heat gradient stroke.</span></>}>
+        <div style={{ display: "grid", gap: 28 }}>
+          <Sample label="Full logo · size 28 (nav scale)">
+            <Logo size={28} />
+          </Sample>
+          <Sample label="Full logo · size 36 (footer scale)">
+            <Logo size={36} />
+          </Sample>
+          <Sample label="Full logo · size 64 (large sample)">
+            <Logo size={64} />
+          </Sample>
+          <Sample label="Mark only · size 36">
+            <Logo variant="mark" size={36} />
+          </Sample>
+          <Sample label="Mark only · size 64 (stroke at scale)">
+            <Logo variant="mark" size={64} />
+          </Sample>
+          <Sample label="Monochrome ink override (gradient bypassed)">
+            <Logo size={36} monochrome="var(--ink)" />
+          </Sample>
+        </div>
+
+        <div
+          style={{
+            marginTop: 32,
+            padding: "40px 32px",
+            background: "var(--ink)",
+            borderRadius: 16,
+            display: "flex",
+            gap: 24,
+            alignItems: "center",
+            color: "#fff",
+            flexWrap: "wrap",
+          }}
+        >
+          <Logo size={36} markColor="#fff" />
+          <span className="meta-label" style={{ color: "rgba(255,255,255,0.6)" }}>
+            on dark surface · markColor override = white
           </span>
         </div>
       </Section>
