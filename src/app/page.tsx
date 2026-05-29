@@ -1,31 +1,33 @@
-import Link from "next/link";
-import { Button } from "@/components/atoms/Button";
+import type { Metadata } from "next";
+import { HeroPanel } from "@/components/sections/HeroPanel";
+import { MetaPills } from "@/components/sections/MetaPills";
+import { Statement } from "@/components/sections/Statement";
+import { HowItWorksBento } from "@/components/sections/HowItWorksBento";
+import { RosterCarousel } from "@/components/sections/RosterCarousel";
+import { CTABand } from "@/components/sections/CTABand";
+
+export const metadata: Metadata = {
+  title: "MakersForge — Growth team contractors for mobile apps & games",
+  description:
+    "A live roster of senior UA managers and marketing artists for mobile apps and games. Pay them direct, pay us a flat monthly fee. No percentage games.",
+  openGraph: {
+    title:
+      "MakersForge — Growth team contractors for mobile apps & games",
+    description:
+      "A live roster of senior UA managers and marketing artists. Flat monthly fees, no percentage games.",
+    type: "website",
+  },
+};
 
 export default function HomePage() {
   return (
-    <section style={{ padding: "150px 0 100px" }}>
-      <div className="container">
-        <p className="kicker">v4 foundations · phase a</p>
-        <h1 className="display-section" style={{ marginTop: 20, maxWidth: 900 }}>
-          tokens, buttons, chrome <span className="gr">landed.</span>
-        </h1>
-        <p className="body-text-lg" style={{ marginTop: 20, maxWidth: 620 }}>
-          Real homepage gets built next. Until then, this stub keeps the
-          build green. The component playground at{" "}
-          <Link href="/playground" className="gr" style={{ fontWeight: 600 }}>
-            /playground
-          </Link>{" "}
-          demonstrates the new design language.
-        </p>
-        <div style={{ display: "flex", gap: 10, marginTop: 32, flexWrap: "wrap" }}>
-          <Button href="/playground" variant="primary" arrow>
-            see the playground
-          </Button>
-          <Button href="/roster" variant="ghost">
-            roster (soon)
-          </Button>
-        </div>
-      </div>
-    </section>
+    <>
+      <HeroPanel />
+      <MetaPills />
+      <Statement />
+      <HowItWorksBento />
+      <RosterCarousel />
+      <CTABand />
+    </>
   );
 }
