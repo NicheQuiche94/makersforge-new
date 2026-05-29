@@ -224,25 +224,25 @@ export default function PlaygroundPage() {
       </Section>
 
       {/* LOGO */}
-      <Section eyebrow="08 · Logo" headline={<>real wordmark, <span className="gr">heat gradient stroke.</span></>}>
+      <Section eyebrow="08 · Logo" headline={<>real wordmark, <span className="gr">two treatments.</span></>}>
         <div style={{ display: "grid", gap: 28 }}>
-          <Sample label="Full logo · size 28 (nav scale)">
-            <Logo size={28} />
+          <Sample label="Primary · gradient stroke + ink MF (size 40 = nav scale)">
+            <Logo size={40} />
           </Sample>
-          <Sample label="Full logo · size 36 (footer scale)">
-            <Logo size={36} />
-          </Sample>
-          <Sample label="Full logo · size 64 (large sample)">
+          <Sample label="Primary · size 64 (large sample)">
             <Logo size={64} />
           </Sample>
-          <Sample label="Mark only · size 36">
-            <Logo variant="mark" size={36} />
+          <Sample label="Mark only · stroke · size 56">
+            <Logo variant="mark" size={56} />
           </Sample>
-          <Sample label="Mark only · size 64 (stroke at scale)">
-            <Logo variant="mark" size={64} />
+          <Sample label="Alt treatment · hexFilled (gradient fill + white MF)">
+            <Logo size={40} hexFilled />
+          </Sample>
+          <Sample label="Alt treatment · mark only · size 56">
+            <Logo variant="mark" size={56} hexFilled />
           </Sample>
           <Sample label="Monochrome ink override (gradient bypassed)">
-            <Logo size={36} monochrome="var(--ink)" />
+            <Logo size={40} monochrome="var(--ink)" />
           </Sample>
         </div>
 
@@ -259,9 +259,9 @@ export default function PlaygroundPage() {
             flexWrap: "wrap",
           }}
         >
-          <Logo size={36} markColor="#fff" />
+          <Logo size={40} />
           <span className="meta-label" style={{ color: "rgba(255,255,255,0.6)" }}>
-            on dark surface · markColor override = white
+            primary on dark — wordmark inherits white via currentColor
           </span>
         </div>
       </Section>

@@ -9,11 +9,20 @@ type LogoProps = {
   size?: number;
   /** "full" = hex + MF + MAKERSFORGE wordmark (default). "mark" = hex + MF only. */
   variant?: Variant;
+  /**
+   * Hex treatment:
+   * - false (default) — Heat gradient STROKE around an empty hex,
+   *   MF mark in currentColor. The primary brand presentation.
+   * - true — Heat gradient FILL of the hex, MF mark in white on top.
+   *   Use for alt contexts where the punchier solid hex helps
+   *   (e.g. against busy backgrounds, on big merch surfaces).
+   */
+  hexFilled?: boolean;
   /** Override the wordmark fill. Default = currentColor. */
   wordmarkColor?: string;
-  /** Override the MF inner mark fill. Default = white. */
+  /** Override the MF inner mark fill. Default depends on hexFilled. */
   markColor?: string;
-  /** Bypass the Heat gradient on the hex fill for a flat colour. */
+  /** Bypass the Heat gradient for a flat colour on the hex. */
   monochrome?: string;
   className?: string;
   title?: string;
@@ -23,21 +32,22 @@ type LogoProps = {
  * MakersForge logo — inlined from `Full Logo white.svg` (full variant) and
  * `Logo W.svg` (mark variant).
  *
- * Treatment:
- * - Hex: full Heat gradient FILL (no stroke).
- * - MF inner mark: white by default — sits on top of the gradient hex.
- * - MAKERSFORGE wordmark: currentColor — sits outside the hex and inherits
- *   the container's text colour (ink on light surfaces, white on dark).
+ * Default treatment (hexFilled=false):
+ * - Hex outline only, Heat gradient stroke, ~9 viewBox units thick.
+ * - MF mark + wordmark in currentColor (ink on light, white on dark).
+ *
+ * Alt treatment (hexFilled=true):
+ * - Hex filled with the Heat gradient, no stroke.
+ * - MF mark in white sitting on top of the gradient.
+ * - Wordmark stays in currentColor.
  *
  * `useId()` gives each instance a unique gradient ID so multiple logos
  * on the same page don't collide.
- *
- * Sizing is by HEIGHT (the wordmark makes width-based sizing awkward).
- * Default 24px.
  */
 export function Logo({
   size = 24,
   variant = "full",
+  hexFilled = false,
   wordmarkColor,
   markColor,
   monochrome,
@@ -45,14 +55,20 @@ export function Logo({
   title = "MakersForge",
 }: LogoProps) {
   const gradientId = useId();
-  const hexFill = monochrome ?? `url(#${gradientId})`;
-  const innerMark = markColor ?? "#fff";
+  const heat = monochrome ?? `url(#${gradientId})`;
   const wordmark = wordmarkColor ?? "currentColor";
+  // Inner mark default flips with treatment so the punch-through reads right.
+  const innerMark = markColor ?? (hexFilled ? "#fff" : "currentColor");
 
   const VB = {
     full: { x: 115, y: 75, w: 600, h: 155 },
     mark: { x: -3, y: -3, w: 203, h: 219 },
   }[variant];
+
+  const hexPoints =
+    variant === "mark"
+      ? "193.25 157.74 193.25 55.23 98.38 3.98 3.5 55.23 3.5 157.74 98.38 209 193.25 157.74"
+      : "249.7 186.35 249.7 119.05 187.42 85.41 125.13 119.05 125.13 186.35 187.42 220 249.7 186.35";
 
   return (
     <svg
@@ -76,28 +92,38 @@ export function Logo({
         </defs>
       )}
 
-      {/* 1. Hex — full gradient fill, sits at the bottom of the stack */}
-      {variant === "mark" ? (
-        <polygon
-          fill={hexFill}
-          points="193.25 157.74 193.25 55.23 98.38 3.98 3.5 55.23 3.5 157.74 98.38 209 193.25 157.74"
-        />
+      {hexFilled ? (
+        <>
+          {/* 1. Hex — full gradient fill, sits at bottom of stack */}
+          <polygon fill={heat} points={hexPoints} />
+          {/* 2. MF inner mark — punch-through white on top */}
+          {variant === "mark" ? (
+            <MarkInner fill={innerMark} />
+          ) : (
+            <MarkInnerFull fill={innerMark} />
+          )}
+          {/* 3. Wordmark — currentColor, outside the hex */}
+          {variant === "full" && <Wordmark fill={wordmark} />}
+        </>
       ) : (
-        <polygon
-          fill={hexFill}
-          points="249.7 186.35 249.7 119.05 187.42 85.41 125.13 119.05 125.13 186.35 187.42 220 249.7 186.35"
-        />
+        <>
+          {/* 1. MF mark + wordmark — render before the stroke */}
+          {variant === "mark" ? (
+            <MarkInner fill={innerMark} />
+          ) : (
+            <MarkInnerFull fill={innerMark} />
+          )}
+          {variant === "full" && <Wordmark fill={wordmark} />}
+          {/* 2. Hex outline — Heat gradient stroke on top */}
+          <polygon
+            fill="none"
+            stroke={heat}
+            strokeMiterlimit={10}
+            strokeWidth={9}
+            points={hexPoints}
+          />
+        </>
       )}
-
-      {/* 2. MF inner mark — white on top of the gradient hex */}
-      {variant === "mark" ? (
-        <MarkInner fill={innerMark} />
-      ) : (
-        <MarkInnerFull fill={innerMark} />
-      )}
-
-      {/* 3. Wordmark — only in the full variant, outside the hex */}
-      {variant === "full" && <Wordmark fill={wordmark} />}
     </svg>
   );
 }
