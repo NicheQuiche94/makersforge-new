@@ -20,6 +20,27 @@
   }
 }
 
+/* Compact variant — used on the pricing page where the standard
+   band would dwarf the now-smaller pricing cards above. */
+.innerCompact {
+  padding: 56px 48px;
+  border-radius: 26px;
+}
+.innerCompact .headline {
+  font-size: clamp(32px, 5vw, 76px);
+  margin-bottom: 18px;
+}
+.innerCompact .body {
+  font-size: 16px;
+  margin-bottom: 22px;
+}
+@media (max-width: 700px) {
+  .innerCompact {
+    padding: 42px 26px;
+    border-radius: 22px;
+  }
+}
+
 /* Ghosted MakersForge mark as visual texture in the bottom-right.
    z-index 0 keeps it behind content; pointer-events none so clicks
    pass through to the CTA button beneath it visually. */

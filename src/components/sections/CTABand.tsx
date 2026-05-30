@@ -9,17 +9,25 @@ type CTABandProps = {
   headline?: ReactNode;
   body?: ReactNode;
   cta?: CTA;
+  /** Compact container — used on pricing page where the band would
+      otherwise dwarf the now-smaller pricing cards above. */
+  compact?: boolean;
 };
 
 export function CTABand({
   headline,
   body,
   cta = { label: "book a 20-min call", href: "/enquire" },
+  compact = false,
 }: CTABandProps) {
   return (
     <section className={styles.section}>
       <div className="container">
-        <div className={`heat-glow ${styles.inner}`}>
+        <div
+          className={`heat-glow ${styles.inner} ${
+            compact ? styles.innerCompact : ""
+          }`}
+        >
           {/* Ghosted MakersForge mark sits in the bottom-right of the
               gradient panel as a subtle brand signature. Hex outline
               at low white opacity reads as visual texture, not a

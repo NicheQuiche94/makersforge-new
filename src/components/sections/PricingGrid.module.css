@@ -16,15 +16,17 @@
   }
 }
 
+/* Another round of size reduction per Andre 2026-05-30 v3 — still
+   reading a touch bigger than a SaaS pricing tile should. */
 .primary,
 .secondary {
-  border-radius: 22px;
-  padding: 30px 28px;
+  border-radius: 20px;
+  padding: 26px 24px;
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  min-height: 380px;
+  min-height: 340px;
 }
 
 /* PRIMARY — composite gradient + radial highlights + noise comes

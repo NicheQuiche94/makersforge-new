@@ -476,6 +476,13 @@ a {
   transform: translateY(-2px);
   background: var(--heat-h);
 }
+/* On hover the fill becomes the heat gradient, so the gradient
+   stroke around the pill is redundant and reads as a double edge.
+   Hide the ::before stroke layer in that state. Per Andre
+   2026-05-30 v3: gradient banner must not also have gradient stroke. */
+.btn-primary:hover::before {
+  opacity: 0;
+}
 .btn-primary:hover .btn-label,
 .btn-primary:hover .btn-arrow {
   background: none;
