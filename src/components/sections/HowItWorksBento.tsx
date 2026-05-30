@@ -1,56 +1,102 @@
 import type { ReactNode } from "react";
 import styles from "./HowItWorksBento.module.css";
 
-type Surface = "paper" | "heat" | "charcoal" | "card";
-type Align = "left" | "right";
+/**
+ * HowItWorks bento — three-step flow.
+ *
+ * Layout (locked via lab Experiment 05 v2 / variant L2):
+ *   Row 1: paper "01 tell us the gap" + heat "02 we match" side-by-side.
+ *   Row 2: charcoal "03 they get to work" full-width, bleeds right.
+ *
+ * The 4th "terms" tile is dropped — that information lives on the
+ * pricing page, no need to duplicate. Bleed implemented via negative
+ * right margin on the tile combined with section overflow-x: hidden
+ * so the bleed never causes horizontal page scroll.
+ */
+
+type Surface = "paper" | "heat" | "charcoal";
 
 type Tile = {
   num: string;
   title: ReactNode;
   body: ReactNode;
   surface: Surface;
-  align: Align;
-  /** Width as a percent of the container. */
-  widthPct: number;
-  /** Optional pill — only shown on certain tiles per the brief. */
   pill?: string;
 };
 
-const TILES: Tile[] = [
-  {
-    num: "01",
-    title: <>tell us <span className="gr">the gap</span></>,
-    body: "UA lead for a launch, performance creative for a refresh, a fractional head of growth. Tell us the shape and the timeline. We push back where it helps.",
-    surface: "paper",
-    align: "left",
-    widthPct: 72,
-  },
-  {
-    num: "02",
-    title: "we match.",
-    body: "From a vetted roster of senior operators we actually know — not a job-board dragnet. You see a shortlist of real people, with real availability, fast.",
-    surface: "heat",
-    align: "right",
-    widthPct: 80,
-    pill: "shortlist in 48h",
-  },
-  {
-    num: "03",
-    title: "they get to work.",
-    body: "You contract and pay them directly. You pay us a flat monthly fee for each month they're engaged. Scale up, scale down, stop any time.",
-    surface: "charcoal",
-    align: "left",
-    widthPct: 76,
-  },
-  {
-    num: "·",
-    title: <>the <span className="gr">terms</span></>,
-    body: "Flat monthly fee. No percentage of their pay. No percentage of placement salary. Terms signed up front. Replacement matching included.",
-    surface: "card",
-    align: "right",
-    widthPct: 68,
-  },
-];
+const TILE_01: Tile = {
+  num: "01",
+  title: (
+    <>
+      tell us <span className="gr">the gap</span>
+    </>
+  ),
+  body: "UA lead for a launch, performance creative for a refresh, a fractional head of growth. Tell us the shape and the timeline. We push back where it helps.",
+  surface: "paper",
+};
+
+const TILE_02: Tile = {
+  num: "02",
+  title: "we match.",
+  body: "From a vetted roster of senior operators we already know, not a job-board dragnet. You see a shortlist of real people, with real availability, fast.",
+  surface: "heat",
+  pill: "shortlist in 48h",
+};
+
+const TILE_03: Tile = {
+  num: "03",
+  title: "they get to work.",
+  body: "You contract and pay them directly. You pay us a flat monthly fee for each month they're engaged. Scale up, scale down, stop any time.",
+  surface: "charcoal",
+};
+
+function BentoTile({
+  tile,
+  bleed,
+  delayClass,
+}: {
+  tile: Tile;
+  bleed?: boolean;
+  delayClass?: string;
+}) {
+  const onDark = tile.surface === "heat" || tile.surface === "charcoal";
+  return (
+    <article
+      className={`reveal ${delayClass ?? ""} ${styles.tile} ${
+        styles[`surface-${tile.surface}`]
+      } ${tile.surface === "heat" ? "heat-glow" : ""} ${
+        bleed ? styles.bleedRight : ""
+      }`}
+    >
+      <span
+        className={`${styles.num} ${onDark ? styles.numOnDark : ""}`}
+        aria-hidden="true"
+      >
+        {tile.num}
+      </span>
+
+      <div className={styles.content}>
+        <h3
+          className={`${styles.title} ${onDark ? styles.titleOnDark : ""}`}
+        >
+          {tile.title}
+        </h3>
+        <p
+          className={`${styles.body} ${onDark ? styles.bodyOnDark : ""}`}
+        >
+          {tile.body}
+        </p>
+
+        {tile.pill && (
+          <span className={styles.pillGrad}>
+            <span className={styles.pillDot} aria-hidden="true" />
+            {tile.pill}
+          </span>
+        )}
+      </div>
+    </article>
+  );
+}
 
 export function HowItWorksBento() {
   return (
@@ -69,45 +115,15 @@ export function HowItWorksBento() {
           </p>
         </div>
 
-        <div className={styles.stack}>
-          {TILES.map((tile, i) => (
-            <article
-              key={tile.num + i}
-              className={`reveal ${i > 0 ? "d1" : ""} ${styles.tileWrap} ${tile.align === "right" ? styles.alignRight : styles.alignLeft}`}
-            >
-              <div
-                className={`${styles.tile} ${styles[`surface-${tile.surface}`]} ${tile.surface === "heat" ? "heat-glow" : ""}`}
-                style={{ "--w": `${tile.widthPct}%` } as React.CSSProperties}
-              >
-                <span
-                  className={`${styles.num} ${tile.surface === "heat" || tile.surface === "charcoal" ? styles.numOnDark : ""}`}
-                  aria-hidden="true"
-                >
-                  {tile.num}
-                </span>
+        <div className={styles.grid}>
+          {/* Row 1: paper small + heat big, side-by-side */}
+          <div className={styles.row}>
+            <BentoTile tile={TILE_01} />
+            <BentoTile tile={TILE_02} delayClass="d1" />
+          </div>
 
-                <div className={styles.content}>
-                  <h3
-                    className={`${styles.title} ${tile.surface === "heat" || tile.surface === "charcoal" ? styles.titleOnDark : ""}`}
-                  >
-                    {tile.title}
-                  </h3>
-                  <p
-                    className={`${styles.body} ${tile.surface === "heat" || tile.surface === "charcoal" ? styles.bodyOnDark : ""}`}
-                  >
-                    {tile.body}
-                  </p>
-
-                  {tile.pill && (
-                    <span className={styles.pillGrad}>
-                      <span className={styles.pillDot} aria-hidden="true" />
-                      {tile.pill}
-                    </span>
-                  )}
-                </div>
-              </div>
-            </article>
-          ))}
+          {/* Row 2: charcoal full-width, bleeds right */}
+          <BentoTile tile={TILE_03} bleed delayClass="d1" />
         </div>
       </div>
     </section>

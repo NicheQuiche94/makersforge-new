@@ -1,5 +1,9 @@
+/* L2 bento layout: pair grouping row + full-width bleed tile.
+   Section needs overflow-x: hidden to contain the right-bleeding
+   charcoal tile without causing horizontal page scroll. */
 .section {
   padding: 80px 0 130px;
+  overflow-x: hidden;
 }
 
 .top {
@@ -29,36 +33,32 @@
   margin: 0;
 }
 
-/* Asymmetric vertical stack — each tile is ~70-80% of the container
-   width, alternating left/right alignment to create magazine-style
-   rhythm. */
-.stack {
+/* L2 grid — flex column with paired row at top, full-width
+   bleeding tile below. */
+.grid {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.tileWrap {
-  display: flex;
-  width: 100%;
+/* Row 1 — small paper (42%) + big heat (58%) side-by-side.
+   Collapses to single column on narrow screens for readability. */
+.row {
+  display: grid;
+  grid-template-columns: 42% 58%;
+  gap: 20px;
 }
-.alignLeft {
-  justify-content: flex-start;
-}
-.alignRight {
-  justify-content: flex-end;
-}
-
-@media (max-width: 700px) {
-  /* On narrow screens collapse to full-width to keep things readable. */
-  .alignLeft,
-  .alignRight {
-    justify-content: stretch;
+@media (max-width: 900px) {
+  .row {
+    grid-template-columns: 1fr;
   }
 }
 
+/* Tile primitive — paper card with hairline border (overridden
+   by surface modifiers below). Tile fills its row cell, then
+   internally lays out the big numeral + content column. */
 .tile {
-  width: var(--w);
+  width: 100%;
   border-radius: 24px;
   padding: 36px 40px;
   position: relative;
@@ -74,18 +74,19 @@
     grid-template-columns: 1fr;
     gap: 16px;
     padding: 28px 28px;
-    width: 100% !important;
   }
+}
+
+/* Bleed past container right edge. Negative margin pulls tile
+   past the container's right padding so it visually escapes the
+   gutter; section overflow-x: hidden contains the overflow. */
+.bleedRight {
+  margin-right: clamp(-160px, -8vw, -40px);
 }
 
 /* Surfaces */
 .surface-paper {
   background: var(--paper);
-  border: 1px solid var(--hair);
-  color: var(--ink);
-}
-.surface-card {
-  background: var(--bg-card);
   border: 1px solid var(--hair);
   color: var(--ink);
 }
