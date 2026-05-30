@@ -84,14 +84,101 @@ export default function LabPage() {
 
         <div className="container">
           <p className={styles.afterNote}>
-            ↑ If this lands: I propagate to homepage (replaces the current
-            rounded hero panel), the current pill nav becomes the glass
-            full-width nav across the site, and we figure out the rest of
-            the page treatments to match (the cream sections still work
-            for context, the hero just becomes the dramatic moment).
+            ↑ v2 of the mock. Logo monochrome white, &quot;you brief it.&quot;
+            dropped, &quot;growth team contractors. on call.&quot; promoted to
+            main headline, top-right is a small editorial masthead, all
+            four glass pills uniform. If this lands: I propagate to
+            homepage (replaces the current rounded hero panel), nav
+            decision below decides which pattern goes site-wide.
           </p>
         </div>
       </section>
+
+      {/* ============================================================
+          EXPERIMENT 03 · Nav variants
+          Same nav element shown four ways on heat-glow strips so we
+          can compare against the gradient surface. We'll need to
+          confirm the winner also works on cream sections.
+          ============================================================ */}
+      <section className={styles.experiment}>
+        <div className="container">
+          <header className={styles.expHeader}>
+            <p className={`kicker ${styles.expKicker}`}>
+              Experiment 03 · Nav variants
+            </p>
+            <h2 className={styles.expH2}>which nav pattern goes site-wide?</h2>
+            <p className={styles.expCopy}>
+              Four patterns shown on heat-glow strips so we can compare
+              against the gradient hero. Same logo + same links + same
+              CTA in each; only the layout/treatment changes. Once a
+              winner is picked we&apos;ll also confirm it reads on cream
+              sections.
+            </p>
+          </header>
+        </div>
+
+        <NavStage
+          label="Variant A · Full-width glass bar (current Exp 02 mock)"
+          description="Edge-to-edge glass strip. Logo flush-left, links center, CTA flush-right. Holds the whole top of the viewport."
+        >
+          <NavVariantA />
+        </NavStage>
+
+        <NavStage
+          label="Variant B · Centered floating pill (current main site)"
+          description="The pill we have on the live build. Sits 14px from the top, max-width 1340, glass background, logo + links + CTA all in the pill. Compact, less dominant."
+        >
+          <NavVariantB />
+        </NavStage>
+
+        <NavStage
+          label="Variant C · Edge-anchored, no container"
+          description="No wrapping element. Logo flush to left edge with side padding only, links + CTA flush to right edge. The lightest treatment — nav blends into the hero gradient instead of imposing a strip."
+        >
+          <NavVariantC />
+        </NavStage>
+
+        <NavStage
+          label="Variant D · Split — logo left + centered floating links + CTA right"
+          description="Three separate elements at the edges, no full-width strip. Logo at left edge, floating glass pill of links centered, CTA at right edge. Modern asymmetric pattern."
+        >
+          <NavVariantD />
+        </NavStage>
+
+        <div className="container">
+          <p className={styles.afterNote}>
+            Once a nav direction lands, I&apos;ll confirm it reads on
+            cream sections too (homepage scroll past the hero, roster
+            page header, pricing page header — all cream surfaces). The
+            glass treatment needs an alpha + blur variation that works
+            on both gradient AND cream.
+          </p>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+/* ============================================================
+   NavStage — wraps each nav variant with a label + description
+   so Andre can scroll-compare with context.
+   ============================================================ */
+function NavStage({
+  label,
+  description,
+  children,
+}: {
+  label: string;
+  description: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className={styles.navStageWrap}>
+      <div className="container">
+        <p className={styles.navStageLabel}>{label}</p>
+        <p className={styles.navStageDesc}>{description}</p>
+      </div>
+      {children}
     </div>
   );
 }
@@ -142,11 +229,13 @@ type WordmarkProps = {
 function HeroV2Mock() {
   return (
     <div className={`heat-glow ${styles.heroV2}`}>
-      {/* GLASS FULL-WIDTH NAV */}
+      {/* GLASS FULL-WIDTH NAV
+          Logo uses monochrome white — gradient on the hex stroke fought
+          the orange BG. Solid white reads clean. */}
       <nav className={styles.glassNav}>
         <div className={styles.glassNavInner}>
           <div className={styles.glassNavLogo}>
-            <Logo size={32} markColor="#fff" wordmarkColor="#fff" />
+            <Logo size={32} monochrome="#fff" />
           </div>
           <ul className={styles.glassNavLinks}>
             <li>the roster</li>
@@ -165,34 +254,44 @@ function HeroV2Mock() {
         <div className={styles.heroV2Top}>
           <p className={styles.heroV2Kicker}>
             <span className={styles.pulseDot} aria-hidden="true" />
-            growth team contractors · mobile apps &amp; games
+            mobile apps &amp; games · EMEA
           </p>
 
-          <div className={styles.heroV2BrandSide}>
-            <span className={styles.brandLine1}>growth team</span>
-            <span className={styles.brandLine2}>contractors</span>
-            <span className={styles.brandLine3}>on call.</span>
+          {/* Top-right minor editorial credit — small magazine-masthead
+              detail. Two lines, low-opacity white, tracked uppercase.
+              Holds the corner without competing with the headline. */}
+          <div className={styles.heroV2Masthead}>
+            <span>est. 2026</span>
+            <span>a SeedCraft venture</span>
           </div>
         </div>
 
+        {/* MAIN HEADLINE — "growth team contractors. on call." is the
+            dominant moment now. Line 1 flush left, line 2 ("on call.")
+            offset right and italic-emphasised. The old "you brief it.
+            they build it." placeholder dropped. */}
         <div className={styles.heroV2Middle}>
-          <h1 className={styles.heroV2Headline}>
-            <span className={styles.weightHeavy}>you brief it.</span>{" "}
-            <span className={styles.weightLight}>they</span>{" "}
-            <span className={styles.weightHeavy}>build it.</span>
+          <h1 className={styles.headlineBig}>
+            <span className={styles.headlineLine1}>
+              growth team contractors.
+            </span>
+            <span className={styles.headlineLine2}>
+              <em>on call.</em>
+            </span>
           </h1>
         </div>
 
+        {/* BOTTOM — 4 UNIFORM glass pills + CTAs.
+            Previous large-white-card-for-85% broke the rhythm — all
+            four pills now share the same glass treatment for
+            consistency. */}
         <div className={styles.heroV2Bottom}>
           <div className={styles.glassCards}>
             <div className={styles.glassCard}>
               <span className={styles.pulseDot} aria-hidden="true" />
               32 available now
             </div>
-            <div className={styles.glassCardLarge}>
-              <p className={styles.glassCardN}>85%</p>
-              <p className={styles.glassCardL}>same-week shortlist rate</p>
-            </div>
+            <div className={styles.glassCard}>85% same-week shortlist</div>
             <div className={styles.glassCard}>EMEA · UK · 8 cities</div>
             <div className={styles.glassCard}>est. 2026 · SeedCraft</div>
           </div>
@@ -207,6 +306,100 @@ function HeroV2Mock() {
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+/* ============================================================
+   EXPERIMENT 03 · Nav variants
+   Andre's call: show options for the nav so we can pick the right
+   pattern across all pages (works on gradient AND cream).
+   ============================================================ */
+
+function NavVariantA() {
+  return (
+    <div className={`heat-glow ${styles.navStage}`}>
+      <nav className={styles.glassNav}>
+        <div className={styles.glassNavInner}>
+          <Logo size={32} monochrome="#fff" />
+          <ul className={styles.glassNavLinks}>
+            <li>the roster</li>
+            <li>how it works</li>
+            <li>pricing</li>
+            <li>about</li>
+          </ul>
+          <a href="#" className={styles.glassNavCta}>
+            book a call
+          </a>
+        </div>
+      </nav>
+    </div>
+  );
+}
+
+function NavVariantB() {
+  return (
+    <div className={`heat-glow ${styles.navStage}`}>
+      <div className={styles.navStageInner}>
+        <nav className={styles.pillNav}>
+          <Logo size={28} monochrome="#fff" />
+          <ul className={styles.pillNavLinks}>
+            <li>the roster</li>
+            <li>how it works</li>
+            <li>pricing</li>
+            <li>about</li>
+          </ul>
+          <a href="#" className={styles.pillNavCta}>
+            book a call
+          </a>
+        </nav>
+      </div>
+    </div>
+  );
+}
+
+function NavVariantC() {
+  return (
+    <div className={`heat-glow ${styles.navStage}`}>
+      <nav className={styles.edgeNav}>
+        <div className={styles.edgeNavLogo}>
+          <Logo size={32} monochrome="#fff" />
+        </div>
+        <div className={styles.edgeNavRight}>
+          <ul className={styles.edgeNavLinks}>
+            <li>the roster</li>
+            <li>how it works</li>
+            <li>pricing</li>
+            <li>about</li>
+          </ul>
+          <a href="#" className={styles.edgeNavCta}>
+            book a call
+          </a>
+        </div>
+      </nav>
+    </div>
+  );
+}
+
+function NavVariantD() {
+  return (
+    <div className={`heat-glow ${styles.navStage}`}>
+      <nav className={styles.splitNav}>
+        <div className={styles.splitNavLeft}>
+          <Logo size={32} monochrome="#fff" />
+        </div>
+        <div className={styles.splitNavCenter}>
+          <ul>
+            <li>the roster</li>
+            <li>how it works</li>
+            <li>pricing</li>
+            <li>about</li>
+          </ul>
+        </div>
+        <div className={styles.splitNavRight}>
+          <a href="#">book a call</a>
+        </div>
+      </nav>
     </div>
   );
 }

@@ -269,68 +269,74 @@
   margin: 0;
 }
 
-.heroV2BrandSide {
+/* Editorial masthead — small magazine-credit corner. Two short lines
+   uppercase tracked, low-opacity white. Holds the corner without
+   competing with the main headline. */
+.heroV2Masthead {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   text-align: right;
-  font-family: "Cal Sans", system-ui, sans-serif;
-  font-weight: 400;
-  font-size: clamp(28px, 3.4vw, 48px);
-  line-height: 0.95;
-  letter-spacing: -0.025em;
-  text-transform: lowercase;
-  color: #fff;
+  gap: 4px;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.62);
 }
-.brandLine1 {
-  opacity: 0.55;
-}
-.brandLine2 {
-  opacity: 0.78;
-}
-.brandLine3 {
-  opacity: 1;
+.heroV2Masthead span:last-child {
+  text-transform: none;
+  letter-spacing: 0.02em;
+  font-style: italic;
+  font-weight: 500;
 }
 @media (max-width: 700px) {
   .heroV2Top {
     flex-direction: column;
     align-items: flex-start;
   }
-  .heroV2BrandSide {
+  .heroV2Masthead {
     align-items: flex-start;
     text-align: left;
   }
 }
 
-/* MIDDLE — main headline */
+/* MIDDLE — main headline. Two-line asymmetric stack. Line 1 flush
+   left, line 2 indented right and italic-emphasised. */
 .heroV2Middle {
   flex: 1;
   display: flex;
   align-items: center;
   padding: 20px 0;
 }
-.heroV2Headline {
+.headlineBig {
   font-family: "Cal Sans", system-ui, sans-serif;
   font-weight: 400;
-  font-size: clamp(54px, 9vw, 150px);
-  line-height: 0.88;
+  font-size: clamp(60px, 10vw, 168px);
+  line-height: 0.9;
   letter-spacing: -0.04em;
   text-transform: lowercase;
   color: #fff;
   margin: 0;
-  max-width: 1100px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
-.weightHeavy {
-  /* Cal Sans only has 400 weight; "heavy" here means full opacity
-     so it reads as the dominant tone. */
-  color: #fff;
+.headlineLine1 {
+  display: block;
 }
-.weightLight {
-  /* Lighter weight via opacity + italic shape change for rhythm. */
-  color: rgba(255, 255, 255, 0.45);
+.headlineLine2 {
+  display: block;
+  margin-left: clamp(40px, 10vw, 200px);
+  margin-top: clamp(4px, 1vw, 10px);
+}
+.headlineLine2 em {
   font-style: italic;
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #ffb347; /* same bright-orange italic accent as Statement */
 }
 
 /* BOTTOM — glass cards + CTAs */
@@ -366,39 +372,6 @@
   text-transform: lowercase;
 }
 
-.glassCardLarge {
-  padding: 16px 22px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.95);
-  color: var(--ink);
-  backdrop-filter: blur(10px) saturate(140%);
-  -webkit-backdrop-filter: blur(10px) saturate(140%);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.glassCardN {
-  font-family: "Cal Sans", system-ui, sans-serif;
-  font-weight: 400;
-  font-size: 28px;
-  line-height: 1;
-  letter-spacing: -0.025em;
-  margin: 0;
-  background: var(--heat-text);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.glassCardL {
-  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
-  font-weight: 600;
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--mute);
-  margin: 0;
-}
 
 .heroV2Cta {
   display: flex;
@@ -455,4 +428,175 @@
   color: var(--dim);
   font-style: italic;
   max-width: 760px;
+}
+
+/* ============================================================
+   EXPERIMENT 03 · Nav variant stages
+   ============================================================ */
+.navStageWrap {
+  margin: 24px 0 32px;
+}
+
+.navStageLabel {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin: 0 0 6px;
+}
+.navStageDesc {
+  font-size: 14px;
+  color: var(--dim);
+  line-height: 1.5;
+  max-width: 720px;
+  margin: 0 0 14px;
+}
+
+.navStage {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+/* Variant A — uses existing .glassNav (same as Exp 02) */
+
+/* Variant B — centered pill nav */
+.navStageInner {
+  display: flex;
+  justify-content: center;
+  padding-top: 14px;
+}
+.pillNav {
+  display: inline-flex;
+  align-items: center;
+  gap: 24px;
+  padding: 10px 10px 10px 22px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  max-width: calc(100% - 28px);
+}
+.pillNavLinks {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 22px;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  text-transform: lowercase;
+  color: rgba(255, 255, 255, 0.78);
+}
+.pillNavLinks li:hover {
+  color: #fff;
+}
+.pillNavCta {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: lowercase;
+  padding: 9px 16px;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+/* Variant C — edge-anchored */
+.edgeNav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px clamp(32px, 4vw, 64px);
+  color: #fff;
+}
+.edgeNavLogo {
+  line-height: 0;
+}
+.edgeNavRight {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+.edgeNavLinks {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 26px;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  text-transform: lowercase;
+  color: rgba(255, 255, 255, 0.72);
+}
+.edgeNavLinks li:hover {
+  color: #fff;
+}
+.edgeNavCta {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: lowercase;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Variant D — split: 3 separate elements */
+.splitNav {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  padding: 18px clamp(28px, 3vw, 48px);
+  gap: 24px;
+  color: #fff;
+}
+.splitNavLeft {
+  line-height: 0;
+}
+.splitNavCenter {
+  display: flex;
+  justify-content: center;
+}
+.splitNavCenter ul {
+  display: inline-flex;
+  list-style: none;
+  margin: 0;
+  padding: 10px 22px;
+  gap: 24px;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  text-transform: lowercase;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.78);
+}
+.splitNavCenter li:hover {
+  color: #fff;
+}
+.splitNavRight a {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: lowercase;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  text-decoration: none;
 }
