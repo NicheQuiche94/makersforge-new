@@ -45,6 +45,15 @@
     #ff5d00 55%,
     #ff3c00 100%
   );
+  /* Brighter gradient variant for italic emphasis on heat-deep panels.
+     Lighter stops so the italic words still read as accent rather than
+     blending into the deep base. */
+  --heat-bright: linear-gradient(
+    108deg,
+    #ffe0b0 0%,
+    #ffb347 45%,
+    #ff8a3c 100%
+  );
 
   /* Surfaces */
   --bg: #f5f1ea;
@@ -151,6 +160,27 @@ a {
 .ghost {
   color: var(--ink);
   opacity: 0.16;
+}
+
+/* Italic emphasis for poster-style headlines.
+   Figtree heavy italic + Heat gradient text-fill. Pairs with Cal Sans
+   upright as the white-equivalent (solid colour). On heat-glow panels,
+   use .italic-gr-bright instead — same shape, lighter gradient stops. */
+.italic-gr,
+.italic-gr-bright {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-style: italic;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.italic-gr {
+  background: var(--heat-text);
+}
+.italic-gr-bright {
+  background: var(--heat-bright);
 }
 
 /* =========================================================

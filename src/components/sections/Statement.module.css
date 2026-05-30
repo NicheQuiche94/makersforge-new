@@ -1,62 +1,134 @@
 .section {
-  padding: 130px 0 110px;
+  padding: 110px 0 90px;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: end;
+.panel {
+  border-radius: 32px;
+  padding: 90px 70px 80px;
+  color: #fff;
 }
-@media (max-width: 900px) {
-  .grid {
-    grid-template-columns: 1fr;
-    gap: 30px;
+@media (max-width: 700px) {
+  .panel {
+    padding: 60px 30px;
+    border-radius: 24px;
   }
 }
 
+/* =========================================================
+   POSTER HEADLINE
+   Mixed-scale, asymmetric, italic-emphasis treatment.
+   ========================================================= */
 .headline {
   font-family: "Cal Sans", system-ui, sans-serif;
   font-weight: 400;
-  font-size: clamp(46px, 7vw, 108px);
-  line-height: 0.92;
-  letter-spacing: -0.035em;
   text-transform: lowercase;
-  margin: 0;
-  grid-column: 1 / -1;
+  letter-spacing: -0.04em;
+  margin: 0 0 70px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 0.85;
+}
+
+.line {
+  display: inline-block;
+  position: relative;
+}
+
+/* "hiring" — upright Cal Sans, moderate scale. Sits flush left. */
+.line1 {
+  font-size: clamp(56px, 7vw, 100px);
+  margin-left: 0;
+}
+
+/* "shouldn't." — Figtree italic gradient. Smaller. Offset right. */
+.line2 {
+  font-size: clamp(36px, 5vw, 64px);
+  margin-left: clamp(20px, 4vw, 80px);
+  margin-top: 4px;
+}
+.line2 em {
+  font-style: italic;
+  line-height: 1;
+}
+
+/* "slow growth." — UPRIGHT, largest. Slight left indent. */
+.line3 {
+  font-size: clamp(72px, 10vw, 140px);
+  letter-spacing: -0.045em;
+  margin-left: clamp(0px, 1vw, 16px);
+  margin-top: clamp(4px, 1vw, 12px);
+}
+
+/* "we won't." — italic gradient, big, indented further right. Houses
+   the arrow doodle. */
+.line4 {
+  font-size: clamp(56px, 8vw, 110px);
+  margin-left: clamp(60px, 10vw, 200px);
+  margin-top: clamp(8px, 2vw, 24px);
+  position: relative;
+}
+.line4 em {
+  font-style: italic;
+  line-height: 1;
+}
+
+/* Arrow doodle — positioned hovering above the start of "we won't.",
+   curving to point at it from the upper-left negative space. */
+.doodle {
+  position: absolute;
+  left: clamp(-90px, -5vw, -50px);
+  top: clamp(-70px, -4vw, -30px);
+  display: block;
+  pointer-events: none;
+  /* Slight tilt for the hand-drawn feel */
+  transform: rotate(-6deg);
+}
+@media (max-width: 700px) {
+  .doodle {
+    left: -40px;
+    top: -36px;
+    transform: rotate(-6deg) scale(0.7);
+  }
+}
+
+/* =========================================================
+   PROSE GRID — 2 columns under the headline, all on dark surface
+   ========================================================= */
+.prose {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 80px);
+  padding-top: 36px;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+}
+@media (max-width: 800px) {
+  .prose {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
 .kicker {
-  margin-bottom: 14px;
-  display: block;
-}
-/* Display-tiny accent: pad-bottom for breathing space between accent
-   headline and the body that follows. */
-:where(.left) .kicker.display-tiny,
-.kicker:global(.display-tiny) {
-  margin-bottom: 18px;
-}
-
-.left .copy,
-.copy {
-  font-size: 17px;
-  line-height: 1.55;
-  color: var(--dim);
+  /* display-tiny is set in globals.css. Override colour for dark surface. */
+  color: #fff;
   margin: 0;
 }
 
-.right {
-  justify-self: end;
-  align-self: end;
-  max-width: 460px;
+.body {
+  font-size: 17px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
 }
-.copyLg {
-  font-size: 19px;
-  line-height: 1.5;
-  color: var(--dim);
-  margin: 0 0 16px;
-}
-.copyLg strong {
-  color: var(--ink);
+.body strong {
+  color: #fff;
   font-weight: 600;
 }
