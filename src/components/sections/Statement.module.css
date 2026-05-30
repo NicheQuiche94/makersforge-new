@@ -1,51 +1,24 @@
+/* Off-white section background. --bg-deep is slightly deeper than the
+   page bg (#EDE7DC vs #F5F1EA) so the section visibly demarcates as
+   a new chapter without needing a container panel. */
 .section {
-  padding: 110px 0 90px;
-}
-
-.panel {
-  position: relative;
-  overflow: hidden;
-  background: var(--charcoal);
-  border-radius: 32px;
-  padding: 90px 70px 80px;
-  color: #fff;
-}
-/* Subtle top-left highlight gives the charcoal some depth without
-   competing with the heat-glow panels elsewhere on the page. */
-.panel::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    ellipse at 15% 0%,
-    rgba(255, 255, 255, 0.06) 0%,
-    transparent 55%
-  );
-  pointer-events: none;
-  z-index: 0;
-}
-.panel > * {
-  position: relative;
-  z-index: 1;
-}
-@media (max-width: 700px) {
-  .panel {
-    padding: 60px 30px;
-    border-radius: 24px;
-  }
+  background: var(--bg-deep);
+  padding: 130px 0 120px;
+  color: var(--ink);
 }
 
 /* =========================================================
-   POSTER HEADLINE
-   Mixed-scale, asymmetric, italic-emphasis treatment.
+   POSTER HEADLINE — smaller than the hero so the hero
+   stays the dominant moment. Same staggered scales + mixed
+   weight, no coloured accents.
    ========================================================= */
 .headline {
   font-family: "Cal Sans", system-ui, sans-serif;
   font-weight: 400;
   text-transform: lowercase;
   letter-spacing: -0.04em;
-  margin: 0 0 70px;
-  color: #fff;
+  margin: 0 0 80px;
+  color: var(--ink);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -57,99 +30,120 @@
   position: relative;
 }
 
-/* "hiring" — upright Cal Sans, moderate scale. Sits flush left. */
+/* "hiring" — upright Cal Sans, mid scale. */
 .line1 {
-  font-size: clamp(56px, 7vw, 100px);
+  font-size: clamp(40px, 5vw, 76px);
   margin-left: 0;
 }
 
-/* "shouldn't." — Figtree italic gradient. Smaller. Offset right. */
+/* "shouldn't." — Figtree heavy italic, smaller, indented. */
 .line2 {
-  font-size: clamp(36px, 5vw, 64px);
-  margin-left: clamp(20px, 4vw, 80px);
-  margin-top: 4px;
+  font-size: clamp(28px, 4vw, 52px);
+  margin-left: clamp(16px, 3vw, 60px);
+  margin-top: 6px;
 }
 .line2 em {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-style: italic;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--ink);
   line-height: 1;
 }
 
-/* "slow growth." — UPRIGHT, largest. Slight left indent. */
+/* "slow growth." — UPRIGHT, largest line in the composition.
+   Still ~60% of the hero's max so the hero stays bigger. */
 .line3 {
-  font-size: clamp(72px, 10vw, 140px);
+  font-size: clamp(52px, 7vw, 100px);
   letter-spacing: -0.045em;
-  margin-left: clamp(0px, 1vw, 16px);
-  margin-top: clamp(4px, 1vw, 12px);
+  margin-left: clamp(0px, 1vw, 12px);
+  margin-top: clamp(4px, 1vw, 10px);
 }
 
-/* "we won't." — italic gradient, big, indented further right. Houses
-   the arrow doodle. */
+/* "we won't." — Figtree heavy italic, indented far right, mid-large. */
 .line4 {
-  font-size: clamp(56px, 8vw, 110px);
-  margin-left: clamp(60px, 10vw, 200px);
-  margin-top: clamp(8px, 2vw, 24px);
-  position: relative;
+  font-size: clamp(42px, 6vw, 84px);
+  margin-left: clamp(40px, 8vw, 160px);
+  margin-top: clamp(6px, 1.5vw, 18px);
 }
 .line4 em {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-style: italic;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--ink);
   line-height: 1;
-}
-
-/* Arrow doodle — positioned hovering above the start of "we won't.",
-   curving to point at it from the upper-left negative space. */
-.doodle {
-  position: absolute;
-  left: clamp(-90px, -5vw, -50px);
-  top: clamp(-70px, -4vw, -30px);
-  display: block;
-  pointer-events: none;
-  /* Slight tilt for the hand-drawn feel */
-  transform: rotate(-6deg);
-}
-@media (max-width: 700px) {
-  .doodle {
-    left: -40px;
-    top: -36px;
-    transform: rotate(-6deg) scale(0.7);
-  }
 }
 
 /* =========================================================
-   PROSE GRID — 2 columns under the headline, all on dark surface
+   CHAPTERS — problem / answer as a 2-act narrative.
+   Numbered, Cal Sans display heading, hairline divider,
+   body copy. Each chapter is a discrete block so motion
+   later can choreograph each independently.
    ========================================================= */
-.prose {
+.chapters {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: clamp(40px, 6vw, 80px);
-  padding-top: 36px;
-  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  gap: clamp(40px, 6vw, 96px);
+  padding-top: 48px;
+  border-top: 1px solid var(--hair-strong);
 }
 @media (max-width: 800px) {
-  .prose {
+  .chapters {
     grid-template-columns: 1fr;
-    gap: 36px;
+    gap: 48px;
   }
 }
 
-.col {
+.chapter {
   display: flex;
   flex-direction: column;
-  gap: 14px;
 }
 
-.kicker {
-  /* display-tiny is set in globals.css. Override colour for dark surface. */
-  color: #fff;
+.chapterHead {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--hair);
+}
+
+.chapterNum {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mute);
+  flex-shrink: 0;
+}
+
+.chapterLabel {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(28px, 3.4vw, 42px);
+  letter-spacing: -0.025em;
+  text-transform: lowercase;
+  line-height: 1;
+  color: var(--ink);
   margin: 0;
+}
+.chapterLabel em {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-style: italic;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ink);
 }
 
 .body {
   font-size: 17px;
-  line-height: 1.55;
-  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+  color: var(--dim);
   margin: 0;
 }
 .body strong {
-  color: #fff;
+  color: var(--ink);
   font-weight: 600;
 }
