@@ -28,46 +28,68 @@ export default function LabPage() {
       </section>
 
       {/* ============================================================
-          EXPERIMENT 04 · Statement headline grid anchoring
-          Currently the Statement headline lines progressively indent
-          (margin-left ramps line-by-line). 12-col grid anchoring
-          could feel more deliberate / Swiss-editorial. Variants below
-          show different anchoring approaches against the current
-          baseline.
+          EXPERIMENT 04 · Statement headline composition (v2)
+          First-pass variants A/B/C anchored individual words to
+          specific grid positions — Andre's read was that they felt
+          "disjointed rather than specifically asymmetric." The
+          Reload references show a different pattern: multi-line
+          headlines with CONSISTENT alignment where the asymmetric
+          feel comes from VARYING LINE LENGTHS + ghost word/line
+          treatment for color rhythm, not from positioning single
+          words. New variants D / E / F explore that direction.
           ============================================================ */}
       <section className={styles.experiment}>
         <div className="container">
           <header className={styles.expHeader}>
             <p className={`kicker ${styles.expKicker}`}>
-              Experiment 04 · Statement headline grid anchoring
+              Experiment 04 · Statement headline composition (v2)
             </p>
             <h2 className={styles.expH2}>
-              anchor lines to deliberate columns vs. progressive indents.
+              multi-line flowing copy + ghost rhythm, not word-by-word grid anchoring.
             </h2>
             <p className={styles.expCopy}>
-              Currently the headline uses ramping margin-left values
-              that create an organic stagger. Swiss-grid composition
-              anchors each line to specific 12-col grid positions for
-              a more deliberate, editorial feel. Four variants below to
-              compare. Headline only — chapters below the headline
-              stay constant in all variants and are omitted here so
-              focus stays on the composition.
+              The first-pass variants (A/B/C, dimmed below) anchored
+              individual words to specific grid columns — felt
+              disjointed rather than asymmetric. The Reload references
+              show a different pattern:{" "}
+              <strong>
+                multi-line headlines with consistent left or centred
+                alignment, where the asymmetric feel comes from
+                varying line lengths + ghost word/line treatment.
+              </strong>{" "}
+              Copy slightly extended on these new variants (was
+              &ldquo;hiring shouldn&apos;t. / slow growth.&rdquo;) to
+              give natural multi-line breaks something to work with.
             </p>
           </header>
         </div>
 
         <StatementCurrent />
-        <StatementVariantA />
-        <StatementVariantB />
-        <StatementVariantC />
+        <StatementVariantD />
+        <StatementVariantE />
+        <StatementVariantF />
 
         <div className="container">
           <p className={styles.afterNote}>
-            Pick one (or hybrid: &quot;A but with line 2 right-aligned
-            like C&quot;) and I propagate to the real Statement
-            section. Then we move to Experiment 05 (HowItWorks bento
-            with dramatic mixed sizes).
+            Pick a direction (or hybrid — &ldquo;D but centred like
+            E&rdquo; etc) and I propagate. Copy is still placeholder
+            — pick the layout direction first, you can rewrite the
+            words later.
           </p>
+        </div>
+
+        <div className="container">
+          <p className={`${styles.afterNote} ${styles.rejectedNote}`}>
+            Below: rejected first-pass attempts (A / B / C) kept dim
+            for reference. Word-by-word grid anchoring read as
+            disjointed rather than asymmetric.
+          </p>
+        </div>
+
+        <div className={styles.dimmedAttempts}>
+          <StatementVariantA />
+          <StatementVariantB />
+          <StatementVariantC />
         </div>
       </section>
 
@@ -312,6 +334,90 @@ function StatementVariantB() {
         <span className={styles.stmtBL3}>
           slow <span className="gr">growth.</span>
         </span>
+      </h2>
+    </StatementSlot>
+  );
+}
+
+/* ============================================================
+   NEW DIRECTION — multi-line flowing copy + ghost rhythm
+   Modelled on the Reload references Andre shared. Same content
+   across D/E/F, only the alignment and ghost treatment change.
+   ============================================================ */
+
+const NEW_COPY = (
+  <>
+    hiring shouldn&apos;t slow
+    <br />
+    your growth.
+    <br />
+    with us, it won&apos;t.
+  </>
+);
+
+/* Variant D · Left-anchored flowing multi-line, ghost on ONE WORD.
+   Closest to Reload 2 (the "EVERYTHING YOUR BRAND NEEDS TO GROW"
+   composition) but left-aligned instead of centred. */
+function StatementVariantD() {
+  return (
+    <StatementSlot
+      label="Variant D · NEW · Left-aligned flowing multi-line, ghost on one word"
+      description={
+        "Multi-line flowing copy, consistent left margin, lines vary in length naturally. One word (“your”) ghost-treated for inline colour rhythm. Same direction as Reload's centred version but left-aligned."
+      }
+    >
+      <h2 className={styles.stmtFlow}>
+        hiring shouldn&apos;t slow
+        <br />
+        <span className={styles.flowGhost}>your</span> growth.
+        <br />
+        with us, it won&apos;t.
+      </h2>
+    </StatementSlot>
+  );
+}
+
+/* Variant E · Centered flowing multi-line, ghost on ONE WORD.
+   Direct port of Reload 2's "EVERYTHING YOUR BRAND NEEDS TO GROW"
+   pattern. Lines centered, varying lengths give ragged-on-both-
+   sides asymmetry. */
+function StatementVariantE() {
+  return (
+    <StatementSlot
+      label="Variant E · NEW · Centered flowing multi-line, ghost on one word"
+      description="Same content as D but centered. Lines centre to each other; varying line lengths give ragged-on-both-sides asymmetry. Direct port of Reload's 'EVERYTHING YOUR BRAND' centred pattern."
+    >
+      <h2 className={`${styles.stmtFlow} ${styles.stmtCenter}`}>
+        hiring shouldn&apos;t slow
+        <br />
+        <span className={styles.flowGhost}>your</span> growth.
+        <br />
+        with us, it won&apos;t.
+      </h2>
+    </StatementSlot>
+  );
+}
+
+/* Variant F · Left-anchored flowing multi-line, ghost on FULL LINE.
+   Direct port of Reload 1's "RELOAD DESIGNS MAKE / BRAND SYSTEMS
+   THAT / REDEFINE MODERN / VISUAL CULTURE" — the middle line
+   "REDEFINE MODERN" is in ghost colour. Most editorial of the
+   three because the ghost line creates a clear chapter-break
+   feeling within the headline. */
+function StatementVariantF() {
+  return (
+    <StatementSlot
+      label="Variant F · NEW · Left-aligned, ghost on ENTIRE MIDDLE LINE (Reload 1 pattern)"
+      description={
+        "Direct port of Reload 1's 'REDEFINE MODERN' move — the middle line is entirely ghost-coloured. Creates a 3-act rhythm (full / ghost / full) within the headline. Most overtly editorial."
+      }
+    >
+      <h2 className={styles.stmtFlow}>
+        hiring shouldn&apos;t slow
+        <br />
+        <span className={styles.flowGhost}>your growth.</span>
+        <br />
+        with us, it won&apos;t.
       </h2>
     </StatementSlot>
   );

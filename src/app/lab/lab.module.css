@@ -577,6 +577,44 @@
 }
 
 /* ============================================================
+   NEW DIRECTION (D/E/F) — multi-line flowing + ghost rhythm
+   ============================================================ */
+
+.stmtFlow {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(48px, 7.5vw, 124px);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  text-transform: lowercase;
+  margin: 0;
+  color: var(--ink);
+}
+
+.stmtCenter {
+  text-align: center;
+}
+
+/* Ghost colour — Reload's references use ~30% opacity (visible
+   but clearly subordinate). 0.16 was too faded for this scale. */
+.flowGhost {
+  color: rgba(14, 15, 17, 0.28);
+}
+
+/* Dimmed previous attempts (A / B / C) — kept visible at low
+   opacity so the rejection is documented but doesn't dominate. */
+.rejectedNote {
+  color: #c72e00;
+  font-style: italic;
+  margin-top: 56px;
+}
+.dimmedAttempts {
+  opacity: 0.45;
+  filter: saturate(0.7);
+  margin-top: 16px;
+}
+
+/* ============================================================
    EXPERIMENT 03 · Nav variant stages
    ============================================================ */
 .navStageWrap {
