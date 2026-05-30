@@ -28,6 +28,53 @@ export default function LabPage() {
       </section>
 
       {/* ============================================================
+          EXPERIMENT 05 · HowItWorks bento — dramatic mixed sizes
+          Current production: 4-tile vertical stack with alternating
+          left/right alignment and gentle width variation (68-80%).
+          Reads as a tidy bento but the rhythm feels uniform.
+          Two variants below push the size variation harder and add
+          ONE bleed off-page (editorial signature):
+            L1 — Dramatic vertical stack. Widths 55 / 105 / 48 / 75.
+                 Heat tile bleeds RIGHT past the container edge.
+            L2 — Pair grouping. Row 1: small paper + big heat
+                 side-by-side. Row 2: full-width charcoal that
+                 bleeds RIGHT. Row 3: compact card right-aligned.
+                 More bento-like rather than pure vertical stack.
+          ============================================================ */}
+      <section className={styles.experiment}>
+        <div className="container">
+          <header className={styles.expHeader}>
+            <p className={`kicker ${styles.expKicker}`}>
+              Experiment 05 · HowItWorks bento — dramatic sizes + bleed
+            </p>
+            <h2 className={styles.expH2}>
+              push size variation harder. one tile bleeds off-page.
+            </h2>
+            <p className={styles.expCopy}>
+              Current production stack reads tidy but rhythm is
+              uniform (widths 68-80%). Two variants below push the
+              size variation harder and add{" "}
+              <strong>one bleed</strong> as an editorial signature
+              moment. L1 is the same vertical-stack pattern with more
+              extreme widths; L2 reshapes into pair groupings (more
+              bento-like).
+            </p>
+          </header>
+        </div>
+
+        <HowMockL1 />
+        <HowMockL2 />
+
+        <div className="container">
+          <p className={styles.afterNote}>
+            Pick a direction. Then I propagate to the live
+            HowItWorks. Then Experiment 06 (editorial sidebar/margin
+            labels).
+          </p>
+        </div>
+      </section>
+
+      {/* ============================================================
           EXPERIMENT 04 · Full Statement section iteration (v7)
           v6 J1 (left-aligned big statements) confirmed as the
           direction. Three corrections + restructure for v7:
@@ -255,6 +302,259 @@ export default function LabPage() {
           </p>
         </div>
       </section>
+    </div>
+  );
+}
+
+/* ============================================================
+   HOW IT WORKS BENTO MOCKS · Experiment 05
+   Local rendering of bento tiles so we can experiment with
+   widths / surfaces / alignment / bleed without touching the
+   live HowItWorksBento component.
+   ============================================================ */
+
+type MockSurface = "paper" | "heat" | "charcoal" | "card";
+type MockAlign = "left" | "right";
+
+type MockTile = {
+  num: string;
+  title: React.ReactNode;
+  body: string;
+  surface: MockSurface;
+  align: MockAlign;
+  widthPct: number;
+  pill?: string;
+  bleed?: "right";
+};
+
+function MockTileRow({ tile }: { tile: MockTile }) {
+  const onDark = tile.surface === "heat" || tile.surface === "charcoal";
+  return (
+    <div
+      className={`${styles.howWrap} ${
+        tile.align === "right" ? styles.howAlignRight : styles.howAlignLeft
+      }`}
+    >
+      <div
+        className={`${styles.howTile} ${styles[`howSurface_${tile.surface}`]} ${
+          tile.surface === "heat" ? "heat-glow" : ""
+        } ${tile.bleed === "right" ? styles.howBleedRight : ""}`}
+        style={{ width: `${tile.widthPct}%` }}
+      >
+        <span
+          className={`${styles.howNum} ${onDark ? styles.howNumOnDark : ""}`}
+          aria-hidden="true"
+        >
+          {tile.num}
+        </span>
+        <div className={styles.howContent}>
+          <h3
+            className={`${styles.howTitle} ${
+              onDark ? styles.howTitleOnDark : ""
+            }`}
+          >
+            {tile.title}
+          </h3>
+          <p
+            className={`${styles.howBody} ${onDark ? styles.howBodyOnDark : ""}`}
+          >
+            {tile.body}
+          </p>
+          {tile.pill && (
+            <span className={styles.howPill}>
+              <span className={styles.howPillDot} aria-hidden="true" />
+              {tile.pill}
+            </span>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* L1 · Dramatic vertical stack with bleed on tile 02. Same
+   pattern as production but widths now 55 / 105 / 48 / 75 and
+   the heat tile bleeds past the container right edge. */
+function HowMockL1() {
+  const tiles: MockTile[] = [
+    {
+      num: "01",
+      title: (
+        <>
+          tell us <span className="gr">the gap</span>
+        </>
+      ),
+      body: "UA lead for a launch, performance creative for a refresh, a fractional head of growth. Tell us the shape and the timeline.",
+      surface: "paper",
+      align: "left",
+      widthPct: 55,
+    },
+    {
+      num: "02",
+      title: "we match.",
+      body: "From a vetted roster of senior operators we already know. You see a shortlist of real people, real availability, fast.",
+      surface: "heat",
+      align: "left",
+      widthPct: 105,
+      pill: "shortlist in 48h",
+      bleed: "right",
+    },
+    {
+      num: "03",
+      title: "they get to work.",
+      body: "You contract and pay them directly. Flat monthly fee. Scale up, scale down, stop any time.",
+      surface: "charcoal",
+      align: "right",
+      widthPct: 48,
+    },
+    {
+      num: "·",
+      title: (
+        <>
+          the <span className="gr">terms</span>
+        </>
+      ),
+      body: "Flat monthly fee. No percentage of pay. No percentage of placement. Replacement matching included.",
+      surface: "card",
+      align: "left",
+      widthPct: 75,
+    },
+  ];
+
+  return (
+    <div className={styles.howSlot}>
+      <div className="container">
+        <p className={styles.variantLabel}>
+          Variant L1 · Dramatic vertical stack (widths 55 / 105 / 48 / 75,
+          heat tile bleeds right)
+        </p>
+        <p className={styles.navStageDesc}>
+          Same pattern as production (vertical stack, alternating
+          align) but width variation pushed harder. Heat tile is over
+          100% wide and bleeds past the container right edge — gives
+          the showcase moment an editorial signature.
+        </p>
+      </div>
+      <div className={styles.howStage}>
+        <div className="container">
+          <div className={styles.howHeader}>
+            <div>
+              <p className="kicker">how it works</p>
+              <h2 className={styles.howHeadline}>
+                brief monday. working <span className="gr">by friday.</span>
+              </h2>
+            </div>
+            <p className={styles.howTopCopy}>
+              Three steps, no recruitment theatre. You&apos;re talking
+              to operators we already know within a day.
+            </p>
+          </div>
+
+          <div className={styles.howStack}>
+            {tiles.map((t, i) => (
+              <MockTileRow key={i} tile={t} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* L2 · Pair grouping. Row 1: small paper + big heat side-by-side.
+   Row 2: full-width charcoal that bleeds right. Row 3: compact
+   card right-aligned. More bento-like, less single-column-stack. */
+function HowMockL2() {
+  return (
+    <div className={styles.howSlot}>
+      <div className="container">
+        <p className={styles.variantLabel}>
+          Variant L2 · Pair grouping (mixed rows, charcoal bleed)
+        </p>
+        <p className={styles.navStageDesc}>
+          Row 1: small paper tile + big heat tile side-by-side. Row 2:
+          charcoal tile spans full width and bleeds right. Row 3:
+          compact card right-aligned. Breaks the single-column stack
+          into a more bento-grid layout — reads as a real bento box
+          rather than a stack of bands.
+        </p>
+      </div>
+      <div className={styles.howStage}>
+        <div className="container">
+          <div className={styles.howHeader}>
+            <div>
+              <p className="kicker">how it works</p>
+              <h2 className={styles.howHeadline}>
+                brief monday. working <span className="gr">by friday.</span>
+              </h2>
+            </div>
+            <p className={styles.howTopCopy}>
+              Three steps, no recruitment theatre. You&apos;re talking
+              to operators we already know within a day.
+            </p>
+          </div>
+
+          <div className={styles.howGrid}>
+            {/* Row 1: paper small + heat big */}
+            <div className={styles.howRow}>
+              <MockTileRow
+                tile={{
+                  num: "01",
+                  title: (
+                    <>
+                      tell us <span className="gr">the gap</span>
+                    </>
+                  ),
+                  body: "UA lead for a launch, performance creative for a refresh, a fractional head of growth. Tell us the shape and the timeline.",
+                  surface: "paper",
+                  align: "left",
+                  widthPct: 100,
+                }}
+              />
+              <MockTileRow
+                tile={{
+                  num: "02",
+                  title: "we match.",
+                  body: "Vetted roster of senior operators we already know. Shortlist of real people, real availability, fast.",
+                  surface: "heat",
+                  align: "left",
+                  widthPct: 100,
+                  pill: "shortlist in 48h",
+                }}
+              />
+            </div>
+
+            {/* Row 2: charcoal full-width with right bleed */}
+            <MockTileRow
+              tile={{
+                num: "03",
+                title: "they get to work.",
+                body: "You contract and pay them directly. Flat monthly fee for each month they're engaged. Scale up, scale down, stop any time.",
+                surface: "charcoal",
+                align: "left",
+                widthPct: 102,
+                bleed: "right",
+              }}
+            />
+
+            {/* Row 3: compact card right-aligned */}
+            <MockTileRow
+              tile={{
+                num: "·",
+                title: (
+                  <>
+                    the <span className="gr">terms</span>
+                  </>
+                ),
+                body: "Flat monthly fee. No percentage of pay. No percentage of placement. Replacement matching included.",
+                surface: "card",
+                align: "right",
+                widthPct: 56,
+              }}
+            />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

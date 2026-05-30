@@ -891,6 +891,214 @@
   text-align: center;
 }
 
+/* ============================================================
+   EXPERIMENT 05 · HowItWorks bento mocks
+   Local rendering of bento tiles, parallel to the live
+   HowItWorksBento module. Class names prefixed with 'how' to
+   avoid collisions with statement classes above.
+   ============================================================ */
+
+.howSlot {
+  margin: 24px 0 64px;
+}
+
+.howStage {
+  background: var(--bg);
+  padding: 70px 0 100px;
+  margin-top: 12px;
+  /* Prevent right-bleed tiles from causing horizontal page scroll. */
+  overflow-x: hidden;
+}
+
+.howHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-bottom: 48px;
+}
+
+.howHeadline {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(36px, 5vw, 68px);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  text-transform: lowercase;
+  margin: 14px 0 0;
+}
+
+.howTopCopy {
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--dim);
+  max-width: 420px;
+  margin: 0;
+}
+
+/* L1 — vertical stack */
+.howStack {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* L2 — bento grid */
+.howGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Side-by-side row for L2 row 1. Inner tiles share width 50/50
+   nominally but the tile widthPct overrides actual rendered width. */
+.howRow {
+  display: grid;
+  grid-template-columns: 42% 58%;
+  gap: 20px;
+}
+@media (max-width: 900px) {
+  .howRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Wrap controls left/right alignment within the row. */
+.howWrap {
+  display: flex;
+  width: 100%;
+}
+.howAlignLeft {
+  justify-content: flex-start;
+}
+.howAlignRight {
+  justify-content: flex-end;
+}
+@media (max-width: 700px) {
+  .howAlignLeft,
+  .howAlignRight {
+    justify-content: stretch;
+  }
+}
+
+.howTile {
+  border-radius: 24px;
+  padding: 36px 40px;
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 32px;
+  align-items: start;
+  min-height: 200px;
+}
+@media (max-width: 900px) {
+  .howTile {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 28px 28px;
+    width: 100% !important;
+  }
+}
+
+/* Right bleed — tile extends past the container right edge.
+   Combined with .howStage overflow-x: hidden so the page doesn't
+   scroll horizontally. Negative margin pulls it out by container
+   padding plus a small overshoot. */
+.howBleedRight {
+  margin-right: clamp(-160px, -8vw, -40px);
+}
+
+/* Surfaces — mirror the live HowItWorksBento surfaces. */
+.howSurface_paper {
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  color: var(--ink);
+}
+.howSurface_card {
+  background: var(--bg-card);
+  border: 1px solid var(--hair);
+  color: var(--ink);
+}
+.howSurface_charcoal {
+  background: var(--charcoal);
+  color: #fff;
+}
+.howSurface_heat {
+  color: #fff;
+}
+
+.howNum {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(56px, 6vw, 84px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  opacity: 0.85;
+  align-self: start;
+}
+.howNumOnDark {
+  color: #fff;
+  opacity: 0.95;
+}
+
+.howContent {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 540px;
+}
+
+.howTitle {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(28px, 3vw, 38px);
+  letter-spacing: -0.025em;
+  text-transform: lowercase;
+  margin: 0;
+  line-height: 1;
+}
+.howTitleOnDark {
+  color: #fff;
+}
+
+.howBody {
+  font-size: 16px;
+  line-height: 1.55;
+  margin: 0;
+  color: var(--dim);
+}
+.howBodyOnDark {
+  color: rgba(255, 255, 255, 0.78);
+}
+.howSurface_charcoal .howBody {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.howPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fff;
+  align-self: flex-start;
+  margin-top: 4px;
+}
+.howPillDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--heat-radial);
+}
+
 /* Dimmed previous attempts (A / B / C) — kept visible at low
    opacity so the rejection is documented but doesn't dominate. */
 .rejectedNote {
