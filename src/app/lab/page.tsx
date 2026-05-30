@@ -28,6 +28,50 @@ export default function LabPage() {
       </section>
 
       {/* ============================================================
+          EXPERIMENT 04 · Statement headline grid anchoring
+          Currently the Statement headline lines progressively indent
+          (margin-left ramps line-by-line). 12-col grid anchoring
+          could feel more deliberate / Swiss-editorial. Variants below
+          show different anchoring approaches against the current
+          baseline.
+          ============================================================ */}
+      <section className={styles.experiment}>
+        <div className="container">
+          <header className={styles.expHeader}>
+            <p className={`kicker ${styles.expKicker}`}>
+              Experiment 04 · Statement headline grid anchoring
+            </p>
+            <h2 className={styles.expH2}>
+              anchor lines to deliberate columns vs. progressive indents.
+            </h2>
+            <p className={styles.expCopy}>
+              Currently the headline uses ramping margin-left values
+              that create an organic stagger. Swiss-grid composition
+              anchors each line to specific 12-col grid positions for
+              a more deliberate, editorial feel. Four variants below to
+              compare. Headline only — chapters below the headline
+              stay constant in all variants and are omitted here so
+              focus stays on the composition.
+            </p>
+          </header>
+        </div>
+
+        <StatementCurrent />
+        <StatementVariantA />
+        <StatementVariantB />
+        <StatementVariantC />
+
+        <div className="container">
+          <p className={styles.afterNote}>
+            Pick one (or hybrid: &quot;A but with line 2 right-aligned
+            like C&quot;) and I propagate to the real Statement
+            section. Then we move to Experiment 05 (HowItWorks bento
+            with dramatic mixed sizes).
+          </p>
+        </div>
+      </section>
+
+      {/* ============================================================
           EXPERIMENT 01 · Bleed wordmark — REJECTED
           The bleed depends on the references' edge-to-edge aesthetic
           (photos bleeding, wordmarks bleeding). Our containerized
@@ -177,6 +221,121 @@ export default function LabPage() {
         </div>
       </section>
     </div>
+  );
+}
+
+/* ============================================================
+   STATEMENT VARIANTS · Experiment 04
+   Each variant renders just the headline portion of the Statement
+   section in a bg-deep slot so we can compare composition without
+   the chapters below adding noise.
+   ============================================================ */
+
+function StatementSlot({
+  label,
+  description,
+  children,
+}: {
+  label: string;
+  description: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className={styles.stmtSlot}>
+      <div className="container">
+        <p className={styles.variantLabel}>{label}</p>
+        <p className={styles.navStageDesc}>{description}</p>
+      </div>
+      <div className={styles.stmtStage}>
+        <div className="container">{children}</div>
+      </div>
+    </div>
+  );
+}
+
+/* Baseline — the current production treatment with progressive
+   margin-left indents on each line. */
+function StatementCurrent() {
+  return (
+    <StatementSlot
+      label="Baseline · current production (progressive margin-left indents)"
+      description="What's on the live Statement section right now. Each line ramps further right by a clamp-based margin-left value. Organic stagger, no grid system underneath."
+    >
+      <h2 className={styles.stmtHCurrent}>
+        <span className={styles.stmtCurrentL1}>hiring</span>
+        <span className={styles.stmtCurrentL2}>
+          <em>shouldn&apos;t.</em>
+        </span>
+        <span className={styles.stmtCurrentL3}>
+          slow <span className="gr">growth.</span>
+        </span>
+      </h2>
+    </StatementSlot>
+  );
+}
+
+/* Variant A — light 12-col grid anchoring. Each line anchored to
+   a specific column range but the change vs baseline is subtle.
+   Feels deliberate without being dramatic. */
+function StatementVariantA() {
+  return (
+    <StatementSlot
+      label="Variant A · Light 12-col grid anchor"
+      description="Lines anchored to specific columns: 'hiring' col 1-4, 'shouldn't.' col 4-8 (centred-ish indent), 'slow growth.' col 1-10 (spans most of width). Subtle but the underlying grid logic shows."
+    >
+      <h2 className={styles.stmtHGrid}>
+        <span className={styles.stmtAL1}>hiring</span>
+        <span className={styles.stmtAL2}>
+          <em>shouldn&apos;t.</em>
+        </span>
+        <span className={styles.stmtAL3}>
+          slow <span className="gr">growth.</span>
+        </span>
+      </h2>
+    </StatementSlot>
+  );
+}
+
+/* Variant B — dramatic Swiss-grid stagger. Bigger column jumps
+   between lines, the diagonal flow is the composition. */
+function StatementVariantB() {
+  return (
+    <StatementSlot
+      label="Variant B · Dramatic Swiss-grid stagger"
+      description="Bigger column jumps: 'hiring' col 1-3, 'shouldn't.' col 6-9 (deep right indent), 'slow growth.' col 2-10. Reads as a deliberate staircase, more confidently asymmetric."
+    >
+      <h2 className={styles.stmtHGrid}>
+        <span className={styles.stmtBL1}>hiring</span>
+        <span className={styles.stmtBL2}>
+          <em>shouldn&apos;t.</em>
+        </span>
+        <span className={styles.stmtBL3}>
+          slow <span className="gr">growth.</span>
+        </span>
+      </h2>
+    </StatementSlot>
+  );
+}
+
+/* Variant C — mixed alignment. Some lines anchored to the right
+   edge of their column span for asymmetric balance. Most editorial
+   of the three. */
+function StatementVariantC() {
+  return (
+    <StatementSlot
+      label="Variant C · Mixed alignment — line 2 right-anchored"
+      description="Lines 1 and 3 stay left-anchored, line 2 ('shouldn't.') anchored to the right edge of its grid span. Creates magazine-style asymmetric balance — the eye moves left → right → left across the lines."
+    >
+      <h2 className={styles.stmtHGrid}>
+        <span className={styles.stmtCL1}>hiring</span>
+        <span className={styles.stmtCL2}>
+          <em>shouldn&apos;t.</em>
+        </span>
+        <span className={styles.stmtCL3}>
+          slow <span className="gr">growth.</span>
+        </span>
+      </h2>
+    </StatementSlot>
   );
 }
 

@@ -424,6 +424,159 @@
 }
 
 /* ============================================================
+   EXPERIMENT 04 · Statement headline variants
+   ============================================================ */
+
+.stmtSlot {
+  margin: 24px 0 48px;
+}
+
+.stmtStage {
+  background: var(--bg-deep);
+  padding: 70px 0;
+  margin-top: 12px;
+}
+
+/* Common headline base. Cal Sans 400 lowercase, ink colour, -0.04em
+   tracking. Each variant overrides display/grid behaviour. */
+.stmtHCurrent,
+.stmtHGrid {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  text-transform: lowercase;
+  letter-spacing: -0.04em;
+  margin: 0;
+  color: var(--ink);
+  line-height: 0.9;
+}
+
+/* CURRENT BASELINE — progressive margin-left indents.
+   Replicates the live Statement headline exactly. */
+.stmtHCurrent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.stmtCurrentL1,
+.stmtCurrentL2,
+.stmtCurrentL3 {
+  display: inline-block;
+}
+.stmtCurrentL1 {
+  font-size: clamp(40px, 5vw, 76px);
+  margin-left: 0;
+}
+.stmtCurrentL2 {
+  font-size: clamp(28px, 4vw, 52px);
+  margin-left: clamp(16px, 3vw, 60px);
+  margin-top: 6px;
+}
+.stmtCurrentL2 em {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-style: italic;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  line-height: 1;
+}
+.stmtCurrentL3 {
+  font-size: clamp(52px, 7vw, 100px);
+  letter-spacing: -0.045em;
+  margin-left: clamp(0px, 1vw, 12px);
+  margin-top: clamp(4px, 1vw, 10px);
+}
+
+/* GRID-ANCHORED VARIANTS — 12-col CSS grid base */
+.stmtHGrid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  row-gap: clamp(8px, 1.5vw, 18px);
+}
+
+/* Each grid line span needs to declare its own font-size + italic
+   treatment. Position via grid-column. */
+.stmtAL1,
+.stmtAL2,
+.stmtAL3,
+.stmtBL1,
+.stmtBL2,
+.stmtBL3,
+.stmtCL1,
+.stmtCL2,
+.stmtCL3 {
+  display: block;
+}
+.stmtAL2 em,
+.stmtAL3 em,
+.stmtBL2 em,
+.stmtBL3 em,
+.stmtCL2 em,
+.stmtCL3 em {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-style: italic;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  line-height: 1;
+}
+
+/* VARIANT A — light grid anchor */
+.stmtAL1 {
+  grid-column: 1 / span 4;
+  font-size: clamp(40px, 5vw, 76px);
+}
+.stmtAL2 {
+  grid-column: 4 / span 5;
+  font-size: clamp(28px, 4vw, 52px);
+}
+.stmtAL3 {
+  grid-column: 1 / span 10;
+  font-size: clamp(52px, 7vw, 100px);
+  letter-spacing: -0.045em;
+}
+
+/* VARIANT B — dramatic stagger */
+.stmtBL1 {
+  grid-column: 1 / span 3;
+  font-size: clamp(40px, 5vw, 76px);
+}
+.stmtBL2 {
+  grid-column: 6 / span 4;
+  font-size: clamp(28px, 4vw, 52px);
+}
+.stmtBL3 {
+  grid-column: 2 / span 10;
+  font-size: clamp(52px, 7vw, 100px);
+  letter-spacing: -0.045em;
+}
+
+/* VARIANT C — mixed alignment, line 2 right-anchored */
+.stmtCL1 {
+  grid-column: 1 / span 4;
+  font-size: clamp(40px, 5vw, 76px);
+}
+.stmtCL2 {
+  grid-column: 7 / span 5;
+  font-size: clamp(28px, 4vw, 52px);
+  text-align: right;
+}
+.stmtCL3 {
+  grid-column: 1 / span 10;
+  font-size: clamp(52px, 7vw, 100px);
+  letter-spacing: -0.045em;
+}
+
+@media (max-width: 700px) {
+  /* On narrow screens collapse to single-column stacks for all
+     variants — grid anchoring breaks down at small widths. */
+  .stmtHGrid {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ============================================================
    EXPERIMENT 03 · Nav variant stages
    ============================================================ */
 .navStageWrap {
