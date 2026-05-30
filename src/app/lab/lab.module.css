@@ -577,10 +577,12 @@
 }
 
 /* ============================================================
-   NEW DIRECTION (D/E/F) — multi-line flowing + ghost rhythm
+   v3 DIRECTION (G1/G2/G3) — centred multi-line, gradient fill
+   on highlighted noun, italic Figtree 800 on closing flourish.
+   Ghost retired from the design language entirely.
    ============================================================ */
 
-.stmtFlow {
+.stmtFlowG {
   font-family: "Cal Sans", system-ui, sans-serif;
   font-weight: 400;
   font-size: clamp(48px, 7.5vw, 124px);
@@ -595,10 +597,25 @@
   text-align: center;
 }
 
-/* Ghost colour — Reload's references use ~30% opacity (visible
-   but clearly subordinate). 0.16 was too faded for this scale. */
-.flowGhost {
-  color: rgba(14, 15, 17, 0.28);
+/* Heat-text gradient fill on cream BG — replaces ghost as the
+   highlight treatment. Uses --heat-text (108° gradient defined
+   in globals). */
+.gradientFill {
+  background: var(--heat-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Closing-flourish italic — Figtree 800 at the same line scale
+   as plain Cal Sans (Andre's spec, not optically downscaled). */
+.italicFill {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-style: italic;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--ink);
 }
 
 /* Dimmed previous attempts (A / B / C) — kept visible at low

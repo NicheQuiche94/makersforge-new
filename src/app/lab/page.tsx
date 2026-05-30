@@ -28,53 +28,59 @@ export default function LabPage() {
       </section>
 
       {/* ============================================================
-          EXPERIMENT 04 · Statement headline composition (v2)
-          First-pass variants A/B/C anchored individual words to
-          specific grid positions — Andre's read was that they felt
-          "disjointed rather than specifically asymmetric." The
-          Reload references show a different pattern: multi-line
-          headlines with CONSISTENT alignment where the asymmetric
-          feel comes from VARYING LINE LENGTHS + ghost word/line
-          treatment for color rhythm, not from positioning single
-          words. New variants D / E / F explore that direction.
+          EXPERIMENT 04 · Statement headline composition (v3)
+          Andre's direction after seeing v2:
+            1. CENTER the Statement headline. Hero is left-aligned so
+               the next section should be centred — don't repeat
+               placement choices, makes the rhythm more dynamic.
+            2. SCRAP ghost from the design language. Only worked in
+               the original hero treatment (lines progressively
+               de-ghosted top→bottom). On cream BG it reads faded,
+               not editorial.
+            3. On cream surfaces, use GRADIENT FILL for highlighted
+               words — heat-text gradient on "your growth".
+            4. Italic Figtree 800 on "it won't" for closing flourish.
+          v3 variants G1 / G2 / G3 implement that direction with
+          small variations on line-break and italic extent.
           ============================================================ */}
       <section className={styles.experiment}>
         <div className="container">
           <header className={styles.expHeader}>
             <p className={`kicker ${styles.expKicker}`}>
-              Experiment 04 · Statement headline composition (v2)
+              Experiment 04 · Statement headline composition (v3)
             </p>
             <h2 className={styles.expH2}>
-              multi-line flowing copy + ghost rhythm, not word-by-word grid anchoring.
+              centred + gradient + italic. ghost retired from the language.
             </h2>
             <p className={styles.expCopy}>
-              The first-pass variants (A/B/C, dimmed below) anchored
-              individual words to specific grid columns — felt
-              disjointed rather than asymmetric. The Reload references
-              show a different pattern:{" "}
               <strong>
-                multi-line headlines with consistent left or centred
-                alignment, where the asymmetric feel comes from
-                varying line lengths + ghost word/line treatment.
+                Hero is left-aligned, so Statement goes centred
               </strong>{" "}
-              Copy slightly extended on these new variants (was
-              &ldquo;hiring shouldn&apos;t. / slow growth.&rdquo;) to
-              give natural multi-line breaks something to work with.
+              to keep placement varied across the page.{" "}
+              <strong>Ghost retired from the design language</strong>{" "}
+              — the only place it ever worked was the original hero
+              treatment where lines progressively de-ghosted
+              top→bottom. On cream surfaces ghost reads faded, not
+              editorial. Replacement: gradient fill on the highlighted
+              noun (&ldquo;your growth&rdquo;) plus italic Figtree 800
+              on the closing flourish (&ldquo;it won&apos;t&rdquo;).
+              Three micro-variations on the same direction below.
             </p>
           </header>
         </div>
 
         <StatementCurrent />
-        <StatementVariantD />
-        <StatementVariantE />
-        <StatementVariantF />
+        <StatementVariantG1 />
+        <StatementVariantG2 />
+        <StatementVariantG3 />
 
         <div className="container">
           <p className={styles.afterNote}>
-            Pick a direction (or hybrid — &ldquo;D but centred like
-            E&rdquo; etc) and I propagate. Copy is still placeholder
-            — pick the layout direction first, you can rewrite the
-            words later.
+            Pick one (or fine-tune — &ldquo;G1 but smaller
+            italic&rdquo;, &ldquo;G2 with the period inside the
+            gradient&rdquo; etc) and I propagate to the live Statement
+            section. Then we move to Experiment 05 (HowItWorks bento
+            dramatic mixed sizes).
           </p>
         </div>
 
@@ -82,7 +88,9 @@ export default function LabPage() {
           <p className={`${styles.afterNote} ${styles.rejectedNote}`}>
             Below: rejected first-pass attempts (A / B / C) kept dim
             for reference. Word-by-word grid anchoring read as
-            disjointed rather than asymmetric.
+            disjointed rather than asymmetric. v2 ghost variants
+            (D / E / F) removed entirely — ghost is no longer in
+            the design language.
           </p>
         </div>
 
@@ -340,84 +348,67 @@ function StatementVariantB() {
 }
 
 /* ============================================================
-   NEW DIRECTION — multi-line flowing copy + ghost rhythm
-   Modelled on the Reload references Andre shared. Same content
-   across D/E/F, only the alignment and ghost treatment change.
+   v3 DIRECTION — centred + gradient on highlighted noun +
+   italic on closing flourish. Ghost retired from the language.
+   All three variants share centred composition + same copy.
+   Differences:
+     G1 — 3 lines, gradient on "your growth", italic on "it won't"
+          (Andre's exact spec)
+     G2 — same treatments, compressed to 2 lines
+          (gradient sits mid-line on line 1)
+     G3 — same treatments, italic extends to "with us, it won't"
+          (full closing line is italic)
    ============================================================ */
 
-const NEW_COPY = (
-  <>
-    hiring shouldn&apos;t slow
-    <br />
-    your growth.
-    <br />
-    with us, it won&apos;t.
-  </>
-);
-
-/* Variant D · Left-anchored flowing multi-line, ghost on ONE WORD.
-   Closest to Reload 2 (the "EVERYTHING YOUR BRAND NEEDS TO GROW"
-   composition) but left-aligned instead of centred. */
-function StatementVariantD() {
+/* G1 · Andre's exact spec. */
+function StatementVariantG1() {
   return (
     <StatementSlot
-      label="Variant D · NEW · Left-aligned flowing multi-line, ghost on one word"
-      description={
-        "Multi-line flowing copy, consistent left margin, lines vary in length naturally. One word (“your”) ghost-treated for inline colour rhythm. Same direction as Reload's centred version but left-aligned."
-      }
+      label='Variant G1 · centred, 3 lines, gradient on "your growth", italic on "it won&apos;t"'
+      description="Andre's exact spec. Three centred lines, heat-text gradient fill on 'your growth', Figtree italic 800 on 'it won't' as the closing flourish."
     >
-      <h2 className={styles.stmtFlow}>
+      <h2 className={`${styles.stmtFlowG} ${styles.stmtCenter}`}>
         hiring shouldn&apos;t slow
         <br />
-        <span className={styles.flowGhost}>your</span> growth.
+        <span className={styles.gradientFill}>your growth</span>.
         <br />
-        with us, it won&apos;t.
+        with us, <span className={styles.italicFill}>it won&apos;t</span>.
       </h2>
     </StatementSlot>
   );
 }
 
-/* Variant E · Centered flowing multi-line, ghost on ONE WORD.
-   Direct port of Reload 2's "EVERYTHING YOUR BRAND NEEDS TO GROW"
-   pattern. Lines centered, varying lengths give ragged-on-both-
-   sides asymmetry. */
-function StatementVariantE() {
+/* G2 · Compressed to 2 lines. Gradient sits mid-line on line 1
+   rather than getting its own line. More compact, more flowing. */
+function StatementVariantG2() {
   return (
     <StatementSlot
-      label="Variant E · NEW · Centered flowing multi-line, ghost on one word"
-      description="Same content as D but centered. Lines centre to each other; varying line lengths give ragged-on-both-sides asymmetry. Direct port of Reload's 'EVERYTHING YOUR BRAND' centred pattern."
+      label='Variant G2 · centred, 2 lines, gradient mid-line on line 1'
+      description="Same treatments as G1 but compressed to 2 lines — 'your growth' sits at the end of line 1 instead of getting its own line. More compact, but the gradient word is no longer the focal centre."
     >
-      <h2 className={`${styles.stmtFlow} ${styles.stmtCenter}`}>
-        hiring shouldn&apos;t slow
+      <h2 className={`${styles.stmtFlowG} ${styles.stmtCenter}`}>
+        hiring shouldn&apos;t slow{" "}
+        <span className={styles.gradientFill}>your growth</span>.
         <br />
-        <span className={styles.flowGhost}>your</span> growth.
-        <br />
-        with us, it won&apos;t.
+        with us, <span className={styles.italicFill}>it won&apos;t</span>.
       </h2>
     </StatementSlot>
   );
 }
 
-/* Variant F · Left-anchored flowing multi-line, ghost on FULL LINE.
-   Direct port of Reload 1's "RELOAD DESIGNS MAKE / BRAND SYSTEMS
-   THAT / REDEFINE MODERN / VISUAL CULTURE" — the middle line
-   "REDEFINE MODERN" is in ghost colour. Most editorial of the
-   three because the ghost line creates a clear chapter-break
-   feeling within the headline. */
-function StatementVariantF() {
+/* G3 · Italic extends to the entire closing line. */
+function StatementVariantG3() {
   return (
     <StatementSlot
-      label="Variant F · NEW · Left-aligned, ghost on ENTIRE MIDDLE LINE (Reload 1 pattern)"
-      description={
-        "Direct port of Reload 1's 'REDEFINE MODERN' move — the middle line is entirely ghost-coloured. Creates a 3-act rhythm (full / ghost / full) within the headline. Most overtly editorial."
-      }
+      label='Variant G3 · centred, 3 lines, full closing line italic'
+      description="Same as G1 but italic extends to the whole closing phrase ('with us, it won't') rather than just the last two words. The closing line reads as a unified italic chapter-end statement."
     >
-      <h2 className={styles.stmtFlow}>
+      <h2 className={`${styles.stmtFlowG} ${styles.stmtCenter}`}>
         hiring shouldn&apos;t slow
         <br />
-        <span className={styles.flowGhost}>your growth.</span>
+        <span className={styles.gradientFill}>your growth</span>.
         <br />
-        with us, it won&apos;t.
+        <span className={styles.italicFill}>with us, it won&apos;t</span>.
       </h2>
     </StatementSlot>
   );
