@@ -8,133 +8,82 @@
 }
 
 /* =========================================================
-   POSTER HEADLINE — smaller than the hero so the hero
-   stays the dominant moment. Same staggered scales + mixed
-   weight, no coloured accents.
+   Shared column for headline + body. Outer max-width holds
+   the wider headline line ("don't let hiring") without
+   wrapping. Body has its own narrower max-width below.
+   ========================================================= */
+.column {
+  width: 100%;
+  max-width: clamp(340px, 55vw, 900px);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(60px, 7vw, 100px);
+}
+
+/* =========================================================
+   Headline — centred Cal Sans, gradient on "hiring", Cal Sans
+   synthetic italic on "slow you down". Largest moment of the
+   section but still ~60% of the hero's max scale so the hero
+   stays the dominant moment on the page.
    ========================================================= */
 .headline {
   font-family: "Cal Sans", system-ui, sans-serif;
   font-weight: 400;
-  text-transform: lowercase;
+  font-size: clamp(48px, 7.5vw, 124px);
+  line-height: 0.92;
   letter-spacing: -0.04em;
-  margin: 0 0 80px;
+  text-transform: lowercase;
+  text-align: center;
+  margin: 0;
   color: var(--ink);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  line-height: 0.85;
 }
 
-.line {
-  display: inline-block;
-  position: relative;
+.gradient {
+  background: var(--heat-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
-/* "hiring" — upright Cal Sans, mid scale. */
-.line1 {
-  font-size: clamp(40px, 5vw, 76px);
-  margin-left: 0;
-}
-
-/* "shouldn't." — Figtree heavy italic, smaller, indented. */
-.line2 {
-  font-size: clamp(28px, 4vw, 52px);
-  margin-left: clamp(16px, 3vw, 60px);
-  margin-top: 6px;
-}
-.line2 em {
-  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+/* Cal Sans synthetic italic. No true italic cut ships with Cal Sans,
+   so browsers oblique-skew the glyphs. Acceptable for short phrases. */
+.italicCal {
   font-style: italic;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  color: var(--ink);
-  line-height: 1;
-}
-
-/* "slow growth." — UPRIGHT, largest line in the composition.
-   Still ~60% of the hero's max so the hero stays bigger. */
-.line3 {
-  font-size: clamp(52px, 7vw, 100px);
-  letter-spacing: -0.045em;
-  margin-left: clamp(0px, 1vw, 12px);
-  margin-top: clamp(4px, 1vw, 10px);
 }
 
 /* =========================================================
-   CHAPTERS — problem / answer as a 2-act narrative.
-   Numbered, Cal Sans display heading, hairline divider,
-   body copy. Each chapter is a discrete block so motion
-   later can choreograph each independently.
+   Body — three statements, narrative arc by alignment.
+   Narrower max-width matches "slow you down" rendering so
+   the body's left/right edges align with that italic line.
    ========================================================= */
-.chapters {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(40px, 6vw, 96px);
-  padding-top: 48px;
-  border-top: 1px solid var(--hair-strong);
-}
-@media (max-width: 800px) {
-  .chapters {
-    grid-template-columns: 1fr;
-    gap: 48px;
-  }
-}
-
-.chapter {
+.body {
   display: flex;
   flex-direction: column;
+  gap: clamp(40px, 5.5vw, 76px);
+  width: 100%;
+  max-width: clamp(300px, 49vw, 780px);
+  align-self: center;
 }
 
-.chapterHead {
-  display: flex;
-  align-items: baseline;
-  gap: 16px;
-  margin-bottom: 24px;
-  padding-bottom: 18px;
-  border-bottom: 1px solid var(--hair);
-}
-
-.chapterNum {
-  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
-  font-weight: 700;
-  font-size: 13px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--mute);
-  flex-shrink: 0;
-}
-
-.chapterLabel {
+.statement {
   font-family: "Cal Sans", system-ui, sans-serif;
   font-weight: 400;
-  font-size: clamp(28px, 3.4vw, 42px);
-  letter-spacing: -0.025em;
+  font-size: clamp(28px, 3.6vw, 48px);
+  line-height: 1.18;
+  letter-spacing: -0.02em;
   text-transform: lowercase;
-  line-height: 1;
   color: var(--ink);
   margin: 0;
-}
-.chapterLabel em {
-  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
-  font-style: italic;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: var(--ink);
 }
 
-/* Weight-contrast body copy. Base 500, key phrases 700. Heavier
-   contrast than the default body-text/strong pair creates the
-   Kinetic-style "rhythm within a sentence" — bold key phrases stand
-   out, base sits lighter, the eye moves through the bolds like
-   beats. */
-.body {
-  font-size: 17px;
-  line-height: 1.55;
-  color: var(--dim);
-  font-weight: 500;
-  margin: 0;
+/* Setup beats default to left-align (statement default).
+   Tension hit swings right. Resolution settles centred. */
+.statementRight {
+  text-align: right;
 }
-.body strong {
-  color: var(--ink);
-  font-weight: 700;
+
+.statementCenter {
+  text-align: center;
 }
