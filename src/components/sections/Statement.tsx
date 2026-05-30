@@ -5,7 +5,7 @@ export function Statement() {
   return (
     <section className={styles.section}>
       <div className="container">
-        <div className={`heat-glow ${styles.panel}`}>
+        <div className={styles.panel}>
           {/* Poster-style asymmetric headline. Mixed scales, mixed weight,
               italic-gradient emphasis. Arrow doodle as a marker pointing
               at "we won't." — the brand promise. */}

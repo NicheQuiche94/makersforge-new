@@ -163,24 +163,32 @@ a {
 }
 
 /* Italic emphasis for poster-style headlines.
-   Figtree heavy italic + Heat gradient text-fill. Pairs with Cal Sans
-   upright as the white-equivalent (solid colour). On heat-glow panels,
-   use .italic-gr-bright instead — same shape, lighter gradient stops. */
+   Figtree heavy italic. Cal Sans has no italic so this is the approved
+   fallback per the brief.
+
+   .italic-gr  — gradient text-fill via background-clip. Used on LIGHT
+                 surfaces only. The text-clip is reliable here because
+                 the cream BG has high contrast with the gradient stops.
+   .italic-gr-bright — SOLID bright orange. Used on DARK surfaces
+                 (charcoal, heat-deep panels). Solid colour is more
+                 reliable than background-clip on dark BGs and matches
+                 the visual references (solid colored italics, not
+                 gradient). */
 .italic-gr,
 .italic-gr-bright {
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-style: italic;
   font-weight: 800;
   letter-spacing: -0.035em;
+}
+.italic-gr {
+  background: var(--heat-text);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-.italic-gr {
-  background: var(--heat-text);
-}
 .italic-gr-bright {
-  background: var(--heat-bright);
+  color: #ffb347;
 }
 
 /* =========================================================

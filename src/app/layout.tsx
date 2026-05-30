@@ -12,6 +12,7 @@ import { ScrollRevealRoot } from "@/components/atoms/ScrollRevealRoot";
 const figtree = Figtree({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700", "800", "900"],
+  style: ["normal", "italic"],
   variable: "--font-figtree",
   display: "swap",
 });
