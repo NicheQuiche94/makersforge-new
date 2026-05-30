@@ -12,9 +12,8 @@ export function Statement() {
           <span className={`${styles.line} ${styles.line2}`}>
             <em>shouldn&apos;t.</em>
           </span>
-          <span className={`${styles.line} ${styles.line3}`}>slow growth.</span>
-          <span className={`${styles.line} ${styles.line4}`}>
-            <em>we won&apos;t.</em>
+          <span className={`${styles.line} ${styles.line3}`}>
+            slow <span className="gr">growth.</span>
           </span>
         </h2>
 

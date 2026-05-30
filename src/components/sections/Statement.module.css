@@ -3,7 +3,7 @@
    a new chapter without needing a container panel. */
 .section {
   background: var(--bg-deep);
-  padding: 130px 0 120px;
+  padding: 130px 0 150px;
   color: var(--ink);
 }
 
@@ -58,21 +58,6 @@
   letter-spacing: -0.045em;
   margin-left: clamp(0px, 1vw, 12px);
   margin-top: clamp(4px, 1vw, 10px);
-}
-
-/* "we won't." — Figtree heavy italic, indented far right, mid-large. */
-.line4 {
-  font-size: clamp(42px, 6vw, 84px);
-  margin-left: clamp(40px, 8vw, 160px);
-  margin-top: clamp(6px, 1.5vw, 18px);
-}
-.line4 em {
-  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
-  font-style: italic;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  color: var(--ink);
-  line-height: 1;
 }
 
 /* =========================================================
