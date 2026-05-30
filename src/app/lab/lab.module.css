@@ -323,20 +323,13 @@
   flex-direction: column;
   align-items: flex-start;
 }
-.headlineLine1 {
-  display: block;
-}
+/* Both headline lines: flush left, Cal Sans white, same treatment.
+   No italic, no colour shift, no indent — Andre wants "on call."
+   to read as a continuation, not an emphasis. */
+.headlineLine1,
 .headlineLine2 {
   display: block;
-  margin-left: clamp(40px, 10vw, 200px);
-  margin-top: clamp(4px, 1vw, 10px);
-}
-.headlineLine2 em {
-  font-style: italic;
-  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  color: #ffb347; /* same bright-orange italic accent as Statement */
+  color: #fff;
 }
 
 /* BOTTOM — glass cards + CTAs */
@@ -463,7 +456,10 @@
 
 /* Variant A — uses existing .glassNav (same as Exp 02) */
 
-/* Variant B — centered pill nav */
+/* Variant B v2 — centered pill nav, condensed + balanced + whiter.
+   Logo size 34 so hex height ≈ CTA button height (visual balance).
+   Tighter link gap, slightly larger CTA padding to match the bigger
+   logo, link text bumped to 0.85 opacity (less faded). */
 .navStageInner {
   display: flex;
   justify-content: center;
@@ -472,40 +468,107 @@
 .pillNav {
   display: inline-flex;
   align-items: center;
-  gap: 24px;
-  padding: 10px 10px 10px 22px;
+  gap: 20px;
+  padding: 8px 10px 8px 22px;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(14px) saturate(140%);
   -webkit-backdrop-filter: blur(14px) saturate(140%);
   border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 999px;
   max-width: calc(100% - 28px);
+  line-height: 0;
 }
 .pillNavLinks {
   display: flex;
   list-style: none;
   margin: 0;
   padding: 0;
-  gap: 22px;
+  gap: 20px;
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-weight: 500;
   font-size: 13px;
   text-transform: lowercase;
-  color: rgba(255, 255, 255, 0.78);
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.2;
 }
 .pillNavLinks li:hover {
   color: #fff;
+  cursor: pointer;
 }
 .pillNavCta {
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-weight: 600;
-  font-size: 12px;
+  font-size: 13px;
   text-transform: lowercase;
-  padding: 9px 16px;
+  padding: 10px 18px;
   border-radius: 999px;
   background: #fff;
   color: var(--ink);
   text-decoration: none;
+  line-height: 1;
+}
+
+/* Variant E — duo nav. White logo card left + glass links pill right.
+   Solves the "logo all-white on glass" readability issue by giving
+   the logo its own light surface so it can keep its normal colours. */
+.duoNav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px clamp(20px, 3vw, 40px);
+  color: #fff;
+}
+.duoNavLogoCard {
+  background: #fff;
+  padding: 8px 16px;
+  border-radius: 999px;
+  line-height: 0;
+  border: 1px solid rgba(14, 15, 17, 0.08);
+  display: inline-flex;
+  align-items: center;
+  color: var(--ink); /* logo MF + wordmark inherit ink via currentColor */
+}
+.duoNavPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 8px 8px 22px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  line-height: 0;
+}
+.duoNavLinks {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 20px;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  text-transform: lowercase;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.2;
+}
+.duoNavLinks li:hover {
+  color: #fff;
+  cursor: pointer;
+}
+.duoNavCta {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: lowercase;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  text-decoration: none;
+  line-height: 1;
+  margin-left: 14px;
 }
 
 /* Variant C — edge-anchored */

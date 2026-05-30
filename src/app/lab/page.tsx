@@ -125,22 +125,36 @@ export default function LabPage() {
         </NavStage>
 
         <NavStage
-          label="Variant B · Centered floating pill (current main site)"
-          description="The pill we have on the live build. Sits 14px from the top, max-width 1340, glass background, logo + links + CTA all in the pill. Compact, less dominant."
+          label="Variant B v2 · Centered floating pill — condensed + balanced + whiter"
+          description="Andre's pick from the first pass. Tightened: logo bumped to size 34 so its hex matches the CTA button height (balanced). Link colour bumped from 0.72→0.85 white (less faded). Pill padding tighter and tighter gap between links — feels apps-and-games-shaped, gives the artsy editorial vibe a UI element to live inside."
         >
           <NavVariantB />
         </NavStage>
 
         <NavStage
-          label="Variant C · Edge-anchored, no container"
-          description="No wrapping element. Logo flush to left edge with side padding only, links + CTA flush to right edge. The lightest treatment — nav blends into the hero gradient instead of imposing a strip."
+          label="Variant E · NEW · Logo in white card + separate links pill (Andre's modified D direction)"
+          description="Logo gets its own little white container on the left so it can keep its NORMAL colours (gradient hex + ink MF + ink wordmark) instead of being all-white-on-glass. Links + CTA sit as a separate floating glass pill on the right. Two distinct chips, edge-anchored."
+        >
+          <NavVariantE />
+        </NavStage>
+
+        <NavStage
+          label="Variant A · Full-width glass bar (reference)"
+          description="Original Exp 02 mock direction. Kept here for context."
+        >
+          <NavVariantA />
+        </NavStage>
+
+        <NavStage
+          label="Variant C · Edge-anchored, no container (reference)"
+          description="Lightest treatment. Kept here for context."
         >
           <NavVariantC />
         </NavStage>
 
         <NavStage
-          label="Variant D · Split — logo left + centered floating links + CTA right"
-          description="Three separate elements at the edges, no full-width strip. Logo at left edge, floating glass pill of links centered, CTA at right edge. Modern asymmetric pattern."
+          label="Variant D · Split with centered links pill (reference — superseded by E)"
+          description="Original split direction. Variant E above is a refinement that swaps the centered-links-pill for a white logo card to solve the &quot;logo all-white on glass&quot; readability issue."
         >
           <NavVariantD />
         </NavStage>
@@ -275,9 +289,7 @@ function HeroV2Mock() {
             <span className={styles.headlineLine1}>
               growth team contractors.
             </span>
-            <span className={styles.headlineLine2}>
-              <em>on call.</em>
-            </span>
+            <span className={styles.headlineLine2}>on call.</span>
           </h1>
         </div>
 
@@ -342,7 +354,7 @@ function NavVariantB() {
     <div className={`heat-glow ${styles.navStage}`}>
       <div className={styles.navStageInner}>
         <nav className={styles.pillNav}>
-          <Logo size={28} monochrome="#fff" />
+          <Logo size={34} monochrome="#fff" />
           <ul className={styles.pillNavLinks}>
             <li>the roster</li>
             <li>how it works</li>
@@ -354,6 +366,34 @@ function NavVariantB() {
           </a>
         </nav>
       </div>
+    </div>
+  );
+}
+
+/* Variant E — Andre's modified-D direction. Logo gets its own white
+   "card" container on the left so it can keep its NORMAL colours
+   (gradient hex stroke + ink MF + ink wordmark). Links + CTA sit
+   in a separate floating glass pill on the right. Two separated
+   elements, like UI chips. */
+function NavVariantE() {
+  return (
+    <div className={`heat-glow ${styles.navStage}`}>
+      <nav className={styles.duoNav}>
+        <div className={styles.duoNavLogoCard}>
+          <Logo size={30} />
+        </div>
+        <div className={styles.duoNavPill}>
+          <ul className={styles.duoNavLinks}>
+            <li>the roster</li>
+            <li>how it works</li>
+            <li>pricing</li>
+            <li>about</li>
+          </ul>
+          <a href="#" className={styles.duoNavCta}>
+            book a call
+          </a>
+        </div>
+      </nav>
     </div>
   );
 }
