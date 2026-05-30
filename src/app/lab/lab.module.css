@@ -577,9 +577,11 @@
 }
 
 /* ============================================================
-   v3 DIRECTION (G1/G2/G3) — centred multi-line, gradient fill
-   on highlighted noun, italic Figtree 800 on closing flourish.
-   Ghost retired from the design language entirely.
+   v4 DIRECTION — full Statement section iteration.
+   Headline composition (.stmtFlowG / .stmtCenter / .gradientFill)
+   carried over from v3 G1. Italic switched from Figtree → Cal
+   Sans synthetic via .italicCal. Glass card primitives added
+   below for the problem/solution treatment.
    ============================================================ */
 
 .stmtFlowG {
@@ -597,9 +599,6 @@
   text-align: center;
 }
 
-/* Heat-text gradient fill on cream BG — replaces ghost as the
-   highlight treatment. Uses --heat-text (108° gradient defined
-   in globals). */
 .gradientFill {
   background: var(--heat-text);
   -webkit-background-clip: text;
@@ -608,14 +607,125 @@
   color: transparent;
 }
 
-/* Closing-flourish italic — Figtree 800 at the same line scale
-   as plain Cal Sans (Andre's spec, not optically downscaled). */
-.italicFill {
-  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+/* Cal Sans synthetic italic. Cal Sans ships only weight 400 with
+   no italic cut, so browsers synthesize the oblique by skewing
+   glyphs. Acceptable for short closing flourishes; would not
+   recommend for body. */
+.italicCal {
   font-style: italic;
-  font-weight: 800;
-  letter-spacing: -0.03em;
+}
+
+/* Full-section stage — taller padding than .stmtStage because
+   it holds the headline + cards beneath, not just a headline. */
+.fullStmtStage {
+  background: var(--bg-deep);
+  padding: 100px 0;
+  margin-top: 12px;
+}
+
+.fullStmtInner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 72px;
+}
+
+/* ============================================================
+   Glass containers — paper card + hairline border. Matches the
+   card pattern used by bento / pricing / roster cards across
+   the site. Replaces the previous free-flowing 2-column chapter
+   layout under the headline.
+   ============================================================ */
+
+.statementCards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  width: 100%;
+  max-width: 960px;
+}
+
+.statementCard {
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  border-radius: 24px;
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+}
+
+.statementCardNum {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 1;
+  color: var(--mute);
+  letter-spacing: -0.02em;
+}
+
+.statementCardLabel {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 22px;
+  text-transform: lowercase;
+  letter-spacing: -0.02em;
+  margin: 0;
   color: var(--ink);
+}
+
+.statementCardDivider {
+  height: 1px;
+  background: var(--hair);
+  width: 28px;
+  margin: 4px 0;
+}
+
+.statementCardBody {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--dim);
+  margin: 0;
+}
+
+/* H3 wide variant — single card with internal vertical hairline. */
+.statementWideCard {
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  border-radius: 28px;
+  width: 100%;
+  max-width: 960px;
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  overflow: hidden;
+}
+
+.statementWideHalf {
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+}
+
+.statementWideDividerCol {
+  background: var(--hair);
+  width: 1px;
+}
+
+@media (max-width: 700px) {
+  .statementCards {
+    grid-template-columns: 1fr;
+  }
+  .statementWideCard {
+    grid-template-columns: 1fr;
+  }
+  .statementWideDividerCol {
+    width: 100%;
+    height: 1px;
+  }
 }
 
 /* Dimmed previous attempts (A / B / C) — kept visible at low

@@ -28,59 +28,67 @@ export default function LabPage() {
       </section>
 
       {/* ============================================================
-          EXPERIMENT 04 · Statement headline composition (v3)
-          Andre's direction after seeing v2:
-            1. CENTER the Statement headline. Hero is left-aligned so
-               the next section should be centred — don't repeat
-               placement choices, makes the rhythm more dynamic.
-            2. SCRAP ghost from the design language. Only worked in
-               the original hero treatment (lines progressively
-               de-ghosted top→bottom). On cream BG it reads faded,
-               not editorial.
-            3. On cream surfaces, use GRADIENT FILL for highlighted
-               words — heat-text gradient on "your growth".
-            4. Italic Figtree 800 on "it won't" for closing flourish.
-          v3 variants G1 / G2 / G3 implement that direction with
-          small variations on line-break and italic extent.
+          EXPERIMENT 04 · Full Statement section iteration (v4)
+          v3 G1 confirmed for headline composition (centred, 3 lines,
+          gradient on "your growth", italic closing flourish), but
+          two refinements + scope expansion:
+            1. Italic flourish → Cal Sans (synthetic) not Figtree.
+               Keeps the typographic family consistent. Cal Sans
+               doesn't ship a true italic cut so browsers will
+               synthesize via oblique skew — readable for short
+               phrases.
+            2. Reword the headline. Current copy is declarative
+               (problem → promise) but lacks dramatic tension.
+               Storytelling rule for the whole site: build tension
+               before payoff, otherwise the reader has no stakes.
+            3. Bring the problem/solution chunks INTO the glass
+               container language used elsewhere on the site. Free-
+               flowing 2-column text feels disconnected from the
+               rest. Paper cards with hairline borders → consistent.
+          Three full-section variants below, each varies the copy
+          and the problem/solution treatment.
           ============================================================ */}
       <section className={styles.experiment}>
         <div className="container">
           <header className={styles.expHeader}>
             <p className={`kicker ${styles.expKicker}`}>
-              Experiment 04 · Statement headline composition (v3)
+              Experiment 04 · Full Statement section iteration (v4)
             </p>
             <h2 className={styles.expH2}>
-              centred + gradient + italic. ghost retired from the language.
+              full section. tension-building copy. glass containers under headline.
             </h2>
             <p className={styles.expCopy}>
+              v3 G1 confirmed but{" "}
+              <strong>italic flourish → Cal Sans (synthetic)</strong>{" "}
+              not Figtree to keep the headline in one family. Three
+              full-section variants below explore copy + the
+              problem/solution block underneath.{" "}
               <strong>
-                Hero is left-aligned, so Statement goes centred
+                Tension-building rule for the site: build stakes
+                before payoff.
               </strong>{" "}
-              to keep placement varied across the page.{" "}
-              <strong>Ghost retired from the design language</strong>{" "}
-              — the only place it ever worked was the original hero
-              treatment where lines progressively de-ghosted
-              top→bottom. On cream surfaces ghost reads faded, not
-              editorial. Replacement: gradient fill on the highlighted
-              noun (&ldquo;your growth&rdquo;) plus italic Figtree 800
-              on the closing flourish (&ldquo;it won&apos;t&rdquo;).
-              Three micro-variations on the same direction below.
+              A flat promise (&ldquo;hiring shouldn&apos;t slow
+              growth&rdquo;) is less sticky than a tensioned setup
+              (&ldquo;most teams lose growth to hiring — ours
+              don&apos;t&rdquo;). Glass containers (paper card +
+              hairline) bring the problem/solution chunks into the
+              same visual language as bento / pricing / roster cards.
             </p>
           </header>
         </div>
 
         <StatementCurrent />
-        <StatementVariantG1 />
-        <StatementVariantG2 />
-        <StatementVariantG3 />
+        <StatementSectionH1 />
+        <StatementSectionH2 />
+        <StatementSectionH3 />
 
         <div className="container">
           <p className={styles.afterNote}>
-            Pick one (or fine-tune — &ldquo;G1 but smaller
-            italic&rdquo;, &ldquo;G2 with the period inside the
-            gradient&rdquo; etc) and I propagate to the live Statement
-            section. Then we move to Experiment 05 (HowItWorks bento
-            dramatic mixed sizes).
+            Pick a direction or hybrid — &ldquo;H2 copy with
+            H3&apos;s single-wide card&rdquo;, &ldquo;H1 layout but
+            H3&apos;s simpler line&rdquo;. Then I propagate to the
+            live Statement section. Then Experiment 05 (HowItWorks
+            bento dramatic mixed sizes).
           </p>
         </div>
 
@@ -89,8 +97,8 @@ export default function LabPage() {
             Below: rejected first-pass attempts (A / B / C) kept dim
             for reference. Word-by-word grid anchoring read as
             disjointed rather than asymmetric. v2 ghost variants
-            (D / E / F) removed entirely — ghost is no longer in
-            the design language.
+            (D / E / F) and v3 G2 / G3 removed entirely — ghost
+            retired from the language, G1 won the headline.
           </p>
         </div>
 
@@ -348,69 +356,165 @@ function StatementVariantB() {
 }
 
 /* ============================================================
-   v3 DIRECTION — centred + gradient on highlighted noun +
-   italic on closing flourish. Ghost retired from the language.
-   All three variants share centred composition + same copy.
-   Differences:
-     G1 — 3 lines, gradient on "your growth", italic on "it won't"
-          (Andre's exact spec)
-     G2 — same treatments, compressed to 2 lines
-          (gradient sits mid-line on line 1)
-     G3 — same treatments, italic extends to "with us, it won't"
-          (full closing line is italic)
+   v4 DIRECTION — full Statement section iteration.
+   Headline composition locked (G1 + Cal Sans synthetic italic).
+   Varies: copy + glass-container layout for problem/solution.
    ============================================================ */
 
-/* G1 · Andre's exact spec. */
-function StatementVariantG1() {
+function FullStatementSlot({
+  label,
+  description,
+  children,
+}: {
+  label: string;
+  description: string;
+  children: React.ReactNode;
+}) {
   return (
-    <StatementSlot
-      label='Variant G1 · centred, 3 lines, gradient on "your growth", italic on "it won&apos;t"'
-      description="Andre's exact spec. Three centred lines, heat-text gradient fill on 'your growth', Figtree italic 800 on 'it won't' as the closing flourish."
-    >
-      <h2 className={`${styles.stmtFlowG} ${styles.stmtCenter}`}>
-        hiring shouldn&apos;t slow
-        <br />
-        <span className={styles.gradientFill}>your growth</span>.
-        <br />
-        with us, <span className={styles.italicFill}>it won&apos;t</span>.
-      </h2>
-    </StatementSlot>
+    <div className={styles.stmtSlot}>
+      <div className="container">
+        <p className={styles.variantLabel}>{label}</p>
+        <p className={styles.navStageDesc}>{description}</p>
+      </div>
+      <div className={styles.fullStmtStage}>
+        <div className="container">{children}</div>
+      </div>
+    </div>
   );
 }
 
-/* G2 · Compressed to 2 lines. Gradient sits mid-line on line 1
-   rather than getting its own line. More compact, more flowing. */
-function StatementVariantG2() {
+/* H1 · Locked G1 copy + 2 paper cards side-by-side. */
+function StatementSectionH1() {
   return (
-    <StatementSlot
-      label='Variant G2 · centred, 2 lines, gradient mid-line on line 1'
-      description="Same treatments as G1 but compressed to 2 lines — 'your growth' sits at the end of line 1 instead of getting its own line. More compact, but the gradient word is no longer the focal centre."
+    <FullStatementSlot
+      label="Variant H1 · G1 confirmed copy + 2 paper glass cards (balanced)"
+      description={
+        "Headline = G1 confirmed ('hiring shouldn't slow / your growth. / with us, it won't.') with Cal Sans synthetic italic on the closing flourish. Below: two paper cards side-by-side (problem / answer). Equal width, hairline border, same card pattern as bento / pricing / roster cards."
+      }
     >
-      <h2 className={`${styles.stmtFlowG} ${styles.stmtCenter}`}>
-        hiring shouldn&apos;t slow{" "}
-        <span className={styles.gradientFill}>your growth</span>.
-        <br />
-        with us, <span className={styles.italicFill}>it won&apos;t</span>.
-      </h2>
-    </StatementSlot>
+      <div className={styles.fullStmtInner}>
+        <h2 className={`${styles.stmtFlowG} ${styles.stmtCenter}`}>
+          hiring shouldn&apos;t slow
+          <br />
+          <span className={styles.gradientFill}>your growth</span>.
+          <br />
+          with us, <span className={styles.italicCal}>it won&apos;t</span>.
+        </h2>
+
+        <div className={styles.statementCards}>
+          <StatementCard
+            num="01"
+            label="the problem."
+            body="Hiring is broken. Months of search, hot candidates ghost you, the team you needed yesterday lands next quarter — if at all. Growth pays the bill."
+          />
+          <StatementCard
+            num="02"
+            label="the answer."
+            body="A pre-vetted bench, ready when you are. One brief, shortlist back same week, contracts by Friday. You scale on your timeline, not the talent market's."
+          />
+        </div>
+      </div>
+    </FullStatementSlot>
   );
 }
 
-/* G3 · Italic extends to the entire closing line. */
-function StatementVariantG3() {
+/* H2 · Tension 3-act copy + 2 paper cards. */
+function StatementSectionH2() {
   return (
-    <StatementSlot
-      label='Variant G3 · centred, 3 lines, full closing line italic'
-      description="Same as G1 but italic extends to the whole closing phrase ('with us, it won't') rather than just the last two words. The closing line reads as a unified italic chapter-end statement."
+    <FullStatementSlot
+      label="Variant H2 · 3-act tension copy + 2 paper cards (balanced)"
+      description={
+        "Headline rewritten for tension: 'hiring is supposed to fuel growth. / for most teams, it slows it down. / ours doesn't.' Sets up the contradiction (expected → reality) before the resolution. Cal Sans italic on 'ours doesn't' as the payoff. Same card layout as H1 below, copy adjusted slightly because the headline does more of the storytelling."
+      }
     >
-      <h2 className={`${styles.stmtFlowG} ${styles.stmtCenter}`}>
-        hiring shouldn&apos;t slow
-        <br />
-        <span className={styles.gradientFill}>your growth</span>.
-        <br />
-        <span className={styles.italicFill}>with us, it won&apos;t</span>.
-      </h2>
-    </StatementSlot>
+      <div className={styles.fullStmtInner}>
+        <h2 className={`${styles.stmtFlowG} ${styles.stmtCenter}`}>
+          hiring is supposed to fuel{" "}
+          <span className={styles.gradientFill}>growth</span>.
+          <br />
+          for most teams, it slows it down.
+          <br />
+          <span className={styles.italicCal}>ours doesn&apos;t</span>.
+        </h2>
+
+        <div className={styles.statementCards}>
+          <StatementCard
+            num="01"
+            label="the pattern."
+            body="Founders pour months into hiring. Momentum dies in the slow bits — search, ghosting, missed-by-a-week starts. The roadmap slips. Growth resets."
+          />
+          <StatementCard
+            num="02"
+            label="the shift."
+            body="We hand you the bench. Same-week shortlist, contracts by Friday, start the same Monday. You stay in motion while the rest of the market waits on inboxes."
+          />
+        </div>
+      </div>
+    </FullStatementSlot>
+  );
+}
+
+/* H3 · Simpler fear-of-loss copy + single wide card with split. */
+function StatementSectionH3() {
+  return (
+    <FullStatementSlot
+      label="Variant H3 · Simple fear-of-loss copy + single wide card with internal split"
+      description={
+        "Shortest headline: 'don't let hiring / slow you down.' Two centred lines, gradient on 'hiring', full closing line in Cal Sans italic. Fear-of-loss framing — direct command. Below: one wide paper card with internal vertical hairline split (problem | answer) instead of two cards. Reads as a single contained statement rather than a diptych."
+      }
+    >
+      <div className={styles.fullStmtInner}>
+        <h2 className={`${styles.stmtFlowG} ${styles.stmtCenter}`}>
+          don&apos;t let{" "}
+          <span className={styles.gradientFill}>hiring</span>
+          <br />
+          <span className={styles.italicCal}>slow you down</span>.
+        </h2>
+
+        <div className={styles.statementWideCard}>
+          <div className={styles.statementWideHalf}>
+            <span className={styles.statementCardNum}>01</span>
+            <p className={styles.statementCardLabel}>every week costs.</p>
+            <div className={styles.statementCardDivider} />
+            <p className={styles.statementCardBody}>
+              Each week without the right hire is launches delayed,
+              campaigns missed, growth left on the table. Hiring is
+              the bottleneck founders pretend isn&apos;t.
+            </p>
+          </div>
+          <div className={styles.statementWideDividerCol} />
+          <div className={styles.statementWideHalf}>
+            <span className={styles.statementCardNum}>02</span>
+            <p className={styles.statementCardLabel}>ours don&apos;t.</p>
+            <div className={styles.statementCardDivider} />
+            <p className={styles.statementCardBody}>
+              Pre-vetted bench, same-week starts, contracts by
+              Friday. The growth you should&apos;ve had — kept.
+            </p>
+          </div>
+        </div>
+      </div>
+    </FullStatementSlot>
+  );
+}
+
+/* Shared card primitive — used by H1, H2 (and structurally by H3). */
+function StatementCard({
+  num,
+  label,
+  body,
+}: {
+  num: string;
+  label: string;
+  body: string;
+}) {
+  return (
+    <div className={styles.statementCard}>
+      <span className={styles.statementCardNum}>{num}</span>
+      <p className={styles.statementCardLabel}>{label}</p>
+      <div className={styles.statementCardDivider} />
+      <p className={styles.statementCardBody}>{body}</p>
+    </div>
   );
 }
 
