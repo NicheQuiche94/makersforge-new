@@ -28,73 +28,64 @@ export default function LabPage() {
       </section>
 
       {/* ============================================================
-          EXPERIMENT 04 · Full Statement section iteration (v5)
-          v4 H1/H2/H3 (paper cards under headline) rejected: cards
-          are overused across the site so reading them feels like
-          ignorable UI rather than primary editorial content.
-          New direction (Andre's call):
-            1. Headline: try the "momentum" rewrite. Line 1 "don't
-               let hiring" (gradient on hiring), Line 2 italic "slow
-               your momentum" (gradient on momentum). Skim reads
-               "hiring momentum" — fast & positive. Full read says
-               the tension. Two gradient words = two hooks for the
-               eye, "good and bad highlighted in two different ways"
-               via the same treatment. May or may not hit.
-            2. Body: NO containers. NO "01 the problem / 02 the
-               answer" structure (call/response felt over-explained).
-               Instead: staggered indented lines that appear on
-               scroll, all Figtree, narrative voice — implicitly
-               sets up the tension then resolves.
-            3. Alternative body: centred narrative pull-quote with
-               gradient quotation marks framing a single sentence
-               of struggle, then the resolution beneath.
-          Three variants below explore headline + body combinations.
-          Copy is still placeholder — we agreed copywriting needs a
-          proper pass; lock the layout direction first.
+          EXPERIMENT 04 · Full Statement section iteration (v6)
+          v5 confirmed:
+            - Headline locked at I3: "don't let hiring / slow you
+              down" — momentum was too big a word, the simpler line
+              hits harder with fewer words.
+            - I1/I2/I3 body treatments (stagger / pull-quote) all
+              rejected: stagger was novel, pull-quote was too
+              "container-ish". Better direction inspired by the
+              Pumpkin reference Andre shared:
+                ▪ Two big statements, large font, generous margin.
+                ▪ No containers, no quote marks, no indents.
+                ▪ Story-driven through scale + spacing alone.
+                ▪ Two phrases that each make an impact, like two
+                  story chapters.
+          The reference uses centred hero → left-aligned body
+          statements; the alignment shift creates the section flow.
+          Three variants below test that pattern + an all-centred
+          counterpart + a gradient-accented version.
           ============================================================ */}
       <section className={styles.experiment}>
         <div className="container">
           <header className={styles.expHeader}>
             <p className={`kicker ${styles.expKicker}`}>
-              Experiment 04 · Full Statement section iteration (v5)
+              Experiment 04 · Full Statement section iteration (v6)
             </p>
             <h2 className={styles.expH2}>
-              cards retired. staggered scroll-reveal vs centred pull-quote.
+              two big statements. scale + spacing carry the story.
             </h2>
             <p className={styles.expCopy}>
-              v4 cards retired —{" "}
               <strong>
-                paper cards are overused site-wide so they read as
-                ignorable UI, not primary editorial.
+                Headline locked at &ldquo;don&apos;t let hiring / slow
+                you down.&rdquo;
               </strong>{" "}
-              Two replacement directions below: <strong>staggered
-              scroll-reveal</strong> (lines appear progressively
-              indented, no labels, no chapters, just narrative) and{" "}
-              <strong>centred narrative pull-quote</strong> (gradient
-              quotation marks frame a single sentence of struggle).
-              Also exploring the headline rewrite to{" "}
-              <em>don&apos;t let hiring / slow your momentum</em> —
-              dual gradient on &ldquo;hiring&rdquo; + &ldquo;momentum&rdquo;
-              gives skim-readers the words &ldquo;hiring momentum&rdquo;
-              (positive & fast); full-read gets the tension. Body copy
-              and headline are placeholder — pick the layout direction
-              first.
+              Body now follows the Pumpkin pattern —{" "}
+              <strong>
+                two large Cal Sans statements with generous margin
+                between them, no containers, no quote marks, no
+                indents
+              </strong>{" "}
+              — story-driven through scale + spacing alone. Statement
+              1 sets the tension, Statement 2 resolves it. The
+              alignment shift (centred headline → body alignment)
+              creates the section flow. Three layouts below to
+              compare. Copy still placeholder.
             </p>
           </header>
         </div>
 
         <StatementCurrent />
-        <StatementSectionI1 />
-        <StatementSectionI2 />
-        <StatementSectionI3 />
+        <StatementSectionJ1 />
+        <StatementSectionJ2 />
+        <StatementSectionJ3 />
 
         <div className="container">
           <p className={styles.afterNote}>
-            Pick a direction or hybrid — &ldquo;I1 headline + I2
-            body&rdquo;, &ldquo;I3 headline + I1 body but shorter
-            stagger&rdquo; etc. Then I propagate and we do a
-            copywriting pass separately. Then Experiment 05
-            (HowItWorks bento dramatic mixed sizes).
+            Pick one or hybrid. Then I propagate, we do a separate
+            copywriting pass, then Experiment 05 (HowItWorks bento
+            dramatic mixed sizes).
           </p>
         </div>
 
@@ -102,10 +93,8 @@ export default function LabPage() {
           <p className={`${styles.afterNote} ${styles.rejectedNote}`}>
             Below: rejected first-pass attempts (A / B / C) kept dim
             for reference. Word-by-word grid anchoring read as
-            disjointed rather than asymmetric. v2 ghost variants
-            (D/E/F), v3 G2/G3, and v4 card variants (H1/H2/H3)
-            removed entirely — directions invalidated by subsequent
-            calls.
+            disjointed rather than asymmetric. Other rejected
+            generations (D-I) removed — too cluttered to keep all.
           </p>
         </div>
 
@@ -363,15 +352,10 @@ function StatementVariantB() {
 }
 
 /* ============================================================
-   v5 DIRECTION — cards retired. Two new body treatments:
-     - Staggered scroll-reveal: progressively-indented Figtree
-       lines, no containers, no labels, narrative voice.
-     - Centred narrative pull-quote: gradient quotation marks
-       frame a single struggle sentence, resolution beneath.
-   Also testing the "momentum" headline rewrite with dual
-   gradient on hiring + momentum.
-   Note: staggered fade-in animation runs on page load with
-   delays per line to simulate the live scroll-reveal feel.
+   v6 DIRECTION — Pumpkin pattern. Two big Cal Sans statements,
+   generous margin between them, no containers / quote marks /
+   indents. Story-driven via scale + spacing.
+   Headline locked: "don't let hiring / slow you down."
    ============================================================ */
 
 function FullStatementSlot({
@@ -396,118 +380,106 @@ function FullStatementSlot({
   );
 }
 
-/* Body content placeholder — used across variants. Roughly
-   Andre's example arc: stakes → win → opportunity → tension. */
-const STAGGER_LINES = [
-  "you're building, testing, iterating at speed.",
-  "you found something that works.",
-  "you want to pour oil on it.",
-  "and you don't have the right person.",
-];
+/* Shared headline — locked from v5 I3. */
+function LockedHeadline() {
+  return (
+    <h2 className={`${styles.stmtFlowG} ${styles.stmtCenter}`}>
+      don&apos;t let{" "}
+      <span className={styles.gradientFill}>hiring</span>
+      <br />
+      <span className={styles.italicCal}>slow you down</span>.
+    </h2>
+  );
+}
 
-const QUOTE_BODY =
-  "you're building, testing, iterating at speed. you found something that works. you want to pour oil on it — and you don't have the right person.";
-
-const RESOLUTION = (
-  <>
-    with <span className={styles.gradientFill}>makersforge</span> — hire your growth expert in a week, not a quarter.
-  </>
-);
-
-/* I1 · "momentum" headline + staggered scroll-reveal body. */
-function StatementSectionI1() {
+/* J1 · Two LEFT-aligned big statements (closest to Pumpkin pattern).
+   Centred headline → left-aligned body. The alignment shift creates
+   the section dynamic. Statements at clamp(28-48) Cal Sans. */
+function StatementSectionJ1() {
   return (
     <FullStatementSlot
-      label='Variant I1 · "momentum" headline (dual gradient) + staggered scroll-reveal body'
+      label="Variant J1 · Two left-aligned big statements (closest to Pumpkin)"
       description={
-        "Headline: 'don't let hiring / slow your momentum' with dual gradient (hiring + momentum) and Cal Sans synthetic italic on line 2. Skim reads 'hiring momentum' — positive, fast. Full read flips to tension. Body below: four Figtree lines, each progressively indented, no labels, no chapters. Animated fade-in on page load to simulate live scroll-reveal stagger. Closing resolution beneath, centred, with 'makersforge' in gradient."
+        "Centred headline → LEFT-aligned body. Two Cal Sans statements at ~32-48px, generous gap between them. The alignment shift (centred → left) creates section flow exactly like the reference. Statement 1 sets the tension, Statement 2 resolves it. No containers, no quote marks, no indents — just scale + spacing."
       }
     >
       <div className={styles.fullStmtInner}>
-        <h2 className={`${styles.stmtFlowG} ${styles.stmtCenter}`}>
-          don&apos;t let{" "}
-          <span className={styles.gradientFill}>hiring</span>
-          <br />
-          <span className={styles.italicCal}>
-            slow your{" "}
-            <span className={styles.gradientFill}>momentum</span>
-          </span>
-        </h2>
+        <LockedHeadline />
 
-        <div className={styles.staggerStanza}>
-          {STAGGER_LINES.map((line, i) => (
-            <p
-              key={i}
-              className={`${styles.staggerLine} ${styles[`staggerL${i + 1}`]}`}
-            >
-              {line}
-            </p>
-          ))}
+        <div className={styles.bigStatementsLeft}>
+          <p className={styles.bigStatement}>
+            you ship at speed. you find what works. then hiring
+            drags you back to a quarter-long crawl.
+          </p>
+          <p className={styles.bigStatement}>
+            we keep the bench warm. brief monday, shortlist friday,
+            contracts the next week — growth keeps its pace.
+          </p>
         </div>
-
-        <p className={styles.staggerResolution}>{RESOLUTION}</p>
       </div>
     </FullStatementSlot>
   );
 }
 
-/* I2 · "momentum" headline + centred narrative pull-quote body. */
-function StatementSectionI2() {
+/* J2 · Two CENTRED big statements. Same content, same scale, but
+   centred to match the headline alignment. More poster-like; loses
+   the alignment-shift dynamic but reads as one continuous centred
+   composition. */
+function StatementSectionJ2() {
   return (
     <FullStatementSlot
-      label='Variant I2 · "momentum" headline + centred narrative pull-quote'
+      label="Variant J2 · Two centred big statements (cohesive with headline)"
       description={
-        "Same headline as I1 ('momentum' rewrite). Body below: a single sentence framed by oversized gradient quotation marks (heat-text on Cal Sans glyphs), italic Figtree, centred. Feels like a pulled passage from a story — narrative voice, not UI. Resolution sits below the quote, separated by a hairline."
+        "Same two statements as J1 but centred to match the headline alignment. Whole section reads as a single centred poster composition. No alignment-shift dynamic but visually most cohesive with the locked centred headline."
       }
     >
       <div className={styles.fullStmtInner}>
-        <h2 className={`${styles.stmtFlowG} ${styles.stmtCenter}`}>
-          don&apos;t let{" "}
-          <span className={styles.gradientFill}>hiring</span>
-          <br />
-          <span className={styles.italicCal}>
-            slow your{" "}
-            <span className={styles.gradientFill}>momentum</span>
-          </span>
-        </h2>
+        <LockedHeadline />
 
-        <blockquote className={styles.narrativeQuote}>{QUOTE_BODY}</blockquote>
-
-        <p className={styles.narrativeResolution}>{RESOLUTION}</p>
+        <div className={styles.bigStatementsCenter}>
+          <p className={styles.bigStatement}>
+            you ship at speed. you find what works. then hiring
+            drags you back to a quarter-long crawl.
+          </p>
+          <p className={styles.bigStatement}>
+            we keep the bench warm. brief monday, shortlist friday,
+            contracts the next week — growth keeps its pace.
+          </p>
+        </div>
       </div>
     </FullStatementSlot>
   );
 }
 
-/* I3 · Original "slow you down" headline + staggered scroll-reveal body. */
-function StatementSectionI3() {
+/* J3 · J1 layout + gradient accent on a key noun per statement.
+   Echoes the reference's color hierarchy ("passionate enthusiasts"
+   / "browse and move them forward" lighter words) but using our
+   heat gradient on a SINGLE noun per statement rather than a whole
+   second line. Adds rhythm without crowding. */
+function StatementSectionJ3() {
   return (
     <FullStatementSlot
-      label='Variant I3 · "slow you down" headline (confirmed) + staggered scroll-reveal body'
+      label='Variant J3 · J1 layout + gradient accent on one noun per statement'
       description={
-        "Keeps the simpler headline you confirmed ('don't let hiring / slow you down') — single gradient on 'hiring', full closing line italic. Pairs it with the staggered scroll-reveal body from I1. Tests whether the simpler headline + the new body presentation lands harder than the dual-gradient momentum experiment."
+        "Same J1 layout (left-aligned, two big statements) but with a heat-gradient accent on one key noun in each statement: 'hiring' (the problem) and 'bench' (the answer). Mirrors the reference's color hierarchy without using ghost. The gradient ties back to the headline's gradient on 'hiring'."
       }
     >
       <div className={styles.fullStmtInner}>
-        <h2 className={`${styles.stmtFlowG} ${styles.stmtCenter}`}>
-          don&apos;t let{" "}
-          <span className={styles.gradientFill}>hiring</span>
-          <br />
-          <span className={styles.italicCal}>slow you down</span>.
-        </h2>
+        <LockedHeadline />
 
-        <div className={styles.staggerStanza}>
-          {STAGGER_LINES.map((line, i) => (
-            <p
-              key={i}
-              className={`${styles.staggerLine} ${styles[`staggerL${i + 1}`]}`}
-            >
-              {line}
-            </p>
-          ))}
+        <div className={styles.bigStatementsLeft}>
+          <p className={styles.bigStatement}>
+            you ship at speed. you find what works. then{" "}
+            <span className={styles.gradientFill}>hiring</span>{" "}
+            drags you back to a quarter-long crawl.
+          </p>
+          <p className={styles.bigStatement}>
+            we keep the{" "}
+            <span className={styles.gradientFill}>bench</span> warm.
+            brief monday, shortlist friday, contracts the next week
+            — growth keeps its pace.
+          </p>
         </div>
-
-        <p className={styles.staggerResolution}>{RESOLUTION}</p>
       </div>
     </FullStatementSlot>
   );
