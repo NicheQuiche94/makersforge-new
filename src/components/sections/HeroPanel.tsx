@@ -17,7 +17,7 @@ import styles from "./HeroPanel.module.css";
  */
 export function HeroPanel() {
   return (
-    <section className={`heat-glow ${styles.hero}`}>
+    <section className={`heat-glow ${styles.hero}`} data-nav-gradient>
       <div className={styles.inner}>
         <div className={styles.top}>
           <p className={styles.kicker}>

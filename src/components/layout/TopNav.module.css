@@ -1,39 +1,110 @@
-/* Wrap handles the fixed positioning so the inner pill can size to
-   content (condensed) instead of stretching. */
+/* Outer wrap is fixed full-width so the two chips can anchor to
+   opposite edges of the viewport. */
 .wrap {
   position: fixed;
   top: 14px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
   z-index: 1000;
-  /* Centre the pill — the wrap is full-width via 50% + translate,
-     and the pill inside is inline-flex so it sizes to content. */
 }
 
 .nav {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 20px;
-  padding: 8px 8px 8px 22px;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-  border: 1px solid rgba(14, 15, 17, 0.1);
-  border-radius: 999px;
-  line-height: 0;
-  color: var(--ink);
-  box-shadow: 0 4px 24px rgba(14, 15, 17, 0.04);
+  justify-content: space-between;
+  padding: 0 clamp(20px, 3vw, 40px);
+  max-width: 1500px;
+  margin: 0 auto;
 }
 
+/* ============================================================
+   LOGO CARD — always white, regardless of nav mode.
+   ============================================================ */
+.logoCard {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  padding: 8px 16px;
+  border-radius: 999px;
+  line-height: 0;
+  border: 1px solid rgba(14, 15, 17, 0.08);
+  display: inline-flex;
+  align-items: center;
+  box-shadow: 0 4px 18px rgba(14, 15, 17, 0.04);
+}
 .logoLink {
   display: inline-flex;
   align-items: center;
   color: var(--ink);
   text-decoration: none;
-  flex-shrink: 0;
   line-height: 0;
 }
 
+/* ============================================================
+   RIGHT PILL — adaptive (glass over gradient, white over cream)
+   ============================================================ */
+.rightPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 8px 8px 22px;
+  border-radius: 999px;
+  line-height: 0;
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  /* Smooth transition between modes on scroll. */
+  transition:
+    background 0.35s ease,
+    border-color 0.35s ease;
+  box-shadow: 0 4px 18px rgba(14, 15, 17, 0.04);
+}
+
+/* GRADIENT MODE — over the homepage hero. Variant E original
+   treatment: glass + white text + solid white CTA. */
+.modeGradient .rightPill {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: none;
+}
+.modeGradient .links a {
+  color: rgba(255, 255, 255, 0.85);
+}
+.modeGradient .links a:hover,
+.modeGradient .activeLink {
+  color: #fff;
+}
+.modeGradient .cta {
+  background: #fff;
+  color: var(--ink);
+}
+.modeGradient .cta:hover {
+  background: var(--bg);
+}
+
+/* LIGHT MODE — over cream surfaces. White pill + ink text +
+   gradient CTA. Works on every cream section across the site. */
+.modeLight .rightPill {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(14, 15, 17, 0.1);
+}
+.modeLight .links a {
+  color: rgba(14, 15, 17, 0.7);
+}
+.modeLight .links a:hover,
+.modeLight .activeLink {
+  color: var(--ink);
+}
+.modeLight .cta {
+  background: var(--heat-h);
+  color: #fff;
+}
+.modeLight .cta:hover {
+  box-shadow: 0 6px 18px rgba(255, 93, 0, 0.3);
+}
+
+/* ============================================================
+   LINKS — common, color overridden per-mode above.
+   ============================================================ */
 .links {
   display: flex;
   gap: 20px;
@@ -48,14 +119,9 @@
 }
 .links a {
   text-decoration: none;
-  color: rgba(14, 15, 17, 0.7);
   transition: color 0.2s;
 }
-.links a:hover,
 .links a.activeLink,
-.activeLink {
-  color: var(--ink);
-}
 .activeLink {
   font-weight: 600;
 }
@@ -65,8 +131,9 @@
   }
 }
 
-/* Gradient CTA — heat-h (horizontal) avoids the diagonal banding
-   the 120° showed on small pills. White text. The brand moment. */
+/* ============================================================
+   CTA — common, background + color overridden per-mode above.
+   ============================================================ */
 .cta {
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-weight: 600;
@@ -74,14 +141,15 @@
   text-transform: lowercase;
   padding: 10px 18px;
   border-radius: 999px;
-  background: var(--heat-h);
-  color: #fff;
   text-decoration: none;
   line-height: 1;
-  transition: transform 0.2s, box-shadow 0.2s;
-  flex-shrink: 0;
+  margin-left: 14px;
+  transition:
+    background 0.35s ease,
+    color 0.35s ease,
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 .cta:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(255, 93, 0, 0.3);
 }
