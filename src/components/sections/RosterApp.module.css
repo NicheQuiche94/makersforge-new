@@ -532,33 +532,40 @@
   padding-right: 12px;
 }
 
-/* Request-info CTA — separate clickable on the right. */
+/* Request-info CTA — subtle text-only link per Andre 2026-05-30 v2:
+   the prior gradient-pill version split the row into two visually
+   distinct surfaces. Now it sits as plain text + arrow on the
+   right of the row, inheriting row colour (ink on paper, white on
+   gradient) so each row reads as a single unified band. */
 .prowCta {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 0 32px;
-  background: var(--heat-h);
-  color: #fff;
+  gap: 6px;
+  padding: 0 26px 0 18px;
+  background: transparent;
+  color: inherit;
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-weight: 700;
-  font-size: 13px;
-  text-transform: lowercase;
-  letter-spacing: -0.005em;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   text-decoration: none;
   border: none;
   cursor: pointer;
   position: relative;
   z-index: 2;
-  transition: filter 0.2s ease;
   white-space: nowrap;
+  transition: opacity 0.2s;
 }
 .prowCta:hover {
-  filter: brightness(1.08);
+  opacity: 0.75;
 }
-.list > .prow:nth-child(even) .prowCta {
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(8px);
+.prowCta span {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+.prowCta:hover span {
+  transform: translateX(3px);
 }
 
 @media (max-width: 920px) {

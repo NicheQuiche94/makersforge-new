@@ -76,7 +76,7 @@ export function ComparisonStrip() {
               {/* Real logo + wordmark in the highlighted column header
                   (replaces the prior Cal-Sans-gradient text "MakersForge"
                   per Andre 2026-05-30). */}
-              <Logo size={28} className={styles.headLogo} />
+              <Logo size={42} className={styles.headLogo} />
             </div>
             <div className={`${styles.cell} ${styles.head} ${styles.headThem}`}>
               <span className={styles.headTagThem}>Traditional</span>

@@ -20,7 +20,7 @@ const STUDIO_LINKS = [
 const COMPANY_LINKS = [
   { href: "/talent", label: "for talent" },
   { href: "/#about", label: "about" },
-  { href: "https://seedcraft.vc", label: "seedcraft ventures", external: true },
+  { href: "https://seedcraft.co", label: "seedcraft ventures", external: true },
 ];
 
 export function Footer() {
@@ -37,7 +37,7 @@ export function Footer() {
             </p>
             <div className={styles.socials}>
               <a
-                href="https://www.linkedin.com/company/makersforge"
+                href="https://www.linkedin.com/company/makers-forge"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="MakersForge on LinkedIn"
@@ -117,12 +117,12 @@ export function Footer() {
 
         <p className={styles.collab}>
           A{" "}
-          <a href="https://seedcraft.vc" target="_blank" rel="noopener noreferrer">
+          <a href="https://seedcraft.co" target="_blank" rel="noopener noreferrer">
             Seedcraft Ventures
           </a>{" "}
           and{" "}
           <a
-            href="https://www.ssgrecruitment.co.uk"
+            href="https://ssgpartnerships.com"
             target="_blank"
             rel="noopener noreferrer"
           >

@@ -1,84 +1,51 @@
 import type { Metadata } from "next";
 import { Button } from "@/components/atoms/Button";
 import { Logo } from "@/components/atoms/Logo";
-import { StatStrip } from "@/components/sections/StatStrip";
-import { CTABand } from "@/components/sections/CTABand";
 import styles from "./talent.module.css";
 
 /**
  * /talent — the page for the people on the lineup.
  *
- * Framing per Andre's punch list (2026-05-30):
- *   - We are a TALENT AGENCY, not a recruitment business.
- *   - We never take a cut of talent's salary or pay.
- *   - We represent talent INDEFINITELY — contract ends, we find the
- *     next one. Always.
- *   - We do the work of canvassing companies and bringing matches.
+ * Rebuilt per Andre 2026-05-30 v3: the previous version reused the
+ * home page's exact rhythm (hero → stat strip → statement → bento
+ * → CTA) which felt like a copy. This version takes its own shape:
  *
- * This is the placeholder page. Copy will be properly rewritten in
- * a dedicated copywriting pass; the structure here captures the
- * narrative arc Andre described (years spent → recruiters take a
- * cut → we represent you, forever) so the layout has something
- * load-bearing to react to.
+ *   1. Hero (kept — distinct from home's full-bleed gradient hero)
+ *   2. The promise wall — five commitments laid as a structured
+ *      grid with the heat-glow framing the moment talent is asked
+ *      to care about most (no salary cut + indefinite rep).
+ *   3. The lifecycle — a horizontal flow showing what "indefinite
+ *      representation" actually means in practice (join, match,
+ *      engage, re-match — and back to match, forever).
+ *   4. A letter to the lineup — closing pitch in conversational
+ *      voice, signed off, sets up the apply CTA.
+ *   5. CTABand wired to /apply.
  *
- * Layout matches the homepage rhythm: hero, stat strip, statement,
- * how-it-works bento, CTA band. Section-level alignment varies
- * (hero left → statement centred → bento mixed → CTA centred) per
- * [[feedback-section-placement-variation]].
+ * Layout/treatment differs from the home page: no stat strip, no
+ * "don't let hiring slow you down" tension headline, no bento. The
+ * page reads as an agency manifesto rather than a product pitch.
  */
 
 export const metadata: Metadata = {
   title: "For talent · MakersForge",
   description:
-    "Represented, not recruited. We never take a cut of your salary, and we stay with you indefinitely. The talent agency for senior growth operators in mobile apps and games.",
+    "Represented, not recruited. We never take a cut of your salary, and we stay with you indefinitely. The talent agency for senior growth specialists in mobile apps and games.",
 };
-
-// All-gradient stat values per Andre 2026-05-30. Talent-side
-// framing emphasises the zero-cut and the indefinite representation.
-const TALENT_STATS = [
-  {
-    n: <span className="gr">0%</span>,
-    label: "of your salary, ever",
-  },
-  {
-    n: <span className="gr">&infin;</span>,
-    label: "indefinite representation",
-  },
-  {
-    n: <span className="gr">2</span>,
-    label: "disciplines live",
-  },
-  {
-    n: <span className="gr">50+</span>,
-    label: "specialists on the lineup",
-  },
-];
 
 export default function TalentPage() {
   return (
     <>
       <TalentHero />
-      <StatStrip cells={TALENT_STATS} />
-      <TalentStatement />
-      <TalentHowItWorks />
-      <CTABand
-        headline={
-          <>
-            apply to the{" "}
-            <span className={styles.ctaItalic}>lineup.</span>
-          </>
-        }
-        body="Senior UA managers and marketing artists in mobile apps and games. Tell us who you are, what you've shipped, where you're based. We'll be in touch when it fits."
-        cta={{ label: "apply to the lineup", href: "/apply" }}
-      />
+      <PromiseWall />
+      <Lifecycle />
+      <Letter />
     </>
   );
 }
 
 /* ============================================================
-   Hero — left-anchored, mirrors PricingHero compositional pattern
-   so all page heroes feel consistent. Two-colour headline (ink +
-   gradient) per the simplification rule applied to PricingHero.
+   HERO — same compositional pattern as PricingHero / ApplyHero
+   for cross-page consistency, but talent-specific copy.
    ============================================================ */
 function TalentHero() {
   return (
@@ -92,10 +59,18 @@ function TalentHero() {
             <span className="gr">not recruited.</span>
           </h1>
           <p className={styles.heroSub}>
-            We&apos;re a talent agency for senior growth operators in mobile
-            apps and games. We never take a cut of your pay. Once
-            you&apos;re on the lineup, you stay on it.
+            We&apos;re a talent agency for senior growth specialists in
+            mobile apps and games. We never take a cut of your pay.
+            Once you&apos;re on the lineup, you stay on it.
           </p>
+          <div className={styles.heroCtas}>
+            <Button href="/apply" variant="primary" arrow>
+              apply to the lineup
+            </Button>
+            <Button href="#how" variant="ghost">
+              how it works
+            </Button>
+          </div>
         </div>
       </div>
     </section>
@@ -103,168 +78,239 @@ function TalentHero() {
 }
 
 /* ============================================================
-   Statement — centred headline + 3-statement arc (setup left,
-   tension right, resolution centre). Mirrors the homepage
-   Statement K composition.
+   PROMISE WALL — five non-negotiable commitments. The middle row
+   is the load-bearing one (heat-glow background, big payoff
+   headline) flanked by quieter paper cards above and below.
    ============================================================ */
-function TalentStatement() {
+function PromiseWall() {
   return (
-    <section className={styles.stmtSection}>
+    <section className={styles.wallSection}>
       <div className="container">
-        <div className={styles.stmtColumn}>
-          <h2 className={`reveal ${styles.stmtH2}`}>
-            you do{" "}
-            <span className={styles.stmtGradient}>the work</span>.
-            <br />
-            <span className={styles.stmtItalic}>
-              we make the calls
-            </span>
-            .
+        <div className={styles.wallHeader}>
+          <span className="kicker">The lineup contract</span>
+          <h2 className={styles.wallH2}>
+            five promises.{" "}
+            <span className="gr">non-negotiable.</span>
           </h2>
-
-          <div className={styles.stmtBody}>
-            <p className={`reveal d1 ${styles.stmtLine}`}>
-              you spent years getting good at this.
-              <br />
-              the wins are real. the reputation is yours.
-            </p>
-            <p
-              className={`reveal d2 ${styles.stmtLine} ${styles.stmtRight}`}
-            >
-              then a recruiter takes 25% the moment you sign.
-            </p>
-            <p
-              className={`reveal d3 ${styles.stmtLine} ${styles.stmtCenter}`}
-            >
-              we never touch your salary.
-              <br />
-              one contract or ten, the cut is zero.
-              <br />
-              once on the lineup, you stay on the lineup.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ============================================================
-   How it works for talent — 3-tile bento mirroring the homepage
-   HowItWorksBento L2 layout (small + big top row, full-width
-   bottom with right bleed). Different copy, same structural
-   rhythm so the site reads as one product.
-   ============================================================ */
-function TalentHowItWorks() {
-  return (
-    <section className={styles.bentoSection} id="how">
-      <div className="container">
-        <div className={styles.bentoTop}>
-          <div>
-            <p className="kicker">how it works</p>
-            <h2 className={styles.bentoH2}>
-              join. match.{" "}
-              <span className="gr">stay represented.</span>
-            </h2>
-          </div>
-          <p className={styles.bentoTopCopy}>
-            Three steps. No middleman skim. You stay represented for as
-            long as you want us in your corner.
+          <p className={styles.wallSub}>
+            What you sign up to when you join the lineup. These hold
+            whether your last engagement was last week or last year.
           </p>
         </div>
 
-        <div className={styles.bentoGrid}>
-          {/* Row 1: small paper + big heat */}
-          <div className={styles.bentoRow}>
-            <article
-              className={`reveal ${styles.bentoTile} ${styles.bentoPaper}`}
-            >
-              <span className={styles.bentoNum} aria-hidden="true">
-                01
-              </span>
-              <div className={styles.bentoContent}>
-                <h3 className={styles.bentoTitle}>
-                  join <span className="gr">the lineup</span>.
-                </h3>
-                <p className={styles.bentoBody}>
-                  Send your profile. Wins, channels, ranges, what you
-                  want next. We read every application; we&apos;re
-                  selective about who joins so the lineup stays high
-                  signal.
-                </p>
-              </div>
-            </article>
+        <div className={styles.wallGrid}>
+          {/* Top row — two paper promises */}
+          <PromiseCard
+            num="01"
+            title="no commission on your pay"
+            body="Studios pay us a flat monthly fee. We never take a cut of what you earn. Day rate, salary, equity. None of it touches our invoice."
+          />
+          <PromiseCard
+            num="02"
+            title="no paid ranking"
+            body="No specialist can pay to surface higher in the lineup. Matching is based on the brief and the fit, not what anyone paid."
+          />
 
-            <article
-              className={`reveal d1 heat-glow ${styles.bentoTile} ${styles.bentoHeat}`}
-            >
-              <span
-                className={`${styles.bentoNum} ${styles.bentoNumOnDark}`}
-                aria-hidden="true"
-              >
-                02
-              </span>
-              <div className={styles.bentoContent}>
-                <h3
-                  className={`${styles.bentoTitle} ${styles.bentoTitleOnDark}`}
-                >
-                  we work the inbound.
-                </h3>
-                <p
-                  className={`${styles.bentoBody} ${styles.bentoBodyOnDark}`}
-                >
-                  Companies brief us. We pitch you forward when it
-                  fits. Direct intros to the hiring team. We help
-                  with the interview prep and rate negotiation.
-                </p>
-                <span className={styles.bentoPill}>
-                  <span
-                    className={styles.bentoPillDot}
-                    aria-hidden="true"
-                  />
-                  no cut of your pay
-                </span>
-              </div>
-            </article>
-          </div>
-
-          {/* Row 2: charcoal full-width with right bleed */}
+          {/* Middle row — heat-glow load-bearing promise */}
           <article
-            className={`reveal d1 ${styles.bentoTile} ${styles.bentoCharcoal} ${styles.bentoBleed}`}
+            className={`reveal heat-glow ${styles.promiseCard} ${styles.promiseHero}`}
           >
-            <span
-              className={`${styles.bentoNum} ${styles.bentoNumOnDark}`}
-              aria-hidden="true"
-            >
+            <span className={`${styles.promiseNum} ${styles.promiseNumOnDark}`}>
               03
             </span>
-            <div className={styles.bentoContent}>
+            <div className={styles.promiseContent}>
               <h3
-                className={`${styles.bentoTitle} ${styles.bentoTitleOnDark}`}
+                className={`${styles.promiseH} ${styles.promiseHOnDark}`}
               >
-                we stay represented.
+                indefinite{" "}
+                <em className={styles.promiseEm}>representation</em>.
               </h3>
               <p
-                className={`${styles.bentoBody} ${styles.bentoBodyOnDark}`}
+                className={`${styles.promiseBody} ${styles.promiseBodyOnDark}`}
               >
-                A seven-month contract ends. A six-month engagement
-                wraps. You don&apos;t go back to job boards. We&apos;ve
-                been talking to the next set of teams already. Once
+                A contract ends. A six-month engagement wraps. You
+                don&apos;t go back to job boards. We&apos;ve already
+                been talking to the next set of teams. Once
                 you&apos;re on the lineup, the relationship is
                 permanent.
               </p>
             </div>
-            {/* Ghosted MakersForge mark in the bottom-right of the
-                bleed tile — same brand-signature treatment as the
-                CTA band. */}
             <Logo
               variant="mark"
-              size={300}
-              monochrome="rgba(255,255,255,0.08)"
-              className={styles.bentoEmblem}
+              size={280}
+              monochrome="rgba(255,255,255,0.09)"
+              className={styles.promiseEmblem}
               title=""
             />
           </article>
+
+          {/* Bottom row — two paper promises */}
+          <PromiseCard
+            num="04"
+            title="no AI training on your work"
+            body="Your profile content, your case studies, your portfolio. We never use any of it to train AI models. Ours or anyone else's."
+          />
+          <PromiseCard
+            num="05"
+            title="no silent changes"
+            body="If any of the above ever needs to change, we tell you first, clearly, with time to leave if you disagree. Quietly rolling back a promise isn't an option."
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function PromiseCard({
+  num,
+  title,
+  body,
+}: {
+  num: string;
+  title: string;
+  body: string;
+}) {
+  return (
+    <article className={`reveal ${styles.promiseCard} ${styles.promiseCardPaper}`}>
+      <span className={styles.promiseNum}>{num}</span>
+      <div className={styles.promiseContent}>
+        <h3 className={styles.promiseH}>{title}</h3>
+        <p className={styles.promiseBody}>{body}</p>
+      </div>
+    </article>
+  );
+}
+
+/* ============================================================
+   LIFECYCLE — the indefinite-representation loop. Four steps
+   laid in a horizontal flow that visually closes back to step 2
+   so the "back to match" beat reads as endless.
+   ============================================================ */
+function Lifecycle() {
+  return (
+    <section className={styles.lifeSection} id="how">
+      <div className="container">
+        <div className={styles.lifeHeader}>
+          <span className="kicker">how it works</span>
+          <h2 className={styles.lifeH2}>
+            join once.{" "}
+            <span className="gr">represented forever.</span>
+          </h2>
+          <p className={styles.lifeSub}>
+            The cycle that runs as long as you want it to. No
+            re-application after every contract. No going back to job
+            boards.
+          </p>
+        </div>
+
+        <div className={styles.lifeFlow}>
+          <LifeStep
+            num="01"
+            title="join the lineup"
+            body="Send your profile. Wins, channels, ranges, what you want next. We read every application; we're selective about who joins so the lineup stays high signal."
+          />
+          <LifeStep
+            num="02"
+            title="we work the inbound"
+            body="Studios brief us. We pitch you forward when the fit is real. Direct intros to the hiring team. We help with interview prep and rate negotiation."
+            highlight
+          />
+          <LifeStep
+            num="03"
+            title="you sign, you ship"
+            body="Contract direct with the studio. They pay you. We invoice them our flat monthly fee. You get on with the work."
+          />
+          <LifeStep
+            num="04"
+            title="we stay on it"
+            body="Engagement wraps. We're already talking to the next set of teams. Six-month gap or six-week gap, the lineup keeps moving for you. Loop back to 02."
+            loopArrow
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function LifeStep({
+  num,
+  title,
+  body,
+  highlight,
+  loopArrow,
+}: {
+  num: string;
+  title: string;
+  body: string;
+  highlight?: boolean;
+  loopArrow?: boolean;
+}) {
+  return (
+    <article
+      className={`reveal ${styles.lifeStep} ${
+        highlight ? styles.lifeStepHighlight : ""
+      }`}
+    >
+      <div className={styles.lifeStepHead}>
+        <span className={styles.lifeNum}>{num}</span>
+        {loopArrow && (
+          <span className={styles.lifeLoop} aria-hidden="true">
+            ↻
+          </span>
+        )}
+      </div>
+      <h3 className={styles.lifeStepH}>{title}</h3>
+      <p className={styles.lifeStepBody}>{body}</p>
+    </article>
+  );
+}
+
+/* ============================================================
+   LETTER — closing pitch in conversational voice. Single column,
+   wider measure than the body sections elsewhere, signs off as
+   if from Andre directly.
+   ============================================================ */
+function Letter() {
+  return (
+    <section className={styles.letterSection}>
+      <div className="container">
+        <div className={styles.letterInner}>
+          <span className={`kicker ${styles.letterKicker}`}>
+            from the desk
+          </span>
+          <p className={styles.letterSalutation}>dear specialist,</p>
+          <p className={styles.letterP}>
+            The mobile growth world is full of people who pretend
+            recruitment is a service to talent. It isn&apos;t. The
+            standard model takes 20% to 30% of your salary, refers you
+            once, and disappears. We built MakersForge for the
+            opposite of that.
+          </p>
+          <p className={styles.letterP}>
+            We represent you the way a music agent represents a
+            songwriter. We do the work of finding the rooms. We bring
+            the brief. We push back when the brief is bad. When the
+            engagement is up, we&apos;re already working the next one.
+            That&apos;s the job. We get paid by the studio for doing
+            it well. You keep what you earn.
+          </p>
+          <p className={styles.letterP}>
+            You don&apos;t need to be open to work to apply. Most of
+            the lineup is in engagements right now. We line up the next
+            one while the current one runs.
+          </p>
+          <p className={styles.letterSignoff}>
+            <span className={styles.letterSignoffName}>Andre</span>
+            <span className={styles.letterSignoffRole}>
+              founder, MakersForge
+            </span>
+          </p>
+
+          <div className={styles.letterCta}>
+            <Button href="/apply" variant="primary" arrow>
+              apply to the lineup
+            </Button>
+          </div>
         </div>
       </div>
     </section>
