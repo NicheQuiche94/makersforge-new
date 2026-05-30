@@ -437,7 +437,8 @@
   border-color: transparent;
   color: #fff;
   transform: translateY(-4px);
-  box-shadow: 0 30px 70px rgba(199, 46, 0, 0.32);
+  /* Neutral dark shadow — deep-red tinted shadow read as a stroke/halo. */
+  box-shadow: 0 24px 50px rgba(14, 15, 17, 0.22);
 }
 /* Hero-style composite: warm radial bottom-right + white radial top-left + noise.
    Both ::before and ::after activate on hover. */

@@ -70,11 +70,17 @@
   height: 440px;
   background: var(--heat-deep);
   color: #fff;
-  border-color: transparent;
+  /* No border on featured — the 1px transparent border was reading as a
+     gradient seam against the surrounding cream. Width difference vs
+     non-featured (1px) is invisible given the card is 80px bigger. */
+  border: none;
   opacity: 1;
   filter: none;
   transform: scale(1);
-  box-shadow: 0 30px 70px rgba(199, 46, 0, 0.32);
+  /* Neutral dark shadow instead of the deep-red tinted one. The
+     red-tinted shadow read as a glow/stroke; this gives the same lift
+     without colouring the halo. */
+  box-shadow: 0 24px 50px rgba(14, 15, 17, 0.22);
   z-index: 5;
 }
 /* Hero-style composite for the featured card. */

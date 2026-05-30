@@ -3,13 +3,19 @@
 import { useEffect } from "react";
 
 /**
- * Adds the `.in-view` class to every element matching `selector`
- * when it enters the viewport (15% threshold).
+ * Observes elements matching `selector` and adds `.in` (and the legacy
+ * `.in-view`) once they enter the viewport at 15% threshold.
  *
- * Honours prefers-reduced-motion: when reduced, every target is marked
- * in-view immediately and the observer is skipped.
+ * Default selector covers both:
+ *   - `.reveal` (v4 brief, fade-up + 28px translate + 0.9s)
+ *   - `.scroll-reveal` (legacy from earlier briefs)
+ *
+ * Honours prefers-reduced-motion: marks every target visible immediately
+ * and skips the observer entirely.
  */
-export function useScrollReveal(selector: string = ".scroll-reveal") {
+export function useScrollReveal(
+  selector: string = ".reveal, .scroll-reveal",
+) {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -18,7 +24,10 @@ export function useScrollReveal(selector: string = ".scroll-reveal") {
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) {
-      targets.forEach((el) => el.classList.add("in-view"));
+      targets.forEach((el) => {
+        el.classList.add("in");
+        el.classList.add("in-view");
+      });
       return;
     }
 
@@ -26,12 +35,13 @@ export function useScrollReveal(selector: string = ".scroll-reveal") {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
+            entry.target.classList.add("in");
             entry.target.classList.add("in-view");
             observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.15 },
+      { threshold: 0.15, rootMargin: "0px 0px -10% 0px" },
     );
 
     targets.forEach((el) => observer.observe(el));
