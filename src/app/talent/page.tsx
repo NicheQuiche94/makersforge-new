@@ -33,34 +33,24 @@ export const metadata: Metadata = {
     "Represented, not recruited. We never take a cut of your salary, and we stay with you indefinitely. The talent agency for senior growth operators in mobile apps and games.",
 };
 
+// All-gradient stat values per Andre 2026-05-30. Talent-side
+// framing emphasises the zero-cut and the indefinite representation.
 const TALENT_STATS = [
   {
-    n: (
-      <>
-        0<span className="gr">%</span>
-      </>
-    ),
+    n: <span className="gr">0%</span>,
     label: "of your salary, ever",
   },
   {
-    n: <>&infin;</>,
+    n: <span className="gr">&infin;</span>,
     label: "indefinite representation",
   },
   {
-    n: (
-      <>
-        <span className="gr">2</span>
-      </>
-    ),
+    n: <span className="gr">2</span>,
     label: "disciplines live",
   },
   {
-    n: (
-      <>
-        50<span className="gr">+</span>
-      </>
-    ),
-    label: "operators on the lineup",
+    n: <span className="gr">50+</span>,
+    label: "specialists on the lineup",
   },
 ];
 

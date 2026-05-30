@@ -230,11 +230,12 @@
   margin: 0;
   color: var(--dim);
 }
+/* White on gradient/charcoal surfaces (Andre 2026-05-30). */
 .bentoBodyOnDark {
-  color: rgba(255, 255, 255, 0.78);
+  color: #fff;
 }
 .bentoCharcoal .bentoBody {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.92);
 }
 
 .bentoPill {

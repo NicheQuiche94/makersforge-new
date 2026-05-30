@@ -506,9 +506,12 @@
   color: var(--mute);
   transition: color 0.3s;
 }
+/* All text on gradient surfaces goes to full white (or 0.85+ for
+   subordinate labels) per Andre 2026-05-30 — the off-white at 0.6-0.78
+   hits low-contrast pockets in the gradient and reads as afterthought. */
 .pcard:hover .pcMono,
 .grid > .pcard:nth-child(even) .pcMono {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .pcStatus {
@@ -619,7 +622,7 @@
 }
 .pcard:hover .pcRole,
 .grid > .pcard:nth-child(even) .pcRole {
-  color: rgba(255, 255, 255, 0.78);
+  color: #fff;
 }
 
 .pcMeta {
@@ -641,7 +644,7 @@
 }
 .pcard:hover .pcK,
 .grid > .pcard:nth-child(even) .pcK {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.85);
 }
 .pcV {
   color: var(--ink);

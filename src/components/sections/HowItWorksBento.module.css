@@ -141,11 +141,14 @@
   margin: 0;
   color: var(--dim);
 }
+/* High-contrast body text on gradient + charcoal surfaces per Andre
+   2026-05-30 — previous 0.7-0.78 readings disappeared into bright
+   patches of the heat gradient. */
 .bodyOnDark {
-  color: rgba(255, 255, 255, 0.78);
+  color: #fff;
 }
 .surface-charcoal .body {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.92);
 }
 
 .pillGrad {

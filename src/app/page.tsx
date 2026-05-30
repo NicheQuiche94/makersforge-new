@@ -6,11 +6,15 @@ import { HowItWorksBento } from "@/components/sections/HowItWorksBento";
 import { RosterCarousel } from "@/components/sections/RosterCarousel";
 import { CTABand } from "@/components/sections/CTABand";
 
+// Stat values now all gradient (no mixed ink+gradient) per Andre
+// 2026-05-30 — the half-ink/half-gradient mix read as "afterthought",
+// and going uniform-gradient eases the Cal Sans angularity at this scale.
+// Lineup language replaces "operators" per the talent-agency reframe.
 const HOME_STATS = [
-  { n: <>50<span className="gr">+</span></>, label: "vetted operators" },
+  { n: <span className="gr">50+</span>, label: "on the lineup" },
   { n: <span className="gr">2</span>, label: "disciplines live" },
-  { n: <>&lt;7<span className="gr">d</span></>, label: "avg deployment" },
-  { n: "£0", label: "% of salary taken" },
+  { n: <span className="gr">&lt;7d</span>, label: "avg deployment" },
+  { n: <span className="gr">£0</span>, label: "% of salary taken" },
 ];
 
 export const metadata: Metadata = {
