@@ -320,7 +320,7 @@ a {
 }
 
 .body-text {
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1.55;
   color: var(--dim);
   margin: 0;
@@ -330,14 +330,43 @@ a {
   font-weight: 600;
 }
 .body-text-lg {
-  font-size: 17px;
-  line-height: 1.55;
+  font-size: 19px;
+  line-height: 1.5;
   color: var(--dim);
   margin: 0;
 }
 .body-text-lg strong {
   color: var(--ink);
   font-weight: 600;
+}
+/* Used for the emphasised intro / lede paragraphs that sit alongside
+   the big headlines — weight up so they hold their own. */
+.body-text-strong {
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--ink);
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Accent kicker-headline. For things like "the problem we solve" that
+   were getting drowned at 12px tracked uppercase. Cal Sans lowercase
+   at 22-28px reads as a deliberate sub-headline, not body noise. */
+.display-tiny {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(22px, 2vw, 28px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-transform: lowercase;
+  color: var(--ink);
+  margin: 0;
+}
+.display-tiny .gr {
+  background: var(--heat-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* =========================================================

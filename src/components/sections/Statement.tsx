@@ -12,7 +12,9 @@ export function Statement() {
             <span className="gr">we won&apos;t.</span>
           </h2>
           <div className={`reveal d1 ${styles.left}`}>
-            <span className={`kicker ${styles.kicker}`}>the problem we solve</span>
+            <p className={`display-tiny ${styles.kicker}`}>
+              the problem <span className="gr">we solve.</span>
+            </p>
             <p className={styles.copy}>
               Months posting ads, sifting CVs, gambling on culture fit. We keep
               a vetted bench of operators we already know.

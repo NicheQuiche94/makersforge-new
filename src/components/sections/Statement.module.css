@@ -30,10 +30,16 @@
   margin-bottom: 14px;
   display: block;
 }
+/* Display-tiny accent: pad-bottom for breathing space between accent
+   headline and the body that follows. */
+:where(.left) .kicker.display-tiny,
+.kicker:global(.display-tiny) {
+  margin-bottom: 18px;
+}
 
 .left .copy,
 .copy {
-  font-size: 15px;
+  font-size: 17px;
   line-height: 1.55;
   color: var(--dim);
   margin: 0;
@@ -42,11 +48,11 @@
 .right {
   justify-self: end;
   align-self: end;
-  max-width: 440px;
+  max-width: 460px;
 }
 .copyLg {
-  font-size: 17px;
-  line-height: 1.55;
+  font-size: 19px;
+  line-height: 1.5;
   color: var(--dim);
   margin: 0 0 16px;
 }

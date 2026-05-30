@@ -49,10 +49,10 @@
 }
 
 .copy {
-  font-size: 17px;
-  line-height: 1.55;
+  font-size: 19px;
+  line-height: 1.5;
   color: var(--dim);
-  margin: 0 0 14px;
+  margin: 0 0 16px;
 }
 .copy strong {
   color: var(--ink);
