@@ -5,7 +5,7 @@ export function HeroPanel() {
   return (
     <section className={styles.wrap}>
       <div className="container">
-        <div className={styles.panel}>
+        <div className={`heat-glow ${styles.panel}`}>
           <div className={styles.top}>
             <p className={styles.kick}>
               Growth team contractors · mobile apps &amp; games

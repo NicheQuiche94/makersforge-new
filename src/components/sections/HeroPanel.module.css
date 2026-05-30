@@ -2,47 +2,15 @@
   padding: 90px 0 18px;
 }
 
+/* Composite heat-deep + radial highlights + noise overlay comes from
+   the global .heat-glow utility. This module only handles layout. */
 .panel {
-  position: relative;
   border-radius: 32px;
-  overflow: hidden;
-  background: var(--heat-deep);
-  color: #fff;
   padding: 80px 60px 60px;
   min-height: 620px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-}
-.panel::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(
-      ellipse at 80% 110%,
-      #ffb347 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      ellipse at 0% 0%,
-      rgba(255, 255, 255, 0.12) 0%,
-      transparent 40%
-    );
-  pointer-events: none;
-}
-.panel::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  mix-blend-mode: overlay;
-  opacity: 0.7;
-  pointer-events: none;
-}
-.panel > * {
-  position: relative;
-  z-index: 2;
 }
 @media (max-width: 700px) {
   .panel {

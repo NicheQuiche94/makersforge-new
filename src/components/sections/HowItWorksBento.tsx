@@ -34,7 +34,7 @@ export function HowItWorksBento() {
           </article>
 
           {/* Tile 2 — heat-deep gradient */}
-          <article className={`reveal d1 ${styles.tile} ${styles.tile2}`}>
+          <article className={`reveal d1 heat-glow ${styles.tile} ${styles.tile2}`}>
             <div>
               <p className={styles.step}>02</p>
               <h3 className={`${styles.h3} ${styles.h3OnDark}`}>we match.</h3>

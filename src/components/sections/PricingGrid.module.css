@@ -25,41 +25,8 @@
   min-height: 580px;
 }
 
-/* PRIMARY (deep gradient) */
-.primary {
-  background: var(--heat-deep);
-  color: #fff;
-}
-.primary::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(
-      ellipse at 100% 110%,
-      #ffb347 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      ellipse at 0% 0%,
-      rgba(255, 255, 255, 0.12) 0%,
-      transparent 40%
-    );
-  pointer-events: none;
-}
-.primary::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  mix-blend-mode: overlay;
-  opacity: 0.7;
-  pointer-events: none;
-}
-.primary > * {
-  position: relative;
-  z-index: 1;
-}
+/* PRIMARY — composite gradient + radial highlights + noise comes
+   from the global .heat-glow utility. */
 
 /* SECONDARY (paper) */
 .secondary {

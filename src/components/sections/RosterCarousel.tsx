@@ -37,19 +37,27 @@ export function RosterCarousel() {
   const hover = useRef(false);
 
   // Compute translate so the featured card centres in the stage.
+  // Track has left: 0; track's left edge starts at the stage's left edge.
+  // We shift the track right by (stageWidth/2 - featuredCenterFromTrackLeft)
+  // so the featured card's centre lands exactly at stageWidth/2.
   const recenter = useCallback(() => {
     const track = trackRef.current;
-    if (!track) return;
+    const stage = stageRef.current;
+    if (!track || !stage) return;
     const cards = cardRefs.current;
-    if (!cards[featured]) return;
-    let offset = 0;
+    const featuredCard = cards[featured];
+    if (!featuredCard) return;
+
+    let offsetFromTrackLeft = 0;
     for (let i = 0; i < featured; i++) {
       const c = cards[i];
-      if (c) offset += c.offsetWidth + 14; // gap = 14
+      if (c) offsetFromTrackLeft += c.offsetWidth + 14; // gap = 14
     }
-    const featuredCard = cards[featured]!;
-    const total = offset + featuredCard.offsetWidth / 2;
-    track.style.transform = `translate(calc(50% - ${total}px), -50%)`;
+    const featuredCenter = offsetFromTrackLeft + featuredCard.offsetWidth / 2;
+    const stageWidth = stage.offsetWidth;
+    const target = stageWidth / 2 - featuredCenter;
+
+    track.style.transform = `translate(${target}px, -50%)`;
   }, [featured]);
 
   // Reduced motion detection

@@ -18,7 +18,7 @@ export function CTABand({
   return (
     <section className={styles.section}>
       <div className="container">
-        <div className={styles.inner}>
+        <div className={`heat-bright-glow ${styles.inner}`}>
           <h2 className={styles.headline}>
             {headline ?? (
               <>

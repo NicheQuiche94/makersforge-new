@@ -53,7 +53,7 @@ export function ApplyForm() {
 
   if (status === "ok") {
     return (
-      <div className={styles.success}>
+      <div className={`heat-glow ${styles.success}`}>
         <p className="kicker" style={{ marginBottom: 14 }}>application received</p>
         <h2 className={styles.successH}>
           we&apos;ll be <span className="gr">in touch.</span>

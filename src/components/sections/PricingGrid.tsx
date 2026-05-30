@@ -7,7 +7,7 @@ export function PricingGrid() {
       <div className="container">
         <div className={styles.grid}>
           {/* PRIMARY — heat-deep panel */}
-          <article className={`reveal ${styles.primary}`}>
+          <article className={`reveal heat-glow ${styles.primary}`}>
             <div className={styles.pcTop}>
               <span className={`${styles.pcTag} ${styles.pcTagOnDark}`}>
                 <span className={styles.dotSm} aria-hidden="true" />
