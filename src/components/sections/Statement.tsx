@@ -1,4 +1,3 @@
-import { Blob } from "@/components/atoms/Blob";
 import styles from "./Statement.module.css";
 
 export function Statement() {
@@ -14,7 +13,7 @@ export function Statement() {
             <em>shouldn&apos;t.</em>
           </span>
           <span className={`${styles.line} ${styles.line3}`}>
-            slow <Blob /> <span className="gr">growth.</span>
+            slow <span className="gr">growth.</span>
           </span>
         </h2>
 
@@ -27,7 +26,7 @@ export function Statement() {
             <header className={styles.chapterHead}>
               <span className={styles.chapterNum}>01 /</span>
               <h3 className={styles.chapterLabel}>
-                the problem <Blob /> <em>we solve.</em>
+                the problem <em>we solve.</em>
               </h3>
             </header>
             <p className={styles.body}>
@@ -42,7 +41,7 @@ export function Statement() {
             <header className={styles.chapterHead}>
               <span className={styles.chapterNum}>02 /</span>
               <h3 className={styles.chapterLabel}>
-                the <Blob /> <em>answer.</em>
+                the <em>answer.</em>
               </h3>
             </header>
             <p className={styles.body}>
