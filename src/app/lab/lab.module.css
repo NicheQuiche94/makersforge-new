@@ -690,41 +690,146 @@
   margin: 0;
 }
 
-/* H3 wide variant — single card with internal vertical hairline. */
-.statementWideCard {
-  background: var(--paper);
-  border: 1px solid var(--hair);
-  border-radius: 28px;
-  width: 100%;
-  max-width: 960px;
-  display: grid;
-  grid-template-columns: 1fr 1px 1fr;
-  overflow: hidden;
+/* ============================================================
+   v5 DIRECTION — staggered scroll-reveal + narrative pull-quote
+   replacements for the (now-retired) paper cards.
+   ============================================================ */
+
+/* Staggered stanza — Figtree lines, no containers, progressively
+   indented within a centred max-width block. Fade-in keyframes
+   simulate the live scroll-reveal effect on lab page load. */
+@keyframes staggerIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.statementWideHalf {
-  padding: 36px 32px;
+.staggerStanza {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  text-align: left;
+  gap: 18px;
+  width: 100%;
+  max-width: 780px;
+  margin: 0 auto;
 }
 
-.statementWideDividerCol {
+.staggerLine {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(20px, 2.3vw, 30px);
+  line-height: 1.35;
+  color: var(--ink);
+  margin: 0;
+  opacity: 0;
+  animation: staggerIn 0.6s ease forwards;
+}
+
+.staggerL1 {
+  margin-left: 0;
+  animation-delay: 0.15s;
+}
+.staggerL2 {
+  margin-left: clamp(20px, 4vw, 70px);
+  animation-delay: 0.35s;
+}
+.staggerL3 {
+  margin-left: clamp(44px, 8vw, 140px);
+  animation-delay: 0.55s;
+}
+.staggerL4 {
+  margin-left: clamp(70px, 12vw, 210px);
+  animation-delay: 0.75s;
+  color: rgba(14, 15, 17, 0.92);
+  font-weight: 500;
+}
+
+/* Resolution — separated from the stagger by a small hairline,
+   centred, Figtree 600 at a slightly larger scale. */
+.staggerResolution,
+.narrativeResolution {
+  margin: 64px auto 0;
+  max-width: 760px;
+  text-align: center;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: clamp(22px, 2.6vw, 32px);
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--ink);
+  position: relative;
+  padding-top: 36px;
+}
+
+.staggerResolution::before,
+.narrativeResolution::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 1px;
   background: var(--hair);
-  width: 1px;
+}
+
+/* Narrative pull-quote — centred italic Figtree paragraph framed
+   by oversized gradient quotation marks (heat-text on Cal Sans). */
+.narrativeQuote {
+  position: relative;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px 70px;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(20px, 2.3vw, 30px);
+  line-height: 1.55;
+  color: var(--ink);
+  text-align: center;
+}
+
+.narrativeQuote::before,
+.narrativeQuote::after {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-style: normal;
+  font-size: clamp(80px, 10vw, 140px);
+  line-height: 0.85;
+  position: absolute;
+  background: var(--heat-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.narrativeQuote::before {
+  content: "\201C";
+  left: 0;
+  top: 8px;
+}
+
+.narrativeQuote::after {
+  content: "\201D";
+  right: 0;
+  bottom: -32px;
 }
 
 @media (max-width: 700px) {
-  .statementCards {
-    grid-template-columns: 1fr;
+  .staggerL2 {
+    margin-left: 16px;
   }
-  .statementWideCard {
-    grid-template-columns: 1fr;
+  .staggerL3 {
+    margin-left: 32px;
   }
-  .statementWideDividerCol {
-    width: 100%;
-    height: 1px;
+  .staggerL4 {
+    margin-left: 48px;
+  }
+  .narrativeQuote {
+    padding: 24px 36px;
   }
 }
 
