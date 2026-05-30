@@ -12,7 +12,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 clamp(20px, 3vw, 40px);
+  /* Padding matches HeroPanel .inner padding so the left logo pill's
+     left edge aligns with the hero text left edge across viewports. */
+  padding: 0 clamp(32px, 4vw, 64px);
   max-width: 1500px;
   margin: 0 auto;
 }

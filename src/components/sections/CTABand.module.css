@@ -26,8 +26,11 @@
   max-width: 920px;
   color: #fff;
 }
+/* Ghost retired from the design language. The "easy bit" span keeps
+   the class hook so we can later attach a wipe-in motion treatment
+   without touching the markup; today it renders solid white. */
 .ghost {
-  color: rgba(255, 255, 255, 0.5);
+  color: #fff;
 }
 
 .body {

@@ -1,8 +1,8 @@
 .foot {
   padding: 90px 0 30px;
-  border-top: 1px solid var(--hair);
-  background: var(--bg);
-  color: var(--ink);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  background: #2a2d3a;
+  color: #fff;
 }
 
 .main {
@@ -31,7 +31,7 @@
 .logoLink {
   display: inline-flex;
   align-items: center;
-  color: var(--ink);
+  color: #fff;
   text-decoration: none;
   margin-bottom: 14px;
   line-height: 0;
@@ -39,7 +39,7 @@
 .tagline {
   font-size: 15px;
   line-height: 1.55;
-  color: var(--dim);
+  color: rgba(255, 255, 255, 0.7);
   margin: 0 0 14px;
   max-width: 280px;
 }
@@ -49,8 +49,8 @@
   gap: 8px;
   padding: 6px 12px;
   border-radius: 999px;
-  background: rgba(255, 93, 0, 0.1);
-  color: #c72e00;
+  background: rgba(255, 93, 0, 0.18);
+  color: #ffb347;
   font-weight: 600;
   font-size: 11px;
   letter-spacing: 0.12em;
@@ -74,17 +74,17 @@
   width: 36px;
   height: 36px;
   border-radius: 999px;
-  background: rgba(14, 15, 17, 0.05);
+  background: rgba(255, 255, 255, 0.08);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--ink);
+  color: #fff;
   text-decoration: none;
   transition: all 0.2s;
 }
 .socials a:hover {
-  background: var(--ink);
-  color: #fff;
+  background: #fff;
+  color: #2a2d3a;
   transform: translateY(-2px);
 }
 .socials a svg {
@@ -97,7 +97,7 @@
   font-size: 11px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--mute);
+  color: rgba(255, 255, 255, 0.5);
   margin: 0 0 16px;
 }
 .col ul {
@@ -114,32 +114,32 @@
   gap: 8px;
   font-size: 14px;
   text-decoration: none;
-  color: var(--ink);
+  color: #fff;
   font-weight: 500;
   text-transform: lowercase;
   transition: opacity 0.2s;
 }
 .col a:hover {
-  opacity: 0.6;
+  opacity: 0.65;
 }
 
 .bottom {
   padding-top: 26px;
-  border-top: 1px solid var(--hair);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 14px;
   font-size: 13px;
-  color: var(--mute);
+  color: rgba(255, 255, 255, 0.55);
   flex-wrap: wrap;
 }
 .copy {
-  color: var(--ink);
+  color: #fff;
   font-weight: 500;
 }
 .dim {
-  color: var(--mute);
+  color: rgba(255, 255, 255, 0.55);
   font-weight: 400;
 }
 .legal {
@@ -147,26 +147,26 @@
   gap: 18px;
 }
 .legal a {
-  color: var(--mute);
+  color: rgba(255, 255, 255, 0.55);
   text-decoration: none;
   transition: color 0.2s;
 }
 .legal a:hover {
-  color: var(--ink);
+  color: #fff;
 }
 
 .collab {
   padding-top: 18px;
   font-size: 13px;
-  color: var(--mute);
+  color: rgba(255, 255, 255, 0.55);
   text-align: center;
   margin: 0;
 }
 .collab a {
-  color: var(--ink);
+  color: #fff;
   text-decoration: underline;
   text-underline-offset: 3px;
-  text-decoration-color: var(--hair-strong);
+  text-decoration-color: rgba(255, 255, 255, 0.25);
   font-weight: 500;
   transition: text-decoration-color 0.2s;
 }

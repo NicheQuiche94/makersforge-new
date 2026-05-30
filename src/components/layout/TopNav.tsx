@@ -6,10 +6,9 @@ import { Logo } from "@/components/atoms/Logo";
 import styles from "./TopNav.module.css";
 
 const LINKS = [
-  { href: "/roster", label: "the roster" },
   { href: "/#how", label: "how it works" },
+  { href: "/roster", label: "the roster" },
   { href: "/pricing", label: "pricing" },
-  { href: "/#about", label: "about" },
 ];
 
 /**

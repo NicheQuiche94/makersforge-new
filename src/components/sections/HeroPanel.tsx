@@ -25,7 +25,7 @@ export function HeroPanel() {
             mobile apps &amp; games · EMEA
           </p>
           <div className={styles.masthead}>
-            <span>est. 2026</span>
+            <span>est. 2024</span>
             <span>a SeedCraft venture</span>
           </div>
         </div>
