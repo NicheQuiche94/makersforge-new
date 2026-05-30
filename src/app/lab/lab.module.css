@@ -834,25 +834,37 @@
 }
 
 /* ============================================================
-   v6 DIRECTION — Pumpkin pattern. Two big Cal Sans statements,
-   generous margin, no containers. Story-driven via scale +
-   spacing alone.
+   v7 LOCKED DIRECTION — Pumpkin pattern + corrected alignment.
+   Headline + body share .lockedColumn whose max-width tracks
+   the headline's widest line ("slow you down."), so the body's
+   left/right edges align with the headline's visible bounds.
    ============================================================ */
 
-.bigStatementsLeft,
-.bigStatementsCenter {
+/* Shared column for headline + body.
+   Width math: "slow you down." ≈ 7.0em at Cal Sans 124px with
+   -0.04em letter-spacing → ~870px. Body and headline both fill
+   this width; headline text-aligns centre, body text-aligns
+   left. The wider line ("slow you down.") fills the container
+   end-to-end; the narrower line ("don't let hiring") centres
+   within it. */
+.lockedColumn {
+  width: 100%;
+  max-width: clamp(340px, 55vw, 900px);
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: clamp(40px, 5.5vw, 80px);
+  gap: clamp(60px, 7vw, 100px);
+}
+
+.lockedBody {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(40px, 5.5vw, 76px);
   width: 100%;
-  max-width: 880px;
-  margin: 0 auto;
 }
 
-.bigStatementsCenter {
-  text-align: center;
-}
-
+/* Big statement — shared by all body lines in the locked
+   column. Cal Sans at ~28-48px, lowercase, left-aligned. */
 .bigStatement {
   font-family: "Cal Sans", system-ui, sans-serif;
   font-weight: 400;

@@ -28,64 +28,65 @@ export default function LabPage() {
       </section>
 
       {/* ============================================================
-          EXPERIMENT 04 · Full Statement section iteration (v6)
-          v5 confirmed:
-            - Headline locked at I3: "don't let hiring / slow you
-              down" — momentum was too big a word, the simpler line
-              hits harder with fewer words.
-            - I1/I2/I3 body treatments (stagger / pull-quote) all
-              rejected: stagger was novel, pull-quote was too
-              "container-ish". Better direction inspired by the
-              Pumpkin reference Andre shared:
-                ▪ Two big statements, large font, generous margin.
-                ▪ No containers, no quote marks, no indents.
-                ▪ Story-driven through scale + spacing alone.
-                ▪ Two phrases that each make an impact, like two
-                  story chapters.
-          The reference uses centred hero → left-aligned body
-          statements; the alignment shift creates the section flow.
-          Three variants below test that pattern + an all-centred
-          counterpart + a gradient-accented version.
+          EXPERIMENT 04 · Full Statement section iteration (v7)
+          v6 J1 (left-aligned big statements) confirmed as the
+          direction. Three corrections + restructure for v7:
+            1. ALIGNMENT: Headline + body now share a max-width
+               sized to the headline's widest line ("slow you
+               down."). Body's left and right edges visually align
+               with the headline's bounds. Previously the body had
+               its own max-width (880px centred) which extended
+               wider than the headline on both sides.
+            2. STRUCTURE: Body restructured from two long statements
+               into three short ones, each a separate phrase with
+               its own visual weight: setup beats, tension hit,
+               resolution. Internal line breaks within each statement
+               for readability (e.g. "you ship at speed." and "you
+               find what works." as two lines within statement A).
+            3. NO EM-DASHES anywhere. Period-only punctuation. This
+               is a durable site-wide style rule, not just this
+               section.
+          Copy still placeholder. Andre flagged some inaccuracies
+          (this isn't a quarter-long crawl, the bench warming line
+          could be tightened). Copywriting pass deferred until
+          layout is fully locked.
           ============================================================ */}
       <section className={styles.experiment}>
         <div className="container">
           <header className={styles.expHeader}>
             <p className={`kicker ${styles.expKicker}`}>
-              Experiment 04 · Full Statement section iteration (v6)
+              Experiment 04 · Full Statement section iteration (v7)
             </p>
             <h2 className={styles.expH2}>
-              two big statements. scale + spacing carry the story.
+              aligned. broken up. no em-dashes.
             </h2>
             <p className={styles.expCopy}>
+              v6 J1 confirmed. Three corrections:{" "}
               <strong>
-                Headline locked at &ldquo;don&apos;t let hiring / slow
-                you down.&rdquo;
+                headline + body share a max-width matched to the
+                headline&apos;s widest line
               </strong>{" "}
-              Body now follows the Pumpkin pattern —{" "}
+              so the left/right edges align;{" "}
               <strong>
-                two large Cal Sans statements with generous margin
-                between them, no containers, no quote marks, no
-                indents
+                body broken into three statements
               </strong>{" "}
-              — story-driven through scale + spacing alone. Statement
-              1 sets the tension, Statement 2 resolves it. The
-              alignment shift (centred headline → body alignment)
-              creates the section flow. Three layouts below to
-              compare. Copy still placeholder.
+              (setup / tension / resolution), each can break across
+              multiple lines internally; and{" "}
+              <strong>no em-dashes anywhere</strong> (site-wide style
+              rule). Copy still placeholder. Lock the layout first.
             </p>
           </header>
         </div>
 
         <StatementCurrent />
-        <StatementSectionJ1 />
-        <StatementSectionJ2 />
-        <StatementSectionJ3 />
+        <StatementSectionK1 />
 
         <div className="container">
           <p className={styles.afterNote}>
-            Pick one or hybrid. Then I propagate, we do a separate
-            copywriting pass, then Experiment 05 (HowItWorks bento
-            dramatic mixed sizes).
+            Confirm alignment / structure, then I propagate to the
+            live Statement section. Copywriting pass separately.
+            Then Experiment 05 (HowItWorks bento dramatic mixed
+            sizes).
           </p>
         </div>
 
@@ -94,7 +95,7 @@ export default function LabPage() {
             Below: rejected first-pass attempts (A / B / C) kept dim
             for reference. Word-by-word grid anchoring read as
             disjointed rather than asymmetric. Other rejected
-            generations (D-I) removed — too cluttered to keep all.
+            generations (D-J) removed.
           </p>
         </div>
 
@@ -352,10 +353,10 @@ function StatementVariantB() {
 }
 
 /* ============================================================
-   v6 DIRECTION — Pumpkin pattern. Two big Cal Sans statements,
-   generous margin between them, no containers / quote marks /
-   indents. Story-driven via scale + spacing.
-   Headline locked: "don't let hiring / slow you down."
+   v7 DIRECTION — locked. Pumpkin pattern + corrected alignment.
+   Headline and body share .lockedColumn with max-width tracked
+   to the headline's widest line. Body broken into 3 statements.
+   No em-dashes (site-wide rule).
    ============================================================ */
 
 function FullStatementSlot({
@@ -380,105 +381,42 @@ function FullStatementSlot({
   );
 }
 
-/* Shared headline — locked from v5 I3. */
-function LockedHeadline() {
-  return (
-    <h2 className={`${styles.stmtFlowG} ${styles.stmtCenter}`}>
-      don&apos;t let{" "}
-      <span className={styles.gradientFill}>hiring</span>
-      <br />
-      <span className={styles.italicCal}>slow you down</span>.
-    </h2>
-  );
-}
-
-/* J1 · Two LEFT-aligned big statements (closest to Pumpkin pattern).
-   Centred headline → left-aligned body. The alignment shift creates
-   the section dynamic. Statements at clamp(28-48) Cal Sans. */
-function StatementSectionJ1() {
+/* K1 · Locked direction with corrected alignment + 3-statement
+   structure. Single live variant; v6's J2/J3 directions retired. */
+function StatementSectionK1() {
   return (
     <FullStatementSlot
-      label="Variant J1 · Two left-aligned big statements (closest to Pumpkin)"
+      label="Variant K · Locked direction. Aligned. 3 statements. No em-dashes."
       description={
-        "Centred headline → LEFT-aligned body. Two Cal Sans statements at ~32-48px, generous gap between them. The alignment shift (centred → left) creates section flow exactly like the reference. Statement 1 sets the tension, Statement 2 resolves it. No containers, no quote marks, no indents — just scale + spacing."
+        "Headline + body share a max-width sized to the headline's widest line ('slow you down.') so left/right edges align. Body restructured to three short statements (setup beats / tension hit / resolution), each with internal line breaks. Period-only punctuation throughout. Copy still placeholder."
       }
     >
       <div className={styles.fullStmtInner}>
-        <LockedHeadline />
+        <div className={styles.lockedColumn}>
+          <h2 className={`${styles.stmtFlowG} ${styles.stmtCenter}`}>
+            don&apos;t let{" "}
+            <span className={styles.gradientFill}>hiring</span>
+            <br />
+            <span className={styles.italicCal}>slow you down</span>.
+          </h2>
 
-        <div className={styles.bigStatementsLeft}>
-          <p className={styles.bigStatement}>
-            you ship at speed. you find what works. then hiring
-            drags you back to a quarter-long crawl.
-          </p>
-          <p className={styles.bigStatement}>
-            we keep the bench warm. brief monday, shortlist friday,
-            contracts the next week — growth keeps its pace.
-          </p>
-        </div>
-      </div>
-    </FullStatementSlot>
-  );
-}
-
-/* J2 · Two CENTRED big statements. Same content, same scale, but
-   centred to match the headline alignment. More poster-like; loses
-   the alignment-shift dynamic but reads as one continuous centred
-   composition. */
-function StatementSectionJ2() {
-  return (
-    <FullStatementSlot
-      label="Variant J2 · Two centred big statements (cohesive with headline)"
-      description={
-        "Same two statements as J1 but centred to match the headline alignment. Whole section reads as a single centred poster composition. No alignment-shift dynamic but visually most cohesive with the locked centred headline."
-      }
-    >
-      <div className={styles.fullStmtInner}>
-        <LockedHeadline />
-
-        <div className={styles.bigStatementsCenter}>
-          <p className={styles.bigStatement}>
-            you ship at speed. you find what works. then hiring
-            drags you back to a quarter-long crawl.
-          </p>
-          <p className={styles.bigStatement}>
-            we keep the bench warm. brief monday, shortlist friday,
-            contracts the next week — growth keeps its pace.
-          </p>
-        </div>
-      </div>
-    </FullStatementSlot>
-  );
-}
-
-/* J3 · J1 layout + gradient accent on a key noun per statement.
-   Echoes the reference's color hierarchy ("passionate enthusiasts"
-   / "browse and move them forward" lighter words) but using our
-   heat gradient on a SINGLE noun per statement rather than a whole
-   second line. Adds rhythm without crowding. */
-function StatementSectionJ3() {
-  return (
-    <FullStatementSlot
-      label='Variant J3 · J1 layout + gradient accent on one noun per statement'
-      description={
-        "Same J1 layout (left-aligned, two big statements) but with a heat-gradient accent on one key noun in each statement: 'hiring' (the problem) and 'bench' (the answer). Mirrors the reference's color hierarchy without using ghost. The gradient ties back to the headline's gradient on 'hiring'."
-      }
-    >
-      <div className={styles.fullStmtInner}>
-        <LockedHeadline />
-
-        <div className={styles.bigStatementsLeft}>
-          <p className={styles.bigStatement}>
-            you ship at speed. you find what works. then{" "}
-            <span className={styles.gradientFill}>hiring</span>{" "}
-            drags you back to a quarter-long crawl.
-          </p>
-          <p className={styles.bigStatement}>
-            we keep the{" "}
-            <span className={styles.gradientFill}>bench</span> warm.
-            brief monday, shortlist friday, contracts the next week
-            — growth keeps its pace.
-          </p>
+          <div className={styles.lockedBody}>
+            <p className={styles.bigStatement}>
+              you ship at speed.
+              <br />
+              you find what works.
+            </p>
+            <p className={styles.bigStatement}>
+              then hiring drags you back to a quarter long crawl.
+            </p>
+            <p className={styles.bigStatement}>
+              we keep the bench warm.
+              <br />
+              brief monday, shortlist friday, contracts the next week.
+              <br />
+              growth keeps its pace.
+            </p>
+          </div>
         </div>
       </div>
     </FullStatementSlot>
