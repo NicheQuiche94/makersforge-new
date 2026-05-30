@@ -132,10 +132,17 @@ export default function LabPage() {
         </NavStage>
 
         <NavStage
-          label="Variant E · NEW · Logo in white card + separate links pill (Andre's modified D direction)"
+          label="Variant E · Logo in white card + separate links pill (modified D)"
           description="Logo gets its own little white container on the left so it can keep its NORMAL colours (gradient hex + ink MF + ink wordmark) instead of being all-white-on-glass. Links + CTA sit as a separate floating glass pill on the right. Two distinct chips, edge-anchored."
         >
           <NavVariantE />
+        </NavStage>
+
+        <NavStage
+          label="Variant F · NEW · White pill + gradient CTA + normal-colour logo"
+          description="Same structure as B v2 (single centered pill, condensed) but inverted: pill background is white (95% alpha, soft backdrop-blur), so the logo can sit in its NORMAL colours (gradient hex + ink MF + ink wordmark) inside the pill itself. CTA flips from solid white → gradient background with white text. Single-element nav (no white card + glass pill split like E). Compare against E above."
+        >
+          <NavVariantF />
         </NavStage>
 
         <NavStage
@@ -362,6 +369,32 @@ function NavVariantB() {
             <li>about</li>
           </ul>
           <a href="#" className={styles.pillNavCta}>
+            book a call
+          </a>
+        </nav>
+      </div>
+    </div>
+  );
+}
+
+/* Variant F — invert Variant B v2: white pill background, gradient
+   CTA with white text. Because the surface under the logo is now
+   white, the logo can sit in its NORMAL colours (gradient hex + ink
+   MF + ink wordmark) inside the pill itself. No separate logo card
+   needed. */
+function NavVariantF() {
+  return (
+    <div className={`heat-glow ${styles.navStage}`}>
+      <div className={styles.navStageInner}>
+        <nav className={styles.pillNavWhite}>
+          <Logo size={34} />
+          <ul className={styles.pillNavWhiteLinks}>
+            <li>the roster</li>
+            <li>how it works</li>
+            <li>pricing</li>
+            <li>about</li>
+          </ul>
+          <a href="#" className={styles.pillNavWhiteCta}>
             book a call
           </a>
         </nav>

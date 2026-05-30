@@ -508,6 +508,52 @@
   line-height: 1;
 }
 
+/* Variant F — inverted Variant B v2. White pill background +
+   gradient CTA + normal-colour logo. Single centered element. */
+.pillNavWhite {
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  padding: 8px 8px 8px 22px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgba(14, 15, 17, 0.08);
+  border-radius: 999px;
+  max-width: calc(100% - 28px);
+  line-height: 0;
+  color: var(--ink);
+}
+.pillNavWhiteLinks {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 20px;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  text-transform: lowercase;
+  color: rgba(14, 15, 17, 0.7);
+  line-height: 1.2;
+}
+.pillNavWhiteLinks li:hover {
+  color: var(--ink);
+  cursor: pointer;
+}
+.pillNavWhiteCta {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: lowercase;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--heat-h);
+  color: #fff;
+  text-decoration: none;
+  line-height: 1;
+}
+
 /* Variant E — duo nav. White logo card left + glass links pill right.
    Solves the "logo all-white on glass" readability issue by giving
    the logo its own light surface so it can keep its normal colours. */
