@@ -1,11 +1,15 @@
+/* Tighter top padding closes the gap to PricingHero above per
+   Andre 2026-05-30. Cards moved to more balanced 1.5 / 1 ratio
+   and shorter min-height so they feel like SaaS pricing tiles
+   rather than two hero panels. */
 .section {
-  padding: 30px 0 70px;
+  padding: 16px 0 60px;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: 2.2fr 1fr;
-  gap: 14px;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 16px;
 }
 @media (max-width: 980px) {
   .grid {
@@ -13,16 +17,17 @@
   }
 }
 
-/* Shared shell */
+/* Shared shell — more compact than before. Primary stays slightly
+   taller than secondary because its content has the points list. */
 .primary,
 .secondary {
   border-radius: 28px;
-  padding: 50px 44px;
+  padding: 40px 36px;
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  min-height: 580px;
+  min-height: 460px;
 }
 
 /* PRIMARY — composite gradient + radial highlights + noise comes
@@ -87,15 +92,16 @@
   color: var(--mute);
 }
 
-/* Headlines */
+/* Headlines — scaled down to SaaS-pricing-tile proportions
+   (primary used to be hero-sized; now feels like a card). */
 .primaryH {
   font-family: "Cal Sans", system-ui, sans-serif;
   font-weight: 400;
-  font-size: clamp(38px, 5.5vw, 72px);
-  line-height: 0.92;
-  letter-spacing: -0.035em;
+  font-size: clamp(30px, 3.8vw, 48px);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
   text-transform: lowercase;
-  margin: 0 0 30px;
+  margin: 0 0 22px;
   color: #fff;
 }
 .em {
@@ -106,43 +112,44 @@
 .secondaryH {
   font-family: "Cal Sans", system-ui, sans-serif;
   font-weight: 400;
-  font-size: clamp(34px, 4.2vw, 52px);
-  line-height: 0.94;
-  letter-spacing: -0.03em;
+  font-size: clamp(28px, 3.4vw, 42px);
+  line-height: 0.95;
+  letter-spacing: -0.025em;
   text-transform: lowercase;
-  margin: 0 0 26px;
+  margin: 0 0 22px;
 }
 
-/* Amount block */
+/* Amount block — primary figure is still the focal moment but no
+   longer competing with the hero scale above. */
 .amount {
   display: flex;
   align-items: baseline;
-  gap: 10px;
-  margin-bottom: 32px;
+  gap: 8px;
+  margin-bottom: 26px;
   flex-wrap: wrap;
 }
 .currency {
   font-family: "Cal Sans", system-ui, sans-serif;
   font-weight: 400;
-  font-size: 36px;
+  font-size: 28px;
   color: rgba(255, 255, 255, 0.6);
 }
 .currencyLight {
   font-family: "Cal Sans", system-ui, sans-serif;
   font-weight: 400;
-  font-size: 30px;
+  font-size: 24px;
   color: var(--mute);
 }
 .figure {
   font-family: "Cal Sans", system-ui, sans-serif;
   font-weight: 400;
-  font-size: clamp(72px, 9vw, 120px);
+  font-size: clamp(54px, 7vw, 92px);
   line-height: 0.9;
   letter-spacing: -0.04em;
   color: #fff;
 }
 .figureLight {
-  font-size: clamp(56px, 7vw, 86px);
+  font-size: clamp(46px, 6vw, 72px);
   background: var(--heat-text);
   -webkit-background-clip: text;
   background-clip: text;
@@ -158,12 +165,12 @@
   margin-bottom: 8px;
 }
 
-/* Lede */
+/* Lede — tighter for SaaS-tile feel */
 .lede {
-  font-size: 17px;
+  font-size: 15px;
   line-height: 1.55;
   color: rgba(255, 255, 255, 0.86);
-  margin: 0 0 32px;
+  margin: 0 0 24px;
   max-width: 520px;
 }
 .lede strong {
@@ -171,28 +178,24 @@
   font-weight: 600;
 }
 .ledeLight {
-  font-size: 15.5px;
+  font-size: 14.5px;
   line-height: 1.6;
   color: var(--dim);
-  margin: 0 0 24px;
+  margin: 0 0 20px;
 }
 
-/* Points (hex-bullets) */
+/* Points (hex-bullets) — tighter rhythm, single column to read
+   like a SaaS feature list. */
 .points {
   list-style: none;
   padding: 0;
-  margin: 0 0 36px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px 22px;
-}
-@media (max-width: 700px) {
-  .points {
-    grid-template-columns: 1fr;
-  }
+  margin: 0 0 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 .points li {
-  font-size: 14.5px;
+  font-size: 14px;
   line-height: 1.5;
   display: flex;
   gap: 10px;
@@ -202,8 +205,8 @@
 .points li::before {
   content: "";
   flex-shrink: 0;
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
   margin-top: 4px;
   background: #fff;
   clip-path: polygon(

@@ -475,8 +475,8 @@ function ProfileCard({ p, onClick }: { p: Profile; onClick: () => void }) {
     ...((p.discipline === "ua" ? p.channels?.slice(0, 2) : p.formats?.slice(0, 2)) ?? []),
   ];
   const ctx = p.discipline === "ua"
-    ? p.budget !== undefined ? BUDGET_LABELS[p.budget] : "—"
-    : p.formats?.slice(0, 2).join(" · ") ?? "—";
+    ? p.budget !== undefined ? BUDGET_LABELS[p.budget] : "n/a"
+    : p.formats?.slice(0, 2).join(" · ") ?? "n/a";
 
   return (
     <button type="button" className={styles.pcard} onClick={onClick}>

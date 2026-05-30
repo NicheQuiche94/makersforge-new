@@ -28,6 +28,85 @@ export default function LabPage() {
       </section>
 
       {/* ============================================================
+          EXPERIMENT 06 · Stat strip restyle iterations
+          Andre's note 2026-05-30: current stat strip looks better
+          than before but Cal Sans feels angular at that scale and
+          the mixed colours (black "50" + orange "+") feel weird.
+          Four iterations exploring different directions.
+          ============================================================ */}
+      <section className={styles.experiment}>
+        <div className="container">
+          <header className={styles.expHeader}>
+            <p className={`kicker ${styles.expKicker}`}>
+              Experiment 06 · Stat strip iterations
+            </p>
+            <h2 className={styles.expH2}>
+              cal sans, gradient pills, tiger stripe, or figtree heavy?
+            </h2>
+            <p className={styles.expCopy}>
+              Current production uses Cal Sans with mixed
+              ink+gradient values in a hairline-ruled magazine strip.
+              Andre&apos;s read: looks angular and the colour mix
+              feels off. Four variants below to compare.
+            </p>
+          </header>
+        </div>
+
+        <StatN1Baseline />
+        <StatN2GradientPills />
+        <StatN3TigerStripe />
+        <StatN4Figtree />
+
+        <div className="container">
+          <p className={styles.afterNote}>
+            Pick a direction and I&apos;ll propagate to the live
+            StatStrip component.
+          </p>
+        </div>
+      </section>
+
+      {/* ============================================================
+          EXPERIMENT 07 · Roster list-style banner rows
+          Andre's note 2026-05-30: tiger-stripe roster cards work,
+          but a list-style with full-banner rows could also be very
+          effective. One variant to compare against current grid.
+          ============================================================ */}
+      <section className={styles.experiment}>
+        <div className="container">
+          <header className={styles.expHeader}>
+            <p className={`kicker ${styles.expKicker}`}>
+              Experiment 07 · Roster list-style banner rows
+            </p>
+            <h2 className={styles.expH2}>
+              full-width banner rows vs the tiger-stripe grid.
+            </h2>
+            <p className={styles.expCopy}>
+              Current production: 3-column grid of cards with
+              tiger-stripe alternation. Alternative: each profile is a
+              full-container-width banner row, ~120px tall, profile
+              data laid out horizontally. Reads as a directory listing
+              rather than a card wall.
+            </p>
+          </header>
+        </div>
+
+        <RosterListBannerMock />
+
+        <div className="container">
+          <p className={styles.afterNote}>
+            Compare against the live{" "}
+            <a
+              href="/roster"
+              style={{ color: "var(--ink)", textDecoration: "underline" }}
+            >
+              /roster
+            </a>{" "}
+            tiger-stripe grid. Pick one or hybrid.
+          </p>
+        </div>
+      </section>
+
+      {/* ============================================================
           EXPERIMENT 05 · HowItWorks bento — LOCKED & PROPAGATED
           L2 pair-grouping pattern with 3 tiles won. The "terms"
           tile was dropped (redundant with the pricing page). Live
@@ -290,6 +369,266 @@ export default function LabPage() {
           </p>
         </div>
       </section>
+    </div>
+  );
+}
+
+/* ============================================================
+   STAT STRIP MOCKS · Experiment 06
+   Four variants of the homepage stats row. Same data, different
+   typographic + container treatments.
+   ============================================================ */
+
+type StatN = { val: React.ReactNode; label: string };
+
+const STATS_N: StatN[] = [
+  { val: <>50<span className="gr">+</span></>, label: "on the lineup" },
+  { val: <span className="gr">2</span>, label: "disciplines live" },
+  { val: <>&lt;7<span className="gr">d</span></>, label: "avg deployment" },
+  { val: "£0", label: "% of salary taken" },
+];
+
+function StatSlot({
+  label,
+  description,
+  children,
+}: {
+  label: string;
+  description: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className={styles.stmtSlot}>
+      <div className="container">
+        <p className={styles.variantLabel}>{label}</p>
+        <p className={styles.navStageDesc}>{description}</p>
+      </div>
+      <div className={styles.statStage}>
+        <div className="container">{children}</div>
+      </div>
+    </div>
+  );
+}
+
+/* N1 — baseline / production. Cal Sans values, hairlines, ink+gradient mix. */
+function StatN1Baseline() {
+  return (
+    <StatSlot
+      label="Variant N1 · Baseline (current production)"
+      description="What's live now. Cal Sans, hairlines between cells, mixed ink and gradient on the values. Reference point only."
+    >
+      <div className={styles.statRowBare}>
+        {STATS_N.map((s, i) => (
+          <div key={i} className={styles.statCellBare}>
+            <p className={styles.statNCal}>{s.val}</p>
+            <p className={styles.statLabel}>{s.label}</p>
+          </div>
+        ))}
+      </div>
+    </StatSlot>
+  );
+}
+
+/* N2 — gradient pills. Each cell is its own heat-gradient pill with
+   white value and white label. Solves the "mixed colours feel weird"
+   issue by going uniform-gradient across all cells. */
+function StatN2GradientPills() {
+  return (
+    <StatSlot
+      label="Variant N2 · Gradient pills, white text"
+      description="Each cell becomes its own heat-gradient pill with white value and white label. Eliminates the mixed black/orange colour issue by going uniform gradient everywhere."
+    >
+      <div className={styles.statRowPills}>
+        {STATS_N.map((s, i) => (
+          <div key={i} className={`heat-glow ${styles.statPill}`}>
+            <p className={styles.statNCalWhite}>{s.val}</p>
+            <p className={styles.statLabelWhite}>{s.label}</p>
+          </div>
+        ))}
+      </div>
+    </StatSlot>
+  );
+}
+
+/* N3 — tiger stripe. Alternate paper card + gradient card across
+   the 4 cells. Echoes the roster page tiger-stripe pattern site-wide. */
+function StatN3TigerStripe() {
+  return (
+    <StatSlot
+      label="Variant N3 · Tiger-striped pills (paper / gradient alternating)"
+      description="Alternates paper cells and gradient cells across the row. Echoes the roster page tiger-stripe pattern, ties the visual language together across sections."
+    >
+      <div className={styles.statRowPills}>
+        {STATS_N.map((s, i) => {
+          const isGrad = i % 2 === 1;
+          return (
+            <div
+              key={i}
+              className={`${
+                isGrad ? "heat-glow " : ""
+              }${styles.statPill} ${isGrad ? styles.statPillGrad : styles.statPillPaper}`}
+            >
+              <p
+                className={
+                  isGrad ? styles.statNCalWhite : styles.statNCal
+                }
+              >
+                {s.val}
+              </p>
+              <p
+                className={
+                  isGrad ? styles.statLabelWhite : styles.statLabel
+                }
+              >
+                {s.label}
+              </p>
+            </div>
+          );
+        })}
+      </div>
+    </StatSlot>
+  );
+}
+
+/* N4 — Figtree heavy treatment. Same hairline strip as baseline but
+   the value font swaps to Figtree 800 to test whether the angular
+   Cal Sans feel goes away at this size. */
+function StatN4Figtree() {
+  return (
+    <StatSlot
+      label="Variant N4 · Hairline strip with Figtree heavy values"
+      description="Same hairline structure as baseline but the values use Figtree 800 instead of Cal Sans. Tests whether Cal Sans's angularity is the problem at this scale."
+    >
+      <div className={styles.statRowBare}>
+        {STATS_N.map((s, i) => (
+          <div key={i} className={styles.statCellBare}>
+            <p className={styles.statNFig}>{s.val}</p>
+            <p className={styles.statLabel}>{s.label}</p>
+          </div>
+        ))}
+      </div>
+    </StatSlot>
+  );
+}
+
+/* ============================================================
+   ROSTER LIST-STYLE BANNER MOCK · Experiment 07
+   Full-container-width banner rows. Profile data laid out
+   horizontally inside each row.
+   ============================================================ */
+
+type ListProfile = {
+  m: string;
+  name: string;
+  role: string;
+  loc: string;
+  rate: string;
+  av: boolean;
+};
+
+const LIST_PROFILES: ListProfile[] = [
+  { m: "ua·101", name: "senior ua manager", role: "ex-supercell · games + apps", loc: "uk · remote", rate: "£600–750", av: true },
+  { m: "art·204", name: "perf. creative lead", role: "ex-calm · apps", loc: "eu remote", rate: "£500–650", av: true },
+  { m: "ua·114", name: "head of ua", role: "ex-rovio · games", loc: "helsinki", rate: "£700–850", av: false },
+  { m: "art·211", name: "senior motion designer", role: "ex-king · games", loc: "lisbon", rate: "£450–550", av: true },
+];
+
+function RosterListBannerMock() {
+  return (
+    <StatSlot
+      label="Variant · Full-width banner rows (list style)"
+      description="Each profile is a full-container-width banner row, ~110px tall. Codename + name + role on the left, location + rate in the middle, availability status on the right. Tiger-striped paper/gradient alternation kept so the visual rhythm carries over from the grid."
+    >
+      <div className={styles.rosterList}>
+        {LIST_PROFILES.map((p, i) => {
+          const isGrad = i % 2 === 1;
+          return (
+            <div
+              key={p.m}
+              className={`${
+                isGrad ? "heat-glow " : ""
+              }${styles.rosterRow} ${
+                isGrad ? styles.rosterRowGrad : styles.rosterRowPaper
+              }`}
+            >
+              <div className={styles.rosterRowLeft}>
+                <span
+                  className={`${styles.rosterMono} ${
+                    isGrad ? styles.rosterOnDark : ""
+                  }`}
+                >
+                  {p.m}
+                </span>
+                <h3
+                  className={`${styles.rosterRowName} ${
+                    isGrad ? styles.rosterOnDark : ""
+                  }`}
+                >
+                  {p.name}
+                </h3>
+                <p
+                  className={`${styles.rosterRowRole} ${
+                    isGrad ? styles.rosterRowRoleOnDark : ""
+                  }`}
+                >
+                  {p.role}
+                </p>
+              </div>
+              <div className={styles.rosterRowMid}>
+                <RosterRowMeta
+                  k="location"
+                  v={p.loc}
+                  onDark={isGrad}
+                />
+                <RosterRowMeta
+                  k="day rate"
+                  v={p.rate}
+                  onDark={isGrad}
+                />
+              </div>
+              <div className={styles.rosterRowRight}>
+                <span
+                  className={`${styles.rosterRowStatus} ${
+                    p.av ? styles.statusAv : styles.statusCt
+                  } ${isGrad ? styles.statusOnDark : ""}`}
+                >
+                  <span className={styles.rosterStatusDot} />
+                  {p.av ? "available" : "in contract"}
+                </span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </StatSlot>
+  );
+}
+
+function RosterRowMeta({
+  k,
+  v,
+  onDark,
+}: {
+  k: string;
+  v: string;
+  onDark: boolean;
+}) {
+  return (
+    <div className={styles.rosterRowMetaCell}>
+      <span
+        className={`${styles.rosterRowK} ${
+          onDark ? styles.rosterRowKOnDark : ""
+        }`}
+      >
+        {k}
+      </span>
+      <span
+        className={`${styles.rosterRowV} ${
+          onDark ? styles.rosterRowVOnDark : ""
+        }`}
+      >
+        {v}
+      </span>
     </div>
   );
 }

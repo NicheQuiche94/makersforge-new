@@ -303,7 +303,7 @@ function Field({
         <span className={styles.label}>
           {label}
           {required && <span className={styles.req}> *</span>}
-          {hint && <span className={styles.hint}> — {hint}</span>}
+          {hint && <span className={styles.hint}> · {hint}</span>}
         </span>
       )}
       {children}
