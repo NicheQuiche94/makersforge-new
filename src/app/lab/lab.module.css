@@ -834,19 +834,17 @@
 }
 
 /* ============================================================
-   v7 LOCKED DIRECTION — Pumpkin pattern + corrected alignment.
-   Headline + body share .lockedColumn whose max-width tracks
-   the headline's widest line ("slow you down."), so the body's
-   left/right edges align with the headline's visible bounds.
+   v7 LOCKED DIRECTION — Pumpkin pattern + alignment refinement.
+   Outer .lockedColumn sized to fit the WIDER headline line
+   ("don't let hiring") so the headline doesn't wrap. Inner
+   .lockedBody given its own narrower max-width matching
+   "slow you down." width so the body's left/right edges align
+   specifically with that italic line.
    ============================================================ */
 
-/* Shared column for headline + body.
-   Width math: "slow you down." ≈ 7.0em at Cal Sans 124px with
-   -0.04em letter-spacing → ~870px. Body and headline both fill
-   this width; headline text-aligns centre, body text-aligns
-   left. The wider line ("slow you down.") fills the container
-   end-to-end; the narrower line ("don't let hiring") centres
-   within it. */
+/* Outer column — sized to hold the wider headline line without
+   wrapping. "don't let hiring" ≈ 6.4em at Cal Sans 124px with
+   -0.04em letter-spacing → ~790px. */
 .lockedColumn {
   width: 100%;
   max-width: clamp(340px, 55vw, 900px);
@@ -856,11 +854,18 @@
   gap: clamp(60px, 7vw, 100px);
 }
 
+/* Inner body — narrower band, centred within the outer column,
+   matched to "slow you down." width so the body's left/right
+   edges align with that italic line (rather than with the wider
+   "don't let hiring"). Italic Cal Sans "slow you down." ≈ 6.5em
+   at 124px with letter-spacing → ~800px. */
 .lockedBody {
   display: flex;
   flex-direction: column;
   gap: clamp(40px, 5.5vw, 76px);
   width: 100%;
+  max-width: clamp(300px, 49vw, 780px);
+  align-self: center;
 }
 
 /* Big statement — shared by all body lines in the locked
