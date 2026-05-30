@@ -41,7 +41,11 @@ export function useScrollReveal(
           }
         });
       },
-      { threshold: 0.15, rootMargin: "0px 0px -10% 0px" },
+      // Threshold 0 + zero rootMargin = fire as soon as ANY pixel of the
+      // target touches the viewport. The previous -10% bottom margin +
+      // 0.15 threshold combo was failing to fire reliably for elements
+      // sitting in the lower portion of mid-height viewports.
+      { threshold: 0, rootMargin: "0px" },
     );
 
     targets.forEach((el) => observer.observe(el));
