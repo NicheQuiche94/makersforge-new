@@ -147,3 +147,312 @@
 .wordmark {
   display: inline-block;
 }
+
+/* ============================================================
+   EXPERIMENT 02 · Full-bleed hero v2
+   Glass nav, full-bleed heat gradient, white type, glass cards
+   ============================================================ */
+.heroV2 {
+  /* Full-bleed: break out of the lab page's container if needed.
+     The lab page wraps experiments in .experiment which has no
+     container, so this is already full-width by default. */
+  position: relative;
+  min-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  overflow: hidden;
+  /* heat-glow utility applies base + composite radials + noise */
+}
+
+/* GLASS NAV */
+.glassNav {
+  position: relative;
+  z-index: 5;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+}
+.glassNavInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 32px;
+  max-width: 1500px;
+  margin: 0 auto;
+  gap: 28px;
+}
+@media (max-width: 700px) {
+  .glassNavInner {
+    padding: 12px 18px;
+  }
+}
+.glassNavLogo {
+  display: flex;
+  align-items: center;
+  line-height: 0;
+  flex-shrink: 0;
+  color: #fff;
+}
+.glassNavLinks {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 26px;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  text-transform: lowercase;
+  color: rgba(255, 255, 255, 0.72);
+}
+.glassNavLinks li:hover {
+  color: #fff;
+  cursor: pointer;
+}
+@media (max-width: 820px) {
+  .glassNavLinks {
+    display: none;
+  }
+}
+.glassNavCta {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: lowercase;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  text-decoration: none;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.glassNavCta:hover {
+  background: var(--bg);
+  transform: translateY(-1px);
+}
+
+/* HERO INNER LAYOUT */
+.heroV2Inner {
+  position: relative;
+  z-index: 4;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 50px clamp(32px, 4vw, 64px) 60px;
+  max-width: 1500px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* TOP — kicker left + brand-side block right */
+.heroV2Top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 30px;
+}
+
+.heroV2Kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.78);
+  margin: 0;
+}
+
+.heroV2BrandSide {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(28px, 3.4vw, 48px);
+  line-height: 0.95;
+  letter-spacing: -0.025em;
+  text-transform: lowercase;
+  color: #fff;
+}
+.brandLine1 {
+  opacity: 0.55;
+}
+.brandLine2 {
+  opacity: 0.78;
+}
+.brandLine3 {
+  opacity: 1;
+}
+@media (max-width: 700px) {
+  .heroV2Top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .heroV2BrandSide {
+    align-items: flex-start;
+    text-align: left;
+  }
+}
+
+/* MIDDLE — main headline */
+.heroV2Middle {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 20px 0;
+}
+.heroV2Headline {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(54px, 9vw, 150px);
+  line-height: 0.88;
+  letter-spacing: -0.04em;
+  text-transform: lowercase;
+  color: #fff;
+  margin: 0;
+  max-width: 1100px;
+}
+.weightHeavy {
+  /* Cal Sans only has 400 weight; "heavy" here means full opacity
+     so it reads as the dominant tone. */
+  color: #fff;
+}
+.weightLight {
+  /* Lighter weight via opacity + italic shape change for rhythm. */
+  color: rgba(255, 255, 255, 0.45);
+  font-style: italic;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 800;
+}
+
+/* BOTTOM — glass cards + CTAs */
+.heroV2Bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.glassCards {
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.glassCard {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 18px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px) saturate(140%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #fff;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  text-transform: lowercase;
+}
+
+.glassCardLarge {
+  padding: 16px 22px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--ink);
+  backdrop-filter: blur(10px) saturate(140%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.glassCardN {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  margin: 0;
+  background: var(--heat-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.glassCardL {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin: 0;
+}
+
+.heroV2Cta {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.btnLight {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: lowercase;
+  padding: 13px 22px;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btnLight:hover {
+  transform: translateY(-2px);
+  background: var(--bg);
+}
+.btnGlass {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: lowercase;
+  padding: 13px 22px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  color: #fff;
+  text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(8px);
+}
+.btnGlass:hover {
+  background: rgba(255, 255, 255, 0.16);
+  transform: translateY(-2px);
+}
+
+.pulseDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #fff;
+  animation: pulseLight 1.6s ease-in-out infinite;
+  display: inline-block;
+}
+
+.afterNote {
+  margin-top: 40px;
+  font-size: 14px;
+  color: var(--dim);
+  font-style: italic;
+  max-width: 760px;
+}

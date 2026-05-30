@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Logo } from "@/components/atoms/Logo";
 import styles from "./lab.module.css";
 
 export const metadata: Metadata = {
@@ -51,25 +52,44 @@ export default function LabPage() {
         </div>
       </section>
 
-      {/* Placeholder until Andre picks the next direction */}
+      {/* ============================================================
+          EXPERIMENT 02 · Full-bleed hero (Reload Creative Branding pattern)
+          - Heat gradient runs full section (no rounded panel)
+          - Glass full-width nav (no centered pill)
+          - White type across everything with weight contrast
+          - Glass UI containers as floating data overlays
+          ============================================================ */}
       <section className={styles.experiment}>
         <div className="container">
           <header className={styles.expHeader}>
             <p className={`kicker ${styles.expKicker}`}>
-              Awaiting Andre · next experiment
+              Experiment 02 · Full-bleed hero (Reload pattern)
             </p>
-            <h2 className={styles.expH2}>what layout move next?</h2>
+            <h2 className={styles.expH2}>
+              full-bleed gradient, glass nav, glass UI cards, white type.
+            </h2>
             <p className={styles.expCopy}>
-              Bleed rejected. Candidates that fit our containerized
-              aesthetic:
+              Pattern from the Creative Branding Agency reference. Hero
+              panel container dropped; heat gradient + composite radials
+              + noise run the FULL section. Nav becomes a full-width
+              glass bar instead of the centered pill. Typography all
+              white with weight contrast carrying the rhythm. Floating
+              glass UI cards layered for data overlays. Single mock
+              below — if direction lands we iterate variants.
             </p>
-            <ul className={styles.queue}>
-              <li><strong>02 · Floating UI badges in hero corners</strong> — layered data inside the existing panel (Kinetic&apos;s &quot;Detailing service&quot; pattern)</li>
-              <li><strong>03 · Statement headline anchored to deliberate grid columns</strong> (vs. progressive indents)</li>
-              <li><strong>04 · HowItWorks as hairline-ruled magazine rows</strong> (no tiles) — risk: bento was working, this changes direction</li>
-              <li><strong>05 · Type composition INSIDE a panel</strong> as a magazine spread — could apply to Statement instead of touching the hero</li>
-            </ul>
           </header>
+        </div>
+
+        <HeroV2Mock />
+
+        <div className="container">
+          <p className={styles.afterNote}>
+            ↑ If this lands: I propagate to homepage (replaces the current
+            rounded hero panel), the current pill nav becomes the glass
+            full-width nav across the site, and we figure out the rest of
+            the page treatments to match (the cream sections still work
+            for context, the hero just becomes the dramatic moment).
+          </p>
         </div>
       </section>
     </div>
@@ -118,6 +138,78 @@ type WordmarkProps = {
   sizePreset?: "md" | "lg" | "xl";
   tight?: boolean;
 };
+
+function HeroV2Mock() {
+  return (
+    <div className={`heat-glow ${styles.heroV2}`}>
+      {/* GLASS FULL-WIDTH NAV */}
+      <nav className={styles.glassNav}>
+        <div className={styles.glassNavInner}>
+          <div className={styles.glassNavLogo}>
+            <Logo size={32} markColor="#fff" wordmarkColor="#fff" />
+          </div>
+          <ul className={styles.glassNavLinks}>
+            <li>the roster</li>
+            <li>how it works</li>
+            <li>pricing</li>
+            <li>about</li>
+          </ul>
+          <a href="#" className={styles.glassNavCta}>
+            book a call
+          </a>
+        </div>
+      </nav>
+
+      {/* HERO CONTENT */}
+      <div className={styles.heroV2Inner}>
+        <div className={styles.heroV2Top}>
+          <p className={styles.heroV2Kicker}>
+            <span className={styles.pulseDot} aria-hidden="true" />
+            growth team contractors · mobile apps &amp; games
+          </p>
+
+          <div className={styles.heroV2BrandSide}>
+            <span className={styles.brandLine1}>growth team</span>
+            <span className={styles.brandLine2}>contractors</span>
+            <span className={styles.brandLine3}>on call.</span>
+          </div>
+        </div>
+
+        <div className={styles.heroV2Middle}>
+          <h1 className={styles.heroV2Headline}>
+            <span className={styles.weightHeavy}>you brief it.</span>{" "}
+            <span className={styles.weightLight}>they</span>{" "}
+            <span className={styles.weightHeavy}>build it.</span>
+          </h1>
+        </div>
+
+        <div className={styles.heroV2Bottom}>
+          <div className={styles.glassCards}>
+            <div className={styles.glassCard}>
+              <span className={styles.pulseDot} aria-hidden="true" />
+              32 available now
+            </div>
+            <div className={styles.glassCardLarge}>
+              <p className={styles.glassCardN}>85%</p>
+              <p className={styles.glassCardL}>same-week shortlist rate</p>
+            </div>
+            <div className={styles.glassCard}>EMEA · UK · 8 cities</div>
+            <div className={styles.glassCard}>est. 2026 · SeedCraft</div>
+          </div>
+
+          <div className={styles.heroV2Cta}>
+            <a href="#" className={styles.btnLight}>
+              see who&apos;s available →
+            </a>
+            <a href="#" className={styles.btnGlass}>
+              how it works
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function Wordmark({
   text,
