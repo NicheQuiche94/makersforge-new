@@ -70,22 +70,28 @@
   display: flex;
   gap: 10px;
 }
+/* Gradient pill with white icon stroke — the icon reads as negative
+   space inside the heat-gradient circle. Hover lifts and brightens. */
 .socials a {
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--heat-h);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   color: #fff;
   text-decoration: none;
-  transition: all 0.2s;
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease,
+    box-shadow 0.2s ease;
+  box-shadow: 0 4px 14px rgba(255, 93, 0, 0.18);
 }
 .socials a:hover {
-  background: #fff;
-  color: #2a2d3a;
   transform: translateY(-2px);
+  filter: brightness(1.08);
+  box-shadow: 0 8px 22px rgba(255, 93, 0, 0.28);
 }
 .socials a svg {
   width: 16px;

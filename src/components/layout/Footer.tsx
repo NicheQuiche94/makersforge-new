@@ -17,6 +17,7 @@ const STUDIO_LINKS = [
 ];
 
 const COMPANY_LINKS = [
+  { href: "/talent", label: "for talent" },
   { href: "/#about", label: "about" },
   { href: "https://seedcraft.vc", label: "seedcraft ventures", external: true },
 ];

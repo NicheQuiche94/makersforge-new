@@ -2,22 +2,16 @@
   padding: 130px 0 50px;
 }
 
+/* Single left-anchored column. Right copy block dropped, so the
+   headline takes the full width of the container. */
 .inner {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
-  align-items: end;
-}
-@media (max-width: 900px) {
-  .inner {
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
 }
 
-.left .kicker,
 .kicker {
-  margin-bottom: 18px;
   display: block;
 }
 
@@ -29,24 +23,4 @@
   letter-spacing: -0.035em;
   text-transform: lowercase;
   margin: 0;
-}
-
-.right {
-  max-width: 440px;
-  justify-self: end;
-}
-@media (max-width: 900px) {
-  .right {
-    justify-self: start;
-  }
-}
-.copy {
-  font-size: 19px;
-  line-height: 1.5;
-  color: var(--dim);
-  margin: 0 0 16px;
-}
-.copy strong {
-  color: var(--ink);
-  font-weight: 600;
 }

@@ -414,7 +414,11 @@
 }
 
 /* ============================================================
-   CARD — paper default, deep-gradient hover takeover
+   CARD — paper default; tiger-stripe gradient on every other card
+   by default + gradient takeover on hover.
+   Per Andre's punch list (2026-05-30): every second card should be
+   gradient by default (the "tiger-stripe" pattern). Hover behaviour
+   stays the same; odd cards swap to gradient, even cards intensify.
    ============================================================ */
 .pcard {
   background: var(--paper);
@@ -432,26 +436,30 @@
   text-align: left;
   color: inherit;
 }
-.pcard:hover {
+
+/* Gradient treatment — applied either on hover OR by default to
+   every other grid card (tiger-stripe). */
+.pcard:hover,
+.grid > .pcard:nth-child(even) {
   background: var(--heat-deep);
   border-color: transparent;
   color: #fff;
-  transform: translateY(-4px);
-  /* Neutral dark shadow — deep-red tinted shadow read as a stroke/halo. */
   box-shadow: 0 24px 50px rgba(14, 15, 17, 0.22);
 }
-/* Hero-style composite: warm radial bottom-right + white radial top-left + noise.
-   Both ::before and ::after activate on hover. */
-.pcard:hover::before {
+.pcard:hover {
+  /* Hover-only: lift on Y. Striped cards stay in place at rest. */
+  transform: translateY(-4px);
+}
+
+/* Composite gradient overlay (warm bottom-right + white top-left
+   radial + noise) — applies to both hover and the striped cards. */
+.pcard:hover::before,
+.grid > .pcard:nth-child(even)::before {
   content: "";
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(
-      ellipse at 80% 110%,
-      #ffb347 0%,
-      transparent 50%
-    ),
+    radial-gradient(ellipse at 80% 110%, #ffb347 0%, transparent 50%),
     radial-gradient(
       ellipse at 0% 0%,
       rgba(255, 255, 255, 0.12) 0%,
@@ -461,7 +469,8 @@
   border-radius: 20px;
   z-index: 0;
 }
-.pcard:hover::after {
+.pcard:hover::after,
+.grid > .pcard:nth-child(even)::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -492,7 +501,8 @@
   color: var(--mute);
   transition: color 0.3s;
 }
-.pcard:hover .pcMono {
+.pcard:hover .pcMono,
+.grid > .pcard:nth-child(even) .pcMono {
   color: rgba(255, 255, 255, 0.7);
 }
 
@@ -529,19 +539,23 @@
 .pcStatusCt .pcDot {
   background: var(--mute);
 }
-.pcard:hover .pcStatusAv {
+.pcard:hover .pcStatusAv,
+.grid > .pcard:nth-child(even) .pcStatusAv {
   background: rgba(255, 255, 255, 0.22);
   color: #fff;
 }
-.pcard:hover .pcStatusAv .pcDot {
+.pcard:hover .pcStatusAv .pcDot,
+.grid > .pcard:nth-child(even) .pcStatusAv .pcDot {
   background: #fff;
 }
-.pcard:hover .pcStatusCt {
+.pcard:hover .pcStatusCt,
+.grid > .pcard:nth-child(even) .pcStatusCt {
   background: rgba(255, 255, 255, 0.18);
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
-.pcard:hover .pcStatusCt .pcDot {
+.pcard:hover .pcStatusCt .pcDot,
+.grid > .pcard:nth-child(even) .pcStatusCt .pcDot {
   background: #fff;
 }
 
@@ -568,7 +582,9 @@
   color: var(--ink);
 }
 .pcard:hover .indgames,
-.pcard:hover .indapps {
+.pcard:hover .indapps,
+.grid > .pcard:nth-child(even) .indgames,
+.grid > .pcard:nth-child(even) .indapps {
   background: rgba(255, 255, 255, 0.18);
   color: #fff;
 }
@@ -584,7 +600,8 @@
   color: var(--ink);
   transition: color 0.3s;
 }
-.pcard:hover .pcName {
+.pcard:hover .pcName,
+.grid > .pcard:nth-child(even) .pcName {
   color: #fff;
 }
 .pcRole {
@@ -595,7 +612,8 @@
   margin: 0 0 18px;
   transition: color 0.3s;
 }
-.pcard:hover .pcRole {
+.pcard:hover .pcRole,
+.grid > .pcard:nth-child(even) .pcRole {
   color: rgba(255, 255, 255, 0.78);
 }
 
@@ -616,7 +634,8 @@
   text-transform: lowercase;
   transition: color 0.3s;
 }
-.pcard:hover .pcK {
+.pcard:hover .pcK,
+.grid > .pcard:nth-child(even) .pcK {
   color: rgba(255, 255, 255, 0.6);
 }
 .pcV {
@@ -626,7 +645,8 @@
   text-align: right;
   transition: color 0.3s;
 }
-.pcard:hover .pcV {
+.pcard:hover .pcV,
+.grid > .pcard:nth-child(even) .pcV {
   color: #fff;
 }
 
@@ -649,7 +669,8 @@
   background: var(--heat-h);
   opacity: 0.7;
 }
-.pcard:hover .pcTags::before {
+.pcard:hover .pcTags::before,
+.grid > .pcard:nth-child(even) .pcTags::before {
   background: rgba(255, 255, 255, 0.35);
   opacity: 1;
 }
@@ -684,10 +705,12 @@
   opacity: 0.7;
   transition: opacity 0.3s;
 }
-.pcard:hover .pcTag {
+.pcard:hover .pcTag,
+.grid > .pcard:nth-child(even) .pcTag {
   color: #fff;
 }
-.pcard:hover .pcTag::before {
+.pcard:hover .pcTag::before,
+.grid > .pcard:nth-child(even) .pcTag::before {
   background: rgba(255, 255, 255, 0.6);
   opacity: 1;
 }

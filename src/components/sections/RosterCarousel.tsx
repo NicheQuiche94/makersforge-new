@@ -1,8 +1,29 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { Button } from "@/components/atoms/Button";
 import styles from "./RosterCarousel.module.css";
+
+/**
+ * RosterCarousel — homepage preview of the bench.
+ *
+ * v2 (per Andre's punch list 2026-05-30): always show FIVE cards
+ * visible — two on the left of the featured card, the featured one
+ * centred, and two on the right. The carousel feels endless because
+ * a profile is always sitting in every slot, no matter where the
+ * featured index is in the list (modulo wrap fills the edges).
+ *
+ * Implementation:
+ *   - Each profile renders with a CSS variable --slot computed from
+ *     its distance to the featured index, wrapped modulo PROFILES.length
+ *     into the range [-half, +half].
+ *   - Slots -2, -1, 0, +1, +2 render visibly with scale + opacity
+ *     decreasing with distance. Slots beyond ±2 are pushed off-screen
+ *     and faded out.
+ *   - Auto-cycle advances featured by 1 every CYCLE_MS; modulo wrap
+ *     keeps the cycle infinite. Reduced-motion users get no auto-
+ *     advance and can navigate via dots.
+ */
 
 type Profile = {
   m: string;
@@ -27,38 +48,18 @@ const PROFILES: Profile[] = [
 
 const CYCLE_MS = 3200;
 
+/** Wrap an integer `n` into the half-open range [-halfLen, +halfLen). */
+function wrapSlot(n: number, len: number): number {
+  const half = Math.floor(len / 2);
+  const mod = ((n + half) % len + len) % len - half;
+  return mod;
+}
+
 export function RosterCarousel() {
-  const [featured, setFeatured] = useState(Math.floor(PROFILES.length / 2));
+  const [featured, setFeatured] = useState(0);
   const [reduced, setReduced] = useState(false);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const stageRef = useRef<HTMLDivElement>(null);
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
   const hover = useRef(false);
-
-  // Compute translate so the featured card centres in the stage.
-  // Track has left: 0; track's left edge starts at the stage's left edge.
-  // We shift the track right by (stageWidth/2 - featuredCenterFromTrackLeft)
-  // so the featured card's centre lands exactly at stageWidth/2.
-  const recenter = useCallback(() => {
-    const track = trackRef.current;
-    const stage = stageRef.current;
-    if (!track || !stage) return;
-    const cards = cardRefs.current;
-    const featuredCard = cards[featured];
-    if (!featuredCard) return;
-
-    let offsetFromTrackLeft = 0;
-    for (let i = 0; i < featured; i++) {
-      const c = cards[i];
-      if (c) offsetFromTrackLeft += c.offsetWidth + 14; // gap = 14
-    }
-    const featuredCenter = offsetFromTrackLeft + featuredCard.offsetWidth / 2;
-    const stageWidth = stage.offsetWidth;
-    const target = stageWidth / 2 - featuredCenter;
-
-    track.style.transform = `translate(${target}px, -50%)`;
-  }, [featured]);
 
   // Reduced motion detection
   useEffect(() => {
@@ -69,14 +70,6 @@ export function RosterCarousel() {
     mq.addEventListener("change", onChange);
     return () => mq.removeEventListener("change", onChange);
   }, []);
-
-  // Recentre on featured change + on window resize
-  useEffect(() => {
-    recenter();
-    if (typeof window === "undefined") return;
-    window.addEventListener("resize", recenter);
-    return () => window.removeEventListener("resize", recenter);
-  }, [recenter]);
 
   // Auto-cycle (skipped under reduced motion)
   useEffect(() => {
@@ -108,6 +101,15 @@ export function RosterCarousel() {
     }
   };
 
+  // Per-profile slot. Slot 0 is the featured (centre); ±1 adjacent;
+  // ±2 far adjacent; |slot| > 2 is off-screen.
+  const cards = useMemo(() => {
+    return PROFILES.map((p, i) => ({
+      profile: p,
+      slot: wrapSlot(i - featured, PROFILES.length),
+    }));
+  }, [featured]);
+
   return (
     <section className={styles.section}>
       <div className={styles.head}>
@@ -124,43 +126,54 @@ export function RosterCarousel() {
       </div>
 
       <div
-        ref={stageRef}
         className={styles.stage}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
       >
-        <div ref={trackRef} className={styles.track}>
-          {PROFILES.map((p, i) => {
-            const isFeat = i === featured;
-            const isAdj = Math.abs(i - featured) === 1;
-            return (
-              <div
-                key={p.m}
-                ref={(el) => {
-                  cardRefs.current[i] = el;
-                }}
-                className={`${styles.pcard} ${isFeat ? styles.featured : ""} ${isAdj ? styles.adj : ""}`}
-              >
-                <div className={styles.top}>
-                  <span className={styles.mono}>{p.m}</span>
-                  <span className={`status ${p.av ? "available" : "contract"} ${isFeat ? styles.statusOnDark : ""}`}>
-                    <span className="dot" />
-                    {p.av ? "available" : "in contract"}
-                  </span>
-                </div>
-                <div className={styles.mid}>
-                  <h3 className={styles.name}>{p.name}</h3>
-                  <p className={styles.role}>{p.role}</p>
-                </div>
-                <div className={styles.meta}>
-                  <Row k="location" v={p.loc} />
-                  <Row k="day rate" v={p.rate} />
-                  <Row k={p.ctxLabel} v={p.ctx} />
-                </div>
+        {cards.map(({ profile, slot }) => {
+          const abs = Math.abs(slot);
+          const isFeat = slot === 0;
+          const isAdj = abs === 1;
+          const isFar = abs === 2;
+          const offScreen = abs > 2;
+          return (
+            <div
+              key={profile.m}
+              className={`${styles.pcard} ${
+                isFeat ? styles.featured : ""
+              } ${isAdj ? styles.adj : ""} ${isFar ? styles.far : ""} ${
+                offScreen ? styles.off : ""
+              }`}
+              style={
+                {
+                  "--slot": slot,
+                } as React.CSSProperties
+              }
+              aria-hidden={offScreen}
+            >
+              <div className={styles.top}>
+                <span className={styles.mono}>{profile.m}</span>
+                <span
+                  className={`status ${profile.av ? "available" : "contract"} ${
+                    isFeat ? styles.statusOnDark : ""
+                  }`}
+                >
+                  <span className="dot" />
+                  {profile.av ? "available" : "in contract"}
+                </span>
               </div>
-            );
-          })}
-        </div>
+              <div className={styles.mid}>
+                <h3 className={styles.name}>{profile.name}</h3>
+                <p className={styles.role}>{profile.role}</p>
+              </div>
+              <div className={styles.meta}>
+                <Row k="location" v={profile.loc} />
+                <Row k="day rate" v={profile.rate} />
+                <Row k={profile.ctxLabel} v={profile.ctx} />
+              </div>
+            </div>
+          );
+        })}
       </div>
 
       <div className={styles.dots} role="tablist" aria-label="Roster preview">

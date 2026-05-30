@@ -1,27 +1,27 @@
 import styles from "./PricingHero.module.css";
 
+/**
+ * Pricing hero — simplified per Andre's punch list (2026-05-30):
+ *   - Headline reduced to two colour treatments (ink + gradient) from
+ *     the prior three (ink + ghost + gradient). Ghost retired from
+ *     the design language.
+ *   - Right-side copy block dropped entirely. The same ground is
+ *     covered by the comparison table further down the page; the
+ *     right copy was getting lost and felt redundant.
+ *   - Layout collapses to a single left-anchored column so the
+ *     headline can sit at its full width on the page.
+ */
 export function PricingHero() {
   return (
     <section className={styles.section}>
       <div className="container">
         <div className={styles.inner}>
-          <div className={styles.left}>
-            <span className={`kicker ${styles.kicker}`}>Pricing</span>
-            <h1 className={styles.headline}>
-              one flat fee. <span className="ghost">no</span>{" "}
-              <span className="gr">percentage games.</span>
-            </h1>
-          </div>
-          <div className={styles.right}>
-            <p className={styles.copy}>
-              Two ways to work with us. Both priced as a single flat fee that
-              doesn&apos;t scale with what you pay your hire.
-            </p>
-            <p className={styles.copy}>
-              <strong>You pay them, we charge you.</strong> No markup on rates,
-              no percentage of salary, no surprises at the end of the contract.
-            </p>
-          </div>
+          <span className={`kicker ${styles.kicker}`}>Pricing</span>
+          <h1 className={styles.headline}>
+            one flat fee.
+            <br />
+            <span className="gr">no percentage games.</span>
+          </h1>
         </div>
       </div>
     </section>
