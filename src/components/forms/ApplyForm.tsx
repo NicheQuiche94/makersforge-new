@@ -79,7 +79,7 @@ export function ApplyForm() {
       <Section
         title="who you are"
         kicker="01"
-        hint="Stays private — never shown on the public roster."
+        hint="Stays private. Never shown on the public lineup."
       >
         <Field label="full name" required>
           <input name="name" type="text" required className={styles.input} />

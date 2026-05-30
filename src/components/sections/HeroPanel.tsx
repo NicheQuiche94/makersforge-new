@@ -20,8 +20,10 @@ export function HeroPanel() {
     <section className={`heat-glow ${styles.hero}`} data-nav-gradient>
       <div className={styles.inner}>
         <div className={styles.top}>
+          {/* Pulse-dot removed per Andre 2026-05-30. Kicker text now
+              starts at the same left edge as the logo pill and the
+              hero headline below — equal margin everywhere. */}
           <p className={styles.kicker}>
-            <span className={styles.pulseDot} aria-hidden="true" />
             mobile apps &amp; games · EMEA
           </p>
           <div className={styles.masthead}>

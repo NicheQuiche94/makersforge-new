@@ -296,3 +296,19 @@
   display: flex;
   justify-content: center;
 }
+
+/* Brand stamp — small MakersForge mark in the bottom-right corner
+   of each card. currentColor + low opacity reads as a subtle brand
+   signature on both paper and gradient cards. */
+.brandStamp {
+  position: absolute;
+  bottom: 14px;
+  right: 16px;
+  opacity: 0.22;
+  pointer-events: none;
+  user-select: none;
+  z-index: 2;
+}
+.pcard.featured .brandStamp {
+  opacity: 0.3;
+}

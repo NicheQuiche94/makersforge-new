@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useMemo } from "react";
 import { Button } from "@/components/atoms/Button";
+import { Logo } from "@/components/atoms/Logo";
 import styles from "./RosterCarousel.module.css";
 
 /**
@@ -114,13 +115,13 @@ export function RosterCarousel() {
     <section className={styles.section}>
       <div className={styles.head}>
         <div>
-          <p className="kicker">a look at the roster</p>
+          <p className="kicker">a look at the lineup</p>
           <h2 className={styles.headline}>
-            some of who&apos;s <span className="gr">on the bench.</span>
+            some of who&apos;s <span className="gr">on the lineup.</span>
           </h2>
         </div>
         <p className={styles.intro}>
-          The full roster filters by discipline, industry, channels, budget
+          The full lineup filters by discipline, industry, channels, budget
           managed and more.
         </p>
       </div>
@@ -171,6 +172,18 @@ export function RosterCarousel() {
                 <Row k="day rate" v={profile.rate} />
                 <Row k={profile.ctxLabel} v={profile.ctx} />
               </div>
+              {/* Brand stamp — small MakersForge mark in bottom-right
+                  of every card. currentColor inheritance lets it pick
+                  up the card's text color automatically, so it reads
+                  dark on paper and white on the heat-gradient
+                  featured card. */}
+              <Logo
+                variant="mark"
+                size={18}
+                monochrome="currentColor"
+                className={styles.brandStamp}
+                title=""
+              />
             </div>
           );
         })}
@@ -192,7 +205,7 @@ export function RosterCarousel() {
 
       <div className={styles.cta}>
         <Button href="/roster" variant="primary" arrow>
-          browse the full roster
+          browse the full lineup
         </Button>
       </div>
     </section>

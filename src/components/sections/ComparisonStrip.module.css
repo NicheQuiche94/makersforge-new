@@ -127,6 +127,10 @@
   color: transparent;
 }
 
+.headLogo {
+  color: var(--ink);
+}
+
 .headTagThem {
   font-family: "Cal Sans", system-ui, sans-serif;
   font-weight: 400;

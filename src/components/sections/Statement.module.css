@@ -54,17 +54,30 @@
 }
 
 /* =========================================================
-   Body — three statements, narrative arc by alignment.
-   Narrower max-width matches "slow you down" rendering so
-   the body's left/right edges align with that italic line.
+   Body panel — heat-glow gradient container holding the 3
+   statements. Per Andre's punch list 2026-05-30: wrap the body
+   in a gradient panel with white text so it becomes a strong
+   visual moment under the headline, matching the gradient
+   panels at the hero and CTA. Outer column width holds the
+   panel; the inner body keeps the narrower "slow you down"
+   width for the left/right/centre arc alignment.
    ========================================================= */
+.bodyPanel {
+  width: 100%;
+  align-self: stretch;
+  border-radius: 32px;
+  padding: clamp(56px, 7vw, 96px) clamp(20px, 4vw, 60px);
+  position: relative;
+  overflow: hidden;
+}
+
 .body {
   display: flex;
   flex-direction: column;
   gap: clamp(40px, 5.5vw, 76px);
   width: 100%;
   max-width: clamp(300px, 49vw, 780px);
-  align-self: center;
+  margin: 0 auto;
 }
 
 .statement {
@@ -74,8 +87,11 @@
   line-height: 1.18;
   letter-spacing: -0.02em;
   text-transform: lowercase;
-  color: var(--ink);
+  /* White text on the gradient panel. */
+  color: #fff;
   margin: 0;
+  position: relative;
+  z-index: 1;
 }
 
 /* Setup beats default to left-align (statement default).

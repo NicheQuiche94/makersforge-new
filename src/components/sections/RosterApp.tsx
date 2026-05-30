@@ -10,6 +10,7 @@ import {
 import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Button } from "@/components/atoms/Button";
+import { Logo } from "@/components/atoms/Logo";
 import { ROSTER, BUDGET_LABELS, type Profile } from "@/data/roster";
 import styles from "./RosterApp.module.css";
 
@@ -211,7 +212,7 @@ export function RosterApp() {
           {/* Filter panel */}
           <div className={`${styles.panel} ${panelOpen ? styles.panelOpen : ""}`}>
             <div className={styles.panelInner}>
-              <FRow label="industry" hint="— pick one or both">
+              <FRow label="industry" hint="·pick one or both">
                 <ChipGroup
                   values={["games", "apps"]}
                   labels={["games", "apps"]}
@@ -221,7 +222,7 @@ export function RosterApp() {
               </FRow>
 
               {showGamesCat && (
-                <FRow label="games category" hint="— complexity">
+                <FRow label="games category" hint="·complexity">
                   <ChipGroup
                     values={["hypercasual", "hybridcasual", "casual", "midcore", "hardcore"]}
                     active={filters.gamesCat}
@@ -231,7 +232,7 @@ export function RosterApp() {
               )}
 
               {showAppsCat && (
-                <FRow label="apps category" hint="— vertical">
+                <FRow label="apps category" hint="·vertical">
                   <ChipGroup
                     values={["health", "dating", "finance", "social", "education", "entertainment", "productivity", "shopping", "lifestyle", "photo"]}
                     labels={["health & fitness", "dating", "finance", "social", "education", "entertainment", "productivity", "shopping", "lifestyle", "photo & video"]}
@@ -242,7 +243,7 @@ export function RosterApp() {
               )}
 
               {showGenre && (
-                <FRow label="genre" hint="— games">
+                <FRow label="genre" hint="·games">
                   <ChipGroup
                     values={["puzzle", "rpg", "strategy", "casino", "simulation", "sports", "action", "cards"]}
                     labels={["puzzle", "rpg", "strategy", "casino", "simulation", "sports/racing", "action", "tabletop/cards"]}
@@ -263,14 +264,14 @@ export function RosterApp() {
 
               {(discipline === "all" || discipline === "ua") && (
                 <>
-                  <FRow label="monetisation" hint="— iap / iaa">
+                  <FRow label="monetisation" hint="·iap / iaa">
                     <ChipGroup
                       values={["iap", "iaa", "hybrid"]}
                       active={filters.monetisation}
                       onToggle={(v) => toggleFilter("monetisation", v)}
                     />
                   </FRow>
-                  <FRow label="channels" hint="— ua expertise">
+                  <FRow label="channels" hint="·ua expertise">
                     <ChipGroup
                       values={["meta", "google", "tiktok", "asa", "programmatic", "influencer", "aso"]}
                       active={filters.channels}
@@ -289,7 +290,7 @@ export function RosterApp() {
               )}
 
               {(discipline === "all" || discipline === "art") && (
-                <FRow label="creative formats" hint="— marketing art">
+                <FRow label="creative formats" hint="·marketing art">
                   <ChipGroup
                     values={["video", "playable", "static", "ugc", "motion"]}
                     labels={["video", "playables", "static", "ugc", "motion"]}
@@ -343,7 +344,7 @@ export function RosterApp() {
             {availOnly && " · available"}
           </p>
           <Link href="/apply" className={styles.applyCta}>
-            join the roster <span aria-hidden="true">→</span>
+            join the lineup <span aria-hidden="true">→</span>
           </Link>
         </div>
 
@@ -509,6 +510,15 @@ function ProfileCard({ p, onClick }: { p: Profile; onClick: () => void }) {
           </span>
         ))}
       </div>
+      {/* Brand stamp in the bottom-right of every card. Inherits
+          card colour so it reads dark on paper, white on gradient. */}
+      <Logo
+        variant="mark"
+        size={18}
+        monochrome="currentColor"
+        className={styles.brandStamp}
+        title=""
+      />
     </button>
   );
 }
@@ -567,7 +577,7 @@ function ProfileModal({ profile, onClose }: { profile: Profile; onClose: () => v
             <h4 className={styles.modalH4}>summary</h4>
             <p className={styles.modalSummaryBody}>
               {profile.summary ??
-                `A handwritten summary about ${profile.codename}. Andre writes these per profile — context on their wins, the kinds of teams they thrive in, what they're best known for. A short paragraph that goes beyond the structured filters and gives the operator some life on the page.`}
+                `A handwritten summary about ${profile.codename}. Andre writes these per profile. Context on their wins, the kinds of teams they thrive in, what they're best known for. A short paragraph that goes beyond the structured filters and gives the specialist some life on the page.`}
             </p>
           </div>
 

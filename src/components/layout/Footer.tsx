@@ -7,6 +7,7 @@ const ROSTER_LINKS = [
   { href: "/roster?discipline=ua", label: "ua managers" },
   { href: "/roster?discipline=art", label: "marketing artists" },
   { href: "/roster?available=true", label: "available now" },
+  { href: "/apply", label: "join the lineup" },
 ];
 
 const STUDIO_LINKS = [
@@ -29,12 +30,11 @@ export function Footer() {
         <div className={styles.main}>
           <div className={styles.brand}>
             <Link href="/" className={styles.logoLink} aria-label="MakersForge home">
-              <Logo size={32} />
+              <Logo size={52} />
             </Link>
             <p className={styles.tagline}>
-              Growth team contractors for mobile apps and games.
+              Growth team specialists for mobile apps and games.
             </p>
-            <span className={styles.valuePill}>flat fee, always</span>
             <div className={styles.socials}>
               <a href="#" aria-label="LinkedIn" title="LinkedIn">
                 <svg viewBox="0 0 24 24" fill="currentColor">
@@ -51,7 +51,7 @@ export function Footer() {
           </div>
 
           <div className={styles.col}>
-            <h5>The roster</h5>
+            <h5>The lineup</h5>
             <ul>
               {ROSTER_LINKS.map((link) => (
                 <li key={link.href}>

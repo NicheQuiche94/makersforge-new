@@ -1,14 +1,10 @@
 /* ============================================================
-   STICKY CONTROLS
+   CONTROLS — sticky removed per Andre 2026-05-30. Controls now
+   sit at the top of the lineup page and stay there; users scroll
+   back up to change filters.
    ============================================================ */
 .controls {
   padding: 30px 0 20px;
-  position: sticky;
-  top: 78px;
-  z-index: 90;
-  background: rgba(245, 241, 234, 0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
 }
 
 .quickbar {
@@ -451,6 +447,15 @@
   transform: translateY(-4px);
 }
 
+/* Tiger-stripe gradient cards on hover — they already have the
+   gradient bg at rest, so hover adds brightness + lift + a richer
+   shadow so the interaction reads. Per Andre 2026-05-30: "gradient
+   cards should also do something on hover, they feel dead now". */
+.grid > .pcard:nth-child(even):hover {
+  filter: brightness(1.08);
+  box-shadow: 0 28px 60px rgba(199, 46, 0, 0.28);
+}
+
 /* Composite gradient overlay (warm bottom-right + white top-left
    radial + noise) — applies to both hover and the striped cards. */
 .pcard:hover::before,
@@ -713,6 +718,23 @@
 .grid > .pcard:nth-child(even) .pcTag::before {
   background: rgba(255, 255, 255, 0.6);
   opacity: 1;
+}
+
+/* Brand stamp — small MakersForge mark bottom-right on every card.
+   currentColor lets it auto-adapt between paper (dark) and gradient
+   (white) surfaces. */
+.brandStamp {
+  position: absolute;
+  bottom: 16px;
+  right: 18px;
+  opacity: 0.22;
+  pointer-events: none;
+  user-select: none;
+  z-index: 2;
+}
+.pcard:hover .brandStamp,
+.grid > .pcard:nth-child(even) .brandStamp {
+  opacity: 0.32;
 }
 
 /* ============================================================

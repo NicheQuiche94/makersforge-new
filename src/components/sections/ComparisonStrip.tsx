@@ -1,3 +1,4 @@
+import { Logo } from "@/components/atoms/Logo";
 import styles from "./ComparisonStrip.module.css";
 
 /**
@@ -72,7 +73,10 @@ export function ComparisonStrip() {
               <span className={styles.headKicker}>compare</span>
             </div>
             <div className={`${styles.cell} ${styles.head} ${styles.headUs}`}>
-              <span className={styles.headTagUs}>MakersForge</span>
+              {/* Real logo + wordmark in the highlighted column header
+                  (replaces the prior Cal-Sans-gradient text "MakersForge"
+                  per Andre 2026-05-30). */}
+              <Logo size={28} className={styles.headLogo} />
             </div>
             <div className={`${styles.cell} ${styles.head} ${styles.headThem}`}>
               <span className={styles.headTagThem}>Traditional</span>

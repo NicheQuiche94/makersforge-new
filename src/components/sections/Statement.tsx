@@ -32,26 +32,28 @@ export function Statement() {
             <span className={styles.italicCal}>slow you down</span>.
           </h2>
 
-          <div className={styles.body}>
-            <p className={`reveal d1 ${styles.statement}`}>
-              you ship at speed.
-              <br />
-              you find what works.
-            </p>
-            <p
-              className={`reveal d2 ${styles.statement} ${styles.statementRight}`}
-            >
-              then hiring drags you back to a quarter long crawl.
-            </p>
-            <p
-              className={`reveal d3 ${styles.statement} ${styles.statementCenter}`}
-            >
-              we keep the bench warm.
-              <br />
-              brief monday, shortlist friday, contracts the next week.
-              <br />
-              growth keeps its pace.
-            </p>
+          <div className={`heat-glow ${styles.bodyPanel}`}>
+            <div className={styles.body}>
+              <p className={`reveal d1 ${styles.statement}`}>
+                you ship at speed.
+                <br />
+                you find what works.
+              </p>
+              <p
+                className={`reveal d2 ${styles.statement} ${styles.statementRight}`}
+              >
+                then hiring drags you back to a quarter long crawl.
+              </p>
+              <p
+                className={`reveal d3 ${styles.statement} ${styles.statementCenter}`}
+              >
+                we represent the lineup.
+                <br />
+                brief monday, shortlist friday, contracts the next week.
+                <br />
+                growth keeps its pace.
+              </p>
+            </div>
           </div>
         </div>
       </div>
