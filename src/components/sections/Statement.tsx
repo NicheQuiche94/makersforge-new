@@ -1,3 +1,4 @@
+import { Blob } from "@/components/atoms/Blob";
 import styles from "./Statement.module.css";
 
 export function Statement() {
@@ -13,7 +14,7 @@ export function Statement() {
             <em>shouldn&apos;t.</em>
           </span>
           <span className={`${styles.line} ${styles.line3}`}>
-            slow <span className="gr">growth.</span>
+            slow <Blob /> <span className="gr">growth.</span>
           </span>
         </h2>
 
@@ -26,13 +27,14 @@ export function Statement() {
             <header className={styles.chapterHead}>
               <span className={styles.chapterNum}>01 /</span>
               <h3 className={styles.chapterLabel}>
-                the problem <em>we solve.</em>
+                the problem <Blob /> <em>we solve.</em>
               </h3>
             </header>
             <p className={styles.body}>
-              Months posting ads, sifting CVs, gambling on culture fit. We
-              keep a vetted bench of operators we already know — so the
-              shortlist is real people, not a search dragnet.
+              <strong>Months posting ads</strong>, sifting CVs, gambling on
+              culture fit. We keep a{" "}
+              <strong>vetted bench of operators</strong> we already know — so
+              the shortlist is real people, not a search dragnet.
             </p>
           </article>
 
@@ -40,15 +42,14 @@ export function Statement() {
             <header className={styles.chapterHead}>
               <span className={styles.chapterNum}>02 /</span>
               <h3 className={styles.chapterLabel}>
-                the <em>answer.</em>
+                the <Blob /> <em>answer.</em>
               </h3>
             </header>
             <p className={styles.body}>
-              Ready to go this week. Senior UA and creative talent for apps
-              and games —{" "}
-              <strong>
-                at a flat monthly fee that doesn&apos;t scale with their pay.
-              </strong>
+              <strong>Ready to go this week.</strong> Senior UA and creative
+              talent for apps and games —{" "}
+              <strong>at a flat monthly fee</strong> that doesn&apos;t scale
+              with their pay.
             </p>
           </article>
         </div>

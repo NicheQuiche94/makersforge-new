@@ -29,8 +29,8 @@ export function HeroPanel() {
 
           <div className={styles.foot}>
             <p className={styles.lede}>
-              A live roster of senior UA managers and marketing artists for
-              mobile apps and games.{" "}
+              A <strong>live roster</strong> of senior UA managers and
+              marketing artists for mobile apps and games.{" "}
               <strong>Pay them direct, pay us a flat monthly fee.</strong>{" "}
               No percentage games.
             </p>

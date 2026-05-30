@@ -59,6 +59,15 @@
   margin-left: clamp(0px, 1vw, 12px);
   margin-top: clamp(4px, 1vw, 10px);
 }
+/* Inline blob in this line is sized down — the default .blob 0.72em
+   would be too prominent at headline scale. Smaller mark reads as
+   typographic punctuation rather than a sphere floating in the text. */
+.line3 :global(.blob) {
+  width: 0.45em;
+  height: 0.45em;
+  margin: 0 0.18em;
+  vertical-align: 0.06em;
+}
 
 /* =========================================================
    CHAPTERS — problem / answer as a 2-act narrative.
@@ -121,14 +130,26 @@
   letter-spacing: -0.02em;
   color: var(--ink);
 }
+.chapterLabel :global(.blob) {
+  width: 0.55em;
+  height: 0.55em;
+  margin: 0 0.1em;
+  vertical-align: 0.04em;
+}
 
+/* Weight-contrast body copy. Base 500, key phrases 700. Heavier
+   contrast than the default body-text/strong pair creates the
+   Kinetic-style "rhythm within a sentence" — bold key phrases stand
+   out, base sits lighter, the eye moves through the bolds like
+   beats. */
 .body {
   font-size: 17px;
-  line-height: 1.6;
+  line-height: 1.55;
   color: var(--dim);
+  font-weight: 500;
   margin: 0;
 }
 .body strong {
   color: var(--ink);
-  font-weight: 600;
+  font-weight: 700;
 }

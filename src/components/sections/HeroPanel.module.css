@@ -97,17 +97,20 @@
   flex-wrap: wrap;
 }
 
+/* Weight-contrast lede. Base 500 / strong 700, base colour dropped
+   to 0.78 white-alpha for more contrast with the white strongs.
+   Same Kinetic-style rhythm as the Statement chapter bodies. */
 .lede {
   font-size: 19px;
   line-height: 1.5;
-  color: rgba(255, 255, 255, 0.88);
+  color: rgba(255, 255, 255, 0.78);
   max-width: 460px;
   margin: 0;
-  font-weight: 400;
+  font-weight: 500;
 }
 .lede strong {
   color: #fff;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .actions {
