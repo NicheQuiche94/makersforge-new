@@ -406,10 +406,10 @@ function StatementSectionK1() {
               <br />
               you find what works.
             </p>
-            <p className={styles.bigStatement}>
+            <p className={`${styles.bigStatement} ${styles.statementRight}`}>
               then hiring drags you back to a quarter long crawl.
             </p>
-            <p className={styles.bigStatement}>
+            <p className={`${styles.bigStatement} ${styles.statementCenter}`}>
               we keep the bench warm.
               <br />
               brief monday, shortlist friday, contracts the next week.

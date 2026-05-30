@@ -869,7 +869,9 @@
 }
 
 /* Big statement — shared by all body lines in the locked
-   column. Cal Sans at ~28-48px, lowercase, left-aligned. */
+   column. Cal Sans at ~28-48px, lowercase, default left-aligned.
+   Per-statement alignment modifiers below mirror the narrative
+   arc (good=left, bad=right, resolution=centre). */
 .bigStatement {
   font-family: "Cal Sans", system-ui, sans-serif;
   font-weight: 400;
@@ -879,6 +881,14 @@
   text-transform: lowercase;
   color: var(--ink);
   margin: 0;
+}
+
+.statementRight {
+  text-align: right;
+}
+
+.statementCenter {
+  text-align: center;
 }
 
 /* Dimmed previous attempts (A / B / C) — kept visible at low
