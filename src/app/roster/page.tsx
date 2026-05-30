@@ -5,9 +5,9 @@ import { RosterLiveStrip } from "@/components/sections/RosterLiveStrip";
 import { RosterApp } from "@/components/sections/RosterApp";
 
 export const metadata: Metadata = {
-  title: "The roster — MakersForge",
+  title: "The lineup · MakersForge",
   description:
-    "Filter to the senior UA managers and marketing artists you need. Profiles anonymised; real identities reveal after a brief.",
+    "Filter to the senior UA managers and marketing artists we represent. Profiles anonymised; real identities reveal after a brief.",
 };
 
 export default function RosterPage() {

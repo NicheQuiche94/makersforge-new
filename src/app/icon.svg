@@ -1,27 +1,16 @@
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 209.41 209.41">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 209.41 209.41">
   <defs>
     <style>
-      .cls-1 {
-        fill: none;
-        stroke: #f0532d;
-        stroke-miterlimit: 10;
-        stroke-width: 7px;
-      }
-
-      .cls-2 {
-        fill: #231f20;
-      }
-
-      .cls-2, .cls-3 {
-        stroke-width: 0px;
-      }
-
-      .cls-3 {
-        fill: #fff;
-      }
+      .bg { fill: #ffffff; }
+      .hex { fill: none; stroke: #f0532d; stroke-miterlimit: 10; stroke-width: 9px; }
+      .mf  { fill: #0e0f11; stroke-width: 0; }
     </style>
   </defs>
-  <rect class="cls-2" width="209.41" height="209.41"/>
-  <polygon class="cls-3" points="130.24 102 130.24 110.14 140.83 110.14 151.42 118.28 130.24 118.28 130.24 126.41 119.64 118.28 119.64 102 87.87 102 109.05 118.28 98.46 126.41 130.24 126.41 130.24 134.55 77.28 134.55 98.46 118.28 87.87 110.14 77.28 110.14 56.1 93.86 151.42 93.86 151.42 110.14 140.83 102 130.24 102"/>
-  <polygon class="cls-1" points="162.79 143.69 162.79 79.9 103.76 48.01 44.72 79.9 44.72 143.69 103.76 175.58 162.79 143.69"/>
+  <!-- Rounded white background. rx ~17% of width matches modern app-icon
+       corner radii (squircle-adjacent) without going full pill. -->
+  <rect class="bg" width="209.41" height="209.41" rx="36" ry="36" />
+  <!-- MF mark (ink on white). -->
+  <polygon class="mf" points="130.24 102 130.24 110.14 140.83 110.14 151.42 118.28 130.24 118.28 130.24 126.41 119.64 118.28 119.64 102 87.87 102 109.05 118.28 98.46 126.41 130.24 126.41 130.24 134.55 77.28 134.55 98.46 118.28 87.87 110.14 77.28 110.14 56.1 93.86 151.42 93.86 151.42 110.14 140.83 102 130.24 102"/>
+  <!-- Heat-orange hex outline -->
+  <polygon class="hex" points="162.79 143.69 162.79 79.9 103.76 48.01 44.72 79.9 44.72 143.69 103.76 175.58 162.79 143.69"/>
 </svg>

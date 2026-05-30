@@ -354,9 +354,13 @@ export function RosterApp() {
             Try widening the search or clearing filters.
           </div>
         ) : (
-          <div className={styles.grid}>
+          <div className={styles.list}>
             {visible.map((p) => (
-              <ProfileCard key={p.id} p={p} onClick={() => setModalProfile(p)} />
+              <ProfileRow
+                key={p.id}
+                p={p}
+                onClick={() => setModalProfile(p)}
+              />
             ))}
           </div>
         )}
@@ -469,57 +473,62 @@ function ChipGroup({
   );
 }
 
-function ProfileCard({ p, onClick }: { p: Profile; onClick: () => void }) {
-  const tags = [
-    p.background,
-    ...((p.discipline === "ua" ? p.channels?.slice(0, 2) : p.formats?.slice(0, 2)) ?? []),
-  ];
+/* Banner row (per Andre 2026-05-30): switched from the tiger-stripe
+   grid of cards to full-width list-style rows. Tiger-stripe rhythm
+   carries over (every other row is gradient). Each row has a
+   click-through to open the detail modal, plus a separate
+   "request info" CTA on the right that goes to /enquire with the
+   codename pre-attached. */
+function ProfileRow({ p, onClick }: { p: Profile; onClick: () => void }) {
   const ctx = p.discipline === "ua"
     ? p.budget !== undefined ? BUDGET_LABELS[p.budget] : "n/a"
     : p.formats?.slice(0, 2).join(" · ") ?? "n/a";
 
   return (
-    <button type="button" className={styles.pcard} onClick={onClick}>
-      <div className={styles.pcTop}>
-        <span className={styles.pcMono}>{p.codename}</span>
-        <span
-          className={`${styles.pcStatus} ${p.available ? styles.pcStatusAv : styles.pcStatusCt}`}
-        >
-          <span className={styles.pcDot} />
-          {p.available ? "available" : "in contract"}
-        </span>
-      </div>
-      <div className={styles.pcInd}>
-        {p.industries.map((i) => (
-          <span key={i} className={`${styles.indBadge} ${styles[`ind${i}`]}`}>
-            {i}
+    <article className={styles.prow}>
+      <button type="button" className={styles.prowMain} onClick={onClick}>
+        <div className={styles.prowLeft}>
+          <span className={styles.prowMono}>{p.codename}</span>
+          <div className={styles.prowLeftBody}>
+            <h3 className={styles.prowName}>{p.role}</h3>
+            <p className={styles.prowRole}>{p.background}</p>
+          </div>
+          <div className={styles.prowInd}>
+            {p.industries.map((i) => (
+              <span key={i} className={`${styles.indBadge} ${styles[`ind${i}`]}`}>
+                {i}
+              </span>
+            ))}
+          </div>
+        </div>
+        <div className={styles.prowMid}>
+          <MetaRow k="location" v={p.location.label} />
+          <MetaRow k="day rate" v={`${p.dayRateLabel}/day`} />
+          <MetaRow k={p.discipline === "ua" ? "budget" : "formats"} v={ctx} />
+        </div>
+        <div className={styles.prowStatusWrap}>
+          <span
+            className={`${styles.pcStatus} ${p.available ? styles.pcStatusAv : styles.pcStatusCt}`}
+          >
+            <span className={styles.pcDot} />
+            {p.available ? "available" : "in contract"}
           </span>
-        ))}
-      </div>
-      <h3 className={styles.pcName}>{p.role}</h3>
-      <p className={styles.pcRole}>{p.background}</p>
-      <div className={styles.pcMeta}>
-        <MetaRow k="location" v={p.location.label} />
-        <MetaRow k="day rate" v={`${p.dayRateLabel}/day`} />
-        <MetaRow k={p.discipline === "ua" ? "budget" : "formats"} v={ctx} />
-      </div>
-      <div className={styles.pcTags}>
-        {tags.map((t) => (
-          <span key={t} className={styles.pcTag}>
-            {t}
-          </span>
-        ))}
-      </div>
-      {/* Brand stamp in the bottom-right of every card. Inherits
-          card colour so it reads dark on paper, white on gradient. */}
-      <Logo
-        variant="mark"
-        size={18}
-        monochrome="currentColor"
-        className={styles.brandStamp}
-        title=""
-      />
-    </button>
+        </div>
+        <Logo
+          variant="mark"
+          size={18}
+          monochrome="currentColor"
+          className={styles.brandStamp}
+          title=""
+        />
+      </button>
+      <Link
+        href={`/enquire?profile=${encodeURIComponent(p.codename)}`}
+        className={styles.prowCta}
+      >
+        request info <span aria-hidden="true">→</span>
+      </Link>
+    </article>
   );
 }
 
@@ -612,7 +621,11 @@ function ProfileModal({ profile, onClose }: { profile: Profile; onClose: () => v
           )}
 
           <div className={styles.modalCta}>
-            <Button href="#" variant="primary" arrow>
+            <Button
+              href={`/enquire?profile=${encodeURIComponent(profile.codename)}`}
+              variant="primary"
+              arrow
+            >
               enquire about {profile.codename}
             </Button>
           </div>

@@ -14,7 +14,7 @@ type CTABandProps = {
 export function CTABand({
   headline,
   body,
-  cta = { label: "book a 20-min call", href: "#" },
+  cta = { label: "book a 20-min call", href: "/enquire" },
 }: CTABandProps) {
   return (
     <section className={styles.section}>

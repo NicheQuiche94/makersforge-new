@@ -6,7 +6,7 @@ import { FAQ } from "@/components/sections/FAQ";
 import { CTABand } from "@/components/sections/CTABand";
 
 export const metadata: Metadata = {
-  title: "Pricing — MakersForge",
+  title: "Pricing · MakersForge",
   description:
     "One flat fee. No percentage games. Flat monthly fee for contractors, flat £10,000 for permanent placement.",
 };

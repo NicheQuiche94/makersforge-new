@@ -24,7 +24,7 @@ import styles from "../legal.module.css";
  */
 
 export const metadata: Metadata = {
-  title: "Terms — MakersForge",
+  title: "Terms · MakersForge",
   description:
     "Terms of use for MakersForge. Talent agency for growth specialists in mobile apps and games.",
 };

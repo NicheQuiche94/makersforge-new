@@ -20,10 +20,10 @@ export function PricingGrid() {
             </h2>
             <div className={styles.amount}>
               <span className={styles.currency}>£</span>
-              <span className={styles.figure}>
-                <span className="placeholder-price">[X]</span>
+              <span className={styles.figure}>1,000</span>
+              <span className={styles.period}>
+                / specialist / month engaged
               </span>
-              <span className={styles.period}>/ contractor / month engaged</span>
             </div>
             <p className={styles.lede}>
               You get matched with a senior growth operator from the roster.{" "}
@@ -40,7 +40,7 @@ export function PricingGrid() {
               <li>Scale up or down month-to-month</li>
             </ul>
             <div className={styles.ctaWrap}>
-              <Button href="#" variant="light" arrow>
+              <Button href="/enquire" variant="light" arrow>
                 talk to us about a hire
               </Button>
             </div>
@@ -76,7 +76,7 @@ export function PricingGrid() {
               <li>UA, Marketing Art, Product, Design, Engineering</li>
             </ul>
             <div className={styles.ctaWrap}>
-              <Button href="#" variant="primary" arrow>
+              <Button href="/enquire" variant="primary" arrow>
                 enquire about permanent
               </Button>
             </div>

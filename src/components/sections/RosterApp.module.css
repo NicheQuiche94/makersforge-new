@@ -373,22 +373,209 @@
 }
 
 /* ============================================================
-   GRID
+   LIST (was grid). Per Andre 2026-05-30: switched from the
+   tiger-stripe 3-column card grid to a vertical list of full-
+   width banner rows. Tiger-stripe rhythm carries over via
+   :nth-child(even) on .prow.
    ============================================================ */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+.list {
+  display: flex;
+  flex-direction: column;
   gap: 14px;
   padding-bottom: 80px;
 }
-@media (max-width: 980px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+
+/* ============================================================
+   PROFILE ROW — full-width banner. Three columns: left
+   (codename + name + role + industry badges), middle (meta rows),
+   right (status pill). Request-info CTA sits outside the main
+   click area so the row's click-to-modal doesn't intercept it.
+   Tiger-stripe via :nth-child(even) on .prow.
+   ============================================================ */
+.prow {
+  position: relative;
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  border-radius: 18px;
+  overflow: hidden;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: stretch;
 }
-@media (max-width: 620px) {
-  .grid {
+
+.prow:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 36px rgba(14, 15, 17, 0.12);
+}
+
+/* Tiger-stripe alternation (carries over from the previous grid). */
+.list > .prow:nth-child(even) {
+  background: var(--heat-deep);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 18px 36px rgba(14, 15, 17, 0.18);
+}
+.list > .prow:nth-child(even):hover {
+  filter: brightness(1.08);
+  box-shadow: 0 24px 48px rgba(199, 46, 0, 0.28);
+}
+.list > .prow:nth-child(even)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 80% 110%, #ffb347 0%, transparent 50%),
+    radial-gradient(
+      ellipse at 0% 0%,
+      rgba(255, 255, 255, 0.12) 0%,
+      transparent 40%
+    );
+  pointer-events: none;
+  border-radius: 18px;
+  z-index: 0;
+}
+.list > .prow:nth-child(even)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+  opacity: 0.7;
+  pointer-events: none;
+  border-radius: 18px;
+  z-index: 0;
+}
+.prow > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Click-through main area: codename + name/role + meta + status.
+   The whole zone opens the detail modal. */
+.prowMain {
+  display: grid;
+  grid-template-columns: minmax(260px, 1.5fr) minmax(220px, 1fr) auto;
+  gap: 28px;
+  align-items: center;
+  padding: 22px 26px;
+  background: transparent;
+  border: none;
+  text-align: left;
+  font-family: inherit;
+  color: inherit;
+  cursor: pointer;
+  width: 100%;
+}
+
+.prowLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.prowMono {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  transition: color 0.3s;
+}
+.list > .prow:nth-child(even) .prowMono {
+  color: rgba(255, 255, 255, 0.85);
+}
+.prowLeftBody {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.prowName {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  letter-spacing: -0.02em;
+  text-transform: lowercase;
+  line-height: 1;
+  margin: 0;
+  color: var(--ink);
+  transition: color 0.3s;
+}
+.list > .prow:nth-child(even) .prowName {
+  color: #fff;
+}
+.prowRole {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 13px;
+  color: var(--mute);
+  text-transform: lowercase;
+  margin: 0;
+}
+.list > .prow:nth-child(even) .prowRole {
+  color: #fff;
+}
+.prowInd {
+  display: flex;
+  gap: 6px;
+}
+
+.prowMid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.prowStatusWrap {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 12px;
+}
+
+/* Request-info CTA — separate clickable on the right. */
+.prowCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 32px;
+  background: var(--heat-h);
+  color: #fff;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: lowercase;
+  letter-spacing: -0.005em;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+  transition: filter 0.2s ease;
+  white-space: nowrap;
+}
+.prowCta:hover {
+  filter: brightness(1.08);
+}
+.list > .prow:nth-child(even) .prowCta {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+}
+
+@media (max-width: 920px) {
+  .prow {
     grid-template-columns: 1fr;
+  }
+  .prowMain {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .prowStatusWrap {
+    justify-content: flex-start;
+    padding-right: 0;
+  }
+  .prowCta {
+    padding: 14px 24px;
+    justify-content: center;
   }
 }
 
@@ -759,11 +946,13 @@
 .modal {
   background: var(--paper);
   border-radius: 24px;
-  max-width: 520px;
+  /* Bigger modal per Andre 2026-05-30 — 520px felt too small to give
+     the profile detail its weight. */
+  max-width: 760px;
   width: 100%;
   position: relative;
   overflow: hidden;
-  max-height: 90vh;
+  max-height: 92vh;
   overflow-y: auto;
   box-shadow: 0 30px 80px rgba(14, 15, 17, 0.3);
 }

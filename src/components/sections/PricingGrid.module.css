@@ -1,9 +1,8 @@
-/* Tighter top padding closes the gap to PricingHero above per
-   Andre 2026-05-30. Cards moved to more balanced 1.5 / 1 ratio
-   and shorter min-height so they feel like SaaS pricing tiles
-   rather than two hero panels. */
+/* Tighter SaaS-pricing-tile sizing per Andre 2026-05-30 round 2 —
+   the cards were still reading as hero-sized after the first pass.
+   This round pulls them to true SaaS pricing-grid proportions. */
 .section {
-  padding: 16px 0 60px;
+  padding: 12px 0 56px;
 }
 
 .grid {
@@ -17,17 +16,15 @@
   }
 }
 
-/* Shared shell — more compact than before. Primary stays slightly
-   taller than secondary because its content has the points list. */
 .primary,
 .secondary {
-  border-radius: 28px;
-  padding: 40px 36px;
+  border-radius: 22px;
+  padding: 30px 28px;
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  min-height: 460px;
+  min-height: 380px;
 }
 
 /* PRIMARY — composite gradient + radial highlights + noise comes
@@ -92,16 +89,14 @@
   color: var(--mute);
 }
 
-/* Headlines — scaled down to SaaS-pricing-tile proportions
-   (primary used to be hero-sized; now feels like a card). */
 .primaryH {
   font-family: "Cal Sans", system-ui, sans-serif;
   font-weight: 400;
-  font-size: clamp(30px, 3.8vw, 48px);
-  line-height: 0.95;
-  letter-spacing: -0.03em;
+  font-size: clamp(24px, 2.8vw, 34px);
+  line-height: 1;
+  letter-spacing: -0.025em;
   text-transform: lowercase;
-  margin: 0 0 22px;
+  margin: 0 0 18px;
   color: #fff;
 }
 .em {
@@ -112,49 +107,52 @@
 .secondaryH {
   font-family: "Cal Sans", system-ui, sans-serif;
   font-weight: 400;
-  font-size: clamp(28px, 3.4vw, 42px);
-  line-height: 0.95;
-  letter-spacing: -0.025em;
+  font-size: clamp(22px, 2.6vw, 32px);
+  line-height: 1;
+  letter-spacing: -0.02em;
   text-transform: lowercase;
-  margin: 0 0 22px;
+  margin: 0 0 18px;
 }
 
-/* Amount block — primary figure is still the focal moment but no
-   longer competing with the hero scale above. */
 .amount {
   display: flex;
   align-items: baseline;
-  gap: 8px;
-  margin-bottom: 26px;
+  gap: 6px;
+  margin-bottom: 20px;
   flex-wrap: wrap;
 }
 .currency {
   font-family: "Cal Sans", system-ui, sans-serif;
   font-weight: 400;
-  font-size: 28px;
-  color: rgba(255, 255, 255, 0.6);
+  font-size: 22px;
+  color: rgba(255, 255, 255, 0.7);
 }
 .currencyLight {
   font-family: "Cal Sans", system-ui, sans-serif;
   font-weight: 400;
-  font-size: 24px;
+  font-size: 20px;
   color: var(--mute);
 }
 .figure {
   font-family: "Cal Sans", system-ui, sans-serif;
   font-weight: 400;
-  font-size: clamp(54px, 7vw, 92px);
-  line-height: 0.9;
+  font-size: clamp(40px, 5.2vw, 68px);
+  line-height: 0.92;
   letter-spacing: -0.04em;
   color: #fff;
 }
 .figureLight {
-  font-size: clamp(46px, 6vw, 72px);
+  font-size: clamp(36px, 4.6vw, 54px);
   background: var(--heat-text);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
+}
+.period {
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: rgba(255, 255, 255, 0.82) !important;
 }
 .period {
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;

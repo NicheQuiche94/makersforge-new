@@ -28,7 +28,7 @@ import styles from "./talent.module.css";
  */
 
 export const metadata: Metadata = {
-  title: "For talent — MakersForge",
+  title: "For talent · MakersForge",
   description:
     "Represented, not recruited. We never take a cut of your salary, and we stay with you indefinitely. The talent agency for senior growth operators in mobile apps and games.",
 };

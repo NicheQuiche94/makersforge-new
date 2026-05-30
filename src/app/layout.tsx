@@ -19,9 +19,9 @@ const figtree = Figtree({
 
 export const metadata: Metadata = {
   title:
-    "MakersForge — Growth team contractors for mobile apps & games",
+    "MakersForge: Growth team specialists for mobile apps & games",
   description:
-    "A live roster of senior UA managers and marketing artists for mobile apps and games. Pay them direct, pay us a flat monthly fee. No percentage games.",
+    "A live lineup of senior UA managers and marketing artists for mobile apps and games. Pay them direct, pay us a flat monthly fee. No percentage games.",
 };
 
 export default function RootLayout({

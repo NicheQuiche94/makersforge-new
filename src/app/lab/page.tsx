@@ -3,7 +3,7 @@ import { Logo } from "@/components/atoms/Logo";
 import styles from "./lab.module.css";
 
 export const metadata: Metadata = {
-  title: "Design Lab — MakersForge",
+  title: "Design Lab · MakersForge",
   description:
     "Internal side-by-side design experiments. Not indexed.",
   robots: { index: false, follow: false },

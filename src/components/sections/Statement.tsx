@@ -44,15 +44,21 @@ export function Statement() {
               >
                 then hiring drags you back to a quarter long crawl.
               </p>
-              <p
-                className={`reveal d3 ${styles.statement} ${styles.statementCenter}`}
-              >
-                we represent the lineup.
-                <br />
-                brief monday, shortlist friday, contracts the next week.
-                <br />
-                growth keeps its pace.
-              </p>
+              <div className={`reveal d3 ${styles.resolutionBlock}`}>
+                <p
+                  className={`${styles.statement} ${styles.statementCenter} ${styles.payoff}`}
+                >
+                  we represent{" "}
+                  <em className={styles.payoffItalic}>the lineup</em>.
+                </p>
+                <p
+                  className={`${styles.statement} ${styles.statementCenter} ${styles.resolutionTail}`}
+                >
+                  brief monday, shortlist friday, contracts the next week.
+                  <br />
+                  growth keeps its pace.
+                </p>
+              </div>
             </div>
           </div>
         </div>

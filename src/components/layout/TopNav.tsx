@@ -101,7 +101,7 @@ export function TopNav({ activeHref }: { activeHref?: string }) {
               </li>
             ))}
           </ul>
-          <Link href="#" className={styles.cta}>
+          <Link href="/enquire" className={styles.cta}>
             book a call
           </Link>
         </div>
