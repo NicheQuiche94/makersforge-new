@@ -27,69 +27,48 @@ export default function LabPage() {
       </section>
 
       {/* ============================================================
-          EXPERIMENT 01 · Bleed wordmark below the hero
+          EXPERIMENT 01 · Bleed wordmark — REJECTED
+          The bleed depends on the references' edge-to-edge aesthetic
+          (photos bleeding, wordmarks bleeding). Our containerized
+          aesthetic (rounded panels inside max-width container,
+          hairlines as boundaries) created tension rather than
+          signature. Kept as a record of what was tried, not a
+          direction to revisit.
           ============================================================ */}
-      <section className={styles.experiment}>
+      <section className={styles.experimentRejected}>
         <div className="container">
           <header className={styles.expHeader}>
             <p className={`kicker ${styles.expKicker}`}>
-              Experiment 01 · Bleed wordmark
+              Experiment 01 · Bleed wordmark · <span style={{ color: "#c72e00" }}>rejected</span>
             </p>
-            <h2 className={styles.expH2}>
-              a typographic moment that bleeds off the page edge.
-            </h2>
+            <h2 className={styles.expH2}>didn&apos;t translate.</h2>
             <p className={styles.expCopy}>
-              Inspired by Kinetic Studio. The wordmark sits below the hero,
-              extends past the right page edge, very low opacity. Makes the
-              page feel <strong>branded</strong> without being a literal
-              logo — closer to a magazine masthead. Six variants below:
-              word, weight, style, position, opacity.
+              Bleed needs an edge-to-edge aesthetic to land. Our
+              containerized rounded-panel + cream BG creates tension
+              with it rather than signature. Moving on.
             </p>
           </header>
         </div>
-
-        <Variant label="Variant A · ‘makersforge’ lowercase Cal Sans · 0.07 · right bleed">
-          <Wordmark text="makersforge" opacity={0.07} />
-        </Variant>
-
-        <Variant label="Variant B · ‘growth’ single value word · 0.09 · larger · right bleed">
-          <Wordmark text="growth" opacity={0.09} sizePreset="xl" />
-        </Variant>
-
-        <Variant label="Variant C · ‘on call.’ short phrase · 0.11 · italic · right bleed">
-          <Wordmark text="on call." opacity={0.11} italic sizePreset="md" />
-        </Variant>
-
-        <Variant label="Variant D · ‘the roster’ product callout · 0.08 · right bleed">
-          <Wordmark text="the roster" opacity={0.08} />
-        </Variant>
-
-        <Variant label="Variant E · ‘makersforge’ gradient text-fill · 0.18 · right bleed">
-          <Wordmark text="makersforge" gradient opacity={0.18} />
-        </Variant>
-
-        <Variant label="Variant F · ‘ROSTER’ uppercase, tightest tracking · 0.07 · right bleed">
-          <Wordmark text="ROSTER" opacity={0.07} sizePreset="xl" tight />
-        </Variant>
       </section>
 
-      {/* Placeholder for future experiments */}
+      {/* Placeholder until Andre picks the next direction */}
       <section className={styles.experiment}>
         <div className="container">
           <header className={styles.expHeader}>
             <p className={`kicker ${styles.expKicker}`}>
-              Queued · future experiments
+              Awaiting Andre · next experiment
             </p>
-            <h2 className={styles.expH2}>more layout moves coming.</h2>
-            <ul className={styles.queue}>
-              <li>02 · Statement headline anchored to deliberate grid columns (vs. progressive indents)</li>
-              <li>03 · HowItWorks bento with dramatic mixed sizes + one tile bleeding off-page</li>
-              <li>04 · Floating contextual UI badges in hero corners (replacing the simple text meta)</li>
-              <li>05 · Editorial sidebar/margin labels (vertical chapter markers)</li>
-            </ul>
+            <h2 className={styles.expH2}>what layout move next?</h2>
             <p className={styles.expCopy}>
-              Order driven by which moves Andre confirms after each round.
+              Bleed rejected. Candidates that fit our containerized
+              aesthetic:
             </p>
+            <ul className={styles.queue}>
+              <li><strong>02 · Floating UI badges in hero corners</strong> — layered data inside the existing panel (Kinetic&apos;s &quot;Detailing service&quot; pattern)</li>
+              <li><strong>03 · Statement headline anchored to deliberate grid columns</strong> (vs. progressive indents)</li>
+              <li><strong>04 · HowItWorks as hairline-ruled magazine rows</strong> (no tiles) — risk: bento was working, this changes direction</li>
+              <li><strong>05 · Type composition INSIDE a panel</strong> as a magazine spread — could apply to Statement instead of touching the hero</li>
+            </ul>
           </header>
         </div>
       </section>
