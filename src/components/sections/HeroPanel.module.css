@@ -90,7 +90,9 @@
   font-size: clamp(60px, 10vw, 168px);
   line-height: 0.9;
   letter-spacing: -0.04em;
-  text-transform: lowercase;
+  /* text-transform: lowercase dropped per Andre 2026-05-30 v4 — the
+     all-lowercase poster aesthetic is being retired in favour of
+     normal sentence-case headlines. */
   color: #fff;
   margin: 0;
   display: flex;

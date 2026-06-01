@@ -4,17 +4,16 @@ import { StatStrip } from "@/components/sections/StatStrip";
 import { Statement } from "@/components/sections/Statement";
 import { HowItWorksBento } from "@/components/sections/HowItWorksBento";
 import { RosterCarousel } from "@/components/sections/RosterCarousel";
+import { ForTalentBanner } from "@/components/sections/ForTalentBanner";
 import { CTABand } from "@/components/sections/CTABand";
 
-// "£0 % of salary taken" tile dropped per Andre 2026-05-30 v3 — the
-// claim implied other recruiters take from salary, which isn't really
-// true (they mark up day rates). Replaced with "flat" / "monthly fee.
-// that's it." which is the actual MakersForge differentiator.
+// Stats reframed per Andre 2026-05-30 v4: "avg deployment" replaced
+// with a claim we can actually back (lineup is live, updated weekly).
 const HOME_STATS = [
-  { n: <span className="gr">50+</span>, label: "on the lineup" },
-  { n: <span className="gr">2</span>, label: "disciplines live" },
-  { n: <span className="gr">&lt;7d</span>, label: "avg deployment" },
-  { n: <span className="gr">flat</span>, label: "monthly fee. that's it." },
+  { n: <span className="gr">50+</span>, label: "On the lineup" },
+  { n: <span className="gr">2</span>, label: "Disciplines live" },
+  { n: <span className="gr">Live</span>, label: "Lineup, updated weekly" },
+  { n: <span className="gr">Flat</span>, label: "Monthly fee. That's it." },
 ];
 
 export const metadata: Metadata = {
@@ -38,6 +37,7 @@ export default function HomePage() {
       <Statement />
       <HowItWorksBento />
       <RosterCarousel />
+      <ForTalentBanner />
       <CTABand />
     </>
   );

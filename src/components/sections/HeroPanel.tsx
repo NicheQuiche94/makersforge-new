@@ -20,22 +20,19 @@ export function HeroPanel() {
     <section className={`heat-glow ${styles.hero}`} data-nav-gradient>
       <div className={styles.inner}>
         <div className={styles.top}>
-          {/* Pulse-dot removed per Andre 2026-05-30. Kicker text now
-              starts at the same left edge as the logo pill and the
-              hero headline below — equal margin everywhere. */}
           <p className={styles.kicker}>
-            mobile apps &amp; games · EMEA
+            Mobile apps &amp; games · EMEA
           </p>
           <div className={styles.masthead}>
-            <span>est. 2024</span>
+            <span>Est. 2024</span>
             <span>a SeedCraft venture</span>
           </div>
         </div>
 
         <div className={styles.middle}>
           <h1 className={styles.headline}>
-            <span className={styles.headlineLine}>growth team contractors.</span>
-            <span className={styles.headlineLine}>on call.</span>
+            <span className={styles.headlineLine}>Growth team specialists.</span>
+            <span className={styles.headlineLine}>On call.</span>
           </h1>
         </div>
 
@@ -43,19 +40,19 @@ export function HeroPanel() {
           <div className={styles.glassCards}>
             <div className={styles.glassCard}>
               <span className={styles.pulseDot} aria-hidden="true" />
-              32 available now
+              Live lineup
             </div>
-            <div className={styles.glassCard}>85% same-week shortlist</div>
-            <div className={styles.glassCard}>EMEA · UK · 8 cities</div>
-            <div className={styles.glassCard}>est. 2026 · SeedCraft</div>
+            <div className={styles.glassCard}>UA · marketing art</div>
+            <div className={styles.glassCard}>EMEA · UK</div>
+            <div className={styles.glassCard}>Est. 2024 · SeedCraft</div>
           </div>
 
           <div className={styles.ctas}>
             <Button href="/roster" variant="light" arrow>
-              see who&apos;s available
+              See the lineup
             </Button>
             <Button href="/#how" variant="on-dark">
-              how it works
+              How it works
             </Button>
           </div>
         </div>
