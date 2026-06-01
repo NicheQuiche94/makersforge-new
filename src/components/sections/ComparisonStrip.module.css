@@ -146,15 +146,6 @@
   color: var(--ink);
 }
 
-.headTagThem {
-  font-family: "Cal Sans", system-ui, sans-serif;
-  font-weight: 400;
-  font-size: 22px;
-  text-transform: none;
-  letter-spacing: -0.02em;
-  color: var(--dim);
-}
-
 /* ============================================================
    Body rows
    ============================================================ */
