@@ -1,0 +1,224 @@
+.section {
+  padding: 60px 0 100px;
+}
+
+/* Standardised section header pattern per Andre 2026-05-30 v6/v7. */
+.top {
+  max-width: 1080px;
+  margin: 0 auto 48px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.h3 {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(44px, 7vw, 108px);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  margin: 4px 0 0;
+  color: var(--ink);
+}
+.body {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: clamp(18px, 1.8vw, 24px);
+  line-height: 1.5;
+  color: var(--dim);
+  max-width: 720px;
+  margin: 0;
+}
+
+/* ============================================================
+   SaaS-comparison grid
+   ============================================================ */
+
+/* Outer wrap holds the table grid plus the highlighted "us"
+   column band that sits behind the centre cells. */
+.tableWrap {
+  position: relative;
+  border-radius: 24px;
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  overflow: hidden;
+}
+
+/* Highlighted column band — sits behind the second column.
+   Width = 1fr of the 1.5fr 1fr 1fr grid. Calc lands the left edge
+   at the start of the "us" column.
+   Uses a soft heat-tint background and a top accent bar so the
+   MakersForge column reads as the recommended option (standard
+   SaaS pricing comparison convention). */
+.usColumn {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc((100% - 0px) * 0.4286);   /* 1.5 / (1.5+1+1) ≈ 0.4286 */
+  width: calc((100% - 0px) * 0.2857);  /* 1 / 3.5 ≈ 0.2857 */
+  background:
+    linear-gradient(180deg, rgba(255, 93, 0, 0.07) 0%, rgba(255, 93, 0, 0.03) 100%);
+  border-left: 1px solid rgba(255, 93, 0, 0.18);
+  border-right: 1px solid rgba(255, 93, 0, 0.18);
+  pointer-events: none;
+  z-index: 0;
+}
+.usColumn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--heat-h);
+}
+
+.table {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  position: relative;
+  z-index: 1;
+}
+@media (max-width: 760px) {
+  .usColumn {
+    display: none;
+  }
+  .table {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cell {
+  padding: 22px 26px;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--hair);
+}
+
+/* Last row in each column drops the bottom border (handled by
+   the wrap's overflow: hidden cropping any seam). */
+.cell:nth-last-child(-n + 3) {
+  border-bottom: none;
+}
+
+/* ============================================================
+   Header row
+   ============================================================ */
+.head {
+  padding: 28px 26px 22px;
+  background: transparent;
+  border-bottom: 1px solid var(--hair-strong);
+}
+/* Per Andre v6: revert "Compare" / "Traditional" to Figtree (not
+   Cal Sans) — column headers read better as labels rather than
+   display type. Logo stays as-is in the middle column. */
+.headLabel,
+.headThem {
+  display: flex;
+  align-items: center;
+}
+.headKicker,
+.headTagThem {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.headTagUs {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  letter-spacing: -0.02em;
+  background: var(--heat-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.headLogo {
+  color: var(--ink);
+}
+
+/* ============================================================
+   Body rows
+   ============================================================ */
+.rowLabel {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--ink);
+  text-transform: none;
+  letter-spacing: -0.005em;
+}
+
+.us {
+  font-weight: 600;
+  color: var(--ink);
+  font-size: 15px;
+}
+.us span {
+  text-transform: none;
+}
+.them {
+  color: var(--dim);
+  font-size: 15px;
+}
+.them span {
+  text-transform: none;
+}
+
+/* Soft alternate row background for readability. Only applies to
+   label + them cells; us cells stay pure within the highlighted band. */
+.alt {
+  background: rgba(14, 15, 17, 0.018);
+}
+.altUs {
+  /* Slight darkening within the highlighted band on alt rows */
+  position: relative;
+}
+.altUs::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 93, 0, 0.025);
+  pointer-events: none;
+}
+
+/* ============================================================
+   Glyphs — gradient tick for "us", neutral cross for "them"
+   ============================================================ */
+.glyph {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 760px) {
+  /* Stack collapses; show row label on its own row, then us/them
+     pair below. Glyphs help distinguish without column headers. */
+  .cell {
+    padding: 16px 22px;
+  }
+  .rowLabel {
+    padding-top: 22px;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mute);
+    border-bottom: none;
+  }
+  .us,
+  .them {
+    border-bottom: none;
+  }
+  .cell:nth-last-child(-n + 3) {
+    border-bottom: none;
+  }
+}

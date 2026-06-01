@@ -1,0 +1,35 @@
+.section {
+  padding: 130px 0 40px;
+}
+
+/* Single left-anchored column (right copy dropped per Andre's
+   pricing-hero simplification rule applied here too). */
+.inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.kicker {
+  display: block;
+}
+
+.headline {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(50px, 8vw, 128px);
+  /* line-height bumped from 0.88 → 1 so descenders + periods don't
+     clip on big hero sizes per Andre 2026-05-30 v6. */
+  line-height: 1;
+  letter-spacing: -0.035em;
+  margin: 0;
+  padding-bottom: 0.06em;
+}
+.em {
+  font-style: italic;
+  background: var(--heat-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

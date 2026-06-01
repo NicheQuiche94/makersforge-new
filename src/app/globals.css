@@ -2,90 +2,734 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: 'Cal Sans';
-  src: url('/fonts/CalSans-SemiBold.woff2') format('woff2');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
+/* =========================================================
+   LOCKED v4 DESIGN TOKENS
+   Lifted verbatim from MakersForge_Homepage_v4.html :root,
+   plus --heat-h (horizontal) added to fix the visible diagonal
+   color-banding flat-edges that 120° linear shows on small pills.
+   ========================================================= */
+:root {
+  /* Gradients */
+  --heat: linear-gradient(
+    120deg,
+    #ffb347 0%,
+    #ff7a2b 28%,
+    #ff5d00 55%,
+    #ff3c00 78%,
+    #c72e00 100%
+  );
+  --heat-h: linear-gradient(
+    90deg,
+    #ffb347 0%,
+    #ff7a2b 28%,
+    #ff5d00 55%,
+    #ff3c00 78%,
+    #c72e00 100%
+  );
+  --heat-deep: linear-gradient(
+    135deg,
+    #ff7a2b 0%,
+    #ff3c00 50%,
+    #7a1f00 100%
+  );
+  --heat-radial: radial-gradient(
+    circle at 30% 30%,
+    #ffb347 0%,
+    #ff5d00 40%,
+    #c72e00 80%,
+    #5c1700 100%
+  );
+  --heat-text: linear-gradient(
+    108deg,
+    #ff8a3c 0%,
+    #ff5d00 55%,
+    #ff3c00 100%
+  );
+  /* Brighter gradient variant for italic emphasis on heat-deep panels.
+     Lighter stops so the italic words still read as accent rather than
+     blending into the deep base. */
+  --heat-bright: linear-gradient(
+    108deg,
+    #ffe0b0 0%,
+    #ffb347 45%,
+    #ff8a3c 100%
+  );
+
+  /* Surfaces */
+  --bg: #f5f1ea;
+  --bg-deep: #ede7dc;
+  --bg-card: #faf6ef;
+  --paper: #ffffff;
+
+  /* Ink / neutrals */
+  --ink: #0e0f11;
+  --ink-soft: #2a2a2e;
+  --charcoal: #3a3a3f;
+  --hair: rgba(14, 15, 17, 0.1);
+  --hair-strong: rgba(14, 15, 17, 0.2);
+  --dim: #52525b;
+  --mute: #8a8780;
 }
 
-:root {
-  --brand-orange: #E8491F;
-  --brand-orange-dark: #C93D18;
-  --brand-black: #0A0A0A;
-  --brand-black-light: #111111;
-  --brand-grey: #1A1A1A;
-  --brand-white: #FFFFFF;
+/* =========================================================
+   BASE
+   ========================================================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--bg);
 }
 
 body {
-  background-color: var(--brand-black);
-  color: var(--brand-white);
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, h6, .font-heading {
-  font-family: 'Cal Sans', system-ui, sans-serif !important;
-  letter-spacing: 0.025em;
+::selection {
+  background: #ff5d00;
+  color: #fff;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* =========================================================
+   SKIP LINK (a11y)
+   ========================================================= */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 8px;
+  background: var(--ink);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13px;
+  z-index: 9999;
+}
+.skip-link:focus {
+  left: 16px;
+  outline: 2px solid #ff5d00;
+  outline-offset: 2px;
+}
+
+/* =========================================================
+   CONTAINER
+   ========================================================= */
+.container {
+  max-width: 1340px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+@media (max-width: 700px) {
+  .container {
+    padding: 0 18px;
+  }
+}
+
+/* =========================================================
+   GRADIENT TEXT UTILITIES
+   ========================================================= */
+.gr,
+.grad-text {
+  background: var(--heat-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ghost {
+  color: var(--ink);
+  opacity: 0.16;
+}
+
+/* Italic emphasis for poster-style headlines.
+   Figtree heavy italic. Cal Sans has no italic so this is the approved
+   fallback per the brief.
+
+   .italic-gr  — gradient text-fill via background-clip. Used on LIGHT
+                 surfaces only. The text-clip is reliable here because
+                 the cream BG has high contrast with the gradient stops.
+   .italic-gr-bright — SOLID bright orange. Used on DARK surfaces
+                 (charcoal, heat-deep panels). Solid colour is more
+                 reliable than background-clip on dark BGs and matches
+                 the visual references (solid colored italics, not
+                 gradient). */
+.italic-gr,
+.italic-gr-bright {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-style: italic;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+}
+.italic-gr {
+  background: var(--heat-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.italic-gr-bright {
+  color: #ffb347;
+}
+
+/* =========================================================
+   HEAT PANEL TREATMENT
+   The "hero gradient look" — base heat gradient + radial highlights
+   (warm bottom-right + white top-left) + SVG noise overlay.
+   Apply to any panel that should feel luminous rather than flat.
+   Element must be position: relative + overflow: hidden + non-static
+   stacking context (or the ::before/::after will sit wrong).
+   ========================================================= */
+.heat-glow,
+.heat-bright-glow {
+  position: relative;
+  overflow: hidden;
+}
+.heat-glow {
+  background: var(--heat-deep);
+  color: #fff;
+}
+.heat-bright-glow {
+  background: var(--heat);
+  color: #fff;
+}
+.heat-glow::before,
+.heat-bright-glow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      ellipse at 80% 110%,
+      #ffb347 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 0% 0%,
+      rgba(255, 255, 255, 0.12) 0%,
+      transparent 40%
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+.heat-glow::after,
+.heat-bright-glow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 0;
+}
+.heat-glow > *,
+.heat-bright-glow > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================================================
+   INLINE BLOB — typographic punctuation, only inside type
+   ========================================================= */
+.blob {
+  display: inline-block;
+  width: 0.72em;
+  height: 0.72em;
+  border-radius: 50%;
+  background: var(--heat-radial);
+  vertical-align: -0.04em;
+  margin: 0 0.14em;
+  position: relative;
+  box-shadow: 0 2px 14px rgba(255, 93, 0, 0.3);
+}
+.blob::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.5' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.18 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+  opacity: 0.6;
+}
+
+/* =========================================================
+   TYPE
+   Display = Cal Sans (400, lowercase, tight tracking).
+   Body = Figtree (300-900).
+   Cal Sans has NO italic — `<em>` can render oblique inside
+   gradient panels (always re-state color so browser default
+   doesn't take over).
+   ========================================================= */
+.display {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  text-transform: lowercase;
+  letter-spacing: -0.035em;
+}
+
+.display-hero {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(54px, 9.5vw, 164px);
+  line-height: 0.85;
+  letter-spacing: -0.035em;
+  text-transform: lowercase;
+  margin: 0;
+}
+
+.display-section {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(46px, 7vw, 108px);
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  text-transform: lowercase;
+  margin: 0;
+}
+
+.display-page-h {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(50px, 8vw, 128px);
+  line-height: 0.88;
+  letter-spacing: -0.035em;
+  text-transform: lowercase;
+  margin: 0;
+}
+
+.display-mid {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(34px, 5vw, 72px);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  text-transform: lowercase;
+  margin: 0;
+}
+
+.display-small {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(28px, 3.6vw, 44px);
+  line-height: 0.96;
+  letter-spacing: -0.025em;
+  text-transform: lowercase;
+  margin: 0;
+}
+
+.kicker {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin: 0;
+}
+
+.meta-label {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin: 0;
+}
+
+.body-text {
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--dim);
+  margin: 0;
+}
+.body-text strong {
+  color: var(--ink);
   font-weight: 600;
 }
+.body-text-lg {
+  font-size: 19px;
+  line-height: 1.5;
+  color: var(--dim);
+  margin: 0;
+}
+.body-text-lg strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+/* Used for the emphasised intro / lede paragraphs that sit alongside
+   the big headlines — weight up so they hold their own. */
+.body-text-strong {
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--ink);
+  font-weight: 500;
+  margin: 0;
+}
 
-@layer base {
-  html {
-    scroll-behavior: smooth;
+/* Accent kicker-headline. For things like "the problem we solve" that
+   were getting drowned at 12px tracked uppercase. Cal Sans lowercase
+   at 22-28px reads as a deliberate sub-headline, not body noise. */
+.display-tiny {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(22px, 2vw, 28px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-transform: lowercase;
+  color: var(--ink);
+  margin: 0;
+}
+.display-tiny .gr {
+  background: var(--heat-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* =========================================================
+   BUTTONS — v4 system
+   - .btn-primary: gradient outline (HORIZONTAL gradient to avoid
+     the diagonal flat-edge banding the 120° showed on small pills)
+     + gradient text, fills on hover, text flips to white
+   - .btn-light: white pill on gradient panels
+   - .btn-ghost: soft-ink-fill quiet secondary
+   - .btn-on-dark: thin white outline on gradient panels
+   ========================================================= */
+.btn {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  text-transform: lowercase;
+  padding: 14px 24px;
+  border-radius: 999px;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  border: 1.5px solid transparent;
+  background: transparent;
+  color: var(--ink);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+  position: relative;
+}
+.btn-sm {
+  padding: 9px 16px;
+  font-size: 13px;
+}
+
+/* Primary — gradient outline via mask, gradient text */
+.btn-primary {
+  background: transparent;
+  color: var(--ink);
+}
+.btn-primary .btn-label,
+.btn-primary .btn-arrow {
+  background: var(--heat-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: -webkit-text-fill-color 0.25s, color 0.25s;
+}
+.btn-primary::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  padding: 1.5px;
+  /* HORIZONTAL gradient — fixes the diagonal flat-edge issue */
+  background: var(--heat-h);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  transition: opacity 0.25s;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  background: var(--heat-h);
+}
+/* On hover the fill becomes the heat gradient, so the gradient
+   stroke around the pill is redundant and reads as a double edge.
+   Hide the ::before stroke layer in that state. Per Andre
+   2026-05-30 v3: gradient banner must not also have gradient stroke. */
+.btn-primary:hover::before {
+  opacity: 0;
+}
+.btn-primary:hover .btn-label,
+.btn-primary:hover .btn-arrow {
+  background: none;
+  -webkit-text-fill-color: #fff;
+  color: #fff;
+}
+
+/* Light — for use on gradient panels */
+.btn-light {
+  background: #fff;
+  color: var(--ink);
+}
+.btn-light:hover {
+  transform: translateY(-2px);
+  background: var(--bg);
+}
+
+/* Ghost — soft cream quiet secondary */
+.btn-ghost {
+  background: rgba(14, 15, 17, 0.05);
+  color: var(--ink);
+}
+.btn-ghost:hover {
+  background: rgba(14, 15, 17, 0.1);
+  transform: translateY(-2px);
+}
+
+/* On-dark — thin white outline on gradient panels */
+.btn-on-dark {
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #fff;
+  background: transparent;
+}
+.btn-on-dark:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+/* =========================================================
+   STATUS PILLS
+   ========================================================= */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  border-radius: 999px;
+}
+.status .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+.status.available {
+  background: rgba(255, 93, 0, 0.08);
+  color: #c72e00;
+}
+.status.available .dot {
+  background: #ff5d00;
+  animation: pulse 1.6s ease-in-out infinite;
+}
+.status.contract {
+  background: rgba(138, 135, 128, 0.1);
+  color: var(--mute);
+}
+.status.contract .dot {
+  background: var(--mute);
+}
+
+/* =========================================================
+   HEX MARK PLACEHOLDER — kept for cases where the Logo SVG
+   isn't appropriate (e.g. inline within prose at small sizes).
+   ========================================================= */
+.hex-mark {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  background: var(--heat);
+  clip-path: polygon(
+    50% 0%,
+    100% 25%,
+    100% 75%,
+    50% 100%,
+    0% 75%,
+    0% 25%
+  );
+  flex-shrink: 0;
+}
+
+/* =========================================================
+   SCROLL PROGRESS
+   ========================================================= */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2.5px;
+  width: 0%;
+  background: var(--heat-h);
+  z-index: 1001;
+  transition: width 0.1s linear;
+  pointer-events: none;
+}
+
+/* =========================================================
+   REVEAL — v4 stagger via .d1/.d2/.d3 child classes
+   ========================================================= */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+.reveal.d1 {
+  transition-delay: 0.1s;
+}
+.reveal.d2 {
+  transition-delay: 0.22s;
+}
+.reveal.d3 {
+  transition-delay: 0.34s;
+}
+
+/* Old .scroll-reveal name kept for compatibility */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--delay, 0s);
+}
+.scroll-reveal.in-view,
+.scroll-reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+/* =========================================================
+   SUBHEAD — site-wide style for section subheadlines that sit
+   under the Cal Sans h1/h2 main headline. Figtree medium per
+   Andre 2026-05-30 v4 — Cal Sans was making subheads too display.
+   ========================================================= */
+.subhead {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: clamp(18px, 1.7vw, 22px);
+  line-height: 1.45;
+  letter-spacing: -0.005em;
+  color: var(--dim);
+  max-width: 720px;
+  margin: 14px 0 0;
+}
+.subhead strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+/* =========================================================
+   DROP-SHADOW utility for paper cards across the site
+   (lineup banner rows, pricing tiles, talent cards). Soft
+   neutral lift, no heat tint so it works on cream.
+   ========================================================= */
+.card-shadow {
+  box-shadow:
+    0 1px 0 rgba(14, 15, 17, 0.02),
+    0 8px 20px rgba(14, 15, 17, 0.08),
+    0 24px 40px rgba(14, 15, 17, 0.06);
+}
+
+/* =========================================================
+   BODY TEXT UPSCALE — base font-size bump across the site
+   per Andre 2026-05-30 v4 ("upscale body test a bit").
+   Applied at the html level so all rem-based text picks it
+   up, but explicit px-sized text in modules needs per-file
+   touchups.
+   ========================================================= */
+html {
+  font-size: 17px;
+}
+
+/* =========================================================
+   PLACEHOLDER PRICING MARKER
+   ========================================================= */
+.placeholder-price {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  padding: 0 12px;
+  display: inline-block;
+}
+.section-light .placeholder-price,
+.on-light .placeholder-price {
+  background: rgba(255, 200, 0, 0.25);
+  border: 1px dashed rgba(180, 130, 0, 0.4);
+}
+
+/* =========================================================
+   KEYFRAMES
+   ========================================================= */
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(255, 93, 0, 0.5);
   }
-
-  ::selection {
-    background-color: var(--brand-orange);
-    color: var(--brand-white);
+  50% {
+    opacity: 0.5;
+    box-shadow: 0 0 0 5px rgba(255, 93, 0, 0);
   }
 }
 
-@layer components {
-  .btn-primary {
-    @apply bg-brand-orange text-white font-semibold px-6 py-3 rounded-lg hover:bg-brand-orange-dark transition-all duration-200 hover:shadow-lg hover:shadow-brand-orange/20;
+@keyframes pulseLight {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.5);
   }
-
-  .btn-secondary {
-    @apply bg-transparent text-brand-orange font-semibold px-6 py-3 rounded-lg border-2 border-brand-orange hover:bg-brand-orange hover:text-white transition-all duration-200;
-  }
-
-  .btn-ghost {
-    @apply bg-white/5 text-white font-semibold px-6 py-3 rounded-lg border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-200;
-  }
-
-  .card {
-    @apply bg-brand-grey/50 border border-white/10 rounded-xl p-6 hover:border-brand-orange/30 transition-all duration-300;
-  }
-
-  .card-highlight {
-    @apply bg-gradient-to-br from-brand-grey to-brand-black-light border border-brand-orange/20 rounded-xl p-6;
-  }
-
-  .section-padding {
-    @apply py-24 lg:py-32;
+  50% {
+    opacity: 0.5;
+    box-shadow: 0 0 0 5px rgba(255, 255, 255, 0);
   }
 }
 
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #0a0a0a;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #333;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #444;
-}
-
-select option {
-  background: #1a1a1a;
-  color: white;
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal,
+  .scroll-reveal {
+    opacity: 1;
+    transform: none;
+  }
 }

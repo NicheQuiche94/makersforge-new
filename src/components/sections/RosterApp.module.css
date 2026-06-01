@@ -1,0 +1,1137 @@
+/* ============================================================
+   CONTROLS — sticky removed per Andre 2026-05-30. Controls now
+   sit at the top of the lineup page and stay there; users scroll
+   back up to change filters.
+   ============================================================ */
+.controls {
+  padding: 30px 0 20px;
+}
+
+.quickbar {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 14px 18px;
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  border-radius: 18px;
+}
+
+.qbLabel {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin-right: 6px;
+}
+
+.qchip {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: none;
+  padding: 9px 16px;
+  border-radius: 999px;
+  background: var(--bg);
+  border: 1.5px solid var(--hair);
+  color: var(--dim);
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+}
+.qchip:hover {
+  border-color: var(--hair-strong);
+  color: var(--ink);
+}
+.qchipActive {
+  /* Solid gradient fill, no stroke or shadow. */
+  border-color: transparent;
+  color: #fff;
+  background: var(--heat-h);
+  font-weight: 700;
+  box-shadow: none;
+}
+
+.qbDivider {
+  width: 1px;
+  height: 22px;
+  background: var(--hair);
+  margin: 0 4px;
+}
+
+.qtoggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--dim);
+  text-transform: none;
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+.track {
+  width: 42px;
+  height: 24px;
+  border-radius: 999px;
+  background: var(--bg);
+  border: 1.5px solid var(--hair-strong);
+  position: relative;
+  transition: all 0.25s;
+  display: inline-block;
+}
+.knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: var(--mute);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.qtoggleOn .track {
+  background: var(--heat-h);
+  border-color: transparent;
+}
+.qtoggleOn .knob {
+  left: 22px;
+  background: #fff;
+}
+.qtoggleOn {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.qbRight {
+  margin-left: auto;
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.qfilters {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: none;
+  padding: 9px 18px;
+  border-radius: 999px;
+  background: var(--bg);
+  border: 1.5px solid var(--hair-strong);
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+/* Hover state — solid gradient fill, no gradient stroke around it
+   per Andre 2026-05-30 v6 (gradient-on-gradient was reading as a
+   weird double edge). */
+.qfilters:hover {
+  border-color: transparent;
+  background: var(--heat-h);
+  color: #fff;
+}
+.count {
+  background: var(--heat-h);
+  color: #fff;
+  border-radius: 999px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+}
+.chev {
+  font-size: 9px;
+  transition: transform 0.25s;
+}
+.qfiltersOpen .chev {
+  transform: rotate(180deg);
+}
+
+.qsort {
+  position: relative;
+}
+.qsort select {
+  appearance: none;
+  -webkit-appearance: none;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: none;
+  padding: 9px 36px 9px 16px;
+  border-radius: 999px;
+  background: var(--bg);
+  border: 1.5px solid var(--hair-strong);
+  color: var(--ink);
+  cursor: pointer;
+}
+.qsort::after {
+  content: "";
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  border-right: 1.5px solid var(--ink);
+  border-bottom: 1.5px solid var(--ink);
+  transform: translateY(-65%) rotate(45deg);
+  pointer-events: none;
+}
+
+/* ============================================================
+   FILTER PANEL
+   ============================================================ */
+.panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  margin-top: 10px;
+}
+.panelOpen {
+  max-height: 1600px;
+}
+.panelInner {
+  padding: 28px;
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  border-radius: 20px;
+}
+.filterRow {
+  padding: 18px 0;
+  border-top: 1px solid var(--hair);
+}
+.filterRow:first-child {
+  padding-top: 4px;
+  border-top: none;
+}
+.filterRow:last-child {
+  padding-bottom: 6px;
+}
+.frLabel {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin: 0 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.frHint {
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--mute);
+  opacity: 0.65;
+  font-size: 11px;
+}
+.fchips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.fchip {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  text-transform: none;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--bg);
+  border: 1.5px solid var(--hair);
+  color: var(--dim);
+  cursor: pointer;
+  transition: all 0.18s;
+  letter-spacing: -0.01em;
+  position: relative;
+}
+.fchip:hover {
+  border-color: var(--hair-strong);
+  color: var(--ink);
+}
+/* Active chip — solid gradient fill instead of the prior gradient
+   stroke-on-paper trick. Andre 2026-05-30 v4: stroke looked weird
+   on a gradient banner, swap to gradient fill + white text. */
+.fchipActive {
+  border-color: transparent;
+  background: var(--heat-h);
+  color: #fff;
+  font-weight: 700;
+  box-shadow: none;
+}
+.fchipActive:hover {
+  color: #fff;
+  filter: brightness(1.05);
+}
+
+.panelFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 20px;
+  margin-top: 14px;
+  border-top: 1px solid var(--hair);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.clearBtn {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: none;
+  color: var(--mute);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.clearBtn:hover {
+  color: #c72e00;
+}
+.applyHint {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 12px;
+  color: var(--mute);
+}
+.applyHint strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+/* ============================================================
+   RESULTS ROW
+   ============================================================ */
+.resultsRow {
+  padding: 20px 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.resultsText {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--dim);
+  text-transform: none;
+  margin: 0;
+}
+.resultsText strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.applyCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: none;
+  padding: 9px 18px;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  text-decoration: none;
+  border: 1.5px solid var(--hair-strong);
+  transition: all 0.2s;
+  position: relative;
+}
+.applyCta:hover {
+  border-color: transparent;
+  background: var(--heat-h);
+  color: #fff;
+}
+
+/* ============================================================
+   LIST (was grid). Per Andre 2026-05-30: switched from the
+   tiger-stripe 3-column card grid to a vertical list of full-
+   width banner rows. Tiger-stripe rhythm carries over via
+   :nth-child(even) on .prow.
+   ============================================================ */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-bottom: 80px;
+}
+
+/* ============================================================
+   PROFILE ROW — full-width banner. Three columns: left
+   (codename + name + role + industry badges), middle (meta rows),
+   right (status pill). Request-info CTA sits outside the main
+   click area so the row's click-to-modal doesn't intercept it.
+   Tiger-stripe via :nth-child(even) on .prow.
+   ============================================================ */
+.prow {
+  position: relative;
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  border-radius: 18px;
+  overflow: hidden;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: stretch;
+  box-shadow:
+    0 1px 0 rgba(14, 15, 17, 0.02),
+    0 8px 20px rgba(14, 15, 17, 0.08),
+    0 24px 40px rgba(14, 15, 17, 0.06);
+}
+
+.prow:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 36px rgba(14, 15, 17, 0.12);
+}
+
+/* Tiger-stripe alternation (carries over from the previous grid). */
+.list > .prow:nth-child(even) {
+  background: var(--heat-deep);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 18px 36px rgba(14, 15, 17, 0.18);
+}
+.list > .prow:nth-child(even):hover {
+  filter: brightness(1.08);
+  box-shadow: 0 24px 48px rgba(199, 46, 0, 0.28);
+}
+.list > .prow:nth-child(even)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 80% 110%, #ffb347 0%, transparent 50%),
+    radial-gradient(
+      ellipse at 0% 0%,
+      rgba(255, 255, 255, 0.12) 0%,
+      transparent 40%
+    );
+  pointer-events: none;
+  border-radius: 18px;
+  z-index: 0;
+}
+.list > .prow:nth-child(even)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+  opacity: 0.7;
+  pointer-events: none;
+  border-radius: 18px;
+  z-index: 0;
+}
+.prow > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Click-through main area: codename + name/role + meta + status.
+   The whole zone opens the detail modal. */
+.prowMain {
+  display: grid;
+  grid-template-columns: minmax(260px, 1.5fr) minmax(220px, 1fr) auto;
+  gap: 28px;
+  align-items: center;
+  padding: 22px 26px;
+  background: transparent;
+  border: none;
+  text-align: left;
+  font-family: inherit;
+  color: inherit;
+  cursor: pointer;
+  width: 100%;
+}
+
+.prowLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.prowMono {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  transition: color 0.3s;
+}
+.list > .prow:nth-child(even) .prowMono {
+  color: rgba(255, 255, 255, 0.85);
+}
+.prowLeftBody {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.prowName {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  line-height: 1;
+  margin: 0;
+  color: var(--ink);
+  transition: color 0.3s;
+}
+.list > .prow:nth-child(even) .prowName {
+  color: #fff;
+}
+.prowRole {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 13px;
+  color: var(--mute);
+  text-transform: none;
+  margin: 0;
+}
+.list > .prow:nth-child(even) .prowRole {
+  color: #fff;
+}
+.prowInd {
+  display: flex;
+  gap: 6px;
+}
+
+.prowMid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.prowStatusWrap {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 12px;
+}
+
+/* Request-info CTA — subtle text-only link per Andre 2026-05-30 v2:
+   the prior gradient-pill version split the row into two visually
+   distinct surfaces. Now it sits as plain text + arrow on the
+   right of the row, inheriting row colour (ink on paper, white on
+   gradient) so each row reads as a single unified band. */
+.prowCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 26px 0 18px;
+  background: transparent;
+  color: inherit;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+}
+.prowCta:hover {
+  opacity: 0.75;
+}
+.prowCta span {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+.prowCta:hover span {
+  transform: translateX(3px);
+}
+
+@media (max-width: 920px) {
+  .prow {
+    grid-template-columns: 1fr;
+  }
+  .prowMain {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .prowStatusWrap {
+    justify-content: flex-start;
+    padding-right: 0;
+  }
+  .prowCta {
+    padding: 14px 24px;
+    justify-content: center;
+  }
+}
+
+.empty {
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--mute);
+  font-size: 16px;
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  border-radius: 20px;
+  /* Gap between the empty/full-list container and the CTABand
+     below per Andre 2026-05-30 v7 — they were touching. */
+  margin-bottom: 80px;
+}
+.emptyH {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-size: 32px;
+  color: var(--ink);
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* ============================================================
+   CARD — paper default; tiger-stripe gradient on every other card
+   by default + gradient takeover on hover.
+   Per Andre's punch list (2026-05-30): every second card should be
+   gradient by default (the "tiger-stripe" pattern). Hover behaviour
+   stays the same; odd cards swap to gradient, even cards intensify.
+   ============================================================ */
+.pcard {
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  border-radius: 20px;
+  padding: 22px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  min-height: 340px;
+  font-family: inherit;
+  text-align: left;
+  color: inherit;
+}
+
+/* Gradient treatment — applied either on hover OR by default to
+   every other grid card (tiger-stripe). */
+.pcard:hover,
+.grid > .pcard:nth-child(even) {
+  background: var(--heat-deep);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 24px 50px rgba(14, 15, 17, 0.22);
+}
+.pcard:hover {
+  /* Hover-only: lift on Y. Striped cards stay in place at rest. */
+  transform: translateY(-4px);
+}
+
+/* Tiger-stripe gradient cards on hover — they already have the
+   gradient bg at rest, so hover adds brightness + lift + a richer
+   shadow so the interaction reads. Per Andre 2026-05-30: "gradient
+   cards should also do something on hover, they feel dead now". */
+.grid > .pcard:nth-child(even):hover {
+  filter: brightness(1.08);
+  box-shadow: 0 28px 60px rgba(199, 46, 0, 0.28);
+}
+
+/* Composite gradient overlay (warm bottom-right + white top-left
+   radial + noise) — applies to both hover and the striped cards. */
+.pcard:hover::before,
+.grid > .pcard:nth-child(even)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 80% 110%, #ffb347 0%, transparent 50%),
+    radial-gradient(
+      ellipse at 0% 0%,
+      rgba(255, 255, 255, 0.12) 0%,
+      transparent 40%
+    );
+  pointer-events: none;
+  border-radius: 20px;
+  z-index: 0;
+}
+.pcard:hover::after,
+.grid > .pcard:nth-child(even)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+  opacity: 0.7;
+  pointer-events: none;
+  border-radius: 20px;
+  z-index: 0;
+}
+.pcard > * {
+  position: relative;
+  z-index: 1;
+}
+
+.pcTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
+.pcMono {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  transition: color 0.3s;
+}
+/* All text on gradient surfaces goes to full white (or 0.85+ for
+   subordinate labels) per Andre 2026-05-30 — the off-white at 0.6-0.78
+   hits low-contrast pockets in the gradient and reads as afterthought. */
+.pcard:hover .pcMono,
+.grid > .pcard:nth-child(even) .pcMono {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.pcStatus {
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  transition: all 0.3s;
+}
+.pcDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+}
+/* Status colours updated per Andre 2026-05-30 v3:
+   - available  → green (live signal, not heat-red)
+   - in contract → neutral grey
+   The previous red-on-red lineup gradient row made available pills
+   disappear. Green reads on both paper and gradient surfaces. */
+.pcStatusAv {
+  background: rgba(16, 163, 77, 0.1);
+  color: #0a7a3b;
+}
+.pcStatusAv .pcDot {
+  background: #10a34d;
+  animation: pulse 1.6s ease-in-out infinite;
+}
+.pcStatusCt {
+  background: rgba(138, 135, 128, 0.12);
+  color: var(--mute);
+}
+.pcStatusCt .pcDot {
+  background: var(--mute);
+}
+/* On-dark inversion (gradient rows + hover state) — high-contrast
+   white pill so the available/in-contract signal reads against the
+   heat surface. Selector now covers the new .list > .prow structure
+   in addition to the legacy .grid > .pcard selectors. */
+.pcard:hover .pcStatusAv,
+.grid > .pcard:nth-child(even) .pcStatusAv,
+.list > .prow:nth-child(even) .pcStatusAv {
+  background: rgba(255, 255, 255, 0.22);
+  color: #fff;
+}
+.pcard:hover .pcStatusAv .pcDot,
+.grid > .pcard:nth-child(even) .pcStatusAv .pcDot,
+.list > .prow:nth-child(even) .pcStatusAv .pcDot {
+  background: #fff;
+}
+.pcard:hover .pcStatusCt,
+.grid > .pcard:nth-child(even) .pcStatusCt,
+.list > .prow:nth-child(even) .pcStatusCt {
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+}
+.pcard:hover .pcStatusCt .pcDot,
+.grid > .pcard:nth-child(even) .pcStatusCt .pcDot,
+.list > .prow:nth-child(even) .pcStatusCt .pcDot {
+  background: #fff;
+}
+
+.pcInd {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.indBadge {
+  font-weight: 700;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 9px;
+  border-radius: 6px;
+  transition: all 0.3s;
+}
+.indgames {
+  background: rgba(255, 93, 0, 0.1);
+  color: #c72e00;
+}
+.indapps {
+  background: rgba(14, 15, 17, 0.06);
+  color: var(--ink);
+}
+.pcard:hover .indgames,
+.pcard:hover .indapps,
+.grid > .pcard:nth-child(even) .indgames,
+.grid > .pcard:nth-child(even) .indapps,
+.list > .prow:nth-child(even) .indgames,
+.list > .prow:nth-child(even) .indapps {
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+}
+
+.pcName {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  margin: 0 0 4px;
+  line-height: 1;
+  color: var(--ink);
+  transition: color 0.3s;
+}
+.pcard:hover .pcName,
+.grid > .pcard:nth-child(even) .pcName {
+  color: #fff;
+}
+.pcRole {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 13px;
+  color: var(--mute);
+  text-transform: none;
+  margin: 0 0 18px;
+  transition: color 0.3s;
+}
+.pcard:hover .pcRole,
+.grid > .pcard:nth-child(even) .pcRole {
+  color: #fff;
+}
+
+.pcMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.pcMetaRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+.pcK {
+  color: var(--mute);
+  text-transform: none;
+  transition: color 0.3s;
+}
+.pcard:hover .pcK,
+.grid > .pcard:nth-child(even) .pcK,
+.list > .prow:nth-child(even) .pcK {
+  color: rgba(255, 255, 255, 0.85);
+}
+.pcV {
+  color: var(--ink);
+  font-weight: 600;
+  text-transform: none;
+  text-align: right;
+  transition: color 0.3s;
+}
+.pcard:hover .pcV,
+.grid > .pcard:nth-child(even) .pcV,
+.list > .prow:nth-child(even) .pcV {
+  color: #fff;
+}
+
+/* Gradient divider above tags (instead of plain hair) */
+.pcTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 16px;
+  position: relative;
+}
+.pcTags::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--heat-h);
+  opacity: 0.7;
+}
+.pcard:hover .pcTags::before,
+.grid > .pcard:nth-child(even) .pcTags::before {
+  background: rgba(255, 255, 255, 0.35);
+  opacity: 1;
+}
+
+.pcTag {
+  font-weight: 500;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  text-transform: none;
+  position: relative;
+  transition: color 0.3s;
+}
+.pcTag::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  padding: 1px;
+  background: var(--heat-h);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+}
+.pcard:hover .pcTag,
+.grid > .pcard:nth-child(even) .pcTag {
+  color: #fff;
+}
+.pcard:hover .pcTag::before,
+.grid > .pcard:nth-child(even) .pcTag::before {
+  background: rgba(255, 255, 255, 0.6);
+  opacity: 1;
+}
+
+/* Brand stamp — small MakersForge mark bottom-right on every card.
+   currentColor lets it auto-adapt between paper (dark) and gradient
+   (white) surfaces. */
+.brandStamp {
+  position: absolute;
+  bottom: 16px;
+  right: 18px;
+  opacity: 0.22;
+  pointer-events: none;
+  user-select: none;
+  z-index: 2;
+}
+.pcard:hover .brandStamp,
+.grid > .pcard:nth-child(even) .brandStamp,
+.list > .prow:nth-child(even) .brandStamp {
+  opacity: 0.32;
+}
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(14, 15, 17, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.modal {
+  background: var(--paper);
+  border-radius: 24px;
+  /* Bigger modal per Andre 2026-05-30 — 520px felt too small to give
+     the profile detail its weight. */
+  max-width: 760px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  max-height: 92vh;
+  overflow-y: auto;
+  box-shadow: 0 30px 80px rgba(14, 15, 17, 0.3);
+}
+
+.modalClose {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  z-index: 3;
+}
+.modalClose:hover {
+  background: #fff;
+  color: var(--ink);
+}
+
+.modalHead {
+  background: var(--heat-deep);
+  color: #fff;
+  padding: 38px 34px 28px;
+  position: relative;
+  overflow: hidden;
+}
+/* Hero-style composite: warm radial bottom-right + white radial top-left + noise */
+.modalHead::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      ellipse at 80% 110%,
+      #ffb347 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 0% 0%,
+      rgba(255, 255, 255, 0.12) 0%,
+      transparent 40%
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+.modalHead::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 0;
+}
+.modalHead > * {
+  position: relative;
+  z-index: 1;
+}
+
+.modalHeadTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.modalStatus {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.modalH {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 38px;
+  letter-spacing: -0.025em;
+  text-transform: none;
+  margin: 0 0 6px;
+  line-height: 0.95;
+}
+.modalRole {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.78);
+  text-transform: none;
+  margin: 0;
+}
+
+.modalBody {
+  padding: 28px 34px 34px;
+}
+
+.modalSection {
+  margin-bottom: 20px;
+}
+.modalH4 {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin: 0 0 8px;
+}
+.modalP {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink);
+  margin: 0;
+}
+
+.modalSummary {
+  padding-bottom: 22px;
+  margin-bottom: 22px;
+  border-bottom: 1px solid var(--hair);
+}
+.modalSummaryBody {
+  color: var(--dim);
+  font-size: 15.5px;
+  line-height: 1.6;
+}
+
+.modalRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  margin: 0;
+  border-top: 1px solid var(--hair);
+}
+.modalRow:last-of-type {
+  border-bottom: 1px solid var(--hair);
+  margin-bottom: 24px;
+}
+
+.modalCta {
+  display: flex;
+  justify-content: flex-end;
+}

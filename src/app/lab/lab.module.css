@@ -1,0 +1,1695 @@
+.lab {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.intro {
+  padding: 140px 0 60px;
+}
+.h1 {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(50px, 7vw, 100px);
+  line-height: 0.9;
+  letter-spacing: -0.035em;
+  text-transform: lowercase;
+  margin: 18px 0 28px;
+}
+.introCopy {
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--dim);
+  max-width: 640px;
+  margin: 0;
+}
+.introCopy strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* ============================================================
+   EXPERIMENT BLOCK
+   ============================================================ */
+.experiment {
+  padding: 80px 0 60px;
+  border-top: 1px solid var(--hair);
+}
+
+.experimentRejected {
+  padding: 60px 0 40px;
+  border-top: 1px solid var(--hair);
+  opacity: 0.55;
+}
+
+.expHeader {
+  max-width: 760px;
+  margin-bottom: 48px;
+}
+.expKicker {
+  color: var(--mute);
+  margin: 0 0 14px;
+}
+.expH2 {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(34px, 4.4vw, 56px);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  text-transform: lowercase;
+  margin: 0 0 18px;
+}
+.expCopy {
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--dim);
+  margin: 0;
+}
+.expCopy strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.queue {
+  list-style: none;
+  margin: 0 0 18px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--ink);
+  font-size: 15px;
+}
+.queue li {
+  padding: 10px 14px;
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  border-radius: 12px;
+}
+
+/* ============================================================
+   VARIANT SHELL
+   ============================================================ */
+.variant {
+  position: relative;
+  margin: 0 0 48px;
+  padding: 32px 0 24px;
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  border-radius: 20px;
+  overflow-x: hidden; /* Critical — let the wordmark bleed but don't
+                          cause horizontal page scroll. */
+}
+
+.variantLabel {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin: 0 0 18px;
+}
+
+.heroEnd,
+.nextStart {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mute);
+  opacity: 0.7;
+  text-align: center;
+  padding: 12px 0;
+  border-top: 1px dashed var(--hair-strong);
+  border-bottom: 1px dashed var(--hair-strong);
+  background: var(--bg-deep);
+  margin-bottom: 16px;
+}
+.nextStart {
+  margin-top: 16px;
+  margin-bottom: 0;
+}
+
+.wordmarkSlot {
+  position: relative;
+  padding: 30px 0;
+  width: 100%;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  /* Anchor to the LEFT so the wordmark starts at container-left and
+     bleeds OFF the right edge. */
+  justify-content: flex-start;
+  padding-left: clamp(18px, 4vw, 60px);
+}
+
+.wordmark {
+  display: inline-block;
+}
+
+/* ============================================================
+   EXPERIMENT 02 · Full-bleed hero v2
+   Glass nav, full-bleed heat gradient, white type, glass cards
+   ============================================================ */
+.heroV2 {
+  /* Full-bleed: break out of the lab page's container if needed.
+     The lab page wraps experiments in .experiment which has no
+     container, so this is already full-width by default. */
+  position: relative;
+  min-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  overflow: hidden;
+  /* heat-glow utility applies base + composite radials + noise */
+}
+
+/* GLASS NAV */
+.glassNav {
+  position: relative;
+  z-index: 5;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+}
+.glassNavInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 32px;
+  max-width: 1500px;
+  margin: 0 auto;
+  gap: 28px;
+}
+@media (max-width: 700px) {
+  .glassNavInner {
+    padding: 12px 18px;
+  }
+}
+.glassNavLogo {
+  display: flex;
+  align-items: center;
+  line-height: 0;
+  flex-shrink: 0;
+  color: #fff;
+}
+.glassNavLinks {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 26px;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  text-transform: lowercase;
+  color: rgba(255, 255, 255, 0.72);
+}
+.glassNavLinks li:hover {
+  color: #fff;
+  cursor: pointer;
+}
+@media (max-width: 820px) {
+  .glassNavLinks {
+    display: none;
+  }
+}
+.glassNavCta {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: lowercase;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  text-decoration: none;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.glassNavCta:hover {
+  background: var(--bg);
+  transform: translateY(-1px);
+}
+
+/* HERO INNER LAYOUT */
+.heroV2Inner {
+  position: relative;
+  z-index: 4;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 50px clamp(32px, 4vw, 64px) 60px;
+  max-width: 1500px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* TOP — kicker left + brand-side block right */
+.heroV2Top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 30px;
+}
+
+.heroV2Kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.78);
+  margin: 0;
+}
+
+/* Editorial masthead — small magazine-credit corner. Two short lines
+   uppercase tracked, low-opacity white. Holds the corner without
+   competing with the main headline. */
+.heroV2Masthead {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  gap: 4px;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.62);
+}
+.heroV2Masthead span:last-child {
+  text-transform: none;
+  letter-spacing: 0.02em;
+  font-style: italic;
+  font-weight: 500;
+}
+@media (max-width: 700px) {
+  .heroV2Top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .heroV2Masthead {
+    align-items: flex-start;
+    text-align: left;
+  }
+}
+
+/* MIDDLE — main headline. Two-line asymmetric stack. Line 1 flush
+   left, line 2 indented right and italic-emphasised. */
+.heroV2Middle {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 20px 0;
+}
+.headlineBig {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(60px, 10vw, 168px);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  text-transform: lowercase;
+  color: #fff;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+/* Both headline lines: flush left, Cal Sans white, same treatment.
+   No italic, no colour shift, no indent — Andre wants "on call."
+   to read as a continuation, not an emphasis. */
+.headlineLine1,
+.headlineLine2 {
+  display: block;
+  color: #fff;
+}
+
+/* BOTTOM — glass cards + CTAs */
+.heroV2Bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.glassCards {
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.glassCard {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 18px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px) saturate(140%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #fff;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  text-transform: lowercase;
+}
+
+
+.heroV2Cta {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.btnLight {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: lowercase;
+  padding: 13px 22px;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btnLight:hover {
+  transform: translateY(-2px);
+  background: var(--bg);
+}
+.btnGlass {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: lowercase;
+  padding: 13px 22px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  color: #fff;
+  text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(8px);
+}
+.btnGlass:hover {
+  background: rgba(255, 255, 255, 0.16);
+  transform: translateY(-2px);
+}
+
+.pulseDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #fff;
+  animation: pulseLight 1.6s ease-in-out infinite;
+  display: inline-block;
+}
+
+.afterNote {
+  margin-top: 40px;
+  font-size: 14px;
+  color: var(--dim);
+  font-style: italic;
+  max-width: 760px;
+}
+
+/* ============================================================
+   EXPERIMENT 04 · Statement headline variants
+   ============================================================ */
+
+.stmtSlot {
+  margin: 24px 0 48px;
+}
+
+.stmtStage {
+  background: var(--bg-deep);
+  padding: 70px 0;
+  margin-top: 12px;
+}
+
+/* Common headline base. Cal Sans 400 lowercase, ink colour, -0.04em
+   tracking. Each variant overrides display/grid behaviour. */
+.stmtHCurrent,
+.stmtHGrid {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  text-transform: lowercase;
+  letter-spacing: -0.04em;
+  margin: 0;
+  color: var(--ink);
+  line-height: 0.9;
+}
+
+/* CURRENT BASELINE — progressive margin-left indents.
+   Replicates the live Statement headline exactly. */
+.stmtHCurrent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.stmtCurrentL1,
+.stmtCurrentL2,
+.stmtCurrentL3 {
+  display: inline-block;
+}
+.stmtCurrentL1 {
+  font-size: clamp(40px, 5vw, 76px);
+  margin-left: 0;
+}
+.stmtCurrentL2 {
+  font-size: clamp(28px, 4vw, 52px);
+  margin-left: clamp(16px, 3vw, 60px);
+  margin-top: 6px;
+}
+.stmtCurrentL2 em {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-style: italic;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  line-height: 1;
+}
+.stmtCurrentL3 {
+  font-size: clamp(52px, 7vw, 100px);
+  letter-spacing: -0.045em;
+  margin-left: clamp(0px, 1vw, 12px);
+  margin-top: clamp(4px, 1vw, 10px);
+}
+
+/* GRID-ANCHORED VARIANTS — 12-col CSS grid base */
+.stmtHGrid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  row-gap: clamp(8px, 1.5vw, 18px);
+}
+
+/* Each grid line span needs to declare its own font-size + italic
+   treatment. Position via grid-column. */
+.stmtAL1,
+.stmtAL2,
+.stmtAL3,
+.stmtBL1,
+.stmtBL2,
+.stmtBL3,
+.stmtCL1,
+.stmtCL2,
+.stmtCL3 {
+  display: block;
+}
+.stmtAL2 em,
+.stmtAL3 em,
+.stmtBL2 em,
+.stmtBL3 em,
+.stmtCL2 em,
+.stmtCL3 em {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-style: italic;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  line-height: 1;
+}
+
+/* VARIANT A — light grid anchor */
+.stmtAL1 {
+  grid-column: 1 / span 4;
+  font-size: clamp(40px, 5vw, 76px);
+}
+.stmtAL2 {
+  grid-column: 4 / span 5;
+  font-size: clamp(28px, 4vw, 52px);
+}
+.stmtAL3 {
+  grid-column: 1 / span 10;
+  font-size: clamp(52px, 7vw, 100px);
+  letter-spacing: -0.045em;
+}
+
+/* VARIANT B — dramatic stagger */
+.stmtBL1 {
+  grid-column: 1 / span 3;
+  font-size: clamp(40px, 5vw, 76px);
+}
+.stmtBL2 {
+  grid-column: 6 / span 4;
+  font-size: clamp(28px, 4vw, 52px);
+}
+.stmtBL3 {
+  grid-column: 2 / span 10;
+  font-size: clamp(52px, 7vw, 100px);
+  letter-spacing: -0.045em;
+}
+
+/* VARIANT C — mixed alignment, line 2 right-anchored */
+.stmtCL1 {
+  grid-column: 1 / span 4;
+  font-size: clamp(40px, 5vw, 76px);
+}
+.stmtCL2 {
+  grid-column: 7 / span 5;
+  font-size: clamp(28px, 4vw, 52px);
+  text-align: right;
+}
+.stmtCL3 {
+  grid-column: 1 / span 10;
+  font-size: clamp(52px, 7vw, 100px);
+  letter-spacing: -0.045em;
+}
+
+@media (max-width: 700px) {
+  /* On narrow screens collapse to single-column stacks for all
+     variants — grid anchoring breaks down at small widths. */
+  .stmtHGrid {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ============================================================
+   v4 DIRECTION — full Statement section iteration.
+   Headline composition (.stmtFlowG / .stmtCenter / .gradientFill)
+   carried over from v3 G1. Italic switched from Figtree → Cal
+   Sans synthetic via .italicCal. Glass card primitives added
+   below for the problem/solution treatment.
+   ============================================================ */
+
+.stmtFlowG {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(48px, 7.5vw, 124px);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  text-transform: lowercase;
+  margin: 0;
+  color: var(--ink);
+}
+
+.stmtCenter {
+  text-align: center;
+}
+
+.gradientFill {
+  background: var(--heat-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Cal Sans synthetic italic. Cal Sans ships only weight 400 with
+   no italic cut, so browsers synthesize the oblique by skewing
+   glyphs. Acceptable for short closing flourishes; would not
+   recommend for body. */
+.italicCal {
+  font-style: italic;
+}
+
+/* Full-section stage — taller padding than .stmtStage because
+   it holds the headline + cards beneath, not just a headline. */
+.fullStmtStage {
+  background: var(--bg-deep);
+  padding: 100px 0;
+  margin-top: 12px;
+}
+
+.fullStmtInner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 72px;
+}
+
+/* ============================================================
+   Glass containers — paper card + hairline border. Matches the
+   card pattern used by bento / pricing / roster cards across
+   the site. Replaces the previous free-flowing 2-column chapter
+   layout under the headline.
+   ============================================================ */
+
+.statementCards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  width: 100%;
+  max-width: 960px;
+}
+
+.statementCard {
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  border-radius: 24px;
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+}
+
+.statementCardNum {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 1;
+  color: var(--mute);
+  letter-spacing: -0.02em;
+}
+
+.statementCardLabel {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 22px;
+  text-transform: lowercase;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--ink);
+}
+
+.statementCardDivider {
+  height: 1px;
+  background: var(--hair);
+  width: 28px;
+  margin: 4px 0;
+}
+
+.statementCardBody {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--dim);
+  margin: 0;
+}
+
+/* ============================================================
+   v5 DIRECTION — staggered scroll-reveal + narrative pull-quote
+   replacements for the (now-retired) paper cards.
+   ============================================================ */
+
+/* Staggered stanza — Figtree lines, no containers, progressively
+   indented within a centred max-width block. Fade-in keyframes
+   simulate the live scroll-reveal effect on lab page load. */
+@keyframes staggerIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.staggerStanza {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.staggerLine {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(20px, 2.3vw, 30px);
+  line-height: 1.35;
+  color: var(--ink);
+  margin: 0;
+  opacity: 0;
+  animation: staggerIn 0.6s ease forwards;
+}
+
+.staggerL1 {
+  margin-left: 0;
+  animation-delay: 0.15s;
+}
+.staggerL2 {
+  margin-left: clamp(20px, 4vw, 70px);
+  animation-delay: 0.35s;
+}
+.staggerL3 {
+  margin-left: clamp(44px, 8vw, 140px);
+  animation-delay: 0.55s;
+}
+.staggerL4 {
+  margin-left: clamp(70px, 12vw, 210px);
+  animation-delay: 0.75s;
+  color: rgba(14, 15, 17, 0.92);
+  font-weight: 500;
+}
+
+/* Resolution — separated from the stagger by a small hairline,
+   centred, Figtree 600 at a slightly larger scale. */
+.staggerResolution,
+.narrativeResolution {
+  margin: 64px auto 0;
+  max-width: 760px;
+  text-align: center;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: clamp(22px, 2.6vw, 32px);
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--ink);
+  position: relative;
+  padding-top: 36px;
+}
+
+.staggerResolution::before,
+.narrativeResolution::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 1px;
+  background: var(--hair);
+}
+
+/* Narrative pull-quote — centred italic Figtree paragraph framed
+   by oversized gradient quotation marks (heat-text on Cal Sans). */
+.narrativeQuote {
+  position: relative;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px 70px;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(20px, 2.3vw, 30px);
+  line-height: 1.55;
+  color: var(--ink);
+  text-align: center;
+}
+
+.narrativeQuote::before,
+.narrativeQuote::after {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-style: normal;
+  font-size: clamp(80px, 10vw, 140px);
+  line-height: 0.85;
+  position: absolute;
+  background: var(--heat-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.narrativeQuote::before {
+  content: "\201C";
+  left: 0;
+  top: 8px;
+}
+
+.narrativeQuote::after {
+  content: "\201D";
+  right: 0;
+  bottom: -32px;
+}
+
+@media (max-width: 700px) {
+  .staggerL2 {
+    margin-left: 16px;
+  }
+  .staggerL3 {
+    margin-left: 32px;
+  }
+  .staggerL4 {
+    margin-left: 48px;
+  }
+  .narrativeQuote {
+    padding: 24px 36px;
+  }
+}
+
+/* ============================================================
+   v7 LOCKED DIRECTION — Pumpkin pattern + alignment refinement.
+   Outer .lockedColumn sized to fit the WIDER headline line
+   ("don't let hiring") so the headline doesn't wrap. Inner
+   .lockedBody given its own narrower max-width matching
+   "slow you down." width so the body's left/right edges align
+   specifically with that italic line.
+   ============================================================ */
+
+/* Outer column — sized to hold the wider headline line without
+   wrapping. "don't let hiring" ≈ 6.4em at Cal Sans 124px with
+   -0.04em letter-spacing → ~790px. */
+.lockedColumn {
+  width: 100%;
+  max-width: clamp(340px, 55vw, 900px);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(60px, 7vw, 100px);
+}
+
+/* Inner body — narrower band, centred within the outer column,
+   matched to "slow you down." width so the body's left/right
+   edges align with that italic line (rather than with the wider
+   "don't let hiring"). Italic Cal Sans "slow you down." ≈ 6.5em
+   at 124px with letter-spacing → ~800px. */
+.lockedBody {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(40px, 5.5vw, 76px);
+  width: 100%;
+  max-width: clamp(300px, 49vw, 780px);
+  align-self: center;
+}
+
+/* Big statement — shared by all body lines in the locked
+   column. Cal Sans at ~28-48px, lowercase, default left-aligned.
+   Per-statement alignment modifiers below mirror the narrative
+   arc (good=left, bad=right, resolution=centre). */
+.bigStatement {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(28px, 3.6vw, 48px);
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  text-transform: lowercase;
+  color: var(--ink);
+  margin: 0;
+}
+
+.statementRight {
+  text-align: right;
+}
+
+.statementCenter {
+  text-align: center;
+}
+
+/* ============================================================
+   EXPERIMENT 05 · HowItWorks bento mocks
+   Local rendering of bento tiles, parallel to the live
+   HowItWorksBento module. Class names prefixed with 'how' to
+   avoid collisions with statement classes above.
+   ============================================================ */
+
+.howSlot {
+  margin: 24px 0 64px;
+}
+
+.howStage {
+  background: var(--bg);
+  padding: 70px 0 100px;
+  margin-top: 12px;
+  /* Prevent right-bleed tiles from causing horizontal page scroll. */
+  overflow-x: hidden;
+}
+
+.howHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-bottom: 48px;
+}
+
+.howHeadline {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(36px, 5vw, 68px);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  text-transform: lowercase;
+  margin: 14px 0 0;
+}
+
+.howTopCopy {
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--dim);
+  max-width: 420px;
+  margin: 0;
+}
+
+/* L1 — vertical stack */
+.howStack {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* L2 — bento grid */
+.howGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Side-by-side row for L2 row 1. Inner tiles share width 50/50
+   nominally but the tile widthPct overrides actual rendered width. */
+.howRow {
+  display: grid;
+  grid-template-columns: 42% 58%;
+  gap: 20px;
+}
+@media (max-width: 900px) {
+  .howRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Wrap controls left/right alignment within the row. */
+.howWrap {
+  display: flex;
+  width: 100%;
+}
+.howAlignLeft {
+  justify-content: flex-start;
+}
+.howAlignRight {
+  justify-content: flex-end;
+}
+@media (max-width: 700px) {
+  .howAlignLeft,
+  .howAlignRight {
+    justify-content: stretch;
+  }
+}
+
+.howTile {
+  border-radius: 24px;
+  padding: 36px 40px;
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 32px;
+  align-items: start;
+  min-height: 200px;
+}
+@media (max-width: 900px) {
+  .howTile {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 28px 28px;
+    width: 100% !important;
+  }
+}
+
+/* Right bleed — tile extends past the container right edge.
+   Combined with .howStage overflow-x: hidden so the page doesn't
+   scroll horizontally. Negative margin pulls it out by container
+   padding plus a small overshoot. */
+.howBleedRight {
+  margin-right: clamp(-160px, -8vw, -40px);
+}
+
+/* Surfaces — mirror the live HowItWorksBento surfaces. */
+.howSurface_paper {
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  color: var(--ink);
+}
+.howSurface_card {
+  background: var(--bg-card);
+  border: 1px solid var(--hair);
+  color: var(--ink);
+}
+.howSurface_charcoal {
+  background: var(--charcoal);
+  color: #fff;
+}
+.howSurface_heat {
+  color: #fff;
+}
+
+.howNum {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(56px, 6vw, 84px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  opacity: 0.85;
+  align-self: start;
+}
+.howNumOnDark {
+  color: #fff;
+  opacity: 0.95;
+}
+
+.howContent {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 540px;
+}
+
+.howTitle {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(28px, 3vw, 38px);
+  letter-spacing: -0.025em;
+  text-transform: lowercase;
+  margin: 0;
+  line-height: 1;
+}
+.howTitleOnDark {
+  color: #fff;
+}
+
+.howBody {
+  font-size: 16px;
+  line-height: 1.55;
+  margin: 0;
+  color: var(--dim);
+}
+.howBodyOnDark {
+  color: rgba(255, 255, 255, 0.78);
+}
+.howSurface_charcoal .howBody {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.howPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fff;
+  align-self: flex-start;
+  margin-top: 4px;
+}
+.howPillDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--heat-radial);
+}
+
+/* Dimmed previous attempts (A / B / C) — kept visible at low
+   opacity so the rejection is documented but doesn't dominate. */
+.rejectedNote {
+  color: #c72e00;
+  font-style: italic;
+  margin-top: 56px;
+}
+.dimmedAttempts {
+  opacity: 0.45;
+  filter: saturate(0.7);
+  margin-top: 16px;
+}
+
+/* ============================================================
+   EXPERIMENT 03 · Nav variant stages
+   ============================================================ */
+.navStageWrap {
+  margin: 24px 0 32px;
+}
+
+.navStageLabel {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin: 0 0 6px;
+}
+.navStageDesc {
+  font-size: 14px;
+  color: var(--dim);
+  line-height: 1.5;
+  max-width: 720px;
+  margin: 0 0 14px;
+}
+
+.navStage {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+/* Variant A — uses existing .glassNav (same as Exp 02) */
+
+/* Variant B v2 — centered pill nav, condensed + balanced + whiter.
+   Logo size 34 so hex height ≈ CTA button height (visual balance).
+   Tighter link gap, slightly larger CTA padding to match the bigger
+   logo, link text bumped to 0.85 opacity (less faded). */
+.navStageInner {
+  display: flex;
+  justify-content: center;
+  padding-top: 14px;
+}
+.pillNav {
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  padding: 8px 10px 8px 22px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  max-width: calc(100% - 28px);
+  line-height: 0;
+}
+.pillNavLinks {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 20px;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  text-transform: lowercase;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.2;
+}
+.pillNavLinks li:hover {
+  color: #fff;
+  cursor: pointer;
+}
+.pillNavCta {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: lowercase;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  text-decoration: none;
+  line-height: 1;
+}
+
+/* Variant F — inverted Variant B v2. White pill background +
+   gradient CTA + normal-colour logo. Single centered element. */
+.pillNavWhite {
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  padding: 8px 8px 8px 22px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgba(14, 15, 17, 0.08);
+  border-radius: 999px;
+  max-width: calc(100% - 28px);
+  line-height: 0;
+  color: var(--ink);
+}
+.pillNavWhiteLinks {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 20px;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  text-transform: lowercase;
+  color: rgba(14, 15, 17, 0.7);
+  line-height: 1.2;
+}
+.pillNavWhiteLinks li:hover {
+  color: var(--ink);
+  cursor: pointer;
+}
+.pillNavWhiteCta {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: lowercase;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--heat-h);
+  color: #fff;
+  text-decoration: none;
+  line-height: 1;
+}
+
+/* Variant E — duo nav. White logo card left + glass links pill right.
+   Solves the "logo all-white on glass" readability issue by giving
+   the logo its own light surface so it can keep its normal colours. */
+.duoNav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px clamp(20px, 3vw, 40px);
+  color: #fff;
+}
+.duoNavLogoCard {
+  background: #fff;
+  padding: 8px 16px;
+  border-radius: 999px;
+  line-height: 0;
+  border: 1px solid rgba(14, 15, 17, 0.08);
+  display: inline-flex;
+  align-items: center;
+  color: var(--ink); /* logo MF + wordmark inherit ink via currentColor */
+}
+.duoNavPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 8px 8px 22px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  line-height: 0;
+}
+.duoNavLinks {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 20px;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  text-transform: lowercase;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.2;
+}
+.duoNavLinks li:hover {
+  color: #fff;
+  cursor: pointer;
+}
+.duoNavCta {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: lowercase;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  text-decoration: none;
+  line-height: 1;
+  margin-left: 14px;
+}
+
+/* Variant C — edge-anchored */
+.edgeNav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px clamp(32px, 4vw, 64px);
+  color: #fff;
+}
+.edgeNavLogo {
+  line-height: 0;
+}
+.edgeNavRight {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+.edgeNavLinks {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 26px;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  text-transform: lowercase;
+  color: rgba(255, 255, 255, 0.72);
+}
+.edgeNavLinks li:hover {
+  color: #fff;
+}
+.edgeNavCta {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: lowercase;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Variant D — split: 3 separate elements */
+.splitNav {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  padding: 18px clamp(28px, 3vw, 48px);
+  gap: 24px;
+  color: #fff;
+}
+.splitNavLeft {
+  line-height: 0;
+}
+.splitNavCenter {
+  display: flex;
+  justify-content: center;
+}
+.splitNavCenter ul {
+  display: inline-flex;
+  list-style: none;
+  margin: 0;
+  padding: 10px 22px;
+  gap: 24px;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  text-transform: lowercase;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.78);
+}
+.splitNavCenter li:hover {
+  color: #fff;
+}
+.splitNavRight a {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: lowercase;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+/* ============================================================
+   EXPERIMENT 06 · Stat strip mocks
+   ============================================================ */
+.statStage {
+  background: var(--bg);
+  padding: 50px 0 60px;
+  margin-top: 12px;
+}
+
+.statRowBare {
+  display: flex;
+  border-top: 1px solid var(--hair);
+  border-bottom: 1px solid var(--hair);
+}
+.statCellBare {
+  flex: 1;
+  padding: 30px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+}
+.statCellBare:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 22px;
+  bottom: 22px;
+  right: 0;
+  width: 1px;
+  background: var(--hair);
+}
+@media (max-width: 700px) {
+  .statRowBare {
+    flex-wrap: wrap;
+  }
+  .statCellBare {
+    flex: 1 1 50%;
+    padding: 22px 20px;
+  }
+  .statCellBare:not(:last-child)::after {
+    display: none;
+  }
+}
+
+.statRowPills {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+@media (max-width: 700px) {
+  .statRowPills {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.statPill {
+  border-radius: 20px;
+  padding: 28px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+  min-height: 130px;
+}
+.statPillPaper {
+  background: var(--paper);
+  border: 1px solid var(--hair);
+}
+.statPillGrad {
+}
+
+.statNCal {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(44px, 5vw, 64px);
+  letter-spacing: -0.035em;
+  line-height: 1;
+  margin: 0;
+  color: var(--ink);
+  position: relative;
+  z-index: 1;
+}
+.statNCal :global(.gr) {
+  background: var(--heat-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.statNCalWhite {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(44px, 5vw, 64px);
+  letter-spacing: -0.035em;
+  line-height: 1;
+  margin: 0;
+  color: #fff;
+  position: relative;
+  z-index: 1;
+}
+.statNCalWhite :global(.gr) {
+  color: rgba(255, 255, 255, 0.55);
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.55);
+  background: none;
+}
+
+.statNFig {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 800;
+  font-size: clamp(44px, 5vw, 60px);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin: 0;
+  color: var(--ink);
+  position: relative;
+  z-index: 1;
+}
+.statNFig :global(.gr) {
+  background: var(--heat-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.statLabel {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.statLabelWhite {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================================
+   EXPERIMENT 07 · Roster list-style banner rows
+   ============================================================ */
+.rosterList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.rosterRow {
+  display: grid;
+  grid-template-columns: 1.6fr 1.2fr auto;
+  gap: 28px;
+  align-items: center;
+  padding: 22px 28px;
+  border-radius: 18px;
+  position: relative;
+  overflow: hidden;
+  min-height: 110px;
+}
+.rosterRowPaper {
+  background: var(--paper);
+  border: 1px solid var(--hair);
+}
+.rosterRowGrad {
+  color: #fff;
+}
+
+.rosterRowLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: relative;
+  z-index: 1;
+}
+.rosterMono {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+.rosterOnDark {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+.rosterRowName {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  letter-spacing: -0.02em;
+  text-transform: lowercase;
+  line-height: 1;
+  margin: 0;
+  color: var(--ink);
+}
+.rosterRowRole {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 13px;
+  color: var(--mute);
+  text-transform: lowercase;
+  margin: 0;
+}
+.rosterRowRoleOnDark {
+  color: #fff;
+}
+
+.rosterRowMid {
+  display: flex;
+  gap: 28px;
+  position: relative;
+  z-index: 1;
+}
+.rosterRowMetaCell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.rosterRowK {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+.rosterRowKOnDark {
+  color: rgba(255, 255, 255, 0.85);
+}
+.rosterRowV {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--ink);
+  text-transform: lowercase;
+}
+.rosterRowVOnDark {
+  color: #fff;
+}
+
+.rosterRowRight {
+  position: relative;
+  z-index: 1;
+}
+.rosterRowStatus {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.statusAv {
+  background: rgba(255, 93, 0, 0.08);
+  color: #c72e00;
+}
+.statusCt {
+  background: rgba(138, 135, 128, 0.1);
+  color: var(--mute);
+}
+.statusOnDark {
+  background: rgba(255, 255, 255, 0.22) !important;
+  color: #fff !important;
+}
+.rosterStatusDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+  background: currentColor;
+}
+
+@media (max-width: 760px) {
+  .rosterRow {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .rosterRowMid {
+    flex-wrap: wrap;
+  }
+}

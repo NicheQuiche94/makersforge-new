@@ -9,20 +9,43 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        brand: {
-          orange: "#E8491F",
-          "orange-dark": "#C93D18",
-          "orange-light": "#F05A2F",
-          black: "#0A0A0A",
-          "black-light": "#111111",
-          grey: "#1A1A1A",
-          white: "#FFFFFF",
-          "white-muted": "#A3A3A3",
+        bg: {
+          DEFAULT: "var(--bg)",
+          deep: "var(--bg-deep)",
+          card: "var(--bg-card)",
+        },
+        paper: "var(--paper)",
+        ink: {
+          DEFAULT: "var(--ink)",
+          soft: "var(--ink-soft)",
+        },
+        charcoal: "var(--charcoal)",
+        dim: "var(--dim)",
+        mute: "var(--mute)",
+        hair: {
+          DEFAULT: "var(--hair)",
+          strong: "var(--hair-strong)",
         },
       },
+      backgroundImage: {
+        heat: "var(--heat)",
+        "heat-h": "var(--heat-h)",
+        "heat-deep": "var(--heat-deep)",
+        "heat-radial": "var(--heat-radial)",
+        "heat-text": "var(--heat-text)",
+      },
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
-        heading: ["var(--font-cal-sans)", "'Cal Sans'", "system-ui", "sans-serif"],
+        display: ['"Cal Sans"', "system-ui", "sans-serif"],
+        sans: ["var(--font-figtree)", '"Figtree"', "system-ui", "sans-serif"],
+      },
+      transitionTimingFunction: {
+        signature: "cubic-bezier(0.16, 1, 0.3, 1)",
+      },
+      borderRadius: {
+        pill: "999px",
+      },
+      maxWidth: {
+        container: "1340px",
       },
     },
   },

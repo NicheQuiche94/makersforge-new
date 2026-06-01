@@ -1,0 +1,97 @@
+/* Top padding gives breathing room between the previous section's
+   background colour transition and the top of the gradient CTA
+   panel (e.g. home page where bg-deep ForTalentBanner ends just
+   above this section). Per Andre 2026-05-30 v8. */
+.section {
+  padding: 50px 0 80px;
+}
+
+/* Composite heat gradient comes from the global .heat-glow utility
+   (matched to the hero, per Andre's "make CTA same as hero" note).
+   Position relative so the ghosted background emblem can absolute-
+   anchor inside it. Overflow hidden clips the emblem at the rounded
+   corners. */
+.inner {
+  border-radius: 32px;
+  padding: 90px 60px;
+  position: relative;
+  overflow: hidden;
+}
+@media (max-width: 700px) {
+  .inner {
+    padding: 56px 30px;
+    border-radius: 24px;
+  }
+}
+
+/* Compact variant — used on the pricing page where the standard
+   band would dwarf the now-smaller pricing cards above. */
+.innerCompact {
+  padding: 56px 48px;
+  border-radius: 26px;
+}
+.innerCompact .headline {
+  font-size: clamp(32px, 5vw, 76px);
+  margin-bottom: 18px;
+}
+.innerCompact .body {
+  font-size: 16px;
+  margin-bottom: 22px;
+}
+@media (max-width: 700px) {
+  .innerCompact {
+    padding: 42px 26px;
+    border-radius: 22px;
+  }
+}
+
+/* Ghosted MakersForge mark as visual texture in the bottom-right.
+   z-index 0 keeps it behind content; pointer-events none so clicks
+   pass through to the CTA button beneath it visually. */
+.bgEmblem {
+  position: absolute;
+  right: -48px;
+  bottom: -64px;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+}
+@media (max-width: 700px) {
+  .bgEmblem {
+    right: -60px;
+    bottom: -80px;
+    width: 240px !important;
+    height: 240px !important;
+  }
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+}
+
+.headline {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(40px, 7vw, 108px);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  margin: 0 0 26px;
+  max-width: 920px;
+  color: #fff;
+}
+/* Ghost retired from the design language. The "easy bit" span keeps
+   the class hook so we can later attach a wipe-in motion treatment
+   without touching the markup; today it renders solid white. */
+.ghost {
+  color: #fff;
+}
+
+.body {
+  font-size: 20px;
+  line-height: 1.55;
+  max-width: 580px;
+  margin: 0 0 32px;
+  color: #fff;
+  font-weight: 500;
+}

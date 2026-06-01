@@ -1,0 +1,154 @@
+/* Full-bleed hero. The .heat-glow utility (applied via className on
+   the section) handles the gradient + radials + noise. This file
+   only handles layout. */
+
+.hero {
+  position: relative;
+  min-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+}
+
+.inner {
+  position: relative;
+  z-index: 4;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* Top padding accommodates the fixed nav pill (its top: 14 + height
+     ≈ 50px + breathing room). */
+  padding: 96px clamp(32px, 4vw, 64px) 60px;
+  max-width: 1500px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* TOP — kicker left + editorial masthead right */
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 30px;
+}
+
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.78);
+  margin: 0;
+}
+
+.masthead {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  gap: 4px;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.62);
+}
+.masthead span:last-child {
+  text-transform: none;
+  letter-spacing: 0.02em;
+  font-style: italic;
+  font-weight: 500;
+}
+@media (max-width: 700px) {
+  .top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .masthead {
+    align-items: flex-start;
+    text-align: left;
+  }
+}
+
+/* MIDDLE — main headline. Two-line stack, both flush left, both
+   plain Cal Sans white. */
+.middle {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 20px 0;
+}
+.headline {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(60px, 10vw, 168px);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  /* text-transform: lowercase dropped per Andre 2026-05-30 v4 — the
+     all-lowercase poster aesthetic is being retired in favour of
+     normal sentence-case headlines. */
+  color: #fff;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.headlineLine {
+  display: block;
+  color: #fff;
+}
+
+/* BOTTOM — uniform glass UI pills + CTAs */
+.bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.glassCards {
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.glassCard {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 18px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px) saturate(140%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #fff;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  text-transform: lowercase;
+  line-height: 1;
+}
+
+.ctas {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.pulseDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #fff;
+  animation: pulseLight 1.6s ease-in-out infinite;
+  display: inline-block;
+}

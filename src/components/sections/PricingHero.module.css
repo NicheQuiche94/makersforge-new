@@ -1,0 +1,28 @@
+/* Tighter bottom padding closes the gap to PricingGrid below per
+   Andre 2026-05-30 (the right copy was dropped so the gap that
+   used to feel balanced now reads as empty). */
+.section {
+  padding: 130px 0 30px;
+}
+
+/* Single left-anchored column. Right copy block dropped, so the
+   headline takes the full width of the container. */
+.inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.kicker {
+  display: block;
+}
+
+.headline {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(50px, 8vw, 128px);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  margin: 0;
+}
