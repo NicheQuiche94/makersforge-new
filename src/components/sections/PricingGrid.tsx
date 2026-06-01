@@ -13,10 +13,10 @@ export function PricingGrid() {
                 <span className={styles.dotSm} aria-hidden="true" />
                 Contract · the main way we work
               </span>
-              <span className={styles.optLabel}>option 01</span>
+              <span className={styles.optLabel}>Option 01</span>
             </div>
             <h2 className={styles.primaryH}>
-              hire a contractor, <em className={styles.em}>flat monthly.</em>
+              Hire a contractor, <em className={styles.em}>flat monthly.</em>
             </h2>
             <div className={styles.amount}>
               <span className={styles.currency}>£</span>
@@ -41,7 +41,7 @@ export function PricingGrid() {
             </ul>
             <div className={styles.ctaWrap}>
               <Button href="/enquire" variant="light" arrow>
-                talk to us about a hire
+                Talk to us about a hire
               </Button>
             </div>
           </article>
@@ -54,11 +54,11 @@ export function PricingGrid() {
                 Permanent
               </span>
               <span className={`${styles.optLabel} ${styles.optLabelLight}`}>
-                option 02
+                Option 02
               </span>
             </div>
             <h2 className={styles.secondaryH}>
-              permanent <span className="gr">placement.</span>
+              Permanent <span className="gr">placement.</span>
             </h2>
             <div className={styles.amount}>
               <span className={styles.currencyLight}>£</span>
@@ -77,7 +77,7 @@ export function PricingGrid() {
             </ul>
             <div className={styles.ctaWrap}>
               <Button href="/enquire" variant="primary" arrow>
-                enquire about permanent
+                Enquire about permanent
               </Button>
             </div>
           </article>

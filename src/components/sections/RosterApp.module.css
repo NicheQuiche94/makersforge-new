@@ -590,6 +590,9 @@
   background: var(--paper);
   border: 1px solid var(--hair);
   border-radius: 20px;
+  /* Gap between the empty/full-list container and the CTABand
+     below per Andre 2026-05-30 v7 — they were touching. */
+  margin-bottom: 80px;
 }
 .emptyH {
   font-family: "Cal Sans", system-ui, sans-serif;

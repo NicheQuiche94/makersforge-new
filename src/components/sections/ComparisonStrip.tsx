@@ -42,7 +42,7 @@ export function ComparisonStrip() {
         <div className={styles.top}>
           <span className="kicker">vs. traditional recruitment</span>
           <h3 className={styles.h3}>
-            Flat fee, plain terms.
+            <span className="gr">Flat fee, plain terms.</span>
           </h3>
           <p className={styles.body}>
             Most recruiters either take 20–30% of first-year salary or pocket

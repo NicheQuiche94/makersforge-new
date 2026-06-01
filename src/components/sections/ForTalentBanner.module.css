@@ -1,5 +1,9 @@
+/* Own section background per Andre 2026-05-30 v7 — the previous
+   page-bg section blurred the boundary between HowItWorks above
+   and this CTA section. bg-deep gives a clear visual chapter break. */
 .section {
-  padding: 40px 0 70px;
+  padding: 90px 0 100px;
+  background: var(--bg-deep);
 }
 
 .banner {
