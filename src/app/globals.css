@@ -631,6 +631,49 @@ a {
 }
 
 /* =========================================================
+   SUBHEAD — site-wide style for section subheadlines that sit
+   under the Cal Sans h1/h2 main headline. Figtree medium per
+   Andre 2026-05-30 v4 — Cal Sans was making subheads too display.
+   ========================================================= */
+.subhead {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: clamp(18px, 1.7vw, 22px);
+  line-height: 1.45;
+  letter-spacing: -0.005em;
+  color: var(--dim);
+  max-width: 720px;
+  margin: 14px 0 0;
+}
+.subhead strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+/* =========================================================
+   DROP-SHADOW utility for paper cards across the site
+   (lineup banner rows, pricing tiles, talent cards). Soft
+   neutral lift, no heat tint so it works on cream.
+   ========================================================= */
+.card-shadow {
+  box-shadow:
+    0 1px 0 rgba(14, 15, 17, 0.02),
+    0 8px 20px rgba(14, 15, 17, 0.08),
+    0 24px 40px rgba(14, 15, 17, 0.06);
+}
+
+/* =========================================================
+   BODY TEXT UPSCALE — base font-size bump across the site
+   per Andre 2026-05-30 v4 ("upscale body test a bit").
+   Applied at the html level so all rem-based text picks it
+   up, but explicit px-sized text in modules needs per-file
+   touchups.
+   ========================================================= */
+html {
+  font-size: 17px;
+}
+
+/* =========================================================
    PLACEHOLDER PRICING MARKER
    ========================================================= */
 .placeholder-price {

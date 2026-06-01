@@ -263,28 +263,19 @@
   border-color: var(--hair-strong);
   color: var(--ink);
 }
+/* Active chip — solid gradient fill instead of the prior gradient
+   stroke-on-paper trick. Andre 2026-05-30 v4: stroke looked weird
+   on a gradient banner, swap to gradient fill + white text. */
 .fchipActive {
   border-color: transparent;
-  background: transparent;
-  color: var(--ink);
-  font-weight: 700;
-}
-.fchipActive::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 999px;
-  padding: 1.5px;
   background: var(--heat-h);
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(255, 93, 0, 0.22);
+}
+.fchipActive:hover {
+  color: #fff;
+  filter: brightness(1.05);
 }
 
 .panelFooter {
@@ -402,6 +393,10 @@
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: stretch;
+  box-shadow:
+    0 1px 0 rgba(14, 15, 17, 0.02),
+    0 8px 20px rgba(14, 15, 17, 0.08),
+    0 24px 40px rgba(14, 15, 17, 0.06);
 }
 
 .prow:hover {

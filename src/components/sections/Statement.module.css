@@ -1,131 +1,100 @@
 /* Off-white section background. --bg-deep is slightly deeper than the
-   page bg (#EDE7DC vs #F5F1EA) so the section visibly demarcates as
-   a new chapter without needing a container panel. */
+   page bg so the section visibly demarcates as a new chapter without
+   needing a container panel. */
 .section {
   background: var(--bg-deep);
-  padding: 130px 0 150px;
+  padding: 100px 0 110px;
   color: var(--ink);
 }
 
-/* =========================================================
-   Shared column for headline + body. Outer max-width holds
-   the wider headline line ("don't let hiring") without
-   wrapping. Body has its own narrower max-width below.
-   ========================================================= */
-.column {
-  width: 100%;
-  max-width: clamp(340px, 55vw, 900px);
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: clamp(60px, 7vw, 100px);
+/* ============================================================
+   Header — Principles kicker + mixed-weight headline.
+   Andre 2026-05-30 v4: drop the all-lowercase poster headline,
+   go to a Nura-style sentence-cased composition with the
+   second half visually softer (mute colour). Shorter section
+   = the page doesn't tower before how-it-works.
+   ============================================================ */
+.header {
+  max-width: 920px;
+  margin-bottom: 56px;
 }
 
-/* =========================================================
-   Headline — centred Cal Sans, gradient on "hiring", Cal Sans
-   synthetic italic on "slow you down". Largest moment of the
-   section but still ~60% of the hero's max scale so the hero
-   stays the dominant moment on the page.
-   ========================================================= */
+.kicker {
+  display: block;
+  margin-bottom: 16px;
+}
+
 .headline {
-  font-family: "Cal Sans", system-ui, sans-serif;
-  font-weight: 400;
-  font-size: clamp(48px, 7.5vw, 124px);
-  line-height: 0.92;
-  letter-spacing: -0.04em;
-  text-transform: lowercase;
-  text-align: center;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: clamp(28px, 3.4vw, 44px);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
   margin: 0;
   color: var(--ink);
+  max-width: 880px;
+}
+.softer {
+  color: var(--mute);
+  font-weight: 500;
 }
 
-.gradient {
-  background: var(--heat-text);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+/* ============================================================
+   3-card grid — principles laid as paper cards with hex
+   gradient icon at the top, sentence-cased title, body text
+   beneath. Drops the prior heat-glow body panel entirely.
+   ============================================================ */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+@media (max-width: 880px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
 }
 
-/* Cal Sans synthetic italic. No true italic cut ships with Cal Sans,
-   so browsers oblique-skew the glyphs. Acceptable for short phrases. */
-.italicCal {
-  font-style: italic;
-}
-
-/* =========================================================
-   Body panel — heat-glow gradient container holding the 3
-   statements. Per Andre's punch list 2026-05-30: wrap the body
-   in a gradient panel with white text so it becomes a strong
-   visual moment under the headline, matching the gradient
-   panels at the hero and CTA. Outer column width holds the
-   panel; the inner body keeps the narrower "slow you down"
-   width for the left/right/centre arc alignment.
-   ========================================================= */
-.bodyPanel {
-  width: 100%;
-  align-self: stretch;
-  border-radius: 32px;
-  padding: clamp(56px, 7vw, 96px) clamp(20px, 4vw, 60px);
-  position: relative;
-  overflow: hidden;
-}
-
-.body {
+.card {
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  border-radius: 22px;
+  padding: 28px 26px 30px;
   display: flex;
   flex-direction: column;
-  gap: clamp(40px, 5.5vw, 76px);
-  width: 100%;
-  max-width: clamp(300px, 49vw, 780px);
-  margin: 0 auto;
+  gap: 18px;
+  min-height: 220px;
 }
 
-.statement {
-  font-family: "Cal Sans", system-ui, sans-serif;
-  font-weight: 400;
-  font-size: clamp(28px, 3.6vw, 48px);
-  line-height: 1.18;
-  letter-spacing: -0.02em;
-  text-transform: lowercase;
-  /* White text on the gradient panel. */
+.iconWrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--heat-h);
   color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(255, 93, 0, 0.22);
+}
+.iconWrap svg {
+  width: 22px;
+  height: 22px;
+}
+
+.cardTitle {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 19px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
   margin: 0;
-  position: relative;
-  z-index: 1;
 }
 
-/* Setup beats default to left-align (statement default).
-   Tension hit swings right. Resolution settles centred. */
-.statementRight {
-  text-align: right;
-}
-
-.statementCenter {
-  text-align: center;
-}
-
-/* Resolution block — wraps the closing statement so the bigger
-   "we represent the lineup." payoff line and the supporting tail
-   read as one beat with a deliberate gap between them. Per Andre
-   2026-05-30: the payoff is the important moment, the tail is the
-   how-it-actually-works detail. */
-.resolutionBlock {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(20px, 2.6vw, 36px);
-}
-
-.payoff {
-  font-size: clamp(36px, 4.8vw, 68px);
-  line-height: 1.1;
-  letter-spacing: -0.025em;
-}
-.payoffItalic {
-  font-style: italic;
-}
-
-.resolutionTail {
-  font-size: clamp(22px, 2.6vw, 34px);
-  line-height: 1.35;
-  letter-spacing: -0.015em;
+.cardBody {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 15.5px;
+  line-height: 1.55;
+  color: var(--dim);
+  margin: 0;
 }

@@ -16,17 +16,20 @@
   }
 }
 
-/* Another round of size reduction per Andre 2026-05-30 v3 — still
-   reading a touch bigger than a SaaS pricing tile should. */
+/* Round 4 reduction per Andre 2026-05-30 v4 + drop shadow added. */
 .primary,
 .secondary {
-  border-radius: 20px;
-  padding: 26px 24px;
+  border-radius: 18px;
+  padding: 22px 22px;
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  min-height: 340px;
+  min-height: 300px;
+  box-shadow:
+    0 1px 0 rgba(14, 15, 17, 0.02),
+    0 8px 20px rgba(14, 15, 17, 0.08),
+    0 24px 40px rgba(14, 15, 17, 0.06);
 }
 
 /* PRIMARY — composite gradient + radial highlights + noise comes

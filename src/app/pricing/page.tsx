@@ -24,13 +24,14 @@ export default function PricingPage() {
         compact
         headline={
           <>
-            still working out{" "}
+            Still working out{" "}
             <em style={{ fontStyle: "italic", color: "#fff" }}>
               the shape of the hire?
             </em>
           </>
         }
-        body="Twenty minutes on a call. Tell us the role, the bar, the timeline. We'll have names for you the same week, and a clear quote."
+        body="Tell us about you, your company, your culture, your product and a few other details so we can personalise your talent pipeline."
+        cta={{ label: "Book a briefing", href: "/enquire" }}
       />
     </>
   );

@@ -2,30 +2,37 @@
   padding: 0 0 110px;
 }
 
+/* Stacked header per Andre 2026-05-30 v4 — subheadline goes under
+   the headline (left-justified, bigger, Figtree medium) instead of
+   the previous right-rail "intro" copy. */
 .head {
   max-width: 1340px;
-  margin: 0 auto 38px;
+  margin: 0 auto 44px;
   padding: 0 28px;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 30px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 14px;
 }
 .headline {
-  font-family: "Cal Sans", system-ui, sans-serif;
-  font-weight: 400;
-  font-size: clamp(36px, 5vw, 72px);
-  line-height: 0.92;
-  letter-spacing: -0.03em;
-  text-transform: lowercase;
-  margin: 14px 0 0;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: clamp(28px, 3.4vw, 44px);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  margin: 12px 0 0;
+  color: var(--ink);
+}
+.headline .softer {
+  color: var(--mute);
+  font-weight: 500;
 }
 .intro {
-  font-size: 15px;
-  line-height: 1.55;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: clamp(18px, 1.7vw, 22px);
+  line-height: 1.45;
   color: var(--dim);
-  max-width: 380px;
+  max-width: 680px;
   margin: 0;
 }
 

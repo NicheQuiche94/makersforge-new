@@ -4,12 +4,10 @@ import styles from "./ComparisonStrip.module.css";
 /**
  * Comparison strip — SaaS-style comparison grid.
  *
- * Per Andre's punch list (2026-05-30): the previous treatment was a
- * flat 3-column grid; this version reads like a real SaaS pricing
- * comparison — highlighted MakersForge column with a header chip and
- * card-like surround, per-row check (us) and cross (them) glyphs,
- * sticky-feeling top header with bigger column labels, soft striped
- * row backgrounds for readability.
+ * v3 (Andre 2026-05-30 v4):
+ *   - "Speed to shortlist" + "Replacement matching" rows removed
+ *     (we don't want to commit to specific timing in copy).
+ *   - "Here's how it stacks up" intro sentence dropped — felt AI.
  */
 
 type Row = { label: string; us: string; them: string };
@@ -17,33 +15,23 @@ type Row = { label: string; us: string; them: string };
 const ROWS: Row[] = [
   {
     label: "Contract pricing",
-    us: "flat monthly fee",
+    us: "Flat monthly fee",
     them: "20–40% markup on day rate",
   },
   {
     label: "Permanent placement",
-    us: "flat £10,000",
+    us: "Flat £10,000",
     them: "20–30% of first-year salary",
   },
   {
-    label: "Who pays the operator",
-    us: "you do, directly",
-    them: "agency. opaque margin",
+    label: "Who pays the specialist",
+    us: "You do, directly",
+    them: "Agency. Opaque margin",
   },
   {
     label: "Bench you're hiring from",
-    us: "vetted senior operators we know",
-    them: "job-board candidate pool",
-  },
-  {
-    label: "Speed to shortlist",
-    us: "48h",
-    them: "2–6 weeks",
-  },
-  {
-    label: "Replacement matching",
-    us: "included",
-    them: "rare. extra fee if so",
+    us: "Vetted senior specialists we represent",
+    them: "Job-board candidate pool",
   },
 ];
 
@@ -54,35 +42,29 @@ export function ComparisonStrip() {
         <div className={styles.top}>
           <span className="kicker">vs. traditional recruitment</span>
           <h3 className={styles.h3}>
-            flat fee <span className="gr">vs. the percentage trap.</span>
+            Flat fee, plain terms.
           </h3>
           <p className={styles.body}>
-            Most recruiters take 20–30% of first-year salary, or skim a margin
-            off every day rate. We don&apos;t. Here&apos;s how it stacks up.
+            Most recruiters either take 20–30% of first-year salary or pocket
+            a markup off every day rate. Our fee is a flat monthly to the
+            studio. Whatever the specialist negotiates is theirs.
           </p>
         </div>
 
         <div className={styles.tableWrap}>
-          {/* Highlighted MakersForge column — sits behind the cells in
-              the middle column to give the SaaS-comparison feel. */}
           <div className={styles.usColumn} aria-hidden="true" />
 
           <div className={styles.table}>
-            {/* Header row */}
             <div className={`${styles.cell} ${styles.head} ${styles.headLabel}`}>
-              <span className={styles.headKicker}>compare</span>
+              <span className={styles.headKicker}>Compare</span>
             </div>
             <div className={`${styles.cell} ${styles.head} ${styles.headUs}`}>
-              {/* Real logo + wordmark in the highlighted column header
-                  (replaces the prior Cal-Sans-gradient text "MakersForge"
-                  per Andre 2026-05-30). */}
               <Logo size={42} className={styles.headLogo} />
             </div>
             <div className={`${styles.cell} ${styles.head} ${styles.headThem}`}>
               <span className={styles.headTagThem}>Traditional</span>
             </div>
 
-            {/* Body rows */}
             {ROWS.map((r, i) => (
               <RowFragment key={r.label} idx={i} {...r} />
             ))}
