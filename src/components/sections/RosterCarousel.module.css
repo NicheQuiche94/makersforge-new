@@ -1,5 +1,8 @@
+/* Section padding tightened per Andre 2026-05-30 v5 — the gap
+   between the carousel CTA and the next section's CTABand was
+   too big. Halved the bottom padding to close it. */
 .section {
-  padding: 0 0 110px;
+  padding: 0 0 50px;
 }
 
 /* Stacked header per Andre 2026-05-30 v4 — subheadline goes under
@@ -13,27 +16,16 @@
   flex-direction: column;
   gap: 14px;
 }
+/* Ink headline + gradient highlight, no grey softer (Andre v5). */
 .headline {
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-weight: 700;
   font-size: clamp(28px, 3.4vw, 44px);
-  line-height: 1.2;
+  line-height: 1.25;
   letter-spacing: -0.015em;
   margin: 12px 0 0;
   color: var(--ink);
-}
-.headline .softer {
-  color: var(--mute);
-  font-weight: 500;
-}
-.intro {
-  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
-  font-weight: 500;
-  font-size: clamp(18px, 1.7vw, 22px);
-  line-height: 1.45;
-  color: var(--dim);
-  max-width: 680px;
-  margin: 0;
+  max-width: 880px;
 }
 
 /* ============================================================
@@ -220,13 +212,15 @@
   color: rgba(255, 255, 255, 0.85);
 }
 
-.statusOnDark.available,
-.statusOnDark.contract {
-  background: rgba(255, 255, 255, 0.22);
-  color: #fff;
+/* On the gradient featured card the default green available pill
+   and grey in-contract pill disappear. Force white-on-white-glass
+   per Andre 2026-05-30 v5. */
+.pcard.featured :global(.status) {
+  background: rgba(255, 255, 255, 0.22) !important;
+  color: #fff !important;
 }
-.statusOnDark :global(.dot) {
-  background: #fff;
+.pcard.featured :global(.status .dot) {
+  background: #fff !important;
 }
 
 .mid h3.name,

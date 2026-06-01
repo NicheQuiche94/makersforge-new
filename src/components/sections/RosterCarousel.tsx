@@ -116,11 +116,9 @@ export function RosterCarousel() {
       <div className={styles.head}>
         <p className="kicker">A look at the lineup</p>
         <h2 className={styles.headline}>
-          Senior people we already represent.{" "}
-          <span className={styles.softer}>
-            Filter the full lineup by discipline, channels, budget managed and
-            more.
-          </span>
+          <span className="gr">Senior people we already represent.</span>{" "}
+          Filter the full lineup by discipline, channels, budget managed and
+          more.
         </h2>
       </div>
 

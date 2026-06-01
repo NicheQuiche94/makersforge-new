@@ -194,10 +194,10 @@ export function RosterApp() {
       <div className={styles.controls}>
         <div className="container">
           <div className={styles.quickbar}>
-            <span className={styles.qbLabel}>discipline</span>
-            <DChip active={discipline === "all"} onClick={() => onDiscipline("all")}>all</DChip>
-            <DChip active={discipline === "ua"} onClick={() => onDiscipline("ua")}>ua managers</DChip>
-            <DChip active={discipline === "art"} onClick={() => onDiscipline("art")}>marketing artists</DChip>
+            <span className={styles.qbLabel}>Discipline</span>
+            <DChip active={discipline === "all"} onClick={() => onDiscipline("all")}>All</DChip>
+            <DChip active={discipline === "ua"} onClick={() => onDiscipline("ua")}>UA managers</DChip>
+            <DChip active={discipline === "art"} onClick={() => onDiscipline("art")}>Marketing artists</DChip>
 
             <span className={styles.qbDivider} />
 
@@ -212,19 +212,20 @@ export function RosterApp() {
           {/* Filter panel */}
           <div className={`${styles.panel} ${panelOpen ? styles.panelOpen : ""}`}>
             <div className={styles.panelInner}>
-              <FRow label="industry" hint="·pick one or both">
+              <FRow label="Industry" hint="Pick one or both">
                 <ChipGroup
                   values={["games", "apps"]}
-                  labels={["games", "apps"]}
+                  labels={["Games", "Apps"]}
                   active={filters.industry}
                   onToggle={(v) => toggleFilter("industry", v)}
                 />
               </FRow>
 
               {showGamesCat && (
-                <FRow label="games category" hint="·complexity">
+                <FRow label="Games category" hint="Complexity">
                   <ChipGroup
                     values={["hypercasual", "hybridcasual", "casual", "midcore", "hardcore"]}
+                    labels={["Hypercasual", "Hybrid casual", "Casual", "Midcore", "Hardcore"]}
                     active={filters.gamesCat}
                     onToggle={(v) => toggleFilter("gamesCat", v)}
                   />
@@ -232,10 +233,10 @@ export function RosterApp() {
               )}
 
               {showAppsCat && (
-                <FRow label="apps category" hint="·vertical">
+                <FRow label="Apps category" hint="Vertical">
                   <ChipGroup
                     values={["health", "dating", "finance", "social", "education", "entertainment", "productivity", "shopping", "lifestyle", "photo"]}
-                    labels={["health & fitness", "dating", "finance", "social", "education", "entertainment", "productivity", "shopping", "lifestyle", "photo & video"]}
+                    labels={["Health & fitness", "Dating", "Finance", "Social", "Education", "Entertainment", "Productivity", "Shopping", "Lifestyle", "Photo & video"]}
                     active={filters.appsCat}
                     onToggle={(v) => toggleFilter("appsCat", v)}
                   />
@@ -243,17 +244,17 @@ export function RosterApp() {
               )}
 
               {showGenre && (
-                <FRow label="genre" hint="·games">
+                <FRow label="Genre" hint="Games">
                   <ChipGroup
                     values={["puzzle", "rpg", "strategy", "casino", "simulation", "sports", "action", "cards"]}
-                    labels={["puzzle", "rpg", "strategy", "casino", "simulation", "sports/racing", "action", "tabletop/cards"]}
+                    labels={["Puzzle", "RPG", "Strategy", "Casino", "Simulation", "Sports/racing", "Action", "Tabletop/cards"]}
                     active={filters.genre}
                     onToggle={(v) => toggleFilter("genre", v)}
                   />
                 </FRow>
               )}
 
-              <FRow label="location">
+              <FRow label="Location">
                 <ChipGroup
                   values={LOCATIONS.map((l) => l.value)}
                   labels={LOCATIONS.map((l) => l.label)}
@@ -264,21 +265,23 @@ export function RosterApp() {
 
               {(discipline === "all" || discipline === "ua") && (
                 <>
-                  <FRow label="monetisation" hint="·iap / iaa">
+                  <FRow label="Monetisation" hint="IAP / IAA">
                     <ChipGroup
                       values={["iap", "iaa", "hybrid"]}
+                      labels={["IAP", "IAA", "Hybrid"]}
                       active={filters.monetisation}
                       onToggle={(v) => toggleFilter("monetisation", v)}
                     />
                   </FRow>
-                  <FRow label="channels" hint="·ua expertise">
+                  <FRow label="Channels" hint="UA expertise">
                     <ChipGroup
                       values={["meta", "google", "tiktok", "asa", "programmatic", "influencer", "aso"]}
+                      labels={["Meta", "Google", "TikTok", "ASA", "Programmatic", "Influencer", "ASO"]}
                       active={filters.channels}
                       onToggle={(v) => toggleFilter("channels", v)}
                     />
                   </FRow>
-                  <FRow label="monthly budget managed">
+                  <FRow label="Monthly budget managed">
                     <ChipGroup
                       values={["0", "1", "2", "3"]}
                       labels={[...BUDGET_LABELS]}
@@ -290,26 +293,26 @@ export function RosterApp() {
               )}
 
               {(discipline === "all" || discipline === "art") && (
-                <FRow label="creative formats" hint="·marketing art">
+                <FRow label="Creative formats" hint="Marketing art">
                   <ChipGroup
                     values={["video", "playable", "static", "ugc", "motion"]}
-                    labels={["video", "playables", "static", "ugc", "motion"]}
+                    labels={["Video", "Playables", "Static", "UGC", "Motion"]}
                     active={filters.formats}
                     onToggle={(v) => toggleFilter("formats", v)}
                   />
                 </FRow>
               )}
 
-              <FRow label="special expertise">
+              <FRow label="Special expertise">
                 <ChipGroup
                   values={["incrementality", "skan", "scaling", "liveops", "reactivation", "audience"]}
-                  labels={["incrementality", "skan / measurement", "creative scaling", "liveops", "reactivation", "audience strategy"]}
+                  labels={["Incrementality", "SKAN / measurement", "Creative scaling", "LiveOps", "Reactivation", "Audience strategy"]}
                   active={filters.expertise}
                   onToggle={(v) => toggleFilter("expertise", v)}
                 />
               </FRow>
 
-              <FRow label="day rate band">
+              <FRow label="Day rate band">
                 <ChipGroup
                   values={["0", "1", "2"]}
                   labels={["< £500", "£500–700", "£700+"]}
@@ -320,7 +323,7 @@ export function RosterApp() {
 
               <div className={styles.panelFooter}>
                 <button type="button" className={styles.clearBtn} onClick={clearAll}>
-                  clear all filters
+                  Clear all filters
                 </button>
                 <span className={styles.applyHint}>
                   <strong>{visible.length}</strong> profiles match
@@ -335,23 +338,24 @@ export function RosterApp() {
       <div className="container">
         <div className={styles.resultsRow}>
           <p className={styles.resultsText}>
-            showing <strong className="gr">{visible.length}</strong>{" "}
+            Showing <strong className="gr">{visible.length}</strong>{" "}
             {discipline === "all"
               ? "profiles"
               : discipline === "ua"
-                ? "ua managers"
+                ? "UA managers"
                 : "marketing artists"}
             {availOnly && " · available"}
           </p>
           <Link href="/apply" className={styles.applyCta}>
-            join the lineup <span aria-hidden="true">→</span>
+            Join the lineup <span aria-hidden="true">→</span>
           </Link>
         </div>
 
         {visible.length === 0 ? (
           <div className={styles.empty}>
-            <span className={styles.emptyH}>no matches.</span>
-            Try widening the search or clearing filters.
+            <span className={styles.emptyH}>The lineup is still being built.</span>
+            Real profiles arrive shortly. In the meantime, brief us directly and we&apos;ll
+            shortlist by hand from our existing network.
           </div>
         ) : (
           <div className={styles.list}>
@@ -400,7 +404,7 @@ function Toggle({ on, onClick }: { on: boolean; onClick: () => void }) {
       <span className={styles.track}>
         <span className={styles.knob} />
       </span>
-      available only
+      Available only
     </button>
   );
 }
@@ -413,7 +417,7 @@ function FiltersBtn({ open, count, onClick }: { open: boolean; count: number; on
       onClick={onClick}
       aria-expanded={open}
     >
-      filters{" "}
+      Filters{" "}
       {count > 0 && <span className={styles.count}>{count}</span>}
       <span className={styles.chev} aria-hidden="true">▼</span>
     </button>
@@ -424,11 +428,11 @@ function SortSelect({ value, onChange }: { value: SortKey; onChange: (v: SortKey
   return (
     <div className={styles.qsort}>
       <select value={value} onChange={(e) => onChange(e.target.value as SortKey)}>
-        <option value="default">sort: featured</option>
-        <option value="price-asc">price: low → high</option>
-        <option value="price-desc">price: high → low</option>
-        <option value="budget-desc">budget: high → low</option>
-        <option value="budget-asc">budget: low → high</option>
+        <option value="default">Sort: Featured</option>
+        <option value="price-asc">Price: low → high</option>
+        <option value="price-desc">Price: high → low</option>
+        <option value="budget-desc">Budget: high → low</option>
+        <option value="budget-asc">Budget: low → high</option>
       </select>
     </div>
   );

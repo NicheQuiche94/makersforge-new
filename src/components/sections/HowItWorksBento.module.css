@@ -14,18 +14,17 @@
 /* Header restyle per Andre 2026-05-30 v4 — Figtree mixed-weight
    sentence-case headline + subhead, dropping the "brief monday,
    working by friday" claim we can't actually promise. */
+/* Headline ink + gradient highlight, no grey softer subhead per
+   Andre 2026-05-30 v5. */
 .headline {
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-weight: 700;
   font-size: clamp(28px, 3.4vw, 44px);
-  line-height: 1.2;
+  line-height: 1.25;
   letter-spacing: -0.015em;
   margin: 14px 0 0;
   color: var(--ink);
-}
-.headline .softer {
-  color: var(--mute);
-  font-weight: 500;
+  max-width: 880px;
 }
 
 .topCopy {

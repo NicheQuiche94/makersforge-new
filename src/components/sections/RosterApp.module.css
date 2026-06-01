@@ -32,7 +32,7 @@
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-weight: 600;
   font-size: 13px;
-  text-transform: lowercase;
+  text-transform: none;
   padding: 9px 16px;
   border-radius: 999px;
   background: var(--bg);
@@ -71,7 +71,7 @@
   font-weight: 500;
   font-size: 13px;
   color: var(--dim);
-  text-transform: lowercase;
+  text-transform: none;
   background: transparent;
   border: none;
   padding: 0;
@@ -123,7 +123,7 @@
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-weight: 600;
   font-size: 13px;
-  text-transform: lowercase;
+  text-transform: none;
   padding: 9px 18px;
   border-radius: 999px;
   background: var(--bg);
@@ -169,7 +169,7 @@
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-weight: 600;
   font-size: 13px;
-  text-transform: lowercase;
+  text-transform: none;
   padding: 9px 36px 9px 16px;
   border-radius: 999px;
   background: var(--bg);
@@ -248,7 +248,7 @@
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-weight: 500;
   font-size: 13px;
-  text-transform: lowercase;
+  text-transform: none;
   padding: 7px 14px;
   border-radius: 999px;
   background: var(--bg);
@@ -292,7 +292,7 @@
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-weight: 600;
   font-size: 12px;
-  text-transform: lowercase;
+  text-transform: none;
   color: var(--mute);
   background: none;
   border: none;
@@ -330,7 +330,7 @@
   font-weight: 500;
   font-size: 14px;
   color: var(--dim);
-  text-transform: lowercase;
+  text-transform: none;
   margin: 0;
 }
 .resultsText strong {
@@ -345,7 +345,7 @@
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-weight: 600;
   font-size: 13px;
-  text-transform: lowercase;
+  text-transform: none;
   padding: 9px 18px;
   border-radius: 999px;
   background: transparent;
@@ -490,7 +490,7 @@
   font-weight: 400;
   font-size: 24px;
   letter-spacing: -0.02em;
-  text-transform: lowercase;
+  text-transform: none;
   line-height: 1;
   margin: 0;
   color: var(--ink);
@@ -503,7 +503,7 @@
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-size: 13px;
   color: var(--mute);
-  text-transform: lowercase;
+  text-transform: none;
   margin: 0;
 }
 .list > .prow:nth-child(even) .prowRole {
@@ -805,7 +805,7 @@
   font-weight: 400;
   font-size: 22px;
   letter-spacing: -0.02em;
-  text-transform: lowercase;
+  text-transform: none;
   margin: 0 0 4px;
   line-height: 1;
   color: var(--ink);
@@ -819,7 +819,7 @@
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-size: 13px;
   color: var(--mute);
-  text-transform: lowercase;
+  text-transform: none;
   margin: 0 0 18px;
   transition: color 0.3s;
 }
@@ -842,7 +842,7 @@
 }
 .pcK {
   color: var(--mute);
-  text-transform: lowercase;
+  text-transform: none;
   transition: color 0.3s;
 }
 .pcard:hover .pcK,
@@ -853,7 +853,7 @@
 .pcV {
   color: var(--ink);
   font-weight: 600;
-  text-transform: lowercase;
+  text-transform: none;
   text-align: right;
   transition: color 0.3s;
 }
@@ -895,7 +895,7 @@
   border-radius: 999px;
   background: transparent;
   color: var(--ink);
-  text-transform: lowercase;
+  text-transform: none;
   position: relative;
   transition: color 0.3s;
 }
@@ -1067,7 +1067,7 @@
   font-weight: 400;
   font-size: 38px;
   letter-spacing: -0.025em;
-  text-transform: lowercase;
+  text-transform: none;
   margin: 0 0 6px;
   line-height: 0.95;
 }
@@ -1075,7 +1075,7 @@
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-size: 14px;
   color: rgba(255, 255, 255, 0.78);
-  text-transform: lowercase;
+  text-transform: none;
   margin: 0;
 }
 

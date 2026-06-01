@@ -3,13 +3,16 @@ import styles from "./Statement.module.css";
 /**
  * Statement — second section after the hero.
  *
- * v4 (Andre 2026-05-30 v4): the "Don't let hiring slow you down"
- * fear-of-friction framing was retired. New angle is SPEED + REAL
- * AVAILABILITY — momentum doesn't get to stop because brilliant
- * operators are already on call and ready to start. Section also
- * went from a tall poster-headline + heat-gradient body panel to
- * a Nura-style 3-card grid (Principles kicker + mixed-weight
- * headline + three icon cards). Shorter, tighter, cleaner.
+ * v5 (Andre 2026-05-30 v5):
+ *   - Header centred (was left-aligned).
+ *   - Grey "softer" subhead retired site-wide — on bg-deep the
+ *     mute colour didn't contrast enough and read as afterthought.
+ *   - Headline is now a single sentence in ink black with two
+ *     gradient highlights: "Growth needs people who can move."
+ *     and "your product keeps growing." The middle clause sits
+ *     between them in plain ink.
+ *   - Section stays as the Nura-style 3-card grid (Available /
+ *     Vetted / Direct) below.
  */
 export function Statement() {
   return (
@@ -18,11 +21,9 @@ export function Statement() {
         <header className={styles.header}>
           <p className={`kicker ${styles.kicker}`}>Principles</p>
           <h2 className={styles.headline}>
-            Growth needs people who can move.{" "}
-            <span className={styles.softer}>
-              We keep brilliant operators on call, so your product keeps
-              shipping.
-            </span>
+            <span className="gr">Growth needs people who can move.</span>{" "}
+            We keep brilliant operators on call, so{" "}
+            <span className="gr">your product keeps growing.</span>
           </h2>
         </header>
 
@@ -65,12 +66,6 @@ function PrincipleCard({
     </article>
   );
 }
-
-/* ============================================================
-   ICONS — small monochrome SVGs sitting inside a heat-gradient
-   hex container at the top of each card. Styled via currentColor
-   so the stroke inherits ink/white based on surface.
-   ============================================================ */
 
 function AvailabilityIcon() {
   return (

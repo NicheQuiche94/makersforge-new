@@ -96,10 +96,8 @@ export function HowItWorksBento() {
         <div className={styles.top}>
           <p className="kicker">How it works</p>
           <h2 className={styles.headline}>
-            How a hire actually happens.{" "}
-            <span className={styles.softer}>
-              Three steps. No CV stack to wade through.
-            </span>
+            <span className="gr">How a hire actually happens.</span>{" "}
+            Three steps. No CV stack to wade through.
           </h2>
         </div>
 

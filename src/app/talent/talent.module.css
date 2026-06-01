@@ -1,8 +1,8 @@
 /* ============================================================
-   /talent — v4 (Andre 2026-05-30 v4)
-   Promise card hierarchy: TITLE biggest, number second, body
-   third. Lifecycle becomes a 3-step horizontal timeline. Letter
-   section removed entirely.
+   /talent — v5 (Andre 2026-05-30 v5)
+   Promise wall and lifecycle both use the same card pattern
+   as the home Statement Principles cards. Grey softer subhead
+   retired. Lifecycle timeline gone.
    ============================================================ */
 
 /* ----------- HERO ----------- */
@@ -42,7 +42,8 @@
 }
 
 /* ============================================================
-   PROMISE WALL
+   PROMISE WALL — 5 PrincipleCard tiles in an auto-fitting grid
+   (3-up on wide screens, collapses gracefully on narrow).
    ============================================================ */
 .wallSection {
   padding: 90px 0 110px;
@@ -50,239 +51,115 @@
 }
 
 .wallHeader {
-  max-width: 820px;
-  margin-bottom: 46px;
+  max-width: 940px;
+  margin: 0 auto 56px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
 .wallH2 {
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-weight: 700;
   font-size: clamp(30px, 3.6vw, 48px);
-  line-height: 1.2;
+  line-height: 1.25;
   letter-spacing: -0.015em;
   margin: 14px 0 0;
   color: var(--ink);
-}
-.wallSofter {
-  color: var(--mute);
-  font-weight: 500;
+  max-width: 940px;
 }
 
 .wallGrid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 18px;
-}
-@media (max-width: 800px) {
-  .wallGrid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Card shell — single column flex, hierarchy title→num→body
-   per Andre 2026-05-30 v4 (was a 2-col layout with big number on
-   the left dominating). */
-.promiseCard {
-  position: relative;
-  border-radius: 22px;
-  padding: 30px 28px 32px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  min-height: 240px;
-}
-.promiseCardPaper {
-  background: var(--paper);
-  border: 1px solid var(--hair);
-}
-
-.promiseHero {
-  grid-column: 1 / -1;
-  min-height: 260px;
-  color: #fff;
-  padding: 36px 38px;
-}
-@media (max-width: 800px) {
-  .promiseHero {
-    grid-column: auto;
-    padding: 30px 28px;
-  }
-}
-
-/* Number — second in visual hierarchy, smaller than title. */
-.promiseNum {
-  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
-  font-weight: 600;
-  font-size: 13px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--mute);
-  margin: 0;
-  position: relative;
-  z-index: 1;
-}
-.promiseNumOnDark {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-/* Title — BIGGEST element per card. */
-.promiseH {
-  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
-  font-weight: 700;
-  font-size: clamp(22px, 2.4vw, 30px);
-  letter-spacing: -0.015em;
-  line-height: 1.2;
-  margin: 0;
-  color: var(--ink);
-  position: relative;
-  z-index: 1;
-}
-.promiseHOnDark {
-  color: #fff;
-  font-size: clamp(26px, 2.8vw, 36px);
-}
-
-/* Body — bigger than before per Andre's universal-body-upscale
-   request. */
-.promiseBody {
-  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
-  font-size: 16.5px;
-  line-height: 1.6;
-  margin: 0;
-  color: var(--dim);
-  position: relative;
-  z-index: 1;
-}
-.promiseBodyOnDark {
-  color: #fff;
-  font-size: 17px;
-}
-
-.promiseEmblem {
-  position: absolute;
-  right: -50px;
-  bottom: -60px;
-  z-index: 0;
-  pointer-events: none;
-  user-select: none;
 }
 
 /* ============================================================
-   LIFECYCLE — horizontal timeline. 3 paper cards sit on top of
-   a gradient connector line that runs through their centres.
-   Each card has a small heat-gradient dot bumped out from its
-   top edge to sit on the connector line.
+   LIFECYCLE — 3 PrincipleCards. Same card primitive as Promise
+   wall + home Statement. Centred header.
    ============================================================ */
 .lifeSection {
   padding: 100px 0 110px;
 }
 
 .lifeHeader {
-  max-width: 820px;
-  margin-bottom: 64px;
+  max-width: 920px;
+  margin: 0 auto 50px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
 .lifeH2 {
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-weight: 700;
   font-size: clamp(30px, 3.6vw, 48px);
-  line-height: 1.2;
+  line-height: 1.25;
   letter-spacing: -0.015em;
   margin: 14px 0 0;
   color: var(--ink);
 }
 
-.timeline {
-  position: relative;
+.lifeGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  padding-top: 18px;
+  gap: 18px;
 }
-
-.timelineLine {
-  position: absolute;
-  top: 11px;
-  left: 8%;
-  right: 8%;
-  height: 2px;
-  background: var(--heat-h);
-  border-radius: 2px;
-  opacity: 0.7;
-  z-index: 0;
-}
-@media (max-width: 800px) {
-  .timeline {
+@media (max-width: 880px) {
+  .lifeGrid {
     grid-template-columns: 1fr;
-    gap: 30px;
-  }
-  .timelineLine {
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    right: auto;
-    width: 2px;
-    height: auto;
-    transform: translateX(-50%);
   }
 }
 
-.lifeStep {
-  position: relative;
+/* ============================================================
+   PrincipleCard primitive — mirrors home Statement.card so the
+   talent page reads as the same product. Hex heat-gradient icon
+   + Figtree title + body. Drop shadow + paper background.
+   ============================================================ */
+.card {
   background: var(--paper);
   border: 1px solid var(--hair);
-  border-radius: 20px;
-  padding: 32px 26px 28px;
+  border-radius: 22px;
+  padding: 28px 26px 30px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  z-index: 1;
+  gap: 16px;
+  min-height: 220px;
 }
 
-.lifeDot {
-  position: absolute;
-  top: -1px;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.iconWrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--heat-h);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(255, 93, 0, 0.22);
+}
+.iconWrap svg {
   width: 22px;
   height: 22px;
-  border-radius: 50%;
-  background: var(--heat-h);
-  border: 3px solid var(--bg);
-  box-shadow: 0 4px 12px rgba(255, 93, 0, 0.28);
-  z-index: 2;
-}
-@media (max-width: 800px) {
-  .lifeDot {
-    top: 50%;
-    left: 0;
-    transform: translate(-50%, -50%);
-  }
 }
 
-.lifeNum {
-  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
-  font-weight: 600;
-  font-size: 12px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--mute);
-  margin: 6px 0 0;
-}
-
-.lifeStepH {
+.cardTitle {
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-weight: 700;
-  font-size: 26px;
-  letter-spacing: -0.015em;
-  line-height: 1.2;
-  margin: 0;
+  font-size: 19px;
+  letter-spacing: -0.01em;
   color: var(--ink);
+  margin: 0;
+  line-height: 1.25;
 }
 
-.lifeStepBody {
+.cardBody {
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
-  font-size: 16px;
+  font-size: 15.5px;
   line-height: 1.55;
   color: var(--dim);
-  margin: 4px 0 0;
+  margin: 0;
 }

@@ -26,7 +26,7 @@ export default function PricingPage() {
           <>
             Still working out{" "}
             <em style={{ fontStyle: "italic", color: "#fff" }}>
-              the shape of the hire?
+              The shape of the hire?
             </em>
           </>
         }

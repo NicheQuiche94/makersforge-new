@@ -103,22 +103,30 @@
   background: transparent;
   border-bottom: 1px solid var(--hair-strong);
 }
-.headLabel {
-  font-weight: 600;
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--mute);
+/* All three column heads in Cal Sans sentence case per Andre
+   2026-05-30 v5 — "Compare" and "Traditional" used to be split
+   between an uppercase Figtree kicker and a lowercase Cal Sans
+   label. Now they match the visual weight of the logo in the
+   middle column. */
+.headLabel,
+.headThem {
+  display: flex;
+  align-items: center;
 }
-.headKicker {
-  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+.headKicker,
+.headTagThem {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 26px;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--ink);
 }
 
 .headTagUs {
   font-family: "Cal Sans", system-ui, sans-serif;
   font-weight: 400;
   font-size: 24px;
-  text-transform: lowercase;
   letter-spacing: -0.02em;
   background: var(--heat-text);
   -webkit-background-clip: text;

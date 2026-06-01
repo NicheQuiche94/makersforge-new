@@ -6,12 +6,22 @@ import { HowItWorksBento } from "@/components/sections/HowItWorksBento";
 import { RosterCarousel } from "@/components/sections/RosterCarousel";
 import { ForTalentBanner } from "@/components/sections/ForTalentBanner";
 import { CTABand } from "@/components/sections/CTABand";
+import { ROSTER } from "@/data/roster";
 
-// Stats reframed per Andre 2026-05-30 v4: "avg deployment" replaced
-// with a claim we can actually back (lineup is live, updated weekly).
+// Stats now derive from the actual ROSTER data per Andre 2026-05-30 v5 —
+// fake "50+ / 2" counts are gone. As real specialists are added to
+// src/data/roster.ts the tiles update automatically. The third and fourth
+// tiles stay as messaging stats (Live / Flat) that don't need a count.
+const liveDisciplines = new Set(ROSTER.map((p) => p.discipline)).size;
 const HOME_STATS = [
-  { n: <span className="gr">50+</span>, label: "On the lineup" },
-  { n: <span className="gr">2</span>, label: "Disciplines live" },
+  {
+    n: <span className="gr">{ROSTER.length}</span>,
+    label: "On the lineup",
+  },
+  {
+    n: <span className="gr">{liveDisciplines}</span>,
+    label: "Disciplines live",
+  },
   { n: <span className="gr">Live</span>, label: "Lineup, updated weekly" },
   { n: <span className="gr">Flat</span>, label: "Monthly fee. That's it." },
 ];
@@ -36,9 +46,13 @@ export default function HomePage() {
       <StatStrip cells={HOME_STATS} />
       <Statement />
       <HowItWorksBento />
-      <RosterCarousel />
+      {ROSTER.length > 0 && <RosterCarousel />}
       <ForTalentBanner />
-      <CTABand />
+      <CTABand
+        compact
+        body="Tell us about you, your company, your culture, your product and a few other details so we can personalise your talent pipeline."
+        cta={{ label: "Book a briefing", href: "/enquire" }}
+      />
     </>
   );
 }
