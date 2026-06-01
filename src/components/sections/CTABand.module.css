@@ -1,5 +1,9 @@
+/* Top padding gives breathing room between the previous section's
+   background colour transition and the top of the gradient CTA
+   panel (e.g. home page where bg-deep ForTalentBanner ends just
+   above this section). Per Andre 2026-05-30 v8. */
 .section {
-  padding: 0 0 80px;
+  padding: 50px 0 80px;
 }
 
 /* Composite heat gradient comes from the global .heat-glow utility

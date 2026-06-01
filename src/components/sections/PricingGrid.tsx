@@ -35,7 +35,6 @@ export function PricingGrid() {
               <li>Flat monthly fee per contractor, billed each month of engagement</li>
               <li>You pay the specialist directly. No markup on their rate</li>
               <li>Fee stops the month engagement ends</li>
-              <li>Replacement matching included if the fit isn&apos;t right</li>
               <li>Terms signed up front, nothing hidden</li>
               <li>Scale up or down month-to-month</li>
             </ul>
