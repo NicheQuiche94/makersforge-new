@@ -90,8 +90,12 @@ function PromiseWall() {
         <header className={styles.wallHeader}>
           <p className="kicker">How the lineup works for you</p>
           <h2 className={styles.wallH2}>
-            <span className="gr">Five things</span> you can actually count on.
+            <span className="gr">Five things you can actually count on.</span>
           </h2>
+          <p className={styles.wallSubhead}>
+            The lineup is a promise, not a marketing line. Here&apos;s what
+            you sign up for the moment you&apos;re on it.
+          </p>
         </header>
 
         <div className={styles.wallGrid}>
@@ -138,8 +142,12 @@ function Lifecycle() {
         <header className={styles.lifeHeader}>
           <p className="kicker">How it actually runs</p>
           <h2 className={styles.lifeH2}>
-            <span className="gr">Apply once.</span> Stay on the lineup.
+            <span className="gr">Apply once. Stay on the lineup.</span>
           </h2>
+          <p className={styles.lifeSubhead}>
+            Three steps and a relationship that doesn&apos;t expire after a
+            single referral.
+          </p>
         </header>
 
         <div className={styles.lifeGrid}>

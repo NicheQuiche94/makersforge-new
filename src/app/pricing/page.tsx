@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { PricingHero } from "@/components/sections/PricingHero";
 import { PricingGrid } from "@/components/sections/PricingGrid";
 import { ComparisonStrip } from "@/components/sections/ComparisonStrip";
-import { CTABand } from "@/components/sections/CTABand";
 
 export const metadata: Metadata = {
   title: "Pricing · MakersForge",
@@ -10,29 +9,16 @@ export const metadata: Metadata = {
     "Flat monthly fee per specialist engaged. Flat £10,000 for permanent placement. No markup on day rate.",
 };
 
-/* FAQ section dropped per Andre 2026-05-30 v3 — no content to put in
-   it yet and the page reads better without an empty section. CTA band
-   is rendered with the `compact` prop so its container doesn't tower
-   over the now-smaller pricing cards above. */
+/* Per Andre 2026-05-30 v6: bottom CTABand removed from pricing page.
+   The two pricing cards already have their own CTAs ("Talk to us
+   about a hire" / "Enquire about permanent"), so a third bottom CTA
+   was redundant. The pricing-style compact CTA moved to /roster. */
 export default function PricingPage() {
   return (
     <>
       <PricingHero />
       <PricingGrid />
       <ComparisonStrip />
-      <CTABand
-        compact
-        headline={
-          <>
-            Still working out{" "}
-            <em style={{ fontStyle: "italic", color: "#fff" }}>
-              The shape of the hire?
-            </em>
-          </>
-        }
-        body="Tell us about you, your company, your culture, your product and a few other details so we can personalise your talent pipeline."
-        cta={{ label: "Book a briefing", href: "/enquire" }}
-      />
     </>
   );
 }

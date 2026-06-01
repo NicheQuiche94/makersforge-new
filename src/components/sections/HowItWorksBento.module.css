@@ -6,35 +6,37 @@
   overflow-x: hidden;
 }
 
+/* Standardised section header (Cal Sans h2 + Figtree subhead,
+   centred) per Andre 2026-05-30 v6. */
 .top {
-  margin-bottom: 48px;
-  max-width: 880px;
+  max-width: 1080px;
+  margin: 0 auto 56px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
 }
 
-/* Header restyle per Andre 2026-05-30 v4 — Figtree mixed-weight
-   sentence-case headline + subhead, dropping the "brief monday,
-   working by friday" claim we can't actually promise. */
-/* Headline ink + gradient highlight, no grey softer subhead per
-   Andre 2026-05-30 v5. */
 .headline {
-  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
-  font-weight: 700;
-  font-size: clamp(28px, 3.4vw, 44px);
-  line-height: 1.25;
-  letter-spacing: -0.015em;
-  margin: 14px 0 0;
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(44px, 7vw, 108px);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  margin: 4px 0 0;
   color: var(--ink);
-  max-width: 880px;
+  max-width: 1080px;
 }
 
-.topCopy {
+.subhead {
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-weight: 500;
-  font-size: 18px;
+  font-size: clamp(18px, 1.8vw, 24px);
   line-height: 1.5;
   color: var(--dim);
-  max-width: 540px;
-  margin: 14px 0 0;
+  max-width: 720px;
+  margin: 0;
 }
 
 /* L2 grid — flex column with paired row at top, full-width

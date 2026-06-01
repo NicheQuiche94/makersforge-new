@@ -103,11 +103,9 @@
   background: transparent;
   border-bottom: 1px solid var(--hair-strong);
 }
-/* All three column heads in Cal Sans sentence case per Andre
-   2026-05-30 v5 — "Compare" and "Traditional" used to be split
-   between an uppercase Figtree kicker and a lowercase Cal Sans
-   label. Now they match the visual weight of the logo in the
-   middle column. */
+/* Per Andre v6: revert "Compare" / "Traditional" to Figtree (not
+   Cal Sans) — column headers read better as labels rather than
+   display type. Logo stays as-is in the middle column. */
 .headLabel,
 .headThem {
   display: flex;
@@ -115,10 +113,10 @@
 }
 .headKicker,
 .headTagThem {
-  font-family: "Cal Sans", system-ui, sans-serif;
-  font-weight: 400;
-  font-size: 26px;
-  letter-spacing: -0.02em;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: -0.01em;
   line-height: 1;
   color: var(--ink);
 }

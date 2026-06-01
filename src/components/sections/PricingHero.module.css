@@ -22,8 +22,7 @@
   font-family: "Cal Sans", system-ui, sans-serif;
   font-weight: 400;
   font-size: clamp(50px, 8vw, 128px);
-  line-height: 0.88;
+  line-height: 1;
   letter-spacing: -0.035em;
-  text-transform: lowercase;
   margin: 0;
 }

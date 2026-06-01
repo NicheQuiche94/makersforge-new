@@ -48,10 +48,12 @@
   color: var(--ink);
 }
 .qchipActive {
+  /* Solid gradient fill, no stroke or shadow. */
   border-color: transparent;
   color: #fff;
   background: var(--heat-h);
   font-weight: 700;
+  box-shadow: none;
 }
 
 .qbDivider {
@@ -132,12 +134,13 @@
   cursor: pointer;
   transition: all 0.2s;
 }
+/* Hover state — solid gradient fill, no gradient stroke around it
+   per Andre 2026-05-30 v6 (gradient-on-gradient was reading as a
+   weird double edge). */
 .qfilters:hover {
   border-color: transparent;
-  background:
-    linear-gradient(var(--paper), var(--paper)) padding-box,
-    var(--heat-h) border-box;
-  border: 1.5px solid transparent;
+  background: var(--heat-h);
+  color: #fff;
 }
 .count {
   background: var(--heat-h);
@@ -271,7 +274,7 @@
   background: var(--heat-h);
   color: #fff;
   font-weight: 700;
-  box-shadow: 0 4px 12px rgba(255, 93, 0, 0.22);
+  box-shadow: none;
 }
 .fchipActive:hover {
   color: #fff;
@@ -357,10 +360,8 @@
 }
 .applyCta:hover {
   border-color: transparent;
-  background:
-    linear-gradient(var(--bg), var(--bg)) padding-box,
-    var(--heat-h) border-box;
-  border: 1.5px solid transparent;
+  background: var(--heat-h);
+  color: #fff;
 }
 
 /* ============================================================

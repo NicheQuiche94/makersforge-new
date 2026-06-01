@@ -18,9 +18,9 @@ export function PricingHero() {
         <div className={styles.inner}>
           <span className={`kicker ${styles.kicker}`}>Pricing</span>
           <h1 className={styles.headline}>
-            one flat fee.
+            One flat fee.
             <br />
-            <span className="gr">no percentage games.</span>
+            <span className="gr">No percentage games.</span>
           </h1>
         </div>
       </div>

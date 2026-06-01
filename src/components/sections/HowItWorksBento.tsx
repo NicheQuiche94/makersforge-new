@@ -93,13 +93,15 @@ export function HowItWorksBento() {
   return (
     <section className={styles.section} id="how">
       <div className="container">
-        <div className={styles.top}>
+        <header className={styles.top}>
           <p className="kicker">How it works</p>
           <h2 className={styles.headline}>
-            <span className="gr">How a hire actually happens.</span>{" "}
-            Three steps. No CV stack to wade through.
+            <span className="gr">How a hire actually happens.</span>
           </h2>
-        </div>
+          <p className={styles.subhead}>
+            Three steps. No CV stack to wade through.
+          </p>
+        </header>
 
         <div className={styles.grid}>
           <div className={styles.row}>

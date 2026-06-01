@@ -43,7 +43,7 @@ export function CTABand({
             <h2 className={styles.headline}>
               {headline ?? (
                 <>
-                  the next hire is{" "}
+                  The next hire is{" "}
                   <span className={styles.ghost}>the easy bit.</span>
                 </>
               )}

@@ -21,10 +21,11 @@ export function Statement() {
         <header className={styles.header}>
           <p className={`kicker ${styles.kicker}`}>Principles</p>
           <h2 className={styles.headline}>
-            <span className="gr">Growth needs people who can move.</span>{" "}
-            We keep brilliant operators on call, so{" "}
-            <span className="gr">your product keeps growing.</span>
+            <span className="gr">Growth needs people who can move.</span>
           </h2>
+          <p className={styles.subhead}>
+            We keep brilliant operators on call, so your product keeps growing.
+          </p>
         </header>
 
         <div className={styles.grid}>

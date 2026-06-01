@@ -113,14 +113,16 @@ export function RosterCarousel() {
 
   return (
     <section className={styles.section}>
-      <div className={styles.head}>
+      <header className={styles.head}>
         <p className="kicker">A look at the lineup</p>
         <h2 className={styles.headline}>
-          <span className="gr">Senior people we already represent.</span>{" "}
+          <span className="gr">Senior people we already represent.</span>
+        </h2>
+        <p className={styles.subhead}>
           Filter the full lineup by discipline, channels, budget managed and
           more.
-        </h2>
-      </div>
+        </p>
+      </header>
 
       <div
         className={styles.stage}

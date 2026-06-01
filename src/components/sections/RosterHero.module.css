@@ -19,10 +19,12 @@
   font-family: "Cal Sans", system-ui, sans-serif;
   font-weight: 400;
   font-size: clamp(50px, 8vw, 128px);
-  line-height: 0.88;
+  /* line-height bumped from 0.88 → 1 so descenders + periods don't
+     clip on big hero sizes per Andre 2026-05-30 v6. */
+  line-height: 1;
   letter-spacing: -0.035em;
-  text-transform: lowercase;
   margin: 0;
+  padding-bottom: 0.06em;
 }
 .em {
   font-style: italic;
