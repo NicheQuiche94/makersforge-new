@@ -77,9 +77,8 @@ export function PricingGrid() {
               </span>
             </div>
             <p className={styles.ledeLight}>
-              You get matched with a senior growth operator from the roster.{" "}
-              <strong>You contract and pay the operator directly</strong> for
-              their work.
+              You get matched with a senior growth operator from the lineup.
+              The specifics (rate, hours, scope) you settle directly with them.
             </p>
             <ul className={`${styles.points} ${styles.pointsLight}`}>
               <li>Flat monthly fee per contractor, billed each month of engagement</li>
