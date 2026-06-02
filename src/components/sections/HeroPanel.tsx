@@ -20,9 +20,6 @@ export function HeroPanel() {
     <section className={`heat-glow ${styles.hero}`} data-nav-gradient>
       <div className={styles.inner}>
         <div className={styles.top}>
-          <p className={styles.kicker}>
-            Mobile apps &amp; games · EMEA
-          </p>
           <div className={styles.masthead}>
             <span>Est. 2024</span>
             <span>a SeedCraft venture</span>
