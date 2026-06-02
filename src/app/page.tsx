@@ -8,6 +8,8 @@ import { ForTalentBanner } from "@/components/sections/ForTalentBanner";
 import { CTABand } from "@/components/sections/CTABand";
 import { ROSTER } from "@/data/roster";
 
+void ROSTER;
+
 // Stats now derive from the actual ROSTER data per Andre 2026-05-30 v5 —
 // fake "50+ / 2" counts are gone. As real specialists are added to
 // src/data/roster.ts the tiles update automatically. The third and fourth
