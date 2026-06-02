@@ -31,7 +31,7 @@ export function HeroPanel() {
 
         <div className={styles.middle}>
           <h1 className={styles.headline}>
-            <span className={styles.headlineLine}>Growth team.</span>
+            <span className={styles.headlineLine}>Growth specialists.</span>
             <span className={styles.headlineLine}>On call.</span>
           </h1>
         </div>
