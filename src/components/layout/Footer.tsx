@@ -10,17 +10,24 @@ const ROSTER_LINKS = [
   { href: "/apply", label: "Join the lineup" },
 ];
 
+/* Per cofounder pass FT1–FT4:
+   - "Book a call" now points to /enquire (was the dead # placeholder).
+   - Contact email removed from the For studios column; lives with the
+     socials only (and is visible as plain text below the icon row).
+   - About removed from the Company column (the link went to /#about
+     which doesn't exist; if we want a real About page, that's a
+     separate build).
+   - Seedcraft Ventures removed from the Company column — the link
+     already appears in the bottom collab line, having it twice felt
+     off. */
 const STUDIO_LINKS = [
   { href: "/#how", label: "How it works" },
   { href: "/pricing", label: "Pricing" },
-  { href: "#", label: "Book a call" },
-  { href: "mailto:andre@makersforge.gg", label: "andre@makersforge.gg" },
+  { href: "/enquire", label: "Book a call" },
 ];
 
 const COMPANY_LINKS = [
   { href: "/talent", label: "For talent" },
-  { href: "/#about", label: "About" },
-  { href: "https://seedcraft.co", label: "Seedcraft Ventures", external: true },
 ];
 
 export function Footer() {
@@ -54,6 +61,12 @@ export function Footer() {
                 </svg>
               </a>
             </div>
+            {/* Plain-text address under the socials per cofounder pass
+                FT2 — the email used to live as a column link which
+                read as a separate page. Sits with the brand block now. */}
+            <a className={styles.emailLine} href="mailto:andre@makersforge.gg">
+              andre@makersforge.gg
+            </a>
           </div>
 
           <div className={styles.col}>
