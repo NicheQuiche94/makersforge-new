@@ -104,13 +104,16 @@
   color: #fff;
 }
 
-/* BOTTOM — uniform glass UI pills + CTAs */
+/* BOTTOM — left-anchored: sentence lede stacked above the CTA row
+   per cofounder pass H6. Whole bottom block flush-left under the
+   headline, ghost MF hex sits absolute bottom-right of section. */
 .bottom {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 30px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  position: relative;
+  z-index: 2;
 }
 
 /* Hero lede — replaces the 4 glass pills per cofounder pass H3.
@@ -139,4 +142,26 @@
   background: #fff;
   animation: pulseLight 1.6s ease-in-out infinite;
   display: inline-block;
+}
+
+/* Ghost MakersForge mark bottom-right per cofounder pass H6.
+   Sits behind the bottom content (z-index 1) so the lede + CTAs
+   pass cleanly over it. Translucent white via Logo monochrome
+   prop. Cropped on the right edge so it reads as a signature
+   rather than a full graphic. */
+.heroEmblem {
+  position: absolute;
+  bottom: 24px;
+  right: -64px;
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+}
+@media (max-width: 800px) {
+  .heroEmblem {
+    width: 240px !important;
+    height: 240px !important;
+    right: -80px;
+    bottom: 12px;
+  }
 }

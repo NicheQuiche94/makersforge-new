@@ -1,4 +1,5 @@
 import { Button } from "@/components/atoms/Button";
+import { Logo } from "@/components/atoms/Logo";
 import styles from "./HeroPanel.module.css";
 
 /**
@@ -48,6 +49,15 @@ export function HeroPanel() {
             </Button>
           </div>
         </div>
+
+        {/* Ghost MF hex bottom-right per cofounder pass H6. */}
+        <Logo
+          variant="mark"
+          size={340}
+          monochrome="rgba(255, 255, 255, 0.12)"
+          className={styles.heroEmblem}
+          title=""
+        />
       </div>
     </section>
   );
