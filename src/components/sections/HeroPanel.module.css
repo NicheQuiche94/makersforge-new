@@ -144,24 +144,24 @@
   display: inline-block;
 }
 
-/* Ghost MakersForge mark bottom-right per cofounder pass H6.
-   Sits behind the bottom content (z-index 1) so the lede + CTAs
-   pass cleanly over it. Translucent white via Logo monochrome
-   prop. Cropped on the right edge so it reads as a signature
-   rather than a full graphic. */
+/* Ghost MakersForge mark bottom-right. Sits behind the bottom
+   content (z-index 1) so the lede + CTAs pass cleanly over it.
+   right: 0 aligns the emblem's right edge with the inner content
+   right edge, which matches the nav bar's right edge for vertical
+   balance per Andre's follow-up note. */
 .heroEmblem {
   position: absolute;
   bottom: 24px;
-  right: -64px;
+  right: 0;
   z-index: 1;
   pointer-events: none;
   user-select: none;
 }
 @media (max-width: 800px) {
   .heroEmblem {
-    width: 240px !important;
-    height: 240px !important;
-    right: -80px;
-    bottom: 12px;
+    width: 180px !important;
+    height: 180px !important;
+    right: 0;
+    bottom: 16px;
   }
 }

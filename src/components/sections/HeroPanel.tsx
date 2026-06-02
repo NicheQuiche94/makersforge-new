@@ -50,10 +50,11 @@ export function HeroPanel() {
           </div>
         </div>
 
-        {/* Ghost MF hex bottom-right per cofounder pass H6. */}
+        {/* Ghost MF hex bottom-right. Right edge aligns with the
+            nav bar's right edge for balance per follow-up note. */}
         <Logo
           variant="mark"
-          size={340}
+          size={260}
           monochrome="rgba(255, 255, 255, 0.12)"
           className={styles.heroEmblem}
           title=""
