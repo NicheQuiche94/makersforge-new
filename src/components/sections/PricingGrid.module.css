@@ -5,9 +5,12 @@
   padding: 12px 0 56px;
 }
 
+/* Grid columns inverted per cofounder pass P3 — Contract (the primary
+   offer) now occupies the wider RIGHT column with paper surface.
+   Permanent sits on the LEFT in the narrower column with gradient. */
 .grid {
   display: grid;
-  grid-template-columns: 1.5fr 1fr;
+  grid-template-columns: 1fr 1.5fr;
   gap: 16px;
 }
 @media (max-width: 980px) {
@@ -16,9 +19,12 @@
   }
 }
 
-/* Round 4 reduction per Andre 2026-05-30 v4 + drop shadow added. */
-.primary,
-.secondary {
+/* Card shells — .cardSmall = smaller, used by gradient Permanent.
+   .cardLarge = larger, used by paper Contract. Surface (gradient
+   vs paper) comes from the heat-glow utility class added in JSX
+   or .cardLarge's paper background defined below. */
+.cardSmall,
+.cardLarge {
   border-radius: 18px;
   padding: 22px 22px;
   position: relative;
@@ -32,14 +38,14 @@
     0 24px 40px rgba(14, 15, 17, 0.06);
 }
 
-/* PRIMARY — composite gradient + radial highlights + noise comes
-   from the global .heat-glow utility. */
-
-/* SECONDARY (paper) */
-.secondary {
+/* Larger Contract card uses paper surface. */
+.cardLarge {
   background: var(--paper);
   border: 1px solid var(--hair);
   color: var(--ink);
+  /* Slightly more breathing room than the smaller card. */
+  padding: 26px 26px;
+  min-height: 340px;
 }
 
 /* Card top row */
@@ -94,22 +100,24 @@
   color: var(--mute);
 }
 
-.primaryH {
+/* Larger Contract heading — paper surface, ink text. */
+.largeH {
   font-family: "Cal Sans", system-ui, sans-serif;
   font-weight: 400;
-  font-size: clamp(24px, 2.8vw, 34px);
+  font-size: clamp(26px, 3vw, 38px);
   line-height: 1;
   letter-spacing: -0.025em;
   text-transform: none;
   margin: 0 0 18px;
-  color: #fff;
+  color: var(--ink);
 }
-.em {
+.emLight {
   font-style: italic;
-  color: #fff;
+  color: var(--ink);
 }
 
-.secondaryH {
+/* Smaller Permanent heading — gradient surface, white text. */
+.smallH {
   font-family: "Cal Sans", system-ui, sans-serif;
   font-weight: 400;
   font-size: clamp(22px, 2.6vw, 32px);
@@ -117,6 +125,11 @@
   letter-spacing: -0.02em;
   text-transform: none;
   margin: 0 0 18px;
+  color: #fff;
+}
+.em {
+  font-style: italic;
+  color: #fff;
 }
 
 .amount {
@@ -154,18 +167,13 @@
   -webkit-text-fill-color: transparent;
   color: transparent;
 }
-.period {
-  font-size: 13px !important;
-  font-weight: 500 !important;
-  color: rgba(255, 255, 255, 0.82) !important;
-}
-.period {
+/* Period label sits on the paper Contract card now — ink-toned. */
+.periodLight {
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
-  font-size: 17px;
+  font-size: 13px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.78);
+  color: var(--dim);
   text-transform: none;
-  margin-bottom: 8px;
 }
 
 /* Lede — tighter for SaaS-tile feel */
