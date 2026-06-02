@@ -34,15 +34,10 @@ export function HeroPanel() {
         </div>
 
         <div className={styles.bottom}>
-          <div className={styles.glassCards}>
-            <div className={styles.glassCard}>
-              <span className={styles.pulseDot} aria-hidden="true" />
-              Live lineup
-            </div>
-            <div className={styles.glassCard}>UA · marketing art</div>
-            <div className={styles.glassCard}>EMEA · UK</div>
-            <div className={styles.glassCard}>Est. 2024 · SeedCraft</div>
-          </div>
+          <p className={styles.heroLede}>
+            Live lineup of UA and Marketing Art specialists. Mobile games and
+            apps. Europe, Middle East, and Africa.
+          </p>
 
           <div className={styles.ctas}>
             <Button href="/roster" variant="light" arrow>

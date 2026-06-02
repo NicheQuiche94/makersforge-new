@@ -113,29 +113,17 @@
   flex-wrap: wrap;
 }
 
-.glassCards {
-  display: flex;
-  align-items: stretch;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.glassCard {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  padding: 11px 18px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px) saturate(140%);
-  -webkit-backdrop-filter: blur(10px) saturate(140%);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  color: #fff;
+/* Hero lede — replaces the 4 glass pills per cofounder pass H3.
+   Bold-white prose so the page-defining info reads as a statement
+   rather than a row of UI chrome. */
+.heroLede {
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
-  font-weight: 500;
-  font-size: 13px;
-  text-transform: lowercase;
-  line-height: 1;
+  font-weight: 700;
+  font-size: clamp(16px, 1.4vw, 20px);
+  line-height: 1.45;
+  color: #fff;
+  margin: 0;
+  max-width: 640px;
 }
 
 .ctas {
