@@ -458,7 +458,12 @@ a {
   position: absolute;
   inset: 0;
   border-radius: 999px;
-  padding: 1.5px;
+  /* 2px (was 1.5px). The mask ring needs to fall on whole pixel
+     boundaries to render evenly — sub-pixel widths get sliced
+     inconsistently on Windows fractional-DPR (1.25x / 1.5x)
+     screens, which made the right side of the pill stroke
+     appear to vanish on /talent. */
+  padding: 2px;
   /* HORIZONTAL gradient — fixes the diagonal flat-edge issue */
   background: var(--heat-h);
   -webkit-mask:
