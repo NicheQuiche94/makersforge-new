@@ -83,7 +83,7 @@ export function TopNav({ activeHref }: { activeHref?: string }) {
             className={styles.logoLink}
             aria-label="MakersForge home"
           >
-            <Logo size={30} />
+            <Logo size={38} />
           </Link>
         </div>
 
