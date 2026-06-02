@@ -470,18 +470,19 @@ a {
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
-  transition: opacity 0.25s;
+  /* No transition — stroke must disappear instantly on hover so the
+     gradient fill doesn't double-edge with the stroke during the
+     fade. Cofounder pass F2. */
 }
 .btn-primary:hover {
   transform: translateY(-2px);
   background: var(--heat-h);
 }
-/* On hover the fill becomes the heat gradient, so the gradient
-   stroke around the pill is redundant and reads as a double edge.
-   Hide the ::before stroke layer in that state. Per Andre
-   2026-05-30 v3: gradient banner must not also have gradient stroke. */
+/* Hide the gradient stroke ring entirely on hover. display: none
+   removes the layer from compositing so no sliver of stroke can
+   leak past the rounded fill at the corners. */
 .btn-primary:hover::before {
-  opacity: 0;
+  display: none;
 }
 .btn-primary:hover .btn-label,
 .btn-primary:hover .btn-arrow {
