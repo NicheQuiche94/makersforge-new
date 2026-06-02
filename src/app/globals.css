@@ -496,9 +496,15 @@ a {
   background: #fff;
   color: var(--ink);
 }
+/* Hover inverts to solid ink with white text per cofounder pass L1.
+   Previously the hover went from white → cream (var(--bg)), keeping
+   the text dark; on a white-ish background with dark text the contrast
+   barely changed and the button looked nearly identical to the rest
+   state. Solid ink + white text is a clear active state. */
 .btn-light:hover {
   transform: translateY(-2px);
-  background: var(--bg);
+  background: var(--ink);
+  color: #fff;
 }
 
 /* Ghost — soft cream quiet secondary */
