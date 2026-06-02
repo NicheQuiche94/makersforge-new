@@ -16,7 +16,8 @@ export function PricingGrid() {
               <span className={styles.optLabel}>Option 01</span>
             </div>
             <h2 className={styles.primaryH}>
-              Hire a contractor, <em className={styles.em}>flat monthly.</em>
+              Hire a contractor,{" "}
+              <em className={`${styles.em} gr`}>flat monthly.</em>
             </h2>
             <div className={styles.amount}>
               <span className={styles.currency}>£</span>
@@ -57,7 +58,7 @@ export function PricingGrid() {
               </span>
             </div>
             <h2 className={styles.secondaryH}>
-              Permanent <span className="gr">placement.</span>
+              Permanent <em className={`${styles.em} gr`}>placement.</em>
             </h2>
             <div className={styles.amount}>
               <span className={styles.currencyLight}>£</span>
