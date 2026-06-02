@@ -44,6 +44,34 @@ export default function HomePage() {
       <StatStrip cells={HOME_STATS} />
       <Statement />
       <HowItWorksBento />
+      {/* Pricing teaser line per cofounder pass P5 — one-line tease
+          so studios don't have to navigate to find a number. */}
+      <section
+        style={{
+          textAlign: "center",
+          padding: "12px 0 36px",
+          fontFamily: "var(--font-figtree), Figtree, system-ui, sans-serif",
+          fontWeight: 500,
+          fontSize: "17px",
+          color: "var(--dim)",
+        }}
+      >
+        From <strong style={{ color: "var(--ink)" }}>£1,000 / specialist / month</strong>.
+        Flat fee, no markup.{" "}
+        <a
+          href="/pricing"
+          style={{
+            color: "var(--ink)",
+            textDecoration: "none",
+            borderBottom: "1px solid var(--hair-strong)",
+            paddingBottom: "2px",
+            marginLeft: "6px",
+            fontWeight: 600,
+          }}
+        >
+          See pricing →
+        </a>
+      </section>
       {ROSTER.length > 0 && <RosterCarousel />}
       <ForTalentBanner />
       <CTABand
