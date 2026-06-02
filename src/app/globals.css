@@ -458,7 +458,12 @@ a {
   position: absolute;
   inset: 0;
   border-radius: 999px;
-  padding: 1.5px;
+  /* 2px (was 1.5px). The mask ring needs to fall on whole pixel
+     boundaries to render evenly — sub-pixel widths get sliced
+     inconsistently on Windows fractional-DPR (1.25x / 1.5x)
+     screens, which made the right side of the pill stroke
+     appear to vanish on /talent. */
+  padding: 2px;
   /* HORIZONTAL gradient — fixes the diagonal flat-edge issue */
   background: var(--heat-h);
   -webkit-mask:
@@ -470,18 +475,19 @@ a {
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
-  transition: opacity 0.25s;
+  /* No transition — stroke must disappear instantly on hover so the
+     gradient fill doesn't double-edge with the stroke during the
+     fade. Cofounder pass F2. */
 }
 .btn-primary:hover {
   transform: translateY(-2px);
   background: var(--heat-h);
 }
-/* On hover the fill becomes the heat gradient, so the gradient
-   stroke around the pill is redundant and reads as a double edge.
-   Hide the ::before stroke layer in that state. Per Andre
-   2026-05-30 v3: gradient banner must not also have gradient stroke. */
+/* Hide the gradient stroke ring entirely on hover. display: none
+   removes the layer from compositing so no sliver of stroke can
+   leak past the rounded fill at the corners. */
 .btn-primary:hover::before {
-  opacity: 0;
+  display: none;
 }
 .btn-primary:hover .btn-label,
 .btn-primary:hover .btn-arrow {
@@ -495,9 +501,15 @@ a {
   background: #fff;
   color: var(--ink);
 }
+/* Hover inverts to solid ink with white text per cofounder pass L1.
+   Previously the hover went from white → cream (var(--bg)), keeping
+   the text dark; on a white-ish background with dark text the contrast
+   barely changed and the button looked nearly identical to the rest
+   state. Solid ink + white text is a clear active state. */
 .btn-light:hover {
   transform: translateY(-2px);
-  background: var(--bg);
+  background: var(--ink);
+  color: #fff;
 }
 
 /* Ghost — soft cream quiet secondary */

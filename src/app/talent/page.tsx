@@ -30,8 +30,9 @@ export default function TalentPage() {
   return (
     <>
       <TalentHero />
-      <PromiseWall />
       <Lifecycle />
+      <StudiosPayBanner />
+      <PromiseWall />
       <CTABand
         compact
         headline={
@@ -47,6 +48,34 @@ export default function TalentPage() {
   );
 }
 
+/* ============================================================
+   STUDIOS-PAY BANNER — full-width dark bento card sitting between
+   Lifecycle and PromiseWall per cofounder pass T2. Surfaces the
+   most load-bearing promise (we charge the studio, not you) as a
+   single moment instead of burying it as one of five cards.
+   ============================================================ */
+function StudiosPayBanner() {
+  return (
+    <section className={styles.payBannerSection}>
+      <div className="container">
+        <article
+          className={`reveal heat-glow card-shadow ${styles.payBanner}`}
+        >
+          <h2 className={styles.payBannerH}>
+            Studios pay our fee.{" "}
+            <em className={styles.payBannerEm}>You keep your full rate.</em>
+          </h2>
+          <p className={styles.payBannerBody}>
+            Our invoice goes to the studio at a flat monthly rate. Whatever you
+            and the studio agree on for your day rate or salary is yours
+            untouched. Nothing comes off the top.
+          </p>
+        </article>
+      </div>
+    </section>
+  );
+}
+
 function TalentHero() {
   return (
     <section className={styles.heroSection}>
@@ -54,9 +83,7 @@ function TalentHero() {
         <div className={styles.heroInner}>
           <span className={`kicker ${styles.heroKicker}`}>For talent</span>
           <h1 className={styles.heroH1}>
-            Represented.
-            <br />
-            <span className="gr">Not recruited.</span>
+            Represented, <span className="gr">not recruited.</span>
           </h1>
           <p className={styles.heroSub}>
             A talent agency for senior growth folks in mobile apps and games.
@@ -90,7 +117,7 @@ function PromiseWall() {
         <header className={styles.wallHeader}>
           <p className="kicker">How the lineup works for you</p>
           <h2 className={styles.wallH2}>
-            <span className="gr">Five things you can actually count on.</span>
+            <span className="gr">Four things you can actually count on.</span>
           </h2>
           <p className={styles.wallSubhead}>
             The lineup is a promise, not a marketing line. Here&apos;s what
@@ -98,12 +125,11 @@ function PromiseWall() {
           </p>
         </header>
 
+        {/* Reduced from 5 → 4 cards per cofounder pass T2. The dropped
+            card ("Our fee comes from the studio") is now the dark
+            bento banner above this section, where it can stand alone
+            as the load-bearing promise. */}
         <div className={styles.wallGrid}>
-          <PrincipleCard
-            icon={<FeeIcon />}
-            title="Our fee comes from the studio"
-            body="Studios pay us a flat monthly fee. That fee is independent of whatever day rate or salary you and the studio agree on. Your number is your number."
-          />
           <PrincipleCard
             icon={<FitIcon />}
             title="We earn from fit, not from your salary"
@@ -194,7 +220,9 @@ function PrincipleCard({
   );
 }
 
-/* Icons — simple monochrome SVGs. White on the heat-gradient hex. */
+/* Icons — simple monochrome SVGs. White on the heat-gradient hex.
+   FeeIcon kept available even though the 01 card it accompanied is
+   now a dark banner; harmless dead export, cheap to keep. */
 
 function FeeIcon() {
   return (

@@ -6,10 +6,10 @@ import { Logo } from "@/components/atoms/Logo";
 import styles from "./TopNav.module.css";
 
 const LINKS = [
-  { href: "/#how", label: "how it works" },
-  { href: "/roster", label: "the lineup" },
-  { href: "/talent", label: "for talent" },
-  { href: "/pricing", label: "pricing" },
+  { href: "/#how", label: "How it works" },
+  { href: "/roster", label: "The lineup" },
+  { href: "/talent", label: "For talent" },
+  { href: "/pricing", label: "Pricing" },
 ];
 
 /**
@@ -83,7 +83,7 @@ export function TopNav({ activeHref }: { activeHref?: string }) {
             className={styles.logoLink}
             aria-label="MakersForge home"
           >
-            <Logo size={30} />
+            <Logo size={38} />
           </Link>
         </div>
 
@@ -102,7 +102,7 @@ export function TopNav({ activeHref }: { activeHref?: string }) {
             ))}
           </ul>
           <Link href="/enquire" className={styles.cta}>
-            book a call
+            Book a call
           </Link>
         </div>
       </nav>

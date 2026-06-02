@@ -266,6 +266,26 @@
   border-radius: 12px;
 }
 
+/* HiddenGem cross-link footnote per cofounder pass L3 — quiet,
+   right-aligned under the submit button, not a primary CTA. */
+.hgFootnote {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 13px;
+  color: var(--mute);
+  margin: 0;
+  align-self: flex-end;
+}
+.hgFootnote a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--hair-strong);
+  font-weight: 500;
+  transition: border-color 0.2s;
+}
+.hgFootnote a:hover {
+  border-color: #ff5d00;
+}
+
 /* Success state — uses the global .heat-glow utility (composite gradient
    + radial highlights + noise) applied at the wrapping element. */
 .success {

@@ -6,7 +6,6 @@ import "./globals.css";
 
 import { TopNav } from "@/components/layout/TopNav";
 import { Footer } from "@/components/layout/Footer";
-import { ScrollProgress } from "@/components/atoms/ScrollProgress";
 import { ScrollRevealRoot } from "@/components/atoms/ScrollRevealRoot";
 
 const figtree = Figtree({
@@ -49,7 +48,6 @@ export default function RootLayout({
         <a href="#main" className="skip-link">
           Skip to content
         </a>
-        <ScrollProgress />
         <TopNav />
         <main id="main">{children}</main>
         <Footer />

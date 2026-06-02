@@ -38,7 +38,7 @@ const TILE_01: Tile = {
 const TILE_02: Tile = {
   num: "02",
   title: "We match",
-  body: "From the lineup we already represent, not a job-board dragnet. The shortlist is real people, with real availability.",
+  body: "From the lineup we already represent. Not a stack of job-board CVs. The shortlist is real people, with real availability.",
   surface: "heat",
 };
 

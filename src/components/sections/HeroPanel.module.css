@@ -4,7 +4,7 @@
 
 .hero {
   position: relative;
-  min-height: 92vh;
+  min-height: 80vh;
   display: flex;
   flex-direction: column;
   color: #fff;
@@ -104,38 +104,29 @@
   color: #fff;
 }
 
-/* BOTTOM — uniform glass UI pills + CTAs */
+/* BOTTOM — left-anchored: sentence lede stacked above the CTA row
+   per cofounder pass H6. Whole bottom block flush-left under the
+   headline, ghost MF hex sits absolute bottom-right of section. */
 .bottom {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 30px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  position: relative;
+  z-index: 2;
 }
 
-.glassCards {
-  display: flex;
-  align-items: stretch;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.glassCard {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  padding: 11px 18px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px) saturate(140%);
-  -webkit-backdrop-filter: blur(10px) saturate(140%);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  color: #fff;
+/* Hero lede — replaces the 4 glass pills per cofounder pass H3.
+   Bold-white prose so the page-defining info reads as a statement
+   rather than a row of UI chrome. */
+.heroLede {
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
-  font-weight: 500;
-  font-size: 13px;
-  text-transform: lowercase;
-  line-height: 1;
+  font-weight: 700;
+  font-size: clamp(16px, 1.4vw, 20px);
+  line-height: 1.45;
+  color: #fff;
+  margin: 0;
+  max-width: 640px;
 }
 
 .ctas {
@@ -151,4 +142,26 @@
   background: #fff;
   animation: pulseLight 1.6s ease-in-out infinite;
   display: inline-block;
+}
+
+/* Ghost MakersForge mark bottom-right. Sits behind the bottom
+   content (z-index 1) so the lede + CTAs pass cleanly over it.
+   right: 0 aligns the emblem's right edge with the inner content
+   right edge, which matches the nav bar's right edge for vertical
+   balance per Andre's follow-up note. */
+.heroEmblem {
+  position: absolute;
+  bottom: 24px;
+  right: 0;
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+}
+@media (max-width: 800px) {
+  .heroEmblem {
+    width: 180px !important;
+    height: 180px !important;
+    right: 0;
+    bottom: 16px;
+  }
 }

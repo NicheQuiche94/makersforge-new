@@ -425,14 +425,14 @@ function FiltersBtn({ open, count, onClick }: { open: boolean; count: number; on
 }
 
 function SortSelect({ value, onChange }: { value: SortKey; onChange: (v: SortKey) => void }) {
+  /* Price + budget sort options removed per cofounder pass L2 — ranking
+     specialists by price reads transactional. The SortKey type and the
+     downstream sort handling stay in place so we can add non-icky
+     options later (e.g. recency, availability). */
   return (
     <div className={styles.qsort}>
       <select value={value} onChange={(e) => onChange(e.target.value as SortKey)}>
         <option value="default">Sort: Featured</option>
-        <option value="price-asc">Price: low → high</option>
-        <option value="price-desc">Price: high → low</option>
-        <option value="budget-desc">Budget: high → low</option>
-        <option value="budget-asc">Budget: low → high</option>
       </select>
     </div>
   );

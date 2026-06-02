@@ -1,4 +1,5 @@
 import { Button } from "@/components/atoms/Button";
+import { Logo } from "@/components/atoms/Logo";
 import styles from "./HeroPanel.module.css";
 
 /**
@@ -20,9 +21,6 @@ export function HeroPanel() {
     <section className={`heat-glow ${styles.hero}`} data-nav-gradient>
       <div className={styles.inner}>
         <div className={styles.top}>
-          <p className={styles.kicker}>
-            Mobile apps &amp; games · EMEA
-          </p>
           <div className={styles.masthead}>
             <span>Est. 2024</span>
             <span>a SeedCraft venture</span>
@@ -31,21 +29,16 @@ export function HeroPanel() {
 
         <div className={styles.middle}>
           <h1 className={styles.headline}>
-            <span className={styles.headlineLine}>Growth team.</span>
+            <span className={styles.headlineLine}>Growth specialists.</span>
             <span className={styles.headlineLine}>On call.</span>
           </h1>
         </div>
 
         <div className={styles.bottom}>
-          <div className={styles.glassCards}>
-            <div className={styles.glassCard}>
-              <span className={styles.pulseDot} aria-hidden="true" />
-              Live lineup
-            </div>
-            <div className={styles.glassCard}>UA · marketing art</div>
-            <div className={styles.glassCard}>EMEA · UK</div>
-            <div className={styles.glassCard}>Est. 2024 · SeedCraft</div>
-          </div>
+          <p className={styles.heroLede}>
+            Live lineup of UA and Marketing Art specialists. Mobile games and
+            apps. Europe, Middle East, and Africa.
+          </p>
 
           <div className={styles.ctas}>
             <Button href="/roster" variant="light" arrow>
@@ -56,6 +49,16 @@ export function HeroPanel() {
             </Button>
           </div>
         </div>
+
+        {/* Ghost MF hex bottom-right. Right edge aligns with the
+            nav bar's right edge for balance per follow-up note. */}
+        <Logo
+          variant="mark"
+          size={260}
+          monochrome="rgba(255, 255, 255, 0.12)"
+          className={styles.heroEmblem}
+          title=""
+        />
       </div>
     </section>
   );

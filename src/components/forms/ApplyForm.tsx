@@ -254,6 +254,18 @@ export function ApplyForm() {
             </span>
           )}
         </button>
+        {/* Quiet footnote per cofounder pass L3 — eventually replaced
+            by a direct join-HG-community link. */}
+        <p className={styles.hgFootnote}>
+          Already on HiddenGem?{" "}
+          <a
+            href="https://hiddengem.gg"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            hiddengem.gg →
+          </a>
+        </p>
       </div>
     </form>
   );
