@@ -3,24 +3,24 @@ import { Logo } from "@/components/atoms/Logo";
 import styles from "./Footer.module.css";
 
 const ROSTER_LINKS = [
-  { href: "/roster", label: "all profiles" },
-  { href: "/roster?discipline=ua", label: "ua managers" },
-  { href: "/roster?discipline=art", label: "marketing artists" },
-  { href: "/roster?available=true", label: "available now" },
-  { href: "/apply", label: "join the lineup" },
+  { href: "/roster", label: "All profiles" },
+  { href: "/roster?discipline=ua", label: "UA managers" },
+  { href: "/roster?discipline=art", label: "Marketing artists" },
+  { href: "/roster?available=true", label: "Available now" },
+  { href: "/apply", label: "Join the lineup" },
 ];
 
 const STUDIO_LINKS = [
-  { href: "/#how", label: "how it works" },
-  { href: "/pricing", label: "pricing" },
-  { href: "#", label: "book a call" },
+  { href: "/#how", label: "How it works" },
+  { href: "/pricing", label: "Pricing" },
+  { href: "#", label: "Book a call" },
   { href: "mailto:andre@makersforge.gg", label: "andre@makersforge.gg" },
 ];
 
 const COMPANY_LINKS = [
-  { href: "/talent", label: "for talent" },
-  { href: "/#about", label: "about" },
-  { href: "https://seedcraft.co", label: "seedcraft ventures", external: true },
+  { href: "/talent", label: "For talent" },
+  { href: "/#about", label: "About" },
+  { href: "https://seedcraft.co", label: "Seedcraft Ventures", external: true },
 ];
 
 export function Footer() {

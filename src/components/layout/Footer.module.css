@@ -122,7 +122,7 @@
   text-decoration: none;
   color: #fff;
   font-weight: 500;
-  text-transform: lowercase;
+  text-transform: none;
   transition: opacity 0.2s;
 }
 .col a:hover {
