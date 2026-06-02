@@ -100,17 +100,7 @@ export function Footer() {
             <ul>
               {COMPANY_LINKS.map((link) => (
                 <li key={link.href}>
-                  {link.external ? (
-                    <a
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {link.label}
-                    </a>
-                  ) : (
-                    <Link href={link.href}>{link.label}</Link>
-                  )}
+                  <Link href={link.href}>{link.label}</Link>
                 </li>
               ))}
             </ul>
