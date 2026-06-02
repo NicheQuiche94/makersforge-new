@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  MakersForge emblem — bare white-on-transparent.
+
+  Faded hex outline (12% white) + solid white MF inner mark, matching
+  the ghost emblem rendered in the homepage hero. Transparent
+  background: place this on any dark surface and the hex reads as a
+  subtle outline with the MF mark sitting on top.
+
+  Use this when you're laying the logo over your own background. If
+  you want the heat-glow tile baked in, use emblem-hero.svg instead.
+-->
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="-3 -3 203 219"
+  width="1024"
+  height="1107"
+  role="img"
+  aria-label="MakersForge"
+>
+  <!-- 1. MF inner mark — solid white -->
+  <polygon
+    fill="#ffffff"
+    points="140.93 90.75 140.93 103.83 157.95 103.83 174.97 116.91 140.93 116.91 140.93 129.99 123.91 116.91 123.91 90.75 72.84 90.75 106.89 116.91 89.86 129.99 140.93 129.99 140.93 143.06 55.82 143.06 89.86 116.91 72.84 103.83 55.82 103.83 21.78 77.67 174.97 77.67 174.97 103.83 157.95 90.75 140.93 90.75"
+  />
+  <!-- 2. Hex outline — 12% white stroke, on top of mark -->
+  <polygon
+    fill="none"
+    stroke="#ffffff"
+    stroke-opacity="0.12"
+    stroke-miterlimit="10"
+    stroke-width="9"
+    points="193.25 157.74 193.25 55.23 98.38 3.98 3.5 55.23 3.5 157.74 98.38 209 193.25 157.74"
+  />
+</svg>

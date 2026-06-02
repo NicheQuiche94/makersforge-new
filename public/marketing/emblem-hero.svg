@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  MakersForge emblem — heat-glow tile, ready for marketing assets.
+
+  Square 1200x1200 canvas with the exact heat-glow composite from
+  the site (linear base + radial highlights + noise overlay) and the
+  white emblem centered on top. Mirrors the ghost emblem rendered in
+  the homepage hero corner.
+
+  Drop straight into decks, social posts, OG images. Resize without
+  quality loss (vector). Renders correctly in Figma, Canva, browsers,
+  Keynote and PowerPoint. If the consuming tool can't render the
+  noise filter, the gradient + radials still carry the look.
+-->
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 1200 1200"
+  width="1200"
+  height="1200"
+  role="img"
+  aria-label="MakersForge"
+>
+  <defs>
+    <!-- Heat-deep linear base: matches --heat-deep in globals.css -->
+    <linearGradient id="base" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff7a2b" />
+      <stop offset="50%" stop-color="#ff3c00" />
+      <stop offset="100%" stop-color="#7a1f00" />
+    </linearGradient>
+    <!-- Bottom-right warm highlight, matches heat-glow ::before layer 1 -->
+    <radialGradient id="hl1" cx="80%" cy="110%" r="65%">
+      <stop offset="0%" stop-color="#ffb347" stop-opacity="1" />
+      <stop offset="50%" stop-color="#ffb347" stop-opacity="0" />
+    </radialGradient>
+    <!-- Top-left soft white highlight, matches heat-glow ::before layer 2 -->
+    <radialGradient id="hl2" cx="0%" cy="0%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.12" />
+      <stop offset="40%" stop-color="#ffffff" stop-opacity="0" />
+    </radialGradient>
+    <!-- Fractal noise overlay, matches heat-glow ::after layer -->
+    <filter id="noise" x="0%" y="0%" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="2" numOctaves="3" />
+      <feColorMatrix
+        values="0 0 0 0 0
+                0 0 0 0 0
+                0 0 0 0 0
+                0 0 0 0.08 0"
+      />
+    </filter>
+  </defs>
+
+  <!-- Background composite -->
+  <rect width="1200" height="1200" fill="url(#base)" />
+  <rect width="1200" height="1200" fill="url(#hl1)" />
+  <rect width="1200" height="1200" fill="url(#hl2)" />
+  <rect
+    width="1200"
+    height="1200"
+    filter="url(#noise)"
+    opacity="0.7"
+    style="mix-blend-mode: overlay;"
+  />
+
+  <!-- Centered white emblem.
+       The mark's native viewBox is 203x219. Scaling by 3.6 gives
+       730x788 — comfortable padding on all sides of the 1200x1200
+       canvas. Translate to center: (1200 - 203*3.6)/2 ≈ 234 left,
+       (1200 - 219*3.6)/2 ≈ 206 top. -->
+  <g transform="translate(234 206) scale(3.6)">
+    <polygon
+      fill="#ffffff"
+      points="140.93 90.75 140.93 103.83 157.95 103.83 174.97 116.91 140.93 116.91 140.93 129.99 123.91 116.91 123.91 90.75 72.84 90.75 106.89 116.91 89.86 129.99 140.93 129.99 140.93 143.06 55.82 143.06 89.86 116.91 72.84 103.83 55.82 103.83 21.78 77.67 174.97 77.67 174.97 103.83 157.95 90.75 140.93 90.75"
+    />
+    <polygon
+      fill="none"
+      stroke="#ffffff"
+      stroke-opacity="0.12"
+      stroke-miterlimit="10"
+      stroke-width="9"
+      points="193.25 157.74 193.25 55.23 98.38 3.98 3.5 55.23 3.5 157.74 98.38 209 193.25 157.74"
+    />
+  </g>
+</svg>
