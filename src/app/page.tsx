@@ -8,24 +8,20 @@ import { ForTalentBanner } from "@/components/sections/ForTalentBanner";
 import { CTABand } from "@/components/sections/CTABand";
 import { ROSTER } from "@/data/roster";
 
-void ROSTER;
-
-// Stats now derive from the actual ROSTER data per Andre 2026-05-30 v5 —
-// fake "50+ / 2" counts are gone. As real specialists are added to
-// src/data/roster.ts the tiles update automatically. The third and fourth
-// tiles stay as messaging stats (Live / Flat) that don't need a count.
-const liveDisciplines = new Set(ROSTER.map((p) => p.discipline)).size;
+// Stats reframed per cofounder pass H8 — the dynamic 0/0 counts from
+// the empty ROSTER weren't selling. Hardcoded to claims we can defend
+// today (region + disciplines + flat fee + indefinite representation).
 const HOME_STATS = [
   {
-    n: <span className="gr">{ROSTER.length}</span>,
-    label: "On the lineup",
+    n: <span className="gr">EMEA</span>,
+    label: "Europe, Middle East, Africa",
   },
   {
-    n: <span className="gr">{liveDisciplines}</span>,
-    label: "Disciplines live",
+    n: <span className="gr">2</span>,
+    label: "UA managers + Marketing artists",
   },
-  { n: <span className="gr">Live</span>, label: "Lineup, updated weekly" },
-  { n: <span className="gr">Flat</span>, label: "Monthly fee. That's it." },
+  { n: <span className="gr">Flat</span>, label: "Monthly fee, no markup" },
+  { n: <span className="gr">∞</span>, label: "Indefinite representation" },
 ];
 
 export const metadata: Metadata = {
