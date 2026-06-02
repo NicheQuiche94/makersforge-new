@@ -20,17 +20,22 @@ export function PricingGrid() {
     <section className={styles.section}>
       <div className="container">
         <div className={styles.grid}>
-          {/* PERMANENT — smaller card, gradient surface (left). */}
+          {/* PERMANENT — smaller card, gradient surface (left).
+              No option label per Andre follow-up: after the P3 swap,
+              option 01 / 02 ordering stopped matching reading order
+              so the labels were retired rather than renumbered. */}
           <article className={`reveal heat-glow ${styles.cardSmall}`}>
             <div className={styles.pcTop}>
               <span className={`${styles.pcTag} ${styles.pcTagOnDark}`}>
                 <span className={styles.dotSm} aria-hidden="true" />
                 Permanent
               </span>
-              <span className={styles.optLabel}>Option 02</span>
             </div>
+            {/* .em (white italic) — no gradient on this card, the
+                heat-h gradient text disappears against the heat-glow
+                background. */}
             <h2 className={styles.smallH}>
-              Permanent <em className={`${styles.em} gr`}>placement.</em>
+              Permanent <em className={styles.em}>placement.</em>
             </h2>
             <div className={styles.amount}>
               <span className={styles.currency}>£</span>
@@ -58,9 +63,6 @@ export function PricingGrid() {
               <span className={`${styles.pcTag} ${styles.pcTagOnLight}`}>
                 <span className={styles.dotSmLight} aria-hidden="true" />
                 Contract
-              </span>
-              <span className={`${styles.optLabel} ${styles.optLabelLight}`}>
-                Option 01
               </span>
             </div>
             <h2 className={styles.largeH}>
