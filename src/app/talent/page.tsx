@@ -54,9 +54,7 @@ function TalentHero() {
         <div className={styles.heroInner}>
           <span className={`kicker ${styles.heroKicker}`}>For talent</span>
           <h1 className={styles.heroH1}>
-            Represented.
-            <br />
-            <span className="gr">Not recruited.</span>
+            Represented, <span className="gr">not recruited.</span>
           </h1>
           <p className={styles.heroSub}>
             A talent agency for senior growth folks in mobile apps and games.

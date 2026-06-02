@@ -19,13 +19,17 @@
 .heroKicker {
   display: block;
 }
+/* Hero h1 — one-line comma version per cofounder pass T1.
+   Slight font-size pull so the single line fits cleanly at the
+   max clamp size without wrapping awkwardly. */
 .heroH1 {
   font-family: "Cal Sans", system-ui, sans-serif;
   font-weight: 400;
-  font-size: clamp(50px, 8vw, 128px);
-  line-height: 0.88;
+  font-size: clamp(42px, 6.4vw, 96px);
+  line-height: 1;
   letter-spacing: -0.035em;
   margin: 0;
+  max-width: 1080px;
 }
 .heroSub {
   font-size: 18px;
