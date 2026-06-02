@@ -37,7 +37,7 @@ export function Statement() {
           <PrincipleCard
             icon={<VettedIcon />}
             title="Already vetted"
-            body="Every profile is someone we know directly or have worked with. The shortlist is real people, not a job-board dragnet."
+            body="Every profile is someone we know directly or have worked with. The shortlist is real people, not a stack of CVs from a job board."
           />
           <PrincipleCard
             icon={<DirectIcon />}
