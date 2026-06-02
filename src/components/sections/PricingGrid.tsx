@@ -11,7 +11,7 @@ export function PricingGrid() {
             <div className={styles.pcTop}>
               <span className={`${styles.pcTag} ${styles.pcTagOnDark}`}>
                 <span className={styles.dotSm} aria-hidden="true" />
-                Contract · the main way we work
+                Contract
               </span>
               <span className={styles.optLabel}>Option 01</span>
             </div>
