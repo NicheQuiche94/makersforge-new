@@ -43,8 +43,8 @@ export function CTABand({
             <h2 className={styles.headline}>
               {headline ?? (
                 <>
-                  The next hire is{" "}
-                  <span className={styles.ghost}>the easy bit.</span>
+                  Brief us.{" "}
+                  <span className={styles.ghost}>We&apos;ll match.</span>
                 </>
               )}
             </h2>
