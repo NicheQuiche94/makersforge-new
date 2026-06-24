@@ -5,7 +5,7 @@ import styles from "./apply.module.css";
 export const metadata: Metadata = {
   title: "Apply to the lineup · MakersForge",
   description:
-    "Senior UA managers and marketing artists for mobile apps and games. Apply to join the MakersForge lineup.",
+    "UA managers and creatives for mobile apps and games. We back good operators, regardless of years on the CV. Apply to join the MakersForge lineup.",
 };
 
 export default function ApplyPage() {
@@ -17,19 +17,20 @@ export default function ApplyPage() {
             <div className={styles.left}>
               <span className="kicker">Apply</span>
               <h1 className={styles.headline}>
-                join the <span className="gr">lineup.</span>
+                Join the <span className="gr">lineup.</span>
               </h1>
             </div>
             <div className={styles.right}>
               <p className={styles.copy}>
-                Senior UA managers and marketing artists for mobile apps and
-                games. <strong>Tell us who you are</strong>, what you&apos;ve
+                UA managers and creatives for mobile apps and games.{" "}
+                <strong>Tell us who you are</strong>, what you&apos;ve
                 shipped, and the kinds of teams you thrive in.
               </p>
               <p className={styles.copy}>
-                Andre reads every application. If we&apos;re a good fit,
-                expect a 20-min call within the week — once that lands well,
-                you go onto the lineup.
+                We back good operators regardless of years on the CV. Andre
+                reads every application. If we&apos;re a good fit, expect a
+                20-min call within the week. Once that lands well, you&apos;re
+                on the lineup.
               </p>
             </div>
           </div>
