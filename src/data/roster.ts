@@ -11,7 +11,7 @@
 
 export type Profile = {
   id: string;
-  discipline: "ua" | "art";
+  discipline: "ua" | "creative";
   codename: string;
   role: string;
   background: string;

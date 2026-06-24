@@ -5,7 +5,7 @@ import styles from "./Footer.module.css";
 const ROSTER_LINKS = [
   { href: "/roster", label: "All profiles" },
   { href: "/roster?discipline=ua", label: "UA managers" },
-  { href: "/roster?discipline=art", label: "Marketing artists" },
+  { href: "/roster?discipline=creative", label: "Marketing artists" },
   { href: "/roster?available=true", label: "Available now" },
   { href: "/apply", label: "Join the lineup" },
 ];

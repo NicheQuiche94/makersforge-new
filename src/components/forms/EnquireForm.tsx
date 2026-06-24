@@ -24,7 +24,7 @@ type Props = {
 const LOCATION_OPTIONS = ["remote", "on-site", "hybrid", "either"];
 const DISCIPLINES = [
   { v: "ua", l: "ua manager" },
-  { v: "art", l: "marketing artist" },
+  { v: "creative", l: "marketing artist" },
   { v: "either", l: "either / not sure yet" },
 ];
 const INDUSTRIES = ["games", "apps"];

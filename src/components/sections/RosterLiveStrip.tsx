@@ -5,7 +5,7 @@ export function RosterLiveStrip() {
   const total = ROSTER.length;
   const available = ROSTER.filter((p) => p.available).length;
   const uaCount = ROSTER.filter((p) => p.discipline === "ua").length;
-  const artCount = ROSTER.filter((p) => p.discipline === "art").length;
+  const artCount = ROSTER.filter((p) => p.discipline === "creative").length;
 
   return (
     <StatStrip

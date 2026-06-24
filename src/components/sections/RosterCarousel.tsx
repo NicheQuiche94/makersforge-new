@@ -38,12 +38,12 @@ type Profile = {
 };
 
 const PROFILES: Profile[] = [
-  { m: "ua·101", name: "senior ua manager", role: "ex-supercell · games + apps", loc: "uk · remote", rate: "£600–750", ctx: "£1m+/mo managed", ctxLabel: "budget", av: true },
-  { m: "art·204", name: "perf. creative lead", role: "ex-calm · apps", loc: "eu remote", rate: "£500–650", ctx: "video · ugc · static", ctxLabel: "formats", av: true },
+  { m: "ua·101", name: "ua manager", role: "ex-supercell · games + apps", loc: "uk · remote", rate: "£600–750", ctx: "£1m+/mo managed", ctxLabel: "budget", av: true },
+  { m: "cr·204", name: "creative producer", role: "ex-calm · apps", loc: "eu remote", rate: "£500–650", ctx: "video · ugc · static", ctxLabel: "formats", av: true },
   { m: "ua·114", name: "head of ua", role: "ex-rovio · games", loc: "helsinki", rate: "£700–850", ctx: "£1m+/mo managed", ctxLabel: "budget", av: false },
-  { m: "art·211", name: "senior motion designer", role: "ex-king · games", loc: "lisbon", rate: "£450–550", ctx: "motion · playables", ctxLabel: "formats", av: true },
+  { m: "cr·211", name: "motion designer", role: "ex-king · games", loc: "lisbon", rate: "£450–550", ctx: "motion · playables", ctxLabel: "formats", av: true },
   { m: "ua·108", name: "ua director", role: "ex-duolingo · apps", loc: "tel aviv", rate: "£700–850", ctx: "£1m+/mo managed", ctxLabel: "budget", av: true },
-  { m: "art·218", name: "art director", role: "ex-voodoo · games", loc: "warsaw", rate: "£600–750", ctx: "static · ugc", ctxLabel: "formats", av: false },
+  { m: "cr·218", name: "art director", role: "ex-voodoo · games", loc: "warsaw", rate: "£600–750", ctx: "static · ugc", ctxLabel: "formats", av: false },
   { m: "ua·130", name: "lead ua manager", role: "ex-peak · games", loc: "uk", rate: "£500–650", ctx: "£250k–1m managed", ctxLabel: "budget", av: true },
 ];
 

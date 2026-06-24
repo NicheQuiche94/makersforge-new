@@ -3,7 +3,7 @@
 import { useState, type FormEvent, type ReactNode } from "react";
 import styles from "./ApplyForm.module.css";
 
-type Discipline = "ua" | "art";
+type Discipline = "ua" | "creative";
 
 type Status = "idle" | "submitting" | "ok" | "error";
 
@@ -110,9 +110,9 @@ export function ApplyForm() {
             />
             <RadioPill
               name="discipline"
-              value="art"
-              checked={discipline === "art"}
-              onChange={() => setDiscipline("art")}
+              value="creative"
+              checked={discipline === "creative"}
+              onChange={() => setDiscipline("creative")}
               label="marketing artist"
             />
           </div>

@@ -18,7 +18,7 @@ import styles from "./RosterApp.module.css";
    Filter shape
    ============================================================ */
 
-type Discipline = "all" | "ua" | "art";
+type Discipline = "all" | "ua" | "creative";
 
 type FilterState = {
   industry: Set<string>;
@@ -76,7 +76,7 @@ export function RosterApp() {
   // Read URL on mount for deep-linking (discipline + availability)
   useEffect(() => {
     const d = searchParams.get("discipline");
-    if (d === "ua" || d === "art") setDiscipline(d);
+    if (d === "ua" || d === "creative") setDiscipline(d);
     if (searchParams.get("available") === "true") setAvailOnly(true);
     // We only want this on mount, not on every re-render
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -113,7 +113,7 @@ export function RosterApp() {
       };
       if (next === "ua") {
         copy.formats.clear();
-      } else if (next === "art") {
+      } else if (next === "creative") {
         copy.monetisation.clear();
         copy.channels.clear();
         copy.budget.clear();
@@ -188,7 +188,7 @@ export function RosterApp() {
             <span className={styles.qbLabel}>Discipline</span>
             <DChip active={discipline === "all"} onClick={() => onDiscipline("all")}>All</DChip>
             <DChip active={discipline === "ua"} onClick={() => onDiscipline("ua")}>UA managers</DChip>
-            <DChip active={discipline === "art"} onClick={() => onDiscipline("art")}>Marketing artists</DChip>
+            <DChip active={discipline === "creative"} onClick={() => onDiscipline("creative")}>Marketing artists</DChip>
 
             <span className={styles.qbDivider} />
 
@@ -282,7 +282,7 @@ export function RosterApp() {
                 </>
               )}
 
-              {(discipline === "all" || discipline === "art") && (
+              {(discipline === "all" || discipline === "creative") && (
                 <FRow label="Creative formats" hint="Marketing art">
                   <ChipGroup
                     values={["video", "playable", "static", "ugc", "motion"]}

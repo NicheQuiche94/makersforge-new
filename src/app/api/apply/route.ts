@@ -170,7 +170,7 @@ function renderEmail(d: {
       ${d.discipline === "ua" ? row("monetisation", d.monetisation) : ""}
       ${d.discipline === "ua" ? row("channels", d.channels) : ""}
       ${d.discipline === "ua" ? row("budget managed", d.budget) : ""}
-      ${d.discipline === "art" ? row("creative formats", d.formats) : ""}
+      ${d.discipline === "creative" ? row("creative formats", d.formats) : ""}
       ${row("expertise", d.expertise)}
       ${row("cv attached", d.hasCv ? "yes (see attachment)" : "no")}
     </table>
