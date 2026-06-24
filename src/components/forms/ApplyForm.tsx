@@ -106,14 +106,14 @@ export function ApplyForm() {
               value="ua"
               checked={discipline === "ua"}
               onChange={() => setDiscipline("ua")}
-              label="ua manager"
+              label="UA manager"
             />
             <RadioPill
               name="discipline"
               value="creative"
               checked={discipline === "creative"}
               onChange={() => setDiscipline("creative")}
-              label="marketing artist"
+              label="Creative production"
             />
           </div>
         </Field>
