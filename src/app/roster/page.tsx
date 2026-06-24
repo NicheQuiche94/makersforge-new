@@ -8,7 +8,7 @@ import { CTABand } from "@/components/sections/CTABand";
 export const metadata: Metadata = {
   title: "The lineup · MakersForge",
   description:
-    "Filter to the senior UA managers and marketing artists we represent. Profiles anonymised; real identities reveal after a brief.",
+    "Filter to the vetted UA managers and marketing artists we represent. Profiles anonymised; real identities reveal after a brief.",
 };
 
 /* Per Andre 2026-05-30 v6: the pricing-style compact CTABand moved

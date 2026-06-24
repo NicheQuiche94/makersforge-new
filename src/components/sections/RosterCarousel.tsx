@@ -116,7 +116,7 @@ export function RosterCarousel() {
       <header className={styles.head}>
         <p className="kicker">A look at the lineup</p>
         <h2 className={styles.headline}>
-          <span className="gr">Senior people we already represent.</span>
+          <span className="gr">Vetted people we already represent.</span>
         </h2>
         <p className={styles.subhead}>
           Filter the full lineup by discipline, channels, budget managed and

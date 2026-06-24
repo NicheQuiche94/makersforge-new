@@ -20,14 +20,14 @@ export function ForTalentBanner() {
           <div className={styles.content}>
             <p className="kicker">For specialists</p>
             <h2 className={styles.h2}>
-              Are you a senior{" "}
+              Are you a{" "}
               <span className="gr">growth specialist</span> looking for your
               next engagement?
             </h2>
             <p className={styles.body}>
-              UA managers, marketing artists, motion designers. We represent
-              senior people indefinitely and put you in front of the studios
-              who brief us.
+              UA managers, marketing artists, motion designers, creative
+              producers. We represent strong operators indefinitely and put
+              you in front of the studios who brief us.
             </p>
           </div>
           <div className={styles.ctas}>

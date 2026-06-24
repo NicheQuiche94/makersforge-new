@@ -27,12 +27,12 @@ const HOME_STATS = [
 export const metadata: Metadata = {
   title: "MakersForge: Growth team specialists for mobile apps & games",
   description:
-    "A live lineup of senior UA managers and marketing artists for mobile apps and games. Pay them direct, pay us a flat monthly fee. No percentage games.",
+    "A live lineup of vetted UA managers and marketing artists for mobile apps and games. Pay them direct, pay us a flat monthly fee. No percentage games.",
   openGraph: {
     title:
       "MakersForge: Growth team specialists for mobile apps & games",
     description:
-      "A live lineup of senior UA managers and marketing artists. Flat monthly fees, no percentage games.",
+      "A live lineup of vetted UA managers and marketing artists. Flat monthly fees, no percentage games.",
     type: "website",
   },
 };

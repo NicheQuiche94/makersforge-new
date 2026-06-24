@@ -79,7 +79,7 @@ export function PricingGrid() {
               </span>
             </div>
             <p className={styles.ledeLight}>
-              You get matched with a senior growth operator from the lineup.
+              You get matched with a vetted growth operator from the lineup.
               The specifics (rate, hours, scope) you settle directly with them.
             </p>
             <ul className={`${styles.points} ${styles.pointsLight}`}>

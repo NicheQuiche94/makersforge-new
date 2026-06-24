@@ -118,7 +118,7 @@ export function ApplyForm() {
           </div>
         </Field>
         <div className={styles.split}>
-          <Field label="role" required hint="e.g. senior ua manager">
+          <Field label="role" required hint="e.g. ua manager, marketing artist, creative producer">
             <input name="role" type="text" required className={styles.input} />
           </Field>
           <Field label="background" required hint="e.g. ex-Supercell">

@@ -179,7 +179,7 @@ export function EnquireForm({ profileCodename }: Props) {
             name="titleOfHire"
             type="text"
             required
-            placeholder="e.g. senior ua manager, performance creative lead"
+            placeholder="e.g. ua manager, marketing artist, creative producer"
             className={styles.input}
           />
         </Field>

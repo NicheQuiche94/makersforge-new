@@ -32,7 +32,7 @@ export function Statement() {
           <PrincipleCard
             icon={<AvailabilityIcon />}
             title="Available now"
-            body="Senior operators with real availability, ready to brief on a Tuesday and start the following Monday. No quarter-long waits."
+            body="Vetted operators with real availability, ready to brief on a Tuesday and start the following Monday. No quarter-long waits."
           />
           <PrincipleCard
             icon={<VettedIcon />}
