@@ -155,6 +155,14 @@ a {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  /* background-clip: text clips the painted gradient to the text
+     inline-box, not the actual glyph ink. With Cal Sans + negative
+     letter-spacing on the display headers, the last glyph of any
+     line whose ink extends past its (now narrower) inline-box gets
+     shaved (full stops, A in EMEA, e in people). Symmetric inline
+     padding extends the painted area on both sides so the clip no
+     longer cuts the glyph edges, and keeps centered text centered. */
+  padding-inline: 0.08em;
 }
 
 .ghost {
