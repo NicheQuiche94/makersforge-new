@@ -17,8 +17,8 @@ const HOME_STATS = [
     label: "Europe, Middle East, Africa",
   },
   {
-    n: <span className="gr">2</span>,
-    label: "UA managers + Marketing artists",
+    n: <span className="gr">UA + Creative</span>,
+    label: "Two disciplines we obsess over",
   },
   { n: <span className="gr">Flat</span>, label: "Monthly fee, no markup" },
   { n: <span className="gr">∞</span>, label: "Indefinite representation" },
