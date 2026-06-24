@@ -32,4 +32,5 @@
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  padding-inline: 0.08em;
 }

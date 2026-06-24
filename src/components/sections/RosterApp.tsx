@@ -19,7 +19,6 @@ import styles from "./RosterApp.module.css";
    ============================================================ */
 
 type Discipline = "all" | "ua" | "art";
-type SortKey = "default" | "price-asc" | "price-desc" | "budget-asc" | "budget-desc";
 
 type FilterState = {
   industry: Set<string>;
@@ -70,7 +69,6 @@ export function RosterApp() {
 
   const [discipline, setDiscipline] = useState<Discipline>("all");
   const [availOnly, setAvailOnly] = useState(false);
-  const [sort, setSort] = useState<SortKey>("default");
   const [filters, setFilters] = useState<FilterState>(emptyFilters);
   const [panelOpen, setPanelOpen] = useState(false);
   const [modalProfile, setModalProfile] = useState<Profile | null>(null);
@@ -175,14 +173,7 @@ export function RosterApp() {
     [discipline, availOnly, filters],
   );
 
-  const visible = useMemo(() => {
-    const list = ROSTER.filter(matches);
-    if (sort === "price-asc") list.sort((a, b) => a.rateMin - b.rateMin);
-    else if (sort === "price-desc") list.sort((a, b) => b.rateMin - a.rateMin);
-    else if (sort === "budget-desc") list.sort((a, b) => (b.budget ?? -1) - (a.budget ?? -1));
-    else if (sort === "budget-asc") list.sort((a, b) => (a.budget ?? 99) - (b.budget ?? 99));
-    return list;
-  }, [matches, sort]);
+  const visible = useMemo(() => ROSTER.filter(matches), [matches]);
 
   const showGamesCat = filters.industry.has("games") || filters.industry.size === 0;
   const showAppsCat = filters.industry.has("apps") || filters.industry.size === 0;
@@ -205,7 +196,6 @@ export function RosterApp() {
 
             <div className={styles.qbRight}>
               <FiltersBtn open={panelOpen} count={activeCount} onClick={() => setPanelOpen((x) => !x)} />
-              <SortSelect value={sort} onChange={setSort} />
             </div>
           </div>
 
@@ -421,20 +411,6 @@ function FiltersBtn({ open, count, onClick }: { open: boolean; count: number; on
       {count > 0 && <span className={styles.count}>{count}</span>}
       <span className={styles.chev} aria-hidden="true">▼</span>
     </button>
-  );
-}
-
-function SortSelect({ value, onChange }: { value: SortKey; onChange: (v: SortKey) => void }) {
-  /* Price + budget sort options removed per cofounder pass L2 — ranking
-     specialists by price reads transactional. The SortKey type and the
-     downstream sort handling stay in place so we can add non-icky
-     options later (e.g. recency, availability). */
-  return (
-    <div className={styles.qsort}>
-      <select value={value} onChange={(e) => onChange(e.target.value as SortKey)}>
-        <option value="default">Sort: Featured</option>
-      </select>
-    </div>
   );
 }
 

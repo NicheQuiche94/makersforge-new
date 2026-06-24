@@ -20,7 +20,6 @@
   font-size: clamp(50px, 8vw, 120px);
   line-height: 0.88;
   letter-spacing: -0.035em;
-  text-transform: lowercase;
   margin: 6px 0 0;
 }
 

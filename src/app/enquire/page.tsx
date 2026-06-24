@@ -24,7 +24,7 @@ export default function EnquirePage() {
           <div className={styles.heroInner}>
             <span className="kicker">brief us</span>
             <h1 className={styles.h1}>
-              tell us about <span className="gr">the hire.</span>
+              Tell us about <span className="gr">the hire.</span>
             </h1>
             <p className={styles.sub}>
               The more you tell us upfront, the faster we can put names back.

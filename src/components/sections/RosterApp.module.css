@@ -129,16 +129,20 @@
   padding: 9px 18px;
   border-radius: 999px;
   background: var(--bg);
-  border: 1.5px solid var(--hair-strong);
+  /* Hairline via box-shadow inset rather than border so the hover
+     state can drop the ring cleanly without leaving a transparent
+     border halo around the gradient fill (Andre saw a seam at the
+     bottom-left of the filled button). Box-shadow is paint-only,
+     so the button geometry never shifts between rest and hover. */
+  border: 0;
+  box-shadow: inset 0 0 0 2px var(--hair-strong);
   color: var(--ink);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
 }
-/* Hover state — solid gradient fill, no gradient stroke around it
-   per Andre 2026-05-30 v6 (gradient-on-gradient was reading as a
-   weird double edge). */
+/* Hover state — solid gradient fill, ring dropped. */
 .qfilters:hover {
-  border-color: transparent;
+  box-shadow: none;
   background: var(--heat-h);
   color: #fff;
 }

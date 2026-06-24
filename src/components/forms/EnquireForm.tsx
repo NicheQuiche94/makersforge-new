@@ -325,7 +325,7 @@ export function EnquireForm({ profileCodename }: Props) {
       <div className={styles.submitRow}>
         {error && <p className={styles.error}>{error}</p>}
         <Button type="submit" variant="primary" arrow disabled={submitting}>
-          {submitting ? "sending…" : "send the brief"}
+          {submitting ? "Sending…" : "Send the brief"}
         </Button>
       </div>
     </form>
