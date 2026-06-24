@@ -36,8 +36,8 @@ export function HeroPanel() {
 
         <div className={styles.bottom}>
           <p className={styles.heroLede}>
-            Live lineup of UA and Marketing Art specialists. Mobile games and
-            apps. Europe, Middle East, and Africa.
+            Live lineup of UA, ASO and Marketing Art specialists. Mobile games
+            and apps. Europe, Middle East, and Africa.
           </p>
 
           <div className={styles.ctas}>

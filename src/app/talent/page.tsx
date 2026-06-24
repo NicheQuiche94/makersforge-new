@@ -87,9 +87,9 @@ function TalentHero() {
           </h1>
           <p className={styles.heroSub}>
             A talent agency for vetted growth folks in mobile apps and games.
-            UA managers, marketing artists, motion designers, creative
-            producers. Studios brief us or browse the lineup directly. We
-            handle the rest.
+            UA managers, ASO managers, marketing artists, motion designers,
+            creative producers. Studios brief us or browse the lineup
+            directly. We handle the rest.
           </p>
           <div className={styles.heroCtas}>
             <Button href="/apply" variant="primary" arrow>

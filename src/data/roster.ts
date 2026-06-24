@@ -11,7 +11,7 @@
 
 export type Profile = {
   id: string;
-  discipline: "ua" | "creative";
+  discipline: "ua" | "creative" | "aso";
   codename: string;
   role: string;
   background: string;
@@ -48,7 +48,6 @@ export type Profile = {
     | "asa"
     | "programmatic"
     | "influencer"
-    | "aso"
   )[];
   budget?: 0 | 1 | 2 | 3;
   formats?: ("video" | "playable" | "static" | "ugc" | "motion")[];

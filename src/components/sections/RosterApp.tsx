@@ -18,7 +18,7 @@ import styles from "./RosterApp.module.css";
    Filter shape
    ============================================================ */
 
-type Discipline = "all" | "ua" | "creative";
+type Discipline = "all" | "ua" | "creative" | "aso";
 
 type FilterState = {
   industry: Set<string>;
@@ -76,7 +76,7 @@ export function RosterApp() {
   // Read URL on mount for deep-linking (discipline + availability)
   useEffect(() => {
     const d = searchParams.get("discipline");
-    if (d === "ua" || d === "creative") setDiscipline(d);
+    if (d === "ua" || d === "creative" || d === "aso") setDiscipline(d);
     if (searchParams.get("available") === "true") setAvailOnly(true);
     // We only want this on mount, not on every re-render
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -114,6 +114,11 @@ export function RosterApp() {
       if (next === "ua") {
         copy.formats.clear();
       } else if (next === "creative") {
+        copy.monetisation.clear();
+        copy.channels.clear();
+        copy.budget.clear();
+      } else if (next === "aso") {
+        copy.formats.clear();
         copy.monetisation.clear();
         copy.channels.clear();
         copy.budget.clear();
@@ -189,6 +194,7 @@ export function RosterApp() {
             <DChip active={discipline === "all"} onClick={() => onDiscipline("all")}>All</DChip>
             <DChip active={discipline === "ua"} onClick={() => onDiscipline("ua")}>UA managers</DChip>
             <DChip active={discipline === "creative"} onClick={() => onDiscipline("creative")}>Marketing artists</DChip>
+            <DChip active={discipline === "aso"} onClick={() => onDiscipline("aso")}>ASO managers</DChip>
 
             <span className={styles.qbDivider} />
 
@@ -265,8 +271,8 @@ export function RosterApp() {
                   </FRow>
                   <FRow label="Channels" hint="UA expertise">
                     <ChipGroup
-                      values={["meta", "google", "tiktok", "asa", "programmatic", "influencer", "aso"]}
-                      labels={["Meta", "Google", "TikTok", "ASA", "Programmatic", "Influencer", "ASO"]}
+                      values={["meta", "google", "tiktok", "asa", "programmatic", "influencer"]}
+                      labels={["Meta", "Google", "TikTok", "ASA", "Programmatic", "Influencer"]}
                       active={filters.channels}
                       onToggle={(v) => toggleFilter("channels", v)}
                     />

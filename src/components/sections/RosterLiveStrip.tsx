@@ -5,7 +5,8 @@ export function RosterLiveStrip() {
   const total = ROSTER.length;
   const available = ROSTER.filter((p) => p.available).length;
   const uaCount = ROSTER.filter((p) => p.discipline === "ua").length;
-  const artCount = ROSTER.filter((p) => p.discipline === "creative").length;
+  const asoCount = ROSTER.filter((p) => p.discipline === "aso").length;
+  const creativeCount = ROSTER.filter((p) => p.discipline === "creative").length;
 
   return (
     <StatStrip
@@ -13,7 +14,8 @@ export function RosterLiveStrip() {
         { n: total, label: "total operators" },
         { n: <span className="gr">{available}</span>, label: "available now", pulse: true },
         { n: uaCount, label: "ua managers" },
-        { n: artCount, label: "marketing artists" },
+        { n: asoCount, label: "aso managers" },
+        { n: creativeCount, label: "marketing artists" },
       ]}
     />
   );

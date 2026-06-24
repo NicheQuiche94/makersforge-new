@@ -25,6 +25,7 @@ const LOCATION_OPTIONS = ["remote", "on-site", "hybrid", "either"];
 const DISCIPLINES = [
   { v: "ua", l: "ua manager" },
   { v: "creative", l: "marketing artist" },
+  { v: "aso", l: "aso manager" },
   { v: "either", l: "either / not sure yet" },
 ];
 const INDUSTRIES = ["games", "apps"];
@@ -179,7 +180,7 @@ export function EnquireForm({ profileCodename }: Props) {
             name="titleOfHire"
             type="text"
             required
-            placeholder="e.g. ua manager, marketing artist, creative producer"
+            placeholder="e.g. ua manager, aso manager, marketing artist, creative producer"
             className={styles.input}
           />
         </Field>

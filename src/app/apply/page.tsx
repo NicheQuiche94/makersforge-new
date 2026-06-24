@@ -5,7 +5,7 @@ import styles from "./apply.module.css";
 export const metadata: Metadata = {
   title: "Apply to the lineup · MakersForge",
   description:
-    "Vetted UA managers, marketing artists, motion designers and creative producers for mobile apps and games. Apply to join the MakersForge lineup.",
+    "Vetted UA managers, ASO managers, marketing artists, motion designers and creative producers for mobile apps and games. Apply to join the MakersForge lineup.",
 };
 
 export default function ApplyPage() {
@@ -22,8 +22,8 @@ export default function ApplyPage() {
             </div>
             <div className={styles.right}>
               <p className={styles.copy}>
-                UA managers, marketing artists, motion designers and creative
-                producers for mobile apps and games.{" "}
+                UA managers, ASO managers, marketing artists, motion designers
+                and creative producers for mobile apps and games.{" "}
                 <strong>Tell us who you are</strong>, what you&apos;ve
                 shipped, and the kinds of teams you thrive in.
               </p>

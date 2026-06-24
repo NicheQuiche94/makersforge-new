@@ -48,7 +48,7 @@ export function PricingGrid() {
             <ul className={styles.points}>
               <li>Flat £10,000 per placement</li>
               <li>No percentage of salary</li>
-              <li>UA, Marketing Art, Product, Design, Engineering</li>
+              <li>UA, ASO, Marketing Art, Product, Design, Engineering</li>
             </ul>
             <div className={styles.ctaWrap}>
               <Button href="/enquire" variant="light" arrow>
