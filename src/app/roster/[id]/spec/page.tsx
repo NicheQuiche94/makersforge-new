@@ -1,9 +1,15 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { Logo } from "@/components/atoms/Logo";
 import { ROSTER, BUDGET_LABELS } from "@/data/roster";
+import {
+  type Currency,
+  formatRate,
+  readStoredCurrency,
+} from "@/lib/currency";
 import styles from "./spec.module.css";
 
 /**
@@ -22,6 +28,15 @@ import styles from "./spec.module.css";
 export default function SpecPage() {
   const params = useParams<{ id: string }>();
   const profile = ROSTER.find((p) => p.id === params.id);
+
+  /* Pick up the currency the user selected on the lineup toolbar so
+     the spec and any subsequent PDF export carry the same rates the
+     user was looking at when they clicked Download. Defaults to GBP
+     on SSR; reads localStorage after mount. */
+  const [currency, setCurrency] = useState<Currency>("GBP");
+  useEffect(() => {
+    setCurrency(readStoredCurrency());
+  }, []);
 
   if (!profile) {
     return (
@@ -103,11 +118,14 @@ export default function SpecPage() {
 
           <Section h="Commercials">
             <dl className={styles.rates}>
-              <RateRow k="Day rate (contract)" v={profile.dayRateLabel} />
-              {profile.salaryAnnualLabel && (
+              <RateRow
+                k="Day rate (contract)"
+                v={formatRate(profile.rateMin, currency, "day")}
+              />
+              {profile.salaryAnnual !== undefined && (
                 <RateRow
                   k="Annual salary (permanent)"
-                  v={profile.salaryAnnualLabel}
+                  v={formatRate(profile.salaryAnnual, currency, "year")}
                 />
               )}
               <RateRow k="Open to" v={openToCopy} />

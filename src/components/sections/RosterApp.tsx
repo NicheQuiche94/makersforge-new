@@ -13,6 +13,14 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { Button } from "@/components/atoms/Button";
 import { Logo } from "@/components/atoms/Logo";
 import { ROSTER, BUDGET_LABELS, type Profile } from "@/data/roster";
+import {
+  CURRENCIES,
+  CURRENCY_SYMBOLS,
+  type Currency,
+  formatRate,
+  readStoredCurrency,
+  writeStoredCurrency,
+} from "@/lib/currency";
 import styles from "./RosterApp.module.css";
 
 /* ============================================================
@@ -82,6 +90,18 @@ export function RosterApp() {
   const [filters, setFilters] = useState<FilterState>(emptyFilters);
   const [panelOpen, setPanelOpen] = useState(false);
   const [modalProfile, setModalProfile] = useState<Profile | null>(null);
+  /* Currency the user has selected on the toolbar. SSR-safe default
+     (GBP); reads localStorage on mount to restore prior choice, and
+     persists on every change so the same currency carries across
+     navigations (lineup ↔ spec page) and revisits. */
+  const [currency, setCurrency] = useState<Currency>("GBP");
+  useEffect(() => {
+    setCurrency(readStoredCurrency());
+  }, []);
+  const onCurrency = (c: Currency) => {
+    setCurrency(c);
+    writeStoredCurrency(c);
+  };
 
   // Unique roles in ROSTER, with counts — feeds the dropdown options.
   // Recomputed only when ROSTER changes (which is at build time, but
@@ -241,6 +261,7 @@ export function RosterApp() {
             <Toggle on={availOnly} onClick={() => onAvail(!availOnly)} />
 
             <div className={styles.qbRight}>
+              <CurrencySwitch value={currency} onChange={onCurrency} />
               <FiltersBtn open={panelOpen} count={activeCount} onClick={() => setPanelOpen((x) => !x)} />
             </div>
           </div>
@@ -401,6 +422,7 @@ export function RosterApp() {
               <ProfileRow
                 key={p.id}
                 p={p}
+                currency={currency}
                 onClick={() => setModalProfile(p)}
               />
             ))}
@@ -409,7 +431,11 @@ export function RosterApp() {
       </div>
 
       {modalProfile && (
-        <ProfileModal profile={modalProfile} onClose={() => setModalProfile(null)} />
+        <ProfileModal
+          profile={modalProfile}
+          currency={currency}
+          onClose={() => setModalProfile(null)}
+        />
       )}
     </>
   );
@@ -418,6 +444,35 @@ export function RosterApp() {
 /* ============================================================
    Sub-components
    ============================================================ */
+
+/* Currency switch — segmented 3-pill control. Sits in the right group
+   of the toolbar alongside the Filters button. Active currency takes
+   the heat-h fill; inactive ones stay quiet so the switcher reads as
+   a single unified control rather than three independent buttons. */
+function CurrencySwitch({
+  value,
+  onChange,
+}: {
+  value: Currency;
+  onChange: (c: Currency) => void;
+}) {
+  return (
+    <div className={styles.currencyGroup} role="group" aria-label="Currency">
+      {CURRENCIES.map((c) => (
+        <button
+          key={c}
+          type="button"
+          className={`${styles.currencyChip} ${value === c ? styles.currencyChipActive : ""}`}
+          onClick={() => onChange(c)}
+          aria-pressed={value === c}
+          aria-label={`Show rates in ${c}`}
+        >
+          {CURRENCY_SYMBOLS[c]}
+        </button>
+      ))}
+    </div>
+  );
+}
 
 /* Role dropdown — replaces the old discipline chip row. Options are
    inferred from ROSTER (unique role strings + counts), styled to
@@ -579,7 +634,15 @@ function ChipGroup({
    click-through to open the detail modal, plus a separate
    "request info" CTA on the right that goes to /enquire with the
    codename pre-attached. */
-function ProfileRow({ p, onClick }: { p: Profile; onClick: () => void }) {
+function ProfileRow({
+  p,
+  currency,
+  onClick,
+}: {
+  p: Profile;
+  currency: Currency;
+  onClick: () => void;
+}) {
   /* Third meta row picks the most commercially load-bearing fact for
      the discipline at hand: budget managed for UA people, annual
      salary for the rest. Formats were removed from quick info per
@@ -587,8 +650,8 @@ function ProfileRow({ p, onClick }: { p: Profile; onClick: () => void }) {
   const thirdRow =
     p.discipline === "ua" && p.budget !== undefined
       ? { k: "Budget", v: BUDGET_LABELS[p.budget] }
-      : p.salaryAnnualLabel
-        ? { k: "Annual salary", v: p.salaryAnnualLabel }
+      : p.salaryAnnual !== undefined
+        ? { k: "Annual salary", v: formatRate(p.salaryAnnual, currency, "year") }
         : null;
 
   return (
@@ -610,7 +673,7 @@ function ProfileRow({ p, onClick }: { p: Profile; onClick: () => void }) {
         </div>
         <div className={styles.prowMid}>
           <MetaRow k="Location" v={p.location.label} />
-          <MetaRow k="Day rate" v={p.dayRateLabel} />
+          <MetaRow k="Day rate" v={formatRate(p.rateMin, currency, "day")} />
           {thirdRow && <MetaRow k={thirdRow.k} v={thirdRow.v} />}
         </div>
         <div className={styles.prowStatusWrap}>
@@ -648,7 +711,15 @@ function MetaRow({ k, v }: { k: string; v: string }) {
   );
 }
 
-function ProfileModal({ profile, onClose }: { profile: Profile; onClose: () => void }) {
+function ProfileModal({
+  profile,
+  currency,
+  onClose,
+}: {
+  profile: Profile;
+  currency: Currency;
+  onClose: () => void;
+}) {
   // Close on escape
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -748,9 +819,12 @@ function ProfileModal({ profile, onClose }: { profile: Profile; onClose: () => v
           )}
           <ModalSec h="special expertise">{profile.expertise.join(" · ")}</ModalSec>
 
-          <ModalRow k="day rate" v={profile.dayRateLabel} />
-          {profile.salaryAnnualLabel && (
-            <ModalRow k="annual salary" v={profile.salaryAnnualLabel} />
+          <ModalRow k="day rate" v={formatRate(profile.rateMin, currency, "day")} />
+          {profile.salaryAnnual !== undefined && (
+            <ModalRow
+              k="annual salary"
+              v={formatRate(profile.salaryAnnual, currency, "year")}
+            />
           )}
           {profile.discipline === "ua" && profile.budget !== undefined && (
             <ModalRow k="budget managed" v={BUDGET_LABELS[profile.budget]} />

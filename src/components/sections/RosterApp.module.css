@@ -118,6 +118,46 @@
   align-items: center;
 }
 
+/* Currency switch — segmented 3-pill control. Single rounded container
+   holding three symbol chips (£ / € / $). The active chip carries
+   the heat-h fill; inactives stay outlined-only so the control reads
+   as one segmented unit rather than three loose buttons. */
+.currencyGroup {
+  display: inline-flex;
+  align-items: center;
+  background: var(--bg);
+  border-radius: 999px;
+  padding: 3px;
+  box-shadow: inset 0 0 0 2px var(--hair-strong);
+}
+.currencyChip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 28px;
+  padding: 0 10px;
+  border: 0;
+  background: transparent;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--mute);
+  cursor: pointer;
+  border-radius: 999px;
+  transition: background 0.18s, color 0.18s;
+}
+.currencyChip:hover {
+  color: var(--ink);
+}
+.currencyChipActive {
+  background: var(--heat-h);
+  color: #fff;
+}
+.currencyChipActive:hover {
+  color: #fff;
+}
+
 /* Role dropdown — replaces the old discipline chip row. Custom-styled
    so it matches the site's pill / hairline UI rather than the browser-
    native <select>. Options are inferred from ROSTER, so the dropdown
