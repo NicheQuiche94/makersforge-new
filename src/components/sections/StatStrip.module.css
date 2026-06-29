@@ -32,6 +32,17 @@
   gap: 10px;
   position: relative;
 }
+
+/* Right-anchored variant. Cells stop stretching and the row pushes
+   them to the right edge. Used by the roster live strip when only
+   two cells (total / available) carry the data. */
+.alignRight {
+  justify-content: flex-end;
+}
+.alignRight .cell {
+  flex: 0 0 auto;
+  min-width: 220px;
+}
 .cell:not(:last-child)::after {
   content: "";
   position: absolute;
