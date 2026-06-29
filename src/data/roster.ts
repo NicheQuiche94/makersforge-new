@@ -64,6 +64,14 @@ export type Profile = {
   rateMin: number;
   available: boolean;
   summary?: string;
+
+  /* Long-form profile content — lifted from the talent intake doc.
+     All optional so older profiles keep rendering; the modal hides
+     each section when its field is missing. */
+  skills?: string[];
+  experience?: string[];
+  motivations?: string;
+  recruiterNotes?: string[];
 };
 
 /**
@@ -93,6 +101,34 @@ export const ROSTER: Profile[] = [
     available: true,
     summary:
       "Genuine production / creative hybrid. Owns release readiness, sprint planning, LiveOps and QA workflows on a live mobile card title. Previously ran high-volume creative production for multi-million-USD/mo campaigns across a top-tier studio's portfolio, scaled a marketing-production org to 25 people, and supported up to $1M/mo ad spend at positive ROI/LTV. Multiple App Growth Awards nominations.",
+    skills: [
+      "Mobile Game Production",
+      "Production Management",
+      "LiveOps Coordination",
+      "Release Management",
+      "Cross-functional Delivery",
+      "Roadmap Execution",
+      "Creative Production Leadership",
+      "Team & Vendor Management",
+      "Jira / Confluence / Asana",
+      "ASO (AppTweak / Sensor Tower)",
+      "Stakeholder Management",
+      "Process Improvement",
+    ],
+    experience: [
+      "10+ years across marketing and production in mobile games and creative production, with significant P&L, budgeting, and forecasting experience at both project and whole-business level.",
+      "Currently Production Lead at a mobile card games studio, where he took a flagship card title through global release, post-launch operations, and ongoing LiveOps. Owns production planning, Jira workflows, sprint priorities, release readiness, and risk escalation across product, design, art, engineering, QA, marketing, ASO, and support. Also contributes to roadmap and LiveOps planning for a second card title.",
+      "Previously ~3 years at a mobile UA/creative agency as senior strategic and operational lead for major mobile-gaming accounts (including a top-tier free-to-play studio whose full title portfolio he supported), running high-volume creative production for multi-million-USD/month campaigns and growing account capacity/team profitability by ~450%. Led teams to multiple App Growth Awards nominations.",
+      "Earlier, as a senior marketing/production lead at a mobile games studio (later acquired by a major ad-tech/mediation company), led creative and marketing production through the overhaul of the studio's flagship title and a second release. Scaled marketing production to support up to $1M/month in ad spend at positive ROI/LTV, and grew the internal creative team to 25.",
+      "Bridges creative and data-driven decision making, keeps art-team motivation and quality high while holding to data-informed strategy. Builds comprehensive 'bibles' for marketing, art, and LiveOps as data-informed knowledge repositories.",
+      "Works within structured experimental frameworks. Production foundation began in national broadcast promo production before moving into mobile games. Earlier career spanned film, TV, and advertising across central Europe in Producer and Director roles, including high-profile advertising and music video projects; ran a small production company servicing clients including a global technology company, a consumer brand, and a mobile games studio.",
+    ],
+    motivations:
+      "Primary motivators are new challenges and the chance to grow teams and projects. Sees no two projects as alike, each one requiring new skills and information, and treats that continual learning as how he grows and gains seniority.",
+    recruiterNotes: [
+      "Genuine production/creative hybrid. The bulk of his earlier leadership sat on the marketing and creative-production side, alongside more recent direct production-lead experience owning release, LiveOps, sprint and QA workflows on a live title.",
+      "Real strength is cohesion across creative and data: held creative consistency across a top-tier studio's full title portfolio for several years and has repeatedly turned performance and audience insight into clear production priorities. Strongly process- and documentation-oriented.",
+    ],
   },
 ];
 

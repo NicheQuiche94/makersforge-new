@@ -577,6 +577,22 @@ function ProfileModal({ profile, onClose }: { profile: Profile; onClose: () => v
             </p>
           </div>
 
+          {profile.skills && profile.skills.length > 0 && (
+            <ModalSec h="skills">{profile.skills.join(" · ")}</ModalSec>
+          )}
+
+          {profile.experience && profile.experience.length > 0 && (
+            <ModalParas h="experience" paras={profile.experience} />
+          )}
+
+          {profile.motivations && (
+            <ModalSec h="motivations">{profile.motivations}</ModalSec>
+          )}
+
+          {profile.recruiterNotes && profile.recruiterNotes.length > 0 && (
+            <ModalParas h="recruiter notes" paras={profile.recruiterNotes} />
+          )}
+
           {cats.length > 0 && (
             <ModalSec h="industry & categories">
               {cats.join(" · ")}
@@ -627,6 +643,26 @@ function ModalSec({ h, children }: { h: string; children: ReactNode }) {
     <div className={styles.modalSection}>
       <h4 className={styles.modalH4}>{h}</h4>
       <p className={styles.modalP}>{children}</p>
+    </div>
+  );
+}
+
+/* Multi-paragraph section — used for the experience and recruiter
+   notes blocks where the intake doc is long-form. Each paragraph
+   gets its own <p> with consistent spacing. */
+function ModalParas({ h, paras }: { h: string; paras: string[] }) {
+  return (
+    <div className={styles.modalSection}>
+      <h4 className={styles.modalH4}>{h}</h4>
+      {paras.map((para, i) => (
+        <p
+          key={i}
+          className={styles.modalP}
+          style={{ marginBottom: i < paras.length - 1 ? 10 : 0 }}
+        >
+          {para}
+        </p>
+      ))}
     </div>
   );
 }
