@@ -118,6 +118,111 @@
   align-items: center;
 }
 
+/* Role dropdown — replaces the old discipline chip row. Custom-styled
+   so it matches the site's pill / hairline UI rather than the browser-
+   native <select>. Options are inferred from ROSTER, so the dropdown
+   tracks whichever roles are actually live. */
+.roleDropdown {
+  position: relative;
+  display: inline-block;
+}
+.roleTrigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 9px 14px 9px 18px;
+  border-radius: 999px;
+  background: var(--bg);
+  border: 0;
+  box-shadow: inset 0 0 0 2px var(--hair-strong);
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+.roleTrigger:hover {
+  box-shadow: inset 0 0 0 2px var(--ink);
+}
+.roleTriggerOpen {
+  background: var(--heat-h);
+  color: #fff;
+  box-shadow: none;
+}
+.roleTriggerLabel {
+  text-transform: none;
+}
+.roleChev {
+  font-size: 9px;
+  transition: transform 0.25s;
+}
+.roleTriggerOpen .roleChev {
+  transform: rotate(180deg);
+}
+
+.roleMenu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 260px;
+  max-width: 360px;
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  border-radius: 14px;
+  box-shadow: 0 14px 36px rgba(14, 15, 17, 0.1);
+  list-style: none;
+  padding: 6px;
+  margin: 0;
+  z-index: 100;
+  max-height: 360px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--hair-strong) transparent;
+}
+.roleMenu::-webkit-scrollbar {
+  width: 6px;
+}
+.roleMenu::-webkit-scrollbar-thumb {
+  background: var(--hair-strong);
+  border-radius: 3px;
+}
+
+.roleOption {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  padding: 9px 12px;
+  border-radius: 9px;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 13.5px;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.roleOption:hover {
+  background: var(--bg-deep);
+}
+.roleOptionActive {
+  background: var(--bg-deep);
+  font-weight: 700;
+}
+.roleCount {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--mute);
+  padding: 2px 8px;
+  background: var(--paper);
+  border-radius: 999px;
+  border: 1px solid var(--hair);
+}
+.roleOptionActive .roleCount {
+  color: var(--ink);
+  border-color: var(--hair-strong);
+}
+
 .qfilters {
   display: inline-flex;
   align-items: center;

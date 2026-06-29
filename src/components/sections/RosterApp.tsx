@@ -3,6 +3,7 @@
 import {
   useEffect,
   useMemo,
+  useRef,
   useState,
   useCallback,
   type ReactNode,
@@ -68,26 +69,55 @@ export function RosterApp() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [discipline, setDiscipline] = useState<Discipline>("all");
+  /* `role` replaces the old `discipline` filter — Andre's call: filter
+     by the actual titles in the lineup so the dropdown options track
+     what we represent, not a hardcoded UA/Creative/ASO split. The
+     value is the literal role string from a Profile, or "all". The
+     conditional filter rows (channels for UA, formats for creative,
+     etc) still need to know which discipline they're operating in,
+     so we derive that from whichever Profile matches the selected
+     role below. */
+  const [role, setRole] = useState<string>("all");
   const [availOnly, setAvailOnly] = useState(false);
   const [filters, setFilters] = useState<FilterState>(emptyFilters);
   const [panelOpen, setPanelOpen] = useState(false);
   const [modalProfile, setModalProfile] = useState<Profile | null>(null);
 
-  // Read URL on mount for deep-linking (discipline + availability)
+  // Unique roles in ROSTER, with counts — feeds the dropdown options.
+  // Recomputed only when ROSTER changes (which is at build time, but
+  // useMemo guards us in case data ever becomes dynamic).
+  const roleOptions = useMemo(() => {
+    const counts = new Map<string, number>();
+    ROSTER.forEach((p) => counts.set(p.role, (counts.get(p.role) ?? 0) + 1));
+    return Array.from(counts.entries())
+      .map(([value, count]) => ({ value, count }))
+      .sort((a, b) => a.value.localeCompare(b.value));
+  }, []);
+
+  // Discipline of whichever role is selected — drives which conditional
+  // filter rows show (UA-specific vs creative-specific). "all" when no
+  // role chosen, so all conditional rows render.
+  const derivedDiscipline: Discipline = useMemo(() => {
+    if (role === "all") return "all";
+    return (ROSTER.find((p) => p.role === role)?.discipline ?? "all") as Discipline;
+  }, [role]);
+
+  // Read URL on mount for deep-linking (role + availability).
+  // Legacy ?discipline= URLs from before the role refactor are ignored
+  // gracefully (just lands on the default "all" view).
   useEffect(() => {
-    const d = searchParams.get("discipline");
-    if (d === "ua" || d === "creative" || d === "aso") setDiscipline(d);
+    const r = searchParams.get("role");
+    if (r) setRole(r);
     if (searchParams.get("available") === "true") setAvailOnly(true);
     // We only want this on mount, not on every re-render
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Push URL when discipline/availability changes
+  // Push URL when role/availability changes
   const updateURL = useCallback(
-    (d: Discipline, a: boolean) => {
+    (r: string, a: boolean) => {
       const p = new URLSearchParams();
-      if (d !== "all") p.set("discipline", d);
+      if (r !== "all") p.set("role", r);
       if (a) p.set("available", "true");
       const qs = p.toString();
       router.replace(qs ? `/roster?${qs}` : "/roster", { scroll: false });
@@ -95,9 +125,16 @@ export function RosterApp() {
     [router],
   );
 
-  // Discipline switch — clear now-hidden filters (fixes the v3 edge case)
-  const onDiscipline = (next: Discipline) => {
-    setDiscipline(next);
+  // Role switch — clear filters that no longer apply to the derived
+  // discipline (e.g. channels filter doesn't apply once you've picked
+  // a creative-discipline role, so clearing prevents stale active
+  // filters reading as "active" in the count).
+  const onRoleChange = (next: string) => {
+    setRole(next);
+    const nextDiscipline: Discipline =
+      next === "all"
+        ? "all"
+        : ((ROSTER.find((p) => p.role === next)?.discipline ?? "all") as Discipline);
     setFilters((prev) => {
       const copy: FilterState = {
         industry: new Set(prev.industry),
@@ -112,13 +149,13 @@ export function RosterApp() {
         expertise: new Set(prev.expertise),
         rateband: new Set(prev.rateband),
       };
-      if (next === "ua") {
+      if (nextDiscipline === "ua") {
         copy.formats.clear();
-      } else if (next === "creative") {
+      } else if (nextDiscipline === "creative") {
         copy.monetisation.clear();
         copy.channels.clear();
         copy.budget.clear();
-      } else if (next === "aso") {
+      } else if (nextDiscipline === "aso") {
         copy.formats.clear();
         copy.monetisation.clear();
         copy.channels.clear();
@@ -131,7 +168,7 @@ export function RosterApp() {
 
   const onAvail = (next: boolean) => {
     setAvailOnly(next);
-    updateURL(discipline, next);
+    updateURL(role, next);
   };
 
   const toggleFilter = (key: keyof FilterState, value: string) => {
@@ -149,7 +186,7 @@ export function RosterApp() {
   const clearAll = () => {
     setFilters(emptyFilters());
     setAvailOnly(false);
-    updateURL(discipline, false);
+    updateURL(role, false);
   };
 
   const activeCount = useMemo(() => {
@@ -161,7 +198,7 @@ export function RosterApp() {
 
   const matches = useCallback(
     (p: Profile) => {
-      if (discipline !== "all" && p.discipline !== discipline) return false;
+      if (role !== "all" && p.role !== role) return false;
       if (availOnly && !p.available) return false;
       if (filters.industry.size && ![...filters.industry].some((v) => p.industries.includes(v as "games" | "apps"))) return false;
       if (filters.gamesCat.size && ![...filters.gamesCat].some((v) => (p.gamesCat as string[]).includes(v))) return false;
@@ -176,7 +213,7 @@ export function RosterApp() {
       if (filters.rateband.size && !filters.rateband.has(String(p.dayRateBand))) return false;
       return true;
     },
-    [discipline, availOnly, filters],
+    [role, availOnly, filters],
   );
 
   const visible = useMemo(() => ROSTER.filter(matches), [matches]);
@@ -191,11 +228,13 @@ export function RosterApp() {
       <div className={styles.controls}>
         <div className="container">
           <div className={styles.quickbar}>
-            <span className={styles.qbLabel}>Discipline</span>
-            <DChip active={discipline === "all"} onClick={() => onDiscipline("all")}>All</DChip>
-            <DChip active={discipline === "ua"} onClick={() => onDiscipline("ua")}>UA managers</DChip>
-            <DChip active={discipline === "creative"} onClick={() => onDiscipline("creative")}>Marketing artists</DChip>
-            <DChip active={discipline === "aso"} onClick={() => onDiscipline("aso")}>ASO managers</DChip>
+            <span className={styles.qbLabel}>Role</span>
+            <RoleDropdown
+              value={role}
+              options={roleOptions}
+              totalCount={ROSTER.length}
+              onChange={onRoleChange}
+            />
 
             <span className={styles.qbDivider} />
 
@@ -260,7 +299,7 @@ export function RosterApp() {
                 />
               </FRow>
 
-              {(discipline === "all" || discipline === "ua") && (
+              {(derivedDiscipline === "all" || derivedDiscipline === "ua") && (
                 <>
                   <FRow label="Monetisation" hint="IAP / IAA">
                     <ChipGroup
@@ -289,7 +328,7 @@ export function RosterApp() {
                 </>
               )}
 
-              {(discipline === "all" || discipline === "creative") && (
+              {(derivedDiscipline === "all" || derivedDiscipline === "creative") && (
                 <FRow label="Creative formats" hint="Marketing art">
                   <ChipGroup
                     values={["video", "playable", "static", "ugc", "motion"]}
@@ -336,11 +375,13 @@ export function RosterApp() {
         <div className={styles.resultsRow}>
           <p className={styles.resultsText}>
             Showing <strong className="gr">{visible.length}</strong>{" "}
-            {discipline === "all"
-              ? "profiles"
-              : discipline === "ua"
-                ? "UA managers"
-                : "marketing artists"}
+            {role === "all"
+              ? visible.length === 1
+                ? "profile"
+                : "profiles"
+              : visible.length === 1
+                ? role.toLowerCase()
+                : `${role.toLowerCase()}s`}
             {availOnly && " · available"}
           </p>
           <Link href="/apply" className={styles.applyCta}>
@@ -378,15 +419,87 @@ export function RosterApp() {
    Sub-components
    ============================================================ */
 
-function DChip({ active, onClick, children }: { active: boolean; onClick: () => void; children: ReactNode }) {
+/* Role dropdown — replaces the old discipline chip row. Options are
+   inferred from ROSTER (unique role strings + counts), styled to
+   match the site UI rather than the browser-native select (Andre
+   previously rejected the native select on this same surface). */
+function RoleDropdown({
+  value,
+  options,
+  totalCount,
+  onChange,
+}: {
+  value: string;
+  options: { value: string; count: number }[];
+  totalCount: number;
+  onChange: (v: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    const onEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("keydown", onEsc);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("keydown", onEsc);
+    };
+  }, [open]);
+
+  const currentLabel = value === "all" ? "All roles" : value;
+
+  const pick = (v: string) => {
+    onChange(v);
+    setOpen(false);
+  };
+
   return (
-    <button
-      type="button"
-      className={`${styles.qchip} ${active ? styles.qchipActive : ""}`}
-      onClick={onClick}
-    >
-      {children}
-    </button>
+    <div className={styles.roleDropdown} ref={ref}>
+      <button
+        type="button"
+        className={`${styles.roleTrigger} ${open ? styles.roleTriggerOpen : ""}`}
+        onClick={() => setOpen((o) => !o)}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+      >
+        <span className={styles.roleTriggerLabel}>{currentLabel}</span>
+        <span className={styles.roleChev} aria-hidden="true">▼</span>
+      </button>
+      {open && (
+        <ul role="listbox" className={styles.roleMenu}>
+          <li
+            role="option"
+            aria-selected={value === "all"}
+            className={`${styles.roleOption} ${value === "all" ? styles.roleOptionActive : ""}`}
+            onClick={() => pick("all")}
+          >
+            <span>All roles</span>
+            <span className={styles.roleCount}>{totalCount}</span>
+          </li>
+          {options.map((opt) => (
+            <li
+              key={opt.value}
+              role="option"
+              aria-selected={value === opt.value}
+              className={`${styles.roleOption} ${value === opt.value ? styles.roleOptionActive : ""}`}
+              onClick={() => pick(opt.value)}
+            >
+              <span>{opt.value}</span>
+              <span className={styles.roleCount}>{opt.count}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
 }
 

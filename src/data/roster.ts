@@ -97,7 +97,7 @@ export const ROSTER: Profile[] = [
     id: "cp-01",
     discipline: "creative",
     codename: "cp·01",
-    role: "Production Lead",
+    role: "Creative Production Lead",
     background:
       "10+ years bridging mobile games production and creative leadership. Currently Production Lead on a card-games title in active LiveOps and post-launch operations.",
     location: { code: "prague", label: "prague" },
