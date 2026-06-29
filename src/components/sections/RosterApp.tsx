@@ -580,9 +580,16 @@ function ChipGroup({
    "request info" CTA on the right that goes to /enquire with the
    codename pre-attached. */
 function ProfileRow({ p, onClick }: { p: Profile; onClick: () => void }) {
-  const ctx = p.discipline === "ua"
-    ? p.budget !== undefined ? BUDGET_LABELS[p.budget] : "n/a"
-    : p.formats?.slice(0, 2).join(" · ") ?? "n/a";
+  /* Third meta row picks the most commercially load-bearing fact for
+     the discipline at hand: budget managed for UA people, annual
+     salary for the rest. Formats were removed from quick info per
+     Andre — they're filter-side data, not at-a-glance commercial. */
+  const thirdRow =
+    p.discipline === "ua" && p.budget !== undefined
+      ? { k: "Budget", v: BUDGET_LABELS[p.budget] }
+      : p.salaryAnnualLabel
+        ? { k: "Annual salary", v: p.salaryAnnualLabel }
+        : null;
 
   return (
     <article className={styles.prow}>
@@ -602,9 +609,9 @@ function ProfileRow({ p, onClick }: { p: Profile; onClick: () => void }) {
           </div>
         </div>
         <div className={styles.prowMid}>
-          <MetaRow k="location" v={p.location.label} />
-          <MetaRow k="day rate" v={`${p.dayRateLabel}/day`} />
-          <MetaRow k={p.discipline === "ua" ? "budget" : "formats"} v={ctx} />
+          <MetaRow k="Location" v={p.location.label} />
+          <MetaRow k="Day rate" v={p.dayRateLabel} />
+          {thirdRow && <MetaRow k={thirdRow.k} v={thirdRow.v} />}
         </div>
         <div className={styles.prowStatusWrap}>
           <span
