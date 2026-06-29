@@ -67,10 +67,33 @@ export type Profile = {
 };
 
 /**
- * Live roster. Empty until Andre seeds real profiles via Airtable (or a
- * direct edit here for the first few). All downstream UI handles the
- * empty state. Stats on the home page derive their counts from this array.
+ * Live roster. First profile seeded 2026-06-29 via the talent intake
+ * doc (Andre fills, Claude commits). All downstream UI handles the
+ * empty / single-profile state. Stats on the home page derive their
+ * counts from this array.
  */
-export const ROSTER: Profile[] = [];
+export const ROSTER: Profile[] = [
+  {
+    id: "cp-01",
+    discipline: "creative",
+    codename: "cp·01",
+    role: "Production Lead",
+    background:
+      "10+ years bridging mobile games production and creative leadership. Currently Production Lead on a card-games title in active LiveOps and post-launch operations.",
+    location: { code: "prague", label: "prague" },
+    industries: ["games"],
+    gamesCat: ["casual"],
+    appsCat: [],
+    genre: ["cards"],
+    formats: ["video", "playable", "static", "ugc", "motion"],
+    expertise: ["scaling", "liveops", "audience"],
+    dayRateLabel: "£500 / day",
+    dayRateBand: 1,
+    rateMin: 500,
+    available: true,
+    summary:
+      "Genuine production / creative hybrid. Owns release readiness, sprint planning, LiveOps and QA workflows on a live mobile card title. Previously ran high-volume creative production for multi-million-USD/mo campaigns across a top-tier studio's portfolio, scaled a marketing-production org to 25 people, and supported up to $1M/mo ad spend at positive ROI/LTV. Multiple App Growth Awards nominations.",
+  },
+];
 
 export const BUDGET_LABELS = ["< £50k", "£50k–250k", "£250k–1m", "£1m+"] as const;

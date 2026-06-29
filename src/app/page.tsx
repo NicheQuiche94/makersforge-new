@@ -72,7 +72,11 @@ export default function HomePage() {
           See pricing →
         </a>
       </section>
-      {ROSTER.length > 0 && <RosterCarousel />}
+      {/* RosterCarousel suppressed — its internal PROFILES array is
+          hardcoded dummies, not real ROSTER data, so showing it next
+          to a real lineup on /roster would mislead. Re-enable once
+          the carousel is refactored to read from ROSTER. */}
+      {false && ROSTER.length > 0 && <RosterCarousel />}
       <ForTalentBanner />
       <CTABand
         compact

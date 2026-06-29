@@ -57,6 +57,7 @@ const LOCATIONS: { value: string; label: string }[] = [
   { value: "istanbul", label: "istanbul" },
   { value: "lisbon", label: "lisbon" },
   { value: "warsaw", label: "warsaw" },
+  { value: "prague", label: "prague" },
 ];
 
 /* ============================================================
