@@ -566,6 +566,16 @@ function ProfileModal({ profile, onClose }: { profile: Profile; onClose: () => v
           <p className={styles.modalRole}>
             {profile.background} · {profile.location.label}
           </p>
+          {profile.availableFor.length > 0 && (
+            <div className={styles.openToRow}>
+              <span className={styles.openToLabel}>Open to</span>
+              {profile.availableFor.map((kind) => (
+                <span key={kind} className={styles.openToPill}>
+                  {kind}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className={styles.modalBody}>
@@ -582,7 +592,7 @@ function ProfileModal({ profile, onClose }: { profile: Profile; onClose: () => v
           )}
 
           {profile.experience && profile.experience.length > 0 && (
-            <ModalParas h="experience" paras={profile.experience} />
+            <ModalParas h="experience" paras={profile.experience} bullet />
           )}
 
           {profile.motivations && (
@@ -618,7 +628,10 @@ function ProfileModal({ profile, onClose }: { profile: Profile; onClose: () => v
           )}
           <ModalSec h="special expertise">{profile.expertise.join(" · ")}</ModalSec>
 
-          <ModalRow k="day rate" v={`${profile.dayRateLabel}/day`} />
+          <ModalRow k="day rate" v={profile.dayRateLabel} />
+          {profile.salaryAnnualLabel && (
+            <ModalRow k="annual salary" v={profile.salaryAnnualLabel} />
+          )}
           {profile.discipline === "ua" && profile.budget !== undefined && (
             <ModalRow k="budget managed" v={BUDGET_LABELS[profile.budget]} />
           )}
@@ -629,7 +642,14 @@ function ProfileModal({ profile, onClose }: { profile: Profile; onClose: () => v
               variant="primary"
               arrow
             >
-              enquire about {profile.codename}
+              Enquire about {profile.codename}
+            </Button>
+            <Button
+              href={`/roster/${profile.id}/spec`}
+              variant="ghost"
+              external
+            >
+              Download spec
             </Button>
           </div>
         </div>
@@ -648,21 +668,42 @@ function ModalSec({ h, children }: { h: string; children: ReactNode }) {
 }
 
 /* Multi-paragraph section — used for the experience and recruiter
-   notes blocks where the intake doc is long-form. Each paragraph
-   gets its own <p> with consistent spacing. */
-function ModalParas({ h, paras }: { h: string; paras: string[] }) {
+   notes blocks where the intake doc is long-form. With `bullet`,
+   each paragraph renders as a list item under a single heat-coloured
+   bullet (Andre asked for experience as bullets so the career history
+   scans line-by-line). Without `bullet`, each paragraph gets its own
+   <p> with consistent spacing — used for the recruiter notes block. */
+function ModalParas({
+  h,
+  paras,
+  bullet,
+}: {
+  h: string;
+  paras: string[];
+  bullet?: boolean;
+}) {
   return (
     <div className={styles.modalSection}>
       <h4 className={styles.modalH4}>{h}</h4>
-      {paras.map((para, i) => (
-        <p
-          key={i}
-          className={styles.modalP}
-          style={{ marginBottom: i < paras.length - 1 ? 10 : 0 }}
-        >
-          {para}
-        </p>
-      ))}
+      {bullet ? (
+        <ul className={styles.modalBullets}>
+          {paras.map((para, i) => (
+            <li key={i} className={styles.modalP}>
+              {para}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        paras.map((para, i) => (
+          <p
+            key={i}
+            className={styles.modalP}
+            style={{ marginBottom: i < paras.length - 1 ? 10 : 0 }}
+          >
+            {para}
+          </p>
+        ))
+      )}
     </div>
   );
 }

@@ -62,7 +62,19 @@ export type Profile = {
   dayRateLabel: string;
   dayRateBand: 0 | 1 | 2;
   rateMin: number;
+  /* Permanent-salary equivalent. Many studios brief us on contract
+     terms but want the option to flip to perm later, so the salary
+     they'd need to pay needs to be on the card as well as the rate. */
+  salaryAnnualLabel?: string;
+  salaryAnnual?: number;
+
+  /* Independent of `available`. `available` is "ready to start now";
+     `availableFor` says which engagement types they're open to. A
+     candidate can be available now but only for contract, or in 3
+     months for permanent, etc. */
   available: boolean;
+  availableFor: ("contract" | "permanent")[];
+
   summary?: string;
 
   /* Long-form profile content — lifted from the talent intake doc.
@@ -98,7 +110,10 @@ export const ROSTER: Profile[] = [
     dayRateLabel: "£500 / day",
     dayRateBand: 1,
     rateMin: 500,
+    salaryAnnualLabel: "£60,000 / year",
+    salaryAnnual: 60000,
     available: true,
+    availableFor: ["contract", "permanent"],
     summary:
       "Genuine production / creative hybrid. Owns release readiness, sprint planning, LiveOps and QA workflows on a live mobile card title. Previously ran high-volume creative production for multi-million-USD/mo campaigns across a top-tier studio's portfolio, scaled a marketing-production org to 25 people, and supported up to $1M/mo ad spend at positive ROI/LTV. Multiple App Growth Awards nominations.",
     skills: [

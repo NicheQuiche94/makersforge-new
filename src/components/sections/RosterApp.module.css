@@ -1138,4 +1138,90 @@
 .modalCta {
   display: flex;
   justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* "Open to: Contract · Permanent" — sits below the role + background
+   line in the modal head, where it has to be glance-readable. Andre
+   asked for this front-and-centre because studios picking off the
+   lineup often want to know whether they can flip a contractor to
+   perm later. Heat-tinted pills on the dark heat-deep head so the
+   answer reads at a glance. */
+.openToRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+.openToLabel {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+}
+.openToPill {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: capitalize;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+/* Bullet list for the experience section. One heat-gradient dot per
+   line so the career history scans top-to-bottom as discrete beats
+   rather than dense prose. */
+.modalBullets {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.modalBullets li {
+  position: relative;
+  padding-left: 22px;
+  margin-bottom: 12px;
+}
+.modalBullets li:last-child {
+  margin-bottom: 0;
+}
+.modalBullets li::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 0.55em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--heat-h);
+}
+
+/* Custom modal scrollbar. The default browser scrollbar on the right
+   of the modal card was reading as a UI artefact against the paper
+   background. Thin track, hairline thumb, matches the design system
+   instead of the OS chrome. Firefox uses the standardised properties;
+   WebKit uses the legacy pseudo-elements. */
+.modal {
+  scrollbar-width: thin;
+  scrollbar-color: var(--hair-strong) transparent;
+}
+.modal::-webkit-scrollbar {
+  width: 8px;
+}
+.modal::-webkit-scrollbar-track {
+  background: transparent;
+}
+.modal::-webkit-scrollbar-thumb {
+  background: var(--hair-strong);
+  border-radius: 4px;
+  border: 2px solid var(--paper);
+}
+.modal::-webkit-scrollbar-thumb:hover {
+  background: var(--mute);
 }
