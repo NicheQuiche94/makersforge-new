@@ -64,28 +64,30 @@ export default function SpecPage() {
         <Link href="/roster" className={styles.backLink}>
           ← Back to lineup
         </Link>
-        <button
-          type="button"
-          className={styles.printBtn}
-          onClick={() => window.print()}
-        >
-          Save as PDF
-        </button>
       </div>
 
       <article className={styles.spec}>
         <header className={`heat-glow ${styles.head}`}>
           <div className={styles.headInner}>
-            <div className={styles.brand}>
-              <Logo
-                size={28}
-                variant="mark"
-                monochrome="#ffffff"
-                title=""
-              />
-              <span className={styles.brandText}>
-                MakersForge · Talent spec
-              </span>
+            <div className={styles.headTop}>
+              <div className={styles.brand}>
+                <Logo
+                  size={28}
+                  variant="mark"
+                  monochrome="#ffffff"
+                  title=""
+                />
+                <span className={styles.brandText}>
+                  MakersForge · Talent spec
+                </span>
+              </div>
+              <button
+                type="button"
+                className={styles.printBtn}
+                onClick={() => window.print()}
+              >
+                Save as PDF
+              </button>
             </div>
             <div className={styles.codeRow}>
               <span className={styles.codename}>{profile.codename}</span>

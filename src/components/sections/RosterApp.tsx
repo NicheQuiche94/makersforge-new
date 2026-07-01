@@ -10,7 +10,6 @@ import {
 } from "react";
 import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
-import { Button } from "@/components/atoms/Button";
 import { Logo } from "@/components/atoms/Logo";
 import { ROSTER, BUDGET_LABELS, type Profile } from "@/data/roster";
 import {
@@ -89,7 +88,6 @@ export function RosterApp() {
   const [availOnly, setAvailOnly] = useState(false);
   const [filters, setFilters] = useState<FilterState>(emptyFilters);
   const [panelOpen, setPanelOpen] = useState(false);
-  const [modalProfile, setModalProfile] = useState<Profile | null>(null);
   /* Currency the user has selected on the toolbar. SSR-safe default
      (GBP); reads localStorage on mount to restore prior choice, and
      persists on every change so the same currency carries across
@@ -419,24 +417,11 @@ export function RosterApp() {
         ) : (
           <div className={styles.list}>
             {visible.map((p) => (
-              <ProfileRow
-                key={p.id}
-                p={p}
-                currency={currency}
-                onClick={() => setModalProfile(p)}
-              />
+              <ProfileRow key={p.id} p={p} currency={currency} />
             ))}
           </div>
         )}
       </div>
-
-      {modalProfile && (
-        <ProfileModal
-          profile={modalProfile}
-          currency={currency}
-          onClose={() => setModalProfile(null)}
-        />
-      )}
     </>
   );
 }
@@ -630,23 +615,22 @@ function ChipGroup({
 
 /* Banner row (per Andre 2026-05-30): switched from the tiger-stripe
    grid of cards to full-width list-style rows. Tiger-stripe rhythm
-   carries over (every other row is gradient). Each row has a
-   click-through to open the detail modal, plus a separate
-   "request info" CTA on the right that goes to /enquire with the
+   carries over (every other row is gradient). The whole row is a
+   Link into /roster/[id]/spec (Andre retired the detail modal — the
+   full-page spec reads better than the cramped modal); a separate
+   "request info" CTA on the right routes to /enquire with the
    codename pre-attached. */
 function ProfileRow({
   p,
   currency,
-  onClick,
 }: {
   p: Profile;
   currency: Currency;
-  onClick: () => void;
 }) {
   /* Third meta row is Annual salary for every discipline — the card
      stays scan-consistent across UA / Creative / ASO profiles rather
-     than swapping to Budget for UA. Budget still appears in the
-     modal for UA profiles. */
+     than swapping to Budget for UA. Budget still appears on the spec
+     page for UA profiles. */
   const thirdRow =
     p.salaryAnnual !== undefined
       ? { k: "Annual salary", v: formatRate(p.salaryAnnual, currency, "year") }
@@ -654,7 +638,7 @@ function ProfileRow({
 
   return (
     <article className={styles.prow}>
-      <button type="button" className={styles.prowMain} onClick={onClick}>
+      <Link href={`/roster/${p.id}/spec`} className={styles.prowMain}>
         <div className={styles.prowLeft}>
           <span className={styles.prowMono}>{p.codename}</span>
           <div className={styles.prowLeftBody}>
@@ -689,7 +673,7 @@ function ProfileRow({
           className={styles.brandStamp}
           title=""
         />
-      </button>
+      </Link>
       <Link
         href={`/enquire?profile=${encodeURIComponent(p.codename)}`}
         className={styles.prowCta}
@@ -709,202 +693,3 @@ function MetaRow({ k, v }: { k: string; v: string }) {
   );
 }
 
-function ProfileModal({
-  profile,
-  currency,
-  onClose,
-}: {
-  profile: Profile;
-  currency: Currency;
-  onClose: () => void;
-}) {
-  // Close on escape
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    window.addEventListener("keydown", onKey);
-    // Prevent body scroll while open
-    const original = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      window.removeEventListener("keydown", onKey);
-      document.body.style.overflow = original;
-    };
-  }, [onClose]);
-
-  const cats = [...(profile.gamesCat ?? []), ...(profile.appsCat ?? [])];
-
-  return (
-    <div className={styles.modalOverlay} onClick={(e) => e.target === e.currentTarget && onClose()} role="dialog" aria-modal="true">
-      <div className={styles.modal}>
-        <div className={styles.modalHead}>
-          <button type="button" className={styles.modalClose} onClick={onClose} aria-label="Close">
-            ×
-          </button>
-          <div className={styles.modalHeadTop}>
-            <span className={styles.pcMono} style={{ color: "rgba(255,255,255,0.7)" }}>
-              {profile.codename}
-            </span>
-            <span className={styles.modalStatus}>
-              <span className={styles.pcDot} style={{ background: "#fff" }} />
-              {profile.available ? "available now" : "in contract"}
-            </span>
-          </div>
-          <h2 className={styles.modalH}>{profile.role}</h2>
-          <p className={styles.modalRole}>
-            {profile.background} · {profile.location.label}
-          </p>
-          {profile.availableFor.length > 0 && (
-            <div className={styles.openToRow}>
-              <span className={styles.openToLabel}>Open to</span>
-              {profile.availableFor.map((kind) => (
-                <span key={kind} className={styles.openToPill}>
-                  {kind}
-                </span>
-              ))}
-            </div>
-          )}
-        </div>
-
-        <div className={styles.modalBody}>
-          <div className={`${styles.modalSection} ${styles.modalSummary}`}>
-            <h4 className={styles.modalH4}>summary</h4>
-            <p className={styles.modalSummaryBody}>
-              {profile.summary ??
-                `A handwritten summary about ${profile.codename}. Andre writes these per profile. Context on their wins, the kinds of teams they thrive in, what they're best known for. A short paragraph that goes beyond the structured filters and gives the specialist some life on the page.`}
-            </p>
-          </div>
-
-          {profile.skills && profile.skills.length > 0 && (
-            <ModalSec h="skills">{profile.skills.join(" · ")}</ModalSec>
-          )}
-
-          {profile.experience && profile.experience.length > 0 && (
-            <ModalParas h="experience" paras={profile.experience} bullet />
-          )}
-
-          {profile.motivations && (
-            <ModalSec h="motivations">{profile.motivations}</ModalSec>
-          )}
-
-          {profile.recruiterNotes && profile.recruiterNotes.length > 0 && (
-            <ModalParas h="recruiter notes" paras={profile.recruiterNotes} />
-          )}
-
-          {cats.length > 0 && (
-            <ModalSec h="industry & categories">
-              {cats.join(" · ")}
-            </ModalSec>
-          )}
-          {profile.genre.length > 0 && (
-            <ModalSec h="genres">{profile.genre.join(" · ")}</ModalSec>
-          )}
-          {profile.discipline === "ua" ? (
-            <>
-              {profile.channels && profile.channels.length > 0 && (
-                <ModalSec h="channels">{profile.channels.join(" · ")}</ModalSec>
-              )}
-              {profile.monetisation && profile.monetisation.length > 0 && (
-                <ModalSec h="monetisation">{profile.monetisation.join(" · ").toUpperCase()}</ModalSec>
-              )}
-            </>
-          ) : (
-            profile.formats &&
-            profile.formats.length > 0 && (
-              <ModalSec h="creative formats">{profile.formats.join(" · ")}</ModalSec>
-            )
-          )}
-          <ModalSec h="special expertise">{profile.expertise.join(" · ")}</ModalSec>
-
-          <ModalRow k="day rate" v={formatRate(profile.rateMin, currency, "day")} />
-          {profile.salaryAnnual !== undefined && (
-            <ModalRow
-              k="annual salary"
-              v={formatRate(profile.salaryAnnual, currency, "year")}
-            />
-          )}
-          {profile.discipline === "ua" && profile.budget !== undefined && (
-            <ModalRow k="budget managed" v={BUDGET_LABELS[profile.budget]} />
-          )}
-
-          <div className={styles.modalCta}>
-            <Button
-              href={`/enquire?profile=${encodeURIComponent(profile.codename)}`}
-              variant="primary"
-              arrow
-            >
-              Enquire about {profile.codename}
-            </Button>
-            <Button
-              href={`/roster/${profile.id}/spec`}
-              variant="ghost"
-              external
-            >
-              Download spec
-            </Button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function ModalSec({ h, children }: { h: string; children: ReactNode }) {
-  return (
-    <div className={styles.modalSection}>
-      <h4 className={styles.modalH4}>{h}</h4>
-      <p className={styles.modalP}>{children}</p>
-    </div>
-  );
-}
-
-/* Multi-paragraph section — used for the experience and recruiter
-   notes blocks where the intake doc is long-form. With `bullet`,
-   each paragraph renders as a list item under a single heat-coloured
-   bullet (Andre asked for experience as bullets so the career history
-   scans line-by-line). Without `bullet`, each paragraph gets its own
-   <p> with consistent spacing — used for the recruiter notes block. */
-function ModalParas({
-  h,
-  paras,
-  bullet,
-}: {
-  h: string;
-  paras: string[];
-  bullet?: boolean;
-}) {
-  return (
-    <div className={styles.modalSection}>
-      <h4 className={styles.modalH4}>{h}</h4>
-      {bullet ? (
-        <ul className={styles.modalBullets}>
-          {paras.map((para, i) => (
-            <li key={i} className={styles.modalP}>
-              {para}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        paras.map((para, i) => (
-          <p
-            key={i}
-            className={styles.modalP}
-            style={{ marginBottom: i < paras.length - 1 ? 10 : 0 }}
-          >
-            {para}
-          </p>
-        ))
-      )}
-    </div>
-  );
-}
-
-function ModalRow({ k, v }: { k: string; v: string }) {
-  return (
-    <div className={`${styles.modalSection} ${styles.modalRow}`}>
-      <h4 className={styles.modalH4} style={{ margin: 0 }}>{k}</h4>
-      <p className={styles.modalP} style={{ fontWeight: 600, textAlign: "right" }}>{v}</p>
-    </div>
-  );
-}
