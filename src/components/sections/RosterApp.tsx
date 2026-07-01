@@ -643,16 +643,14 @@ function ProfileRow({
   currency: Currency;
   onClick: () => void;
 }) {
-  /* Third meta row picks the most commercially load-bearing fact for
-     the discipline at hand: budget managed for UA people, annual
-     salary for the rest. Formats were removed from quick info per
-     Andre — they're filter-side data, not at-a-glance commercial. */
+  /* Third meta row is Annual salary for every discipline — the card
+     stays scan-consistent across UA / Creative / ASO profiles rather
+     than swapping to Budget for UA. Budget still appears in the
+     modal for UA profiles. */
   const thirdRow =
-    p.discipline === "ua" && p.budget !== undefined
-      ? { k: "Budget", v: BUDGET_LABELS[p.budget] }
-      : p.salaryAnnual !== undefined
-        ? { k: "Annual salary", v: formatRate(p.salaryAnnual, currency, "year") }
-        : null;
+    p.salaryAnnual !== undefined
+      ? { k: "Annual salary", v: formatRate(p.salaryAnnual, currency, "year") }
+      : null;
 
   return (
     <article className={styles.prow}>
