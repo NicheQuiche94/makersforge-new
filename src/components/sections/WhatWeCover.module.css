@@ -1,0 +1,101 @@
+/* WhatWeCover — cluster grid of the mobile-growth disciplines we
+   represent. Card styling mirrors Statement's principle cards so the
+   home page reads as a consistent set of paper tiles. */
+
+.section {
+  background: var(--bg);
+  padding: 90px 0 100px;
+  color: var(--ink);
+}
+
+/* Standardised section header — Cal Sans h2 + Figtree subhead,
+   centred (matches Statement / HowItWorks / RosterCarousel). */
+.header {
+  max-width: 1080px;
+  margin: 0 auto 56px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.headline {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(44px, 7vw, 108px);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  margin: 4px 0 0;
+  color: var(--ink);
+  max-width: 1080px;
+}
+
+.subhead {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: clamp(18px, 1.8vw, 24px);
+  line-height: 1.5;
+  color: var(--dim);
+  max-width: 720px;
+  margin: 0;
+}
+
+/* 3-column grid with a 3+2 layout on desktop (5 items). Below 900px
+   collapses to 2 columns, below 600px to 1. Left-anchored last row is
+   the natural look; centring would only be worth the CSS trick if a
+   different mobile-growth cluster shows up later. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Cards — same paper + hairline + rounded pattern as Statement's
+   principle cards, so the two sections read as one visual language. */
+.card {
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  border-radius: 22px;
+  padding: 26px 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 180px;
+}
+
+.cardTitle {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--hair);
+}
+
+.roleList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.role {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 14.5px;
+  line-height: 1.4;
+  color: var(--dim);
+}

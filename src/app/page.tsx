@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { HeroPanel } from "@/components/sections/HeroPanel";
 import { StatStrip } from "@/components/sections/StatStrip";
 import { Statement } from "@/components/sections/Statement";
+import { WhatWeCover } from "@/components/sections/WhatWeCover";
 import { HowItWorksBento } from "@/components/sections/HowItWorksBento";
 import { RosterCarousel } from "@/components/sections/RosterCarousel";
 import { ForTalentBanner } from "@/components/sections/ForTalentBanner";
@@ -43,35 +44,8 @@ export default function HomePage() {
       <HeroPanel />
       <StatStrip cells={HOME_STATS} />
       <Statement />
+      <WhatWeCover />
       <HowItWorksBento />
-      {/* Pricing teaser line per cofounder pass P5 — one-line tease
-          so studios don't have to navigate to find a number. */}
-      <section
-        style={{
-          textAlign: "center",
-          padding: "12px 0 36px",
-          fontFamily: "var(--font-figtree), Figtree, system-ui, sans-serif",
-          fontWeight: 500,
-          fontSize: "17px",
-          color: "var(--dim)",
-        }}
-      >
-        From <strong style={{ color: "var(--ink)" }}>£1,000 / specialist / month</strong>.
-        Flat fee, no markup.{" "}
-        <a
-          href="/pricing"
-          style={{
-            color: "var(--ink)",
-            textDecoration: "none",
-            borderBottom: "1px solid var(--hair-strong)",
-            paddingBottom: "2px",
-            marginLeft: "6px",
-            fontWeight: 600,
-          }}
-        >
-          See pricing →
-        </a>
-      </section>
       {/* RosterCarousel suppressed — its internal PROFILES array is
           hardcoded dummies, not real ROSTER data, so showing it next
           to a real lineup on /roster would mislead. Re-enable once
@@ -80,8 +54,8 @@ export default function HomePage() {
       <ForTalentBanner />
       <CTABand
         compact
-        body="Tell us about you, your company, your culture, your product and a few other details so we can personalise your talent pipeline."
-        cta={{ label: "Book a briefing", href: "/enquire" }}
+        body="Tell us about your team and what you're building. We'll point you at the people on the lineup who fit."
+        cta={{ label: "Get in touch", href: "/enquire" }}
       />
     </>
   );

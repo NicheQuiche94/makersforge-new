@@ -21,28 +21,29 @@ export function Statement() {
         <header className={styles.header}>
           <p className={`kicker ${styles.kicker}`}>Principles</p>
           <h2 className={styles.headline}>
-            <span className="gr">Growth needs people who can move.</span>
+            <span className="gr">Represented, not searched.</span>
           </h2>
           <p className={styles.subhead}>
-            We keep brilliant operators on call, so your product keeps growing.
+            You don&apos;t run a search. You look at the lineup and tell us who
+            you want to talk to.
           </p>
         </header>
 
         <div className={styles.grid}>
           <PrincipleCard
             icon={<AvailabilityIcon />}
-            title="Available now"
-            body="Vetted operators with real availability, ready to brief on a Tuesday and start the following Monday. No quarter-long waits."
+            title="Currently available"
+            body="The specialists on the lineup are open to new work now. What you see is who you can talk to this month."
           />
           <PrincipleCard
             icon={<VettedIcon />}
             title="Already vetted"
-            body="Every profile is someone we know directly or have worked with. The shortlist is real people, not a stack of CVs from a job board."
+            body="Everyone on the lineup is someone we've worked with or dug into. No CV stacks, no unknowns."
           />
           <PrincipleCard
             icon={<DirectIcon />}
-            title="Direct to fit"
-            body="Brief us, or come to the lineup and ask for the specific person. Either way we make the intro and stay close to the matching."
+            title="Direct intro"
+            body="Pick from the lineup and we set up the call. You talk to the specialist, not to us."
           />
         </div>
       </div>

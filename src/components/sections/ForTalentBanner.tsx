@@ -27,7 +27,7 @@ export function ForTalentBanner() {
             <p className={styles.body}>
               UA managers, ASO managers, marketing artists, motion designers,
               creative producers. We represent strong operators indefinitely
-              and put you in front of the studios who brief us.
+              and put you in front of the studios asking for intros.
             </p>
           </div>
           <div className={styles.ctas}>

@@ -1,116 +1,123 @@
-import type { ReactNode } from "react";
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
 import styles from "./HowItWorksBento.module.css";
 
 /**
- * HowItWorks bento — three-step flow.
+ * HowItWorks — two-column: left-hand argument for the access model,
+ * right-hand stack of collapsible numbered stages.
  *
- * v3 (Andre 2026-05-30 v4):
- *   - Headline reframed: "brief monday, working by friday" dropped
- *     because we can't promise that.
- *   - Hierarchy fix: title is now BIGGEST per tile, then number,
- *     then body. The big Cal Sans numeral previously dominated.
- *   - Tile bodies upscaled to 17px and given a soft drop shadow.
- *   - "Shortlist in 48h" pill on tile 02 removed (prior pass).
- *   - Headline + subhead now Figtree mixed-weight sentence case to
- *     match the new Statement section above it.
- *
- * Layout (locked at L2): paper "01 Tell us the gap" + heat "02 We
- * match" side-by-side; charcoal "03 They get to work" full-width
- * with right bleed.
+ * Andre swapped the previous 3-tile bento for this pattern after
+ * candidate feedback that the process wasn't clear enough on the site.
+ * The old bento is preserved in git; file name kept for compatibility
+ * with the /#how anchor link and existing imports.
  */
 
-type Surface = "paper" | "heat" | "charcoal";
-
-type Tile = {
-  num: string;
-  title: ReactNode;
-  body: ReactNode;
-  surface: Surface;
+type Stage = {
+  title: string;
+  body: string;
 };
 
-const TILE_01: Tile = {
-  num: "01",
-  title: "Tell us the gap",
-  body: "UA lead for a launch, performance creative for a refresh, a fractional head of growth. Send the shape and the timeline. We push back when it helps.",
-  surface: "paper",
-};
-
-const TILE_02: Tile = {
-  num: "02",
-  title: "We match",
-  body: "From the lineup we already represent. Not a stack of job-board CVs. The shortlist is real people, with real availability.",
-  surface: "heat",
-};
-
-const TILE_03: Tile = {
-  num: "03",
-  title: "They get to work",
-  body: "Contract direct with the specialist. They get paid. We invoice you a flat monthly fee. Scale up, scale down, stop any time.",
-  surface: "charcoal",
-};
-
-function BentoTile({
-  tile,
-  bleed,
-  delayClass,
-}: {
-  tile: Tile;
-  bleed?: boolean;
-  delayClass?: string;
-}) {
-  const onDark = tile.surface === "heat" || tile.surface === "charcoal";
-  return (
-    <article
-      className={`reveal ${delayClass ?? ""} ${styles.tile} ${
-        styles[`surface-${tile.surface}`]
-      } ${tile.surface === "heat" ? "heat-glow" : ""} ${
-        bleed ? styles.bleedRight : ""
-      }`}
-    >
-      <p
-        className={`${styles.num} ${onDark ? styles.numOnDark : ""}`}
-        aria-hidden="true"
-      >
-        {tile.num}
-      </p>
-      <h3
-        className={`${styles.title} ${onDark ? styles.titleOnDark : ""}`}
-      >
-        {tile.title}
-      </h3>
-      <div className={styles.content}>
-        <p
-          className={`${styles.body} ${onDark ? styles.bodyOnDark : ""}`}
-        >
-          {tile.body}
-        </p>
-      </div>
-    </article>
-  );
-}
+const STAGES: Stage[] = [
+  {
+    title: "Have a look at the lineup.",
+    body: "Filter by role, discipline, or availability. Every profile is someone we currently represent.",
+  },
+  {
+    title: "Tell us who to introduce you to.",
+    body: "Once someone catches your eye, request an intro through their profile. We reply the same day and set up the call that week.",
+  },
+  {
+    title: "Meet the specialist.",
+    body: "One call. You and the person doing the work. We don't sit in.",
+  },
+  {
+    title: "Contract with them, not us.",
+    body: "Day rate, hours, scope, you and the specialist agree. We invoice a flat monthly fee for the engagement. Simple.",
+  },
+  {
+    title: "The relationship keeps running.",
+    body: "When the engagement ends, the specialist stays on the lineup. Need the next one, same process.",
+  },
+];
 
 export function HowItWorksBento() {
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
+
   return (
     <section className={styles.section} id="how">
       <div className="container">
-        <header className={styles.top}>
-          <p className="kicker">How it works</p>
-          <h2 className={styles.headline}>
-            <span className="gr">How a hire actually happens.</span>
-          </h2>
-          <p className={styles.subhead}>
-            Three steps. No CV stack to wade through.
-          </p>
-        </header>
-
-        <div className={styles.grid}>
-          <div className={styles.row}>
-            <BentoTile tile={TILE_01} />
-            <BentoTile tile={TILE_02} delayClass="d1" />
+        <div className={styles.split}>
+          <div className={styles.left}>
+            <p className="kicker">How it works</p>
+            <h2 className={styles.header}>
+              <span className="gr">How it works.</span>
+            </h2>
+            <p className={styles.body}>
+              Recruitment agencies run searches. We represent people directly,
+              so you don&apos;t need to. Look at the lineup, tell us who to
+              introduce you to, and take the call. If it&apos;s a fit, you
+              contract with them.
+            </p>
+            <Link href="/enquire" className={styles.cta}>
+              <span className={styles.ctaArrow} aria-hidden="true">
+                ↳
+              </span>
+              Get in touch
+            </Link>
           </div>
-          <BentoTile tile={TILE_03} bleed delayClass="d1" />
+
+          <div className={styles.right}>
+            {STAGES.map((stage, i) => (
+              <StageRow
+                key={i}
+                index={i + 1}
+                stage={stage}
+                open={openIndex === i}
+                onToggle={() =>
+                  setOpenIndex(openIndex === i ? null : i)
+                }
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>
+  );
+}
+
+function StageRow({
+  index,
+  stage,
+  open,
+  onToggle,
+}: {
+  index: number;
+  stage: Stage;
+  open: boolean;
+  onToggle: () => void;
+}) {
+  const label = String(index).padStart(2, "0");
+  return (
+    <div className={`${styles.stage} ${open ? styles.stageOpen : ""}`}>
+      <button
+        type="button"
+        className={styles.stageBtn}
+        onClick={onToggle}
+        aria-expanded={open}
+      >
+        <span className={styles.stageNum} aria-hidden="true">
+          {label}
+        </span>
+        <span className={styles.stageTitle}>{stage.title}</span>
+        <span className={styles.stageToggle} aria-hidden="true">
+          {open ? "−" : "+"}
+        </span>
+      </button>
+      <div className={styles.stageBodyWrap} aria-hidden={!open}>
+        <p className={styles.stageBody}>{stage.body}</p>
+      </div>
+    </div>
   );
 }
