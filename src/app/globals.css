@@ -756,3 +756,17 @@ html {
     transform: none;
   }
 }
+
+/* Print: hide the site chrome (TopNav + Footer) so the printed page
+   only contains the routed page content. Andre noticed the spec-page
+   PDF was capturing the site footer; scoping the nav to the aria
+   label and the site footer to its id keeps this rule from hiding
+   the spec page's own inner <footer> element (that one is scoped by
+   className not tag+id). */
+@media print {
+  nav[aria-label="Primary"],
+  footer#contact,
+  .skip-link {
+    display: none !important;
+  }
+}
