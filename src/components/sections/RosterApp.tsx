@@ -58,7 +58,6 @@ const emptyFilters = (): FilterState => ({
 });
 
 const LOCATIONS: { value: string; label: string }[] = [
-  { value: "remote", label: "remote" },
   { value: "uk", label: "uk" },
   { value: "eu", label: "eu · remote" },
   { value: "berlin", label: "berlin" },

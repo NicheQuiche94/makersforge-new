@@ -152,7 +152,7 @@ export const ROSTER: Profile[] = [
     role: "Lead Growth Manager",
     background:
       "6+ years in mobile games user acquisition, focused on hyper and hybrid casual. Currently Lead Growth Manager at a hyper/hybrid casual publisher; 1 month notice.",
-    location: { code: "remote", label: "remote" },
+    location: { code: "eu", label: "eu · remote" },
     industries: ["games"],
     gamesCat: ["hypercasual", "hybridcasual"],
     appsCat: [],
@@ -166,7 +166,7 @@ export const ROSTER: Profile[] = [
     rateMin: 550,
     salaryAnnualLabel: "£62,000 / year",
     salaryAnnual: 62000,
-    available: false,
+    available: true,
     availableFor: ["contract", "permanent"],
     summary:
       "Growth manager with a strong internal-promotion story: UA Executive to Lead Growth Manager at the same publisher in ~4 years. Now owns growth across the publisher's full live portfolio, steering the team to spend and ROAS targets across all major UA networks with up to ~$2M/month in spend. Standout: native Mandarin plus a Nordic language and repeated ownership of China growth alongside Western channels.",
