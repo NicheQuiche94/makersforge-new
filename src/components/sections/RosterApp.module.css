@@ -639,7 +639,12 @@
   font-family: "Cal Sans", system-ui, sans-serif;
   font-weight: 400;
   font-size: 24px;
-  letter-spacing: -0.02em;
+  /* Was -0.02em. Cal Sans + the tight negative spacing was letting
+     letters bleed into each other on longer titles like 'Head of
+     User Acquisition' — 'acquisition' in particular read as a
+     single block. 0 gives the glyphs their natural spacing without
+     losing the Cal Sans display feel. */
+  letter-spacing: 0;
   text-transform: none;
   line-height: 1;
   margin: 0;
