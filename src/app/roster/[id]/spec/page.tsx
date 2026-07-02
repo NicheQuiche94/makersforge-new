@@ -122,12 +122,17 @@ export default function SpecPage() {
             <dl className={styles.rates}>
               <RateRow
                 k="Day rate (contract)"
-                v={formatRate(profile.rateMin, currency, "day")}
+                v={formatRate(profile.rateMin, currency, "day", profile.rateMax)}
               />
               {profile.salaryAnnual !== undefined && (
                 <RateRow
                   k="Annual salary (permanent)"
-                  v={formatRate(profile.salaryAnnual, currency, "year")}
+                  v={formatRate(
+                    profile.salaryAnnual,
+                    currency,
+                    "year",
+                    profile.salaryAnnualMax,
+                  )}
                 />
               )}
               <RateRow k="Open to" v={openToCopy} />

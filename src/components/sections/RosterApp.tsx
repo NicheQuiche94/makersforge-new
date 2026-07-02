@@ -633,7 +633,10 @@ function ProfileRow({
      page for UA profiles. */
   const thirdRow =
     p.salaryAnnual !== undefined
-      ? { k: "Annual salary", v: formatRate(p.salaryAnnual, currency, "year") }
+      ? {
+          k: "Annual salary",
+          v: formatRate(p.salaryAnnual, currency, "year", p.salaryAnnualMax),
+        }
       : null;
 
   return (
@@ -655,7 +658,7 @@ function ProfileRow({
         </div>
         <div className={styles.prowMid}>
           <MetaRow k="Location" v={p.location.label} />
-          <MetaRow k="Day rate" v={formatRate(p.rateMin, currency, "day")} />
+          <MetaRow k="Day rate" v={formatRate(p.rateMin, currency, "day", p.rateMax)} />
           {thirdRow && <MetaRow k={thirdRow.k} v={thirdRow.v} />}
         </div>
         <div className={styles.prowStatusWrap}>

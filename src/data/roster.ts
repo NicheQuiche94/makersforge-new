@@ -62,11 +62,18 @@ export type Profile = {
   dayRateLabel: string;
   dayRateBand: 0 | 1 | 2;
   rateMin: number;
+  /* Optional upper bound for day rate. When present and different
+     from rateMin, the display renders the day rate as a range
+     (e.g. £800 to £1,000 / day). Absent = single value. */
+  rateMax?: number;
   /* Permanent-salary equivalent. Many studios brief us on contract
      terms but want the option to flip to perm later, so the salary
      they'd need to pay needs to be on the card as well as the rate. */
   salaryAnnualLabel?: string;
   salaryAnnual?: number;
+  /* Optional upper bound for annual salary. Same pattern as
+     rateMax — when present, display renders as a range. */
+  salaryAnnualMax?: number;
 
   /* Independent of `available`. `available` is "ready to start now";
      `availableFor` says which engagement types they're open to. A
@@ -164,8 +171,9 @@ export const ROSTER: Profile[] = [
     dayRateLabel: "£800 / day",
     dayRateBand: 2,
     rateMin: 800,
-    salaryAnnualLabel: "£80,000 - £120,000 / year",
-    salaryAnnual: 100000,
+    salaryAnnualLabel: "£80,000 to £120,000 / year",
+    salaryAnnual: 80000,
+    salaryAnnualMax: 120000,
     available: true,
     availableFor: ["permanent", "contract"],
     summary:
@@ -252,6 +260,59 @@ export const ROSTER: Profile[] = [
     recruiterNotes: [
       "Strong internal-progression signal: moved from UA Executive to Lead Growth Manager at the same publisher in roughly four years, with promotions explicitly tied to results. Reads as someone studios retain and keep betting on.",
       "Cross-market profile is the standout: native Mandarin plus a Nordic language and an international business background.",
+    ],
+  },
+  {
+    id: "ua-05",
+    discipline: "ua",
+    codename: "ua·05",
+    role: "Head of User Acquisition",
+    background:
+      "8+ years in user acquisition across mobile games and subscription apps, 6+ of them as Head of UA. Currently Head of UA at a US subscription apps company; available now.",
+    location: { code: "eu", label: "eu · remote" },
+    industries: ["games", "apps"],
+    gamesCat: ["casual"],
+    appsCat: ["lifestyle", "productivity"],
+    genre: ["puzzle"],
+    monetisation: ["iap", "iaa", "hybrid"],
+    channels: ["meta", "google", "tiktok", "programmatic"],
+    budget: 3,
+    expertise: ["scaling", "audience", "reactivation"],
+    dayRateLabel: "£900 / day",
+    dayRateBand: 2,
+    rateMin: 900,
+    salaryAnnualLabel: "€120,000 to €180,000 / year",
+    salaryAnnual: 100000,
+    salaryAnnualMax: 150000,
+    available: true,
+    availableFor: ["contract", "permanent"],
+    summary:
+      "Serious scaling operator with a hands-on core. Took a studio's UA from ~$200K to ~$3.5M/month at 5x profit growth. Launched a match-3 title from zero to ~$3.5M/month. Repeatedly rebuilt both monetisation and creative pipelines across mobile games and subscription apps. Stays on the tools even as Head of UA. Sits with PMs, runs creative strategy, owns the testing framework.",
+    skills: [
+      "User Acquisition Strategy",
+      "Mobile Games & Subscription Apps UA",
+      "Web2App / Web2Web",
+      "Team Leadership (UA / Analytics / Creative)",
+      "Creative Strategy & Production Scaling",
+      "Monetisation (IAA / IAP)",
+      "Meta / Google / AppLovin / Unity / Mintegral / Moloco / ironSource / TikTok",
+      "AppsFlyer / Adjust / BI",
+      "Predictive Analytics & Forecasting",
+      "Budgets to $3.5M/month",
+    ],
+    experience: [
+      "8+ years in user acquisition across mobile games and apps, 6+ of them as Head of UA, scaling teams from 3 up to 15 specialists spanning lead UA managers, analytics, and creative. Hands-on throughout: builds strategy with the team and still runs campaigns herself even at Head level, and owns the outcome.",
+      "Most recently Head of UA at a US subscription apps company, leading UA and creative for a long-running (5+ year) flagship subscription app. Built reporting and forecasting, lifted company profitability ~1.5x, scaled the flagship to #1 in its category despite a mature lifecycle, launched Web2Web and Web2App acquisition, held every R&D project at 100%+ ROI, and set a new all-time revenue record. Also runs her own B2B company on the side.",
+      "Before that, Head of UA at a French apps-and-games company: ran UA, analytics, and creative with acquisition audits and scale-readiness planning, established reporting and forecasting, lifted profitability ~4x and hit the annual revenue plan in year one, and scaled 2 utility apps and 3 games by 5x+.",
+      "Earlier, Head of UA at a casual mobile games studio, where she built the UA org from ~4 to ~15 people (UA managers, team leads, analytics, and creative producers). Joined at ~$200K/month spend, reworked monetisation from pure ad/IAA into IAA+IAP, overhauled UA strategy, and scaled to ~$3.5M/month with 5x+ profit growth. Tested 20+ networks, worked with Meta on IAP ROAS optimisation, launched and owned a new match-3 title end to end (from zero to ~$3.5M/month), built the UA analytics, BI, and predictive-forecasting function, and set up a freelance motion-design platform that lifted creative output from ~20 to ~100 pieces a week. Helped the company into the top 10 by revenue in its market.",
+      "Foundations at a UA agency (progressed from junior to team lead in 6 months across all the major networks) and earlier UA roles at casual mobile studios; bachelor's in management.",
+      "Works extremely close to product and creative: sits with PMs for the full product picture, and runs creative strategy hands-on, sharing metrics, scoping creative tasks, and owning the testing framework. Deep channel coverage across Meta, Google, AppLovin, Unity, Mintegral, Moloco, ironSource, and TikTok, with AppsFlyer, Adjust, and strong BI and predictive analytics.",
+    ],
+    motivations:
+      "Wants to move back into gaming, ideally toward larger and well-resourced companies. Open to any monetisation model, with a lean toward casual and IAP-driven games. Prefers remote. Biggest driver is great people and a good working environment.",
+    recruiterNotes: [
+      "Serious scaling operator with a hands-on core: took a studio's UA from ~$200K to ~$3.5M/month at 5x profit, launched a match-3 title from zero, and repeatedly rebuilt both monetisation (IAA into IAP) and creative pipelines. The through-line is that she stays on the tools, running campaigns herself as Head of UA, which suits a studio wanting a leader who still executes.",
+      "Very complete across the UA stack: strategy, team building (up to 15 across UA, analytics, and creative), predictive BI and forecasting, and creative production at volume, with the freelance motion-design platform going 20 to 100 creatives a week as a standout. Comfortable across both games and subscription apps, and both in-house and agency.",
     ],
   },
 ];
