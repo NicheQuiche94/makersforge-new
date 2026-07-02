@@ -1,0 +1,86 @@
+/* Principles — three columns, containerless. Icon + title + body
+   per column. */
+
+.section {
+  background: var(--bg-deep);
+  padding: 100px 0 110px;
+  color: var(--ink);
+}
+
+.header {
+  max-width: 1080px;
+  margin: 0 auto 56px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.h2 {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(44px, 7vw, 108px);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  margin: 4px 0 0;
+  color: var(--ink);
+  max-width: 1080px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 48px;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+@media (max-width: 800px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+.principle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 18px;
+  padding: 12px 8px;
+}
+
+.iconWrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: var(--heat-h);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 18px rgba(255, 93, 0, 0.24);
+}
+.iconWrap svg {
+  width: 26px;
+  height: 26px;
+}
+
+.title {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 19px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 0;
+}
+
+.body {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 15.5px;
+  line-height: 1.55;
+  color: var(--dim);
+  margin: 0;
+  max-width: 320px;
+}
