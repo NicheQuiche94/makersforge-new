@@ -10,7 +10,6 @@ import {
 } from "react";
 import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
-import { Logo } from "@/components/atoms/Logo";
 import { ROSTER, BUDGET_LABELS, type Profile } from "@/data/roster";
 import {
   CURRENCIES,
@@ -669,13 +668,6 @@ function ProfileRow({
             {p.available ? "available" : "in contract"}
           </span>
         </div>
-        <Logo
-          variant="mark"
-          size={18}
-          monochrome="currentColor"
-          className={styles.brandStamp}
-          title=""
-        />
       </Link>
       <Link
         href={`/enquire?profile=${encodeURIComponent(p.codename)}`}
