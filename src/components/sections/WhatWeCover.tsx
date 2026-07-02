@@ -68,7 +68,7 @@ export function WhatWeCover() {
         </div>
 
         <div className={styles.ctaRow}>
-          <Link href="/roster" className={styles.cta}>
+          <Link href="/line-up" className={styles.cta}>
             <span className={styles.ctaArrow} aria-hidden="true">
               ↳
             </span>

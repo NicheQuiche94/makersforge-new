@@ -41,7 +41,7 @@ export function HeroPanel() {
           </p>
 
           <div className={styles.ctas}>
-            <Button href="/roster" variant="light" arrow>
+            <Button href="/line-up" variant="light" arrow>
               See the lineup
             </Button>
             <Button href="/#how" variant="on-dark">

@@ -13,7 +13,7 @@ import {
 import styles from "./spec.module.css";
 
 /**
- * /roster/[id]/spec
+ * /line-up/[id]/spec
  *
  * Printable single-page candidate spec. Linked from the "Download spec"
  * button on the lineup modal. Layout is intentionally calm and content-
@@ -43,7 +43,7 @@ export default function SpecPage() {
       <div className={styles.page}>
         <p className={styles.notFound}>
           Profile not found.{" "}
-          <Link href="/roster">Back to the lineup →</Link>
+          <Link href="/line-up">Back to the lineup →</Link>
         </p>
       </div>
     );
@@ -61,7 +61,7 @@ export default function SpecPage() {
   return (
     <div className={styles.page}>
       <div className={styles.toolbar}>
-        <Link href="/roster" className={styles.backLink}>
+        <Link href="/line-up" className={styles.backLink}>
           ← Back to lineup
         </Link>
       </div>

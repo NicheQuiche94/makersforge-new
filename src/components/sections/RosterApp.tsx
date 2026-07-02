@@ -138,7 +138,7 @@ export function RosterApp() {
       if (r !== "all") p.set("role", r);
       if (a) p.set("available", "true");
       const qs = p.toString();
-      router.replace(qs ? `/roster?${qs}` : "/roster", { scroll: false });
+      router.replace(qs ? `/line-up?${qs}` : "/line-up", { scroll: false });
     },
     [router],
   );
@@ -616,7 +616,7 @@ function ChipGroup({
 /* Banner row (per Andre 2026-05-30): switched from the tiger-stripe
    grid of cards to full-width list-style rows. Tiger-stripe rhythm
    carries over (every other row is gradient). The whole row is a
-   Link into /roster/[id]/spec (Andre retired the detail modal — the
+   Link into /line-up/[id]/spec (Andre retired the detail modal — the
    full-page spec reads better than the cramped modal); a separate
    "request info" CTA on the right routes to /enquire with the
    codename pre-attached. */
@@ -641,7 +641,7 @@ function ProfileRow({
 
   return (
     <article className={styles.prow}>
-      <Link href={`/roster/${p.id}/spec`} className={styles.prowMain}>
+      <Link href={`/line-up/${p.id}/spec`} className={styles.prowMain}>
         <div className={styles.prowLeft}>
           <span className={styles.prowMono}>{p.codename}</span>
           <div className={styles.prowLeftBody}>

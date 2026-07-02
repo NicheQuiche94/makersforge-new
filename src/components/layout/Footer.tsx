@@ -3,11 +3,11 @@ import { Logo } from "@/components/atoms/Logo";
 import styles from "./Footer.module.css";
 
 const ROSTER_LINKS = [
-  { href: "/roster", label: "All profiles" },
-  { href: "/roster?discipline=ua", label: "UA managers" },
-  { href: "/roster?discipline=aso", label: "ASO managers" },
-  { href: "/roster?discipline=creative", label: "Marketing artists" },
-  { href: "/roster?available=true", label: "Available now" },
+  { href: "/line-up", label: "All profiles" },
+  { href: "/line-up?discipline=ua", label: "UA managers" },
+  { href: "/line-up?discipline=aso", label: "ASO managers" },
+  { href: "/line-up?discipline=creative", label: "Marketing artists" },
+  { href: "/line-up?available=true", label: "Available now" },
   { href: "/apply", label: "Join the lineup" },
 ];
 

@@ -152,7 +152,7 @@ export default function SandboxPage() {
           </div>
 
           <div className={styles.wwcCtaRow}>
-            <Link href="/roster" className={styles.arrowCta}>
+            <Link href="/line-up" className={styles.arrowCta}>
               <span className={styles.arrowCtaArrow} aria-hidden="true">
                 ↳
               </span>

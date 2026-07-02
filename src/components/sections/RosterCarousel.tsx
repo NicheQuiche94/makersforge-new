@@ -202,7 +202,7 @@ export function RosterCarousel() {
       </div>
 
       <div className={styles.cta}>
-        <Button href="/roster" variant="primary" arrow>
+        <Button href="/line-up" variant="primary" arrow>
           browse the full lineup
         </Button>
       </div>

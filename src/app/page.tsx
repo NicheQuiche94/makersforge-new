@@ -47,7 +47,7 @@ export default function HomePage() {
       <Principles />
       {/* RosterCarousel suppressed — its internal PROFILES array is
           hardcoded dummies, not real ROSTER data, so showing it next
-          to a real lineup on /roster would mislead. Re-enable once
+          to a real lineup on /line-up would mislead. Re-enable once
           the carousel is refactored to read from ROSTER. */}
       {false && ROSTER.length > 0 && <RosterCarousel />}
       <ForTalentBanner />

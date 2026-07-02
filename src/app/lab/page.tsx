@@ -96,10 +96,10 @@ export default function LabPage() {
           <p className={styles.afterNote}>
             Compare against the live{" "}
             <a
-              href="/roster"
+              href="/line-up"
               style={{ color: "var(--ink)", textDecoration: "underline" }}
             >
-              /roster
+              /line-up
             </a>{" "}
             tiger-stripe grid. Pick one or hybrid.
           </p>

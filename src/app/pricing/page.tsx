@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 /* Per Andre 2026-05-30 v6: bottom CTABand removed from pricing page.
    The two pricing cards already have their own CTAs ("Talk to us
    about a hire" / "Enquire about permanent"), so a third bottom CTA
-   was redundant. The pricing-style compact CTA moved to /roster. */
+   was redundant. The pricing-style compact CTA moved to /line-up. */
 export default function PricingPage() {
   return (
     <>

@@ -7,7 +7,7 @@ import styles from "./TopNav.module.css";
 
 const LINKS = [
   { href: "/#how", label: "How it works" },
-  { href: "/roster", label: "The lineup" },
+  { href: "/line-up", label: "The lineup" },
   { href: "/talent", label: "For talent" },
   { href: "/pricing", label: "Pricing" },
 ];
