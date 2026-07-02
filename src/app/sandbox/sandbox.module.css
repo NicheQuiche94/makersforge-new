@@ -1,0 +1,233 @@
+/* Sandbox surface. Not styled to match live pages — the goal is
+   Andre eyeballs each variant in isolation with clear labels. The
+   ACTUAL variant styles are namespaced to match the live component
+   they'd eventually become (`.wwc*` = WhatWeCover, `.principles*` =
+   Statement), so porting is a copy-paste. */
+
+.page {
+  min-height: 100vh;
+  padding: 130px 0 80px;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.header {
+  max-width: 720px;
+  margin: 0 auto 40px;
+  padding: 0 24px;
+  text-align: center;
+}
+.h1 {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(40px, 5vw, 72px);
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  margin: 8px 0 14px;
+  line-height: 1;
+}
+.hint {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--dim);
+  margin: 0 auto;
+  max-width: 560px;
+}
+
+.variant {
+  padding: 60px 0;
+  border-top: 1px dashed var(--hair);
+}
+.variantLabel {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mute);
+  text-align: center;
+  margin: 0 0 40px;
+}
+
+/* ============================================================
+   WhatWeCover variant — four columns, hairline separators only
+   ============================================================ */
+
+.wwcHeader {
+  max-width: 1080px;
+  margin: 0 auto 48px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.wwcH2 {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(44px, 6vw, 84px);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  margin: 4px 0 0;
+  color: var(--ink);
+  max-width: 1080px;
+}
+.wwcSubhead {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: clamp(16px, 1.5vw, 20px);
+  line-height: 1.5;
+  color: var(--dim);
+  max-width: 620px;
+  margin: 0;
+}
+
+/* 4-column grid, top + bottom hairlines, vertical hairlines between
+   columns. No paper background, no border radius — content-first. */
+.clusterGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--hair);
+  border-bottom: 1px solid var(--hair);
+}
+@media (max-width: 900px) {
+  .clusterGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .cluster:nth-child(2) {
+    border-right: 0;
+  }
+}
+@media (max-width: 500px) {
+  .clusterGrid {
+    grid-template-columns: 1fr;
+  }
+  .cluster {
+    border-right: 0;
+    border-bottom: 1px solid var(--hair);
+  }
+  .cluster:last-child {
+    border-bottom: 0;
+  }
+}
+
+.cluster {
+  padding: 36px 26px 40px;
+  border-right: 1px solid var(--hair);
+}
+.cluster:last-child {
+  border-right: 0;
+}
+.clusterLabel {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: clamp(17px, 1.4vw, 21px);
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 0 0 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--hair);
+}
+.roleList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.role {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--dim);
+}
+
+/* ============================================================
+   Principles variant — three columns, icon + title + body, no
+   card container. Icons stay lush (Andre's word); cards removed.
+   ============================================================ */
+
+.principlesHeader {
+  max-width: 1080px;
+  margin: 0 auto 56px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.principlesH2 {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(44px, 7vw, 108px);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  margin: 4px 0 0;
+  color: var(--ink);
+  max-width: 1080px;
+}
+.principlesSubhead {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: clamp(16px, 1.5vw, 20px);
+  line-height: 1.5;
+  color: var(--dim);
+  max-width: 620px;
+  margin: 0;
+}
+
+.principlesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 48px;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+@media (max-width: 800px) {
+  .principlesGrid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+.principle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 18px;
+  padding: 12px 8px;
+}
+.iconWrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: var(--heat-h);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 18px rgba(255, 93, 0, 0.24);
+}
+.iconWrap svg {
+  width: 26px;
+  height: 26px;
+}
+.principleTitle {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 19px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 0;
+}
+.principleBody {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 15.5px;
+  line-height: 1.55;
+  color: var(--dim);
+  margin: 0;
+  max-width: 320px;
+}
