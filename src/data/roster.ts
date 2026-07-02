@@ -156,7 +156,7 @@ export const ROSTER: Profile[] = [
     id: "ua-01",
     discipline: "ua",
     codename: "ua·01",
-    role: "Head of UA & Growth",
+    role: "Head of Growth",
     background:
       "15+ years in growth and performance marketing across mobile games, apps, and AI-driven products. Currently Head of UA & Growth at an AI venture studio (remote contract).",
     location: { code: "uk", label: "uk" },
@@ -266,7 +266,7 @@ export const ROSTER: Profile[] = [
     id: "ua-05",
     discipline: "ua",
     codename: "ua·05",
-    role: "Head of User Acquisition",
+    role: "Head of UA",
     background:
       "8+ years in user acquisition across mobile games and subscription apps, 6+ of them as Head of UA. Currently Head of UA at a US subscription apps company; available now.",
     location: { code: "eu", label: "eu · remote" },
@@ -319,7 +319,7 @@ export const ROSTER: Profile[] = [
     id: "ua-04",
     discipline: "ua",
     codename: "ua·04",
-    role: "Head of Growth, Mobile Gaming",
+    role: "Head of Growth",
     background:
       "Multi-disciplinary growth marketer combining UA, creative production, ASO, product marketing, and monetisation. Recent Head of Growth on an RPG launch; immediately available.",
     location: { code: "eu", label: "eu · remote" },
