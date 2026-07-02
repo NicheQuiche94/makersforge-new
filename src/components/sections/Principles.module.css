@@ -9,7 +9,9 @@
 
 .header {
   max-width: 1080px;
-  margin: 0 auto 56px;
+  /* 56px → 88px header-to-grid gap. The three principle blocks were
+     reading as compressed under the big Cal Sans header per Andre. */
+  margin: 0 auto 88px;
   text-align: center;
   display: flex;
   flex-direction: column;
