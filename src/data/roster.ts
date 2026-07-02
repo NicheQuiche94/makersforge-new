@@ -315,6 +315,58 @@ export const ROSTER: Profile[] = [
       "Very complete across the UA stack: strategy, team building (up to 15 across UA, analytics, and creative), predictive BI and forecasting, and creative production at volume, with the freelance motion-design platform going 20 to 100 creatives a week as a standout. Comfortable across both games and subscription apps, and both in-house and agency.",
     ],
   },
+  {
+    id: "ua-04",
+    discipline: "ua",
+    codename: "ua·04",
+    role: "Head of Growth, Mobile Gaming",
+    background:
+      "Multi-disciplinary growth marketer combining UA, creative production, ASO, product marketing, and monetisation. Recent Head of Growth on an RPG launch; immediately available.",
+    location: { code: "eu", label: "eu · remote" },
+    industries: ["games"],
+    gamesCat: ["casual", "midcore"],
+    appsCat: [],
+    genre: ["rpg", "simulation"],
+    monetisation: ["iap", "hybrid"],
+    channels: ["meta", "google", "tiktok"],
+    expertise: ["audience", "reactivation"],
+    dayRateLabel: "£500 / day",
+    dayRateBand: 1,
+    rateMin: 500,
+    salaryAnnualLabel: "€60,000 to €65,000 / year",
+    salaryAnnual: 51000,
+    salaryAnnualMax: 55000,
+    available: true,
+    availableFor: ["permanent", "contract"],
+    summary:
+      "Multi-disciplinary growth marketer with a strong engineering and data combination. Owns UA end-to-end: creative production, ASO, monetisation design, A/B testing, and community building. Recent Head of Growth on an RPG launch hit ~$1 CPIs in Tier-1 GEOs, 15% D7 ROAS uplift from monetisation design, ~10% ASO conversion lift, and 3x community growth. Stays hands-on across the stack.",
+    skills: [
+      "User Acquisition (Organic + Paid)",
+      "UA Creative Production",
+      "Creative Testing & Iteration",
+      "ASO",
+      "Monetisation & IAP Design",
+      "Product Marketing",
+      "Data Analysis",
+      "A/B Testing",
+      "Community Building",
+      "Customer Segmentation",
+      "Go-to-Market",
+    ],
+    experience: [
+      "Multi-disciplinary growth marketer with engineering, data, and research background combining growth, performance, and product marketing into one holistic approach; consistently hands-on in small, cross-functional teams.",
+      "Most recently Head of Growth at a mobile games studio, owning soft and global launch and UA strategy for an RPG title: KPI-centric UA creative production and iteration (ROAS/CPI/CPE/retention), ASO lifting conversion ~10%, monetisation design driving a 15% D7 ROAS uplift, and A/B testing that reached ~$1 CPIs in Tier-1 GEOs on Android and iOS, plus 3x community growth. The role ended in a redundancy after the studio's funding fell through.",
+      "Before that, a multi-year progression at a gaming company that began as a web gaming platform and moved into mobile: from Product Specialist and Product Marketing Manager (Mixpanel ownership, data-driven product reporting, tutorialisation, feature-project management, and helping build a 250k+ userbase) up to Growth Lead.",
+      "As Growth Lead there, designed soft-launch and UA strategy for a dating and life-simulation mobile game, ran a weekly playtest-driven design loop, hit peak ASO conversion of 88% on Tier-1 iOS and sub-$1 CPIs, built a 1,500+ member playtesting community in 6 months, and managed a team of 6 (2x creative output and guided playtests).",
+      "Earlier in that progression, as Growth & Product Marketing Manager, ran marketability testing, go-to-market (+20% organic lifetime users at launch), social strategy (20M+ impressions across paid and organic), and owned email marketing end to end.",
+      "Strong data-and-creative combination: comfortable owning the analytics side and producing UA creative directly, running structured creative testing. Also runs personal growth and content projects, including a video-production channel and a gaming-events project grown 300% YoY on attendance.",
+    ],
+    motivations:
+      "Core preference is UA and creative production, with product and monetisation/IAP design as genuinely enjoyable adjacent work. Wants small, multi-disciplinary teams where he can stay hands-on across UA, creative, ASO, product, and monetisation. Prefers to avoid casino products.",
+    recruiterNotes: [
+      "Rare mix of a rigorous science and data background with hands-on UA creative production, which shows up in the numbers ($1 CPIs, 88% ASO conversion, 15% D7 ROAS uplift). Strong fit where a studio wants one person to own UA end to end, creative through analytics.",
+    ],
+  },
 ];
 
 export const BUDGET_LABELS = ["< £50k", "£50k–250k", "£250k–1m", "£1m+"] as const;
