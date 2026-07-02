@@ -73,14 +73,32 @@
   color: var(--ink);
   max-width: 1080px;
 }
-.wwcSubhead {
+/* WhatWeCover CTA row — sits under the four columns. Same arrow-
+   plus-label pattern as the HowItWorks left-column CTA, kept
+   consistent so the two CTAs read as the same UI element. */
+.wwcCtaRow {
+  display: flex;
+  justify-content: center;
+  padding: 32px 0 0;
+}
+.arrowCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
-  font-weight: 500;
-  font-size: clamp(16px, 1.5vw, 20px);
-  line-height: 1.5;
-  color: var(--dim);
-  max-width: 620px;
-  margin: 0;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--ink);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.arrowCta:hover {
+  color: #ff5d00;
+}
+.arrowCtaArrow {
+  color: #ff5d00;
+  font-size: 22px;
+  line-height: 1;
 }
 
 /* 4-column grid, top + bottom hairlines, vertical hairlines between
@@ -169,14 +187,105 @@
   color: var(--ink);
   max-width: 1080px;
 }
-.principlesSubhead {
+/* ============================================================
+   Explainer — represented-not-searched
+   ============================================================ */
+
+.explainerHeader {
+  max-width: 1080px;
+  margin: 0 auto 32px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.explainerH2 {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(44px, 7vw, 108px);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  margin: 4px 0 0;
+  color: var(--ink);
+  max-width: 1080px;
+}
+
+.explainerBody {
+  max-width: 720px;
+  margin: 0 auto 48px;
+}
+.explainerP {
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-weight: 500;
-  font-size: clamp(16px, 1.5vw, 20px);
-  line-height: 1.5;
+  font-size: clamp(17px, 1.5vw, 20px);
+  line-height: 1.6;
   color: var(--dim);
-  max-width: 620px;
   margin: 0;
+  text-align: center;
+}
+
+/* Two-column comparison strip — hairline table without cells.
+   Left column reads as the recruiter treatment (mute), right
+   column as the talent-agent treatment (ink + heat-accented). */
+.comparison {
+  max-width: 960px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 1px solid var(--hair);
+  border-bottom: 1px solid var(--hair);
+}
+.comparisonCol {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--hair);
+  border-right: 1px solid var(--hair);
+}
+.comparisonCol:last-child {
+  border-right: 0;
+}
+.comparisonLabel {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin: 0;
+}
+.comparisonRow {
+  display: contents;
+}
+.comparisonCell {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--hair);
+  border-right: 1px solid var(--hair);
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--mute);
+}
+.comparisonRow:last-child .comparisonCell {
+  border-bottom: 0;
+}
+.comparisonCell:last-child {
+  border-right: 0;
+}
+.comparisonUs {
+  color: var(--ink);
+  font-weight: 600;
+  background: rgba(255, 93, 0, 0.03);
+}
+@media (max-width: 700px) {
+  .comparison {
+    grid-template-columns: 1fr;
+  }
+  .comparisonCol {
+    border-right: 0;
+  }
+  .comparisonCell {
+    border-right: 0;
+  }
 }
 
 .principlesGrid {

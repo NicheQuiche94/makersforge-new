@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import Link from "next/link";
 import { StatStrip } from "@/components/sections/StatStrip";
 import styles from "./sandbox.module.css";
 
 /**
  * /sandbox — preview surface for home-page section variants.
  *
- * Not linked from nav. Not indexed. Andre uses this to eyeball the
- * proposed redesigns (StatStrip trimmed, WhatWeCover containerless,
- * Statement columns-not-cards) side-by-side with the live home page
- * before any of them get pushed into src/app/page.tsx. Approved
- * variants get ported into their respective component files.
+ * Not linked from nav. Not indexed. Andre uses this to eyeball
+ * proposed redesigns before any of them get pushed into
+ * src/app/page.tsx. Approved variants get ported into their
+ * respective component files.
  */
 
 export const metadata: Metadata = {
@@ -52,24 +52,43 @@ const CLUSTERS: { label: string; roles: string[] }[] = [
   },
 ];
 
-const PRINCIPLES: { icon: ReactNode; title: string; body: string }[] = [
+const NEW_PRINCIPLES: { icon: ReactNode; title: string; body: string }[] = [
   {
-    icon: <AvailabilityIcon />,
-    title: "Currently available",
+    icon: <WalletIcon />,
+    title: "Talent doesn't pay for representation.",
     body:
-      "The specialists on the lineup are open to new work now. What you see is who you can talk to this month.",
+      "The specialist keeps 100% of what they earn. Studios pay us a flat monthly fee; the talent side never sees an invoice from us.",
   },
   {
-    icon: <VettedIcon />,
-    title: "Already vetted",
+    icon: <ScalesIcon />,
+    title: "We work for both sides.",
     body:
-      "Everyone on the lineup is someone we've worked with or dug into. No CV stacks, no unknowns.",
+      "A recruiter's job is done when someone gets hired. Ours is done when the specialist wants to come back to the lineup and the studio wants to work with us again.",
   },
   {
-    icon: <DirectIcon />,
-    title: "Direct intro",
+    icon: <InfinityIcon />,
+    title: "Indefinite representation.",
     body:
-      "Pick from the lineup and we set up the call. You talk to the specialist, not to us.",
+      "Once a specialist is on the lineup, they stay on it. We keep the relationship warm between engagements and open the next round when the current one wraps.",
+  },
+];
+
+const COMPARISON: { them: string; us: string }[] = [
+  {
+    them: "Sells search to companies",
+    us: "Represents specialists directly",
+  },
+  {
+    them: "Per-hire fee or a cut of the salary",
+    us: "Flat monthly fee, paid by the studio",
+  },
+  {
+    them: "Job's done at placement",
+    us: "Indefinite representation, both sides",
+  },
+  {
+    them: "You brief them; they go find people",
+    us: "You look at the lineup; we set up the call",
   },
 ];
 
@@ -84,10 +103,11 @@ export default function SandboxPage() {
         <p className="kicker">Sandbox</p>
         <h1 className={styles.h1}>Home variants</h1>
         <p className={styles.hint}>
-          Three redesigns landing here first so we can push them clean.
-          StatStrip trimmed to three centred tiles. WhatWeCover switched to
-          four columns, no cards. Statement kept the icons but dropped the
-          card containers.
+          Preview surface for the home-page reshuffle. Iterate here, then
+          port. StatStrip (three centred tiles). WhatWeCover (four columns,
+          no subhead, CTA to the lineup). NEW Principles (actual talent-
+          agent commitments, not the old how-it-works points). NEW
+          Represented-not-searched explainer with a comparison strip.
         </p>
       </header>
 
@@ -102,11 +122,11 @@ export default function SandboxPage() {
       </section>
 
       {/* ============================================================
-          Variant 2 — WhatWeCover: four columns, containerless
+          Variant 2 — WhatWeCover: four columns, no subhead, CTA
           ============================================================ */}
       <section className={styles.variant}>
         <p className={styles.variantLabel}>
-          WhatWeCover · four columns, no cards
+          WhatWeCover · no subhead, CTA to the lineup
         </p>
         <div className="container">
           <header className={styles.wwcHeader}>
@@ -114,10 +134,6 @@ export default function SandboxPage() {
             <h2 className={styles.wwcH2}>
               <span className="gr">Growth teams for mobile apps and games.</span>
             </h2>
-            <p className={styles.wwcSubhead}>
-              Grouped roughly. Roles overlap. If who you need isn&apos;t
-              obvious, ask.
-            </p>
           </header>
 
           <div className={styles.clusterGrid}>
@@ -134,33 +150,83 @@ export default function SandboxPage() {
               </div>
             ))}
           </div>
+
+          <div className={styles.wwcCtaRow}>
+            <Link href="/roster" className={styles.arrowCta}>
+              <span className={styles.arrowCtaArrow} aria-hidden="true">
+                ↳
+              </span>
+              See the lineup
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* ============================================================
-          Variant 3 — Principles: three columns, containerless
+          Variant 3 — NEW Principles: actual talent-agent commitments
           ============================================================ */}
       <section className={styles.variant}>
         <p className={styles.variantLabel}>
-          Principles · three columns, no card containers
+          Principles · actual commitments (new copy)
         </p>
         <div className="container">
           <header className={styles.principlesHeader}>
             <p className="kicker">Principles</p>
             <h2 className={styles.principlesH2}>
-              <span className="gr">Represented, not searched.</span>
+              <span className="gr">How we hold ourselves.</span>
             </h2>
-            <p className={styles.principlesSubhead}>
-              These are the specialists we currently represent.
-            </p>
           </header>
 
           <div className={styles.principlesGrid}>
-            {PRINCIPLES.map((p) => (
+            {NEW_PRINCIPLES.map((p) => (
               <div key={p.title} className={styles.principle}>
                 <div className={styles.iconWrap}>{p.icon}</div>
                 <h3 className={styles.principleTitle}>{p.title}</h3>
                 <p className={styles.principleBody}>{p.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================
+          Variant 4 — NEW Represented-not-searched explainer
+          ============================================================ */}
+      <section className={styles.variant}>
+        <p className={styles.variantLabel}>
+          Explainer · represented, not searched
+        </p>
+        <div className="container">
+          <header className={styles.explainerHeader}>
+            <p className="kicker">The difference</p>
+            <h2 className={styles.explainerH2}>
+              <span className="gr">Represented, not searched.</span>
+            </h2>
+          </header>
+
+          <div className={styles.explainerBody}>
+            <p className={styles.explainerP}>
+              A recruitment agency runs searches. They don&apos;t know the
+              people they&apos;re finding for you; they go and look. A talent
+              agent represents specialists directly. Everyone on the lineup
+              is someone we already work with. Ask us for an intro and
+              you&apos;re talking to them the same week.
+            </p>
+          </div>
+
+          <div className={styles.comparison}>
+            <div className={styles.comparisonCol}>
+              <p className={styles.comparisonLabel}>Recruitment agency</p>
+            </div>
+            <div className={styles.comparisonCol}>
+              <p className={styles.comparisonLabel}>Talent agent</p>
+            </div>
+            {COMPARISON.map((row, i) => (
+              <div key={i} className={styles.comparisonRow}>
+                <div className={styles.comparisonCell}>{row.them}</div>
+                <div className={`${styles.comparisonCell} ${styles.comparisonUs}`}>
+                  {row.us}
+                </div>
               </div>
             ))}
           </div>
@@ -171,41 +237,40 @@ export default function SandboxPage() {
 }
 
 /* ============================================================
-   Icons — inlined from Statement.tsx so this sandbox doesn't
-   need Statement.tsx to expose them.
+   Icons for the NEW principles.
    ============================================================ */
 
-function AvailabilityIcon() {
+function WalletIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
-      <circle cx="12" cy="12" r="9" />
-      <path d="M12 7v5l3 2" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8z"
+        strokeLinejoin="round"
+      />
+      <path d="M3 10h18" strokeLinecap="round" />
+      <circle cx="17" cy="14" r="1.2" fill="currentColor" stroke="none" />
     </svg>
   );
 }
 
-function VettedIcon() {
+function ScalesIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
-      <path
-        d="M12 3l8 3v6c0 4.4-3.1 8-8 9-4.9-1-8-4.6-8-9V6l8-3z"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M8.5 12l2.5 2.5L16 9.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path d="M12 4v16" strokeLinecap="round" />
+      <path d="M6 7h12" strokeLinecap="round" />
+      <path d="M3 14l3-7 3 7" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M15 14l3-7 3 7" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M3 14a3 3 0 0 0 6 0" strokeLinecap="round" />
+      <path d="M15 14a3 3 0 0 0 6 0" strokeLinecap="round" />
     </svg>
   );
 }
 
-function DirectIcon() {
+function InfinityIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
-      <path d="M4 12h14" strokeLinecap="round" />
       <path
-        d="M14 6l6 6-6 6"
+        d="M7 12c0-2.2 1.6-4 3.7-4 1.5 0 2.6 1 3.3 2.3 0.7 1.3 1.8 2.3 3.3 2.3 2.1 0 3.7-1.8 3.7-4s-1.6-4-3.7-4c-1.5 0-2.6 1-3.3 2.3-0.7 1.3-1.8 2.3-3.3 2.3C3.6 8 2 9.8 2 12s1.6 4 3.7 4c1.5 0 2.6-1 3.3-2.3"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
