@@ -150,18 +150,20 @@
   color: #ff5d00;
 }
 
-/* Body wrap — grid-template-rows trick for a smooth height animation
-   without measuring the child, plus keeps the tab order accessible. */
+/* Body wrap — max-height animation. Previously used the grid-
+   template-rows 0fr → 1fr trick, but that relies on the grid
+   child having min-height: 0 explicitly; without that the row
+   expands to fit content and every stage body stayed visible
+   regardless of open state. max-height is boring but reliable. */
 .stageBodyWrap {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .stageOpen .stageBodyWrap {
-  grid-template-rows: 1fr;
+  max-height: 400px;
 }
 .stageBody {
-  overflow: hidden;
   margin: 0;
   padding: 0 0 26px 72px;
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
