@@ -2,12 +2,15 @@ import Link from "next/link";
 import { Logo } from "@/components/atoms/Logo";
 import styles from "./Footer.module.css";
 
+/* Condensed 2026-07-02 — the per-discipline deep links were pointing
+   at a legacy ?discipline= URL param that the lineup app retired when
+   the discipline chip row was replaced by the role dropdown inferred
+   from ROSTER. Rather than migrate them to ?role= (roles would need
+   listing here and go stale as new titles land), stripped to just
+   the two links that always make sense: browse the whole lineup,
+   or join it. */
 const ROSTER_LINKS = [
   { href: "/line-up", label: "All profiles" },
-  { href: "/line-up?discipline=ua", label: "UA managers" },
-  { href: "/line-up?discipline=aso", label: "ASO managers" },
-  { href: "/line-up?discipline=creative", label: "Marketing artists" },
-  { href: "/line-up?available=true", label: "Available now" },
   { href: "/apply", label: "Join the lineup" },
 ];
 
