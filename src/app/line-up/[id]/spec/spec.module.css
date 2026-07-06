@@ -354,6 +354,66 @@
 }
 
 /* FOOTER. */
+/* Request Interview CTA band. Sits after the profile-filters block
+   inside .body, before the branded footer. Ink surface so the heat
+   button pops; on-print CSS hides the whole block to keep the PDF
+   export clean. */
+.ctaBand {
+  margin-top: 32px;
+  padding: 28px 32px;
+  background: var(--ink);
+  color: #fff;
+  border-radius: 18px;
+  break-inside: avoid;
+}
+.ctaBandInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.ctaBandCopy {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.88);
+  margin: 0;
+  max-width: 420px;
+}
+.ctaBandCodename {
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+.ctaBandBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  background: var(--heat-h);
+  color: #fff;
+  border-radius: 999px;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  transition: filter 0.18s, transform 0.15s;
+  white-space: nowrap;
+}
+.ctaBandBtn:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+@media print {
+  .ctaBand {
+    display: none;
+  }
+}
+
 .foot {
   display: flex;
   justify-content: space-between;

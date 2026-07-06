@@ -224,6 +224,27 @@ export default function SpecPage() {
               <FilterRow k="Location" v={profile.location.label} />
             </dl>
           </Section>
+
+          {/* Primary action lives on the spec page (moved off the
+              lineup card so the card stayed clean). Request Interview
+              flows through /enquire with the codename pre-attached. */}
+          <div className={styles.ctaBand}>
+            <div className={styles.ctaBandInner}>
+              <p className={styles.ctaBandCopy}>
+                Like what you see? We'll set up a call so you can meet{" "}
+                <span className={styles.ctaBandCodename}>
+                  {profile.codename}
+                </span>{" "}
+                directly.
+              </p>
+              <Link
+                href={`/enquire?profile=${encodeURIComponent(profile.codename)}`}
+                className={styles.ctaBandBtn}
+              >
+                Request interview <span aria-hidden="true">→</span>
+              </Link>
+            </div>
+          </div>
         </div>
 
         <footer className={styles.foot}>

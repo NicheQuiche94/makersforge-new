@@ -421,9 +421,9 @@ export function RosterApp() {
             shortlist by hand from our existing network.
           </div>
         ) : (
-          <div className={styles.list}>
+          <div className={styles.cardGrid}>
             {visible.map((p) => (
-              <ProfileRow key={p.id} p={p} currency={currency} />
+              <ProfileCard key={p.id} p={p} currency={currency} />
             ))}
           </div>
         )}
@@ -619,24 +619,20 @@ function ChipGroup({
   );
 }
 
-/* Banner row (per Andre 2026-05-30): switched from the tiger-stripe
-   grid of cards to full-width list-style rows. Tiger-stripe rhythm
-   carries over (every other row is gradient). The whole row is a
-   Link into /line-up/[id]/spec (Andre retired the detail modal — the
-   full-page spec reads better than the cramped modal); a separate
-   "request info" CTA on the right routes to /enquire with the
-   codename pre-attached. */
-function ProfileRow({
+/* Profile card — Andre swapped the full-width rows for a 3-column
+   card grid 2026-07-02 after eyeballing both in /sandbox/cards.
+   Tiger-stripe alternation carries over (every second card gets the
+   heat-deep gradient background + noise overlay). Card body is one
+   Link into the spec page; a single 'See more' footer strip repeats
+   the intent explicitly. Request Interview lives on the spec page
+   itself, so no dual-CTA noise on the card. */
+function ProfileCard({
   p,
   currency,
 }: {
   p: Profile;
   currency: Currency;
 }) {
-  /* Third meta row is Annual salary for every discipline — the card
-     stays scan-consistent across UA / Creative / ASO profiles rather
-     than swapping to Budget for UA. Budget still appears on the spec
-     page for UA profiles. */
   const thirdRow =
     p.salaryAnnual !== undefined
       ? {
@@ -646,28 +642,10 @@ function ProfileRow({
       : null;
 
   return (
-    <article className={styles.prow}>
-      <Link href={`/line-up/${p.id}/spec`} className={styles.prowMain}>
-        <div className={styles.prowLeft}>
-          <span className={styles.prowMono}>{p.codename}</span>
-          <div className={styles.prowLeftBody}>
-            <h3 className={styles.prowName}>{p.role}</h3>
-            <p className={styles.prowRole}>{p.background}</p>
-          </div>
-          <div className={styles.prowInd}>
-            {p.industries.map((i) => (
-              <span key={i} className={`${styles.indBadge} ${styles[`ind${i}`]}`}>
-                {i}
-              </span>
-            ))}
-          </div>
-        </div>
-        <div className={styles.prowMid}>
-          <MetaRow k="Location" v={p.location.label} />
-          <MetaRow k="Day rate" v={formatRate(p.rateMin, currency, "day", p.rateMax)} />
-          {thirdRow && <MetaRow k={thirdRow.k} v={thirdRow.v} />}
-        </div>
-        <div className={styles.prowStatusWrap}>
+    <article className={styles.pcard}>
+      <Link href={`/line-up/${p.id}/spec`} className={styles.pcardMain}>
+        <div className={styles.pcardHead}>
+          <span className={styles.pcardMono}>{p.codename}</span>
           <span
             className={`${styles.pcStatus} ${p.available ? styles.pcStatusAv : styles.pcStatusCt}`}
           >
@@ -675,12 +653,32 @@ function ProfileRow({
             {p.available ? "available" : "in contract"}
           </span>
         </div>
+
+        <div className={styles.pcardBody}>
+          <h3 className={styles.pcardRole}>{p.role}</h3>
+          <p className={styles.pcardBg}>{p.background}</p>
+        </div>
+
+        <div className={styles.pcardInd}>
+          {p.industries.map((i) => (
+            <span key={i} className={styles.indBadge}>
+              {i}
+            </span>
+          ))}
+        </div>
+
+        <div className={styles.pcardMeta}>
+          <MetaRow k="Location" v={p.location.label} />
+          <MetaRow k="Day rate" v={formatRate(p.rateMin, currency, "day", p.rateMax)} />
+          {thirdRow && <MetaRow k={thirdRow.k} v={thirdRow.v} />}
+        </div>
       </Link>
+
       <Link
-        href={`/enquire?profile=${encodeURIComponent(p.codename)}`}
-        className={styles.prowCta}
+        href={`/line-up/${p.id}/spec`}
+        className={styles.pcardCta}
       >
-        request info <span aria-hidden="true">→</span>
+        See more <span aria-hidden="true">→</span>
       </Link>
     </article>
   );

@@ -1375,3 +1375,220 @@
 .modal::-webkit-scrollbar-thumb:hover {
   background: var(--mute);
 }
+
+/* ============================================================
+   PROFILE CARD (3-column grid) — Andre 2026-07-02: swapped the
+   full-width row layout for a card grid after eyeballing both in
+   /sandbox/cards. Tiger-stripe :nth-child(even) carries over. Card
+   body is one Link into the spec page; single 'See more' CTA in
+   the footer. Request Interview lives on the spec page itself.
+   ============================================================ */
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding-bottom: 80px;
+}
+@media (max-width: 1080px) {
+  .cardGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 700px) {
+  .cardGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.pcard {
+  position: relative;
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.pcard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(14, 15, 17, 0.06);
+}
+
+.pcardMain {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 22px 22px 20px;
+  text-decoration: none;
+  color: inherit;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.pcardHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.pcardMono {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mute);
+  transition: color 0.3s;
+}
+
+.pcardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pcardRole {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  letter-spacing: 0;
+  line-height: 1.05;
+  margin: 0;
+  color: var(--ink);
+  transition: color 0.3s;
+}
+.pcardBg {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--dim);
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color 0.3s;
+}
+
+.pcardInd {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.pcardMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 14px;
+  border-top: 1px solid var(--hair);
+  margin-top: auto;
+  transition: border-color 0.3s;
+}
+
+/* Single 'See more' CTA strip — Andre's call after rejecting the
+   dual-CTA split. Heat-gradient hover keeps it clearly interactive. */
+.pcardCta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 12px;
+  background: var(--bg-deep);
+  border-top: 1px solid var(--hair);
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  text-decoration: none;
+  transition: background 0.18s, color 0.18s;
+  position: relative;
+  z-index: 1;
+}
+.pcardCta:hover {
+  background: var(--heat-h);
+  color: #fff;
+}
+
+/* TIGER-STRIPE — every second card gets the heat-deep gradient +
+   radial highlights + noise overlay. Ported from the retired row
+   layout's :nth-child(even) rules. */
+.pcard:nth-child(even) {
+  background: var(--heat-deep);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 18px 36px rgba(14, 15, 17, 0.18);
+}
+.pcard:nth-child(even):hover {
+  filter: brightness(1.08);
+  box-shadow: 0 24px 48px rgba(199, 46, 0, 0.28);
+}
+.pcard:nth-child(even)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 80% 110%, #ffb347 0%, transparent 50%),
+    radial-gradient(
+      ellipse at 0% 0%,
+      rgba(255, 255, 255, 0.12) 0%,
+      transparent 40%
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+.pcard:nth-child(even)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* On gradient cards, invert text + accents to white/high-contrast
+   so everything still reads against the heat base. */
+.pcard:nth-child(even) .pcardMono {
+  color: rgba(255, 255, 255, 0.72);
+}
+.pcard:nth-child(even) .pcardRole,
+.pcard:nth-child(even) .pcV {
+  color: #fff;
+}
+.pcard:nth-child(even) .pcardBg,
+.pcard:nth-child(even) .pcK {
+  color: rgba(255, 255, 255, 0.82);
+}
+.pcard:nth-child(even) .indBadge {
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.24);
+}
+.pcard:nth-child(even) .pcardMeta {
+  border-top-color: rgba(255, 255, 255, 0.22);
+}
+.pcard:nth-child(even) .pcStatusAv,
+.pcard:nth-child(even) .pcStatusCt {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+.pcard:nth-child(even) .pcStatusAv .pcDot,
+.pcard:nth-child(even) .pcStatusCt .pcDot {
+  background: #fff;
+}
+
+/* CTA on gradient cards — translucent-black band under the heat base
+   for definition, flips to solid white pill on hover. */
+.pcard:nth-child(even) .pcardCta {
+  background: rgba(0, 0, 0, 0.14);
+  color: #fff;
+  border-top-color: rgba(255, 255, 255, 0.22);
+}
+.pcard:nth-child(even) .pcardCta:hover {
+  background: #fff;
+  color: var(--ink);
+}
