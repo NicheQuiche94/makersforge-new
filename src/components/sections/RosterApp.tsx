@@ -642,10 +642,10 @@ function ProfileCard({
       : null;
 
   return (
-    <article className={styles.pcard}>
-      <Link href={`/line-up/${p.id}/spec`} className={styles.pcardMain}>
-        <div className={styles.pcardHead}>
-          <span className={styles.pcardMono}>{p.codename}</span>
+    <article className={styles.rcard}>
+      <Link href={`/line-up/${p.id}/spec`} className={styles.rcardMain}>
+        <div className={styles.rcardHead}>
+          <span className={styles.rcardMono}>{p.codename}</span>
           <span
             className={`${styles.pcStatus} ${p.available ? styles.pcStatusAv : styles.pcStatusCt}`}
           >
@@ -654,12 +654,12 @@ function ProfileCard({
           </span>
         </div>
 
-        <div className={styles.pcardBody}>
-          <h3 className={styles.pcardRole}>{p.role}</h3>
-          <p className={styles.pcardBg}>{p.background}</p>
+        <div className={styles.rcardBody}>
+          <h3 className={styles.rcardRole}>{p.role}</h3>
+          <p className={styles.rcardBg}>{p.background}</p>
         </div>
 
-        <div className={styles.pcardInd}>
+        <div className={styles.rcardInd}>
           {p.industries.map((i) => (
             <span key={i} className={styles.indBadge}>
               {i}
@@ -667,7 +667,7 @@ function ProfileCard({
           ))}
         </div>
 
-        <div className={styles.pcardMeta}>
+        <div className={styles.rcardMeta}>
           <MetaRow k="Location" v={p.location.label} />
           <MetaRow k="Day rate" v={formatRate(p.rateMin, currency, "day", p.rateMax)} />
           {thirdRow && <MetaRow k={thirdRow.k} v={thirdRow.v} />}
@@ -676,7 +676,7 @@ function ProfileCard({
 
       <Link
         href={`/line-up/${p.id}/spec`}
-        className={styles.pcardCta}
+        className={styles.rcardCta}
       >
         See more <span aria-hidden="true">→</span>
       </Link>

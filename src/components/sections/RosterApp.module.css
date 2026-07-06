@@ -1400,7 +1400,13 @@
   }
 }
 
-.pcard {
+/* NOTE: classes are prefixed .rcard* (roster-card) NOT .pcard*.
+   The legacy retired row-layout CSS above still holds a big
+   .pcard:hover rulebook that fires background: var(--heat-deep) on
+   every hover — Andre spotted paper cards flipping to gradient in
+   the live deploy. Renaming the new grid classes side-steps the
+   collision without needing to purge the legacy block. */
+.rcard {
   position: relative;
   background: var(--paper);
   border: 1px solid var(--hair);
@@ -1410,12 +1416,12 @@
   flex-direction: column;
   transition: transform 0.2s, box-shadow 0.2s;
 }
-.pcard:hover {
+.rcard:hover {
   transform: translateY(-2px);
   box-shadow: 0 12px 32px rgba(14, 15, 17, 0.06);
 }
 
-.pcardMain {
+.rcardMain {
   display: flex;
   flex-direction: column;
   gap: 18px;
@@ -1427,13 +1433,13 @@
   z-index: 1;
 }
 
-.pcardHead {
+.rcardHead {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 12px;
 }
-.pcardMono {
+.rcardMono {
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-weight: 700;
   font-size: 11px;
@@ -1443,12 +1449,12 @@
   transition: color 0.3s;
 }
 
-.pcardBody {
+.rcardBody {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-.pcardRole {
+.rcardRole {
   font-family: "Cal Sans", system-ui, sans-serif;
   font-weight: 400;
   font-size: 24px;
@@ -1458,7 +1464,7 @@
   color: var(--ink);
   transition: color 0.3s;
 }
-.pcardBg {
+.rcardBg {
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-size: 14px;
   line-height: 1.5;
@@ -1471,13 +1477,13 @@
   transition: color 0.3s;
 }
 
-.pcardInd {
+.rcardInd {
   display: flex;
   gap: 6px;
   flex-wrap: wrap;
 }
 
-.pcardMeta {
+.rcardMeta {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -1487,9 +1493,23 @@
   transition: border-color 0.3s;
 }
 
+/* Meta rows on the paper .rcard use their own scoped K/V styles so
+   we don't rely on shared .pcK / .pcV (also touched by the legacy
+   :hover-goes-gradient block). */
+.rcardMeta .pcMetaRow {
+  color: inherit;
+}
+.rcard .pcK {
+  color: var(--mute);
+}
+.rcard .pcV {
+  color: var(--ink);
+  font-weight: 600;
+}
+
 /* Single 'See more' CTA strip — Andre's call after rejecting the
    dual-CTA split. Heat-gradient hover keeps it clearly interactive. */
-.pcardCta {
+.rcardCta {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1507,25 +1527,24 @@
   position: relative;
   z-index: 1;
 }
-.pcardCta:hover {
+.rcardCta:hover {
   background: var(--heat-h);
   color: #fff;
 }
 
 /* TIGER-STRIPE — every second card gets the heat-deep gradient +
-   radial highlights + noise overlay. Ported from the retired row
-   layout's :nth-child(even) rules. */
-.pcard:nth-child(even) {
+   radial highlights + noise overlay. */
+.rcard:nth-child(even) {
   background: var(--heat-deep);
   border-color: transparent;
   color: #fff;
   box-shadow: 0 18px 36px rgba(14, 15, 17, 0.18);
 }
-.pcard:nth-child(even):hover {
+.rcard:nth-child(even):hover {
   filter: brightness(1.08);
   box-shadow: 0 24px 48px rgba(199, 46, 0, 0.28);
 }
-.pcard:nth-child(even)::before {
+.rcard:nth-child(even)::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -1539,7 +1558,7 @@
   pointer-events: none;
   z-index: 0;
 }
-.pcard:nth-child(even)::after {
+.rcard:nth-child(even)::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -1552,43 +1571,43 @@
 
 /* On gradient cards, invert text + accents to white/high-contrast
    so everything still reads against the heat base. */
-.pcard:nth-child(even) .pcardMono {
+.rcard:nth-child(even) .rcardMono {
   color: rgba(255, 255, 255, 0.72);
 }
-.pcard:nth-child(even) .pcardRole,
-.pcard:nth-child(even) .pcV {
+.rcard:nth-child(even) .rcardRole,
+.rcard:nth-child(even) .pcV {
   color: #fff;
 }
-.pcard:nth-child(even) .pcardBg,
-.pcard:nth-child(even) .pcK {
+.rcard:nth-child(even) .rcardBg,
+.rcard:nth-child(even) .pcK {
   color: rgba(255, 255, 255, 0.82);
 }
-.pcard:nth-child(even) .indBadge {
+.rcard:nth-child(even) .indBadge {
   background: rgba(255, 255, 255, 0.14);
   color: #fff;
   border-color: rgba(255, 255, 255, 0.24);
 }
-.pcard:nth-child(even) .pcardMeta {
+.rcard:nth-child(even) .rcardMeta {
   border-top-color: rgba(255, 255, 255, 0.22);
 }
-.pcard:nth-child(even) .pcStatusAv,
-.pcard:nth-child(even) .pcStatusCt {
+.rcard:nth-child(even) .pcStatusAv,
+.rcard:nth-child(even) .pcStatusCt {
   background: rgba(255, 255, 255, 0.2);
   color: #fff;
 }
-.pcard:nth-child(even) .pcStatusAv .pcDot,
-.pcard:nth-child(even) .pcStatusCt .pcDot {
+.rcard:nth-child(even) .pcStatusAv .pcDot,
+.rcard:nth-child(even) .pcStatusCt .pcDot {
   background: #fff;
 }
 
 /* CTA on gradient cards — translucent-black band under the heat base
    for definition, flips to solid white pill on hover. */
-.pcard:nth-child(even) .pcardCta {
+.rcard:nth-child(even) .rcardCta {
   background: rgba(0, 0, 0, 0.14);
   color: #fff;
   border-top-color: rgba(255, 255, 255, 0.22);
 }
-.pcard:nth-child(even) .pcardCta:hover {
+.rcard:nth-child(even) .rcardCta:hover {
   background: #fff;
   color: var(--ink);
 }
