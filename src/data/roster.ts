@@ -11,7 +11,7 @@
 
 export type Profile = {
   id: string;
-  discipline: "ua" | "creative" | "aso";
+  discipline: "ua" | "creative" | "aso" | "product";
   codename: string;
   role: string;
   background: string;
@@ -527,6 +527,60 @@ export const ROSTER: Profile[] = [
     recruiterNotes: [
       "Rare combination of deep hands-on channel operator (managing 7-figure monthly Google/Meta budgets, DSP scaling, SKAN/AEM) with a genuine academic grounding — the PhD sits behind concrete, well-defined tests like the GEO-specific user flow that lifted ARPU d7 38%.",
       "Repeatedly promoted or handed bigger portfolios: scaled a casual title 39% while holding ROAS, took a board game DAU from 130K to 450K, and doubled YoY gross profit as Head of UA on a 10+ idle-title portfolio. The through-line is scaling while defending unit economics rather than chasing volume.",
+    ],
+  },
+  {
+    id: "pm-01",
+    discipline: "product",
+    codename: "pm·01",
+    role: "Head of Product & Ad Monetisation",
+    background:
+      "16+ years across product, monetisation, and commercial leadership; last several years in casual mobile games after a long stint at a major global technology platform. Currently GM, Head of Product and Head of Ad Monetisation at a mobile games studio.",
+    location: { code: "eu", label: "eu · remote" },
+    industries: ["games", "apps"],
+    gamesCat: ["casual"],
+    appsCat: [],
+    genre: ["puzzle"],
+    monetisation: ["iap", "iaa", "hybrid"],
+    expertise: ["scaling", "audience", "reactivation", "liveops"],
+    dayRateLabel: "£1,000 / day",
+    dayRateBand: 2,
+    rateMin: 1000,
+    salaryAnnualLabel: "£140,000 to £180,000 / year",
+    salaryAnnual: 140000,
+    salaryAnnualMax: 180000,
+    available: true,
+    availableFor: ["permanent", "contract"],
+    summary:
+      "Rare breadth at real scale. Sits at the intersection of product, monetisation, and ad-mon, with hard P&L ownership across a portfolio in the hundreds of millions and a shipping record ($100M P&L, new titles to ~$15M/year, doubled LTV, +10pt retention, +20% IAP). Early and credible on AI in production (LLM test automation, Gen-AI UX agent, cycle-time cuts). Commercial and partnerships pedigree from platform years travels well into product, GM, or ad-mon leadership seats.",
+    skills: [
+      "Product Leadership",
+      "Ad Monetisation",
+      "P&L Management",
+      "LiveOps",
+      "Monetisation Strategy",
+      "Cross-Functional Leadership",
+      "Data-Driven Product",
+      "Segmentation & Personalisation",
+      "AI / LLM-Powered Tooling",
+      "Strategic Partnerships",
+      "Team Building",
+    ],
+    experience: [
+      "16+ years across product, monetisation, and commercial leadership; the last several years in casual mobile games following a long stint at a major global technology platform. Track record of scaling consumer digital products used by millions worldwide.",
+      "Currently holds a dual mandate at a mobile games studio: General Manager, Head of Product AND Head of Ad Monetisation. Owns product strategy, P&L, and full user experience for the portfolio ($100M P&L, 2M+ DAU across the US, UK, Australia, and Canada), while running the centralised ad-monetisation platform that services every studio's games. Across the two mandates he carries responsibility for a combined portfolio generating several hundred million dollars in annual revenue.",
+      "Leads 75+ cross-functional people, including senior and lead PMs across product plus the company-wide ad-monetisation function.",
+      "Product wins: launched a new puzzle title from concept to $15M ARR in 6 months; doubled yearly LTV on a flagship word title via segmentation-driven personalisation and monetisation; lifted early retention by 10 points on select titles through content personalisation; and grew IAP revenue 20% with personalised seasonal offers and social features.",
+      "Drove the studio's AI transformation: shipped an LLM-powered automation platform that cut release cycle time ~25% across 10+ games, and a Gen-AI UX-validation agent that cut design-review time 15% and iterations 30%.",
+      "Ad monetisation: led company-wide strategy delivering 20% YoY growth to $XXXM+ ARR through platform optimisation, new ad formats, and partnerships with leading ad networks and mediation platforms (including AppLovin).",
+      "Earlier, ~5 years at a major global technology platform across its app-store games and ad-monetisation arms as a strategic partnerships manager, advising several of the world's largest gaming and app companies on revenue growth and managing a $250M+ portfolio; launched a new apps/games service generating $100M ARR incremental revenue across APAC. Before that, ~7 years in brand, sales, and regional P&L roles at a multinational company.",
+    ],
+    motivations:
+      "Ready to expand horizons beyond current game categories, also into subscription and consumer applications.",
+    recruiterNotes: [
+      "Rare breadth at real scale: sits at the intersection of product, monetisation, and ad-mon, with hard P&L ownership across a portfolio in the hundreds of millions and a genuine shipping record ($100M P&L, new titles to ~$15M/year, doubled LTV, +10pt retention, +20% IAP).",
+      "Early and credible on AI in production rather than just talk: LLM test automation and a Gen-AI UX agent with measurable cycle-time and review-time cuts, and he kickstarted his org's AI transformation.",
+      "Strong commercial and partnerships pedigree from his platform years (advising the largest global gaming companies) that travels well into product, GM, or ad-mon leadership.",
     ],
   },
 ];

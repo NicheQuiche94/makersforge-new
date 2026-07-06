@@ -3,7 +3,7 @@
 import { useState, type FormEvent, type ReactNode } from "react";
 import styles from "./ApplyForm.module.css";
 
-type Discipline = "ua" | "creative" | "aso";
+type Discipline = "ua" | "creative" | "aso" | "product";
 
 type Status = "idle" | "submitting" | "ok" | "error";
 
@@ -122,10 +122,17 @@ export function ApplyForm() {
               onChange={() => setDiscipline("aso")}
               label="ASO manager"
             />
+            <RadioPill
+              name="discipline"
+              value="product"
+              checked={discipline === "product"}
+              onChange={() => setDiscipline("product")}
+              label="Product / Monetisation"
+            />
           </div>
         </Field>
         <div className={styles.split}>
-          <Field label="role" required hint="e.g. ua manager, aso manager, marketing artist, creative producer">
+          <Field label="role" required hint="e.g. ua manager, aso manager, marketing artist, creative producer, head of product">
             <input name="role" type="text" required className={styles.input} />
           </Field>
           <Field label="background" required hint="e.g. ex-Supercell">

@@ -26,6 +26,7 @@ const DISCIPLINES = [
   { v: "ua", l: "ua manager" },
   { v: "creative", l: "marketing artist" },
   { v: "aso", l: "aso manager" },
+  { v: "product", l: "product / monetisation" },
   { v: "either", l: "either / not sure yet" },
 ];
 const INDUSTRIES = ["games", "apps"];

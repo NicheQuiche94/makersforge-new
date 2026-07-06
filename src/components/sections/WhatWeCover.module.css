@@ -33,15 +33,30 @@
    columns. No paper background, no border radius — content-first. */
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  /* 5 columns after Andre added the Product cluster 2026-07-02. */
+  grid-template-columns: repeat(5, 1fr);
   border-top: 1px solid var(--hair);
   border-bottom: 1px solid var(--hair);
 }
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  /* Last visible column on each row shouldn't carry a right hairline;
+     with 5 items in a 3-col grid rows are 3 / 2, so item 3 and item 5
+     are last-of-row. */
+  .cluster:nth-child(3) {
+    border-right: 0;
+  }
+}
+@media (max-width: 700px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  .cluster:nth-child(2) {
+  .cluster {
+    border-right: 1px solid var(--hair);
+  }
+  .cluster:nth-child(2n) {
     border-right: 0;
   }
 }

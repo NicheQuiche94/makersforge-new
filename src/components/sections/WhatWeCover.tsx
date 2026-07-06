@@ -32,6 +32,10 @@ const CLUSTERS: Cluster[] = [
     ],
   },
   {
+    label: "Product",
+    roles: ["Product leads", "Ad monetisation", "General managers"],
+  },
+  {
     label: "Analytics",
     roles: ["Data analysts", "Analytics engineers"],
   },

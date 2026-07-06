@@ -53,7 +53,9 @@ export default function SpecPage() {
   const disciplineLabel =
     profile.discipline === "creative"
       ? "Creative production"
-      : profile.discipline.toUpperCase();
+      : profile.discipline === "product"
+        ? "Product / Monetisation"
+        : profile.discipline.toUpperCase();
   const openToCopy = profile.availableFor
     .map((k) => k[0].toUpperCase() + k.slice(1))
     .join(" · ");

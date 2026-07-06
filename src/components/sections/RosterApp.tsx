@@ -25,7 +25,7 @@ import styles from "./RosterApp.module.css";
    Filter shape
    ============================================================ */
 
-type Discipline = "all" | "ua" | "creative" | "aso";
+type Discipline = "all" | "ua" | "creative" | "aso" | "product";
 
 type FilterState = {
   industry: Set<string>;
@@ -175,6 +175,13 @@ export function RosterApp() {
       } else if (nextDiscipline === "aso") {
         copy.formats.clear();
         copy.monetisation.clear();
+        copy.channels.clear();
+        copy.budget.clear();
+      } else if (nextDiscipline === "product") {
+        /* Product / Ad-Mon people care about monetisation but not
+           UA-side channels or budget bands (their world is P&L,
+           not monthly UA spend), and not creative formats. */
+        copy.formats.clear();
         copy.channels.clear();
         copy.budget.clear();
       }
