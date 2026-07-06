@@ -1468,7 +1468,11 @@
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-size: 14px;
   line-height: 1.5;
-  color: var(--dim);
+  /* Full ink on paper cards — the intake-doc background line has to
+     scan clearly (it's the deciding-piece copy for whether a studio
+     clicks through), and dim was reading as afterthought. Inverted
+     to full white on gradient cards a few rules down. */
+  color: var(--ink);
   margin: 0;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -1578,7 +1582,9 @@
 .rcard:nth-child(even) .pcV {
   color: #fff;
 }
-.rcard:nth-child(even) .rcardBg,
+.rcard:nth-child(even) .rcardBg {
+  color: #fff;
+}
 .rcard:nth-child(even) .pcK {
   color: rgba(255, 255, 255, 0.82);
 }
