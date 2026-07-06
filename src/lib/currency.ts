@@ -51,14 +51,18 @@ export function writeStoredCurrency(c: Currency): void {
 
 /**
  * Format a GBP amount as the user's selected currency with a "/ period"
- * suffix. Rounds to whole units; thousands separators via Intl.
+ * suffix. Rounds to a clean display unit so figures read as whole
+ * numbers no matter which currency is picked:
+ *
+ *   period === "year" → nearest 1,000
+ *   period === "day"  → nearest 100
  *
  * With `maxInGbp` supplied and different from the min, renders as a
  * range using ' to ' (no dashes — Andre's site rule kills all em/en
  * dashes site-wide, and 'to' reads cleaner than the hyphen anyway).
  *
- * formatRate(500, "EUR", "day")                    // "€590 / day"
- * formatRate(60000, "USD", "year")                 // "$76,200 / year"
+ * formatRate(500, "EUR", "day")                    // "€600 / day"
+ * formatRate(60000, "USD", "year")                 // "$76,000 / year"
  * formatRate(80000, "GBP", "year", 120000)         // "£80,000 to £120,000 / year"
  */
 export function formatRate(
@@ -69,8 +73,11 @@ export function formatRate(
 ): string {
   const symbol = CURRENCY_SYMBOLS[currency];
   const rate = RATES[currency];
-  const convert = (n: number) =>
-    new Intl.NumberFormat("en-GB").format(Math.round(n * rate));
+  const unit = period === "year" ? 1000 : 100;
+  const convert = (n: number) => {
+    const rounded = Math.round((n * rate) / unit) * unit;
+    return new Intl.NumberFormat("en-GB").format(rounded);
+  };
 
   if (maxInGbp === undefined || maxInGbp === amountInGbp) {
     return `${symbol}${convert(amountInGbp)} / ${period}`;
