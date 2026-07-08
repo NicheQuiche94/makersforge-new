@@ -107,7 +107,7 @@ export const ROSTER: Profile[] = [
     role: "Creative Production Lead",
     background:
       "10+ years bridging mobile games production and creative leadership. Currently Production Lead on a card-games title in active LiveOps and post-launch operations.",
-    location: { code: "prague", label: "prague" },
+    location: { code: "prague", label: "Prague, Czechia" },
     industries: ["games"],
     gamesCat: ["casual"],
     appsCat: [],
@@ -641,10 +641,10 @@ export const ROSTER: Profile[] = [
     id: "ua-06",
     discipline: "ua",
     codename: "ua·06",
-    role: "Growth Manager",
+    role: "Senior Growth Manager",
     background:
       "11 years in mobile across production, ad-network UA, publishing, and growth leadership. Currently Senior Growth Manager at a hypercasual-to-hybrid-casual mobile games studio; immediately available.",
-    location: { code: "eu", label: "eu · remote" },
+    location: { code: "berlin", label: "Berlin, Germany" },
     industries: ["games", "apps"],
     gamesCat: ["hypercasual", "hybridcasual", "casual"],
     appsCat: ["lifestyle", "productivity", "entertainment"],

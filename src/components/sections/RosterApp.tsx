@@ -55,16 +55,21 @@ const emptyFilters = (): FilterState => ({
   rateband: new Set(),
 });
 
+/* City / country convention (Andre 2026-07-03): specific cities get
+   'City, Country' labels; regional 'remote' filter chips retain the
+   older short form. The `value` field is the filter code (kept in
+   the previous short-form so URL params + existing profile records
+   don't break); `label` is the display string. */
 const LOCATIONS: { value: string; label: string }[] = [
-  { value: "uk", label: "uk" },
+  { value: "uk", label: "uk · remote" },
   { value: "eu", label: "eu · remote" },
-  { value: "berlin", label: "berlin" },
-  { value: "helsinki", label: "helsinki" },
-  { value: "telaviv", label: "tel aviv" },
-  { value: "istanbul", label: "istanbul" },
-  { value: "lisbon", label: "lisbon" },
-  { value: "warsaw", label: "warsaw" },
-  { value: "prague", label: "prague" },
+  { value: "berlin", label: "Berlin, Germany" },
+  { value: "helsinki", label: "Helsinki, Finland" },
+  { value: "telaviv", label: "Tel Aviv, Israel" },
+  { value: "istanbul", label: "Istanbul, Turkey" },
+  { value: "lisbon", label: "Lisbon, Portugal" },
+  { value: "warsaw", label: "Warsaw, Poland" },
+  { value: "prague", label: "Prague, Czechia" },
 ];
 
 /* ============================================================
