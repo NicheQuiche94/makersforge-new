@@ -7,6 +7,7 @@ import "./globals.css";
 import { TopNav } from "@/components/layout/TopNav";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollRevealRoot } from "@/components/atoms/ScrollRevealRoot";
+import { SiteSchema } from "@/components/seo/SiteSchema";
 import { SITE_URL } from "@/lib/site";
 
 const figtree = Figtree({
@@ -67,6 +68,7 @@ export default function RootLayout({
         </Script>
       </head>
       <body>
+        <SiteSchema />
         <a href="#main" className="skip-link">
           Skip to content
         </a>

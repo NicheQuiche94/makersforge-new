@@ -1,0 +1,19 @@
+# MakersForge
+
+> MakersForge is a talent agency and job board for user acquisition, growth and marketing-art specialists in mobile games and consumer apps.
+
+MakersForge represents vetted UA, growth and marketing-art talent, helps studios and app companies hire them, and runs a free, hand-curated job board dedicated to those roles. Talent is hosted in front of hiring studios and contracts directly with them, keeping their full rate; studios pay a flat monthly fee. Focused on mobile games and consumer apps across EMEA and remote.
+
+## Key pages
+- [Job board](https://makersforge.gg/jobs): Hand-curated, weekly-updated board of UA, growth and marketing-art roles in games and apps. Free to post a role.
+- [For talent](https://makersforge.gg/talent): How representation works for growth specialists — hosted in front of studios, interviews come to you, you contract directly and keep your full rate.
+- [The line-up](https://makersforge.gg/line-up): The roster of represented specialists.
+- [Pricing](https://makersforge.gg/pricing): Flat monthly fee, paid by the studio, not a percentage of salary.
+- [Apply](https://makersforge.gg/apply): Join the line-up.
+- [Post a role](https://makersforge.gg/jobs/post): Free job posting for hiring teams.
+
+## What we cover
+User acquisition, growth marketing, app store optimization (ASO), marketing art, motion design, creative strategy and production, for mobile games and consumer apps.
+
+## Contact
+andre@makersforge.gg

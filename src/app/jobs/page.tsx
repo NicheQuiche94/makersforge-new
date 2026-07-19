@@ -11,7 +11,35 @@ import { JobsBoard } from "@/components/jobs/JobsBoard";
 import { StatBar } from "@/components/jobs/StatBar";
 import { AlertForm } from "@/components/jobs/AlertForm";
 import { TalentAlertForm } from "@/components/jobs/TalentAlertForm";
+import { FaqSection } from "@/components/seo/FaqSection";
 import styles from "./jobs.module.css";
+
+const JOBS_FAQ = [
+  {
+    q: "What is the MakersForge job board?",
+    a: "It is a hand-curated job board dedicated to user acquisition, growth and marketing-art roles in mobile games and consumer apps. Every role is checked for relevance before it goes live, and the board is updated weekly.",
+  },
+  {
+    q: "What kinds of roles are on the board?",
+    a: "UA managers, growth managers, performance marketers, ASO managers, marketing artists, motion designers and creative producers, at game studios and consumer app companies.",
+  },
+  {
+    q: "Is it free to post a role?",
+    a: "Yes. Hiring teams can post a role for free. If it does not fill, MakersForge can introduce vetted UA and marketing-art talent from its line-up.",
+  },
+  {
+    q: "Who is the job board for?",
+    a: "Both sides of the market: people looking for growth and marketing roles in mobile, and the studios and app companies hiring for them.",
+  },
+  {
+    q: "How often is it updated?",
+    a: "Weekly. New in-remit roles are added regularly, and you can set an email alert for your categories so you never miss one.",
+  },
+  {
+    q: "Where are the roles based?",
+    a: "Across EMEA and beyond, including fully remote roles, with a focus on mobile games and consumer app companies.",
+  },
+];
 
 export const metadata: Metadata = {
   title:
@@ -118,6 +146,11 @@ export default function JobsPage() {
           </div>
         </div>
       </section>
+
+      <FaqSection
+        heading="Questions about the board"
+        items={JOBS_FAQ}
+      />
     </div>
   );
 }
