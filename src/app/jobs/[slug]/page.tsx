@@ -54,16 +54,21 @@ export default async function JobPage({
   if (!job) notFound();
 
   const expired = isExpired(job);
-  const schema = buildJobPostingSchema(job);
 
   return (
     <article className={styles.page}>
       {/* JobPosting structured data, the primary traffic engine (brief §5).
-          Present in the static HTML so Google's job crawler reads it. */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-      />
+          Present in the static HTML so Google's job crawler reads it.
+          Dropped once the role expires: Google flags live JobPosting markup
+          on closed roles, so the page stays only as long-tail content. */}
+      {!expired && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(buildJobPostingSchema(job)),
+          }}
+        />
+      )}
 
       <div className="jobs-wrap">
         <nav className={styles.crumbs} aria-label="Breadcrumb">

@@ -7,6 +7,7 @@ import "./globals.css";
 import { TopNav } from "@/components/layout/TopNav";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollRevealRoot } from "@/components/atoms/ScrollRevealRoot";
+import { SITE_URL } from "@/lib/site";
 
 const figtree = Figtree({
   subsets: ["latin"],
@@ -16,11 +17,32 @@ const figtree = Figtree({
   display: "swap",
 });
 
+const SITE_NAME = "MakersForge";
+const DEFAULT_TITLE =
+  "MakersForge: Growth team specialists for mobile apps & games";
+const DEFAULT_DESC =
+  "A live lineup of vetted UA managers and marketing artists for mobile apps and games. Pay them direct, pay us a flat monthly fee. No percentage games.";
+
 export const metadata: Metadata = {
-  title:
-    "MakersForge: Growth team specialists for mobile apps & games",
-  description:
-    "A live lineup of vetted UA managers and marketing artists for mobile apps and games. Pay them direct, pay us a flat monthly fee. No percentage games.",
+  // Resolves every relative URL (per-page canonicals, the OG image) to an
+  // absolute one, and clears the Next build warning.
+  metadataBase: new URL(SITE_URL),
+  // Plain string default (pages set their own fully-branded titles, so no
+  // template — a template would double the "| MakersForge" they already carry).
+  title: DEFAULT_TITLE,
+  description: DEFAULT_DESC,
+  openGraph: {
+    type: "website",
+    siteName: SITE_NAME,
+    url: "/",
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESC,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESC,
+  },
 };
 
 export default function RootLayout({
