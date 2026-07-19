@@ -155,7 +155,7 @@
       "sector": "apps"
     },
     "category": "ua",
-    "location": "New York, New York",
+    "location": "New York",
     "region": "americas",
     "remote": "onsite",
     "employment_type": "FULL_TIME",
@@ -217,7 +217,7 @@
   },
   {
     "slug": "oura-paid-social-specialist-2",
-    "title": "Paid Social Specialist ",
+    "title": "Paid Social Specialist",
     "company": {
       "slug": "oura",
       "name": "Oura",
@@ -313,7 +313,7 @@
   },
   {
     "slug": "wildlifestudios-creative-strategy-intern-2",
-    "title": "Creative Strategy Intern ",
+    "title": "Creative Strategy Intern",
     "company": {
       "slug": "wildlifestudios",
       "name": "Wildlife Studios",
@@ -361,7 +361,7 @@
   },
   {
     "slug": "amanotes-uplive-company-user-acquisition-marketing-manager-2",
-    "title": "[UPLIVE Company]  User Acquisition Marketing Manager",
+    "title": "User Acquisition Marketing Manager",
     "company": {
       "slug": "amanotes",
       "name": "Amanotes",
@@ -396,7 +396,7 @@
       "stage": "Series C"
     },
     "category": "ua",
-    "location": "Gibraltar GX11 1AA, Gibraltar",
+    "location": "Gibraltar",
     "region": "emea",
     "remote": "onsite",
     "employment_type": "FULL_TIME",
@@ -444,7 +444,7 @@
       "sector": "apps"
     },
     "category": "ua",
-    "location": "Poland | Ukraine",
+    "location": "Poland, Ukraine",
     "region": "emea",
     "remote": "onsite",
     "employment_type": "FULL_TIME",
@@ -578,7 +578,7 @@
   },
   {
     "slug": "rocket-money-creative-strategist-2",
-    "title": "Creative Strategist ",
+    "title": "Creative Strategist",
     "company": {
       "slug": "rocket-money",
       "name": "Rocket Money",
@@ -588,7 +588,7 @@
       "sector": "apps"
     },
     "category": "creative-strategy",
-    "location": "Detroit, Michigan, United States, New York, New York, United States, Remote, San Francisco, California, United States, Washington, District of Columbia, United States",
+    "location": "Detroit, Michigan, United States, New York, United States, Remote, San Francisco, California, United States, Washington, District of Columbia, United States",
     "region": "americas",
     "remote": "remote",
     "employment_type": "FULL_TIME",
@@ -602,7 +602,7 @@
   },
   {
     "slug": "codeway-mid-senior-user-acquisition-manager-app-2",
-    "title": "Mid / Senior User Acquisition Manager ( App )",
+    "title": "Mid / Senior User Acquisition Manager (App)",
     "company": {
       "slug": "codeway",
       "name": "Codeway",
@@ -626,7 +626,7 @@
   },
   {
     "slug": "codeway-lead-user-acquisition-manager-google-ads-2",
-    "title": " Lead User Acquisition Manager (Google Ads)",
+    "title": "Lead User Acquisition Manager (Google Ads)",
     "company": {
       "slug": "codeway",
       "name": "Codeway",
@@ -650,7 +650,7 @@
   },
   {
     "slug": "codeway-mid-senior-user-acquisition-manager-google-ads-2",
-    "title": "Mid / Senior User Acquisition Manager ( Google Ads)",
+    "title": "Mid / Senior User Acquisition Manager (Google Ads)",
     "company": {
       "slug": "codeway",
       "name": "Codeway",
@@ -890,7 +890,7 @@
   },
   {
     "slug": "codeway-mid-senior-growth-manager-app-2",
-    "title": "Mid / Senior Growth Manager ( App )",
+    "title": "Mid / Senior Growth Manager (App)",
     "company": {
       "slug": "codeway",
       "name": "Codeway",
@@ -1227,7 +1227,7 @@
   },
   {
     "slug": "suno-graphic-designer-paid-media-contractor-2",
-    "title": "Graphic Designer, Paid Media (Contractor) ",
+    "title": "Graphic Designer, Paid Media (Contractor)",
     "company": {
       "slug": "suno",
       "name": "Suno",
@@ -1359,7 +1359,7 @@
       "sector": "apps"
     },
     "category": "ua",
-    "location": "Paris | Remote",
+    "location": "Paris, Remote",
     "region": "emea",
     "remote": "remote",
     "employment_type": "FULL_TIME",
@@ -1373,7 +1373,7 @@
   },
   {
     "slug": "acorns-growth-marketing-sr-associate-2",
-    "title": "Growth Marketing, Sr. Associate ",
+    "title": "Growth Marketing, Sr. Associate",
     "company": {
       "slug": "acorns",
       "name": "Acorns",
@@ -1397,7 +1397,7 @@
   },
   {
     "slug": "amanotes-uplive-company-senior-ua-marketing-mobile-games-2",
-    "title": "[UPLIVE Company] Senior UA Marketing (Mobile Games)",
+    "title": "Senior UA Marketing (Mobile Games)",
     "company": {
       "slug": "amanotes",
       "name": "Amanotes",
@@ -1421,7 +1421,7 @@
   },
   {
     "slug": "amanotes-uplive-company-ua-marketing-mobile-apps-2",
-    "title": "[UPLIVE Company] UA Marketing (Mobile Apps)",
+    "title": "UA Marketing (Mobile Apps)",
     "company": {
       "slug": "amanotes",
       "name": "Amanotes",
@@ -1445,7 +1445,7 @@
   },
   {
     "slug": "amanotes-uplive-company-ua-marketing-mobile-games-2",
-    "title": "[UPLIVE Company] UA Marketing (Mobile Games)",
+    "title": "UA Marketing (Mobile Games)",
     "company": {
       "slug": "amanotes",
       "name": "Amanotes",
@@ -1493,7 +1493,7 @@
   },
   {
     "slug": "amanotes-uplive-company-senior-ua-marketing-mobile-apps-2",
-    "title": "[UPLIVE Company] Senior UA Marketing (Mobile Apps)",
+    "title": "Senior UA Marketing (Mobile Apps)",
     "company": {
       "slug": "amanotes",
       "name": "Amanotes",
@@ -1541,7 +1541,7 @@
   },
   {
     "slug": "scopely-director-performance-marketing-unannounced-arpg-mobile-game-2",
-    "title": "Director, Performance Marketing -  Unannounced ARPG Mobile Game",
+    "title": "Director, Performance Marketing - Unannounced ARPG Mobile Game",
     "company": {
       "slug": "scopely",
       "name": "Scopely",
@@ -1599,7 +1599,7 @@
       "sector": "apps"
     },
     "category": "ua",
-    "location": "San Francisco, CA, Washington, D.C., New York City, N.Y.,  Detroit, MI, Phoenix, AZ, Miami, FL, Denver, CO.",
+    "location": "San Francisco, CA, Washington, D.C., New York City, N.Y., Detroit, MI, Phoenix, AZ, Miami, FL, Denver, CO.",
     "region": "americas",
     "remote": "onsite",
     "employment_type": "FULL_TIME",
@@ -1661,7 +1661,7 @@
   },
   {
     "slug": "sumup-marketing-designer-performance-marketing-12-month-fixed-term-contract-2",
-    "title": "Marketing Designer  - Performance Marketing (12-month fixed-term contract)",
+    "title": "Marketing Designer - Performance Marketing (12-month fixed-term contract)",
     "company": {
       "slug": "sumup",
       "name": "SumUp",
@@ -2022,7 +2022,7 @@
   },
   {
     "slug": "flohealth-creative-strategist-2",
-    "title": " Creative Strategist ",
+    "title": "Creative Strategist",
     "company": {
       "slug": "flohealth",
       "name": "Flo Health",
@@ -2358,7 +2358,7 @@
   },
   {
     "slug": "amanotes-uplive-company-user-acquisition-lead-2",
-    "title": "[UPLIVE Company]  User Acquisition Lead",
+    "title": "User Acquisition Lead",
     "company": {
       "slug": "amanotes",
       "name": "Amanotes",
@@ -2382,7 +2382,7 @@
   },
   {
     "slug": "amanotes-uplive-company-performance-marketing-2",
-    "title": "[UPLIVE Company] Performance Marketing",
+    "title": "Performance Marketing",
     "company": {
       "slug": "amanotes",
       "name": "Amanotes",

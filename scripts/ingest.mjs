@@ -27,6 +27,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import { standardizeJob } from "./standardize.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
@@ -664,9 +665,11 @@ async function main() {
     console.log(`· ${board.vc} (getro): ${jobs.length} jobs → ${kept} in remit`);
   }
 
-  const merged = [...curated, ...ingested].sort((a, b) =>
-    b.posted_at.localeCompare(a.posted_at),
-  );
+  // Standardise every title/location before writing so scraped artifacts
+  // (bracket prefixes, postcodes, pipe separators) never reach the board.
+  const merged = [...curated, ...ingested]
+    .map(standardizeJob)
+    .sort((a, b) => b.posted_at.localeCompare(a.posted_at));
 
   console.log(
     `\nSummary: ${curated.length} curated kept · ${ingested.length} ingested · ${stale} skipped (>${MAX_POSTED_AGE_DAYS}d old) · ${rejects.length} rejected (off-remit)`,
