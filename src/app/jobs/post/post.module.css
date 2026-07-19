@@ -1,0 +1,49 @@
+.page {
+  padding: 120px 0 80px;
+}
+
+.crumbs {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--mute);
+  margin-bottom: 22px;
+}
+.crumbs a:hover {
+  color: var(--ink);
+}
+
+.head {
+  max-width: 640px;
+  margin-bottom: 36px;
+}
+.title {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(38px, 6vw, 68px);
+  line-height: 0.96;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin: 14px 0 0;
+}
+.intro {
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--dim);
+  margin: 18px 0 0;
+}
+
+.formWrap {
+  max-width: 760px;
+  background: var(--bg-card);
+  border: 1px solid var(--hair);
+  border-radius: 22px;
+  padding: 36px;
+}
+@media (max-width: 680px) {
+  .formWrap {
+    padding: 24px;
+  }
+}

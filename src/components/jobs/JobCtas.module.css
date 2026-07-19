@@ -1,0 +1,47 @@
+.block {
+  border-radius: 22px;
+  padding: 40px 36px;
+}
+
+.inner {
+  max-width: 560px;
+}
+
+.kickerLight {
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+  margin: 0 0 12px;
+}
+
+.headline {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(26px, 3.2vw, 38px);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  color: #fff;
+  margin: 0 0 10px;
+}
+
+.em {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-style: italic;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  color: #ffb347;
+  text-transform: none;
+}
+
+.body {
+  font-size: 16px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.92);
+  margin: 0 0 22px;
+}
+
+.btn {
+  gap: 8px;
+}

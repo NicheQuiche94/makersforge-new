@@ -1,0 +1,227 @@
+{
+  "vc-stockgro": {
+    "size": "51-200",
+    "blurb": "StockGro, Apps, Education, E-Learning · Series B. Backed by BITKRAFT Ventures."
+  },
+  "vc-eloelo-2": {
+    "size": "201-500",
+    "blurb": "Eloelo, Application Software, Commerce and Shopping, Content · Series B. Backed by Play Ventures."
+  },
+  "vc-pocket-worlds": {
+    "size": "51-200",
+    "blurb": "Pocket Worlds, 3D Technology, App Development, Apps · Series A. Backed by BITKRAFT Ventures."
+  },
+  "vc-midnite-2-05ded3cb-add8-4ec9-b8cb-7a414f5518cb": {
+    "size": "51-200",
+    "blurb": "Midnite, Application Software, Casino, Entertainment Software · Series C. Backed by Play Ventures."
+  },
+  "scorewarrior": {
+    "size": "51-200",
+    "blurb": "Cyprus-based studio behind the strategy hit Total Battle."
+  },
+  "outfit7": {
+    "size": "201-500",
+    "blurb": "Cyprus-based studio behind the Talking Tom & Friends franchise, 6B+ downloads.",
+    "funding": "last round Jan 2016",
+    "lastRaise": "2016-01"
+  },
+  "lightricks": {
+    "size": "501-1000",
+    "blurb": "Creative apps company behind Facetune, Photoleap and Videoleap.",
+    "funding": "$335M raised · last round Feb 2022",
+    "lastRaise": "2022-02"
+  },
+  "duolingo": {
+    "size": "501-1000",
+    "blurb": "The world's most popular language-learning app, 100M+ monthly users.",
+    "funding": "$183M raised · last round Nov 2020",
+    "lastRaise": "2020-11"
+  },
+  "sumup": {
+    "size": "1001-5000",
+    "blurb": "Global fintech app helping small merchants get paid, in 35+ markets.",
+    "funding": "$4.0B raised · last round May 2024",
+    "lastRaise": "2024-05"
+  },
+  "kabam": {
+    "size": "501-1000",
+    "blurb": "Vancouver mobile games studio behind Marvel Contest of Champions.",
+    "funding": "$245M raised · last round Dec 2014",
+    "lastRaise": "2014-12"
+  },
+  "strava": {
+    "size": "201-500",
+    "blurb": "The app for runners and cyclists, 100M+ athletes worldwide.",
+    "funding": "$152M raised · last round May 2025",
+    "lastRaise": "2025-05"
+  },
+  "mistplay": {
+    "size": "201-500",
+    "blurb": "Montreal loyalty platform for mobile gamers, spanning UA and engagement.",
+    "funding": "last round May 2018",
+    "lastRaise": "2018-05"
+  },
+  "acorns": {
+    "size": "201-500",
+    "blurb": "Investing and saving app for everyday people.",
+    "funding": "$510M raised · last round Mar 2022",
+    "lastRaise": "2022-03"
+  },
+  "discord": {
+    "size": "501-1000",
+    "blurb": "The voice, video and chat app for communities.",
+    "funding": "$995M raised · last round Mar 2024",
+    "lastRaise": "2024-03"
+  },
+  "easybrain": {
+    "size": "201-500",
+    "blurb": "Puzzle games publisher (Sudoku.com, Blockudoku, Art Puzzle) with tens of millions of daily players."
+  },
+  "whoop": {
+    "size": "501-1000",
+    "blurb": "Boston wearable and app for fitness, sleep and recovery.",
+    "funding": "$980M raised · last round Mar 2026",
+    "lastRaise": "2026-03"
+  },
+  "goodgamestudios": {
+    "size": "201-500",
+    "blurb": "Hamburg free-to-play games company on web and mobile (Empire series)."
+  },
+  "supercell": {
+    "size": "201-500",
+    "blurb": "Helsinki studio behind Clash of Clans, Clash Royale and Brawl Stars.",
+    "funding": "$143M raised · last round Apr 2013",
+    "lastRaise": "2013-04"
+  },
+  "loopgames": {
+    "size": "11-50",
+    "blurb": "Istanbul mobile games studio building casual and puzzle titles.",
+    "funding": "$60M raised · last round Feb 2021",
+    "lastRaise": "2021-02"
+  },
+  "rocket-money": {
+    "size": "201-500",
+    "blurb": "Personal-finance app (formerly Truebill) helping people manage subscriptions and save.",
+    "funding": "$84M raised · last round Jun 2021",
+    "lastRaise": "2021-06"
+  },
+  "flohealth": {
+    "size": "201-500",
+    "blurb": "London-based women's health app, one of the most-installed health apps worldwide.",
+    "funding": "$276M raised · last round Jul 2024",
+    "lastRaise": "2024-07"
+  },
+  "scopely": {
+    "size": "1001-5000",
+    "blurb": "Global mobile games company behind Monopoly GO!, Stumble Guys and MARVEL Strike Force.",
+    "funding": "$999M raised · last round Oct 2021",
+    "lastRaise": "2021-10"
+  },
+  "amanotes": {
+    "size": "51-200",
+    "blurb": "Vietnam's number-one music-games publisher (Magic Tiles 3, Tiles Hop), 3B+ downloads.",
+    "funding": "last round Jan 2022",
+    "lastRaise": "2022-01"
+  },
+  "headway": {
+    "size": "201-500",
+    "blurb": "Microlearning app for book summaries and self-growth, a major mobile UA spender.",
+    "funding": "last round Jan 2026",
+    "lastRaise": "2026-01"
+  },
+  "jamcity": {
+    "size": "501-1000",
+    "blurb": "Los Angeles mobile games studio behind Cookie Jam and Harry Potter: Hogwarts Mystery.",
+    "funding": "$652M raised · last round Sept 2021",
+    "lastRaise": "2021-09"
+  },
+  "oura": {
+    "size": "201-500",
+    "blurb": "The smart ring and app for sleep, readiness and long-term health.",
+    "funding": "$1.6B raised · last round Oct 2025",
+    "lastRaise": "2025-10"
+  },
+  "perplexity": {
+    "size": "11-50",
+    "blurb": "AI-powered answer engine and fast-growing consumer app.",
+    "funding": "$1.5B raised · last round Feb 2026",
+    "lastRaise": "2026-02"
+  },
+  "monzo": {
+    "size": "1001-5000",
+    "blurb": "UK digital bank with 10M+ app-first customers.",
+    "funding": "$2.0B raised · last round Oct 2024",
+    "lastRaise": "2024-10"
+  },
+  "peloton": {
+    "size": "1001-5000",
+    "blurb": "Connected-fitness app and hardware with a large member base.",
+    "funding": "$2.2B raised · last round May 2024",
+    "lastRaise": "2024-05"
+  },
+  "elevenlabs": {
+    "size": "51-200",
+    "blurb": "AI voice and audio platform powering consumer and creator apps.",
+    "funding": "$931M raised · last round May 2026",
+    "lastRaise": "2026-05"
+  },
+  "greenlight": {
+    "size": "201-500",
+    "blurb": "Family finance and debit-card app for kids and teens.",
+    "funding": "$557M raised · last round Nov 2024",
+    "lastRaise": "2024-11"
+  },
+  "applovin": {
+    "size": "1001-5000",
+    "blurb": "Mobile app growth and monetisation platform with its own portfolio of apps and games.",
+    "funding": "$5.1B raised · last round Nov 2024",
+    "lastRaise": "2024-11"
+  },
+  "wildlifestudios": {
+    "size": "1001-5000",
+    "blurb": "One of the worlds largest mobile game companies, behind Zooba and Tennis Clash.",
+    "funding": "$260M raised · last round May 2022",
+    "lastRaise": "2022-05"
+  },
+  "suno": {
+    "size": "11-50",
+    "blurb": "AI music-creation app letting anyone make songs from a prompt.",
+    "funding": "$375M raised · last round Nov 2025",
+    "lastRaise": "2025-11"
+  },
+  "tripledotstudios": {
+    "size": "501-1000",
+    "blurb": "London casual games studio (Woodoku, Solitaire, Puzzletime), profitable and scaling paid UA.",
+    "funding": "$252M raised · last round Feb 2022",
+    "lastRaise": "2022-02"
+  },
+  "photoroom": {
+    "size": "11-50",
+    "funding": "$62M raised · last round Feb 2024",
+    "lastRaise": "2024-02"
+  },
+  "voodoo": {
+    "size": "501-1000",
+    "funding": "$517M raised · last round Aug 2021",
+    "lastRaise": "2021-08"
+  },
+  "madbox": {
+    "size": "51-200",
+    "blurb": "madbox is a mobile gaming company, creating and publishing its own games worldwide. since 2018 madbox has gathered more than 300 million players, still growing. we are looking for top talents with mad skills, a mad passion and a mad ambition to join us."
+  },
+  "codeway": {
+    "size": "51-200",
+    "funding": "$16M raised · last round Feb 2024",
+    "lastRaise": "2024-02"
+  },
+  "agavegames": {
+    "size": "11-50",
+    "funding": "$25M raised · last round Dec 2024",
+    "lastRaise": "2024-12"
+  },
+  "goodjobgames": {
+    "size": "51-200",
+    "funding": "$83M raised · last round Jul 2025",
+    "lastRaise": "2025-07"
+  }
+}

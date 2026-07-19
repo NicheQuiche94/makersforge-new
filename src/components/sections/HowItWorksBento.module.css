@@ -1,42 +1,46 @@
-/* HowItWorks — left-column argument + right-column collapsible stages.
-   Modelled on the Modma reference Andre shared. Replaced the L2 bento
-   layout that lived here previously; kept the filename so the /#how
-   anchor and existing imports don't need updating. */
+/* HowItWorks — left-column argument + right-column numbered step cards
+   (always visible; the +/- accordion was retired 2026-07-19 for the
+   card language). Kept the filename so the /#how anchor and existing
+   imports don't need updating. */
 
 .section {
+  position: relative;
+  overflow: hidden;
   background: var(--bg);
   padding: 90px 0 110px;
   color: var(--ink);
 }
-
-.split {
-  display: grid;
-  grid-template-columns: 1fr 1.4fr;
-  gap: 60px;
-  align-items: start;
+.contentAbove {
+  position: relative;
+  z-index: 1;
 }
-@media (max-width: 900px) {
-  .split {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
+
+/* Header stacked on top, step cards centred beneath. The former
+   side-by-side (short left column against a tall 5-card right column)
+   read as unbalanced (Andre 2026-07-19); a centred header + centred
+   step column is symmetric and reads as a sequence. */
+.split {
+  display: block;
 }
 
 /* ============================================================
-   LEFT COLUMN — kicker, big header, argument paragraph, CTA
+   HEADER — kicker, big header, argument paragraph, CTA (centred)
    ============================================================ */
 .left {
+  max-width: 640px;
+  margin: 0 auto 46px;
+  text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  padding-top: 6px;
+  align-items: center;
+  gap: 16px;
 }
 
 .header {
   font-family: "Cal Sans", system-ui, sans-serif;
   font-weight: 400;
-  font-size: clamp(44px, 5.5vw, 88px);
-  line-height: 1;
+  font-size: clamp(34px, 4.6vw, 64px);
+  line-height: 1.02;
   letter-spacing: -0.035em;
   margin: 4px 0 0;
   color: var(--ink);
@@ -44,11 +48,15 @@
 
 .body {
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
-  font-size: 16px;
-  line-height: 1.55;
+  /* Matches the Explainer intro paragraph exactly (Andre 2026-07-19:
+     "make sure that is properly the same size"). */
+  font-weight: 500;
+  font-size: clamp(17px, 1.5vw, 20px);
+  line-height: 1.6;
   color: var(--dim);
   margin: 6px 0 0;
-  max-width: 440px;
+  max-width: 520px;
+  text-align: center;
 }
 
 /* CTA — Modma-style arrow + label. Solid orange arrow, ink label,
@@ -64,7 +72,7 @@
   color: var(--ink);
   text-decoration: none;
   transition: color 0.2s;
-  align-self: flex-start;
+  align-self: center;
 }
 .cta:hover {
   color: #ff5d00;
@@ -76,32 +84,33 @@
 }
 
 /* ============================================================
-   RIGHT COLUMN — numbered collapsible stages
+   RIGHT COLUMN — numbered step cards (always visible)
    ============================================================ */
 .right {
+  max-width: 720px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
+  gap: 14px;
 }
 
 .stage {
-  border-top: 1px solid var(--hair);
-}
-.stage:last-child {
-  border-bottom: 1px solid var(--hair);
-}
-
-.stageBtn {
   display: grid;
-  grid-template-columns: 50px 1fr auto;
-  align-items: center;
-  gap: 22px;
-  width: 100%;
-  padding: 24px 0;
-  background: transparent;
-  border: 0;
-  cursor: pointer;
-  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
-  text-align: left;
+  grid-template-columns: 40px 1fr;
+  gap: 20px;
+  align-items: start;
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  border-radius: 16px;
+  padding: 24px 26px;
+  transition:
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+.stage:hover {
+  transform: translateY(-3px);
+  border-color: var(--hair-strong);
 }
 
 .stageNum {
@@ -116,56 +125,27 @@
   font-size: 11px;
   letter-spacing: 0.06em;
   color: var(--ink);
-  background: var(--paper);
-  transition: border-color 0.25s, color 0.25s;
+  background: var(--bg-card);
+}
+
+.stageText {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
 }
 
 .stageTitle {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-weight: 700;
-  font-size: clamp(18px, 1.7vw, 24px);
+  font-size: clamp(18px, 1.6vw, 22px);
   letter-spacing: -0.015em;
   color: var(--ink);
-  transition: color 0.25s;
+  margin: 0;
 }
 
-.stageToggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  font-size: 22px;
-  line-height: 1;
-  color: #ff5d00;
-  transition: transform 0.2s;
-}
-
-/* Open state — stage number border + title get the heat colour so
-   the currently-expanded stage stands out at a glance. */
-.stageOpen .stageNum {
-  border-color: #ff5d00;
-  color: #ff5d00;
-}
-.stageOpen .stageTitle {
-  color: #ff5d00;
-}
-
-/* Body wrap — max-height animation. Previously used the grid-
-   template-rows 0fr → 1fr trick, but that relies on the grid
-   child having min-height: 0 explicitly; without that the row
-   expands to fit content and every stage body stayed visible
-   regardless of open state. max-height is boring but reliable. */
-.stageBodyWrap {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.stageOpen .stageBodyWrap {
-  max-height: 400px;
-}
 .stageBody {
   margin: 0;
-  padding: 0 0 26px 72px;
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-size: 16px;
   line-height: 1.55;
@@ -173,16 +153,13 @@
 }
 
 @media (max-width: 700px) {
-  .stageBtn {
-    grid-template-columns: 40px 1fr auto;
+  .stage {
+    grid-template-columns: 34px 1fr;
     gap: 16px;
-    padding: 20px 0;
+    padding: 20px 22px;
   }
   .stageNum {
     width: 34px;
     height: 34px;
-  }
-  .stageBody {
-    padding-left: 56px;
   }
 }

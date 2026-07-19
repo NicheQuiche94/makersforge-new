@@ -1,0 +1,71 @@
+.section {
+  padding: 56px 0 60px;
+}
+
+.cap {
+  text-align: center;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin: 0 0 28px;
+}
+
+/* Even five-up grid so every chip is the same size and the row reads
+   as a balanced shelf (Andre 2026-07-19). */
+.row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+@media (max-width: 900px) {
+  .row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 560px) {
+  .row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 92px;
+  padding: 0 22px;
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  border-radius: 16px;
+}
+
+/* Sized by max-height so the compact / stacked marks fill the chip and
+   read as large as Lessmore's wide wordmark (which caps on width). */
+.logo {
+  max-height: 54px;
+  max-width: 150px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  filter: grayscale(1);
+  opacity: 0.72;
+  transition:
+    filter 0.25s ease,
+    opacity 0.25s ease;
+}
+.chip:hover .logo {
+  filter: grayscale(0);
+  opacity: 1;
+}
+/* Yallaplay ships white-on-black; invert flips it to dark-on-light. */
+.invert {
+  filter: grayscale(1) invert(1);
+}
+.chip:hover .invert {
+  filter: grayscale(0) invert(1);
+}

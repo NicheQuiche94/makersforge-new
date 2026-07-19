@@ -1,0 +1,79 @@
+.page {
+  padding: 120px 0 80px;
+}
+
+.crumbs {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--mute);
+  margin-bottom: 22px;
+}
+.crumbs a:hover {
+  color: var(--ink);
+}
+
+.head {
+  max-width: 760px;
+  padding-bottom: 34px;
+  border-bottom: 1px solid var(--hair);
+}
+.title {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(36px, 5.4vw, 64px);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin: 14px 0 0;
+}
+.intro {
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--dim);
+  margin: 18px 0 0;
+}
+.boardLink {
+  display: inline-block;
+  font-size: 15px;
+  font-weight: 600;
+  color: #c72e00;
+  margin-top: 20px;
+}
+.boardLink:hover {
+  text-decoration: underline;
+}
+
+.section {
+  margin-top: 44px;
+}
+.sectionH {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(24px, 3vw, 34px);
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  margin: 0 0 22px;
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.muted {
+  font-size: 16px;
+  color: var(--dim);
+  margin: 0 0 18px;
+}
+.emptyForm {
+  max-width: 560px;
+}
+
+.alertSection {
+  margin-top: 48px;
+  max-width: 620px;
+}

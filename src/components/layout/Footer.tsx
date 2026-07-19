@@ -11,6 +11,7 @@ import styles from "./Footer.module.css";
    or join it. */
 const ROSTER_LINKS = [
   { href: "/line-up", label: "All profiles" },
+  { href: "/jobs", label: "Jobs board" },
   { href: "/apply", label: "Join the lineup" },
 ];
 
@@ -27,7 +28,14 @@ const ROSTER_LINKS = [
 const STUDIO_LINKS = [
   { href: "/#how", label: "How it works" },
   { href: "/pricing", label: "Pricing" },
+  { href: "/jobs/post", label: "Post a role" },
   { href: "/enquire", label: "Book a call" },
+];
+
+const JOBS_LINKS = [
+  { href: "/jobs", label: "Browse roles" },
+  { href: "/jobs/post", label: "Post a role, free" },
+  { href: "/apply", label: "Get represented" },
 ];
 
 const COMPANY_LINKS = [
@@ -77,6 +85,17 @@ export function Footer() {
             <h5>The lineup</h5>
             <ul>
               {ROSTER_LINKS.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href}>{link.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className={styles.col}>
+            <h5>Job board</h5>
+            <ul>
+              {JOBS_LINKS.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href}>{link.label}</Link>
                 </li>

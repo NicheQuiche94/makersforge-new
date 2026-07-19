@@ -92,6 +92,8 @@
   line-height: 1.55;
   max-width: 580px;
   margin: 0 0 32px;
-  color: #fff;
+  /* Recessed white so the headline stays the protagonist (emphasis
+     budget, 2026-07-19), matching the hero lede treatment. */
+  color: rgba(255, 255, 255, 0.82);
   font-weight: 500;
 }

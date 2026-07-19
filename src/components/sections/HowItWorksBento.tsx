@@ -1,17 +1,15 @@
-"use client";
-
-import { useState } from "react";
 import Link from "next/link";
 import styles from "./HowItWorksBento.module.css";
+import { CornerGlow } from "./CornerGlow";
 
 /**
  * HowItWorks — two-column: left-hand argument for the access model,
- * right-hand stack of collapsible numbered stages.
+ * right-hand stack of numbered step cards.
  *
- * Andre swapped the previous 3-tile bento for this pattern after
- * candidate feedback that the process wasn't clear enough on the site.
- * The old bento is preserved in git; file name kept for compatibility
- * with the /#how anchor link and existing imports.
+ * Was a click-to-expand +/- accordion; converted 2026-07-19 to
+ * always-visible numbered cards so the section reads in the same card
+ * language as the rest of the home page and every step is scannable
+ * without interaction. Filename kept for the /#how anchor + imports.
  */
 
 type Stage = {
@@ -33,8 +31,8 @@ const STAGES: Stage[] = [
     body: "One call. You and the person doing the work. We don't sit in.",
   },
   {
-    title: "Contract with them, not us.",
-    body: "Day rate, hours, scope, you and the specialist agree. We invoice a flat monthly fee for the engagement. Simple.",
+    title: "You contract with the specialist.",
+    body: "Day rate, hours, scope, you and the specialist agree it directly. We invoice a flat monthly fee for the engagement. Simple.",
   },
   {
     title: "The relationship keeps running.",
@@ -43,17 +41,14 @@ const STAGES: Stage[] = [
 ];
 
 export function HowItWorksBento() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
-
   return (
     <section className={styles.section} id="how">
-      <div className="container">
+      <CornerGlow variant="tlSoft" />
+      <div className={`container ${styles.contentAbove}`}>
         <div className={styles.split}>
           <div className={styles.left}>
             <p className="kicker">How it works</p>
-            <h2 className={styles.header}>
-              <span className="gr">How it works.</span>
-            </h2>
+            <h2 className={styles.header}>How it works.</h2>
             <p className={styles.body}>
               Recruitment agencies run searches. We represent people directly,
               so you don&apos;t need to. Look at the lineup, tell us who to
@@ -70,54 +65,19 @@ export function HowItWorksBento() {
 
           <div className={styles.right}>
             {STAGES.map((stage, i) => (
-              <StageRow
-                key={i}
-                index={i + 1}
-                stage={stage}
-                open={openIndex === i}
-                onToggle={() =>
-                  setOpenIndex(openIndex === i ? null : i)
-                }
-              />
+              <div key={i} className={`card-shadow ${styles.stage}`}>
+                <span className={styles.stageNum} aria-hidden="true">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <div className={styles.stageText}>
+                  <h3 className={styles.stageTitle}>{stage.title}</h3>
+                  <p className={styles.stageBody}>{stage.body}</p>
+                </div>
+              </div>
             ))}
           </div>
         </div>
       </div>
     </section>
-  );
-}
-
-function StageRow({
-  index,
-  stage,
-  open,
-  onToggle,
-}: {
-  index: number;
-  stage: Stage;
-  open: boolean;
-  onToggle: () => void;
-}) {
-  const label = String(index).padStart(2, "0");
-  return (
-    <div className={`${styles.stage} ${open ? styles.stageOpen : ""}`}>
-      <button
-        type="button"
-        className={styles.stageBtn}
-        onClick={onToggle}
-        aria-expanded={open}
-      >
-        <span className={styles.stageNum} aria-hidden="true">
-          {label}
-        </span>
-        <span className={styles.stageTitle}>{stage.title}</span>
-        <span className={styles.stageToggle} aria-hidden="true">
-          {open ? "−" : "+"}
-        </span>
-      </button>
-      <div className={styles.stageBodyWrap} aria-hidden={!open}>
-        <p className={styles.stageBody}>{stage.body}</p>
-      </div>
-    </div>
   );
 }

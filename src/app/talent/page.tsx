@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Button } from "@/components/atoms/Button";
 import { CTABand } from "@/components/sections/CTABand";
+import { CornerGlow } from "@/components/sections/CornerGlow";
 import styles from "./talent.module.css";
 
 /**
@@ -49,10 +50,12 @@ export default function TalentPage() {
 }
 
 /* ============================================================
-   STUDIOS-PAY BANNER — full-width dark bento card sitting between
-   Lifecycle and PromiseWall per cofounder pass T2. Surfaces the
-   most load-bearing promise (we charge the studio, not you) as a
-   single moment instead of burying it as one of five cards.
+   VALUE BANNER — full-width heat-glow card between Lifecycle and
+   PromiseWall. Reframed 2026-07-19 (Andre): was the "studios pay
+   our fee, you keep your full rate" money statement, which read as
+   defensive and doubled up with a promise card. Now leads with the
+   real value: hosted + proactively pitched, so interviews come to
+   them. Function name kept to avoid churn.
    ============================================================ */
 function StudiosPayBanner() {
   return (
@@ -62,13 +65,13 @@ function StudiosPayBanner() {
           className={`reveal heat-glow card-shadow ${styles.payBanner}`}
         >
           <h2 className={styles.payBannerH}>
-            Studios pay our fee.{" "}
-            <em className={styles.payBannerEm}>You keep your full rate.</em>
+            The right interviews{" "}
+            <em className={styles.payBannerEm}>come to you.</em>
           </h2>
           <p className={styles.payBannerBody}>
-            Our invoice goes to the studio at a flat monthly rate. Whatever you
-            and the studio agree on for your day rate or salary is yours
-            untouched. Nothing comes off the top.
+            You&apos;re hosted where studios hire, and we take you to the ones
+            you fit. Conversations land in your inbox instead of you chasing
+            applications, and we run each one from first intro to signed.
           </p>
         </article>
       </div>
@@ -86,10 +89,10 @@ function TalentHero() {
             Represented, <span className="gr">not recruited.</span>
           </h1>
           <p className={styles.heroSub}>
-            A talent agency for vetted growth folks in mobile apps and games.
-            UA managers, ASO managers, marketing artists, motion designers,
-            creative producers. Studios brief us or browse the lineup
-            directly. We handle the rest.
+            A talent agency for vetted growth people in mobile apps and games.
+            UA managers, ASO managers, marketing artists, motion designers and
+            creative producers. We host you in front of hiring studios and run
+            the whole process, from first intro to signed.
           </p>
           <div className={styles.heroCtas}>
             <Button href="/apply" variant="primary" arrow>
@@ -97,6 +100,9 @@ function TalentHero() {
             </Button>
             <Button href="#how" variant="ghost">
               How it works
+            </Button>
+            <Button href="/jobs" variant="ghost">
+              Open the job board
             </Button>
           </div>
         </div>
@@ -113,15 +119,14 @@ function TalentHero() {
 function PromiseWall() {
   return (
     <section className={styles.wallSection}>
-      <div className="container">
+      <CornerGlow variant="trSoft" />
+      <div className={`container ${styles.contentAbove}`}>
         <header className={styles.wallHeader}>
           <p className="kicker">How the lineup works for you</p>
-          <h2 className={styles.wallH2}>
-            <span className="gr">Four things you can actually count on.</span>
-          </h2>
+          <h2 className={styles.wallH2}>Four things you can count on.</h2>
           <p className={styles.wallSubhead}>
-            The lineup is a promise, not a marketing line. Here&apos;s what
-            you sign up for the moment you&apos;re on it.
+            Here&apos;s what you&apos;re signing up for the moment you&apos;re on
+            the lineup.
           </p>
         </header>
 
@@ -131,24 +136,24 @@ function PromiseWall() {
             as the load-bearing promise. */}
         <div className={styles.wallGrid}>
           <PrincipleCard
+            icon={<MatchIcon />}
+            title="We run your interview process"
+            body="From the first intro to a signed contract, we manage the process for you. Feedback comes back straight and fast, and nothing drags on for months. You always know where you stand."
+          />
+          <PrincipleCard
             icon={<FitIcon />}
-            title="We earn from fit, not from your salary"
-            body="Traditional recruiters typically take a percentage of the salary they place you at, so a higher salary means a bigger cut for them. Our flat fee means we put you forward because the role is right, not because the payout is bigger."
+            title="You contract directly with the studio"
+            body="You and the studio agree your terms one to one. We handle everything around the deal and keep it moving, so you're never left waiting on a reply."
           />
           <PrincipleCard
             icon={<SeatIcon />}
             title="Once on the lineup, that's your seat"
-            body="You're not signed up for a one-off referral. While your current engagement is running, we're already lining up the next round of conversations. The lineup keeps moving for you."
+            body="One engagement wraps and you stay on the lineup. We're already lining up the next round of conversations, so it never resets to zero."
           />
           <PrincipleCard
             icon={<ShieldIcon />}
             title="Your work stays your work"
-            body="Nothing you share with us gets used to train AI models. Your profile content, case studies and portfolio assets are not fed into anyone's training data, including our own systems."
-          />
-          <PrincipleCard
-            icon={<BellIcon />}
-            title="We don't sneak changes through"
-            body="If something on this list ever has to change, we'll tell you about it before it takes effect. Plain words, enough time to leave the lineup if you're not on board with the new version."
+            body="Nothing you share gets fed into AI training, ours or anyone else's. Your profile content, case studies and portfolio assets stay yours."
           />
         </div>
       </div>
@@ -164,12 +169,11 @@ function PromiseWall() {
 function Lifecycle() {
   return (
     <section className={styles.lifeSection} id="how">
-      <div className="container">
+      <CornerGlow variant="tlSoft" />
+      <div className={`container ${styles.contentAbove}`}>
         <header className={styles.lifeHeader}>
           <p className="kicker">How it actually runs</p>
-          <h2 className={styles.lifeH2}>
-            <span className="gr">Apply once. Stay on the lineup.</span>
-          </h2>
+          <h2 className={styles.lifeH2}>Apply once. Stay on the lineup.</h2>
           <p className={styles.lifeSubhead}>
             Three steps and a relationship that doesn&apos;t expire after a
             single referral.

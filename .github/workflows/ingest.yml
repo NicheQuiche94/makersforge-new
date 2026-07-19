@@ -1,0 +1,48 @@
+name: Daily job ingest
+
+# Pulls fresh in-remit roles from the ATS boards in src/data/sources.json and
+# commits the updated src/data/jobs.json. Pushing to the default branch triggers
+# Vercel's production deploy, so the board refreshes itself once a day.
+#
+# Runs only on the default branch (activates once this work is merged). Trigger
+# it by hand any time from the Actions tab via "Run workflow".
+
+on:
+  schedule:
+    - cron: "0 6 * * *" # daily at 06:00 UTC
+  workflow_dispatch: {}
+
+# Allow the workflow to commit the regenerated jobs.json back to the repo.
+permissions:
+  contents: write
+
+concurrency:
+  group: job-ingest
+  cancel-in-progress: false
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # No dependencies to install — the script uses only Node built-ins + fetch.
+      - name: Run ingest
+        run: node scripts/ingest.mjs
+
+      - name: Commit & push if the board changed
+        run: |
+          if [[ -n "$(git status --porcelain src/data/jobs.json)" ]]; then
+            git config user.name "makersforge-bot"
+            git config user.email "actions@users.noreply.github.com"
+            git add src/data/jobs.json
+            git commit -m "chore(jobs): daily ingest $(date -u +%F)"
+            git push
+            echo "Board updated."
+          else
+            echo "No changes to publish."
+          fi

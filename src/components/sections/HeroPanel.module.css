@@ -76,19 +76,29 @@
   }
 }
 
-/* MIDDLE — main headline. Two-line stack, both flush left, both
-   plain Cal Sans white. */
-.middle {
+/* MAIN — headline + lede + CTAs grouped as one cohesive, vertically
+   centred block. Previously the headline (centred) and the lede/CTAs
+   (pinned to the bottom) were split by the full section height and
+   read as disconnected pieces (Andre 2026-07-19: "layout of that copy
+   is messy"). z-index keeps the group above the ghost emblem. */
+.main {
   flex: 1;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 30px;
+  position: relative;
+  z-index: 2;
   padding: 20px 0;
 }
 .headline {
   font-family: "Cal Sans", system-ui, sans-serif;
   font-weight: 400;
-  font-size: clamp(60px, 10vw, 168px);
-  line-height: 0.9;
+  /* Three lines now, so a calmer cap (was 168px, felt like too much
+     over-long lines per Andre 2026-07-19). */
+  font-size: clamp(44px, 7.5vw, 120px);
+  line-height: 0.94;
   letter-spacing: -0.04em;
   /* text-transform: lowercase dropped per Andre 2026-05-30 v4 — the
      all-lowercase poster aesthetic is being retired in favour of
@@ -104,29 +114,18 @@
   color: #fff;
 }
 
-/* BOTTOM — left-anchored: sentence lede stacked above the CTA row
-   per cofounder pass H6. Whole bottom block flush-left under the
-   headline, ghost MF hex sits absolute bottom-right of section. */
-.bottom {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 24px;
-  position: relative;
-  z-index: 2;
-}
-
-/* Hero lede — replaces the 4 glass pills per cofounder pass H3.
-   Bold-white prose so the page-defining info reads as a statement
-   rather than a row of UI chrome. */
+/* Hero lede — supports the headline, doesn't compete with it. Lighter
+   weight + recessed white (82%) so the headline stays the single
+   protagonist (emphasis budget, 2026-07-19); was bold 700 full-white
+   over three sentences, which read as a second loud element. */
 .heroLede {
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
-  font-weight: 700;
+  font-weight: 500;
   font-size: clamp(16px, 1.4vw, 20px);
   line-height: 1.45;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.82);
   margin: 0;
-  max-width: 640px;
+  max-width: 560px;
 }
 
 .ctas {

@@ -67,8 +67,13 @@
   --charcoal: #3a3a3f;
   --hair: rgba(14, 15, 17, 0.1);
   --hair-strong: rgba(14, 15, 17, 0.2);
-  --dim: #52525b;
-  --mute: #8a8780;
+  /* Tonal text: one ink at opacity stops rather than separate literal
+     greys (design system, 2026-07-19). 0.72 over white matches the old
+     #52525b almost exactly, but now composites correctly on every
+     ground (cream, deeper cream, gradient) and reads more premium.
+     Both tones clear the AA contrast floor on --bg and --bg-deep. */
+  --dim: rgba(14, 15, 17, 0.72);
+  --mute: rgba(14, 15, 17, 0.52);
 }
 
 /* =========================================================
@@ -142,6 +147,21 @@ a {
 }
 @media (max-width: 700px) {
   .container {
+    padding: 0 18px;
+  }
+}
+
+/* Job board content column — a single consistent width used across every
+   /jobs page (hero, board, detail, company, category, post) so all content
+   shares the same left/right margins. Narrower than .container for a
+   focused, scannable job-board reading measure. */
+.jobs-wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+@media (max-width: 700px) {
+  .jobs-wrap {
     padding: 0 18px;
   }
 }

@@ -1,11 +1,19 @@
-/* WhatWeCover — four containerless columns of role clusters, top +
-   bottom hairlines, vertical hairlines between columns. CTA row
-   underneath links to the lineup. */
+/* WhatWeCover — role clusters as compact paper cards (same UI family
+   as the three service cards + job board), CTA row underneath links
+   to the lineup. */
 
 .section {
-  background: var(--bg);
+  /* --bg-deep so this alternates against the --bg Explainer above and
+     the --bg How-it-works below (Andre 2026-07-19 section-cue rhythm). */
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-deep);
   padding: 100px 0 110px;
   color: var(--ink);
+}
+.contentAbove {
+  position: relative;
+  z-index: 1;
 }
 
 .header {
@@ -21,64 +29,56 @@
 .h2 {
   font-family: "Cal Sans", system-ui, sans-serif;
   font-weight: 400;
-  font-size: clamp(44px, 6vw, 84px);
-  line-height: 1;
+  font-size: clamp(34px, 4.6vw, 64px);
+  line-height: 1.02;
   letter-spacing: -0.035em;
   margin: 4px 0 0;
   color: var(--ink);
   max-width: 1080px;
 }
 
-/* 4-column grid, top + bottom hairlines, vertical hairlines between
-   columns. No paper background, no border radius — content-first. */
+/* Compact paper cards, matching the three service cards + job board
+   so the homepage reads in the same UI language as /jobs and the
+   line-up (Andre 2026-07-19: "the homepage is the only place we
+   don't do any of that. We need to be cohesive."). Retired the
+   hairline-column treatment that lived here from 2026-07-02. */
+/* Flex, not a rigid 5-col grid: three cards on top, the last two
+   centre underneath rather than sitting left-aligned with an empty
+   gap on the right (Andre 2026-07-19: "center the bottom two").
+   justify-content: center does the centring on the short final row. */
 .grid {
-  display: grid;
-  /* 5 columns after Andre added the Product cluster 2026-07-02. */
-  grid-template-columns: repeat(5, 1fr);
-  border-top: 1px solid var(--hair);
-  border-bottom: 1px solid var(--hair);
-}
-@media (max-width: 1100px) {
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  /* Last visible column on each row shouldn't carry a right hairline;
-     with 5 items in a 3-col grid rows are 3 / 2, so item 3 and item 5
-     are last-of-row. */
-  .cluster:nth-child(3) {
-    border-right: 0;
-  }
-}
-@media (max-width: 700px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .cluster {
-    border-right: 1px solid var(--hair);
-  }
-  .cluster:nth-child(2n) {
-    border-right: 0;
-  }
-}
-@media (max-width: 500px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
-  .cluster {
-    border-right: 0;
-    border-bottom: 1px solid var(--hair);
-  }
-  .cluster:last-child {
-    border-bottom: 0;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  max-width: 1080px;
+  margin: 0 auto;
 }
 
 .cluster {
-  padding: 36px 26px 40px;
-  border-right: 1px solid var(--hair);
+  flex: 0 1 calc(33.333% - 10px);
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  border-radius: 16px;
+  padding: 24px 22px 26px;
+  transition:
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
 }
-.cluster:last-child {
-  border-right: 0;
+@media (max-width: 760px) {
+  .cluster {
+    flex-basis: calc(50% - 7px);
+  }
+}
+@media (max-width: 480px) {
+  .cluster {
+    flex-basis: 100%;
+  }
+}
+.cluster:hover {
+  transform: translateY(-3px);
+  border-color: var(--hair-strong);
 }
 
 .clusterLabel {
@@ -101,11 +101,25 @@
   gap: 8px;
 }
 .role {
+  position: relative;
+  padding-left: 18px;
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-weight: 500;
   font-size: 15px;
   line-height: 1.4;
   color: var(--dim);
+}
+/* Heat bullet: a small injection of brand colour into an otherwise
+   very reserved list (Andre 2026-07-19). */
+.role::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #ff5d00;
 }
 
 /* CTA row — sits under the four columns. Same arrow-plus-label

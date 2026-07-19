@@ -87,23 +87,34 @@ export function TopNav({ activeHref }: { activeHref?: string }) {
           </Link>
         </div>
 
-        {/* Right pill — adaptive */}
-        <div className={styles.rightPill}>
-          <ul className={styles.links}>
-            {LINKS.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  className={activeHref === link.href ? styles.activeLink : ""}
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <Link href="/enquire" className={styles.cta}>
-            Book a call
+        {/* Right cluster: the job board gets its OWN pill, sitting apart from
+            the main nav pill. It reads as a distinct product (a board of roles
+            across the industry) rather than "our" openings, and the standalone
+            treatment plus the live dot pulls funnel traffic to it. */}
+        <div className={styles.rightCluster}>
+          <Link href="/jobs" className={styles.jobsPill}>
+            <span className={styles.jobsDot} aria-hidden="true" />
+            Job board
           </Link>
+
+          {/* Main nav pill — adaptive */}
+          <div className={styles.rightPill}>
+            <ul className={styles.links}>
+              {LINKS.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className={activeHref === link.href ? styles.activeLink : ""}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <Link href="/enquire" className={styles.cta}>
+              Book a call
+            </Link>
+          </div>
         </div>
       </nav>
     </div>

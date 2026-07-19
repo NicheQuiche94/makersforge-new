@@ -1,0 +1,179 @@
+.page {
+  padding-bottom: 80px;
+}
+
+/* Hero, the plain-spoken category-ownership statement (brief §6). */
+.hero {
+  padding: 140px 0 44px;
+}
+
+.heroH {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(40px, 6vw, 76px);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  margin: 14px 0 0;
+  max-width: 16ch;
+}
+
+.heroSub {
+  font-size: clamp(17px, 1.7vw, 20px);
+  line-height: 1.5;
+  color: var(--dim);
+  margin: 20px 0 0;
+  max-width: 60ch;
+}
+
+.body {
+  padding: 20px 0 0;
+}
+
+.statWrap {
+  /* More air between the stat bar and the ad bar below it (Andre
+     2026-07-19: had gone cramped again). */
+  margin-bottom: 30px;
+}
+
+/* Full-width post-a-role ad bar, sits between the stats and the board.
+   Whole bar links to /jobs/post. Heat-glow gradient via the global
+   .heat-glow utility. */
+.adWrap {
+  margin-bottom: 34px;
+}
+.adBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  padding: 18px 26px;
+  border-radius: 16px;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.adBar:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 30px rgba(255, 93, 0, 0.26);
+}
+.adBarText {
+  position: relative;
+  z-index: 1;
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.92);
+}
+.adBarText strong {
+  color: #fff;
+  font-weight: 700;
+}
+.adBarCta {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px 18px;
+  border-radius: 999px;
+}
+@media (max-width: 640px) {
+  .adBar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 20px;
+  }
+}
+
+.loading {
+  padding: 40px 0;
+  color: var(--mute);
+  font-size: 15px;
+}
+
+/* Two-up alert strip below the board: candidate alert + reverse
+   talent alert. */
+.alertStrip {
+  margin-top: 56px;
+}
+
+/* Two full-width bars stacked (like the ad bar, just taller to fit the
+   form), rather than side-by-side cards (Andre 2026-07-19). */
+.alertPair {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Filled cards (like the ad bar) rather than plain cream. Candidate
+   card on dark ink, hiring (reverse-alert) card on the heat-glow so it
+   rhymes with the post-a-role ad bar. Slightly different fills so the
+   pair feels considered (Andre 2026-07-19). */
+.alertCard {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  padding: 30px 36px;
+}
+.fillDark {
+  background: #2a2d3a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+/* Content above the heat-glow's pseudo-element layers. Horizontal bar
+   layout: copy on the left, form on the right. */
+.alertContent {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 36px;
+  align-items: center;
+}
+@media (max-width: 760px) {
+  .alertContent {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+.alertCopy {
+  display: flex;
+  flex-direction: column;
+}
+.alertCard :global(.kicker) {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.alertH {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(24px, 2.8vw, 32px);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  color: #fff;
+  margin: 10px 0 8px;
+}
+
+.alertSub {
+  font-size: 15px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.82);
+  margin: 0;
+  max-width: 42ch;
+}
+
+@media (max-width: 700px) {
+  .hero {
+    padding-top: 120px;
+  }
+}
+

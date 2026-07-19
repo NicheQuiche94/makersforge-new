@@ -1,0 +1,100 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+@media (max-width: 680px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--ink);
+}
+.req {
+  color: #ff5d00;
+}
+.hint {
+  font-weight: 400;
+  color: var(--mute);
+}
+
+.input,
+.textarea {
+  font-family: inherit;
+  font-size: 15px;
+  padding: 12px 15px;
+  border-radius: 12px;
+  border: 1px solid var(--hair-strong);
+  background: var(--paper);
+  color: var(--ink);
+  width: 100%;
+}
+.input:focus,
+.textarea:focus {
+  outline: 2px solid #ff5d00;
+  outline-offset: 1px;
+}
+.textarea {
+  resize: vertical;
+}
+
+.submitRow {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+}
+.submit {
+  align-self: flex-start;
+}
+.error {
+  font-size: 14px;
+  color: #c72e00;
+  margin: 0;
+}
+
+/* success state */
+.success {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.successKicker {
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin: 0;
+}
+.successH {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(28px, 4vw, 40px);
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin: 0;
+}
+.successBody {
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--dim);
+  margin: 0 0 12px;
+  max-width: 52ch;
+}

@@ -1,0 +1,106 @@
+/* Alternating section grounds give a subtle cue at each boundary
+   (Andre 2026-07-19). Rhythm down the page: logo(--bg) →
+   services(--bg-deep) → explainer(--bg) → cover(--bg-deep) →
+   how(--bg) → principles(--bg-deep). White cards read on both. */
+.section {
+  position: relative;
+  overflow: hidden;
+  padding: 64px 0;
+  background: var(--bg-deep);
+  color: var(--ink);
+}
+.contentAbove {
+  position: relative;
+  z-index: 1;
+}
+
+.head {
+  max-width: 720px;
+  margin: 0 auto 40px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.h2 {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(34px, 4.6vw, 64px);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  margin: 0;
+}
+
+/* Three equal cards, side by side. This is the intentional anchor of
+   the page (Andre 2026-07-19: "the three the same, side by side, was
+   perfect"). Every other card section varies FROM this, so this one
+   stays uniform. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  border-radius: 16px;
+  padding: 32px 30px;
+  text-decoration: none;
+  color: inherit;
+  transition:
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+.card:hover {
+  transform: translateY(-3px);
+  border-color: var(--hair-strong);
+}
+
+.eyebrow {
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #c72e00;
+}
+
+.who {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 27px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 2px 0 0;
+}
+
+.body {
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--dim);
+  margin: 0;
+}
+
+.link {
+  margin-top: auto;
+  padding-top: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  transition: color 0.2s ease;
+}
+.card:hover .link {
+  color: #c72e00;
+}

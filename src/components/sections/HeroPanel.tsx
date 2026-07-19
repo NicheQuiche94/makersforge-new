@@ -27,25 +27,24 @@ export function HeroPanel() {
           </div>
         </div>
 
-        <div className={styles.middle}>
+        <div className={styles.main}>
           <h1 className={styles.headline}>
-            <span className={styles.headlineLine}>Growth specialists.</span>
-            <span className={styles.headlineLine}>On call.</span>
+            <span className={styles.headlineLine}>The home for</span>
+            <span className={styles.headlineLine}>growth teams in</span>
+            <span className={styles.headlineLine}>games and apps.</span>
           </h1>
-        </div>
 
-        <div className={styles.bottom}>
           <p className={styles.heroLede}>
-            We give App and Games companies immediate access to the vetted
-            growth talent we represent.
+            Representation for the talent, recruitment for the studios, and a
+            job board that&apos;s free for both.
           </p>
 
           <div className={styles.ctas}>
-            <Button href="/line-up" variant="light" arrow>
-              See the lineup
+            <Button href="/apply" variant="light" arrow>
+              Get represented
             </Button>
-            <Button href="/#how" variant="on-dark">
-              How it works
+            <Button href="/enquire" variant="on-dark">
+              Hire a team
             </Button>
           </div>
         </div>

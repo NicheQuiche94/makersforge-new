@@ -1,0 +1,471 @@
+[
+  {
+    "ats": "ashby",
+    "slug": "voodoo",
+    "name": "Voodoo",
+    "url": "https://www.voodoo.io",
+    "sector": "games",
+    "size": "500+",
+    "blurb": "Paris-based mobile games and apps publisher, one of the largest hypercasual and hybrid-casual UA operations in the world."
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "tripledotstudios",
+    "name": "Tripledot Studios",
+    "url": "https://www.tripledotstudios.com",
+    "sector": "games",
+    "size": "500+",
+    "blurb": "London casual games studio (Woodoku, Solitaire, Puzzletime), profitable and scaling paid UA."
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "scopely",
+    "name": "Scopely",
+    "url": "https://www.scopely.com",
+    "sector": "games",
+    "size": "1000+",
+    "blurb": "Global mobile games company behind Monopoly GO!, Stumble Guys and MARVEL Strike Force."
+  },
+  {
+    "ats": "lever",
+    "slug": "dreamgames",
+    "name": "Dream Games",
+    "url": "https://dreamgames.com",
+    "sector": "games",
+    "size": "200-500",
+    "blurb": "Istanbul studio behind Royal Match, one of the top-grossing puzzle games worldwide."
+  },
+  {
+    "ats": "lever",
+    "slug": "easybrain",
+    "name": "Easybrain",
+    "url": "https://easybrain.com",
+    "sector": "games",
+    "size": "200-500",
+    "blurb": "Puzzle games publisher (Sudoku.com, Blockudoku, Art Puzzle) with tens of millions of daily players."
+  },
+  {
+    "ats": "lever",
+    "slug": "jamcity",
+    "name": "Jam City",
+    "url": "https://www.jamcity.com",
+    "sector": "games",
+    "size": "500+",
+    "blurb": "Los Angeles mobile games studio behind Cookie Jam and Harry Potter: Hogwarts Mystery."
+  },
+  {
+    "ats": "ashby",
+    "slug": "supercell",
+    "name": "Supercell",
+    "url": "https://supercell.com",
+    "sector": "games",
+    "size": "500+",
+    "blurb": "Helsinki studio behind Clash of Clans, Clash Royale and Brawl Stars."
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "wildlifestudios",
+    "name": "Wildlife Studios",
+    "url": "https://wildlifestudios.com",
+    "sector": "games",
+    "size": "500+",
+    "blurb": "One of the world's largest mobile game companies, behind Zooba and Tennis Clash."
+  },
+  {
+    "ats": "lever",
+    "slug": "mistplay",
+    "name": "Mistplay",
+    "url": "https://www.mistplay.com",
+    "sector": "games",
+    "size": "200-500",
+    "blurb": "Montreal loyalty platform for mobile gamers, spanning UA and engagement."
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "applovin",
+    "name": "AppLovin",
+    "url": "https://www.applovin.com",
+    "sector": "apps",
+    "size": "1000+",
+    "blurb": "Mobile app growth and monetisation platform with its own portfolio of apps and games."
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "flohealth",
+    "name": "Flo Health",
+    "url": "https://flo.health",
+    "sector": "apps",
+    "size": "500+",
+    "blurb": "London-based women's health app, one of the most-installed health apps worldwide."
+  },
+  {
+    "ats": "ashby",
+    "slug": "photoroom",
+    "name": "PhotoRoom",
+    "url": "https://www.photoroom.com",
+    "sector": "apps",
+    "size": "50-200",
+    "blurb": "Paris AI photo-editing app used by millions of sellers and creators."
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "duolingo",
+    "name": "Duolingo",
+    "url": "https://www.duolingo.com",
+    "sector": "apps",
+    "size": "500+",
+    "blurb": "The world's most popular language-learning app, 100M+ monthly users."
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "sumup",
+    "name": "SumUp",
+    "url": "https://www.sumup.com",
+    "sector": "apps",
+    "size": "1000+",
+    "blurb": "Global fintech app helping small merchants get paid, in 35+ markets."
+  },
+  {
+    "ats": "lever",
+    "slug": "whoop",
+    "name": "WHOOP",
+    "url": "https://www.whoop.com",
+    "sector": "apps",
+    "size": "500+",
+    "blurb": "Boston wearable and app for fitness, sleep and recovery."
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "oura",
+    "name": "Oura",
+    "url": "https://ouraring.com",
+    "sector": "apps",
+    "size": "500+",
+    "blurb": "The smart ring and app for sleep, readiness and long-term health."
+  },
+  {
+    "ats": "ashby",
+    "slug": "strava",
+    "name": "Strava",
+    "url": "https://www.strava.com",
+    "sector": "apps",
+    "size": "500+",
+    "blurb": "The app for runners and cyclists, 100M+ athletes worldwide."
+  },
+  {
+    "ats": "ashby",
+    "slug": "preply",
+    "name": "Preply",
+    "url": "https://preply.com",
+    "sector": "apps",
+    "size": "200-500",
+    "blurb": "Global language-tutoring marketplace app connecting learners and tutors."
+  },
+  {
+    "ats": "ashby",
+    "slug": "headway",
+    "name": "Headway",
+    "url": "https://makeheadway.com",
+    "sector": "apps",
+    "size": "200-500",
+    "blurb": "Microlearning app for book summaries and self-growth, a major mobile UA spender."
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "truebill",
+    "companySlug": "rocket-money",
+    "name": "Rocket Money",
+    "url": "https://www.rocketmoney.com",
+    "sector": "apps",
+    "size": "200-500",
+    "blurb": "Personal-finance app (formerly Truebill) helping people manage subscriptions and save."
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "lightricks",
+    "name": "Lightricks",
+    "url": "https://www.lightricks.com",
+    "sector": "apps",
+    "size": "500+",
+    "blurb": "Creative apps company behind Facetune, Photoleap and Videoleap."
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "monzo",
+    "name": "Monzo",
+    "url": "https://monzo.com",
+    "sector": "apps",
+    "size": "1000+",
+    "blurb": "UK digital bank with 10M+ app-first customers."
+  },
+  {
+    "ats": "ashby",
+    "slug": "suno",
+    "name": "Suno",
+    "url": "https://suno.com",
+    "sector": "apps",
+    "size": "50-200",
+    "blurb": "AI music-creation app letting anyone make songs from a prompt."
+  },
+  {
+    "ats": "ashby",
+    "slug": "elevenlabs",
+    "name": "ElevenLabs",
+    "url": "https://elevenlabs.io",
+    "sector": "apps",
+    "size": "200-500",
+    "blurb": "AI voice and audio platform powering consumer and creator apps."
+  },
+  {
+    "ats": "ashby",
+    "slug": "perplexity",
+    "name": "Perplexity",
+    "url": "https://www.perplexity.ai",
+    "sector": "apps",
+    "size": "200-500",
+    "blurb": "AI-powered answer engine and fast-growing consumer app."
+  },
+  {
+    "ats": "ashby",
+    "slug": "krea",
+    "name": "Krea",
+    "url": "https://www.krea.ai",
+    "sector": "apps",
+    "size": "15-50",
+    "blurb": "Real-time AI image and video creation app, an early-stage studio."
+  },
+  {
+    "ats": "lever",
+    "slug": "greenlight",
+    "name": "Greenlight",
+    "url": "https://greenlight.com",
+    "sector": "apps",
+    "size": "200-500",
+    "blurb": "Family finance and debit-card app for kids and teens."
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "kalshi",
+    "name": "Kalshi",
+    "url": "https://kalshi.com",
+    "sector": "apps",
+    "size": "50-200",
+    "blurb": "Regulated prediction-markets trading app."
+  },
+  {
+    "ats": "ashby",
+    "slug": "acorns",
+    "name": "Acorns",
+    "url": "https://www.acorns.com",
+    "sector": "apps",
+    "size": "200-500",
+    "blurb": "Investing and saving app for everyday people."
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "tamara",
+    "name": "Tamara",
+    "url": "https://tamara.co",
+    "sector": "apps",
+    "size": "200-500",
+    "blurb": "MENA buy-now-pay-later shopping app."
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "peloton",
+    "name": "Peloton",
+    "url": "https://www.onepeloton.com",
+    "sector": "apps",
+    "size": "500+",
+    "blurb": "Connected-fitness app and hardware with a large member base."
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "discord",
+    "name": "Discord",
+    "url": "https://discord.com",
+    "sector": "apps",
+    "size": "500+",
+    "blurb": "The voice, video and chat app for communities."
+  },
+  {
+    "ats": "lever",
+    "slug": "peakgames",
+    "name": "Peak",
+    "url": "https://www.peak.com",
+    "sector": "games",
+    "size": "500+",
+    "blurb": "Istanbul studio behind Toon Blast and Toy Blast, a top mobile puzzle publisher, part of Zynga."
+  },
+  {
+    "ats": "lever",
+    "slug": "kabam",
+    "name": "Kabam",
+    "url": "https://www.kabam.com",
+    "sector": "games",
+    "size": "500+",
+    "blurb": "Vancouver mobile games studio behind Marvel Contest of Champions."
+  },
+  {
+    "ats": "teamtailor",
+    "slug": "stillfrontgroup",
+    "name": "Stillfront Group",
+    "url": "https://www.stillfront.com",
+    "sector": "games",
+    "size": "1000+",
+    "blurb": "Global group of mobile games studios, 1,200+ staff and 40M+ monthly players."
+  },
+  {
+    "ats": "teamtailor",
+    "slug": "madbox",
+    "name": "Madbox",
+    "url": "https://www.madbox.io",
+    "sector": "games",
+    "size": "50-200",
+    "blurb": "Paris mobile games studio building hybrid-casual hits."
+  },
+  {
+    "ats": "teamtailor",
+    "slug": "goodgamestudios",
+    "name": "Goodgame Studios",
+    "url": "https://www.goodgamestudios.com",
+    "sector": "games",
+    "size": "200-500",
+    "blurb": "Hamburg free-to-play games company on web and mobile (Empire series)."
+  },
+  {
+    "ats": "teamtailor",
+    "slug": "tapnation",
+    "name": "TapNation",
+    "url": "https://tap-nation.io",
+    "sector": "games",
+    "size": "50-200",
+    "blurb": "Hypercasual and hybrid-casual mobile games publisher."
+  },
+  {
+    "ats": "teamtailor",
+    "slug": "pixiongames",
+    "name": "Pixion Games",
+    "url": "https://pixiongames.com",
+    "sector": "games",
+    "size": "15-50",
+    "blurb": "Remote-first studio building Fableborne and mobile web3 games."
+  },
+  {
+    "ats": "teamtailor",
+    "slug": "starstable",
+    "name": "Star Stable",
+    "url": "https://www.starstable.com",
+    "sector": "games",
+    "size": "200-500",
+    "blurb": "Stockholm studio behind Star Stable, a hit adventure game on mobile and web."
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "tactilegames",
+    "name": "Tactile Games",
+    "url": "https://tactilegames.com",
+    "sector": "games",
+    "size": "200-500",
+    "blurb": "Copenhagen studio behind Lily's Garden and Penny & Flo."
+  },
+  {
+    "ats": "lever",
+    "slug": "kolibrigames",
+    "name": "Kolibri Games",
+    "url": "https://www.kolibrigames.com",
+    "sector": "games",
+    "size": "50-200",
+    "blurb": "Berlin studio behind Idle Miner Tycoon."
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "wooga",
+    "name": "Wooga",
+    "url": "https://www.wooga.com",
+    "sector": "games",
+    "size": "200-500",
+    "blurb": "Berlin casual games studio (June's Journey), part of Playtika."
+  },
+  {
+    "ats": "ashby",
+    "slug": "codeway",
+    "name": "Codeway",
+    "url": "https://codeway.co",
+    "sector": "apps",
+    "size": "200-500",
+    "blurb": "Istanbul consumer-apps studio behind Wonder, Chatbot AI and other top utility apps."
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "goodjobgames",
+    "name": "Good Job Games",
+    "url": "https://www.goodjobgames.com",
+    "sector": "games",
+    "size": "200-500",
+    "blurb": "Istanbul mobile games studio (part of Zynga), behind hits like Screw Jam."
+  },
+  {
+    "ats": "ashby",
+    "slug": "agavegames",
+    "name": "Agave Games",
+    "url": "https://www.agavegames.com",
+    "sector": "games",
+    "size": "50-200",
+    "blurb": "Istanbul mobile games studio behind the puzzle hit Match Factory."
+  },
+  {
+    "ats": "lever",
+    "slug": "loopgames",
+    "name": "Loop Games",
+    "url": "https://www.loopgames.co",
+    "sector": "games",
+    "size": "50-200",
+    "blurb": "Istanbul mobile games studio building casual and puzzle titles."
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "truecaller",
+    "name": "Truecaller",
+    "url": "https://www.truecaller.com",
+    "sector": "apps",
+    "size": "500+",
+    "blurb": "Caller ID and spam-blocking app used by hundreds of millions worldwide."
+  },
+  {
+    "ats": "lever",
+    "slug": "amanotes",
+    "name": "Amanotes",
+    "url": "https://www.amanotes.com",
+    "sector": "games",
+    "size": "200-500",
+    "blurb": "Vietnam's number-one music-games publisher (Magic Tiles 3, Tiles Hop), 3B+ downloads."
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "outfit7",
+    "name": "Outfit7",
+    "url": "https://outfit7.com",
+    "sector": "games",
+    "size": "500+",
+    "blurb": "Cyprus-based studio behind the Talking Tom & Friends franchise, 6B+ downloads."
+  },
+  {
+    "ats": "ashby",
+    "slug": "scorewarrior",
+    "name": "Scorewarrior",
+    "url": "https://scorewarrior.com",
+    "sector": "games",
+    "size": "200-500",
+    "blurb": "Cyprus-based studio behind the strategy hit Total Battle."
+  },
+  {
+    "ats": "ashby",
+    "slug": "skymavis",
+    "name": "Sky Mavis",
+    "url": "https://skymavis.com",
+    "sector": "games",
+    "size": "200-500",
+    "blurb": "Vietnam and Singapore studio behind Axie Infinity and the Ronin network."
+  }
+]

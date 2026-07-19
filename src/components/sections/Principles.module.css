@@ -2,16 +2,23 @@
    per column. */
 
 .section {
+  position: relative;
+  overflow: hidden;
   background: var(--bg-deep);
   padding: 100px 0 110px;
   color: var(--ink);
 }
+.contentAbove {
+  position: relative;
+  z-index: 1;
+}
 
 .header {
   max-width: 1080px;
-  /* 56px → 88px header-to-grid gap. The three principle blocks were
-     reading as compressed under the big Cal Sans header per Andre. */
-  margin: 0 auto 88px;
+  /* Header-to-grid gap. Was 88px when the principles were bare
+     columns; tightened to 56px now they sit in cards that hold
+     their own visual weight. */
+  margin: 0 auto 56px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -22,52 +29,74 @@
 .h2 {
   font-family: "Cal Sans", system-ui, sans-serif;
   font-weight: 400;
-  font-size: clamp(44px, 7vw, 108px);
-  line-height: 1;
+  font-size: clamp(34px, 4.6vw, 64px);
+  line-height: 1.02;
   letter-spacing: -0.035em;
   margin: 4px 0 0;
   color: var(--ink);
   max-width: 1080px;
 }
 
+/* Bento arrangement, distinct from the service cards' big-left layout:
+   the first principle is a wide horizontal card across the top, the
+   other two sit side by side beneath it. Mobile-first so the desktop
+   spans never fight the single-column base. */
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 48px;
+  grid-template-columns: 1fr;
+  gap: 16px;
   max-width: 1080px;
   margin: 0 auto;
 }
-@media (max-width: 800px) {
+@media (min-width: 760px) {
   .grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  .principle:nth-child(1) {
+    grid-column: 1 / span 2;
+    flex-direction: row;
+    align-items: center;
+    gap: 26px;
+  }
+  .principle:nth-child(1) .body {
+    max-width: 620px;
   }
 }
 
+/* Title + body stack. Kept in its own wrapper so the first card can go
+   icon-left / text-right (row) while the other two stay icon-on-top. */
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+/* Paper cards matching the three service cards + job board, so the
+   homepage reads in the same UI language as /jobs and the line-up
+   (Andre 2026-07-19: "the homepage is the only place we don't do
+   any of that. We need to be cohesive."). */
 .principle {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 18px;
-  padding: 12px 8px;
+  align-items: flex-start;
+  text-align: left;
+  gap: 16px;
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  border-radius: 16px;
+  padding: 34px 30px;
+  transition:
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+.principle:hover {
+  transform: translateY(-3px);
+  border-color: var(--hair-strong);
 }
 
-.iconWrap {
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
-  background: var(--heat-h);
-  color: #fff;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 6px 18px rgba(255, 93, 0, 0.24);
-}
-.iconWrap svg {
-  width: 26px;
-  height: 26px;
-}
 
 .title {
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
@@ -84,5 +113,4 @@
   line-height: 1.55;
   color: var(--dim);
   margin: 0;
-  max-width: 320px;
 }

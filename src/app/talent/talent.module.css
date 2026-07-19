@@ -50,8 +50,16 @@
    (3-up on wide screens, collapses gracefully on narrow).
    ============================================================ */
 .wallSection {
+  position: relative;
+  overflow: hidden;
   padding: 90px 0 110px;
   background: var(--bg-deep);
+}
+
+/* Keeps section content above the corner-glow decoration. */
+.contentAbove {
+  position: relative;
+  z-index: 1;
 }
 
 /* Standardised section header (Cal Sans h2 + Figtree subhead,
@@ -69,8 +77,8 @@
 .wallH2 {
   font-family: "Cal Sans", system-ui, sans-serif;
   font-weight: 400;
-  font-size: clamp(44px, 7vw, 108px);
-  line-height: 1;
+  font-size: clamp(34px, 4.6vw, 64px);
+  line-height: 1.02;
   letter-spacing: -0.035em;
   margin: 4px 0 0;
   color: var(--ink);
@@ -81,10 +89,11 @@
 .lifeSubhead {
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-weight: 500;
-  font-size: clamp(18px, 1.8vw, 24px);
-  line-height: 1.5;
+  /* Matches the home section-intro size (Andre 2026-07-19 restyle). */
+  font-size: clamp(17px, 1.5vw, 20px);
+  line-height: 1.6;
   color: var(--dim);
-  max-width: 720px;
+  max-width: 640px;
   margin: 0;
 }
 
@@ -108,7 +117,10 @@
    wall + home Statement. Centred header.
    ============================================================ */
 .lifeSection {
+  position: relative;
+  overflow: hidden;
   padding: 100px 0 110px;
+  background: var(--bg-deep);
 }
 
 .lifeHeader {
@@ -124,8 +136,8 @@
 .lifeH2 {
   font-family: "Cal Sans", system-ui, sans-serif;
   font-weight: 400;
-  font-size: clamp(44px, 7vw, 108px);
-  line-height: 1;
+  font-size: clamp(34px, 4.6vw, 64px);
+  line-height: 1.02;
   letter-spacing: -0.035em;
   margin: 4px 0 0;
   color: var(--ink);
@@ -152,12 +164,20 @@
 .card {
   background: var(--paper);
   border: 1px solid var(--hair);
-  border-radius: 22px;
+  border-radius: 16px;
   padding: 24px 22px 26px;
   display: flex;
   flex-direction: column;
   gap: 14px;
   min-height: 170px;
+  transition:
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+.card:hover {
+  transform: translateY(-3px);
+  border-color: var(--hair-strong);
 }
 
 .iconWrap {
@@ -199,7 +219,8 @@
    between Lifecycle and PromiseWall per cofounder pass T2.
    ============================================================ */
 .payBannerSection {
-  padding: 30px 0 40px;
+  padding: 40px 0 48px;
+  background: var(--bg);
 }
 .payBanner {
   border-radius: 24px;

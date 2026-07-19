@@ -1,0 +1,27 @@
+/* Soft heat wash raked to the hexagon's ~28deg edge angle, bleeding
+   into a top corner. Only the soft top-corner fade survived the trial
+   (Andre 2026-07-19); sections alternate top-left / top-right. */
+.glow {
+  position: absolute;
+  z-index: 0;
+  top: -120px;
+  width: 560px;
+  height: 230px;
+  background: var(--heat-h);
+  border-radius: 48px;
+  filter: blur(52px);
+  opacity: 0.22;
+  pointer-events: none;
+}
+
+/* Top-left */
+.tlSoft {
+  left: -90px;
+  transform: rotate(-28deg);
+}
+
+/* Top-right (mirrored angle) */
+.trSoft {
+  right: -90px;
+  transform: rotate(28deg);
+}

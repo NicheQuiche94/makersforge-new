@@ -43,6 +43,84 @@
 }
 
 /* ============================================================
+   RIGHT CLUSTER — the standalone Job Board pill + the main pill
+   ============================================================ */
+.rightCluster {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Standalone Job Board pill — deliberately separate from the main nav pill
+   so it reads as its own product and pulls funnel traffic. */
+.jobsPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  box-shadow: 0 4px 18px rgba(14, 15, 17, 0.04);
+  transition:
+    background 0.35s ease,
+    color 0.35s ease,
+    border-color 0.35s ease,
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+.jobsPill:hover {
+  transform: translateY(-1px);
+}
+.jobsDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--heat-h);
+  flex-shrink: 0;
+  animation: jobsDotPulse 1.7s ease-in-out infinite;
+}
+@keyframes jobsDotPulse {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(255, 93, 0, 0.45);
+  }
+  50% {
+    opacity: 0.55;
+    box-shadow: 0 0 0 4px rgba(255, 93, 0, 0);
+  }
+}
+
+/* Pills stay white even over the hero gradient (Andre 2026-07-19:
+   "make sure they're still white when they're on the orange, they
+   used to be like that"). White pills on the heat gradient read far
+   cleaner than the glass treatment they'd drifted to. */
+.modeGradient .jobsPill {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(14, 15, 17, 0.08);
+  color: var(--ink);
+}
+.modeGradient .jobsDot {
+  background: var(--heat-h);
+}
+.modeLight .jobsPill {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(14, 15, 17, 0.1);
+  color: var(--ink);
+}
+.modeLight .jobsPill:hover {
+  box-shadow: 0 6px 18px rgba(255, 93, 0, 0.16);
+  border-color: rgba(255, 93, 0, 0.4);
+}
+
+/* ============================================================
    RIGHT PILL — adaptive (glass over gradient, white over cream)
    ============================================================ */
 .rightPill {
@@ -64,23 +142,22 @@
 /* GRADIENT MODE — over the homepage hero. Variant E original
    treatment: glass + white text + solid white CTA. */
 .modeGradient .rightPill {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  box-shadow: none;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(14, 15, 17, 0.08);
 }
 .modeGradient .links a {
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(14, 15, 17, 0.7);
 }
 .modeGradient .links a:hover,
 .modeGradient .activeLink {
-  color: #fff;
-}
-.modeGradient .cta {
-  background: #fff;
   color: var(--ink);
 }
+.modeGradient .cta {
+  background: var(--heat-h);
+  color: #fff;
+}
 .modeGradient .cta:hover {
-  background: var(--bg);
+  box-shadow: 0 6px 18px rgba(255, 93, 0, 0.3);
 }
 
 /* LIGHT MODE — over cream surfaces. White pill + ink text +
