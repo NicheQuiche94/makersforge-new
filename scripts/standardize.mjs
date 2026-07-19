@@ -38,10 +38,24 @@ export function cleanLocation(raw) {
   return parts.join(", ").replace(/\s{2,}/g, " ").trim();
 }
 
-/** Apply both to a job object in place; returns it. */
+/** Normalise employee-count labels to one scheme (job sources mix the board
+ *  buckets "50-200"/"500+" with Getro's "51-200"/"201-500"/"1001-5000"). */
+const SIZE_CANON = {
+  "11-50": "1-50",
+  "51-200": "50-200",
+  "201-500": "200-500",
+  "501-1000": "500+",
+  "1001-5000": "1000+",
+};
+export function cleanSize(s) {
+  return s ? (SIZE_CANON[s] ?? s) : s;
+}
+
+/** Apply cleaning to a job object in place; returns it. */
 export function standardizeJob(job) {
   if (job.title) job.title = cleanTitle(job.title);
   if (job.location) job.location = cleanLocation(job.location);
+  if (job.company?.size) job.company.size = cleanSize(job.company.size);
   return job;
 }
 

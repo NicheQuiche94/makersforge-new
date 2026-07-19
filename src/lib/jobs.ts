@@ -181,16 +181,30 @@ type FolkEnrichment = Partial<
 >;
 const ENRICH = folkEnrichment as Record<string, FolkEnrichment>;
 
+/** "YYYY-MM" five years before build. Funding whose last round predates this
+ *  is suppressed: an old pre-acquisition round (e.g. Supercell 2013) reads as
+ *  stale and misrepresents the company (Andre 2026-07-19). */
+const FUNDING_STALE_CUTOFF = (() => {
+  const d = buildToday();
+  return `${d.getFullYear() - 5}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+})();
+
 function applyEnrichment(company: Company): Company {
   const e = ENRICH[company.slug];
   if (!e) return company;
+  // Keep funding only when it isn't stale (no date = can't tell, so keep).
+  const fundingFresh = !e.lastRaise || e.lastRaise >= FUNDING_STALE_CUTOFF;
   return {
     ...company,
-    ...(e.size ? { size: e.size } : {}),
+    // NOTE: size is intentionally NOT taken from Folk — its employee-range
+    // data was unreliable (downgrading e.g. Perplexity to 11-50 while showing
+    // $1.5B raised, Andre 2026-07-19). The base size from the job source is
+    // trustworthy and uses one consistent bucket scheme. Folk still supplies
+    // blurb / stage / funding / lastRaise.
     ...(e.blurb ? { blurb: e.blurb } : {}),
     ...(e.stage ? { stage: e.stage } : {}),
-    ...(e.funding ? { funding: e.funding } : {}),
-    ...(e.lastRaise ? { lastRaise: e.lastRaise } : {}),
+    ...(e.funding && fundingFresh ? { funding: e.funding } : {}),
+    ...(e.lastRaise && fundingFresh ? { lastRaise: e.lastRaise } : {}),
   };
 }
 
