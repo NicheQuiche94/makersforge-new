@@ -39,11 +39,18 @@ const KEY = process.env.SERPAPI_KEY;
 const UA =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0 Safari/537.36";
 
-// EMEA/UK first (Andre 2026-07-20). Trim/extend freely.
+// UK/EMEA + Turkey & Nordics — mobile-games hubs Andre has strong ties in
+// (2026-07-20). Note: searches/run = REGIONS × CHARTS × SOURCES (8×2×5 = 80),
+// so run periodically, not often. Trim for a cheaper run.
 const REGIONS = [
   { gl: "gb", name: "UK" },
   { gl: "de", name: "Germany" },
   { gl: "fr", name: "France" },
+  { gl: "tr", name: "Turkey" },
+  { gl: "se", name: "Sweden" },
+  { gl: "fi", name: "Finland" },
+  { gl: "no", name: "Norway" },
+  { gl: "dk", name: "Denmark" },
 ];
 const CHARTS = ["topgrossing", "topselling_free"];
 // Games use the dedicated games engine; apps use google_play + a category.

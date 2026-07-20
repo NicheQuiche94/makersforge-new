@@ -19,6 +19,7 @@ import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { fetchGoogleSearch, categoryFor } from "./serpapi.mjs";
+import { listCompanies, createCompanyLead, normName } from "./folk.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = join(__dirname, "..", "src", "data");
@@ -119,6 +120,49 @@ async function main() {
   const hiring = banked.filter((r) => r.hiring_signal).length;
   console.log(
     `\n✓ ${searches} searches · ${banked.length} banked · ${own} on own domain · ${hiring} with a live in-remit role → src/data/company-research.json`,
+  );
+
+  // Flow to Folk: push this run's own-domain companies in as leads (deduped).
+  const FOLK_KEY = process.env.FOLK_API_KEY;
+  if (!FOLK_KEY) {
+    console.log(
+      "\n(FOLK_API_KEY not set — skipped Folk push. Run with `node --env-file=.env.local` to enable.)",
+    );
+    return;
+  }
+  if (process.argv.includes("--no-folk")) return;
+
+  const existing = new Set((await listCompanies(FOLK_KEY)).map((c) => normName(c.name)));
+  let created = 0,
+    existed = 0,
+    skipped = 0;
+  for (const d of queue) {
+    const r = research[d.slug];
+    if (!r.own_domain) {
+      skipped++; // only real careers pages become leads
+      continue;
+    }
+    if (existing.has(normName(r.developer))) {
+      existed++;
+      continue;
+    }
+    const nextSteps = `Top-grossing ${r.sector} on Play (${(r.regions || []).join("/")}). Careers: ${r.careers_url}. Check for UA / growth / marketing-art roles.`;
+    try {
+      await createCompanyLead(FOLK_KEY, {
+        name: r.developer,
+        url: r.careers_url,
+        sector: r.sector,
+        nextSteps,
+      });
+      existing.add(normName(r.developer));
+      created++;
+      console.log(`  → Folk lead: ${r.developer}`);
+    } catch (e) {
+      console.warn(`  ! Folk ${r.developer}: ${e.message}`);
+    }
+  }
+  console.log(
+    `\nFolk: +${created} leads created · ${existed} already existed · ${skipped} skipped (no own-domain careers page)`,
   );
 }
 
