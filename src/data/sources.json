@@ -117,15 +117,6 @@
     "blurb": "The world's most popular language-learning app, 100M+ monthly users."
   },
   {
-    "ats": "greenhouse",
-    "slug": "sumup",
-    "name": "SumUp",
-    "url": "https://www.sumup.com",
-    "sector": "apps",
-    "size": "1000+",
-    "blurb": "Global fintech app helping small merchants get paid, in 35+ markets."
-  },
-  {
     "ats": "lever",
     "slug": "whoop",
     "name": "WHOOP",
@@ -278,15 +269,6 @@
     "sector": "apps",
     "size": "500+",
     "blurb": "Connected-fitness app and hardware with a large member base."
-  },
-  {
-    "ats": "greenhouse",
-    "slug": "discord",
-    "name": "Discord",
-    "url": "https://discord.com",
-    "sector": "apps",
-    "size": "500+",
-    "blurb": "The voice, video and chat app for communities."
   },
   {
     "ats": "lever",

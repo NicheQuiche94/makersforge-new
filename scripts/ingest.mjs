@@ -342,7 +342,7 @@ const GETRO_STAGE = {
 
 // Getro companies to exclude: off-remit (web3 / AI game *infrastructure*, not
 // studios) or a duplicate of an ATS source we already carry (Andre 2026-07-19).
-const GETRO_BLOCKLIST = /^(immutable|inworld|discord)/i;
+const GETRO_BLOCKLIST = /^(immutable|inworld|discord|sumup)/i;
 
 /** Classify a company from its Getro industry tags: "games", "apps", or null
  *  (drop, SaaS / B2B / infra / not a mobile consumer product). */
