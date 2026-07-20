@@ -32,9 +32,13 @@ const CATEGORY_RULES = [
 ];
 const OFF_REMIT_TITLE =
   /\bb2b\b|enterprise|software engineer|\bcrm\b|life[- ]?cycle|public relations|digital pr|\bpr\b/i;
+// Technical/product roles inside a growth team (e.g. "AI Engineer, Performance
+// Marketing") — not the talent we represent. Analytics engineers are exempt.
+const TECHNICAL_ROLE = /\b(engineer|developer|scientist|programmer)\b/i;
 
 export function categoryFor(title) {
   if (!title || OFF_REMIT_TITLE.test(title)) return null;
+  if (TECHNICAL_ROLE.test(title) && !/analytics engineer/i.test(title)) return null;
   for (const [cat, re] of CATEGORY_RULES) if (re.test(title)) return cat;
   return null;
 }

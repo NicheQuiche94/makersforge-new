@@ -1,29 +1,5 @@
 [
   {
-    "slug": "dreamgames-ai-engineer-performance-marketing",
-    "title": "AI Engineer, Performance Marketing",
-    "company": {
-      "slug": "dreamgames",
-      "name": "Dream Games",
-      "url": "https://dreamgames.com",
-      "blurb": "Istanbul studio behind Royal Match, one of the top-grossing puzzle games worldwide.",
-      "size": "200-500",
-      "sector": "games"
-    },
-    "category": "ua",
-    "location": "Istanbul",
-    "region": "emea",
-    "remote": "onsite",
-    "employment_type": "FULL_TIME",
-    "salary": null,
-    "description_md": "We are looking for a passionate AI Engineer to join our performance marketing team. As an AI Engineer, you will build generative AI pipelines and agentic systems for creative production: creative ideation, image and video generation, automated creative pipelines, and the tooling around them. You will prototype quickly against real creative problems and take what works into production. Prior marketing experience is not required, but a genuine creative eye for what makes an ad creative work is essential.\n\nAt Dream Games, all team members have a genuine chance to contribute to the final product and have an impact on the company. If you want to be a team member of a fast-growing company, you might be the person we are looking for!\n\n**Responsibilities**\n\n- Building and maintaining AI powered features and agentic workflows for creative production\n\n- Contributing to systems that generate ad creatives, including interactive playables, by combining code generation and multimodal asset generation\n\n- Working with creative strategists to turn their craft into repeatable, scaled workflows\n\n- Developing evaluation pipelines for creative output, including quality checks and human-in-the-loop review\n\n**Requirements**\n\n- Computer engineering (or similar) background with a genuine creative eye\n\n- Proficiency in Python and hands on experience building agentic workflows, LLM chains, and multimodal model calls\n\n- Experience with generative AI, such as diffusion models and image/video generation\n\n- Familiarity with modern AI application techniques such as RAG, function calling, and vector databases\n\n- Deep interest in state-of-the-art AI, following new models and capabilities closely\n\n- Passion and interest in games\n\n- Appreciation and understanding of teamwork\n\nProtecting your privacy and the security of your data is a top priority for Dream Games. We collect and process your personal data as confidential as part of the recruitment process. Please read our Statement of Personal Data Protection Law and Consent Letter to know more details.",
-    "apply_url": "https://jobs.lever.co/dreamgames/2a2c64d7-cc33-49a0-bf41-807b28933ca7",
-    "source": "lever",
-    "posted_at": "2026-07-20",
-    "expires_at": "2026-09-03",
-    "ingested_at": "2026-07-20"
-  },
-  {
     "slug": "wildlifestudios-senior-creative-strategist",
     "title": "Senior Creative Strategist",
     "company": {

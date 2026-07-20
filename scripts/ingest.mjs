@@ -77,9 +77,14 @@ const CATEGORY_RULES = [
 // games & apps — not these (Andre 2026-07-19).
 const OFF_REMIT_TITLE =
   /\bb2b\b|enterprise|software engineer|\bcrm\b|life[- ]?cycle|public relations|digital pr|\bpr\b/i;
+// Technical/product roles that sit inside a growth/marketing team but aren't the
+// talent we represent (e.g. "AI Engineer, Performance Marketing", Andre
+// 2026-07-20). Analytics engineers are exempt — that's growth-data, in remit.
+const TECHNICAL_ROLE = /\b(engineer|developer|scientist|programmer)\b/i;
 
 function categoryFor(title) {
   if (OFF_REMIT_TITLE.test(title)) return null;
+  if (TECHNICAL_ROLE.test(title) && !/analytics engineer/i.test(title)) return null;
   for (const [cat, re] of CATEGORY_RULES) if (re.test(title)) return cat;
   return null;
 }
