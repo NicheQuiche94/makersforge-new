@@ -110,28 +110,41 @@ export async function fetchGoogleJobs(q, { apiKey, location } = {}) {
 }
 
 /**
- * One Google Play chart page (engine=google_play). `chart` is topgrossing /
- * topselling_free / topselling_paid; `category` is a Play category id (GAME,
- * FINANCE, HEALTH_AND_FITNESS…); `gl` is a country code. Returns the app rows.
- * The exact result key varies, so we scan for the array of app-shaped objects.
+ * One Google Play chart page. Games and apps use DIFFERENT engines:
+ *   - games: engine "google_play_games" (no category)
+ *   - apps:  engine "google_play", store "apps", apps_category "FINANCE" etc.
+ * `chart` is topgrossing / topselling_free / topselling_paid; `gl` a country.
+ * Apps sit under `top_charts`. Each row has title + author (the developer).
  */
-export async function fetchGooglePlayChart({ chart, category, gl, apiKey }) {
+export async function fetchGooglePlayChart({
+  engine = "google_play",
+  store,
+  apps_category,
+  chart,
+  gl,
+  apiKey,
+}) {
   const url = new URL("https://serpapi.com/search.json");
-  url.searchParams.set("engine", "google_play");
-  url.searchParams.set("store", "apps");
+  url.searchParams.set("engine", engine);
+  if (store) url.searchParams.set("store", store);
+  if (apps_category) url.searchParams.set("apps_category", apps_category);
   url.searchParams.set("chart", chart);
-  if (category) url.searchParams.set("apps_category", category);
   if (gl) url.searchParams.set("gl", gl);
   url.searchParams.set("hl", "en");
   url.searchParams.set("api_key", apiKey);
 
   const res = await fetch(url, { headers: { "User-Agent": UA } });
-  if (!res.ok) throw new Error(`SerpApi Play HTTP ${res.status}`);
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    throw new Error(
+      `SerpApi Play HTTP ${res.status}${body.error ? `: ${body.error}` : ""}`,
+    );
+  }
   const data = await res.json();
   if (data.error) throw new Error(`SerpApi Play: ${data.error}`);
 
+  if (Array.isArray(data.top_charts)) return data.top_charts;
   if (Array.isArray(data.organic_results)) return data.organic_results;
-  // Fallback: find the first array whose items look like apps (title + author).
   for (const v of Object.values(data)) {
     if (Array.isArray(v) && v.some((x) => x && x.title && (x.author || x.developer)))
       return v;
