@@ -34,6 +34,7 @@ import styles from "./JobsBoard.module.css";
 
 type FilterState = {
   category: string | null;
+  company: string | null;
   sector: string | null;
   remote: string | null;
   region: string | null;
@@ -43,6 +44,7 @@ type FilterState = {
 
 const EMPTY: FilterState = {
   category: null,
+  company: null,
   sector: null,
   remote: null,
   region: null,
@@ -50,7 +52,7 @@ const EMPTY: FilterState = {
   stage: null,
 };
 
-const KEYS = ["category", "sector", "remote", "region", "size", "stage"] as const;
+const KEYS = ["category", "company", "sector", "remote", "region", "size", "stage"] as const;
 const REMOTE_OPTIONS = ["remote", "hybrid", "onsite"] as const;
 const PER_PAGE = 25;
 
@@ -77,6 +79,7 @@ export function JobsBoard({
     // eslint-disable-next-line react-hooks/set-state-in-effect -- post-mount URL sync, hydration-safe
     setFilters({
       category: p.get("category"),
+      company: p.get("company"),
       sector: p.get("sector"),
       remote: p.get("remote"),
       region: p.get("region"),
@@ -114,11 +117,26 @@ export function JobsBoard({
     syncUrl(EMPTY);
   };
 
+  // Every company with its total live-role count, most roles first — used for
+  // the company facet, "Name (n)" (Andre 2026-07-20 UX ask).
+  const companyOptions = useMemo(() => {
+    const map = new Map<string, { name: string; count: number }>();
+    for (const j of jobs) {
+      const e = map.get(j.company.slug) ?? { name: j.company.name, count: 0 };
+      e.count += 1;
+      map.set(j.company.slug, e);
+    }
+    return [...map.entries()]
+      .sort((a, b) => b[1].count - a[1].count || a[1].name.localeCompare(b[1].name))
+      .map(([slug, { name, count }]) => [slug, `${name} (${count})`] as [string, string]);
+  }, [jobs]);
+
   const filtered = useMemo(
     () =>
       jobs.filter(
         (j) =>
           (!filters.category || j.category === filters.category) &&
+          (!filters.company || j.company.slug === filters.company) &&
           (!filters.sector || j.company.sector === filters.sector) &&
           (!filters.remote || j.remote === filters.remote) &&
           (!filters.region || (j.region ?? "global") === filters.region) &&
@@ -150,6 +168,13 @@ export function JobsBoard({
           value={filters.category}
           options={CATEGORY_ORDER.map((c) => [c, CATEGORY_LABELS[c]])}
           onChange={(v) => set("category", v)}
+        />
+        <SelectFacet
+          label="Company"
+          allLabel={`All companies (${companyOptions.length})`}
+          value={filters.company}
+          options={companyOptions}
+          onChange={(v) => set("company", v)}
         />
         <SelectFacet
           label="Sector"
