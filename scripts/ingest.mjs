@@ -35,6 +35,7 @@ const DATA_DIR = join(ROOT, "src", "data");
 const SOURCES_PATH = join(DATA_DIR, "sources.json");
 const JOBS_PATH = join(DATA_DIR, "jobs.json");
 const CSV_PATH = join(DATA_DIR, "folk-import.csv");
+const DIGEST_PATH = join(ROOT, "docs", "weekly-roles.md");
 
 const DRY_RUN = process.argv.includes("--dry-run");
 // Sources we re-fetch every run (everything except hand-curated/employer).
@@ -102,6 +103,53 @@ function categoryFor(title) {
   )
     return "growth";
   return null;
+}
+
+/* -------------------------------------------- weekly LinkedIn digest */
+const CAT_LABEL = {
+  ua: "User acquisition",
+  growth: "Growth",
+  "marketing-art": "Marketing art",
+  aso: "ASO",
+  "creative-strategy": "Creative strategy",
+};
+const CAT_ORDER = ["ua", "growth", "marketing-art", "aso", "creative-strategy"];
+
+/** Rewrite docs/weekly-roles.md with roles added in the last 7 days, grouped by
+ *  discipline — a copy-paste starting point for the Monday LinkedIn post
+ *  (Andre 2026-07-20). Rewrites itself every ingest run. */
+async function writeWeeklyDigest(jobs) {
+  const cutoff = addDaysISO(todayISO(), -7);
+  const fresh = jobs.filter((j) => (j.ingested_at || "") >= cutoff);
+  const companies = new Set(fresh.map((j) => j.company.name)).size;
+  const byCat = {};
+  for (const j of fresh) (byCat[j.category] ||= []).push(j);
+
+  const out = ["# New roles on the MakersForge board this week", ""];
+  out.push(
+    `**${fresh.length} new UA, growth and marketing-art role${fresh.length === 1 ? "" : "s"}** landed in the last 7 days, across ${companies} compan${companies === 1 ? "y" : "ies"}.`,
+    "",
+    "See them all → https://makersforge.gg/jobs",
+    "",
+  );
+  for (const cat of CAT_ORDER) {
+    const roles = (byCat[cat] || []).sort((a, b) =>
+      a.company.name.localeCompare(b.company.name),
+    );
+    if (!roles.length) continue;
+    out.push(`**${CAT_LABEL[cat]}**`);
+    for (const j of roles) {
+      const loc =
+        j.location && j.location !== "See posting"
+          ? ` · ${j.location.split(",")[0].trim()}`
+          : "";
+      out.push(`- ${j.company.name} — ${j.title}${loc}`);
+    }
+    out.push("");
+  }
+  if (!fresh.length) out.push("_No new roles in the last 7 days._", "");
+  out.push(`_Auto-generated ${todayISO()} by the ingest. Rewrites every run._`);
+  await writeFile(DIGEST_PATH, out.join("\n") + "\n", "utf8");
 }
 
 /* ------------------------------------------------------------- utilities */
@@ -725,8 +773,10 @@ async function main() {
 
   await writeFile(JOBS_PATH, JSON.stringify(merged, null, 2) + "\n", "utf8");
   await writeFile(CSV_PATH, buildFolkCsv(companiesTouched), "utf8");
+  await writeWeeklyDigest(merged);
   console.log(`\n✓ Wrote ${merged.length} jobs → src/data/jobs.json`);
   console.log(`✓ Wrote ${companiesTouched.size} companies → src/data/folk-import.csv`);
+  console.log(`✓ Wrote weekly digest → docs/weekly-roles.md`);
   console.log("Review the diff, then commit + push to publish.");
 }
 

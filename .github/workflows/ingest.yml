@@ -36,10 +36,10 @@ jobs:
 
       - name: Commit & push if the board changed
         run: |
-          if [[ -n "$(git status --porcelain src/data/jobs.json)" ]]; then
+          if [[ -n "$(git status --porcelain src/data/jobs.json docs/weekly-roles.md)" ]]; then
             git config user.name "makersforge-bot"
             git config user.email "actions@users.noreply.github.com"
-            git add src/data/jobs.json
+            git add src/data/jobs.json docs/weekly-roles.md
             git commit -m "chore(jobs): daily ingest $(date -u +%F)"
             git push
             echo "Board updated."
