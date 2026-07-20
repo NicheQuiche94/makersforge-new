@@ -54,3 +54,5 @@ next-env.d.ts
 
 # Apollo contact output — contains personal emails (PII), keep out of git
 src/data/apollo-contacts.json
+# YC discovery — startup lead list, not site data
+/src/data/yc-discover.json
