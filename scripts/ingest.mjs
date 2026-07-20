@@ -115,23 +115,63 @@ const CAT_LABEL = {
 };
 const CAT_ORDER = ["ua", "growth", "marketing-art", "aso", "creative-strategy"];
 
-/** Rewrite docs/weekly-roles.md with roles added in the last 7 days, grouped by
- *  discipline — a copy-paste starting point for the Monday LinkedIn post
- *  (Andre 2026-07-20). Rewrites itself every ingest run. */
+/** Rewrite docs/weekly-roles.md with the roles new to the board in the week
+ *  ending on the most recent Monday — a copy-paste starting point for the
+ *  Monday LinkedIn post (Andre 2026-07-20).
+ *
+ *  The window is (previous Monday, most-recent Monday], exclusive at the start
+ *  so consecutive weeks tile exactly: every role lands in precisely one week's
+ *  digest, none dropped between weeks, none counted twice ("since last digest",
+ *  Andre 2026-07-20). It only rolls forward when a new Monday arrives, so it's
+ *  stable Mon–Sun and survives the daily ingest regenerating it (won't shrink
+ *  mid-week). Anchored to ingested_at, which is preserved per role across runs,
+ *  so "new" genuinely means new to the board. All dates are handled in UTC to
+ *  match ingested_at / todayISO() and stay identical on Andre's machine and the
+ *  UTC GitHub Action runner. */
+const DAY_MS = 86400000;
+function shiftISO(iso, days) {
+  return new Date(new Date(iso + "T00:00:00Z").getTime() + days * DAY_MS)
+    .toISOString()
+    .slice(0, 10);
+}
+function mondayWindow(todayIso) {
+  const dow = new Date(todayIso + "T00:00:00Z").getUTCDay(); // 0=Sun … 6=Sat
+  const endIncl = shiftISO(todayIso, -((dow + 6) % 7)); // most recent Monday ≤ today
+  return { startExcl: shiftISO(endIncl, -7), endIncl };
+}
+function humanDay(iso) {
+  return new Date(iso + "T00:00:00Z").toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+}
+
 async function writeWeeklyDigest(jobs) {
-  const cutoff = addDaysISO(todayISO(), -7);
-  const fresh = jobs.filter((j) => (j.ingested_at || "") >= cutoff);
+  const { startExcl, endIncl } = mondayWindow(todayISO());
+  const fresh = jobs.filter((j) => {
+    const d = (j.ingested_at || "").slice(0, 10);
+    return d > startExcl && d <= endIncl;
+  });
   const companies = new Set(fresh.map((j) => j.company.name)).size;
   const byCat = {};
   for (const j of fresh) (byCat[j.category] ||= []).push(j);
 
-  const out = ["# New roles on the MakersForge board this week", ""];
-  out.push(
-    `**${fresh.length} new UA, growth and marketing-art role${fresh.length === 1 ? "" : "s"}** landed in the last 7 days, across ${companies} compan${companies === 1 ? "y" : "ies"}.`,
+  const out = [
+    `# New roles on the MakersForge board — week ending ${humanDay(endIncl)}`,
     "",
-    "See them all → https://makersforge.gg/jobs",
-    "",
-  );
+  ];
+  if (fresh.length) {
+    out.push(
+      `**${fresh.length} new UA, growth and marketing-art role${fresh.length === 1 ? "" : "s"}** landed on the board this week, across ${companies} compan${companies === 1 ? "y" : "ies"}.`,
+      "",
+      "See them all → https://makersforge.gg/jobs",
+      "",
+    );
+  } else {
+    out.push("_No new roles landed on the board this week._", "");
+  }
   for (const cat of CAT_ORDER) {
     const roles = (byCat[cat] || []).sort((a, b) =>
       a.company.name.localeCompare(b.company.name),
@@ -147,8 +187,9 @@ async function writeWeeklyDigest(jobs) {
     }
     out.push("");
   }
-  if (!fresh.length) out.push("_No new roles in the last 7 days._", "");
-  out.push(`_Auto-generated ${todayISO()} by the ingest. Rewrites every run._`);
+  out.push(
+    `_Auto-generated ${todayISO()} by the ingest. Roles new to the board in the 7 days to the most recent Monday; rewrites every run._`,
+  );
   await writeFile(DIGEST_PATH, out.join("\n") + "\n", "utf8");
 }
 

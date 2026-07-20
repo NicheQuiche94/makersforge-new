@@ -1,6 +1,6 @@
-# New roles on the MakersForge board this week
+# New roles on the MakersForge board — week ending 20 July 2026
 
-**108 new UA, growth and marketing-art roles** landed in the last 7 days, across 44 companies.
+**110 new UA, growth and marketing-art roles** landed on the board this week, across 45 companies.
 
 See them all → https://makersforge.gg/jobs
 
@@ -46,6 +46,8 @@ See them all → https://makersforge.gg/jobs
 - Strava — Lead Marketing Analyst, Growth Marketing · Strava SF
 - Suno — Graphic Designer, Paid Media (Contractor) · Remote
 - Suno — Senior Graphic Designer, Paid Media · Los Angeles
+- WHOOP — Senior Manager, Performance Marketing · Boston
+- WHOOP — Senior Business Analyst (Growth Marketing) · Boston
 
 **Growth**
 - Agave Games — Growth Specialist (New Grad) · İstanbul
@@ -122,4 +124,4 @@ See them all → https://makersforge.gg/jobs
 - Wildlife Studios — Senior Creative Strategist · São Paulo
 - Wildlife Studios — Creative Strategy Intern · São Paulo
 
-_Auto-generated 2026-07-20 by the ingest. Rewrites every run._
+_Auto-generated 2026-07-20 by the ingest. Roles new to the board in the 7 days to the most recent Monday; rewrites every run._
