@@ -449,5 +449,13 @@
     "sector": "games",
     "size": "200-500",
     "blurb": "Vietnam and Singapore studio behind Axie Infinity and the Ronin network."
+  },
+  {
+    "ats": "ashby",
+    "slug": "loora",
+    "name": "Loora",
+    "url": "https://www.loora.com",
+    "sector": "apps",
+    "blurb": "AI English-speaking tutor app."
   }
 ]
