@@ -457,5 +457,14 @@
     "url": "https://www.loora.com",
     "sector": "apps",
     "blurb": "AI English-speaking tutor app."
+  },
+  {
+    "ats": "workable",
+    "slug": "homa-games",
+    "name": "Homa",
+    "url": "https://www.homagames.com",
+    "sector": "games",
+    "size": "200-500",
+    "blurb": "Mobile games publisher (hyper/hybrid-casual)."
   }
 ]

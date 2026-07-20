@@ -80,12 +80,26 @@ const OFF_REMIT_TITLE =
 // Technical/product roles that sit inside a growth/marketing team but aren't the
 // talent we represent (e.g. "AI Engineer, Performance Marketing", Andre
 // 2026-07-20). Analytics engineers are exempt — that's growth-data, in remit.
-const TECHNICAL_ROLE = /\b(engineer|developer|scientist|programmer)\b/i;
+const TECHNICAL_ROLE = /\b(engineer(ing)?|developer|scientist|programmer)\b/i;
+
+// A growth role in ANY word order: "growth" + a role word (catches "Associate
+// Team Lead Growth", "Junior Growth Associate" that the strict rule missed,
+// Andre 2026-07-20).
+const GROWTH_ROLE =
+  /\b(market|manager|lead|head|associate|specialist|director|analyst|strateg|hacker|executive|coordinator|marketer|ops|operations)\b/i;
 
 function categoryFor(title) {
   if (OFF_REMIT_TITLE.test(title)) return null;
   if (TECHNICAL_ROLE.test(title) && !/analytics engineer/i.test(title)) return null;
   for (const [cat, re] of CATEGORY_RULES) if (re.test(title)) return cat;
+  // Broad growth catch, minus product/program/supply/finance roles — those
+  // aren't the marketing talent we represent (Andre 2026-07-20).
+  if (
+    /\bgrowth\b/i.test(title) &&
+    GROWTH_ROLE.test(title) &&
+    !/\bproduct\b|\bprogram\b|\bpm\b|supply|procurement|\bfinance\b/i.test(title)
+  )
+    return "growth";
   return null;
 }
 

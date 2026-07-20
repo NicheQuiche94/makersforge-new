@@ -34,12 +34,22 @@ const OFF_REMIT_TITLE =
   /\bb2b\b|enterprise|software engineer|\bcrm\b|life[- ]?cycle|public relations|digital pr|\bpr\b/i;
 // Technical/product roles inside a growth team (e.g. "AI Engineer, Performance
 // Marketing") — not the talent we represent. Analytics engineers are exempt.
-const TECHNICAL_ROLE = /\b(engineer|developer|scientist|programmer)\b/i;
+const TECHNICAL_ROLE = /\b(engineer(ing)?|developer|scientist|programmer)\b/i;
+
+// Growth role in any word order (mirrors ingest.mjs).
+const GROWTH_ROLE =
+  /\b(market|manager|lead|head|associate|specialist|director|analyst|strateg|hacker|executive|coordinator|marketer|ops|operations)\b/i;
 
 export function categoryFor(title) {
   if (!title || OFF_REMIT_TITLE.test(title)) return null;
   if (TECHNICAL_ROLE.test(title) && !/analytics engineer/i.test(title)) return null;
   for (const [cat, re] of CATEGORY_RULES) if (re.test(title)) return cat;
+  if (
+    /\bgrowth\b/i.test(title) &&
+    GROWTH_ROLE.test(title) &&
+    !/\bproduct\b|\bprogram\b|\bpm\b|supply|procurement|\bfinance\b/i.test(title)
+  )
+    return "growth";
   return null;
 }
 
