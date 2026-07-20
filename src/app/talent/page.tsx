@@ -3,31 +3,7 @@ import type { ReactNode } from "react";
 import { Button } from "@/components/atoms/Button";
 import { CTABand } from "@/components/sections/CTABand";
 import { CornerGlow } from "@/components/sections/CornerGlow";
-import { FaqSection } from "@/components/seo/FaqSection";
 import styles from "./talent.module.css";
-
-const TALENT_FAQ = [
-  {
-    q: "What does MakersForge do for talent?",
-    a: "MakersForge is a talent agency for vetted UA, growth and marketing-art specialists in mobile games and apps. We host you in front of hiring studios, take you to the companies you fit, and run the interview process from first intro to signed.",
-  },
-  {
-    q: "What does representation cost me?",
-    a: "Nothing comes out of your pay. You contract directly with the studio and keep your full rate. Studios cover our fee, not you.",
-  },
-  {
-    q: "What roles do you represent?",
-    a: "UA managers, ASO managers, marketing artists, motion designers, creative producers and other growth specialists working in mobile games and consumer apps.",
-  },
-  {
-    q: "How do I join the line-up?",
-    a: "Apply through the site. We read every application, then jump on a call to get to know your work. If it is a fit, you go on the line-up.",
-  },
-  {
-    q: "What happens after an engagement ends?",
-    a: "You stay on the line-up. We keep the relationship warm and line up the next conversation, so representation does not expire after a single intro.",
-  },
-];
 
 /**
  * /talent — the page for the people on the lineup.
@@ -58,7 +34,6 @@ export default function TalentPage() {
       <Lifecycle />
       <StudiosPayBanner />
       <PromiseWall />
-      <FaqSection heading="Questions from talent" items={TALENT_FAQ} />
       <CTABand
         compact
         headline={
