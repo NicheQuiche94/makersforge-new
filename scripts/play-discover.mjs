@@ -21,7 +21,12 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
-import { fetchGooglePlayChart, normalizePlayApp, slugify } from "./serpapi.mjs";
+import {
+  fetchGooglePlayChart,
+  normalizePlayApp,
+  slugify,
+  categoryFor,
+} from "./serpapi.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = join(__dirname, "..", "src", "data");
@@ -68,34 +73,50 @@ function slugVariants(name) {
   return [...new Set([base, stripped].filter(Boolean))];
 }
 
-async function probeOne(ats, slug, url) {
+function titlesOf(ats, data) {
+  if (ats === "lever") return Array.isArray(data) ? data.map((j) => j.text) : [];
+  return (data.jobs || []).map((j) => j.title); // greenhouse / ashby / workable
+}
+
+/**
+ * A hit only counts if the board actually has IN-REMIT roles right now (not
+ * just "exists" — that gave empty boards + slug collisions like King ICT).
+ * Where the ATS returns a company name (workable), it must match the developer.
+ */
+async function probeOne(ats, slug, url, devName) {
   try {
     const res = await fetch(url, {
       headers: { "User-Agent": UA },
-      signal: AbortSignal.timeout(5000),
+      signal: AbortSignal.timeout(6000),
     });
     if (!res.ok) return null;
     const data = await res.json().catch(() => null);
     if (!data) return null;
-    const count = Array.isArray(data.jobs)
-      ? data.jobs.length
-      : Array.isArray(data)
-        ? data.length
-        : (data.total ?? data.jobsCount ?? 0);
-    return { ats, slug, count: count || "board found" };
+    const name = ats === "workable" ? data.name || "" : "";
+    if (name && normName(name) !== normName(devName)) return null; // wrong company
+    const titles = titlesOf(ats, data).filter(Boolean);
+    const inRemit = titles.filter((t) => categoryFor(t));
+    if (!inRemit.length) return null; // no roles we'd host → not pull-ready
+    return {
+      ats,
+      slug,
+      roles: titles.length,
+      inRemit: inRemit.length,
+      sample: inRemit.slice(0, 3),
+    };
   } catch {
     return null;
   }
 }
 
-/** Race every ATS endpoint for every slug variant; return the first hit. Free. */
+/** Race every ATS endpoint for every slug variant; return the first real hit. */
 async function probeAts(name) {
   const jobs = [];
   for (const slug of slugVariants(name)) {
-    jobs.push(probeOne("greenhouse", slug, `https://boards-api.greenhouse.io/v1/boards/${slug}/jobs`));
-    jobs.push(probeOne("lever", slug, `https://api.lever.co/v0/postings/${slug}?mode=json&limit=1`));
-    jobs.push(probeOne("ashby", slug, `https://api.ashbyhq.com/posting-api/job-board/${slug}`));
-    jobs.push(probeOne("workable", slug, `https://apply.workable.com/api/v1/widget/accounts/${slug}`));
+    jobs.push(probeOne("greenhouse", slug, `https://boards-api.greenhouse.io/v1/boards/${slug}/jobs`, name));
+    jobs.push(probeOne("lever", slug, `https://api.lever.co/v0/postings/${slug}?mode=json`, name));
+    jobs.push(probeOne("ashby", slug, `https://api.ashbyhq.com/posting-api/job-board/${slug}`, name));
+    jobs.push(probeOne("workable", slug, `https://apply.workable.com/api/v1/widget/accounts/${slug}`, name));
   }
   const results = await Promise.all(jobs);
   return results.find(Boolean) || null;
@@ -195,10 +216,22 @@ async function main() {
     };
   });
 
-  const withAts = probed.filter((r) => r.ats);
-  probed.sort(
-    (a, b) => Number(Boolean(b.ats)) - Number(Boolean(a.ats)) || b.score - a.score,
-  );
+  // The primary deliverable is the LEAD LIST: every new proven-grossing
+  // developer (Folk leads + manual careers research). ats is a bonus subset.
+  const atsMap = new Map(probed.filter((p) => p.ats).map((p) => [p.slug, p.ats]));
+  const developers = ranked.map((d) => ({
+    developer: d.developer,
+    slug: d.slug,
+    sector: d.sector,
+    score: d.score,
+    grossing: d.grossingHits,
+    free: d.freeHits,
+    regions: [...d.regions],
+    topDownloads: d.topDownloads,
+    apps: [...d.apps].slice(0, 4),
+    ats: atsMap.get(d.slug) || null,
+  }));
+  const withAts = developers.filter((r) => r.ats);
 
   const out = {
     generated_at: new Date().toISOString().slice(0, 10),
@@ -207,15 +240,17 @@ async function main() {
     developers_found: devs.size,
     new_developers: ranked.length,
     with_ats: withAts.length,
-    developers: probed,
+    developers,
   };
 
   console.log(
     `\nSummary: ${searches} searches · ${devs.size} devs · ${ranked.length} new · ${withAts.length} ATS-ready`,
   );
-  console.log("\nATS-ready developers (pull-ready):");
+  console.log("\nATS-ready developers (board has in-remit roles NOW):");
   for (const r of withAts.slice(0, 40))
-    console.log(`  · ${r.developer} — ${r.ats.ats}/${r.ats.slug} (${r.sector}, score ${r.score})`);
+    console.log(
+      `  · ${r.developer} — ${r.ats.ats}/${r.ats.slug}: ${r.ats.inRemit} in-remit (${r.sector}) → ${r.ats.sample.join(" | ")}`,
+    );
 
   if (DRY_RUN) {
     console.log("\n--dry-run: file not written.");
