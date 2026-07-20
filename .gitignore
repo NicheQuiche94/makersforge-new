@@ -49,6 +49,8 @@ next-env.d.ts
 
 # SerpApi Google-Jobs pull — a review queue to vet, not site data (regenerated each run)
 /src/data/serpapi-review.json
+# Play Store company discovery — a scored review list, not site data
+/src/data/play-discover.json
 
 # Apollo contact output — contains personal emails (PII), keep out of git
 src/data/apollo-contacts.json

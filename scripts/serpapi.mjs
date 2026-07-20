@@ -110,6 +110,52 @@ export async function fetchGoogleJobs(q, { apiKey, location } = {}) {
 }
 
 /**
+ * One Google Play chart page (engine=google_play). `chart` is topgrossing /
+ * topselling_free / topselling_paid; `category` is a Play category id (GAME,
+ * FINANCE, HEALTH_AND_FITNESS…); `gl` is a country code. Returns the app rows.
+ * The exact result key varies, so we scan for the array of app-shaped objects.
+ */
+export async function fetchGooglePlayChart({ chart, category, gl, apiKey }) {
+  const url = new URL("https://serpapi.com/search.json");
+  url.searchParams.set("engine", "google_play");
+  url.searchParams.set("store", "apps");
+  url.searchParams.set("chart", chart);
+  if (category) url.searchParams.set("apps_category", category);
+  if (gl) url.searchParams.set("gl", gl);
+  url.searchParams.set("hl", "en");
+  url.searchParams.set("api_key", apiKey);
+
+  const res = await fetch(url, { headers: { "User-Agent": UA } });
+  if (!res.ok) throw new Error(`SerpApi Play HTTP ${res.status}`);
+  const data = await res.json();
+  if (data.error) throw new Error(`SerpApi Play: ${data.error}`);
+
+  if (Array.isArray(data.organic_results)) return data.organic_results;
+  // Fallback: find the first array whose items look like apps (title + author).
+  for (const v of Object.values(data)) {
+    if (Array.isArray(v) && v.some((x) => x && x.title && (x.author || x.developer)))
+      return v;
+  }
+  return [];
+}
+
+/** Extract the developer/publisher from a Play app row. Returns null if no
+ *  usable author. `downloads` and `product_id` come along for scoring/linking. */
+export function normalizePlayApp(app, sector) {
+  const author = (app.author || app.developer || "").trim();
+  if (!author) return null;
+  return {
+    developer: author,
+    developerSlug: slugify(author),
+    app: (app.title || "").trim(),
+    product_id: app.product_id || app.app_id || "",
+    downloads: app.downloads || app.extracted_downloads || "",
+    rating: app.rating ?? null,
+    sector,
+  };
+}
+
+/**
  * Map one Google Jobs result to a review candidate. Returns null if the title
  * is out of remit or the row is unusable. `sectorGuess` is the sector the
  * QUERY targeted — a guess, since the company may not actually match (that's
