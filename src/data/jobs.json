@@ -1,6 +1,30 @@
 [
   {
-    "slug": "wildlifestudios-senior-creative-strategist-2",
+    "slug": "dreamgames-ai-engineer-performance-marketing",
+    "title": "AI Engineer, Performance Marketing",
+    "company": {
+      "slug": "dreamgames",
+      "name": "Dream Games",
+      "url": "https://dreamgames.com",
+      "blurb": "Istanbul studio behind Royal Match, one of the top-grossing puzzle games worldwide.",
+      "size": "200-500",
+      "sector": "games"
+    },
+    "category": "ua",
+    "location": "Istanbul",
+    "region": "emea",
+    "remote": "onsite",
+    "employment_type": "FULL_TIME",
+    "salary": null,
+    "description_md": "We are looking for a passionate AI Engineer to join our performance marketing team. As an AI Engineer, you will build generative AI pipelines and agentic systems for creative production: creative ideation, image and video generation, automated creative pipelines, and the tooling around them. You will prototype quickly against real creative problems and take what works into production. Prior marketing experience is not required, but a genuine creative eye for what makes an ad creative work is essential.\n\nAt Dream Games, all team members have a genuine chance to contribute to the final product and have an impact on the company. If you want to be a team member of a fast-growing company, you might be the person we are looking for!\n\n**Responsibilities**\n\n- Building and maintaining AI powered features and agentic workflows for creative production\n\n- Contributing to systems that generate ad creatives, including interactive playables, by combining code generation and multimodal asset generation\n\n- Working with creative strategists to turn their craft into repeatable, scaled workflows\n\n- Developing evaluation pipelines for creative output, including quality checks and human-in-the-loop review\n\n**Requirements**\n\n- Computer engineering (or similar) background with a genuine creative eye\n\n- Proficiency in Python and hands on experience building agentic workflows, LLM chains, and multimodal model calls\n\n- Experience with generative AI, such as diffusion models and image/video generation\n\n- Familiarity with modern AI application techniques such as RAG, function calling, and vector databases\n\n- Deep interest in state-of-the-art AI, following new models and capabilities closely\n\n- Passion and interest in games\n\n- Appreciation and understanding of teamwork\n\nProtecting your privacy and the security of your data is a top priority for Dream Games. We collect and process your personal data as confidential as part of the recruitment process. Please read our Statement of Personal Data Protection Law and Consent Letter to know more details.",
+    "apply_url": "https://jobs.lever.co/dreamgames/2a2c64d7-cc33-49a0-bf41-807b28933ca7",
+    "source": "lever",
+    "posted_at": "2026-07-20",
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
+  },
+  {
+    "slug": "wildlifestudios-senior-creative-strategist",
     "title": "Senior Creative Strategist",
     "company": {
       "slug": "wildlifestudios",
@@ -20,11 +44,11 @@
     "apply_url": "https://job-boards.greenhouse.io/wildlifestudios/jobs/8635729002",
     "source": "greenhouse",
     "posted_at": "2026-07-17",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "applovin-media-buyer-emerging-channels-growth-marketing-2",
+    "slug": "applovin-media-buyer-emerging-channels-growth-marketing",
     "title": "Media Buyer, Emerging Channels - Growth Marketing",
     "company": {
       "slug": "applovin",
@@ -44,11 +68,11 @@
     "apply_url": "https://boards.greenhouse.io/applovin/jobs/4698111006?gh_jid=4698111006",
     "source": "greenhouse",
     "posted_at": "2026-07-17",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "greenlight-senior-creative-strategist-2",
+    "slug": "greenlight-senior-creative-strategist",
     "title": "Senior Creative Strategist",
     "company": {
       "slug": "greenlight",
@@ -68,11 +92,11 @@
     "apply_url": "https://jobs.lever.co/greenlight/f3d599c5-8806-4c6a-a802-c95e9ec4ef52",
     "source": "lever",
     "posted_at": "2026-07-17",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "greenlight-video-editor-paid-social-2",
+    "slug": "greenlight-video-editor-paid-social",
     "title": "Video Editor, Paid Social",
     "company": {
       "slug": "greenlight",
@@ -92,11 +116,11 @@
     "apply_url": "https://jobs.lever.co/greenlight/96f2e2bd-a47a-450a-acdc-1b2216590abb",
     "source": "lever",
     "posted_at": "2026-07-17",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "suno-paid-social-creative-strategist-contract-2",
+    "slug": "suno-paid-social-creative-strategist-contract",
     "title": "Paid Social Creative Strategist (Contract)",
     "company": {
       "slug": "suno",
@@ -116,11 +140,11 @@
     "apply_url": "https://jobs.ashbyhq.com/suno/984a5e2f-9370-4912-95f5-17ea1988171c",
     "source": "ashby",
     "posted_at": "2026-07-16",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "elevenlabs-paid-media-manager-2",
+    "slug": "elevenlabs-paid-media-manager",
     "title": "Paid Media Manager",
     "company": {
       "slug": "elevenlabs",
@@ -140,11 +164,11 @@
     "apply_url": "https://jobs.ashbyhq.com/elevenlabs/0e690a2f-0a1a-4c4e-adf6-4dc3c6cbc3bd",
     "source": "ashby",
     "posted_at": "2026-07-16",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "peloton-associate-manager-digital-media-and-paid-social-2",
+    "slug": "peloton-associate-manager-digital-media-and-paid-social",
     "title": "Associate Manager, Digital Media and Paid Social",
     "company": {
       "slug": "peloton",
@@ -164,11 +188,11 @@
     "apply_url": "https://careers.onepeloton.com/en/all-jobs/?gh_jid=8059781",
     "source": "greenhouse",
     "posted_at": "2026-07-16",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "tripledotstudios-lead-motion-designer-2",
+    "slug": "tripledotstudios-lead-motion-designer",
     "title": "Lead Motion Designer",
     "company": {
       "slug": "tripledotstudios",
@@ -188,11 +212,11 @@
     "apply_url": "https://job-boards.eu.greenhouse.io/tripledotstudios/jobs/4928926101",
     "source": "greenhouse",
     "posted_at": "2026-07-15",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "monzo-senior-growth-marketing-executive-affiliates-2",
+    "slug": "monzo-senior-growth-marketing-executive-affiliates",
     "title": "Senior Growth Marketing Executive, Affiliates",
     "company": {
       "slug": "monzo",
@@ -212,11 +236,11 @@
     "apply_url": "https://job-boards.greenhouse.io/monzo/jobs/8066940",
     "source": "greenhouse",
     "posted_at": "2026-07-15",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "oura-paid-social-specialist-2",
+    "slug": "oura-paid-social-specialist",
     "title": "Paid Social Specialist",
     "company": {
       "slug": "oura",
@@ -236,11 +260,11 @@
     "apply_url": "https://job-boards.greenhouse.io/oura/jobs/4312925009",
     "source": "greenhouse",
     "posted_at": "2026-07-14",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "voodoo-growth-manager-2",
+    "slug": "voodoo-growth-manager",
     "title": "Growth Manager",
     "company": {
       "slug": "voodoo",
@@ -260,11 +284,11 @@
     "apply_url": "https://jobs.ashbyhq.com/voodoo/93fa8d2a-06e2-460f-ba3b-21214b749a05",
     "source": "ashby",
     "posted_at": "2026-07-13",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "jamcity-associate-director-growth-marketing-2",
+    "slug": "jamcity-associate-director-growth-marketing",
     "title": "Associate Director, Growth Marketing",
     "company": {
       "slug": "jamcity",
@@ -284,11 +308,11 @@
     "apply_url": "https://jobs.lever.co/jamcity/c6d5eb23-addf-4b19-ac4f-c17017f58446",
     "source": "lever",
     "posted_at": "2026-07-13",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "jamcity-growth-marketing-manager-2",
+    "slug": "jamcity-growth-marketing-manager",
     "title": "Growth Marketing Manager",
     "company": {
       "slug": "jamcity",
@@ -308,11 +332,11 @@
     "apply_url": "https://jobs.lever.co/jamcity/94943ae6-6d9c-4dd1-8035-8510ce668e51",
     "source": "lever",
     "posted_at": "2026-07-13",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "wildlifestudios-creative-strategy-intern-2",
+    "slug": "wildlifestudios-creative-strategy-intern",
     "title": "Creative Strategy Intern",
     "company": {
       "slug": "wildlifestudios",
@@ -332,11 +356,11 @@
     "apply_url": "https://job-boards.greenhouse.io/wildlifestudios/jobs/8631628002",
     "source": "greenhouse",
     "posted_at": "2026-07-13",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "headway-lead-brand-creative-strategist-2",
+    "slug": "headway-lead-brand-creative-strategist",
     "title": "Lead Brand & Creative Strategist",
     "company": {
       "slug": "headway",
@@ -356,11 +380,11 @@
     "apply_url": "https://jobs.ashbyhq.com/headway/9b7699d1-c803-46ad-b66e-0fb1f756223e",
     "source": "ashby",
     "posted_at": "2026-07-13",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "amanotes-uplive-company-user-acquisition-marketing-manager-2",
+    "slug": "amanotes-uplive-company-user-acquisition-marketing-manager",
     "title": "User Acquisition Marketing Manager",
     "company": {
       "slug": "amanotes",
@@ -380,11 +404,11 @@
     "apply_url": "https://jobs.lever.co/amanotes/334e9d02-fcce-44e2-b813-fa81b8f3614a",
     "source": "lever",
     "posted_at": "2026-07-13",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "vc-midnite-2-05ded3cb-add8-4ec9-b8cb-7a414f5518cb-paid-social-manager-2",
+    "slug": "vc-midnite-2-05ded3cb-add8-4ec9-b8cb-7a414f5518cb-paid-social-manager",
     "title": "Paid Social Manager",
     "company": {
       "slug": "vc-midnite-2-05ded3cb-add8-4ec9-b8cb-7a414f5518cb",
@@ -405,11 +429,11 @@
     "apply_url": "https://gi.linkedin.com/jobs/view/paid-social-manager-at-midnite-4438317782",
     "source": "getro",
     "posted_at": "2026-07-12",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "scopely-creative-production-manager-user-acquisition-2",
+    "slug": "scopely-creative-production-manager-user-acquisition",
     "title": "Creative Production Manager, User Acquisition",
     "company": {
       "slug": "scopely",
@@ -429,11 +453,11 @@
     "apply_url": "https://job-boards.greenhouse.io/scopely/jobs/5238543008?gh_jid=5238543008",
     "source": "greenhouse",
     "posted_at": "2026-07-10",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "flohealth-senior-user-acquisition-manager-2",
+    "slug": "flohealth-senior-user-acquisition-manager",
     "title": "Senior User Acquisition Manager",
     "company": {
       "slug": "flohealth",
@@ -453,11 +477,11 @@
     "apply_url": "https://job-boards.greenhouse.io/flohealth/jobs/7718699003",
     "source": "greenhouse",
     "posted_at": "2026-07-10",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "codeway-associate-user-acquisition-manager-2",
+    "slug": "codeway-associate-user-acquisition-manager",
     "title": "Associate User Acquisition Manager",
     "company": {
       "slug": "codeway",
@@ -477,11 +501,11 @@
     "apply_url": "https://jobs.ashbyhq.com/codeway/96dfb55f-22c0-4b6d-b6f6-b01e64924d07",
     "source": "ashby",
     "posted_at": "2026-07-10",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "tripledotstudios-creative-strategy-manager-2",
+    "slug": "tripledotstudios-creative-strategy-manager",
     "title": "Creative Strategy Manager",
     "company": {
       "slug": "tripledotstudios",
@@ -501,11 +525,11 @@
     "apply_url": "https://job-boards.eu.greenhouse.io/tripledotstudios/jobs/4924122101",
     "source": "greenhouse",
     "posted_at": "2026-07-09",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "tripledotstudios-motion-designer-2",
+    "slug": "tripledotstudios-motion-designer",
     "title": "Motion Designer",
     "company": {
       "slug": "tripledotstudios",
@@ -525,11 +549,11 @@
     "apply_url": "https://job-boards.eu.greenhouse.io/tripledotstudios/jobs/4924125101",
     "source": "greenhouse",
     "posted_at": "2026-07-09",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "scopely-performance-marketing-director-2",
+    "slug": "scopely-performance-marketing-director",
     "title": "Performance Marketing Director",
     "company": {
       "slug": "scopely",
@@ -549,11 +573,11 @@
     "apply_url": "https://job-boards.greenhouse.io/scopely/jobs/5282076008?gh_jid=5282076008",
     "source": "greenhouse",
     "posted_at": "2026-07-09",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "voodoo-playable-ads-strategist-2",
+    "slug": "voodoo-playable-ads-strategist",
     "title": "Playable Ads Strategist",
     "company": {
       "slug": "voodoo",
@@ -573,11 +597,11 @@
     "apply_url": "https://jobs.ashbyhq.com/voodoo/1d82a61f-0769-44f7-83c6-8d0b2db2b043",
     "source": "ashby",
     "posted_at": "2026-07-08",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "rocket-money-creative-strategist-2",
+    "slug": "rocket-money-creative-strategist",
     "title": "Creative Strategist",
     "company": {
       "slug": "rocket-money",
@@ -597,11 +621,11 @@
     "apply_url": "https://job-boards.greenhouse.io/truebill/jobs/7798870003",
     "source": "greenhouse",
     "posted_at": "2026-07-08",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "codeway-mid-senior-user-acquisition-manager-app-2",
+    "slug": "codeway-mid-senior-user-acquisition-manager-app",
     "title": "Mid / Senior User Acquisition Manager (App)",
     "company": {
       "slug": "codeway",
@@ -621,11 +645,11 @@
     "apply_url": "https://jobs.ashbyhq.com/codeway/ca683b30-d3a3-4e8e-a709-283d67dbdc88",
     "source": "ashby",
     "posted_at": "2026-07-08",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "codeway-lead-user-acquisition-manager-google-ads-2",
+    "slug": "codeway-lead-user-acquisition-manager-google-ads",
     "title": "Lead User Acquisition Manager (Google Ads)",
     "company": {
       "slug": "codeway",
@@ -645,11 +669,11 @@
     "apply_url": "https://jobs.ashbyhq.com/codeway/028679e2-2ab8-4891-97f4-aafa0c977bb6",
     "source": "ashby",
     "posted_at": "2026-07-08",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "codeway-mid-senior-user-acquisition-manager-google-ads-2",
+    "slug": "codeway-mid-senior-user-acquisition-manager-google-ads",
     "title": "Mid / Senior User Acquisition Manager (Google Ads)",
     "company": {
       "slug": "codeway",
@@ -669,11 +693,11 @@
     "apply_url": "https://jobs.ashbyhq.com/codeway/1fbba449-6976-4373-b94f-0f499c46565c",
     "source": "ashby",
     "posted_at": "2026-07-08",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "loopgames-marketing-artist-motion-designer-2",
+    "slug": "loopgames-marketing-artist-motion-designer",
     "title": "Marketing Artist (Motion Designer)",
     "company": {
       "slug": "loopgames",
@@ -693,11 +717,11 @@
     "apply_url": "https://jobs.lever.co/loopgames/df0136a1-2bd9-4610-951f-ede1ed366297",
     "source": "lever",
     "posted_at": "2026-07-08",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "voodoo-growth-manager-junior-cortex-studio-internship-2",
+    "slug": "voodoo-growth-manager-junior-cortex-studio-internship",
     "title": "Growth Manager Junior- Cortex Studio (Internship)",
     "company": {
       "slug": "voodoo",
@@ -717,11 +741,11 @@
     "apply_url": "https://jobs.ashbyhq.com/voodoo/882d74a7-ba01-4cfb-b2ed-6fecee842ad1",
     "source": "ashby",
     "posted_at": "2026-07-07",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "voodoo-growth-manager-cortex-studio-freelance-fully-remote-2",
+    "slug": "voodoo-growth-manager-cortex-studio-freelance-fully-remote",
     "title": "Growth Manager- Cortex Studio (Freelance-Fully remote)",
     "company": {
       "slug": "voodoo",
@@ -741,11 +765,11 @@
     "apply_url": "https://jobs.ashbyhq.com/voodoo/c7e973a1-ffba-46e0-bac2-72bce1f8a4be",
     "source": "ashby",
     "posted_at": "2026-07-07",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "applovin-growth-analyst-2",
+    "slug": "applovin-growth-analyst",
     "title": "Growth Analyst",
     "company": {
       "slug": "applovin",
@@ -765,11 +789,11 @@
     "apply_url": "https://boards.greenhouse.io/applovin/jobs/4677504006?gh_jid=4677504006",
     "source": "greenhouse",
     "posted_at": "2026-07-07",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "codeway-marketing-artist-2",
+    "slug": "codeway-marketing-artist",
     "title": "Marketing Artist",
     "company": {
       "slug": "codeway",
@@ -789,11 +813,11 @@
     "apply_url": "https://jobs.ashbyhq.com/codeway/e039f968-aa6a-4df6-8d90-1cb931aef5b3",
     "source": "ashby",
     "posted_at": "2026-07-06",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "codeway-growth-manager-learna-2",
+    "slug": "codeway-growth-manager-learna",
     "title": "Growth Manager, Learna",
     "company": {
       "slug": "codeway",
@@ -813,11 +837,11 @@
     "apply_url": "https://jobs.ashbyhq.com/codeway/3f5c2489-d889-4783-b846-70f04d274094",
     "source": "ashby",
     "posted_at": "2026-07-06",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "codeway-associate-growth-manager-2",
+    "slug": "codeway-associate-growth-manager",
     "title": "Associate Growth Manager",
     "company": {
       "slug": "codeway",
@@ -837,11 +861,11 @@
     "apply_url": "https://jobs.ashbyhq.com/codeway/d3d456a8-4d90-4964-b7e4-f3752ba3abf4",
     "source": "ashby",
     "posted_at": "2026-07-06",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "codeway-mid-senior-growth-manager-web-2",
+    "slug": "codeway-mid-senior-growth-manager-web",
     "title": "Mid / Senior Growth Manager (Web)",
     "company": {
       "slug": "codeway",
@@ -861,11 +885,11 @@
     "apply_url": "https://jobs.ashbyhq.com/codeway/52e2fed5-cab9-4149-8bb6-ea1e73e79cc9",
     "source": "ashby",
     "posted_at": "2026-07-06",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "codeway-organic-growth-manager-learna-2",
+    "slug": "codeway-organic-growth-manager-learna",
     "title": "Organic Growth Manager, Learna",
     "company": {
       "slug": "codeway",
@@ -885,11 +909,11 @@
     "apply_url": "https://jobs.ashbyhq.com/codeway/c4e23af1-a3a9-416d-83f4-365a19fc4009",
     "source": "ashby",
     "posted_at": "2026-07-06",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "codeway-mid-senior-growth-manager-app-2",
+    "slug": "codeway-mid-senior-growth-manager-app",
     "title": "Mid / Senior Growth Manager (App)",
     "company": {
       "slug": "codeway",
@@ -909,11 +933,11 @@
     "apply_url": "https://jobs.ashbyhq.com/codeway/14a6995b-d4b3-4aa5-a402-bceed023fc9f",
     "source": "ashby",
     "posted_at": "2026-07-06",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "codeway-lead-growth-manager-web-2",
+    "slug": "codeway-lead-growth-manager-web",
     "title": "Lead Growth Manager (Web)",
     "company": {
       "slug": "codeway",
@@ -933,11 +957,11 @@
     "apply_url": "https://jobs.ashbyhq.com/codeway/296b9481-561f-47f6-8c05-f6e3caedd4f1",
     "source": "ashby",
     "posted_at": "2026-07-06",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "codeway-marketing-artist-dramapops-2",
+    "slug": "codeway-marketing-artist-dramapops",
     "title": "Marketing Artist - Dramapops",
     "company": {
       "slug": "codeway",
@@ -957,11 +981,11 @@
     "apply_url": "https://jobs.ashbyhq.com/codeway/d62c23b7-34cc-494a-8d43-38ea8338f01d",
     "source": "ashby",
     "posted_at": "2026-07-06",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "vc-pocket-worlds-motion-designer-marketing-2",
+    "slug": "vc-pocket-worlds-motion-designer-marketing",
     "title": "Motion Designer (Marketing)",
     "company": {
       "slug": "vc-pocket-worlds",
@@ -982,11 +1006,11 @@
     "apply_url": "https://jobs.ashbyhq.com/Pocket%20Worlds/74595b01-1f77-4f25-af76-9423c49e5d88",
     "source": "getro",
     "posted_at": "2026-07-04",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "supercell-gameplay-capture-video-artist-creative-studio-2",
+    "slug": "supercell-gameplay-capture-video-artist-creative-studio",
     "title": "Gameplay Capture & Video Artist, Creative Studio",
     "company": {
       "slug": "supercell",
@@ -1006,11 +1030,11 @@
     "apply_url": "https://jobs.ashbyhq.com/supercell/a91f0f17-3e71-4767-a448-94bd86dbb525",
     "source": "ashby",
     "posted_at": "2026-07-03",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "voodoo-creative-strategist-2",
+    "slug": "voodoo-creative-strategist",
     "title": "Creative Strategist",
     "company": {
       "slug": "voodoo",
@@ -1030,11 +1054,11 @@
     "apply_url": "https://jobs.ashbyhq.com/voodoo/698aaa1c-f530-47cf-b82b-f0c7eaec2109",
     "source": "ashby",
     "posted_at": "2026-07-02",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "stillfrontgroup-marketing-video-artist-new-mobile-strategy-game-2",
+    "slug": "stillfrontgroup-marketing-video-artist-new-mobile-strategy-game",
     "title": "Marketing Video Artist – New Mobile Strategy Game",
     "company": {
       "slug": "stillfrontgroup",
@@ -1054,11 +1078,11 @@
     "apply_url": "https://stillfrontgroup.teamtailor.com/jobs/8009895-marketing-video-artist-new-mobile-strategy-game",
     "source": "teamtailor",
     "posted_at": "2026-07-02",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "goodgamestudios-marketing-video-artist-new-mobile-strategy-game-2",
+    "slug": "goodgamestudios-marketing-video-artist-new-mobile-strategy-game",
     "title": "Marketing Video Artist – New Mobile Strategy Game",
     "company": {
       "slug": "goodgamestudios",
@@ -1078,11 +1102,11 @@
     "apply_url": "https://goodgamestudios.teamtailor.com/jobs/8009895-marketing-video-artist-new-mobile-strategy-game",
     "source": "teamtailor",
     "posted_at": "2026-07-02",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "whoop-senior-manager-performance-marketing-2",
+    "slug": "whoop-senior-manager-performance-marketing",
     "title": "Senior Manager, Performance Marketing",
     "company": {
       "slug": "whoop",
@@ -1102,11 +1126,11 @@
     "apply_url": "https://jobs.lever.co/whoop/95eb8ad3-b194-4020-90c8-e9715151bcd7",
     "source": "lever",
     "posted_at": "2026-06-29",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "suno-video-editor-paid-social-contract-2",
+    "slug": "suno-video-editor-paid-social-contract",
     "title": "Video Editor, Paid Social (Contract)",
     "company": {
       "slug": "suno",
@@ -1126,11 +1150,11 @@
     "apply_url": "https://jobs.ashbyhq.com/suno/3ff17212-aa3b-4df5-b7d1-da437eb79a81",
     "source": "ashby",
     "posted_at": "2026-06-26",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "easybrain-junior-user-acquisition-manager-2",
+    "slug": "easybrain-junior-user-acquisition-manager",
     "title": "Junior User Acquisition Manager",
     "company": {
       "slug": "easybrain",
@@ -1150,11 +1174,11 @@
     "apply_url": "https://jobs.lever.co/easybrain/c1e6d89e-0835-4db7-9716-e952281bcd97",
     "source": "lever",
     "posted_at": "2026-06-25",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "tripledotstudios-senior-motion-designer-2",
+    "slug": "tripledotstudios-senior-motion-designer",
     "title": "Senior Motion Designer",
     "company": {
       "slug": "tripledotstudios",
@@ -1174,11 +1198,11 @@
     "apply_url": "https://job-boards.eu.greenhouse.io/tripledotstudios/jobs/4906683101",
     "source": "greenhouse",
     "posted_at": "2026-06-24",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "scopely-director-performance-marketing-2",
+    "slug": "scopely-director-performance-marketing",
     "title": "Director, Performance Marketing",
     "company": {
       "slug": "scopely",
@@ -1198,11 +1222,11 @@
     "apply_url": "https://job-boards.greenhouse.io/scopely/jobs/5281535008?gh_jid=5281535008",
     "source": "greenhouse",
     "posted_at": "2026-06-24",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "easybrain-user-acquisition-manager-2",
+    "slug": "easybrain-user-acquisition-manager",
     "title": "User Acquisition Manager",
     "company": {
       "slug": "easybrain",
@@ -1222,11 +1246,11 @@
     "apply_url": "https://jobs.lever.co/easybrain/f787bd9e-ee13-4ca3-82cc-954164bf4f89",
     "source": "lever",
     "posted_at": "2026-06-24",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "suno-graphic-designer-paid-media-contractor-2",
+    "slug": "suno-graphic-designer-paid-media-contractor",
     "title": "Graphic Designer, Paid Media (Contractor)",
     "company": {
       "slug": "suno",
@@ -1246,11 +1270,11 @@
     "apply_url": "https://jobs.ashbyhq.com/suno/3da14a90-a4fb-47b9-a17e-7412a63882d4",
     "source": "ashby",
     "posted_at": "2026-06-24",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "agavegames-motion-designer-performance-marketing-new-grad-2",
+    "slug": "agavegames-motion-designer-performance-marketing-new-grad",
     "title": "Motion Designer, Performance Marketing (New Grad)",
     "company": {
       "slug": "agavegames",
@@ -1270,11 +1294,11 @@
     "apply_url": "https://jobs.ashbyhq.com/agavegames/c2e87dc2-2aab-4641-a2dc-323a087b5889",
     "source": "ashby",
     "posted_at": "2026-06-23",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "vc-eloelo-2-video-editor-contract-2",
+    "slug": "vc-eloelo-2-video-editor-contract",
     "title": "Video Editor - Contract",
     "company": {
       "slug": "vc-eloelo-2",
@@ -1295,11 +1319,11 @@
     "apply_url": "https://eloelo.keka.com/careers/jobdetails/138445",
     "source": "getro",
     "posted_at": "2026-06-23",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "vc-eloelo-2-creative-producer-2",
+    "slug": "vc-eloelo-2-creative-producer",
     "title": "Creative Producer",
     "company": {
       "slug": "vc-eloelo-2",
@@ -1320,11 +1344,11 @@
     "apply_url": "https://eloelo.keka.com/careers/jobdetails/128998",
     "source": "getro",
     "posted_at": "2026-06-23",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "photoroom-senior-user-acquisition-manager-2",
+    "slug": "photoroom-senior-user-acquisition-manager",
     "title": "Senior User Acquisition Manager",
     "company": {
       "slug": "photoroom",
@@ -1344,11 +1368,11 @@
     "apply_url": "https://jobs.ashbyhq.com/photoroom/93fc05c2-63e0-422f-9501-3171be3be840",
     "source": "ashby",
     "posted_at": "2026-06-19",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "acorns-growth-marketing-sr-associate-2",
+    "slug": "acorns-growth-marketing-sr-associate",
     "title": "Growth Marketing, Sr. Associate",
     "company": {
       "slug": "acorns",
@@ -1368,11 +1392,11 @@
     "apply_url": "https://jobs.ashbyhq.com/acorns/f221bf93-f4e3-41cd-9beb-c745bf8c0123",
     "source": "ashby",
     "posted_at": "2026-06-16",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "amanotes-uplive-company-senior-ua-marketing-mobile-games-2",
+    "slug": "amanotes-uplive-company-senior-ua-marketing-mobile-games",
     "title": "Senior UA Marketing (Mobile Games)",
     "company": {
       "slug": "amanotes",
@@ -1392,11 +1416,11 @@
     "apply_url": "https://jobs.lever.co/amanotes/23cc7ffb-45a3-4319-b591-0480d93db140",
     "source": "lever",
     "posted_at": "2026-06-12",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "amanotes-uplive-company-ua-marketing-mobile-apps-2",
+    "slug": "amanotes-uplive-company-ua-marketing-mobile-apps",
     "title": "UA Marketing (Mobile Apps)",
     "company": {
       "slug": "amanotes",
@@ -1416,11 +1440,11 @@
     "apply_url": "https://jobs.lever.co/amanotes/ba8099c2-03d4-44ac-9bbd-61063df8984d",
     "source": "lever",
     "posted_at": "2026-06-12",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "amanotes-uplive-company-ua-marketing-mobile-games-2",
+    "slug": "amanotes-uplive-company-ua-marketing-mobile-games",
     "title": "UA Marketing (Mobile Games)",
     "company": {
       "slug": "amanotes",
@@ -1440,11 +1464,11 @@
     "apply_url": "https://jobs.lever.co/amanotes/65d17b11-2708-47e7-96a4-2091a67fd75b",
     "source": "lever",
     "posted_at": "2026-06-12",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "tripledotstudios-creative-producer-2",
+    "slug": "tripledotstudios-creative-producer",
     "title": "Creative Producer",
     "company": {
       "slug": "tripledotstudios",
@@ -1464,11 +1488,11 @@
     "apply_url": "https://job-boards.eu.greenhouse.io/tripledotstudios/jobs/4895210101",
     "source": "greenhouse",
     "posted_at": "2026-06-11",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "amanotes-uplive-company-senior-ua-marketing-mobile-apps-2",
+    "slug": "amanotes-uplive-company-senior-ua-marketing-mobile-apps",
     "title": "Senior UA Marketing (Mobile Apps)",
     "company": {
       "slug": "amanotes",
@@ -1488,11 +1512,11 @@
     "apply_url": "https://jobs.lever.co/amanotes/340ca3e8-c264-4150-8f7a-628477a24381",
     "source": "lever",
     "posted_at": "2026-06-11",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "mistplay-senior-user-acquisition-manager-ii-apac-2",
+    "slug": "mistplay-senior-user-acquisition-manager-ii-apac",
     "title": "Senior User Acquisition Manager II, APAC",
     "company": {
       "slug": "mistplay",
@@ -1512,11 +1536,11 @@
     "apply_url": "https://jobs.lever.co/mistplay/84d92ec9-6283-4d02-b200-fcb5084592c2",
     "source": "lever",
     "posted_at": "2026-06-10",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "scopely-director-performance-marketing-unannounced-arpg-mobile-game-2",
+    "slug": "scopely-director-performance-marketing-unannounced-arpg-mobile-game",
     "title": "Director, Performance Marketing - Unannounced ARPG Mobile Game",
     "company": {
       "slug": "scopely",
@@ -1536,11 +1560,11 @@
     "apply_url": "https://job-boards.greenhouse.io/scopely/jobs/5239651008?gh_jid=5239651008",
     "source": "greenhouse",
     "posted_at": "2026-06-08",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "strava-lead-marketing-analyst-growth-marketing-2",
+    "slug": "strava-lead-marketing-analyst-growth-marketing",
     "title": "Lead Marketing Analyst, Growth Marketing",
     "company": {
       "slug": "strava",
@@ -1560,11 +1584,11 @@
     "apply_url": "https://jobs.ashbyhq.com/strava/bd427f4e-e701-404a-b320-318c6840c24b",
     "source": "ashby",
     "posted_at": "2026-06-05",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "rocket-money-senior-data-analyst-growth-marketing-2",
+    "slug": "rocket-money-senior-data-analyst-growth-marketing",
     "title": "Senior Data Analyst, Growth Marketing",
     "company": {
       "slug": "rocket-money",
@@ -1584,11 +1608,11 @@
     "apply_url": "https://job-boards.greenhouse.io/truebill/jobs/7764054003",
     "source": "greenhouse",
     "posted_at": "2026-06-05",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "kabam-growth-marketing-manager-aso-contract-2",
+    "slug": "kabam-growth-marketing-manager-aso-contract",
     "title": "Growth Marketing Manager, ASO (Contract)",
     "company": {
       "slug": "kabam",
@@ -1608,11 +1632,11 @@
     "apply_url": "https://jobs.lever.co/kabam/b974a409-510c-4d1a-946e-32cd10c2a9e9",
     "source": "lever",
     "posted_at": "2026-06-04",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "perplexity-member-of-creative-studio-motion-designer-2",
+    "slug": "perplexity-member-of-creative-studio-motion-designer",
     "title": "Member of Creative Studio (Motion Designer)",
     "company": {
       "slug": "perplexity",
@@ -1632,11 +1656,11 @@
     "apply_url": "https://jobs.ashbyhq.com/perplexity/39d520eb-6b81-4b61-8b23-5efcdac4cad9",
     "source": "ashby",
     "posted_at": "2026-06-03",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "photoroom-senior-growth-marketing-2",
+    "slug": "photoroom-senior-growth-marketing",
     "title": "Senior Growth Marketing",
     "company": {
       "slug": "photoroom",
@@ -1656,11 +1680,11 @@
     "apply_url": "https://jobs.ashbyhq.com/photoroom/321aa19e-bd58-4ac2-bd65-da23aea6299b",
     "source": "ashby",
     "posted_at": "2026-05-29",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "voodoo-marketing-video-artist-apps-2",
+    "slug": "voodoo-marketing-video-artist-apps",
     "title": "Marketing Video Artist - Apps",
     "company": {
       "slug": "voodoo",
@@ -1680,11 +1704,11 @@
     "apply_url": "https://jobs.ashbyhq.com/voodoo/bf199825-2f50-4cac-839a-1d3143fc3ecc",
     "source": "ashby",
     "posted_at": "2026-05-28",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "vc-stockgro-retention-and-growth-manager-2",
+    "slug": "vc-stockgro-retention-and-growth-manager",
     "title": "Retention and Growth manager",
     "company": {
       "slug": "vc-stockgro",
@@ -1705,11 +1729,11 @@
     "apply_url": "https://in.linkedin.com/jobs/view/retention-and-growth-manager-at-stockgro-4418946707",
     "source": "getro",
     "posted_at": "2026-05-27",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "duolingo-performance-marketing-lead-2",
+    "slug": "duolingo-performance-marketing-lead",
     "title": "Performance Marketing Lead",
     "company": {
       "slug": "duolingo",
@@ -1729,11 +1753,11 @@
     "apply_url": "https://careers.duolingo.com/jobs/8562780002?gh_jid=8562780002",
     "source": "greenhouse",
     "posted_at": "2026-05-22",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "elevenlabs-mobile-growth-manager-2",
+    "slug": "elevenlabs-mobile-growth-manager",
     "title": "Mobile Growth Manager",
     "company": {
       "slug": "elevenlabs",
@@ -1753,11 +1777,11 @@
     "apply_url": "https://jobs.ashbyhq.com/elevenlabs/09d54604-b5eb-498e-9868-e52b25967a66",
     "source": "ashby",
     "posted_at": "2026-05-22",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "voodoo-growth-lead-blitz-us-2",
+    "slug": "voodoo-growth-lead-blitz-us",
     "title": "Growth Lead Blitz (US)",
     "company": {
       "slug": "voodoo",
@@ -1777,11 +1801,11 @@
     "apply_url": "https://jobs.ashbyhq.com/voodoo/78fb3618-fd24-4cb4-9b0d-ddfea991a020",
     "source": "ashby",
     "posted_at": "2026-05-20",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "voodoo-creative-strategist-wizz-2",
+    "slug": "voodoo-creative-strategist-wizz",
     "title": "Creative Strategist - Wizz",
     "company": {
       "slug": "voodoo",
@@ -1801,11 +1825,11 @@
     "apply_url": "https://jobs.ashbyhq.com/voodoo/2211c1d7-5dbc-4e19-a9aa-19ae4c7e5a88",
     "source": "ashby",
     "posted_at": "2026-05-19",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "scopely-manager-i-performance-marketing-2",
+    "slug": "scopely-manager-i-performance-marketing",
     "title": "Manager I, Performance Marketing",
     "company": {
       "slug": "scopely",
@@ -1825,11 +1849,11 @@
     "apply_url": "https://job-boards.greenhouse.io/scopely/jobs/5225517008?gh_jid=5225517008",
     "source": "greenhouse",
     "posted_at": "2026-05-19",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "scopely-performance-marketing-manager-2",
+    "slug": "scopely-performance-marketing-manager",
     "title": "Performance Marketing Manager",
     "company": {
       "slug": "scopely",
@@ -1849,11 +1873,11 @@
     "apply_url": "https://job-boards.greenhouse.io/scopely/jobs/5216080008?gh_jid=5216080008",
     "source": "greenhouse",
     "posted_at": "2026-05-15",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "supercell-ua-creative-producer-hay-day-2",
+    "slug": "supercell-ua-creative-producer-hay-day",
     "title": "UA Creative Producer, Hay Day",
     "company": {
       "slug": "supercell",
@@ -1873,11 +1897,11 @@
     "apply_url": "https://jobs.ashbyhq.com/supercell/ab40c52a-c067-47fb-a202-277a4854a8df",
     "source": "ashby",
     "posted_at": "2026-05-15",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "applovin-growth-marketing-social-content-2",
+    "slug": "applovin-growth-marketing-social-content",
     "title": "Growth Marketing, Social Content",
     "company": {
       "slug": "applovin",
@@ -1897,11 +1921,11 @@
     "apply_url": "https://boards.greenhouse.io/applovin/jobs/4681220006?gh_jid=4681220006",
     "source": "greenhouse",
     "posted_at": "2026-05-13",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "madbox-senior-3d-marketing-artist-2",
+    "slug": "madbox-senior-3d-marketing-artist",
     "title": "Senior 3D Marketing Artist",
     "company": {
       "slug": "madbox",
@@ -1921,11 +1945,11 @@
     "apply_url": "https://madbox.teamtailor.com/jobs/7707805-senior-3d-marketing-artist",
     "source": "teamtailor",
     "posted_at": "2026-05-08",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "lightricks-creative-marketing-motion-designer-2",
+    "slug": "lightricks-creative-marketing-motion-designer",
     "title": "Creative Marketing & Motion Designer",
     "company": {
       "slug": "lightricks",
@@ -1945,11 +1969,11 @@
     "apply_url": "https://careers.lightricks.com/position?gh_jid=8540048002&gh_jid=8540048002",
     "source": "greenhouse",
     "posted_at": "2026-05-07",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "voodoo-marketing-video-artist-paper-io-2-2",
+    "slug": "voodoo-marketing-video-artist-paper-io-2",
     "title": "Marketing Video Artist - Paper.io 2",
     "company": {
       "slug": "voodoo",
@@ -1969,11 +1993,11 @@
     "apply_url": "https://jobs.ashbyhq.com/voodoo/11dfc90c-e1b2-4be9-8fde-a9b896425031",
     "source": "ashby",
     "posted_at": "2026-05-05",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "flohealth-creative-strategist-2",
+    "slug": "flohealth-creative-strategist",
     "title": "Creative Strategist",
     "company": {
       "slug": "flohealth",
@@ -1993,11 +2017,11 @@
     "apply_url": "https://job-boards.greenhouse.io/flohealth/jobs/7720947003",
     "source": "greenhouse",
     "posted_at": "2026-04-30",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "voodoo-marketing-video-artist-eastern-europe-growth-2",
+    "slug": "voodoo-marketing-video-artist-eastern-europe-growth",
     "title": "Marketing Video Artist - Eastern Europe - Growth",
     "company": {
       "slug": "voodoo",
@@ -2017,11 +2041,11 @@
     "apply_url": "https://jobs.ashbyhq.com/voodoo/9b71d150-5d38-4bba-9670-0bb455715dc9",
     "source": "ashby",
     "posted_at": "2026-04-27",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "goodjobgames-junior-marketing-artist-2",
+    "slug": "goodjobgames-junior-marketing-artist",
     "title": "Junior Marketing Artist",
     "company": {
       "slug": "goodjobgames",
@@ -2041,11 +2065,11 @@
     "apply_url": "https://job-boards.greenhouse.io/goodjobgames/jobs/7715325003",
     "source": "greenhouse",
     "posted_at": "2026-04-27",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "goodjobgames-marketing-artist-part-time-2",
+    "slug": "goodjobgames-marketing-artist-part-time",
     "title": "Marketing Artist - Part Time",
     "company": {
       "slug": "goodjobgames",
@@ -2065,11 +2089,11 @@
     "apply_url": "https://job-boards.greenhouse.io/goodjobgames/jobs/7715335003",
     "source": "greenhouse",
     "posted_at": "2026-04-27",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "greenlight-senior-growth-marketing-manager-2",
+    "slug": "greenlight-senior-growth-marketing-manager",
     "title": "Senior Growth Marketing Manager",
     "company": {
       "slug": "greenlight",
@@ -2089,11 +2113,11 @@
     "apply_url": "https://jobs.lever.co/greenlight/b0617a86-5b6c-4c26-bd02-5063653aa2fc",
     "source": "lever",
     "posted_at": "2026-04-23",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "outfit7-senior-growth-marketing-manager-2",
+    "slug": "outfit7-senior-growth-marketing-manager",
     "title": "Senior Growth Marketing Manager",
     "company": {
       "slug": "outfit7",
@@ -2113,11 +2137,11 @@
     "apply_url": "https://outfit7.com/careers/jobs?gh_jid=7705561003",
     "source": "greenhouse",
     "posted_at": "2026-04-18",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "voodoo-marketing-video-artist-beach-bum-2",
+    "slug": "voodoo-marketing-video-artist-beach-bum",
     "title": "Marketing Video Artist - Beach Bum",
     "company": {
       "slug": "voodoo",
@@ -2137,11 +2161,11 @@
     "apply_url": "https://jobs.ashbyhq.com/voodoo/8b505ffd-0480-4ef1-873b-02c43815cd07",
     "source": "ashby",
     "posted_at": "2026-04-09",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "suno-senior-performance-creative-designer-2",
+    "slug": "suno-senior-performance-creative-designer",
     "title": "Senior Performance Creative Designer",
     "company": {
       "slug": "suno",
@@ -2161,11 +2185,11 @@
     "apply_url": "https://jobs.ashbyhq.com/suno/e4b620ad-d1ba-410f-8042-4753c740e7cb",
     "source": "ashby",
     "posted_at": "2026-04-07",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "suno-senior-graphic-designer-paid-media-2",
+    "slug": "suno-senior-graphic-designer-paid-media",
     "title": "Senior Graphic Designer, Paid Media",
     "company": {
       "slug": "suno",
@@ -2185,11 +2209,11 @@
     "apply_url": "https://jobs.ashbyhq.com/suno/777f2aa8-50fb-40ef-9dcf-9f8c0df2b03f",
     "source": "ashby",
     "posted_at": "2026-04-01",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "voodoo-marketing-video-artist-wizz-2",
+    "slug": "voodoo-marketing-video-artist-wizz",
     "title": "Marketing Video Artist - Wizz",
     "company": {
       "slug": "voodoo",
@@ -2209,11 +2233,11 @@
     "apply_url": "https://jobs.ashbyhq.com/voodoo/938d1ba4-e322-4a13-ad9b-7becb97e2696",
     "source": "ashby",
     "posted_at": "2026-03-30",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "voodoo-video-editor-wizz-2",
+    "slug": "voodoo-video-editor-wizz",
     "title": "Video Editor - Wizz",
     "company": {
       "slug": "voodoo",
@@ -2233,11 +2257,11 @@
     "apply_url": "https://jobs.ashbyhq.com/voodoo/70c60d3f-4ecb-474f-b303-8c604429e077",
     "source": "ashby",
     "posted_at": "2026-03-30",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "scorewarrior-ua-manager-talent-pool-2",
+    "slug": "scorewarrior-ua-manager-talent-pool",
     "title": "UA Manager (Talent Pool)",
     "company": {
       "slug": "scorewarrior",
@@ -2257,11 +2281,11 @@
     "apply_url": "https://jobs.ashbyhq.com/scorewarrior/0cf66d1a-9493-458d-be4d-9f24c0082b1d",
     "source": "ashby",
     "posted_at": "2026-03-24",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "whoop-senior-business-analyst-growth-marketing-2",
+    "slug": "whoop-senior-business-analyst-growth-marketing",
     "title": "Senior Business Analyst (Growth Marketing)",
     "company": {
       "slug": "whoop",
@@ -2281,11 +2305,11 @@
     "apply_url": "https://jobs.lever.co/whoop/3db1cade-dc17-4a57-b7fe-29addea39b84",
     "source": "lever",
     "posted_at": "2026-03-16",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "voodoo-head-of-growth-bereal-2",
+    "slug": "voodoo-head-of-growth-bereal",
     "title": "Head of Growth - BeReal",
     "company": {
       "slug": "voodoo",
@@ -2305,11 +2329,11 @@
     "apply_url": "https://jobs.ashbyhq.com/voodoo/94aad15d-33b2-4b73-bacf-194634313fd8",
     "source": "ashby",
     "posted_at": "2026-03-10",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "amanotes-uplive-company-user-acquisition-lead-2",
+    "slug": "amanotes-uplive-company-user-acquisition-lead",
     "title": "User Acquisition Lead",
     "company": {
       "slug": "amanotes",
@@ -2329,11 +2353,11 @@
     "apply_url": "https://jobs.lever.co/amanotes/b280ffc0-b9fb-4af1-a545-148dbdaff5bd",
     "source": "lever",
     "posted_at": "2026-02-27",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   },
   {
-    "slug": "amanotes-uplive-company-performance-marketing-2",
+    "slug": "amanotes-uplive-company-performance-marketing",
     "title": "Performance Marketing",
     "company": {
       "slug": "amanotes",
@@ -2353,7 +2377,7 @@
     "apply_url": "https://jobs.lever.co/amanotes/fd0958b1-2370-4d57-8058-ab1e3a5ac96d",
     "source": "lever",
     "posted_at": "2026-02-27",
-    "expires_at": "2026-09-01",
-    "ingested_at": "2026-07-19"
+    "expires_at": "2026-09-03",
+    "ingested_at": "2026-07-20"
   }
 ]
