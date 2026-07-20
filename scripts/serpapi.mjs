@@ -109,6 +109,22 @@ export async function fetchGoogleJobs(q, { apiKey, location } = {}) {
   return data.jobs_results || [];
 }
 
+/** A Google web search (engine=google). Returns organic_results. */
+export async function fetchGoogleSearch(q, { apiKey, gl = "gb", num = 10 } = {}) {
+  const url = new URL("https://serpapi.com/search.json");
+  url.searchParams.set("engine", "google");
+  url.searchParams.set("q", q);
+  url.searchParams.set("gl", gl);
+  url.searchParams.set("hl", "en");
+  url.searchParams.set("num", String(num));
+  url.searchParams.set("api_key", apiKey);
+  const res = await fetch(url, { headers: { "User-Agent": UA } });
+  if (!res.ok) throw new Error(`SerpApi Search HTTP ${res.status}`);
+  const data = await res.json();
+  if (data.error) throw new Error(`SerpApi Search: ${data.error}`);
+  return data.organic_results || [];
+}
+
 /**
  * One Google Play chart page. Games and apps use DIFFERENT engines:
  *   - games: engine "google_play_games" (no category)

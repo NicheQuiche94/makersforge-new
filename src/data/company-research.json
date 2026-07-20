@@ -1,0 +1,338 @@
+{
+  "playrix": {
+    "developer": "Playrix",
+    "sector": "games",
+    "grossing_score": 39,
+    "regions": [
+      "UK",
+      "Germany",
+      "France"
+    ],
+    "careers_url": "https://playrix.com/job",
+    "own_domain": true,
+    "hiring_signal": true,
+    "top_results": [
+      {
+        "title": "Job",
+        "link": "https://playrix.com/job"
+      },
+      {
+        "title": "Product Analyst (Game)",
+        "link": "https://playrix.com/job/open/Analytics/product-analyst-game"
+      },
+      {
+        "title": "Playrix User Acquisition Manager Reviews",
+        "link": "https://www.glassdoor.com/Reviews/Playrix-User-Acquisition-Manager-Reviews-EI_IE1939037.0,7_KO8,32.htm"
+      }
+    ],
+    "searched_at": "2026-07-20"
+  },
+  "simply-ltd": {
+    "developer": "Simply Ltd",
+    "sector": "apps",
+    "grossing_score": 36,
+    "regions": [
+      "UK",
+      "Germany",
+      "France"
+    ],
+    "careers_url": "https://simply-commerce.co.uk/jobs/",
+    "own_domain": true,
+    "hiring_signal": true,
+    "top_results": [
+      {
+        "title": "User acquisition Work, Jobs (with Salaries)",
+        "link": "https://www.simplyhired.co.uk/search?q=user+acquisition"
+      },
+      {
+        "title": "User Acquisition Manager at 5x10",
+        "link": "https://www.remocate.app/jobs/user-acquisition-manager-7"
+      },
+      {
+        "title": "Junior User Acquisition Specialist (Skillsta)",
+        "link": "https://careers.headway.inc/jobs/7538038-junior-user-acquisition-specialist-skillsta"
+      }
+    ],
+    "searched_at": "2026-07-20"
+  },
+  "century-games-pte-ltd": {
+    "developer": "Century Games PTE. LTD.",
+    "sector": "games",
+    "grossing_score": 33,
+    "regions": [
+      "UK",
+      "Germany",
+      "France"
+    ],
+    "careers_url": "https://www.centurygames.com/",
+    "own_domain": true,
+    "hiring_signal": true,
+    "top_results": [
+      {
+        "title": "Century Games - Official Site",
+        "link": "https://www.centurygames.com/"
+      },
+      {
+        "title": "Passionate talents who are interested to work in mobile ...",
+        "link": "https://sg.linkedin.com/jobs/view/passionate-talents-who-are-interested-to-work-in-mobile-game-industry-at-century-games-4378494295"
+      },
+      {
+        "title": "Growth Marketing Intern In Singapore",
+        "link": "https://sg.thebigjobsite.com/details/DCEC36CA4DF2DA91D0C980588DF78B08/growth-marketing-intern"
+      }
+    ],
+    "searched_at": "2026-07-20"
+  },
+  "next-vision-limited": {
+    "developer": "Next Vision Limited",
+    "sector": "apps",
+    "grossing_score": 31,
+    "regions": [
+      "UK",
+      "Germany",
+      "France"
+    ],
+    "careers_url": "https://careers.growthco.uk/home.html",
+    "own_domain": false,
+    "hiring_signal": true,
+    "top_results": [
+      {
+        "title": "User Growth Manager, UK Market in London at Vitanic Vision ...",
+        "link": "https://talents.studysmarter.co.uk/companies/vitanic-vision-limited/london/user-growth-manager-uk-market-34962262/"
+      },
+      {
+        "title": "Current Vacancies | The Growth Company",
+        "link": "https://careers.growthco.uk/home.html"
+      },
+      {
+        "title": "Acquisition of an 80.2% shareholding in Future Technology ...",
+        "link": "https://www.gov.uk/government/publications/acquisition-of-an-802-shareholding-in-future-technology-devices-international-limited-by-willow-vision-limited/acquisition-of-an-802-shareholding-in-future-technology-devices-international-limited-by-willow-vision-limited"
+      }
+    ],
+    "searched_at": "2026-07-20"
+  },
+  "prequel-inc": {
+    "developer": "Prequel Inc.",
+    "sector": "apps",
+    "grossing_score": 31,
+    "regions": [
+      "UK",
+      "Germany",
+      "France"
+    ],
+    "careers_url": "https://www.prequel.co/careers/",
+    "own_domain": true,
+    "hiring_signal": true,
+    "top_results": [
+      {
+        "title": "User Acquisition Application Lead - Prequel Inc.",
+        "link": "https://rs.linkedin.com/jobs/view/user-acquisition-application-lead-at-prequel-inc-4130126437"
+      },
+      {
+        "title": "User Acquisition Manager at Prequel Inc",
+        "link": "https://www.hiredchina.com/jobs/4d8a6873-10d4-4523-b379-96abb328fa69"
+      },
+      {
+        "title": "Prequel Job Openings",
+        "link": "https://prequel.global.huntflow.io/"
+      }
+    ],
+    "searched_at": "2026-07-20"
+  },
+  "microfun-limited": {
+    "developer": "Microfun Limited",
+    "sector": "games",
+    "grossing_score": 29,
+    "regions": [
+      "UK",
+      "Germany",
+      "France"
+    ],
+    "careers_url": "https://www.linkedin.com/company/microfun?trk=ppro_cprof",
+    "own_domain": false,
+    "hiring_signal": false,
+    "top_results": [
+      {
+        "title": "Microfun",
+        "link": "https://www.linkedin.com/company/microfun?trk=ppro_cprof"
+      },
+      {
+        "title": "Cooking Games on iOS in Bahrain: Q2 2025 Overview",
+        "link": "https://sensortower.com/blog/2025-q2-ios-top-5-cooking%20games-revenue-bh-6012d15b241bc16eb82bc0b7"
+      },
+      {
+        "title": "Microfun 2026 Company Profile",
+        "link": "https://pitchbook.com/profiles/company/265942-27"
+      }
+    ],
+    "searched_at": "2026-07-20"
+  },
+  "superplay": {
+    "developer": "SuperPlay.",
+    "sector": "games",
+    "grossing_score": 27,
+    "regions": [
+      "UK",
+      "Germany",
+      "France"
+    ],
+    "careers_url": "https://www.superplay.co/careers/",
+    "own_domain": true,
+    "hiring_signal": true,
+    "top_results": [
+      {
+        "title": "Careers At SuperPlay - Join Us!",
+        "link": "https://www.superplay.co/careers/"
+      },
+      {
+        "title": "User Acquisition Manager @ SuperPlay",
+        "link": "https://jobs.generalcatalyst.com/companies/superplay/jobs/56954195-user-acquisition-manager"
+      },
+      {
+        "title": "Jobs at SuperPlay - Comeet",
+        "link": "https://www.comeet.com/jobs/superplay/28.003"
+      }
+    ],
+    "searched_at": "2026-07-20"
+  },
+  "google-llc": {
+    "developer": "Google LLC",
+    "sector": "apps",
+    "grossing_score": 25,
+    "regions": [
+      "UK",
+      "Germany",
+      "France"
+    ],
+    "careers_url": "https://www.google.com/about/careers/applications/jobs/results/",
+    "own_domain": true,
+    "hiring_signal": true,
+    "top_results": [
+      {
+        "title": "Search Jobs — Google Careers",
+        "link": "https://www.google.com/about/careers/applications/jobs/results/"
+      },
+      {
+        "title": "Growth Marketing Manager, Payments Job - Google LLC",
+        "link": "https://www.monster.com/job-openings/growth-marketing-manager-payments-san-francisco-ca--471b1028-98f0-4049-8288-7bf6101a7fa0"
+      },
+      {
+        "title": "Search for your career at Google.",
+        "link": "https://www.google.com/about/careers/applications/"
+      }
+    ],
+    "searched_at": "2026-07-20"
+  },
+  "adobe": {
+    "developer": "Adobe",
+    "sector": "apps",
+    "grossing_score": 25,
+    "regions": [
+      "UK",
+      "Germany",
+      "France"
+    ],
+    "careers_url": "https://careers.adobe.com/",
+    "own_domain": true,
+    "hiring_signal": false,
+    "top_results": [
+      {
+        "title": "Careers at Adobe | Adobe job opportunities.",
+        "link": "https://careers.adobe.com/"
+      },
+      {
+        "title": "Let's Adobe together. | Adobe Careers",
+        "link": "https://www.adobe.com/careers.html"
+      },
+      {
+        "title": "Marketing and Strategy jobs",
+        "link": "https://careers.adobe.com/us/en/c/marketing-and-strategy-jobs"
+      }
+    ],
+    "searched_at": "2026-07-20"
+  },
+  "deep-flow-apps": {
+    "developer": "Deep Flow Apps",
+    "sector": "apps",
+    "grossing_score": 25,
+    "regions": [
+      "UK",
+      "Germany",
+      "France"
+    ],
+    "careers_url": "https://deepmind.google/careers/",
+    "own_domain": true,
+    "hiring_signal": true,
+    "top_results": [
+      {
+        "title": "Join the team",
+        "link": "https://www.stillfront.com/en/career/join-the-team/"
+      },
+      {
+        "title": "Codeway | Leading in AI-Powered Mobile App Development",
+        "link": "https://www.codeway.co/"
+      },
+      {
+        "title": "DeepFlow",
+        "link": "https://www.deepflow.com/"
+      }
+    ],
+    "searched_at": "2026-07-20"
+  },
+  "ez-health": {
+    "developer": "EZ Health",
+    "sector": "apps",
+    "grossing_score": 24,
+    "regions": [
+      "UK",
+      "Germany",
+      "France"
+    ],
+    "careers_url": "https://careers.ez.health/",
+    "own_domain": true,
+    "hiring_signal": false,
+    "top_results": [
+      {
+        "title": "Ez Health Careers and Employment",
+        "link": "https://www.indeed.com/cmp/Ez-Health-1"
+      },
+      {
+        "title": "Ez Health: Become a Health Guide",
+        "link": "https://careers.ez.health/"
+      },
+      {
+        "title": "Ez Health",
+        "link": "https://www.linkedin.com/company/ez-health-inc"
+      }
+    ],
+    "searched_at": "2026-07-20"
+  },
+  "smart-ai-dev": {
+    "developer": "Smart AI DEV",
+    "sector": "apps",
+    "grossing_score": 23,
+    "regions": [
+      "UK",
+      "Germany",
+      "France"
+    ],
+    "careers_url": "https://smartavatar.nl/careers",
+    "own_domain": true,
+    "hiring_signal": false,
+    "top_results": [
+      {
+        "title": "R27643 - Internship Smart Automation & Agentic AI Dev",
+        "link": "https://www.euronext.com/en/about/careers/job-offers/r27643-france-internship-smart-automation-agentic-ai-dev"
+      },
+      {
+        "title": "Join the team",
+        "link": "https://www.stillfront.com/en/career/join-the-team/"
+      },
+      {
+        "title": "AI won't replace software engineers, but an engineer using ...",
+        "link": "https://www.reddit.com/r/ExperiencedDevs/comments/1hm8gxj/ai_wont_replace_software_engineers_but_an/"
+      }
+    ],
+    "searched_at": "2026-07-20"
+  }
+}
