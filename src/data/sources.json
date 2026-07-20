@@ -466,5 +466,41 @@
     "sector": "games",
     "size": "200-500",
     "blurb": "Mobile games publisher (hyper/hybrid-casual)."
+  },
+  {
+    "ats": "lever",
+    "slug": "spyke-games",
+    "name": "Spyke Games",
+    "url": "https://www.spykegames.com",
+    "sector": "games",
+    "size": "50-200",
+    "blurb": "Istanbul social/casual mobile games studio."
+  },
+  {
+    "ats": "teamtailor",
+    "slug": "sybo",
+    "name": "SYBO",
+    "url": "https://www.sybo.com",
+    "sector": "games",
+    "size": "50-200",
+    "blurb": "Copenhagen studio, makers of Subway Surfers."
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "spcareers",
+    "name": "Socialpoint",
+    "url": "https://www.socialpoint.es",
+    "sector": "games",
+    "size": "500+",
+    "blurb": "Barcelona mobile games studio (Take-Two)."
+  },
+  {
+    "ats": "recruitee",
+    "slug": "huuuge",
+    "name": "Huuuge Games",
+    "url": "https://www.huuugegames.com",
+    "sector": "games",
+    "size": "200-500",
+    "blurb": "Social casino mobile games."
   }
 ]

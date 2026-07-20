@@ -44,6 +44,7 @@ const ATS_SOURCES = new Set([
   "ashby",
   "workable",
   "teamtailor",
+  "recruitee",
   "getro",
 ]);
 const DEFAULT_EXPIRY_DAYS = 45;
@@ -326,12 +327,35 @@ async function fromTeamTailor(slug) {
   });
 }
 
+async function fromRecruitee(slug) {
+  const data = await fetchJson(`https://${slug}.recruitee.com/api/offers/`);
+  return (data.offers || []).map((o) => {
+    const loc =
+      o.location ||
+      (o.locations || []).map((l) => l.name || l.city).filter(Boolean).join(", ") ||
+      [o.city, o.country].filter(Boolean).join(", ");
+    return {
+      title: o.title,
+      location: loc,
+      remote: o.remote ? "remote" : o.hybrid ? "hybrid" : inferRemote(loc),
+      employment_type: inferEmployment(
+        `${o.employment_type_code || o.category_code || ""} ${o.title}`,
+      ),
+      apply_url: o.careers_url || o.url,
+      posted_at: (o.published_at || "").slice(0, 10) || todayISO(),
+      salary: null,
+      contentHtml: o.description || o.requirements || "",
+    };
+  });
+}
+
 const FETCHERS = {
   greenhouse: fromGreenhouse,
   lever: fromLever,
   ashby: fromAshby,
   workable: fromWorkable,
   teamtailor: fromTeamTailor,
+  recruitee: fromRecruitee,
 };
 
 /* ------------------------------------------------ Getro (VC portfolio boards)
