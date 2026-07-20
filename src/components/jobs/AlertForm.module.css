@@ -181,6 +181,14 @@
   background: #fff;
   color: var(--ink);
 }
+/* On the filled dark/heat alert cards the white button must NOT flip to
+   black on hover (base .btn:hover) — that left dark text on black,
+   unreadable. Match the ad bar's white CTA: stay white, lift + shadow. */
+.dark .btn:hover:not(:disabled) {
+  background: #fff;
+  color: var(--ink);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22);
+}
 
 .error {
   font-size: 13px;
