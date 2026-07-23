@@ -161,7 +161,8 @@ export default async function JobPage({
             <TransparencyPanel
               terms={job.terms}
               mode={job.remote}
-              source={job.source}
+              verified={job.verified}
+              slug={job.slug}
               company={job.company.name}
             />
             <div className={styles.companyCard}>

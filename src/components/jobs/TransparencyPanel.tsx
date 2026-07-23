@@ -1,10 +1,5 @@
 import Link from "next/link";
-import {
-  type Terms,
-  type WorkMode,
-  isVerifiedSource,
-  transparencyReport,
-} from "@/lib/terms";
+import { type Terms, type WorkMode, transparencyReport } from "@/lib/terms";
 import styles from "./TransparencyPanel.module.css";
 
 /**
@@ -26,18 +21,19 @@ import styles from "./TransparencyPanel.module.css";
 export function TransparencyPanel({
   terms,
   mode,
-  source,
+  verified,
+  slug,
   company,
 }: {
   terms?: Terms;
   mode?: WorkMode;
-  source: string;
+  verified?: boolean;
+  slug: string;
   company?: string;
 }) {
   const report = transparencyReport(terms, mode);
   if (report.total === 0) return null;
 
-  const verified = isVerifiedSource(source);
   const blankLabel = verified ? "Not disclosed" : "Not stated";
 
   return (
@@ -92,7 +88,7 @@ export function TransparencyPanel({
         <p className={styles.note}>
           Pulled from {company ? `${company}’s` : "a"} public posting, so
           some terms aren&apos;t captured here.{" "}
-          <Link href="/jobs/post" className={styles.claim}>
+          <Link href={`/jobs/${slug}/claim`} className={styles.claim}>
             Hiring for this role? Claim it &rarr;
           </Link>
         </p>

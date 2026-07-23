@@ -18,6 +18,7 @@
 import rawJobs from "@/data/jobs.json";
 import folkEnrichment from "@/data/folk-enrichment.json";
 import termsOverrides from "@/data/terms-overrides.json";
+import claimedRoles from "@/data/claimed-roles.json";
 import {
   type Terms,
   type WorkMode,
@@ -100,6 +101,10 @@ export type Job = {
    *  remote-scope, each tri-state (value | undisclosed | n/a). Assembled at
    *  build time from extraction + manual overrides (see below). */
   terms?: Terms;
+  /** True when the employer opted in — posted it here (source), or claimed a
+   *  sourced listing (present in claimed-roles.json). Verified roles are scored
+   *  and judged; sourced ones are not. */
+  verified?: boolean;
 };
 
 /** A company plus the roles that reference it — live and past. */
@@ -223,23 +228,32 @@ function applyEnrichment(company: Company): Company {
 }
 
 const TERMS_OVERRIDES = termsOverrides as Record<string, Terms>;
+/** Roles an employer has claimed and we've verified. Keyed by slug; the value
+ *  carries the terms the employer confirmed. Presence ⇒ the role is verified. */
+const CLAIMED = claimedRoles as Record<string, { terms?: Terms }>;
 
 const JOBS = (rawJobs as unknown as Job[]).map((j) => {
+  const verified = isVerifiedSource(j.source) || j.slug in CLAIMED;
   // Transparency terms are layered lowest→highest: text extraction, then any
-  // inline terms already on the record, then the manual overrides file (which
-  // lets curated/partner roles be hand-perfected to full disclosure).
+  // inline terms already on the record, then the manual overrides file, then
+  // the employer's confirmed terms from a verified claim (the highest source
+  // of truth — it came straight from them).
   const extracted = extractTerms({
     description_md: j.description_md,
     title: j.title,
     location: j.location,
     remote: j.remote as WorkMode,
     employment_type: j.employment_type,
-    verified: isVerifiedSource(j.source),
+    verified,
   });
-  const terms = mergeTerms(mergeTerms(extracted, j.terms), TERMS_OVERRIDES[j.slug]);
+  const terms = mergeTerms(
+    mergeTerms(mergeTerms(extracted, j.terms), TERMS_OVERRIDES[j.slug]),
+    CLAIMED[j.slug]?.terms,
+  );
   return {
     ...j,
     company: applyEnrichment(j.company),
+    verified,
     ...(terms ? { terms } : {}),
   };
 });
