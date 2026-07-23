@@ -4,7 +4,7 @@ import { Button } from "@/components/atoms/Button";
 import styles from "./standard.module.css";
 
 export const metadata: Metadata = {
-  title: "The Fair Board Standard — how we do transparency | MakersForge",
+  title: "The Fair Board Standard: how we do transparency | MakersForge",
   description:
     "How the MakersForge job board handles pay, contract and hours transparency: where roles come from, exactly what we infer and how, and what we refuse to claim. Sourced vs employer-verified listings explained.",
   alternates: { canonical: "/jobs/standard" },
@@ -66,9 +66,9 @@ export default function StandardPage() {
               things, never hidden:
             </p>
             <p>
-              <strong>Disclosed</strong> — stated, shown as-is.{" "}
-              <strong>Not disclosed / Not stated</strong> — shown honestly.{" "}
-              <strong>Not applicable</strong> — for example, remote scope on an
+              <strong>Disclosed</strong>: stated, shown as-is.{" "}
+              <strong>Not disclosed / Not stated</strong>: shown honestly.{" "}
+              <strong>Not applicable</strong>: for example, remote scope on an
               on-site role.
             </p>
             <p>
