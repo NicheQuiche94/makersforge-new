@@ -28,6 +28,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const board: MetadataRoute.Sitemap = [
     { url: `${SITE_URL}/jobs`, changeFrequency: "daily", priority: 0.9 },
     { url: `${SITE_URL}/jobs/post`, changeFrequency: "monthly", priority: 0.5 },
+    { url: `${SITE_URL}/jobs/standard`, changeFrequency: "monthly", priority: 0.6 },
   ];
 
   const categories: MetadataRoute.Sitemap = CATEGORY_ORDER.map((c) => ({

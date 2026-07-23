@@ -42,7 +42,9 @@ export function TransparencyPanel({
       aria-label="Working terms: pay, contract, hours"
     >
       <header className={styles.head}>
-        <p className={styles.kicker}>Fair Board Standard</p>
+        <Link href="/jobs/standard" className={styles.kicker}>
+          Fair Board Standard
+        </Link>
         {verified ? (
           report.full ? (
             <span className={`heat-glow ${styles.badge}`}>Fully transparent</span>

@@ -21,6 +21,10 @@
   text-transform: uppercase;
   color: var(--mute);
   margin: 0;
+  transition: color 0.15s ease;
+}
+.kicker:hover {
+  color: #c72e00;
 }
 
 /* Disclosure score — descriptive, tonal, no colour weight. */

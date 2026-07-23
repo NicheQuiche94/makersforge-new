@@ -1,0 +1,149 @@
+.page {
+  padding: 120px 0 90px;
+}
+
+.hero {
+  max-width: 720px;
+  margin-bottom: 8px;
+}
+.title {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(38px, 6vw, 68px);
+  line-height: 0.96;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin: 14px 0 0;
+}
+.intro {
+  font-size: 19px;
+  line-height: 1.6;
+  color: var(--dim);
+  margin: 20px 0 0;
+}
+
+.section {
+  max-width: 720px;
+  margin-top: 56px;
+}
+.sectionH {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(24px, 3.4vw, 34px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 0 0 16px;
+}
+.prose p {
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--dim);
+  margin: 0 0 16px;
+}
+.prose strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* Two kinds of listing — a pair of cards. */
+.kinds {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 8px;
+}
+@media (max-width: 640px) {
+  .kinds {
+    grid-template-columns: 1fr;
+  }
+}
+.kind {
+  background: var(--bg-card);
+  border: 1px solid var(--hair);
+  border-radius: 16px;
+  padding: 22px 24px;
+}
+.kindTag {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 5px 11px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+}
+.kindSourced {
+  color: var(--mute);
+  background: rgba(14, 15, 17, 0.05);
+}
+.kindVerified {
+  color: #c72e00;
+  background: rgba(255, 93, 0, 0.09);
+}
+.kind p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--dim);
+  margin: 0;
+}
+
+/* Definition list for the inference rules. */
+.rules {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 4px 0 0;
+}
+.rule {
+  padding: 18px 0;
+  border-top: 1px solid var(--hair);
+}
+.rule:first-child {
+  border-top: none;
+}
+.ruleH {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 6px;
+}
+.ruleH .heat {
+  color: #c72e00;
+}
+.rule p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--dim);
+  margin: 0;
+}
+
+/* Closing callout. */
+.callout {
+  max-width: 720px;
+  margin-top: 56px;
+  background: var(--bg-card);
+  border: 1px solid var(--hair);
+  border-radius: 18px;
+  padding: 32px;
+}
+.calloutH {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(22px, 3vw, 30px);
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 0 0 10px;
+}
+.calloutBody {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--dim);
+  margin: 0 0 20px;
+}
+.actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
