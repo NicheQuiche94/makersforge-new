@@ -17,6 +17,17 @@
 
 import rawJobs from "@/data/jobs.json";
 import folkEnrichment from "@/data/folk-enrichment.json";
+import termsOverrides from "@/data/terms-overrides.json";
+import claimedRoles from "@/data/claimed-roles.json";
+import {
+  type Terms,
+  type WorkMode,
+  extractTerms,
+  isVerifiedSource,
+  mergeTerms,
+} from "./terms";
+
+export type { Terms } from "./terms";
 
 export type JobCategory =
   | "ua"
@@ -86,6 +97,14 @@ export type Job = {
   /** ISO date (YYYY-MM-DD) we first pulled it — freshness fallback when the
    *  original post date is stale (long-open evergreen reqs). */
   ingested_at?: string;
+  /** Fair Board Standard transparency layer — pay / contract / hours /
+   *  remote-scope, each tri-state (value | undisclosed | n/a). Assembled at
+   *  build time from extraction + manual overrides (see below). */
+  terms?: Terms;
+  /** True when the employer opted in — posted it here (source), or claimed a
+   *  sourced listing (present in claimed-roles.json). Verified roles are scored
+   *  and judged; sourced ones are not. */
+  verified?: boolean;
 };
 
 /** A company plus the roles that reference it — live and past. */
@@ -208,10 +227,36 @@ function applyEnrichment(company: Company): Company {
   };
 }
 
-const JOBS = (rawJobs as unknown as Job[]).map((j) => ({
-  ...j,
-  company: applyEnrichment(j.company),
-}));
+const TERMS_OVERRIDES = termsOverrides as Record<string, Terms>;
+/** Roles an employer has claimed and we've verified. Keyed by slug; the value
+ *  carries the terms the employer confirmed. Presence ⇒ the role is verified. */
+const CLAIMED = claimedRoles as Record<string, { terms?: Terms }>;
+
+const JOBS = (rawJobs as unknown as Job[]).map((j) => {
+  const verified = isVerifiedSource(j.source) || j.slug in CLAIMED;
+  // Transparency terms are layered lowest→highest: text extraction, then any
+  // inline terms already on the record, then the manual overrides file, then
+  // the employer's confirmed terms from a verified claim (the highest source
+  // of truth — it came straight from them).
+  const extracted = extractTerms({
+    description_md: j.description_md,
+    title: j.title,
+    location: j.location,
+    remote: j.remote as WorkMode,
+    employment_type: j.employment_type,
+    verified,
+  });
+  const terms = mergeTerms(
+    mergeTerms(mergeTerms(extracted, j.terms), TERMS_OVERRIDES[j.slug]),
+    CLAIMED[j.slug]?.terms,
+  );
+  return {
+    ...j,
+    company: applyEnrichment(j.company),
+    verified,
+    ...(terms ? { terms } : {}),
+  };
+});
 
 /** Build-time "today", at day granularity (local build timezone). */
 function buildToday(): Date {
@@ -347,6 +392,7 @@ export type JobStats = {
   last30: number;
   companies: number;
   remote: number;
+  payShown: number;
 };
 
 export function getJobStats(): JobStats {
@@ -362,6 +408,9 @@ export function getJobStats(): JobStats {
     last30,
     companies: new Set(live.map((j) => j.company.slug)).size,
     remote: live.filter((j) => j.remote === "remote").length,
+    payShown: live.filter(
+      (j) => j.terms?.pay && (j.terms.pay.min != null || j.terms.pay.max != null),
+    ).length,
   };
 }
 

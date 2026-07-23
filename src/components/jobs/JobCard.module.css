@@ -116,6 +116,19 @@
   flex-shrink: 0;
 }
 
+/* Disclosed pay, front and centre on the card — the strongest scan signal. */
+.pay {
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: -0.01em;
+  color: #c72e00;
+  background: rgba(255, 93, 0, 0.09);
+  border: 1px solid rgba(255, 93, 0, 0.16);
+  padding: 5px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
 .remote {
   font-weight: 600;
   font-size: 10px;

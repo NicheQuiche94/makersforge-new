@@ -1,0 +1,121 @@
+.panel {
+  background: var(--bg-card);
+  border: 1px solid var(--hair);
+  border-radius: 18px;
+  padding: 22px 24px;
+  margin-bottom: 20px;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.kicker {
+  font-weight: 600;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin: 0;
+  transition: color 0.15s ease;
+}
+.kicker:hover {
+  color: #c72e00;
+}
+
+/* Disclosure score — descriptive, tonal, no colour weight. */
+.score {
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--dim);
+  background: rgba(14, 15, 17, 0.05);
+  padding: 5px 11px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* Neutral provenance tag for sourced (non-opted-in) roles — no judgement. */
+.tag {
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: var(--mute);
+  background: rgba(14, 15, 17, 0.05);
+  padding: 5px 11px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* The one accent moment: full disclosure earns the heat badge. */
+.badge {
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.01em;
+  color: #fff;
+  padding: 5px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+}
+
+.row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 11px 0;
+  border-top: 1px solid var(--hair);
+}
+.row:first-child {
+  border-top: none;
+}
+
+.label {
+  font-size: 13px;
+  color: var(--mute);
+  flex-shrink: 0;
+}
+
+.value {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0;
+  text-align: right;
+}
+
+/* Undisclosed values recede — visibly present, clearly not stated. */
+.row[data-disclosed="false"] .value {
+  font-weight: 500;
+  font-style: italic;
+  color: var(--mute);
+}
+
+.note {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--mute);
+  margin: 16px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--hair);
+}
+
+.claim {
+  display: inline;
+  font-weight: 600;
+  color: #c72e00;
+}
+.claim:hover {
+  text-decoration: underline;
+}

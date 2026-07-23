@@ -11,8 +11,10 @@ import {
   EMPLOYMENT_LABELS,
 } from "@/lib/jobs";
 import { buildJobPostingSchema } from "@/lib/jobSchema";
+import { formatPay } from "@/lib/terms";
 import { formatPosted } from "@/lib/jobDate";
 import { JobDescription } from "@/components/jobs/JobDescription";
+import { TransparencyPanel } from "@/components/jobs/TransparencyPanel";
 import { CandidateCTA, HiringCTA } from "@/components/jobs/JobCtas";
 import styles from "./job.module.css";
 
@@ -108,7 +110,12 @@ export default async function JobPage({
               label="Type"
               value={EMPLOYMENT_LABELS[job.employment_type]}
             />
-            {job.salary && <Fact label="Salary" value={job.salary} />}
+            {(formatPay(job.terms?.pay) ?? job.salary) && (
+              <Fact
+                label="Salary"
+                value={formatPay(job.terms?.pay) ?? job.salary!}
+              />
+            )}
           </div>
 
           {!expired && (
@@ -151,6 +158,13 @@ export default async function JobPage({
           </div>
 
           <aside className={styles.side}>
+            <TransparencyPanel
+              terms={job.terms}
+              mode={job.remote}
+              verified={job.verified}
+              slug={job.slug}
+              company={job.company.name}
+            />
             <div className={styles.companyCard}>
               <p className={styles.sideKicker}>About {job.company.name}</p>
               <p className={styles.blurb}>{job.company.blurb}</p>

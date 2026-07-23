@@ -13,6 +13,7 @@ import {
   REGION_LABELS,
   sizeBucketOf,
 } from "@/lib/jobs";
+import { CONTRACT_LABELS } from "@/lib/terms";
 import { JobCard } from "./JobCard";
 import { AlertForm } from "./AlertForm";
 import styles from "./JobsBoard.module.css";
@@ -40,6 +41,9 @@ type FilterState = {
   region: string | null;
   size: string | null;
   stage: string | null;
+  pay: string | null;
+  contract: string | null;
+  remoteScope: string | null;
 };
 
 const EMPTY: FilterState = {
@@ -50,11 +54,28 @@ const EMPTY: FilterState = {
   region: null,
   size: null,
   stage: null,
+  pay: null,
+  contract: null,
+  remoteScope: null,
 };
 
-const KEYS = ["category", "company", "sector", "remote", "region", "size", "stage"] as const;
+const KEYS = [
+  "category",
+  "company",
+  "sector",
+  "remote",
+  "region",
+  "size",
+  "stage",
+  "pay",
+  "contract",
+  "remoteScope",
+] as const;
 const REMOTE_OPTIONS = ["remote", "hybrid", "onsite"] as const;
 const PER_PAGE = 25;
+
+const payDisclosed = (j: Job) =>
+  j.terms?.pay != null && (j.terms.pay.min != null || j.terms.pay.max != null);
 
 export function JobsBoard({
   jobs,
@@ -85,6 +106,9 @@ export function JobsBoard({
       region: p.get("region"),
       size: p.get("size"),
       stage: p.get("stage"),
+      pay: p.get("pay"),
+      contract: p.get("contract"),
+      remoteScope: p.get("remoteScope"),
     });
   }, []);
 
@@ -131,6 +155,34 @@ export function JobsBoard({
       .map(([slug, { name, count }]) => [slug, `${name} (${count})`] as [string, string]);
   }, [jobs]);
 
+  // Fair Board Standard facets — only rendered when the data actually varies.
+  const payShownCount = useMemo(
+    () => jobs.filter((j) => payDisclosed(j)).length,
+    [jobs],
+  );
+  const contractOptions = useMemo(() => {
+    const present = new Set<string>();
+    for (const j of jobs) if (j.terms?.contract?.type) present.add(j.terms.contract.type);
+    return (["permanent", "fixed_term", "rolling", "contractor"] as const)
+      .filter((t) => present.has(t))
+      .map((t) => [t, CONTRACT_LABELS[t]] as [string, string]);
+  }, [jobs]);
+  const remoteScopeOptions = useMemo(() => {
+    const present = new Set<string>();
+    for (const j of jobs) {
+      const s = j.terms?.location?.remote_scope;
+      if (s) present.add(s);
+    }
+    const LABEL: Record<string, string> = {
+      country: "One country",
+      region: "Region / timezone",
+      global: "Worldwide",
+    };
+    return (["global", "region", "country"] as const)
+      .filter((s) => present.has(s))
+      .map((s) => [s, LABEL[s]] as [string, string]);
+  }, [jobs]);
+
   const filtered = useMemo(
     () =>
       jobs.filter(
@@ -141,7 +193,11 @@ export function JobsBoard({
           (!filters.remote || j.remote === filters.remote) &&
           (!filters.region || (j.region ?? "global") === filters.region) &&
           (!filters.size || sizeBucketOf(j.company.size) === filters.size) &&
-          (!filters.stage || j.company.stage === filters.stage),
+          (!filters.stage || j.company.stage === filters.stage) &&
+          (!filters.pay || payDisclosed(j)) &&
+          (!filters.contract || j.terms?.contract?.type === filters.contract) &&
+          (!filters.remoteScope ||
+            j.terms?.location?.remote_scope === filters.remoteScope),
       ),
     [jobs, filters],
   );
@@ -186,6 +242,33 @@ export function JobsBoard({
           ]}
           onChange={(v) => set("sector", v)}
         />
+        {payShownCount > 0 && (
+          <SelectFacet
+            label="Pay"
+            allLabel="Any pay"
+            value={filters.pay}
+            options={[["shown", `Pay shown (${payShownCount})`]]}
+            onChange={(v) => set("pay", v)}
+          />
+        )}
+        {contractOptions.length > 1 && (
+          <SelectFacet
+            label="Contract"
+            allLabel="Any contract"
+            value={filters.contract}
+            options={contractOptions}
+            onChange={(v) => set("contract", v)}
+          />
+        )}
+        {remoteScopeOptions.length > 0 && (
+          <SelectFacet
+            label="Remote scope"
+            allLabel="Any remote scope"
+            value={filters.remoteScope}
+            options={remoteScopeOptions}
+            onChange={(v) => set("remoteScope", v)}
+          />
+        )}
         <SelectFacet
           label="Location"
           allLabel="Anywhere"
