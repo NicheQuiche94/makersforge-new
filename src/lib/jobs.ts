@@ -18,7 +18,13 @@
 import rawJobs from "@/data/jobs.json";
 import folkEnrichment from "@/data/folk-enrichment.json";
 import termsOverrides from "@/data/terms-overrides.json";
-import { type Terms, type WorkMode, extractTerms, mergeTerms } from "./terms";
+import {
+  type Terms,
+  type WorkMode,
+  extractTerms,
+  isVerifiedSource,
+  mergeTerms,
+} from "./terms";
 
 export type { Terms } from "./terms";
 
@@ -227,6 +233,8 @@ const JOBS = (rawJobs as unknown as Job[]).map((j) => {
     title: j.title,
     location: j.location,
     remote: j.remote as WorkMode,
+    employment_type: j.employment_type,
+    verified: isVerifiedSource(j.source),
   });
   const terms = mergeTerms(mergeTerms(extracted, j.terms), TERMS_OVERRIDES[j.slug]);
   return {

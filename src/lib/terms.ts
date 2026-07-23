@@ -35,6 +35,9 @@ export type Contract = {
   fixed_term_months?: number; // only meaningful when type === "fixed_term"
   probation_months?: number;
   notice_weeks?: number;
+  /** True when `type` was inferred (e.g. permanent, from listed employee
+   *  benefits) rather than explicitly stated. */
+  inferred?: boolean;
 };
 
 export type Hours = {
@@ -276,6 +279,12 @@ export function extractTerms(input: {
   title?: string;
   location?: string;
   remote?: WorkMode;
+  /** Structured ATS type: FULL_TIME | PART_TIME | CONTRACTOR. Authoritative
+   *  (it's what the job page header already shows). */
+  employment_type?: string;
+  /** Employer opted into the Standard — suppress inference; show only what they
+   *  actually state. */
+  verified?: boolean;
 }): Terms {
   const text = (input.description_md || "").replace(/\s+/g, " ");
   const loc = input.location || "";
@@ -284,10 +293,10 @@ export function extractTerms(input: {
   const pay = extractPay(text);
   if (pay) terms.pay = pay;
 
-  const contract = extractContract(text);
+  const contract = extractContract(text, input.employment_type, input.verified);
   if (contract) terms.contract = contract;
 
-  const hours = extractHours(text);
+  const hours = extractHours(text, input.employment_type);
   if (hours) terms.hours = hours;
 
   const location = extractLocation(text, loc, input.remote);
@@ -342,8 +351,31 @@ function extractPay(text: string): Pay | null {
   return { min, max, currency, period };
 }
 
-/* -- contract -- */
-function extractContract(text: string): Contract | null {
+/* -- contract --
+ * Employee benefits are the tell: contractors and short fixed-terms don't get
+ * equity / 401k / parental leave / insurance. Distinct categories so a real
+ * benefits section (which lists several) clears the bar but a stray mention
+ * doesn't. */
+const BENEFIT_PATTERNS: RegExp[] = [
+  /\b401\s?\(?k\)?\b/,
+  /\bpension\b/,
+  /\b(equity|stock options?|rsus?|share options?)\b/,
+  /\b(parental|maternity|paternity) leave\b/,
+  /\b(health|medical|dental|vision) insurance\b|\bhealthcare\b/,
+  /\b(paid time off|\bpto\b|annual leave|vacation days?|holiday allowance)\b/,
+  /\b(employee benefits|benefits package)\b/,
+];
+function hasEmployeeBenefits(t: string): boolean {
+  let n = 0;
+  for (const re of BENEFIT_PATTERNS) if (re.test(t)) n++;
+  return n >= 2;
+}
+
+function extractContract(
+  text: string,
+  employmentType?: string,
+  verified?: boolean,
+): Contract | null {
   const t = text.toLowerCase();
   const c: Contract = {};
 
@@ -366,11 +398,26 @@ function extractContract(text: string): Contract | null {
   if (noticeW) c.notice_weeks = parseInt(noticeW[1], 10);
   else if (noticeM) c.notice_weeks = parseInt(noticeM[1], 10) * 4;
 
+  // Fall-throughs when nothing explicit was stated:
+  if (!c.type) {
+    if (employmentType === "CONTRACTOR") {
+      // Structured ATS type — reliable, same field the header shows.
+      c.type = "contractor";
+    } else if (!verified && employmentType === "FULL_TIME" && hasEmployeeBenefits(t)) {
+      // Full-time + real employee benefits + no fixed-term stated ⇒ permanent
+      // (a fixed-term role would say so). Inferred, not stated — flagged as such
+      // and only for sourced roles, never for employer-verified ones where we
+      // show only what the employer states (Andre 2026-07-23).
+      c.type = "permanent";
+      c.inferred = true;
+    }
+  }
+
   return c.type || c.fixed_term_months || c.probation_months || c.notice_weeks ? c : null;
 }
 
 /* -- hours -- */
-function extractHours(text: string): Hours | null {
+function extractHours(text: string, employmentType?: string): Hours | null {
   const t = text.toLowerCase();
   const h: Hours = {};
 
@@ -382,9 +429,13 @@ function extractHours(text: string): Hours | null {
     if (n >= 10 && n <= 60) h.per_week = n;
   }
 
-  // A stated "full-time" is a real fact — enough to not read as withheld,
-  // without inventing an exact number the posting didn't give.
-  if (h.per_week == null && /\bfull[-\s]?time\b/.test(t)) h.full_time = true;
+  // Full-time from the authoritative ATS type (already shown in the page header)
+  // or stated in text — a real fact, without inventing an exact number.
+  if (
+    h.per_week == null &&
+    (employmentType === "FULL_TIME" || /\bfull[-\s]?time\b/.test(t))
+  )
+    h.full_time = true;
 
   if (/\bflexible (working )?hours\b|\bcore hours\b|\bflexi[-\s]?time\b/.test(t)) h.flexible = true;
 
