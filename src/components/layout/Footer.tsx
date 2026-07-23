@@ -34,6 +34,7 @@ const STUDIO_LINKS = [
 
 const JOBS_LINKS = [
   { href: "/jobs", label: "Browse roles" },
+  { href: "/jobs/standard", label: "Fair Board Standard" },
   { href: "/jobs/post", label: "Post a role, free" },
   { href: "/apply", label: "Get represented" },
 ];
