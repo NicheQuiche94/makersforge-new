@@ -61,16 +61,24 @@ export function TransparencyPanel({
       </header>
 
       <dl className={styles.rows}>
-        {report.dims.map((d) => (
-          <div
-            key={d.key}
-            className={styles.row}
-            data-disclosed={d.disclosed ? "true" : "false"}
-          >
-            <dt className={styles.label}>{d.label}</dt>
-            <dd className={styles.value}>{d.disclosed ? d.value : blankLabel}</dd>
-          </div>
-        ))}
+        {report.dims.map((d) => {
+          // Bonus signals (e.g. second job) only appear when positively stated —
+          // their absence is never shown as a gap or counted against the role.
+          if (!d.scored && !d.disclosed) return null;
+          return (
+            <div
+              key={d.key}
+              className={styles.row}
+              data-disclosed={d.disclosed ? "true" : "false"}
+              data-bonus={!d.scored ? "true" : undefined}
+            >
+              <dt className={styles.label}>{d.label}</dt>
+              <dd className={styles.value}>
+                {d.disclosed ? d.value : blankLabel}
+              </dd>
+            </div>
+          );
+        })}
       </dl>
 
       {verified && !report.full && (

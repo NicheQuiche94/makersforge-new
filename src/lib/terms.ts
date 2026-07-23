@@ -182,6 +182,7 @@ export type TransparencyDim = {
   label: string;
   disclosed: boolean;
   value: string | null; // disclosed value, or null when not stated
+  scored: boolean; // counts toward the disclosure score; bonus signals don't
 };
 
 export type TransparencyReport = {
@@ -212,23 +213,29 @@ export function transparencyReport(
   const t = terms ?? {};
   const dims: TransparencyDim[] = [];
 
-  const push = (key: string, label: string, value: string | null) =>
-    dims.push({ key, label, disclosed: value != null, value });
+  const push = (key: string, label: string, value: string | null, scored = true) =>
+    dims.push({ key, label, disclosed: value != null, value, scored });
 
   push("pay", "Pay", formatPay(t.pay));
   push("contract", "Contract", formatContract(t.contract));
   push("hours", "Weekly hours", formatHours(t.hours));
-  push("second_job", "Second job", formatSecondJob(t.hours));
+
+  // Second job is a BONUS signal, never scored. Almost no full-time ad states
+  // it (it's really only meaningful for sub-full-time / contract roles), so its
+  // absence must never count against a role — presence is a plus, absence is
+  // not damning (Andre 2026-07-23). The panel shows it only when disclosed.
+  push("second_job", "Second job", formatSecondJob(t.hours), false);
 
   const loc = locationDim(t.location, fallbackMode);
   if (loc) push("location", loc.label, loc.value);
 
-  const disclosed = dims.filter((d) => d.disclosed).length;
+  const scored = dims.filter((d) => d.scored);
+  const disclosed = scored.filter((d) => d.disclosed).length;
   return {
     dims,
     disclosed,
-    total: dims.length,
-    full: dims.length > 0 && disclosed === dims.length,
+    total: scored.length,
+    full: scored.length > 0 && disclosed === scored.length,
   };
 }
 
