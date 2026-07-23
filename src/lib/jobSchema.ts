@@ -14,7 +14,16 @@
 
 import type { Job } from "./jobs";
 import { REGION_LABELS } from "./jobs";
+import type { Pay } from "./terms";
 import { absoluteUrl } from "./site";
+
+/** schema.org unitText for a pay period. */
+const PERIOD_UNIT: Record<NonNullable<Pay["period"]>, string> = {
+  year: "YEAR",
+  month: "MONTH",
+  day: "DAY",
+  hour: "HOUR",
+};
 
 export function buildJobPostingSchema(job: Job): Record<string, unknown> {
   const schema: Record<string, unknown> = {
@@ -24,7 +33,7 @@ export function buildJobPostingSchema(job: Job): Record<string, unknown> {
     description: descriptionToHtml(job.description_md),
     datePosted: job.posted_at,
     validThrough: `${job.expires_at}T23:59:59`,
-    employmentType: job.employment_type,
+    employmentType: employmentTypesFor(job),
     directApply: false,
     url: absoluteUrl(`/jobs/${job.slug}`),
     identifier: {
@@ -41,6 +50,23 @@ export function buildJobPostingSchema(job: Job): Record<string, unknown> {
         : {}),
     },
   };
+
+  // Structured pay (Fair Board Standard) → baseSalary. Only emitted when we
+  // have a currency, a period and at least one bound — a partial/malformed
+  // MonetaryAmount is worse than none. The free-text `salary` is never used here.
+  const pay = job.terms?.pay;
+  if (pay && pay.currency && pay.period && (pay.min != null || pay.max != null)) {
+    schema.baseSalary = {
+      "@type": "MonetaryAmount",
+      currency: pay.currency,
+      value: {
+        "@type": "QuantitativeValue",
+        ...(pay.min != null ? { minValue: pay.min } : {}),
+        ...(pay.max != null ? { maxValue: pay.max } : {}),
+        unitText: PERIOD_UNIT[pay.period],
+      },
+    };
+  }
 
   const { locality, country } = parseLocation(job.location);
 
@@ -67,6 +93,18 @@ export function buildJobPostingSchema(job: Job): Record<string, unknown> {
   }
 
   return schema;
+}
+
+/** schema.org employmentType. Combines the base full/part/contractor type with
+ *  the Fair Board Standard contract kind so fixed-term/rolling roles surface as
+ *  TEMPORARY and contractor roles as CONTRACTOR. Returns a de-duped array (the
+ *  enum accepts multiple values). */
+function employmentTypesFor(job: Job): string[] {
+  const set = new Set<string>([job.employment_type]);
+  const kind = job.terms?.contract?.type;
+  if (kind === "fixed_term" || kind === "rolling") set.add("TEMPORARY");
+  if (kind === "contractor") set.add("CONTRACTOR");
+  return [...set];
 }
 
 /** Split "Istanbul, Türkiye" → {locality, country}. Remote-only strings

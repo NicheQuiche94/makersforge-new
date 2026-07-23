@@ -17,6 +17,10 @@
 
 import rawJobs from "@/data/jobs.json";
 import folkEnrichment from "@/data/folk-enrichment.json";
+import termsOverrides from "@/data/terms-overrides.json";
+import { type Terms, type WorkMode, extractTerms, mergeTerms } from "./terms";
+
+export type { Terms } from "./terms";
 
 export type JobCategory =
   | "ua"
@@ -86,6 +90,10 @@ export type Job = {
   /** ISO date (YYYY-MM-DD) we first pulled it — freshness fallback when the
    *  original post date is stale (long-open evergreen reqs). */
   ingested_at?: string;
+  /** Fair Board Standard transparency layer — pay / contract / hours / crunch /
+   *  remote-scope, each tri-state (value | undisclosed | n/a). Assembled at
+   *  build time from extraction + manual overrides (see below). */
+  terms?: Terms;
 };
 
 /** A company plus the roles that reference it — live and past. */
@@ -208,10 +216,25 @@ function applyEnrichment(company: Company): Company {
   };
 }
 
-const JOBS = (rawJobs as unknown as Job[]).map((j) => ({
-  ...j,
-  company: applyEnrichment(j.company),
-}));
+const TERMS_OVERRIDES = termsOverrides as Record<string, Terms>;
+
+const JOBS = (rawJobs as unknown as Job[]).map((j) => {
+  // Transparency terms are layered lowest→highest: text extraction, then any
+  // inline terms already on the record, then the manual overrides file (which
+  // lets curated/partner roles be hand-perfected to full disclosure).
+  const extracted = extractTerms({
+    description_md: j.description_md,
+    title: j.title,
+    location: j.location,
+    remote: j.remote as WorkMode,
+  });
+  const terms = mergeTerms(mergeTerms(extracted, j.terms), TERMS_OVERRIDES[j.slug]);
+  return {
+    ...j,
+    company: applyEnrichment(j.company),
+    ...(terms ? { terms } : {}),
+  };
+});
 
 /** Build-time "today", at day granularity (local build timezone). */
 function buildToday(): Date {
