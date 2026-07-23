@@ -43,11 +43,6 @@ export type Hours = {
   flexible?: boolean; // flexible / core-hours arrangement
 };
 
-export type CrunchPolicy = "none" | "occasional" | "expected";
-export type Conditions = {
-  crunch_policy?: CrunchPolicy;
-};
-
 export type WorkMode = "remote" | "hybrid" | "onsite";
 export type RemoteScope = "global" | "region" | "country";
 export type LocationTerms = {
@@ -64,7 +59,6 @@ export type Terms = {
   pay?: Pay;
   contract?: Contract;
   hours?: Hours;
-  conditions?: Conditions;
   location?: LocationTerms;
 };
 
@@ -75,12 +69,6 @@ export const CONTRACT_LABELS: Record<ContractKind, string> = {
   fixed_term: "Fixed-term",
   rolling: "Rolling contract",
   contractor: "Contractor",
-};
-
-export const CRUNCH_LABELS: Record<CrunchPolicy, string> = {
-  none: "No mandatory crunch",
-  occasional: "Occasional crunch",
-  expected: "Crunch expected",
 };
 
 const CURRENCY_SYMBOL: Record<string, string> = { GBP: "£", USD: "$", EUR: "€" };
@@ -136,11 +124,6 @@ function formatSecondJob(h?: Hours): string | null {
   return h.second_job_allowed
     ? "Second job allowed"
     : "Exclusive — no second job";
-}
-
-function formatCrunch(c?: Conditions): string | null {
-  if (!c || !c.crunch_policy) return null;
-  return CRUNCH_LABELS[c.crunch_policy];
 }
 
 const SCOPE_FALLBACK: Record<RemoteScope, string> = {
@@ -214,7 +197,6 @@ export function transparencyReport(
   push("contract", "Contract", formatContract(t.contract));
   push("hours", "Weekly hours", formatHours(t.hours));
   push("second_job", "Second job", formatSecondJob(t.hours));
-  push("crunch", "Crunch policy", formatCrunch(t.conditions));
 
   const loc = locationDim(t.location, fallbackMode);
   if (loc) push("location", loc.label, loc.value);
@@ -230,7 +212,7 @@ export function transparencyReport(
 
 /* --------------------------------------------------------------- merge */
 
-const TERM_KEYS = ["pay", "contract", "hours", "conditions", "location"] as const;
+const TERM_KEYS = ["pay", "contract", "hours", "location"] as const;
 
 /** Shallow-merge per sub-object: override wins field-by-field over the base
  *  (extracted) terms. Used to layer manual overrides on top of extraction. */
@@ -278,9 +260,6 @@ export function extractTerms(input: {
 
   const hours = extractHours(text);
   if (hours) terms.hours = hours;
-
-  const conditions = extractConditions(text);
-  if (conditions) terms.conditions = conditions;
 
   const location = extractLocation(text, loc, input.remote);
   if (location) terms.location = location;
@@ -385,16 +364,6 @@ function extractHours(text: string): Hours | null {
   if (/\bexclusivity clause\b|\bmust be exclusive\b/.test(t)) h.second_job_allowed = false;
 
   return h.per_week != null || h.flexible != null || h.second_job_allowed != null ? h : null;
-}
-
-/* -- conditions (crunch) -- */
-function extractConditions(text: string): Conditions | null {
-  const t = text.toLowerCase();
-  if (/\bno (mandatory |forced )?crunch\b|\bcrunch[-\s]free\b|\bno crunch culture\b/.test(t))
-    return { crunch_policy: "none" };
-  if (/\bcrunch (is )?(expected|required|part of)\b/.test(t))
-    return { crunch_policy: "expected" };
-  return null;
 }
 
 /* -- location / remote scope -- */

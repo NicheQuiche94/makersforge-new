@@ -90,7 +90,7 @@ export type Job = {
   /** ISO date (YYYY-MM-DD) we first pulled it — freshness fallback when the
    *  original post date is stale (long-open evergreen reqs). */
   ingested_at?: string;
-  /** Fair Board Standard transparency layer — pay / contract / hours / crunch /
+  /** Fair Board Standard transparency layer — pay / contract / hours /
    *  remote-scope, each tri-state (value | undisclosed | n/a). Assembled at
    *  build time from extraction + manual overrides (see below). */
   terms?: Terms;
