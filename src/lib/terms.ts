@@ -134,7 +134,7 @@ function formatSecondJob(h?: Hours): string | null {
   if (!h || h.second_job_allowed == null) return null;
   return h.second_job_allowed
     ? "Second job allowed"
-    : "Exclusive — no second job";
+    : "Exclusive (no second job)";
 }
 
 const SCOPE_FALLBACK: Record<RemoteScope, string> = {

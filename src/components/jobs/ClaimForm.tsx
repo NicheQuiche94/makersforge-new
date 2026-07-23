@@ -101,7 +101,7 @@ export function ClaimForm({
 
       <p className={styles.sectionNote}>
         Confirm or complete the terms below. Anything you leave blank stays
-        &ldquo;not disclosed&rdquo; — your call, shown honestly.
+        &ldquo;not disclosed&rdquo;. Your call, shown honestly.
       </p>
 
       <div className={styles.grid}>
@@ -176,7 +176,7 @@ export function ClaimForm({
           <select name="secondJob" className={styles.input} defaultValue="">
             <option value="">Not applicable</option>
             <option value="allowed">Allowed</option>
-            <option value="exclusive">Exclusive — no second job</option>
+            <option value="exclusive">Exclusive (no second job)</option>
           </select>
         </Field>
         {defaults.isRemote && (
@@ -194,7 +194,7 @@ export function ClaimForm({
           </Field>
         )}
         {defaults.isRemote && (
-          <Field label="Remote — where" hint="e.g. UK, EU (CET ±3h), Worldwide">
+          <Field label="Remote location" hint="e.g. UK, EU (CET ±3h), Worldwide">
             <input
               name="remoteWhere"
               type="text"
