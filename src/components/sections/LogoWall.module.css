@@ -12,13 +12,13 @@
   margin: 0 0 28px;
 }
 
-/* Even five-up grid so every chip is the same size and the row reads
-   as a balanced shelf (Andre 2026-07-19). */
+/* Even six-up grid so every chip is the same size and the row reads
+   as a balanced shelf (Andre 2026-07-19; +Triple Tap 2026-07-23). */
 .row {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 16px;
-  max-width: 1080px;
+  max-width: 1160px;
   margin: 0 auto;
 }
 @media (max-width: 900px) {

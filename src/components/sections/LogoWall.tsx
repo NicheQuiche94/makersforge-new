@@ -1,10 +1,10 @@
 import styles from "./LogoWall.module.css";
 
 /**
- * Logo wall — the studios / apps Andre has personally placed UA /
- * marketing-art hires at. Static even grid of five white chips (the
- * marquee looked like it was ending rather than looping with so few
- * logos, Andre 2026-07-19).
+ * Logo wall — the studios / apps Andre has personally placed growth
+ * hires at. Static even grid of six white chips (the marquee looked
+ * like it was ending rather than looping with so few logos, Andre
+ * 2026-07-19).
  *
  * Chips normalise the mixed source backgrounds (Yallaplay ships
  * white-on-black, Playsome is a colour JPG on white) into one clean
@@ -20,6 +20,7 @@ const HOME_LOGOS: Logo[] = [
   { name: "Yallaplay", src: "/logos/yallaplay.png", invert: true },
   { name: "Skunkworks", src: "/logos/skunkworks.png" },
   { name: "Playsome", src: "/logos/playsome.jpg" },
+  { name: "Triple Tap", src: "/logos/TTG.png" },
 ];
 
 export function LogoWall() {
@@ -28,9 +29,7 @@ export function LogoWall() {
   return (
     <section className={styles.section}>
       <div className="container">
-        <p className={styles.cap}>
-          Where we&apos;ve placed UA and marketing-art hires
-        </p>
+        <p className={styles.cap}>Where we placed growth hires</p>
         <div className={styles.row}>
           {HOME_LOGOS.map((logo) => (
             <span key={logo.name} className={styles.chip}>
