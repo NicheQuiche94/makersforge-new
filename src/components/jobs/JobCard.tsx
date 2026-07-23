@@ -5,6 +5,7 @@ import {
   REMOTE_LABELS,
   shortLocation,
 } from "@/lib/jobs";
+import { formatPay } from "@/lib/terms";
 import { formatPosted } from "@/lib/jobDate";
 import styles from "./JobCard.module.css";
 
@@ -17,6 +18,10 @@ import styles from "./JobCard.module.css";
  * server company page and the client-side filtered board.
  */
 export function JobCard({ job }: { job: Job }) {
+  // Pay on the card itself, not only on the detail page — a disclosed salary is
+  // the strongest signal a candidate scans for (Andre 2026-07-23).
+  const pay = formatPay(job.terms?.pay);
+
   return (
     <Link href={`/jobs/${job.slug}`} className={styles.row}>
       <Monogram name={job.company.name} logo={job.company.logo} />
@@ -37,6 +42,7 @@ export function JobCard({ job }: { job: Job }) {
       </div>
 
       <div className={styles.aside}>
+        {pay && <span className={styles.pay}>{pay}</span>}
         <span className={styles.remote} data-mode={job.remote}>
           {REMOTE_LABELS[job.remote]}
         </span>
