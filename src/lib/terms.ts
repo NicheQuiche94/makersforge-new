@@ -39,6 +39,7 @@ export type Contract = {
 
 export type Hours = {
   per_week?: number; // contracted hours: 40, 37.5, 20 …
+  full_time?: boolean; // stated full-time (when exact hours aren't given)
   second_job_allowed?: boolean; // exclusivity clause? true = a second job is allowed
   flexible?: boolean; // flexible / core-hours arrangement
 };
@@ -114,9 +115,16 @@ function formatContract(c?: Contract): string | null {
 }
 
 function formatHours(h?: Hours): string | null {
-  if (!h || h.per_week == null) return null;
-  const n = Number.isInteger(h.per_week) ? h.per_week : h.per_week.toFixed(1);
-  return `${n}h / week${h.flexible ? " · flexible" : ""}`;
+  if (!h) return null;
+  const flex = h.flexible ? " · flexible" : "";
+  if (h.per_week != null) {
+    const n = Number.isInteger(h.per_week) ? h.per_week : h.per_week.toFixed(1);
+    return `${n}h / week${flex}`;
+  }
+  // "Full-time" is a real stated fact when a role names it but not exact hours —
+  // enough to not read as withheld, without inventing a number they didn't give.
+  if (h.full_time) return `Full-time${flex}`;
+  return h.flexible ? "Flexible hours" : null;
 }
 
 function formatSecondJob(h?: Hours): string | null {
@@ -154,7 +162,16 @@ function locationDim(
       value: `Hybrid · ${loc.office_days_per_week} days in office${city}`,
     };
   }
-  // onsite (or unknown): the remote-scope question doesn't apply.
+  if (mode === "onsite") {
+    // "5 days/week in-office" is a stated commitment worth surfacing. Without a
+    // stated number the remote-scope question just doesn't apply (n/a).
+    if (loc?.office_days_per_week == null) return null;
+    return {
+      label: "On-site schedule",
+      value: `On-site · ${loc.office_days_per_week} days/week in office`,
+    };
+  }
+  // unknown mode: the location question doesn't apply.
   return null;
 }
 
@@ -164,7 +181,7 @@ export type TransparencyDim = {
   key: string;
   label: string;
   disclosed: boolean;
-  value: string; // the disclosed value, or "Not disclosed"
+  value: string | null; // disclosed value, or null when not stated
 };
 
 export type TransparencyReport = {
@@ -174,10 +191,20 @@ export type TransparencyReport = {
   full: boolean; // every applicable dimension disclosed
 };
 
-const NOT_DISCLOSED = "Not disclosed";
+/**
+ * A role is "verified" only when the employer put it here themselves and
+ * therefore opted into the Standard. Everything sourced from a public ATS /
+ * board did NOT — so we never score it or imply it chose to withhold anything.
+ * We only hold to account those who signed up to be held to account.
+ */
+export function isVerifiedSource(source: string): boolean {
+  return source === "employer" || source === "partner";
+}
 
-/** Build the honest disclosure report for a role. `fallbackMode` is the job's
- *  legacy `remote` field, used when terms.location.mode isn't set. */
+/** Build the disclosure report for a role. `fallbackMode` is the job's legacy
+ *  `remote` field, used when terms.location.mode isn't set. Undisclosed dims
+ *  carry `value: null`; the panel chooses the wording ("Not stated" for sourced
+ *  roles vs "Not disclosed" for employer-verified ones). */
 export function transparencyReport(
   terms: Terms | undefined,
   fallbackMode?: WorkMode,
@@ -186,12 +213,7 @@ export function transparencyReport(
   const dims: TransparencyDim[] = [];
 
   const push = (key: string, label: string, value: string | null) =>
-    dims.push({
-      key,
-      label,
-      disclosed: value != null,
-      value: value ?? NOT_DISCLOSED,
-    });
+    dims.push({ key, label, disclosed: value != null, value });
 
   push("pay", "Pay", formatPay(t.pay));
   push("contract", "Contract", formatContract(t.contract));
@@ -353,6 +375,10 @@ function extractHours(text: string): Hours | null {
     if (n >= 10 && n <= 60) h.per_week = n;
   }
 
+  // A stated "full-time" is a real fact — enough to not read as withheld,
+  // without inventing an exact number the posting didn't give.
+  if (h.per_week == null && /\bfull[-\s]?time\b/.test(t)) h.full_time = true;
+
   if (/\bflexible (working )?hours\b|\bcore hours\b|\bflexi[-\s]?time\b/.test(t)) h.flexible = true;
 
   if (/\bsecond job\b/.test(t)) {
@@ -363,7 +389,24 @@ function extractHours(text: string): Hours | null {
   }
   if (/\bexclusivity clause\b|\bmust be exclusive\b/.test(t)) h.second_job_allowed = false;
 
-  return h.per_week != null || h.flexible != null || h.second_job_allowed != null ? h : null;
+  return h.per_week != null ||
+    h.full_time != null ||
+    h.flexible != null ||
+    h.second_job_allowed != null
+    ? h
+    : null;
+}
+
+/** Days a week in the office, when a posting states it. Handles "5 days/week
+ *  in-office", "in the office 3 days", "hybrid, 2 days", "3 days on-site". */
+function extractOfficeDays(text: string): number | undefined {
+  const m =
+    /\b([1-5])\s?days?[^.]{0,14}\bin[-\s](?:the\s)?office\b/i.exec(text) ||
+    /\bin[-\s](?:the\s)?office\b[^.]{0,14}?\b([1-5])\s?days?/i.exec(text) ||
+    /\b([1-5])\s?days?\s?(?:\/|per|a)\s?week\b[^.]{0,14}(?:office|on[-\s]?site)/i.exec(text) ||
+    /\bhybrid\b[^.]{0,40}?\b([1-5])\s?days?\b/i.exec(text) ||
+    /\b([1-5])\s?days?\s?on[-\s]?site\b/i.exec(text);
+  return m ? parseInt(m[1], 10) : undefined;
 }
 
 /* -- location / remote scope -- */
@@ -410,16 +453,13 @@ function extractLocation(
     const tz = /(\d)\s?h(?:ours?)?\s?overlap|overlap[^.]{0,20}?\b(cet|cest|gmt|utc|est|pst|bst)\b/i.exec(text);
     if (tz) out.timezone_overlap = tz[0].trim();
   } else if (mode === "hybrid") {
-    const days =
-      /\b(\d)\s?days?\s?(?:per week |a week |\/\s?week )?in (?:the )?office\b/i.exec(text) ||
-      /\bhybrid\b[^.]{0,40}?\b(\d)\s?days?\b/i.exec(text) ||
-      /\b(\d)\s?days?\s?on[-\s]?site\b/i.exec(text);
-    if (days) {
-      const n = parseInt(days[1], 10);
-      if (n >= 1 && n <= 5) out.office_days_per_week = n;
-    }
+    const days = extractOfficeDays(text);
+    if (days) out.office_days_per_week = days;
     const city = locationStr.split(/[,(]/)[0].trim();
     if (city && !/remote|hybrid/i.test(city)) out.office_city = city;
+  } else if (mode === "onsite") {
+    const days = extractOfficeDays(text);
+    if (days) out.office_days_per_week = days;
   }
 
   // Only return if we learned something beyond the mode itself.

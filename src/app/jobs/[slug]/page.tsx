@@ -158,7 +158,12 @@ export default async function JobPage({
           </div>
 
           <aside className={styles.side}>
-            <TransparencyPanel terms={job.terms} mode={job.remote} />
+            <TransparencyPanel
+              terms={job.terms}
+              mode={job.remote}
+              source={job.source}
+              company={job.company.name}
+            />
             <div className={styles.companyCard}>
               <p className={styles.sideKicker}>About {job.company.name}</p>
               <p className={styles.blurb}>{job.company.blurb}</p>

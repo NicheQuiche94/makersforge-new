@@ -35,6 +35,18 @@
   white-space: nowrap;
 }
 
+/* Neutral provenance tag for sourced (non-opted-in) roles — no judgement. */
+.tag {
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: var(--mute);
+  background: rgba(14, 15, 17, 0.05);
+  padding: 5px 11px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
 /* The one accent moment: full disclosure earns the heat badge. */
 .badge {
   font-weight: 700;
@@ -93,4 +105,13 @@
   margin: 16px 0 0;
   padding-top: 14px;
   border-top: 1px solid var(--hair);
+}
+
+.claim {
+  display: inline;
+  font-weight: 600;
+  color: #c72e00;
+}
+.claim:hover {
+  text-decoration: underline;
 }
