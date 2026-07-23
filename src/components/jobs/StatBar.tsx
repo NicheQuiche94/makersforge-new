@@ -12,6 +12,7 @@ export function StatBar({ stats }: { stats: JobStats }) {
     { n: stats.last30, label: "Added in the last 30 days" },
     { n: stats.companies, label: "Companies hiring" },
     { n: stats.remote, label: "Remote roles" },
+    { n: stats.payShown, label: "With pay shown" },
   ];
 
   return (

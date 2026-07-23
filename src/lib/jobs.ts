@@ -378,6 +378,7 @@ export type JobStats = {
   last30: number;
   companies: number;
   remote: number;
+  payShown: number;
 };
 
 export function getJobStats(): JobStats {
@@ -393,6 +394,9 @@ export function getJobStats(): JobStats {
     last30,
     companies: new Set(live.map((j) => j.company.slug)).size,
     remote: live.filter((j) => j.remote === "remote").length,
+    payShown: live.filter(
+      (j) => j.terms?.pay && (j.terms.pay.min != null || j.terms.pay.max != null),
+    ).length,
   };
 }
 
