@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "source:talent": "node --env-file=.env.local scripts/talent-source.mjs"
   },
   "dependencies": {
     "@fontsource/cal-sans": "^5.2.3",
