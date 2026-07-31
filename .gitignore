@@ -60,3 +60,4 @@ src/data/apollo-contacts.json
 # Talent-led sourcing review artifacts (transient, regenerated each run)
 src/data/talent-sourcing.json
 docs/talent-sourcing.md
+docs/pm01-roles.md
