@@ -28,6 +28,9 @@ const CATEGORY_RULES = [
     "ua",
     /user acquisition|\bua\b(?!\w)|performance marketing|paid (media|social|acquisition|marketing)|media buyer|growth marketing/i,
   ],
+  // Ad monetisation is a growth-team discipline, in remit (Andre 2026-07-31).
+  // Keep in sync with ingest.mjs.
+  ["growth", /\bad[-\s]?moneti[sz]ation\b|\bad[-\s]?revenue\b|\bad[-\s]?ops\b|\b(head|lead|director|manager|vp) of moneti[sz]ation\b|\bmoneti[sz]ation (manager|lead|director|head|specialist)\b/i],
   ["growth", /\bgrowth (marketing|marketer|lead|manager|head|analyst)|head of growth/i],
 ];
 const OFF_REMIT_TITLE =

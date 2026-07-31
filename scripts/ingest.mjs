@@ -71,6 +71,13 @@ const CATEGORY_RULES = [
     "ua",
     /user acquisition|\bua\b(?!\w)|performance marketing|paid (media|social|acquisition|marketing)|media buyer|growth marketing/i,
   ],
+  // Ad monetisation / ad revenue is a growth-team discipline, so it's in remit
+  // (Andre 2026-07-31: "any role that sits in a growth team is in our remit and
+  // admon is certainly a growth discipline"). Catches "Head of Ad Monetisation",
+  // "Ad Revenue Manager", monetisation leadership. Technical/eng variants are
+  // still excluded by TECHNICAL_ROLE; pure product without a growth/ad-mon
+  // signal stays out.
+  ["growth", /\bad[-\s]?moneti[sz]ation\b|\bad[-\s]?revenue\b|\bad[-\s]?ops\b|\b(head|lead|director|manager|vp) of moneti[sz]ation\b|\bmoneti[sz]ation (manager|lead|director|head|specialist)\b/i],
   ["growth", /\bgrowth (marketing|marketer|lead|manager|head|analyst)|head of growth/i],
 ];
 // Out-of-remit even when the title otherwise matches: B2B/enterprise sales
