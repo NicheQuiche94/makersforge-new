@@ -112,6 +112,36 @@ function categoryFor(title) {
   return null;
 }
 
+// Sales / account / BD roles — NOT our marketing talent and NOT for the public
+// board, but captured to a private bank for the Appbroda sales-recruitment side
+// model (Andre 2026-08-02). Intercepted before board classification, so a
+// mislabelled "Agency Growth Manager" is banked instead of landing on the board.
+const SALES_ROLE =
+  /\b(sales\b|account (executive|manager|director|lead)|business development|\bbdr\b|\bsdr\b|(agency|client|supply|demand|publisher|partner) (growth|success|partnerships?)|partnerships? (manager|lead|director)|advertising sales|revenue partner|customer success)\b/i;
+const salesBank = [];
+const SALES_BANK_PATH = join(ROOT, "docs", "sales-bank.md");
+
+/** Rewrite docs/sales-bank.md (private, gitignored) — sales/BD roles captured
+ *  off the board for the Appbroda side model. */
+async function writeSalesBank() {
+  const byCompany = {};
+  for (const r of salesBank) (byCompany[r.company] ||= []).push(r);
+  const names = Object.keys(byCompany).sort();
+  const out = [
+    "# Sales roles bank — private (Appbroda side model)",
+    "",
+    `${salesBank.length} sales / account / BD roles across ${names.length} companies, captured from the ingest and kept OFF the public board. Rewrites every run.`,
+    "",
+  ];
+  for (const c of names) {
+    out.push(`## ${c}`);
+    for (const r of byCompany[c])
+      out.push(`- ${r.title}${r.location ? ` · ${r.location}` : ""}${r.url ? `  \n  [role ↗](${r.url})` : ""}`);
+    out.push("");
+  }
+  await writeFile(SALES_BANK_PATH, out.join("\n") + "\n", "utf8");
+}
+
 /* -------------------------------------------- weekly LinkedIn digest */
 const CAT_LABEL = {
   ua: "User acquisition",
@@ -633,9 +663,19 @@ async function main() {
     let kept = 0;
     for (const p of postings) {
       if (!p.title || !p.apply_url) continue;
+      // Sales / account / BD -> Appbroda bank, never the public board.
+      if (SALES_ROLE.test(p.title)) {
+        salesBank.push({ company: src.name, title: p.title, location: cleanLocation(p.location) || "", url: p.apply_url, sector: src.sector || "" });
+        continue;
+      }
       const category = categoryFor(p.title);
       if (!category) {
         rejects.push(`${src.name}: ${p.title}`);
+        continue;
+      }
+      // uaOnly sources (adtech crossover) contribute ONLY their UA roles.
+      if (src.uaOnly && category !== "ua") {
+        rejects.push(`${src.name}: ${p.title} (non-UA, uaOnly source)`);
         continue;
       }
       p.location = cleanLocation(p.location);
@@ -719,13 +759,17 @@ async function main() {
     let kept = 0;
     for (const j of jobs) {
       if (!j.title || !j.url || !j.organization) continue;
+      const sector = getroSector(j.organization.industry_tags);
+      if (!sector) continue; // keep only mobile games/apps
+      if (SALES_ROLE.test(j.title)) {
+        salesBank.push({ company: j.organization.name || board.vc, title: j.title, location: cleanLocation(j.location) || "", url: j.url, sector });
+        continue; // sales -> Appbroda bank
+      }
       const category = categoryFor(j.title);
       if (!category) {
         rejects.push(`${board.vc}: ${j.title}`);
         continue;
       }
-      const sector = getroSector(j.organization.industry_tags);
-      if (!sector) continue; // keep only mobile games/apps
 
       const org = j.organization;
       if (GETRO_BLOCKLIST.test(org.slug || "") || GETRO_BLOCKLIST.test(org.name || ""))
@@ -822,9 +866,11 @@ async function main() {
   await writeFile(JOBS_PATH, JSON.stringify(merged, null, 2) + "\n", "utf8");
   await writeFile(CSV_PATH, buildFolkCsv(companiesTouched), "utf8");
   await writeWeeklyDigest(merged);
+  await writeSalesBank();
   console.log(`\n✓ Wrote ${merged.length} jobs → src/data/jobs.json`);
   console.log(`✓ Wrote ${companiesTouched.size} companies → src/data/folk-import.csv`);
   console.log(`✓ Wrote weekly digest → docs/weekly-roles.md`);
+  console.log(`✓ Wrote sales bank (${salesBank.length}) → docs/sales-bank.md`);
   console.log("Review the diff, then commit + push to publish.");
 }
 

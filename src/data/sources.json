@@ -529,5 +529,32 @@
     "sector": "games",
     "size": "500+",
     "blurb": "Tel Aviv mobile games studio, makers of Coin Master."
+  },
+  {
+    "ats": "ashby",
+    "slug": "almedia",
+    "name": "Almedia",
+    "url": "https://www.almedia.co",
+    "sector": "apps",
+    "uaOnly": true,
+    "blurb": "Rewarded-play adtech; UA roles only (crossover)."
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "moloco",
+    "name": "Moloco",
+    "url": "https://www.moloco.com",
+    "sector": "apps",
+    "uaOnly": true,
+    "blurb": "Mobile performance advertising (ML); UA roles only (crossover)."
+  },
+  {
+    "ats": "ashby",
+    "slug": "adjoe",
+    "name": "adjoe",
+    "url": "https://www.adjoe.io",
+    "sector": "apps",
+    "uaOnly": true,
+    "blurb": "Mobile growth/monetisation adtech; UA roles only (crossover)."
   }
 ]
