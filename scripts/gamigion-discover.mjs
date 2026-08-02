@@ -78,24 +78,31 @@ async function main() {
   const records = await capture();
   console.log(`captured ${records.length} roles`);
 
-  const inRemit = records.filter((r) => titleOf(r) && categoryFor(titleOf(r)));
-  console.log(`${inRemit.length} in-remit (UA/growth/marketing-art/ASO/creative/ad-mon)`);
-
   // Skip companies already on the board.
   const sources = JSON.parse(await readFile(join(ROOT, "src", "data", "sources.json"), "utf8"));
   const sourced = new Set(
     (Array.isArray(sources) ? sources : sources.sources || []).map((s) => (s.name || "").toLowerCase().trim()),
   );
 
+  // EVERY mobile-gaming company is a forward lead (Andre 2026-08-02): a studio
+  // without a growth role today will post one eventually, and once it's a source
+  // the ingester auto-captures it. So capture ALL companies, not just ones with
+  // an in-remit role right now — with the in-remit count as a priority signal.
   const companies = new Map();
-  for (const r of inRemit) {
+  for (const r of records) {
     const name = companyOf(r);
     if (!name || sourced.has(name.toLowerCase().trim())) continue;
-    if (!companies.has(name.toLowerCase())) companies.set(name.toLowerCase(), { name, sector: "games", roles: [] });
-    companies.get(name.toLowerCase()).roles.push({ title: titleOf(r), location: locationOf(r) });
+    const key = name.toLowerCase();
+    if (!companies.has(key)) companies.set(key, { name, sector: "games", total: 0, inRemit: [] });
+    const c = companies.get(key);
+    c.total += 1;
+    if (categoryFor(titleOf(r))) c.inRemit.push({ title: titleOf(r), location: locationOf(r) });
   }
-  const list = [...companies.values()].sort((a, b) => b.roles.length - a.roles.length);
-  console.log(`${list.length} new mobile-gaming companies with in-remit roles (not already sourced)`);
+  const list = [...companies.values()].sort(
+    (a, b) => b.inRemit.length - a.inRemit.length || b.total - a.total || a.name.localeCompare(b.name),
+  );
+  const withInRemit = list.filter((c) => c.inRemit.length).length;
+  console.log(`${list.length} new mobile-gaming companies (${withInRemit} with an in-remit role now), not already sourced`);
 
   await writeFile(
     OUT_JSON,
@@ -103,14 +110,15 @@ async function main() {
     "utf8",
   );
 
-  const md = ["# Gamigion — new mobile-gaming companies with in-remit roles", ""];
+  const md = ["# Gamigion — mobile-gaming companies to ATS-check", ""];
   md.push(
-    `${list.length} companies not already on the board, from ${inRemit.length} in-remit roles (of ${records.length} total). Feed into the ATS bridge to add the ones with a supported ATS.`,
+    `${list.length} companies not already on the board, from ${records.length} roles. Every one is a lead: run the slug-probe to auto-add the ones with a supported ATS, manually check the rest. Companies with an in-remit role live now are listed first.`,
     "",
   );
   for (const c of list) {
-    md.push(`- **${c.name}** — ${c.roles.length} in-remit role${c.roles.length === 1 ? "" : "s"}`);
-    for (const r of c.roles.slice(0, 4)) md.push(`  - ${r.title}${r.location ? ` · ${r.location}` : ""}`);
+    const tag = c.inRemit.length ? `${c.inRemit.length} in-remit / ${c.total} roles` : `${c.total} roles`;
+    md.push(`- **${c.name}** — ${tag}`);
+    for (const r of c.inRemit.slice(0, 3)) md.push(`  - ${r.title}${r.location ? ` · ${r.location}` : ""}`);
   }
   await writeFile(OUT_MD, md.join("\n") + "\n", "utf8");
 
