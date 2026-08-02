@@ -502,5 +502,32 @@
     "sector": "games",
     "size": "200-500",
     "blurb": "Social casino mobile games."
+  },
+  {
+    "ats": "ashby",
+    "slug": "justdice",
+    "name": "justDice",
+    "url": "https://www.justdice.io",
+    "sector": "apps",
+    "size": "50-200",
+    "blurb": "Hamburg-based rewarded-play adtech studio behind JustPlay and partner apps."
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "nordeus",
+    "name": "Nordeus",
+    "url": "https://www.nordeus.com",
+    "sector": "games",
+    "size": "200-500",
+    "blurb": "Belgrade mobile games studio, makers of Top Eleven."
+  },
+  {
+    "ats": "ashby",
+    "slug": "moonactive",
+    "name": "Moon Active",
+    "url": "https://www.moonactive.com",
+    "sector": "games",
+    "size": "500+",
+    "blurb": "Tel Aviv mobile games studio, makers of Coin Master."
   }
 ]
