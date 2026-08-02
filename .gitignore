@@ -61,3 +61,5 @@ src/data/apollo-contacts.json
 src/data/talent-sourcing.json
 docs/talent-sourcing.md
 docs/pm01-roles.md
+src/data/gamigion-companies.json
+docs/gamigion-roles.md

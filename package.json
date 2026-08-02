@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "source:talent": "node --env-file=.env.local scripts/talent-source.mjs",
-    "source:pm01": "node --env-file=.env.local scripts/source-pm01.mjs"
+    "source:pm01": "node --env-file=.env.local scripts/source-pm01.mjs",
+    "source:gamigion": "node scripts/gamigion-discover.mjs"
   },
   "dependencies": {
     "@fontsource/cal-sans": "^5.2.3",
@@ -29,6 +30,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.1.1",
+    "playwright": "^1.62.1",
     "typescript": "^5"
   }
 }

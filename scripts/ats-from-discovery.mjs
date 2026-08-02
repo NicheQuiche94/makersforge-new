@@ -106,6 +106,13 @@ async function main() {
   } catch {
     /* no talent-sourcing.json yet */
   }
+  try {
+    const gami = JSON.parse(await readFile(join(ROOT, "src", "data", "gamigion-companies.json"), "utf8"));
+    for (const c of gami.companies || [])
+      if (c.name) companies.set(c.name.toLowerCase(), { name: c.name, sector: c.sector || "games" });
+  } catch {
+    /* no gamigion-companies.json yet */
+  }
   for (const c of PM01_COMPANIES) companies.set(c.name.toLowerCase(), c);
 
   const todo = [...companies.values()].filter((c) => !sourced.has(c.name.toLowerCase().trim()));
