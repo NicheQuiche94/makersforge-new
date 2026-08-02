@@ -127,6 +127,25 @@ async function main() {
   md.push(`## Manual check — ${misses.length} no ATS found by slug (reverse-engineer / check site)`, "", ...misses.map((c) => `- ${c.name}`));
   await writeFile(OUT_MD, md.join("\n") + "\n", "utf8");
 
+  // Machine-readable: every ATS-resolved company + its live hiring status, for
+  // the Folk sync (folk-sync-leads.mjs). inRemit>0 = hiring now; 0 = future lead.
+  await writeFile(
+    join(ROOT, "src", "data", "ats-resolved.json"),
+    JSON.stringify(
+      {
+        generatedAt: Date.now(),
+        companies: results.map((r) => ({
+          name: r.name, ats: r.ats, slug: r.slug, sector: r.sector,
+          boardRoles: r.total, inRemit: r.inRemit, adtech: !!r.adtech,
+          giant: isGiant(r.name), sample: r.sample || "",
+        })),
+      },
+      null,
+      2,
+    ) + "\n",
+    "utf8",
+  );
+
   // Private adtech file (Andre's silent side model). Includes the UA-flavoured
   // roles that could be a small crossover on the board.
   const UA_CROSSOVER = /user acquisition|\bua\b|performance marketing|paid (media|social|acquisition)|media buy|growth marketing/i;
