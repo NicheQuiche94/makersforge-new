@@ -13,6 +13,7 @@
  * we know which fetchers to add next.
  */
 
+import { pathToFileURL } from "node:url";
 import { categoryFor } from "./serpapi.mjs";
 
 const UA =
@@ -129,23 +130,33 @@ async function mapLimit(items, limit, fn) {
   return out;
 }
 
-const results = await mapLimit(CANDIDATES, 6, probe);
-
-console.log("\n=== ATS detection ===");
-const addable = [];
-for (const r of results) {
-  if (!r.ats) { console.log(`· ${r.name} (${r.domain}): no ATS found on careers page`); continue; }
-  const v = r.verify;
-  const tag = SUPPORTED.has(r.ats) ? (v ? `${v.total} roles, ${v.inRemit.length} in-remit` : "verify failed") : "(fetcher not built yet)";
-  console.log(`✓ ${r.name}: ${r.ats}/${r.slug} — ${tag}`);
-  if (SUPPORTED.has(r.ats) && v) {
-    if (v.inRemit.length) console.log(`     in-remit: ${v.inRemit.slice(0, 3).join(" | ")}`);
-    addable.push({ ats: r.ats, slug: r.slug, name: r.name, url: `https://www.${r.domain}`, sector: r.sector });
+/** Probe a list of {name, domain, sector} candidates, log findings, and return
+ *  the ones ready to add to sources.json (supported ATS, verified in-remit). */
+export async function runDetection(candidates) {
+  const results = await mapLimit(candidates, 6, probe);
+  console.log("\n=== ATS detection ===");
+  const addable = [];
+  for (const r of results) {
+    if (!r.ats) { console.log(`· ${r.name} (${r.domain}): no ATS found on careers page`); continue; }
+    const v = r.verify;
+    const tag = SUPPORTED.has(r.ats) ? (v ? `${v.total} roles, ${v.inRemit.length} in-remit` : "verify failed") : "(fetcher not built yet)";
+    console.log(`✓ ${r.name}: ${r.ats}/${r.slug} — ${tag}`);
+    if (SUPPORTED.has(r.ats) && v && v.inRemit.length) {
+      console.log(`     in-remit: ${v.inRemit.slice(0, 3).join(" | ")}`);
+      addable.push({ ats: r.ats, slug: r.slug, name: r.name, url: `https://www.${r.domain}`, sector: r.sector });
+    }
   }
+  console.log(`\n=== ${addable.length} ready to add to sources.json (supported ATS, in-remit roles) ===`);
+  console.log(JSON.stringify(addable, null, 2));
+  const unsupported = results.filter((r) => r.ats && !SUPPORTED.has(r.ats));
+  if (unsupported.length)
+    console.log(`\nDetected but no fetcher yet: ${unsupported.map((r) => `${r.name}=${r.ats}`).join(", ")}`);
+  return { results, addable };
 }
 
-console.log(`\n=== ${addable.length} ready to add to sources.json (supported ATS, verified) ===`);
-console.log(JSON.stringify(addable, null, 2));
-const unsupported = results.filter((r) => r.ats && !SUPPORTED.has(r.ats));
-if (unsupported.length)
-  console.log(`\nNeed a fetcher for: ${[...new Set(unsupported.map((r) => r.ats))].join(", ")} (e.g. ${unsupported.map((r) => `${r.name}=${r.ats}`).join(", ")})`);
+export { probe, detect, verify, SUPPORTED };
+
+// Run the built-in EU-studio candidate list only when invoked directly.
+if (import.meta.url === pathToFileURL(process.argv[1] || "").href) {
+  await runDetection(CANDIDATES);
+}
