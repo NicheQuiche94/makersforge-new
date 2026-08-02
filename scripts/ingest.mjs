@@ -46,6 +46,8 @@ const ATS_SOURCES = new Set([
   "workable",
   "teamtailor",
   "recruitee",
+  "smartrecruiters",
+  "personio",
   "getro",
 ]);
 const DEFAULT_EXPIRY_DAYS = 45;
@@ -475,6 +477,63 @@ async function fromRecruitee(slug) {
   });
 }
 
+async function fromSmartRecruiters(slug) {
+  const data = await fetchJson(
+    `https://api.smartrecruiters.com/v1/companies/${slug}/postings?limit=100`,
+  );
+  return (data.content || []).map((j) => {
+    const l = j.location || {};
+    const loc = [l.city, l.region, l.country].filter(Boolean).join(", ");
+    return {
+      title: j.name,
+      location: loc,
+      remote: l.remote ? "remote" : inferRemote(`${loc} ${j.name}`),
+      employment_type: inferEmployment(`${j.typeOfEmployment?.label || ""} ${j.name}`),
+      apply_url: j.ref || `https://jobs.smartrecruiters.com/${slug}/${j.id}`,
+      posted_at: (j.releasedDate || "").slice(0, 10) || todayISO(),
+      salary: null,
+      contentHtml: "", // list endpoint has no body; ingester synthesises a fallback
+    };
+  });
+}
+
+async function fromPersonio(slug) {
+  // Personio serves an XML job feed, not JSON — try .com then .de.
+  let xml = null;
+  for (const tld of ["com", "de"]) {
+    try {
+      const r = await fetch(`https://${slug}.jobs.personio.${tld}/xml?language=en`, {
+        headers: { "user-agent": UA },
+        signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
+      });
+      if (r.ok) { xml = await r.text(); break; }
+    } catch { /* try next tld */ }
+  }
+  if (!xml) return [];
+  const pick = (b, tag) => {
+    const m = new RegExp(`<${tag}>(?:<!\\[CDATA\\[)?([\\s\\S]*?)(?:\\]\\]>)?</${tag}>`).exec(b);
+    return m ? m[1].trim() : "";
+  };
+  return [...xml.matchAll(/<position>([\s\S]*?)<\/position>/g)]
+    .map((m) => {
+      const b = m[1];
+      const office = pick(b, "office");
+      const id = pick(b, "id");
+      const desc = [...b.matchAll(/<value>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/value>/g)].map((x) => x[1]).join("");
+      return {
+        title: pick(b, "name"),
+        location: office,
+        remote: inferRemote(office),
+        employment_type: inferEmployment(`${pick(b, "employmentType")} ${pick(b, "schedule")} ${pick(b, "name")}`),
+        apply_url: `https://${slug}.jobs.personio.com/job/${id}?language=en`,
+        posted_at: (pick(b, "createdAt") || "").slice(0, 10) || todayISO(),
+        salary: null,
+        contentHtml: desc,
+      };
+    })
+    .filter((p) => p.title);
+}
+
 const FETCHERS = {
   greenhouse: fromGreenhouse,
   lever: fromLever,
@@ -482,6 +541,8 @@ const FETCHERS = {
   workable: fromWorkable,
   teamtailor: fromTeamTailor,
   recruitee: fromRecruitee,
+  smartrecruiters: fromSmartRecruiters,
+  personio: fromPersonio,
 };
 
 /* ------------------------------------------------ Getro (VC portfolio boards)

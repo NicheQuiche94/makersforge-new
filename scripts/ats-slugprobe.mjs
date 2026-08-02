@@ -23,7 +23,7 @@ import { verify } from "./ats-detect.mjs";
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const OUT_MD = join(ROOT, "docs", "ats-slugprobe.md");
 const OUT_ADTECH = join(ROOT, "docs", "adtech-leads.md");
-const ATSES = ["greenhouse", "lever", "ashby", "workable", "teamtailor"];
+const ATSES = ["greenhouse", "lever", "ashby", "workable", "teamtailor", "recruitee", "smartrecruiters", "personio"];
 
 // Adtech / marketing-platform companies (ad networks, MMPs, monetisation, DSP/
 // SSP). Kept OFF the board and in their own private file — Andre works a

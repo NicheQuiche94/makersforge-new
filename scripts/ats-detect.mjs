@@ -63,7 +63,7 @@ const ATS_PATTERNS = {
   comeet: /comeet\.co\/jobs\/([^\/"']+)/i,
   join: /join\.com\/companies\/([a-z0-9-]+)/i,
 };
-const SUPPORTED = new Set(["greenhouse", "lever", "ashby", "workable", "teamtailor"]);
+const SUPPORTED = new Set(["greenhouse", "lever", "ashby", "workable", "teamtailor", "recruitee", "smartrecruiters", "personio"]);
 
 async function getText(url) {
   try {
@@ -93,12 +93,24 @@ function detect(html) {
 }
 
 async function verify(ats, slug) {
+  // Personio serves XML, not JSON — handle it separately.
+  if (ats === "personio") {
+    for (const tld of ["com", "de"]) {
+      const xml = await getText(`https://${slug}.jobs.personio.${tld}/xml?language=en`);
+      if (!xml) continue;
+      const titles = [...xml.matchAll(/<name>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/name>/g)].map((m) => m[1].trim()).filter(Boolean);
+      if (titles.length) return { total: titles.length, inRemit: titles.filter((t) => categoryFor(t)) };
+    }
+    return null;
+  }
   const map = {
     greenhouse: [`https://boards-api.greenhouse.io/v1/boards/${slug}/jobs`, (d) => (d.jobs || []).map((x) => x.title)],
     lever: [`https://api.lever.co/v0/postings/${slug}?mode=json`, (d) => (Array.isArray(d) ? d.map((x) => x.text) : [])],
     ashby: [`https://api.ashbyhq.com/posting-api/job-board/${slug}`, (d) => (d.jobs || []).map((x) => x.title)],
     workable: [`https://apply.workable.com/api/v1/widget/accounts/${slug}`, (d) => (d.jobs || []).map((x) => x.title)],
     teamtailor: [`https://${slug}.teamtailor.com/jobs.json`, (d) => (d.data || d.jobs || []).map((x) => x.title || x.attributes?.title)],
+    recruitee: [`https://${slug}.recruitee.com/api/offers/`, (d) => (d.offers || []).map((x) => x.title)],
+    smartrecruiters: [`https://api.smartrecruiters.com/v1/companies/${slug}/postings?limit=100`, (d) => (d.content || []).map((x) => x.name)],
   };
   if (!map[ats]) return null;
   const [url, ex] = map[ats];
