@@ -92,6 +92,7 @@ async function loadCompanies() {
   };
   for (const [file, pick] of [
     ["gamigion-companies.json", (d) => d.companies || []],
+    ["aggregator-companies.json", (d) => d.companies || []],
     ["talent-sourcing.json", (d) => (d.talent || []).flatMap((t) => (t.candidates || []).map((c) => ({ name: c.company, sector: c.sectorGuess })))],
   ]) {
     try {
