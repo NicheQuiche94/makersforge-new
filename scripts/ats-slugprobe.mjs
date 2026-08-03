@@ -127,24 +127,23 @@ async function main() {
   md.push(`## Manual check — ${misses.length} no ATS found by slug (reverse-engineer / check site)`, "", ...misses.map((c) => `- ${c.name}`));
   await writeFile(OUT_MD, md.join("\n") + "\n", "utf8");
 
-  // Machine-readable: every ATS-resolved company + its live hiring status, for
-  // the Folk sync (folk-sync-leads.mjs). inRemit>0 = hiring now; 0 = future lead.
-  await writeFile(
-    join(ROOT, "src", "data", "ats-resolved.json"),
-    JSON.stringify(
-      {
-        generatedAt: Date.now(),
-        companies: results.map((r) => ({
-          name: r.name, ats: r.ats, slug: r.slug, sector: r.sector,
-          boardRoles: r.total, inRemit: r.inRemit, adtech: !!r.adtech,
-          giant: isGiant(r.name), sample: r.sample || "",
-        })),
-      },
-      null,
-      2,
-    ) + "\n",
-    "utf8",
-  );
+  // Machine-readable, ACCUMULATED. The parallel probe is non-deterministic
+  // (transient rate-limits mean each run resolves a different subset), so UNION
+  // with prior results and never drop a company we've resolved before — repeated
+  // runs converge to full coverage. Re-found companies get refreshed hiring
+  // counts. Feeds the Folk sync (inRemit>0 = hiring now; 0 = future lead).
+  const RESOLVED_PATH = join(ROOT, "src", "data", "ats-resolved.json");
+  let prior = [];
+  try { prior = JSON.parse(await readFile(RESOLVED_PATH, "utf8")).companies || []; } catch { /* first run */ }
+  const merged = new Map(prior.map((c) => [c.name.toLowerCase(), c]));
+  for (const r of results)
+    merged.set(r.name.toLowerCase(), {
+      name: r.name, ats: r.ats, slug: r.slug, sector: r.sector,
+      boardRoles: r.total, inRemit: r.inRemit, adtech: !!r.adtech,
+      giant: isGiant(r.name), sample: r.sample || "", refreshedAt: Date.now(),
+    });
+  await writeFile(RESOLVED_PATH, JSON.stringify({ generatedAt: Date.now(), companies: [...merged.values()] }, null, 2) + "\n", "utf8");
+  console.log(`✓ ats-resolved.json: ${merged.size} total (${results.length} this run)`);
 
   // Private adtech file (Andre's silent side model). Includes the UA-flavoured
   // roles that could be a small crossover on the board.
