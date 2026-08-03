@@ -65,14 +65,14 @@ export async function createPerson(key, { fullName, jobTitle, email, linkedin, c
 }
 
 /** Create a company as a lead in "Companies MF". */
-export async function createCompanyLead(key, { name, url, sector, channel, nextSteps }) {
+export async function createCompanyLead(key, { name, url, sector, channel, nextSteps, industry }) {
   return folk(
     "/companies",
     "POST",
     {
       name,
       urls: url ? [url] : [],
-      industry: sector === "apps" ? "Consumer apps" : "Mobile games",
+      industry: industry || (sector === "apps" ? "Consumer apps" : "Mobile games"),
       groups: [{ id: G_COMPANIES }],
       customFieldValues: {
         [G_COMPANIES]: {
