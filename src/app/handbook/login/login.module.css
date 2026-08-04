@@ -1,0 +1,79 @@
+.wrap {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+  background: var(--bg-card);
+  border: 1px solid var(--hair);
+  border-radius: 22px;
+  padding: 40px 36px;
+  box-shadow: 0 20px 60px rgba(14, 15, 17, 0.08);
+}
+
+.kicker {
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin: 0;
+}
+.title {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin: 12px 0 0;
+}
+.sub {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--dim);
+  margin: 12px 0 26px;
+}
+
+.input {
+  width: 100%;
+  font-size: 16px;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--hair-strong);
+  border-radius: 12px;
+  padding: 13px 15px;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.input:focus {
+  border-color: #ff5d00;
+  box-shadow: 0 0 0 3px rgba(255, 93, 0, 0.12);
+}
+
+.error {
+  font-size: 13px;
+  font-weight: 600;
+  color: #c72e00;
+  margin: 10px 0 0;
+}
+
+.submit {
+  margin-top: 18px;
+  width: 100%;
+  justify-content: center;
+}
+
+.footnote {
+  font-size: 12px;
+  color: var(--mute);
+  text-align: center;
+  margin: 22px 0 0;
+}

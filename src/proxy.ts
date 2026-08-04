@@ -1,35 +1,23 @@
 import { NextResponse, type NextRequest } from "next/server";
+import { HANDBOOK_COOKIE, handbookPassword, handbookToken } from "@/lib/handbookAuth";
 
 /**
- * Password gate for the internal team handbook (/handbook + the manual files
- * under it). HTTP Basic Auth over HTTPS — genuinely server-side, runs on the
- * edge before anything is served, so the docs are never reachable without the
- * password. Not linked publicly and noindex'd on top.
- *
- * Credentials come from env: HANDBOOK_PASSWORD (any username accepted). Set it
- * in Vercel (Production + Preview) and .env.local. A default is used until then
- * so the page works on first deploy — change it via the env var.
+ * Gate for the internal team handbook (/handbook + the manual files under it).
+ * Instead of a browser Basic-Auth popup, unauthenticated requests are redirected
+ * to a branded /handbook/login page. A valid handbook_ok cookie (set by the
+ * login API once the password checks out) lets them through. noindex on top.
  */
 export const config = { matcher: ["/handbook", "/handbook/:path*"] };
 
-export function proxy(req: NextRequest) {
-  const expected = process.env.HANDBOOK_PASSWORD || "welcome-to-the-desk";
-  const header = req.headers.get("authorization") || "";
+export async function proxy(req: NextRequest) {
+  const { pathname } = req.nextUrl;
+  if (pathname === "/handbook/login") return NextResponse.next(); // the login page is open
 
-  if (header.startsWith("Basic ")) {
-    try {
-      const [, pass] = atob(header.slice(6)).split(":");
-      if (pass === expected) return NextResponse.next();
-    } catch {
-      /* malformed header → fall through to challenge */
-    }
-  }
+  const expected = await handbookToken(handbookPassword());
+  if (req.cookies.get(HANDBOOK_COOKIE)?.value === expected) return NextResponse.next();
 
-  return new NextResponse("Authentication required.", {
-    status: 401,
-    headers: {
-      "WWW-Authenticate": 'Basic realm="MakersForge team handbook", charset="UTF-8"',
-      "Cache-Control": "no-store",
-    },
-  });
+  const url = req.nextUrl.clone();
+  url.pathname = "/handbook/login";
+  url.searchParams.set("next", pathname);
+  return NextResponse.redirect(url);
 }
