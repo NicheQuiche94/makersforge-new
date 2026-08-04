@@ -11,7 +11,8 @@
     "source:pm01": "node --env-file=.env.local scripts/source-pm01.mjs",
     "source:gamigion": "node scripts/gamigion-discover.mjs",
     "folk:sync": "node --env-file=.env.local scripts/folk-sync-leads.mjs",
-    "ats:probe": "node scripts/ats-slugprobe.mjs"
+    "ats:probe": "node scripts/ats-slugprobe.mjs",
+    "hot": "node scripts/hot-leads.mjs"
   },
   "dependencies": {
     "@fontsource/cal-sans": "^5.2.3",
