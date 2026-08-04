@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 };
 
 // The manuals live as self-contained branded HTML in /public/handbook. Ordered
-// as an onboarding path — start at the top.
+// as an onboarding path, start at the top.
 const MANUALS = [
   {
     n: "01",
@@ -28,7 +28,7 @@ const MANUALS = [
     file: "cold-outreach-manual.html",
     title: "Cold Outreach",
     sub: "How we do it",
-    desc: "The end-to-end playbook — who to contact, when, and exactly what to say.",
+    desc: "The end-to-end playbook, who to contact, when, and exactly what to say.",
   },
   {
     n: "04",
@@ -47,7 +47,7 @@ export default function HandbookPage() {
           <p className={styles.kicker}>MakersForge · Team</p>
           <h1 className={styles.title}>The handbook</h1>
           <p className={styles.intro}>
-            Everything you need to run your desk — the systems, the funnel, and
+            Everything you need to run your desk, the systems, the funnel, and
             the playbooks. Work through them top to bottom, then keep them close.
             Bookmark this page; it&apos;s only for you.
           </p>
