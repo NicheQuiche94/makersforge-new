@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Cold Outreach — How We Do It | MakersForge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;800&display=swap" rel="stylesheet">
+<style>
+@font-face{
+  font-family:'Cal Sans';
+  src:url('https://cdn.jsdelivr.net/npm/@fontsource/cal-sans@5.0.0/files/cal-sans-latin-600-normal.woff2') format('woff2');
+  font-weight:600;font-style:normal;font-display:swap;
+}
+:root{
+  --paper:#FBF7F2;--ink:#17110D;--deep:#221812;--ember:#F0532D;
+  --ash:#6E625A;--rule:#E7DCD2;--wash:#F3EAE1;
+  --display:clamp(2.441rem,1.6rem + 3vw,3.5rem);
+  --h1:1.953rem;--h2:1.563rem;--h3:1.25rem;--body:1rem;--small:0.8rem;
+  --font-display:'Cal Sans','Figtree',system-ui,sans-serif;
+  --font-body:'Figtree',system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-body);font-size:var(--body);line-height:1.5;-webkit-font-smoothing:antialiased;}
+.progress{position:fixed;top:0;left:0;height:4px;width:0%;background:var(--ember);z-index:100;transition:width .1s linear;}
+.section{padding:96px 24px;border-bottom:1px solid var(--rule);position:relative;}
+.wrap{max-width:720px;margin:0 auto;}
+.wrap-wide{max-width:920px;margin:0 auto;}
+.eyebrow{font-size:var(--small);font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ember);margin:0 0 24px;display:flex;align-items:center;gap:12px;}
+.eyebrow::after{content:"";flex:1;height:1px;background:var(--rule);}
+h1,h2,h3{font-family:var(--font-display);font-weight:600;letter-spacing:-.01em;}
+h1{font-size:var(--h1);line-height:1.15;margin:0 0 16px;}
+h2{font-size:var(--h2);line-height:1.3;margin:48px 0 16px;}
+h3{font-size:var(--h3);line-height:1.3;margin:32px 0 8px;}
+p{margin:0 0 16px;max-width:66ch;}
+.lede{font-size:var(--h3);line-height:1.5;color:var(--ash);}
+strong{font-weight:600;}
+em{font-style:normal;color:var(--ember);font-weight:600;}
+.cover{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:96px 24px;position:relative;overflow:hidden;border-bottom:1px solid var(--rule);}
+.cover::before{content:"";position:absolute;top:-30%;left:50%;transform:translateX(-50%);width:120vw;height:90vh;background:radial-gradient(ellipse at center, rgba(240,83,45,.22) 0%, rgba(240,83,45,.06) 40%, rgba(240,83,45,0) 68%);pointer-events:none;}
+.cover .wrap{position:relative;}
+.cover h1{font-size:var(--display);margin:0 0 24px;}
+.stamp{display:inline-block;font-size:var(--small);font-weight:600;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--ember);color:var(--ember);padding:8px 12px;border-radius:4px;margin-bottom:32px;}
+.meta{margin-top:48px;padding-top:24px;border-top:1px solid var(--rule);font-size:var(--small);color:var(--ash);display:flex;flex-wrap:wrap;gap:24px;}
+.tablewrap{overflow-x:auto;margin:24px 0;}
+table{border-collapse:collapse;width:100%;font-size:var(--body);}
+th,td{text-align:left;padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;}
+th{font-size:var(--small);font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ash);}
+tbody tr:last-child td{border-bottom:none;}
+.good td:first-child{border-left:3px solid var(--ember);}
+.bad{color:var(--ash);}
+.bad td:first-child{border-left:3px solid var(--rule);}
+.callout{background:var(--wash);border-radius:8px;padding:24px;margin:32px 0;border-left:3px solid var(--ember);}
+.callout p:last-child{margin-bottom:0;}
+.callout .k{font-size:var(--small);font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ember);display:block;margin-bottom:8px;}
+.flag{border-left-color:var(--ash);}
+.flag .k{color:var(--ash);}
+/* message compare */
+.msgs{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin:32px 0;}
+.msg{border-radius:8px;padding:24px;background:#fff;border:1px solid var(--rule);}
+.msg .t{font-size:var(--small);font-weight:600;letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px;}
+.msg.no{background:transparent;}
+.msg.no .t{color:var(--ash);}
+.msg.yes{border-color:var(--ember);}
+.msg.yes .t{color:var(--ember);}
+.msg p{font-size:var(--body);margin-bottom:12px;}
+.msg .why{font-size:var(--small);color:var(--ash);margin:0;padding-top:12px;border-top:1px solid var(--rule);}
+ol.steps{list-style:none;counter-reset:s;padding:0;margin:24px 0;}
+ol.steps li{counter-increment:s;position:relative;padding-left:48px;margin-bottom:24px;}
+ol.steps li::before{content:counter(s,decimal-leading-zero);position:absolute;left:0;top:0;font-family:var(--font-display);font-size:var(--small);color:var(--ember);letter-spacing:.08em;border:1px solid var(--rule);border-radius:4px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;}
+ol.steps li strong{display:block;margin-bottom:4px;}
+ol.steps li p{margin:0;color:var(--ash);}
+.rule{background:var(--deep);color:var(--paper);border-bottom:none;}
+.rule .eyebrow{color:var(--ember);}
+.rule .eyebrow::after{background:rgba(251,247,242,.18);}
+.rule h1{font-size:var(--display);margin-bottom:32px;}
+.rule p{color:rgba(251,247,242,.72);}
+.card{background:var(--deep);color:var(--paper);border-bottom:none;}
+.card .eyebrow{color:var(--ember);}
+.card .eyebrow::after{background:rgba(251,247,242,.18);}
+.cardgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:32px;margin-top:32px;}
+.cardblock .t{font-size:var(--small);font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ember);margin-bottom:12px;}
+.cardblock ul{margin:0;padding-left:20px;color:rgba(251,247,242,.82);}
+.cardblock li{margin-bottom:8px;}
+.cardblock p{color:rgba(251,247,242,.82);}
+footer{padding:48px 24px;text-align:center;font-size:var(--small);color:var(--ash);}
+a{color:var(--ember);}
+:focus-visible{outline:2px solid var(--ember);outline-offset:3px;border-radius:4px;}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}.reveal{opacity:1;transform:none;transition:none;}}
+@media print{.progress{display:none;}.section,.cover{page-break-inside:avoid;padding:32px 0;}body{background:#fff;}}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<header class="cover">
+  <div class="wrap">
+    <span class="stamp">Internal · Do not distribute</span>
+    <h1>Cold Outreach</h1>
+    <p class="lede">Our secondary channel. A framework to use or ignore, not a script.</p>
+    <div class="meta">
+      <span>MakersForge Limited</span>
+      <span>Business Development · Resource 03</span>
+      <span>Version 1.0</span>
+    </div>
+  </div>
+</header>
+
+<!-- BEFORE YOU START -->
+<section class="section reveal">
+  <div class="wrap">
+    <p class="eyebrow">Before you start</p>
+    <h1>You already know how to do this</h1>
+    <p>You have been doing cold outreach for longer than I have, so this is not a lesson. It is a suggested framework, written down so we are roughly aligned and so you know what the business will and will not put its name to.</p>
+    <p>There are two or three things we do not do as a company, and they are marked where they appear. Everything else in here is something I think is worth trying, offered as a starting point rather than a method.</p>
+    <p>The trust is already there. Take what is useful, leave what is not, and tell me what you find, because most of what ends up in the next version of this will come from you rather than from me.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="section reveal">
+  <div class="wrap">
+    <p class="eyebrow">01 — Where it sits</p>
+    <h1>Secondary, and deliberately so</h1>
+    <p>Referrals and affiliates are the primary channel. Cold outreach is second, and a recruitment business cannot pretend otherwise, because plenty of good clients will never be introduced to us by anyone.</p>
+    <p>What makes ours different from the noise in every founder's inbox is that we are not guessing. The job board ingests roles from around 500 tracked companies daily and pushes them into the CRM enriched, so you are contacting companies you already know are hiring, for a role you can name.</p>
+    <div class="callout">
+      <span class="k">Start here, not in a list-building tool</span>
+      <p>Your targets come from the CRM, and specifically from the day 10 and day 20 lists. See the Job Funnel manual for how that works. Building prospect lists from scratch is work the system already did for you overnight.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="section reveal">
+  <div class="wrap-wide">
+    <p class="eyebrow">02 — The core principle</p>
+    <h1>Lead by giving something</h1>
+    <p>Founders get pitched by recruiters constantly, and the pattern is nearly always the same: I noticed you're hiring, we do that, want to talk? It tends to get deleted, because it asks for something before it has offered anything.</p>
+    <p>We open by giving. That is the entire reason the job board exists as an asset for you.</p>
+    <div class="msgs">
+      <div class="msg no">
+        <div class="t">The usual approach</div>
+        <p>“Hi Anna, saw you're hiring a Senior UA Manager. We're specialists in mobile games recruitment and have a strong network of UA talent. Do you have 15 minutes this week to discuss?”</p>
+        <p class="why">Asks on the first line, offers nothing, and could have been sent to two hundred companies. Nothing here costs us anything to say, so nothing here is worth anything to read.</p>
+      </div>
+      <div class="msg yes">
+        <div class="t">What I'd try instead</div>
+        <p>“Hi Anna, saw the Senior UA Manager role. We run a job board purely for growth team roles in games and consumer apps, and I'd be glad to put yours on it, free, no catch. Happy to do it now if useful. And if there's anything else I can help with on the search, just say.”</p>
+        <p class="why">Offers first, asks for nothing, and is trivially easy to accept or ignore without friction. The door stays open either way.</p>
+      </div>
+    </div>
+    <p>The second message is not softer because we are being nice. It is better because there is nothing to decline, so replying costs them nothing and refusing gains them nothing.</p>
+    <div class="callout">
+      <span class="k">Your call</span>
+      <p>If you read a situation and think you can sell on message one, sell on message one. Give-first is the default because it tends to work more often, not because there is anything wrong with the alternative.</p>
+    </div>
+    <div class="callout flag">
+      <span class="k">Timing</span>
+      <p>The board is not live yet. Until Andre confirms it, lead with a specific, useful observation about the role or the market instead, and hold the board offer back rather than promising something we cannot yet deliver.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="section reveal">
+  <div class="wrap">
+    <p class="eyebrow">03 — Staying specific</p>
+    <h1>Specificity is most of the advantage</h1>
+    <p>You know this already, so treat it as a shared position rather than advice: the thing that separates our outreach from the rest of the inbox is how specific it is.</p>
+    <div class="callout">
+      <span class="k">A check I find useful</span>
+      <p>Could this message be sent to a different company by changing the name? If so, it is probably worth another minute on it.</p>
+    </div>
+    <p>Usually that means naming the actual role and one thing that is only true of them: the game, the funding round, a market they just entered, the fact this is their second growth hire this quarter, something they said publicly.</p>
+    <h2>Why it matters more in our niche</h2>
+    <p>We work a small market. The people we contact talk to each other, sit in the same Slacks, and go to the same three conferences a year. If our outreach reads as sprayed, that travels quickly and it reaches people we have not met yet. Being visibly careful is part of the pitch, because it demonstrates the specialism we charge for.</p>
+  </div>
+</section>
+
+<!-- 04 VOLUME -->
+<section class="section rule reveal">
+  <div class="wrap">
+    <p class="eyebrow">04 — Batch size</p>
+    <h1>Small batches, kept individual</h1>
+    <p>My suggestion is to keep a batch to around twenty. Not because twenty is a magic number, but because past roughly that point it gets hard to stay genuinely specific, and specificity is where our edge is.</p>
+    <p>The one part I would ask you to hold to: <strong>we send individually rather than through merge tools or sequencers.</strong> That is a positioning decision more than anything else. We charge a premium for being specialists, and mass-sent mail is the clearest possible signal that we are not.</p>
+    <p>If you find a way to work at higher volume without losing the specificity, I am genuinely interested. Come and show me.</p>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="section reveal">
+  <div class="wrap">
+    <p class="eyebrow">05 — Follow-up</p>
+    <h1>Most replies arrive later than people expect</h1>
+    <p>Plenty of outreach dies because someone sent two messages, heard nothing, and assumed the answer was no. In my experience the reply rate keeps climbing well past the point most people give up, so persistence is usually the right instinct.</p>
+    <p>The thing worth watching is not the number of touches, it is whether each one carries something. A follow-up that says “just bumping this” is a different animal from one that arrives with a useful observation attached. The second kind can run a long time without wearing out its welcome.</p>
+    <h2>A rhythm that fits our system</h2>
+    <p>Since the CRM flags roles at day 10 and day 20, those are convenient natural moments rather than a prescribed sequence:</p>
+    <ol class="steps">
+      <li><strong>Opening message: give something</strong><p>The board offer, or a specific observation. No ask.</p></li>
+      <li><strong>Around day 10</strong><p>Light check-in. “How's the search going, getting anyone decent?” This is where a lot of conversations actually start.</p></li>
+      <li><strong>Around day 20</strong><p>If the role is still open, say plainly what we do and offer a call.</p></li>
+      <li><strong>Beyond that, your judgement</strong><p>Keep going if you have something worth saying. The question to ask is whether this message would be useful to receive, not whether you have used up an allowance.</p></li>
+    </ol>
+    <div class="callout">
+      <span class="k">Worth knowing when to leave it</span>
+      <p>Bowing out gracefully is not a failure and it is often worth more than another message, because the next role they post starts the conversation again on good terms. That is a read you make on the person, not a count.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="section reveal">
+  <div class="wrap-wide">
+    <p class="eyebrow">06 — Sharing what works</p>
+    <h1>The one ask I'd make</h1>
+    <p>Between the three of us there is a lot of experience, and almost none of it is written down anywhere the others can use. Every reply any of us gets is evidence, and it is worth more shared than sitting in one sent folder.</p>
+    <h2>Keep it to a minute</h2>
+    <p>When you get a reply worth noting, drop it in the outreach channel in Slack with a line on what you think did the work. No spreadsheet, no CRM field, no report. If it takes longer than a minute it is too much.</p>
+    <div class="callout">
+      <span class="k">The format</span>
+      <p>Paste the message that got the reply. Add a line on what you think landed. Done.</p>
+    </div>
+    <h3>The kind of thing worth flagging</h3>
+    <div class="tablewrap">
+      <table>
+        <tbody>
+          <tr><td><strong>Hooks</strong></td><td>Opening lines that get read past</td></tr>
+          <tr><td><strong>Offers</strong></td><td>What people accept, and what they ignore</td></tr>
+          <tr><td><strong>Selling points</strong></td><td>Which parts of what we do people react to. Fixed fee, speed, specialism?</td></tr>
+          <tr><td><strong>Objections</strong></td><td>What comes back as a no, and the reason attached</td></tr>
+          <tr><td><strong>Timing</strong></td><td>Where replies actually cluster</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>The misses are useful too, particularly a message you were confident about that got nothing back. Those tend to teach more than the wins.</p>
+    <div class="callout">
+      <span class="k">Where it goes</span>
+      <p>Whatever proves itself gets written into the next version of this and we all use it. That is how a framework turns into something we actually own, and it is why this section matters more than any script I could have written up front.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="section reveal">
+  <div class="wrap-wide">
+    <p class="eyebrow">07 — The few fixed things</p>
+    <h1>What the business won't put its name to</h1>
+    <p>Short list, and all of it is about positioning rather than process. Everything not on here is yours to run as you see fit.</p>
+    <div class="tablewrap">
+      <table>
+        <tbody>
+          <tr><td><strong>We send individually</strong></td><td>No merge tools or sequencers. Mass-sent mail undercuts the specialist positioning we charge a premium for.</td></tr>
+          <tr><td><strong>We don't manufacture warmth</strong></td><td>Invented shared connections get found out in a market this small.</td></tr>
+          <tr><td><strong>Pricing: £1,000 of movement is yours</strong></td><td>Quote £12,500 freely, I am not precious about saying it. You can move up or down by £1,000 on the call without checking, so you are never stuck choosing between losing the deal and going away to ask. Anything beyond that comes to me.</td></tr>
+          <tr><td><strong>We don't promise candidates we don't have</strong></td><td>Implying we already have their person, when we don't, costs more than the meeting is worth.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h2>Worth a conversation before you chase</h2>
+    <p>Some prospects are a bad outcome even when they say yes: anyone wanting a CV-sending service, anyone who does not see the value in specialism, anyone running three agencies at once. Not a rule, just a pattern that has burned us before. Your call, but worth a chat first.</p>
+  </div>
+</section>
+
+<!-- 08 QUICK CARD -->
+<section class="section card reveal">
+  <div class="wrap-wide">
+    <p class="eyebrow">08 — Quick reference</p>
+    <h1>The card</h1>
+    <div class="cardgrid">
+      <div class="cardblock">
+        <div class="t">Where targets come from</div>
+        <p>The CRM. The day 10 and day 20 lists are the easiest place to start.</p>
+      </div>
+      <div class="cardblock">
+        <div class="t">Message one</div>
+        <p>Give something, ask for nothing. The board offer once it's live. Sell early if you read it that way.</p>
+      </div>
+      <div class="cardblock">
+        <div class="t">The specificity check</div>
+        <p>Could this go to another company by changing the name? Probably worth another minute.</p>
+      </div>
+      <div class="cardblock">
+        <div class="t">Cadence</div>
+        <ul>
+          <li>Day 0: give</li>
+          <li>Day 10: check in</li>
+          <li>Day 20: the ask</li>
+          <li>Beyond: your judgement</li>
+        </ul>
+      </div>
+      <div class="cardblock">
+        <div class="t">The fixed bits</div>
+        <ul>
+          <li>Sent individually, no merge tools</li>
+          <li>No manufactured warmth</li>
+          <li>£12,500, with £1,000 of movement yours</li>
+        </ul>
+      </div>
+      <div class="cardblock">
+        <div class="t">Every reply</div>
+        <p>Paste it in Slack with a line on what you think landed. A minute, and we all get the benefit.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>MakersForge Limited · Business Development · Resource 03 · Not for distribution outside the team</footer>
+
+<script>
+(function(){
+  var bar=document.getElementById('progress');
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    bar.style.width=(h>0?(window.scrollY/h)*100:0)+'%';
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+  },{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+})();
+</script>
+</body>
+</html>

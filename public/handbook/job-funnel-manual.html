@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>The Job Funnel — How the Board Feeds the Business | MakersForge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;800&display=swap" rel="stylesheet">
+<style>
+@font-face{
+  font-family:'Cal Sans';
+  src:url('https://cdn.jsdelivr.net/npm/@fontsource/cal-sans@5.0.0/files/cal-sans-latin-600-normal.woff2') format('woff2');
+  font-weight:600;font-style:normal;font-display:swap;
+}
+
+:root{
+  --paper:#FBF7F2;
+  --ink:#17110D;
+  --deep:#221812;
+  --ember:#F0532D;
+  --ash:#6E625A;
+  --rule:#E7DCD2;
+  --wash:#F3EAE1;
+
+  --display:clamp(2.441rem,1.6rem + 3vw,3.5rem);
+  --h1:1.953rem;
+  --h2:1.563rem;
+  --h3:1.25rem;
+  --body:1rem;
+  --small:0.8rem;
+
+  --font-display:'Cal Sans','Figtree',system-ui,sans-serif;
+  --font-body:'Figtree',system-ui,-apple-system,sans-serif;
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--font-body);font-size:var(--body);line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+
+.progress{position:fixed;top:0;left:0;height:4px;width:0%;background:var(--ember);z-index:100;transition:width .1s linear;}
+
+.section{padding:96px 24px;border-bottom:1px solid var(--rule);position:relative;}
+.wrap{max-width:720px;margin:0 auto;}
+.wrap-wide{max-width:920px;margin:0 auto;}
+
+.eyebrow{
+  font-size:var(--small);font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ember);margin:0 0 24px;
+  display:flex;align-items:center;gap:12px;
+}
+.eyebrow::after{content:"";flex:1;height:1px;background:var(--rule);}
+
+h1,h2,h3{font-family:var(--font-display);font-weight:600;letter-spacing:-.01em;}
+h1{font-size:var(--h1);line-height:1.15;margin:0 0 16px;}
+h2{font-size:var(--h2);line-height:1.3;margin:48px 0 16px;}
+h3{font-size:var(--h3);line-height:1.3;margin:32px 0 8px;}
+p{margin:0 0 16px;max-width:66ch;}
+.lede{font-size:var(--h3);line-height:1.5;color:var(--ash);}
+strong{font-weight:600;}
+em{font-style:normal;color:var(--ember);font-weight:600;}
+
+.cover{
+  min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+  padding:96px 24px;position:relative;overflow:hidden;border-bottom:1px solid var(--rule);
+}
+.cover::before{
+  content:"";position:absolute;top:-30%;left:50%;transform:translateX(-50%);
+  width:120vw;height:90vh;
+  background:radial-gradient(ellipse at center, rgba(240,83,45,.22) 0%, rgba(240,83,45,.06) 40%, rgba(240,83,45,0) 68%);
+  pointer-events:none;
+}
+.cover .wrap{position:relative;}
+.cover h1{font-size:var(--display);margin:0 0 24px;}
+.stamp{
+  display:inline-block;font-size:var(--small);font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;border:1px solid var(--ember);color:var(--ember);
+  padding:8px 12px;border-radius:4px;margin-bottom:32px;
+}
+.meta{
+  margin-top:48px;padding-top:24px;border-top:1px solid var(--rule);
+  font-size:var(--small);color:var(--ash);display:flex;flex-wrap:wrap;gap:24px;
+}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:24px;margin:32px 0;}
+.stat{border-top:2px solid var(--ember);padding-top:16px;}
+.stat .n{font-family:var(--font-display);font-size:var(--h1);line-height:1.15;display:block;}
+.stat .l{font-size:var(--small);color:var(--ash);}
+
+.tablewrap{overflow-x:auto;margin:24px 0;}
+table{border-collapse:collapse;width:100%;font-size:var(--body);}
+th,td{text-align:left;padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;}
+th{font-size:var(--small);font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ash);}
+tbody tr:last-child td{border-bottom:none;}
+.good td:first-child{border-left:3px solid var(--ember);}
+.bad{color:var(--ash);}
+.bad td:first-child{border-left:3px solid var(--rule);}
+
+.callout{background:var(--wash);border-radius:8px;padding:24px;margin:32px 0;border-left:3px solid var(--ember);}
+.callout p:last-child{margin-bottom:0;}
+.callout .k{font-size:var(--small);font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ember);display:block;margin-bottom:8px;}
+.flag{border-left-color:var(--ash);}
+.flag .k{color:var(--ash);}
+
+/* the loop */
+.loop{background:var(--deep);color:var(--paper);border-bottom:none;}
+.loop .eyebrow{color:var(--ember);}
+.loop .eyebrow::after{background:rgba(251,247,242,.18);}
+.loop h1{font-size:var(--display);margin-bottom:32px;}
+.loop p{color:rgba(251,247,242,.72);}
+.ring{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;margin-top:48px;}
+.node{border-top:2px solid var(--ember);padding-top:16px;}
+.node .s{font-family:var(--font-display);font-size:var(--small);color:var(--ember);letter-spacing:.08em;display:block;margin-bottom:8px;}
+.node .a{font-family:var(--font-display);font-size:var(--h3);display:block;margin-bottom:8px;}
+.node p{margin:0;font-size:var(--small);}
+
+/* the line */
+.linegrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0;margin:32px 0;border:1px solid var(--rule);border-radius:8px;overflow:hidden;}
+.linecol{padding:24px;background:#fff;}
+.linecol+.linecol{border-left:1px solid var(--rule);background:var(--wash);}
+.linecol .t{font-size:var(--small);font-weight:600;letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px;}
+.linecol.free .t{color:var(--ash);}
+.linecol.paid .t{color:var(--ember);}
+.linecol ul{margin:0;padding-left:20px;}
+.linecol li{margin-bottom:8px;}
+
+ol.steps{list-style:none;counter-reset:s;padding:0;margin:24px 0;}
+ol.steps li{counter-increment:s;position:relative;padding-left:48px;margin-bottom:24px;}
+ol.steps li::before{
+  content:counter(s,decimal-leading-zero);position:absolute;left:0;top:0;
+  font-family:var(--font-display);font-size:var(--small);color:var(--ember);letter-spacing:.08em;
+  border:1px solid var(--rule);border-radius:4px;
+  width:32px;height:32px;display:flex;align-items:center;justify-content:center;
+}
+ol.steps li strong{display:block;margin-bottom:4px;}
+ol.steps li p{margin:0;color:var(--ash);}
+
+.card{background:var(--deep);color:var(--paper);border-bottom:none;}
+.card .eyebrow{color:var(--ember);}
+.card .eyebrow::after{background:rgba(251,247,242,.18);}
+.cardgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:32px;margin-top:32px;}
+.cardblock .t{font-size:var(--small);font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ember);margin-bottom:12px;}
+.cardblock ul{margin:0;padding-left:20px;color:rgba(251,247,242,.82);}
+.cardblock li{margin-bottom:8px;}
+.cardblock p{color:rgba(251,247,242,.82);}
+
+footer{padding:48px 24px;text-align:center;font-size:var(--small);color:var(--ash);}
+a{color:var(--ember);}
+:focus-visible{outline:2px solid var(--ember);outline-offset:3px;border-radius:4px;}
+
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.in{opacity:1;transform:none;}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  .reveal{opacity:1;transform:none;transition:none;}
+}
+@media print{
+  .progress{display:none;}
+  .section,.cover{page-break-inside:avoid;padding:32px 0;}
+  body{background:#fff;}
+}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<header class="cover">
+  <div class="wrap">
+    <span class="stamp">Internal · Do not distribute</span>
+    <h1>The Job Funnel</h1>
+    <p class="lede">How the job board works, what it is actually for, and the one line it must never cross.</p>
+    <div class="callout flag" style="background:rgba(240,83,45,.08);border-left-color:var(--ember);">
+      <span class="k" style="color:var(--ember);">Not live yet</span>
+      <p><strong>Do not use any of this in a client or partner conversation until Andre confirms it is ready.</strong> Email delivery still needs connecting, and the candidate capture on the apply flow is not built. Read it now so you are ready. Wait for the signal before you sell it.</p>
+    </div>
+    <div class="meta">
+      <span>MakersForge Limited</span>
+      <span>Business Development · Resource 02</span>
+      <span>Version 1.0</span>
+    </div>
+  </div>
+</header>
+
+<!-- BEFORE YOU START -->
+<section class="section reveal">
+  <div class="wrap">
+    <p class="eyebrow">Before you start</p>
+    <h1>This is our standard set, not scripture</h1>
+    <p>Written down so all of us are doing the same thing, and so nobody has to reinvent it on a Tuesday afternoon. Follow it and you will not go far wrong.</p>
+    <p>We deliberately overindex on exploration over exploitation. If you spot a better way to run any of this, <strong>bring it to Andre.</strong> The people running a process are the ones best placed to see what is broken in it.</p>
+    <p>The fixed parts are few and marked where they appear. Everything else is open.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="section reveal">
+  <div class="wrap">
+    <p class="eyebrow">01 — What it's for</p>
+    <h1>The board is not a product. It's a lead machine.</h1>
+    <p>We run a job board for growth hires at makersforge.gg. It fills two ways: it <strong>ingests roles automatically from around 500 tracked companies every day</strong>, and companies can post directly for free.</p>
+    <p>The board itself does not make money and is not supposed to. Its job is twofold. It puts MakersForge in front of companies and talent repeatedly at no cost to them, and it feeds our CRM with a live, enriched list of every company in our market that is currently hiring.</p>
+    <p>That second part is the one to internalise. <strong>Every role on the board becomes a CRM record automatically.</strong> You do not build a prospect list. It builds itself overnight, every night.</p>
+    <div class="callout">
+      <span class="k">How to think about it</span>
+      <p>A job posting is a company telling us, in writing and unprompted, exactly what they are hiring for and when. Finding that any other way costs hours per company. Here it arrives enriched, in the CRM, before you get up.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="section reveal">
+  <div class="wrap">
+    <p class="eyebrow">02 — The slower half</p>
+    <h1>Familiarity does the rest</h1>
+    <p>Nobody buys a £12,500 service from a company they met once. They buy from a company whose name they have seen five times, whose content they have read, and whose board they have already used.</p>
+    <p>That is the freemium pattern, and it runs on a longer clock than the CRM half. A company that posts with us this month may not be a client for a year. That is fine. The board is buying repeated, cost-free exposure while the CRM does the immediate work.</p>
+  </div>
+</section>
+
+<!-- 02 THE LOOP -->
+<section class="section loop reveal">
+  <div class="wrap-wide">
+    <p class="eyebrow">03 — The loop</p>
+    <h1>Two circuits, one board</h1>
+    <p>The board runs a commercial circuit and a talent circuit at the same time. Each one makes the other worth showing up for.</p>
+    <div class="ring">
+      <div class="node">
+        <span class="s">01</span>
+        <span class="a">Roles arrive</span>
+        <p>Ingested daily from around 500 tracked companies, plus free direct postings.</p>
+      </div>
+      <div class="node">
+        <span class="s">02</span>
+        <span class="a">CRM populates</span>
+        <p>Every role becomes an enriched company record automatically. This is your prospect list.</p>
+      </div>
+      <div class="node">
+        <span class="s">03</span>
+        <span class="a">Talent browses</span>
+        <p>Growth, UA, monetisation and creative people arrive looking for roles.</p>
+      </div>
+      <div class="node">
+        <span class="s">04</span>
+        <span class="a">The roster grows</span>
+        <p>A portion opt into representation, including people who will stop applying publicly.</p>
+      </div>
+      <div class="node">
+        <span class="s">05</span>
+        <span class="a">The roster sells</span>
+        <p>Represented talent is what makes the paid service worth £12,500, and what makes the board worth posting on.</p>
+      </div>
+    </div>
+    <p style="margin-top:48px;">Content feeds the top of both circuits. Every useful thing we publish brings companies and talent to the board, and the loop turns again.</p>
+  </div>
+</section>
+
+<!-- 03 THE LINE -->
+<section class="section reveal">
+  <div class="wrap-wide">
+    <p class="eyebrow">04 — The line</p>
+    <h1>Applicants are free. Candidates are not.</h1>
+    <p>This is the most important idea in this document, and the question you will eventually be asked: if companies can get people from our board for free, why would anyone pay us £12,500?</p>
+    <p>Because they are not the same people, and it is not the same work.</p>
+    <div class="linegrid">
+      <div class="linecol free">
+        <div class="t">The board — free</div>
+        <ul>
+          <li>Active job seekers who are already looking</li>
+          <li>They apply, the company sifts</li>
+          <li>No screening, no shortlist, no assessment</li>
+          <li>The company does every hour of the work</li>
+          <li>They get <strong>applicants</strong></li>
+        </ul>
+      </div>
+      <div class="linecol paid">
+        <div class="t">The service — £12,500</div>
+        <ul>
+          <li>People who are not looking and will never see a job ad</li>
+          <li>We approach, qualify, and sell the role in</li>
+          <li>Screened, assessed, shortlisted</li>
+          <li>The founder spends hours, not weeks</li>
+          <li>They get <strong>candidates</strong></li>
+        </ul>
+      </div>
+    </div>
+    <p>A free board does not cannibalise us, because the senior people worth £12,500 are precisely the ones not trawling job boards. If anything the board proves the point: a founder who posts, receives 300 applications, and finds nobody usable has just experienced our sales pitch without us saying a word.</p>
+    <div class="callout">
+      <span class="k">Use this in conversation</span>
+      <p>“Post it on our board, it's free. If the right person applies, brilliant, you've saved yourself a fee. If you get 300 CVs and none of them fit, that's usually a signal the person you want isn't looking, and that's the point we're useful.”</p>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="section reveal">
+  <div class="wrap">
+    <p class="eyebrow">05 — Capturing talent</p>
+    <h1>Nobody leaves the funnel</h1>
+    <p>Anyone browsing the board is, by definition, a growth or games professional thinking about their next move. Letting them apply and disappear wastes the most valuable traffic we have.</p>
+    <p>At the point they click to apply, we capture their email and offer representation. One field, one checkbox, no wall in front of the listing itself.</p>
+    <div class="callout">
+      <span class="k">The offer, roughly</span>
+      <p>“Want to hear about roles that never get posted? A lot of what we work on is confidential and never reaches a job board. Tick here and we'll be in touch when something fits.”</p>
+    </div>
+    <p>That is a real offer rather than a data grab, which is why it converts and why it does not annoy people. It also feeds the represented roster, which is the asset the entire paid service rests on.</p>
+    <div class="callout flag">
+      <span class="k">Placement matters</span>
+      <p>The capture happens at apply, never in front of the listing. Gating the ads themselves would cut the traffic that makes the board worth posting on, which defeats the purpose.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="section reveal">
+  <div class="wrap">
+    <p class="eyebrow">06 — The CRM connection</p>
+    <h1>Your prospect list builds itself overnight</h1>
+    <p>This is the part that changes how you work. The board and the CRM are wired together, so every role that appears on the board becomes a company record with the data enriched around it.</p>
+    <p>You are not doing cold outreach in the usual sense. You are contacting companies you already know are hiring, for a role you can name, in a discipline we place. That is not warm, since they have never heard of us, but it is <strong>prequalified</strong>, and it removes the worst part of outbound, which is guessing who might need you.</p>
+    <div class="tablewrap">
+      <table>
+        <tbody>
+          <tr><td><strong>What arrives automatically</strong></td><td>Roles from around 500 tracked companies, ingested daily, enriched, in the CRM</td></tr>
+          <tr><td><strong>What you get from it</strong></td><td>Who is hiring, what for, and when they started looking</td></tr>
+          <tr><td><strong>What it replaces</strong></td><td>List building, guessing, and researching whether a company has a live need</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout">
+      <span class="k">Timing is the edge</span>
+      <p>A role that has been open a while is a better conversation than one posted yesterday. Early on they are optimistic. A few weeks in, they have seen the applications and the optimism has gone. That is when we are useful.</p>
+      <p>So the system notifies you at <strong>day 10</strong> and again at <strong>day 20</strong> on any role still live. Treat those as your first and second check-ins. Reach out earlier if you have a reason, this is a strong suggestion rather than a rule, but the two prompts exist because that is when the conversation tends to land.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="section reveal">
+  <div class="wrap">
+    <p class="eyebrow">07 — Your daily process</p>
+    <h1>What you actually do with it</h1>
+    <p>Two responsibilities. Both are small, both are daily, and the system degrades quickly if either slips.</p>
+    <ol class="steps">
+      <li><strong>Check the CRM for new roles, every day</strong><p>Overnight ingestion means there is something new each morning. Work it while it is fresh, because so is everyone else's.</p></li>
+      <li><strong>Work the day 10 and day 20 lists</strong><p>You get a notification of every role still open at those marks. Day 10 is the first check-in, day 20 the second. By day 20 they have usually seen enough applications to know it is not working.</p></li>
+      <li><strong>Feed anything the system missed</strong><p>If you see a relevant role anywhere else, on LinkedIn, at a conference, in a Discord, and it is not already in the CRM, add it. It flows through to the board automatically. This is how coverage grows beyond the 500 we already track.</p></li>
+    </ol>
+    <div class="callout">
+      <span class="k">Why the backfill matters</span>
+      <p>Every role you add improves the board for candidates and adds a prospect to the CRM for all of us. Five minutes of yours becomes a permanent asset. Treat it as part of the job rather than admin.</p>
+    </div>
+    <h2>Then use it in conversation</h2>
+    <ol class="steps">
+      <li><strong>As a cold opener</strong><p>“Saw you're hiring a UA lead. We run a growth-specific job board, happy to put your role on it, no charge and no catch.” There is nothing to decline.</p></li>
+      <li><strong>As a follow-up with someone not ready</strong><p>They are not using an agency this quarter. Fine. Get the role on the board and stay in the conversation while they try it themselves.</p></li>
+      <li><strong>As a reason to check back</strong><p>At day 10 and again at day 20: “How's it going, getting anyone decent?” If the answer is no, that is the sales conversation, and they opened it.</p></li>
+    </ol>
+    <div class="callout">
+      <span class="k">The mindset</span>
+      <p>You are not giving away a job ad. You are buying the right to ask how it went.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="section reveal">
+  <div class="wrap-wide">
+    <p class="eyebrow">08 — What we don't do</p>
+    <h1>Rules that protect the funnel</h1>
+    <div class="tablewrap">
+      <table>
+        <tbody>
+          <tr class="bad"><td><strong>We don't charge for postings</strong></td><td>The moment it costs money it stops being a frictionless opener and becomes a product we have to sell. That is a worse business than the one we already have.</td></tr>
+          <tr class="bad"><td><strong>We don't send board applicants to clients as our candidates</strong></td><td>That is a CV-sending service, and it is on our own list of disqualifying client behaviours. If someone applies through the board, they applied to that company, not to us.</td></tr>
+          <tr class="bad"><td><strong>We don't promise a company the board will fill their role</strong></td><td>Sometimes it will. Promising it sets us up to be blamed for a free service, and makes the paid service look like the same thing.</td></tr>
+          <tr class="bad"><td><strong>We don't spam people who opted in</strong></td><td>The represented roster works because those people trust us. Contact them about roles that genuinely fit, and not otherwise.</td></tr>
+          <tr class="bad"><td><strong>We don't let junk on the board</strong></td><td>An unmoderated board fills with irrelevant listings, candidate traffic drops, and the whole loop stalls. Postings get a light review.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="section reveal">
+  <div class="wrap">
+    <p class="eyebrow">09 — What good looks like</p>
+    <h1>What to watch</h1>
+    <p>The board is a funnel, so the useful numbers are conversions between stages, not totals. Volume flatters and tells you nothing.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Measure</th><th>Why it matters</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Companies posting per month</strong></td><td>The raw supply of qualified, intent-signalled leads</td></tr>
+          <tr><td><strong>Repeat posters</strong></td><td>The strongest buying signal on the board. A company hiring repeatedly has a growing team and a hiring problem.</td></tr>
+          <tr><td><strong>Applicant to roster opt-in rate</strong></td><td>Whether the capture is working, and how fast the represented list is growing</td></tr>
+          <tr><td><strong>Posters who become clients</strong></td><td>The number that proves the funnel is a funnel and not a hobby</td></tr>
+          <tr><td><strong>Roles posted that go unfilled</strong></td><td>Every one is a warm sales conversation waiting to happen</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout flag">
+      <span class="k">Open</span>
+      <p>Tracking for these is not fully wired up yet. If you spot a posting that looks like a live opportunity, flag it manually rather than waiting for a dashboard.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 08 QUICK CARD -->
+<section class="section card reveal">
+  <div class="wrap-wide">
+    <p class="eyebrow">10 — Quick reference</p>
+    <h1>The card</h1>
+    <div class="cardgrid">
+      <div class="cardblock">
+        <div class="t">What the board is</div>
+        <p>Free lead generation. Not a product, not a revenue line, not a service we sell.</p>
+      </div>
+      <div class="cardblock">
+        <div class="t">The line</div>
+        <p>The board gives companies <strong>applicants</strong>. We sell <strong>candidates</strong>. The people worth £12,500 are not reading job ads.</p>
+      </div>
+      <div class="cardblock">
+        <div class="t">The opener</div>
+        <p>“Happy to put your role on our board, free, no catch.” Then check back in two weeks.</p>
+      </div>
+      <div class="cardblock">
+        <div class="t">Every day</div>
+        <ul>
+          <li>Check the CRM for overnight roles</li>
+          <li>Work the day 10 and day 20 lists</li>
+          <li>Add any role you see elsewhere that isn't in there</li>
+        </ul>
+      </div>
+      <div class="cardblock">
+        <div class="t">Never</div>
+        <ul>
+          <li>Charge for a posting</li>
+          <li>Pass board applicants off as our candidates</li>
+          <li>Promise the board will fill a role</li>
+          <li>Gate the listings themselves</li>
+        </ul>
+      </div>
+      <div class="cardblock">
+        <div class="t">The best moment</div>
+        <p>A founder who posted, got 300 applications, and found nobody. They have just sold themselves on why we exist.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>MakersForge Limited · Business Development · Resource 02 · Not for distribution outside the team</footer>
+
+<script>
+(function(){
+  var bar=document.getElementById('progress');
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    bar.style.width=(h>0?(window.scrollY/h)*100:0)+'%';
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+    });
+  },{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+})();
+</script>
+</body>
+</html>

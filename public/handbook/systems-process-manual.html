@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Systems &amp; Process — Where Everything Lives | MakersForge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;800&display=swap" rel="stylesheet">
+<style>
+@font-face{
+  font-family:'Cal Sans';
+  src:url('https://cdn.jsdelivr.net/npm/@fontsource/cal-sans@5.0.0/files/cal-sans-latin-600-normal.woff2') format('woff2');
+  font-weight:600;font-style:normal;font-display:swap;
+}
+:root{
+  --paper:#FBF7F2;--ink:#17110D;--deep:#221812;--ember:#F0532D;
+  --ash:#6E625A;--rule:#E7DCD2;--wash:#F3EAE1;
+  --display:clamp(2.441rem,1.6rem + 3vw,3.5rem);
+  --h1:1.953rem;--h2:1.563rem;--h3:1.25rem;--body:1rem;--small:0.8rem;
+  --font-display:'Cal Sans','Figtree',system-ui,sans-serif;
+  --font-body:'Figtree',system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-body);font-size:var(--body);line-height:1.5;-webkit-font-smoothing:antialiased;}
+.progress{position:fixed;top:0;left:0;height:4px;width:0%;background:var(--ember);z-index:100;transition:width .1s linear;}
+.section{padding:96px 24px;border-bottom:1px solid var(--rule);position:relative;}
+.wrap{max-width:720px;margin:0 auto;}
+.wrap-wide{max-width:920px;margin:0 auto;}
+.eyebrow{font-size:var(--small);font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ember);margin:0 0 24px;display:flex;align-items:center;gap:12px;}
+.eyebrow::after{content:"";flex:1;height:1px;background:var(--rule);}
+h1,h2,h3{font-family:var(--font-display);font-weight:600;letter-spacing:-.01em;}
+h1{font-size:var(--h1);line-height:1.15;margin:0 0 16px;}
+h2{font-size:var(--h2);line-height:1.3;margin:48px 0 16px;}
+h3{font-size:var(--h3);line-height:1.3;margin:32px 0 8px;}
+p{margin:0 0 16px;max-width:66ch;}
+.lede{font-size:var(--h3);line-height:1.5;color:var(--ash);}
+strong{font-weight:600;}
+ul.tight{margin:0 0 16px;padding-left:20px;max-width:66ch;}
+ul.tight li{margin-bottom:8px;}
+.cover{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:96px 24px;position:relative;overflow:hidden;border-bottom:1px solid var(--rule);}
+.cover::before{content:"";position:absolute;top:-30%;left:50%;transform:translateX(-50%);width:120vw;height:90vh;background:radial-gradient(ellipse at center, rgba(240,83,45,.22) 0%, rgba(240,83,45,.06) 40%, rgba(240,83,45,0) 68%);pointer-events:none;}
+.cover .wrap{position:relative;}
+.cover h1{font-size:var(--display);margin:0 0 24px;}
+.stamp{display:inline-block;font-size:var(--small);font-weight:600;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--ember);color:var(--ember);padding:8px 12px;border-radius:4px;margin-bottom:32px;}
+.meta{margin-top:48px;padding-top:24px;border-top:1px solid var(--rule);font-size:var(--small);color:var(--ash);display:flex;flex-wrap:wrap;gap:24px;}
+.tablewrap{overflow-x:auto;margin:24px 0;}
+table{border-collapse:collapse;width:100%;font-size:var(--body);}
+th,td{text-align:left;padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;}
+th{font-size:var(--small);font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ash);}
+tbody tr:last-child td{border-bottom:none;}
+.callout{background:var(--wash);border-radius:8px;padding:24px;margin:32px 0;border-left:3px solid var(--ember);}
+.callout p:last-child,.callout ul:last-child{margin-bottom:0;}
+.callout .k{font-size:var(--small);font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ember);display:block;margin-bottom:8px;}
+.flag{border-left-color:var(--ash);}
+.flag .k{color:var(--ash);}
+ol.steps{list-style:none;counter-reset:s;padding:0;margin:24px 0;}
+ol.steps li{counter-increment:s;position:relative;padding-left:48px;margin-bottom:24px;}
+ol.steps li::before{content:counter(s,decimal-leading-zero);position:absolute;left:0;top:0;font-family:var(--font-display);font-size:var(--small);color:var(--ember);letter-spacing:.08em;border:1px solid var(--rule);border-radius:4px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;}
+ol.steps li strong{display:block;margin-bottom:4px;}
+ol.steps li p{margin:0;color:var(--ash);}
+.card{background:var(--deep);color:var(--paper);border-bottom:none;}
+.card .eyebrow{color:var(--ember);}
+.card .eyebrow::after{background:rgba(251,247,242,.18);}
+.cardgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:32px;margin-top:32px;}
+.cardblock .t{font-size:var(--small);font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ember);margin-bottom:12px;}
+.cardblock ul{margin:0;padding-left:20px;color:rgba(251,247,242,.82);}
+.cardblock li{margin-bottom:8px;}
+.cardblock p{color:rgba(251,247,242,.82);}
+footer{padding:48px 24px;text-align:center;font-size:var(--small);color:var(--ash);}
+a{color:var(--ember);}
+:focus-visible{outline:2px solid var(--ember);outline-offset:3px;border-radius:4px;}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}.reveal{opacity:1;transform:none;transition:none;}}
+@media print{.progress{display:none;}.section,.cover{page-break-inside:avoid;padding:32px 0;}body{background:#fff;}}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<header class="cover">
+  <div class="wrap">
+    <span class="stamp">Internal · Do not distribute</span>
+    <h1>Systems &amp; Process</h1>
+    <p class="lede">Where everything lives, what goes where, and the handful of habits that keep it usable.</p>
+    <div class="meta">
+      <span>MakersForge Limited</span>
+      <span>Business Development · Resource 04</span>
+      <span>Version 1.0</span>
+    </div>
+  </div>
+</header>
+
+<!-- 01 -->
+<section class="section reveal">
+  <div class="wrap-wide">
+    <p class="eyebrow">01 — The stack</p>
+    <h1>What we use, and for what</h1>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Tool</th><th>What it's for</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Folk</strong></td><td>The CRM. Companies, contacts, leads, and everything the job board ingests.</td></tr>
+          <tr><td><strong>Airtable</strong></td><td>Candidates. Notes, specs, and profile records.</td></tr>
+          <tr><td><strong>Slack</strong></td><td>All team communication. Outreach learnings go here too.</td></tr>
+          <tr><td><strong>LinkedIn</strong></td><td>Sourcing and outreach, from your own account.</td></tr>
+          <tr><td><strong>makersforge.gg</strong></td><td>Job board and marketing site. Feeds Folk automatically.</td></tr>
+          <tr><td><strong>Your MakersForge Outlook</strong></td><td>Email. Sent individually from your own address.</td></tr>
+          <tr><td><strong>DocuSign</strong></td><td>Agreements, including affiliate agreements. Request from Andre.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout flag">
+      <span class="k">Access</span>
+      <p>Andre sets up Folk, Airtable, Slack, and your MakersForge email. If something is missing or you cannot see a view you expect, say so rather than working around it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="section reveal">
+  <div class="wrap">
+    <p class="eyebrow">02 — Candidates</p>
+    <h1>Airtable, in three steps</h1>
+    <ol class="steps">
+      <li><strong>Create the record</strong><p>Every candidate goes into Airtable. Fill out the form fields as you go.</p></li>
+      <li><strong>Raw notes during the call</strong><p>Take meeting notes straight into the raw notes section. Messy is fine, this is the transcript-ish version.</p></li>
+      <li><strong>Convert to a spec afterwards</strong><p>Turn the raw notes into a clean spec in the recruiter notes section. This is the version anyone else can pick up and use.</p></li>
+    </ol>
+    <div class="callout">
+      <span class="k">Why both sections exist</span>
+      <p>Raw notes preserve what was actually said, including the throwaway lines that matter later. The spec is what makes the record useful to someone who was not on the call. Keeping them separate means neither job gets done badly.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="section reveal">
+  <div class="wrap">
+    <p class="eyebrow">03 — Leads</p>
+    <h1>Folk, and how things get into it</h1>
+    <ul class="tight">
+      <li><strong>Automatically.</strong> Roles ingested by the job board from around 500 tracked companies land in Folk enriched, every day.</li>
+      <li><strong>From LinkedIn.</strong> Install the Folk browser extension. Anything you find on LinkedIn can be pulled straight in.</li>
+      <li><strong>By hand.</strong> Anything you come across elsewhere. If it is a relevant role and not already in Folk, add it, and it flows through to the board.</li>
+    </ul>
+    <h2>Day 10 and day 20</h2>
+    <p>Roles still open at those marks get flagged. They are the easiest place to start a working session. Full detail in the Job Funnel manual.</p>
+    <h2>Enrichment</h2>
+    <ul class="tight">
+      <li>Folk enriches data, but on limited credits.</li>
+      <li>When you add a lead, fill in anything you already know, particularly an email address.</li>
+      <li><strong>Don't run enrichment yourself.</strong> Andre runs it in batches every few days so the credits last.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="section reveal">
+  <div class="wrap">
+    <p class="eyebrow">04 — Email</p>
+    <h1>From your own address, one at a time</h1>
+    <ul class="tight">
+      <li>Send from your MakersForge Outlook address, not from Folk.</li>
+      <li>Individually, never through a merge tool or sequencer.</li>
+      <li>Log replies worth noting in the outreach channel in Slack.</li>
+    </ul>
+    <p>This lines up with the Cold Outreach manual, and it is a positioning choice rather than a technical limitation. Small batches, written properly, sent by a person.</p>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="section reveal">
+  <div class="wrap">
+    <p class="eyebrow">05 — Affiliates</p>
+    <h1>What you run, and what comes to Andre</h1>
+    <h2>Individual affiliates</h2>
+    <ul class="tight">
+      <li>Yours to recruit, brief, and manage.</li>
+      <li>Request the agreement from Andre, and it goes out via DocuSign.</li>
+      <li>Record them properly: name, email, company, type, segment, who recruited them, date. Your name in that record is what triggers your override.</li>
+      <li>Their leads come to you, and you get them into Folk.</li>
+    </ul>
+    <h2>Agency partners</h2>
+    <ul class="tight">
+      <li>Same recruitment and agreement process.</li>
+      <li>The difference is the giveaway: a 45-minute brief and interview process health check, run by Andre personally.</li>
+      <li>When an agency wants to use it for a client, loop Andre in and hand over the context.</li>
+    </ul>
+    <div class="callout flag">
+      <span class="k">Still being finalised</span>
+      <p>Exactly how the health check gets booked, whether via a direct introduction, a booking link, or Andre reaching out, is not settled yet. For now, flag it to Andre and he will take it from there.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="section reveal">
+  <div class="wrap-wide">
+    <p class="eyebrow">06 — Habits</p>
+    <h1>The small things that keep it working</h1>
+    <div class="tablewrap">
+      <table>
+        <tbody>
+          <tr><td><strong>Log promptly, not perfectly</strong></td><td>Batching a week into one session is fine. What matters is that it gets in, because CRM records are the starting point for working out origination credit.</td></tr>
+          <tr><td><strong>Add what the system missed</strong></td><td>A role you spot elsewhere takes a minute to add and becomes a prospect for all of us.</td></tr>
+          <tr><td><strong>Share replies</strong></td><td>Anything that landed, and anything you were confident about that didn't. Slack, one line.</td></tr>
+          <tr><td><strong>Say when something's broken</strong></td><td>If a tool is missing, a view is wrong, or a process is costing you time, that is worth more to me than working around it quietly.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 07 QUICK CARD -->
+<section class="section card reveal">
+  <div class="wrap-wide">
+    <p class="eyebrow">07 — Quick reference</p>
+    <h1>The card</h1>
+    <div class="cardgrid">
+      <div class="cardblock">
+        <div class="t">Candidates</div>
+        <p>Airtable. Raw notes during the call, clean spec in recruiter notes after.</p>
+      </div>
+      <div class="cardblock">
+        <div class="t">Leads</div>
+        <p>Folk. Auto-ingested daily, plus the LinkedIn extension, plus anything you add by hand.</p>
+      </div>
+      <div class="cardblock">
+        <div class="t">Enrichment</div>
+        <p>Add what you know. Leave the enrichment runs to Andre, credits are limited.</p>
+      </div>
+      <div class="cardblock">
+        <div class="t">Email</div>
+        <p>Your own MakersForge Outlook address, individually, no merge tools.</p>
+      </div>
+      <div class="cardblock">
+        <div class="t">Affiliates</div>
+        <ul>
+          <li>Agreements via Andre, signed in DocuSign</li>
+          <li>Record who recruited them, it triggers your override</li>
+          <li>Agency health check: loop Andre in</li>
+        </ul>
+      </div>
+      <div class="cardblock">
+        <div class="t">Everything else</div>
+        <p>Slack. Replies worth noting, things that are broken, ideas worth trying.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>MakersForge Limited · Business Development · Resource 04 · Not for distribution outside the team</footer>
+
+<script>
+(function(){
+  var bar=document.getElementById('progress');
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    bar.style.width=(h>0?(window.scrollY/h)*100:0)+'%';
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+  },{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Affiliate Program — Partner Growth Manual | MakersForge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;800&display=swap" rel="stylesheet">
+<style>
+@font-face{
+  font-family:'Cal Sans';
+  src:url('https://cdn.jsdelivr.net/npm/@fontsource/cal-sans@5.0.0/files/cal-sans-latin-600-normal.woff2') format('woff2');
+  font-weight:600;font-style:normal;font-display:swap;
+}
+
+:root{
+  --paper:#FBF7F2;
+  --ink:#17110D;
+  --deep:#221812;
+  --ember:#F0532D;
+  --ash:#6E625A;
+  --rule:#E7DCD2;
+  --wash:#F3EAE1;
+
+  --display:clamp(2.441rem,1.6rem + 3vw,3.5rem);
+  --h1:1.953rem;
+  --h2:1.563rem;
+  --h3:1.25rem;
+  --body:1rem;
+  --small:0.8rem;
+
+  --font-display:'Cal Sans','Figtree',system-ui,sans-serif;
+  --font-body:'Figtree',system-ui,-apple-system,sans-serif;
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-size:var(--body);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* progress rail */
+.progress{
+  position:fixed;top:0;left:0;height:4px;width:0%;
+  background:var(--ember);z-index:100;transition:width .1s linear;
+}
+
+/* layout */
+.section{
+  padding:96px 24px;
+  border-bottom:1px solid var(--rule);
+  position:relative;
+}
+.wrap{max-width:720px;margin:0 auto;}
+.wrap-wide{max-width:920px;margin:0 auto;}
+
+.eyebrow{
+  font-size:var(--small);
+  font-weight:600;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--ember);
+  margin:0 0 24px;
+  display:flex;align-items:center;gap:12px;
+}
+.eyebrow::after{
+  content:"";flex:1;height:1px;background:var(--rule);
+}
+
+h1,h2,h3{font-family:var(--font-display);font-weight:600;letter-spacing:-.01em;}
+h1{font-size:var(--h1);line-height:1.15;margin:0 0 16px;}
+h2{font-size:var(--h2);line-height:1.3;margin:48px 0 16px;}
+h3{font-size:var(--h3);line-height:1.3;margin:32px 0 8px;}
+p{margin:0 0 16px;max-width:66ch;}
+.lede{font-size:var(--h3);line-height:1.5;color:var(--ash);}
+strong{font-weight:600;}
+em{font-style:normal;color:var(--ember);font-weight:600;}
+
+/* cover */
+.cover{
+  min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+  padding:96px 24px;position:relative;overflow:hidden;
+  border-bottom:1px solid var(--rule);
+}
+.cover::before{
+  content:"";position:absolute;top:-30%;left:50%;transform:translateX(-50%);
+  width:120vw;height:90vh;
+  background:radial-gradient(ellipse at center, rgba(240,83,45,.22) 0%, rgba(240,83,45,.06) 40%, rgba(240,83,45,0) 68%);
+  pointer-events:none;
+}
+.cover .wrap{position:relative;}
+.cover h1{font-size:var(--display);margin:0 0 24px;}
+.stamp{
+  display:inline-block;font-size:var(--small);font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;
+  border:1px solid var(--ember);color:var(--ember);
+  padding:8px 12px;border-radius:4px;margin-bottom:32px;
+}
+.meta{
+  margin-top:48px;padding-top:24px;border-top:1px solid var(--rule);
+  font-size:var(--small);color:var(--ash);
+  display:flex;flex-wrap:wrap;gap:24px;
+}
+
+/* stat row */
+.stats{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:24px;margin:32px 0;
+}
+.stat{border-top:2px solid var(--ember);padding-top:16px;}
+.stat .n{font-family:var(--font-display);font-size:var(--h1);line-height:1.15;display:block;}
+.stat .l{font-size:var(--small);color:var(--ash);}
+
+/* signature: fee split bar */
+.splitwrap{margin:32px 0;}
+.splitbar{
+  display:flex;height:64px;border-radius:8px;overflow:hidden;
+  border:1px solid var(--rule);background:var(--wash);
+}
+.seg{
+  display:flex;align-items:center;justify-content:center;
+  font-size:var(--small);font-weight:600;color:#fff;
+  width:0;transition:width 1.1s cubic-bezier(.2,.7,.3,1);
+  white-space:nowrap;overflow:hidden;
+}
+.seg-a{background:var(--ember);}
+.seg-b{background:#C6421F;}
+.seg-c{background:var(--deep);}
+.seg-rest{background:transparent;color:var(--ash);flex:1;}
+.splitkey{
+  display:flex;flex-wrap:wrap;gap:16px;margin-top:16px;
+  font-size:var(--small);color:var(--ash);
+}
+.splitkey span{display:flex;align-items:center;gap:8px;}
+.dot{width:12px;height:12px;border-radius:4px;display:inline-block;}
+
+/* tables */
+.tablewrap{overflow-x:auto;margin:24px 0;}
+table{border-collapse:collapse;width:100%;font-size:var(--body);}
+th,td{text-align:left;padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;}
+th{
+  font-size:var(--small);font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ash);
+}
+tbody tr:last-child td{border-bottom:none;}
+.good td:first-child{border-left:3px solid var(--ember);}
+.bad{color:var(--ash);}
+.bad td:first-child{border-left:3px solid var(--rule);}
+
+/* callout */
+.callout{
+  background:var(--wash);border-radius:8px;padding:24px;margin:32px 0;
+  border-left:3px solid var(--ember);
+}
+.callout p:last-child{margin-bottom:0;}
+.callout .k{
+  font-size:var(--small);font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ember);display:block;margin-bottom:8px;
+}
+.flag{border-left-color:var(--ash);}
+.flag .k{color:var(--ash);}
+
+/* the filter question */
+.filter{background:var(--deep);color:var(--paper);border-bottom:none;}
+.filter .eyebrow{color:var(--ember);}
+.filter .eyebrow::after{background:rgba(251,247,242,.18);}
+.filter h1{font-size:var(--display);margin-bottom:32px;}
+.filter p{color:rgba(251,247,242,.72);}
+.forks{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:24px;margin-top:48px;
+}
+.fork{border-top:2px solid;padding-top:16px;}
+.fork.yes{border-color:var(--ember);}
+.fork.no{border-color:rgba(251,247,242,.28);}
+.fork .a{font-family:var(--font-display);font-size:var(--h3);display:block;margin-bottom:8px;}
+.fork.yes .a{color:var(--ember);}
+.fork p{margin:0;font-size:var(--small);}
+
+/* steps */
+ol.steps{list-style:none;counter-reset:s;padding:0;margin:24px 0;}
+ol.steps li{
+  counter-increment:s;position:relative;padding-left:48px;margin-bottom:24px;
+}
+ol.steps li::before{
+  content:counter(s,decimal-leading-zero);
+  position:absolute;left:0;top:0;
+  font-family:var(--font-display);font-size:var(--small);
+  color:var(--ember);letter-spacing:.08em;
+  border:1px solid var(--rule);border-radius:4px;
+  width:32px;height:32px;display:flex;align-items:center;justify-content:center;
+}
+ol.steps li strong{display:block;margin-bottom:4px;}
+ol.steps li p{margin:0;font-size:var(--body);color:var(--ash);}
+
+/* pipeline */
+.pipe{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0;}
+.pipe span{
+  font-size:var(--small);font-weight:500;padding:8px 12px;
+  border:1px solid var(--rule);border-radius:4px;background:#fff;
+}
+.pipe span.term{color:var(--ash);background:transparent;}
+
+/* objections */
+.obj{border-top:1px solid var(--rule);padding:24px 0;}
+.obj .q{font-family:var(--font-display);font-size:var(--h3);margin:0 0 8px;}
+.obj p{margin:0;color:var(--ash);}
+
+/* quick card */
+.card{background:var(--deep);color:var(--paper);border-bottom:none;}
+.card .eyebrow{color:var(--ember);}
+.card .eyebrow::after{background:rgba(251,247,242,.18);}
+.card h1{font-size:var(--h1);}
+.cardgrid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:32px;margin-top:32px;
+}
+.cardblock .t{
+  font-size:var(--small);font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ember);margin-bottom:12px;
+}
+.cardblock ul{margin:0;padding-left:20px;color:rgba(251,247,242,.82);font-size:var(--body);}
+.cardblock li{margin-bottom:8px;}
+.cardblock p{color:rgba(251,247,242,.82);}
+
+footer{padding:48px 24px;text-align:center;font-size:var(--small);color:var(--ash);}
+
+a{color:var(--ember);}
+:focus-visible{outline:2px solid var(--ember);outline-offset:3px;border-radius:4px;}
+
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.in{opacity:1;transform:none;}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  .reveal{opacity:1;transform:none;transition:none;}
+  .seg{transition:none;}
+}
+@media print{
+  .progress{display:none;}
+  .section,.cover{page-break-inside:avoid;padding:32px 0;}
+  body{background:#fff;}
+}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<!-- COVER -->
+<header class="cover">
+  <div class="wrap">
+    <span class="stamp">Internal · Do not distribute</span>
+    <h1>The Affiliate Program</h1>
+    <p class="lede">A partner growth manual. How the program works, who we want in it, what you say, and how you get paid for building it.</p>
+    <div class="meta">
+      <span>MakersForge Limited</span>
+      <span>Version 1.0</span>
+      <span>Reference this before every partner conversation</span>
+    </div>
+  </div>
+</header>
+
+<!-- BEFORE YOU START -->
+<section class="section reveal">
+  <div class="wrap">
+    <p class="eyebrow">Before you start</p>
+    <h1>This is our standard set, not scripture</h1>
+    <p>Everything in here is what we currently believe works, written down so all three of us are doing the same thing and so nobody has to reinvent the pitch on a Tuesday afternoon. Follow it, and you will not go far wrong.</p>
+    <p>But we deliberately overindex on exploration over exploitation. If you find a better way to open a conversation, a segment we have not thought about, an objection we handle badly, or a step that is wasting your time, <strong>bring it to Andre.</strong> Not as a complaint, as an improvement. These processes get reviewed constantly and the people running them are the ones best placed to see what is broken.</p>
+    <p>The parts that are genuinely fixed are few, and they are marked where they appear: the commission rate, the pricing, and anything involving a promise to a partner or a client. Everything else is open.</p>
+    <div class="callout">
+      <span class="k">Why it's written this way</span>
+      <p>You do the best work when you have real input into how it gets done. That is the whole point of writing this down rather than managing you through it. Use the parts that help, challenge the parts that don't, and tell us which is which.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="section reveal">
+  <div class="wrap">
+    <p class="eyebrow">01 — Why this is the strategy</p>
+    <h1>Four channels, ranked. Not four channels, split.</h1>
+    <p>A business can advertise four ways: paid ads, content, cold outbound, and referrals. Most split their effort evenly across all four and end up mediocre at each. We rank them instead, and the ranking decides where your hours go.</p>
+    <div class="tablewrap">
+      <table>
+        <tbody>
+          <tr class="good"><td><strong>Referrals &amp; affiliates</strong></td><td><strong>Primary.</strong> The channel we intend to own outright. This manual is that channel.</td></tr>
+          <tr><td><strong>Cold outbound</strong></td><td><strong>Secondary.</strong> A recruitment business cannot ignore it. It is how we reach studios nobody has introduced us to.</td></tr>
+          <tr><td><strong>Content</strong></td><td><strong>Optional.</strong> Worth doing when we have something worth saying. Never at the expense of the first two.</td></tr>
+          <tr class="bad"><td><strong>Paid ads</strong></td><td><strong>We don't.</strong> B2B acquisition costs run to roughly £3,000 per customer. Spending that to earn £12,500 makes no sense while cheaper channels are nowhere near exhausted.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>The goal for the primary channel is specific: build it until it produces more work than we can handle, which forces us to hire more recruiters. That is why this program is not a side project or a lead-gen experiment. It is the growth engine, and building it is the job.</p>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="section reveal">
+  <div class="wrap">
+    <p class="eyebrow">02 — It already worked</p>
+    <h1>The proof you can quote</h1>
+    <p>The first version of this program ran for three months with no dedicated tooling and almost no management. It was eight people making warm introductions.</p>
+    <div class="stats">
+      <div class="stat"><span class="n">£18,500</span><span class="l">Revenue generated</span></div>
+      <div class="stat"><span class="n">8</span><span class="l">Active affiliates</span></div>
+      <div class="stat"><span class="n">3</span><span class="l">Months running</span></div>
+      <div class="stat"><span class="n">~20</span><span class="l">Hours of management</span></div>
+    </div>
+    <p>It was stopped for a software reason, not a performance reason. We are restarting it with a better offer, two people building it, and proper tooling to follow.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="section reveal">
+  <div class="wrap">
+    <p class="eyebrow">03 — What we actually sell</p>
+    <h1>Know this cold before you pitch the program</h1>
+    <p>You cannot recruit affiliates for a service you can't describe. MakersForge is a specialist recruitment agency for mobile gaming and consumer apps across EMEA. We place growth, UA, monetisation, and creative talent into funded and profitable studios.</p>
+    <div class="tablewrap">
+      <table>
+        <tbody>
+          <tr><td><strong>Permanent placement</strong></td><td>£12,500 fixed fee</td></tr>
+          <tr><td><strong>Contract placement</strong></td><td>£1,000 per specialist per month</td></tr>
+          <tr><td><strong>How we differ</strong></td><td>Fixed fee, not a percentage of salary. The client knows the cost before we start, and our fee does not rise when the salary does.</td></tr>
+          <tr><td><strong>Who we are for</strong></td><td>Funded or profitable, 10 to 100 people, hiring specialists rather than volume</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout">
+      <span class="k">Positioning</span>
+      <p>We are more expensive than generalists and that is deliberate. It is the heart surgeon argument: hyper-specialisation in mobile games and consumer apps is what people are paying for. If a prospect does not value specialism, they are not our client, and you should not chase them.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="section reveal">
+  <div class="wrap">
+    <p class="eyebrow">04 — The offer</p>
+    <h1>One sentence. Say it exactly like this.</h1>
+    <p class="lede" style="color:var(--ink);font-family:var(--font-display);font-size:var(--h2);line-height:1.3;">“Every deal we do that came from your introduction pays you £1,000.”</p>
+    <p>No tiers. No ladders. No qualification thresholds. Ten deals from your intros is ten thousand pounds. That is the entire commission structure, and its simplicity is the point.</p>
+    <p>We ran tiers before, at £750 rising to £1,500. They were removed on purpose. Tiers create admin, arguments about qualification, and confusion in exactly the conversation where you need to be clear. Do not reintroduce them, and do not imply a partner could negotiate a higher rate.</p>
+    <div class="splitwrap">
+      <div class="splitbar" id="splitbar">
+        <div class="seg seg-a" data-w="8" id="segA">£1,000</div>
+        <div class="seg seg-rest">Client pays £12,500 per placement</div>
+      </div>
+      <div class="splitkey">
+        <span><i class="dot" style="background:var(--ember)"></i> Affiliate commission, paid per placement</span>
+      </div>
+    </div>
+    <div class="callout">
+      <span class="k">Uncapped</span>
+      <p>There is no limit on how much a single affiliate can earn, and no limit on how many affiliates we take. The only limit is quality, which is what section 07 is about.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="section reveal">
+  <div class="wrap">
+    <p class="eyebrow">05 — Two kinds of partner</p>
+    <h1>Same money, different job</h1>
+    <p>Both types are paid £1,000 per placement. What separates them is whether they have something to hand their own clients.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th></th><th>Individual affiliate</th><th>Agency partner</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Who</strong></td><td>A well-connected person in mobile games, ad tech, or consumer apps</td><td>A business selling services to our client base</td></tr>
+          <tr><td><strong>What they do</strong></td><td>Makes a warm introduction</td><td>Bolts our offer onto their existing client relationships</td></tr>
+          <tr><td><strong>Commission</strong></td><td>£1,000 per placement</td><td>£1,000 per placement</td></tr>
+          <tr><td><strong>What they can give</strong></td><td>Nothing. Just the intro.</td><td>A free health check session for their clients (section 06)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h2>Why individuals get nothing to sell</h2>
+    <p>This is deliberate and worth understanding, because you will be asked. When an individual passes on a discount or an offer, they stop sounding like a friend making a recommendation and start sounding like they are working an angle. The trust is the asset. Anything we hand them to sell erodes it.</p>
+    <p>An agency passing on an offer is just doing business. Same mechanic, completely different signal.</p>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="section reveal">
+  <div class="wrap">
+    <p class="eyebrow">06 — The agency hook</p>
+    <h1>Something valuable they can give away for free</h1>
+    <p>An agency partner needs a reason for their client to want the introduction. So we give them a deliverable they can hand over at no cost to themselves, which makes them look generous and well-connected, and delivers us a qualified lead.</p>
+    <h2>A 45-minute session with the founder of MakersForge</h2>
+    <p>The full name, and how to say it: <strong>a one-to-one Pre-Recruitment Brief Overview and Interview Process Health Check, direct with Andre.</strong> Free to the client, free to the agency, and not something we advertise publicly.</p>
+    <h3>What happens in the 45 minutes</h3>
+    <div class="tablewrap">
+      <table>
+        <tbody>
+          <tr><td><strong>Process health check</strong></td><td>We map their current interview process, stage by stage, and say honestly where it is costing them people. Six stages over three months is why they keep losing candidates at offer, and most founders have never had anyone tell them that.</td></tr>
+          <tr><td><strong>Brief build</strong></td><td>We work through the role with them: level, what it owns and does not own, must-have against learnable, realistic salary band.</td></tr>
+          <tr><td><strong>Specificity</strong></td><td>The part they feel immediately. Most job ads bring everyone to the table. We show them how to write one that only attracts the handful of people they actually want.</td></tr>
+          <tr><td><strong>Written follow-up</strong></td><td>The brief, the process recommendations, and the interview scorecard for that discipline, sent afterwards. Complete and usable whether or not they ever hire us.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3>Why this and not something else</h3>
+    <p>Two rules govern every giveaway we design. It cannot contain candidates, because anything that puts talent in front of a company for free competes with the fee we exist to earn. And it has to be something they cannot do alone, or it is a PDF.</p>
+    <p>A health check passes both. It contains no candidates, only judgement, and judgement is the one thing a founder cannot download.</p>
+    <h3>Who qualifies</h3>
+    <p>Funded or profitably trading, 10 to 100 people, with a named role they intend to fill within 90 days. The constraint does your lead qualification for you, and it lets the agency say “I can get you one of these” rather than “here's a link.”</p>
+    <div class="callout">
+      <span class="k">Andre runs these personally</span>
+      <p>Every session, without exception. It is a founder-to-founder conversation and that is a large part of what makes it feel valuable. You still earn your override and any fill commission exactly as normal. Book it in, brief Andre on the context, and hand it over.</p>
+    </div>
+    <div class="callout flag">
+      <span class="k">Never say this</span>
+      <p>Do not describe the session as access to candidates, a shortlist, or CVs. It is advice on their process and their brief. Promising talent for free undercuts the only thing we sell.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="section reveal">
+  <div class="wrap-wide">
+    <p class="eyebrow">07 — Who we want</p>
+    <h1>Target these people</h1>
+    <p>Our best affiliates already sit in front of our clients every week and have a commercial reason to want those clients to hire well.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Segment</th><th>Why they're in the room</th><th>Type</th></tr></thead>
+        <tbody>
+          <tr class="good"><td><strong>Ad tech sales &amp; partnerships</strong><br><span style="color:var(--ash);font-size:var(--small)">MMPs, ad networks, mediation, monetisation SDKs</span></td><td>Weekly calls with founders and growth leads. Their product performs better when the client's growth team is strong.</td><td>Individual</td></tr>
+          <tr class="good"><td><strong>Fractional CMOs &amp; growth advisors</strong></td><td>They frequently recommend the first full-time growth hire, and often exit into it. Strongest alignment of any segment.</td><td>Individual</td></tr>
+          <tr class="good"><td><strong>Publisher &amp; scaling consultants</strong></td><td>Hiring advice is already part of what they do</td><td>Individual</td></tr>
+          <tr class="good"><td><strong>Investors, accelerators, angels</strong></td><td>Portfolio support, zero conflict, and the strongest trust to borrow</td><td>Individual</td></tr>
+          <tr class="good"><td><strong>Analytics &amp; LiveOps tooling vendors</strong></td><td>Same alignment as ad tech</td><td>Individual</td></tr>
+          <tr class="good"><td><strong>Creative production agencies</strong><br><span style="color:var(--ash);font-size:var(--small)">including AI-creative studios</span></td><td>A bigger in-house growth team means more creative demand, so our placement grows their account</td><td>Agency</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h2>Preferred characteristics</h2>
+    <p>Independent consultants convert better than employed people. Conference-goers convert better than desk-bound ones. Anyone who already does business development into our client base is ideal, because we become their second product.</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="section reveal">
+  <div class="wrap-wide">
+    <p class="eyebrow">08 — Who we don't</p>
+    <h1>The one group to walk away from</h1>
+    <p><strong>Media-buying agencies that manage client spend.</strong> Do not sign them, however well connected they are.</p>
+    <p>The reason is structural, not personal. When a studio hires a capable in-house UA manager, the case for outsourcing spend management weakens and the agency's retainer is eventually at risk. We would be paying them £1,000 to accelerate their own churn. They will take the agreement, and then quietly never make an introduction.</p>
+    <div class="callout">
+      <span class="k">The nuance that matters</span>
+      <p>Split the UA world. Agencies selling <strong>creative production</strong> are among our best partners, because more in-house growth headcount means more creative briefs. Agencies <strong>managing spend</strong> are structurally against us. Same industry, opposite incentive. Ask which side of that line their revenue sits on.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 09 THE FILTER -->
+<section class="section filter reveal">
+  <div class="wrap">
+    <p class="eyebrow">09 — The filter</p>
+    <h1>Does their business get better when their client's team gets stronger?</h1>
+    <p>One question. Ask it about every potential affiliate before you spend an hour on them. It is faster and more reliable than any list of segments, and it will correctly classify people we have not thought of yet.</p>
+    <div class="forks">
+      <div class="fork yes">
+        <span class="a">Yes</span>
+        <p>Their incentive points the same way as ours. Referring us is self-interested in the good way. Sign them.</p>
+      </div>
+      <div class="fork no">
+        <span class="a">No</span>
+        <p>No commission fixes a conflicted incentive. They will sign and never refer. Walk away, and keep the relationship warm for something else.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="section reveal">
+  <div class="wrap">
+    <p class="eyebrow">10 — How you get paid</p>
+    <h1>You earn twice on an affiliate you recruit</h1>
+    <p>Building this network is compensated work, not a favour. Two things pay you, and <strong>they stack</strong>.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>What you did</th><th>Rate</th><th>On a £12,500 placement</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Affiliate origination override</strong><br><span style="color:var(--ash);font-size:var(--small)">Any placement from an affiliate you recruited, for 12 months from their signup</span></td><td>5% of fee</td><td>£625</td></tr>
+          <tr><td><strong>You also filled the role</strong><br><span style="color:var(--ash);font-size:var(--small)">Sourced the candidate and ran them to accepted offer</span></td><td>15.25% of fee</td><td>£1,906</td></tr>
+          <tr class="good"><td><strong>Both, stacked</strong></td><td>20.25% of fee</td><td><strong>£2,531</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="splitwrap">
+      <div class="splitbar" id="splitbar2">
+        <div class="seg seg-a" data-w="8">£1,000</div>
+        <div class="seg seg-b" data-w="5">£625</div>
+        <div class="seg seg-c" data-w="15">£1,906</div>
+        <div class="seg seg-rest">£12,500 placement fee</div>
+      </div>
+      <div class="splitkey">
+        <span><i class="dot" style="background:var(--ember)"></i> Affiliate</span>
+        <span><i class="dot" style="background:#C6421F"></i> Your override</span>
+        <span><i class="dot" style="background:var(--deep)"></i> Your fill commission</span>
+      </div>
+    </div>
+    <p>The override runs for twelve months from the date the affiliate signs, on every placement they generate, whether or not you touch the role. One affiliate producing four placements a year pays you £2,500 for work you did once.</p>
+    <div class="callout">
+      <span class="k">Read this honestly</span>
+      <p>Originating and filling a client yourself pays more per deal (30.5%, or £3,813). The affiliate route pays less per deal but compounds, because each affiliate keeps producing without further effort from you. The two are not in competition. Do both.</p>
+    </div>
+    <p style="font-size:var(--small);color:var(--ash);">All commission is governed by your consultant agreement. Rates here are shown against a £12,500 fee; the percentages are what govern if the fee changes.</p>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="section reveal">
+  <div class="wrap">
+    <p class="eyebrow">11 — The pitch</p>
+    <h1>The lightbulb moment</h1>
+    <p>Do not open by explaining a program. Open by naming something they already do.</p>
+    <div class="callout">
+      <p style="font-family:var(--font-display);font-size:var(--h3);line-height:1.4;color:var(--ink);">“You know when you're talking to someone, they mention a problem, and you get that immediate flash of <em>I know exactly who you should talk to</em>? What if I paid you for those moments?”</p>
+    </div>
+    <p>That framing works because it is true. You are not asking them to sell, prospect, or change their behaviour. You are asking them to be paid for an instinct they already have.</p>
+    <h2>Then, in order</h2>
+    <ol class="steps">
+      <li><strong>What we do, in one line</strong><p>Specialist recruitment for mobile games and consumer apps. Fixed fee, not a percentage.</p></li>
+      <li><strong>What triggers an introduction</strong><p>Any time someone mentions they are struggling to hire, sitting on 500 CVs, or losing candidates at offer stage.</p></li>
+      <li><strong>What they get</strong><p>£1,000 for every deal that comes from their intro. Uncapped.</p></li>
+      <li><strong>What it costs them</strong><p>An email introduction. We take it from there and they stay informed.</p></li>
+      <li><strong>Agency partners only: the giveaway</strong><p>A free 45-minute brief and interview process health check with Andre, that they can offer their clients.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- 12 -->
+<section class="section reveal">
+  <div class="wrap">
+    <p class="eyebrow">12 — Objections</p>
+    <h1>What they will say, and what you say back</h1>
+
+    <div class="obj">
+      <p class="q">“I don't want to look like I'm selling something to my contacts.”</p>
+      <p>You are not. You make one introduction and step out. There is no pitch to deliver, no follow-up on you, and nothing you have to defend. If it goes nowhere, nothing happens to your relationship.</p>
+    </div>
+    <div class="obj">
+      <p class="q">“What if the hire doesn't work out? It reflects on me.”</p>
+      <p>Fair, and it is the objection worth taking seriously. We stand behind placements, and the specific guarantee terms are confirmed per engagement. Check the current wording with Andre rather than improvising a promise.</p>
+    </div>
+    <div class="obj">
+      <p class="q">“How long until I actually see money?”</p>
+      <p>Be honest, because a vague answer here damages trust later. The placement has to happen, the client has to pay, then commission is paid within 14 days. Realistically that is weeks, not days, from the introduction.</p>
+    </div>
+    <div class="obj">
+      <p class="q">“I already know a recruiter.”</p>
+      <p>Most people do. We are specialists in mobile games and consumer apps, on a fixed fee rather than a percentage of salary. If their contact is a generalist, those are different products.</p>
+    </div>
+    <div class="obj">
+      <p class="q">“Is £1,000 the top rate? Can we discuss it?”</p>
+      <p>Yes it is the rate, and no it does not move. It is the same for everyone, which is exactly why nobody has to negotiate for it. Do not imply otherwise.</p>
+    </div>
+    <div class="obj">
+      <p class="q">“What if someone else refers the same company?”</p>
+      <p>First submission wins, with a 90-day window on that company. If theirs is second, we tell them the same day rather than letting them discover it at payout.</p>
+    </div>
+    <div class="callout flag" style="margin-top:32px;">
+      <span class="k">What moves and what doesn't</span>
+      <p>The affiliate commission is £1,000 and does not move. On client pricing you have £1,000 of movement either way on the £12,500 fee, so you are never stuck on a call. Anything beyond that, or any change to payment terms, comes to Andre.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 13 -->
+<section class="section reveal">
+  <div class="wrap">
+    <p class="eyebrow">13 — Signing an affiliate</p>
+    <h1>The manual process, for now</h1>
+    <p>The affiliate platform is being built. Until it ships, everything is captured by hand. <strong>Capture these exact fields</strong>, because they map directly onto the system that is coming and anything missing has to be chased later.</p>
+    <ol class="steps">
+      <li><strong>Qualify against section 09</strong><p>One question. If the answer is no, stop.</p></li>
+      <li><strong>Explain the offer</strong><p>£1,000 per deal, uncapped, no tiers. Agency partners also get the health check session to give away.</p></li>
+      <li><strong>Send the agreement</strong><p>Request it from Andre. Nobody is an affiliate until it is signed.</p></li>
+      <li><strong>Record them</strong><p>Full name, email, company, individual or agency, segment, who recruited them, signup date. Your name in that record is what triggers your override, so do not skip it.</p></li>
+      <li><strong>Brief them on what a good lead looks like</strong><p>Funded or profitable, 10 to 100 people, hiring a specialist within 90 days.</p></li>
+    </ol>
+    <h2>When they submit a lead</h2>
+    <div class="tablewrap">
+      <table>
+        <tbody>
+          <tr><td><strong>Company name</strong></td><td>Required. Checked against the 90-day window immediately.</td></tr>
+          <tr><td><strong>Contact name and role</strong></td><td>Required. Decision-maker, ideally founder or head of ops.</td></tr>
+          <tr><td><strong>Email</strong></td><td>Required</td></tr>
+          <tr><td><strong>What triggered it</strong></td><td>What they said about hiring, in their words</td></tr>
+          <tr><td><strong>Timeline</strong></td><td>When they intend to hire</td></tr>
+          <tr><td><strong>Relationship</strong></td><td>How the affiliate knows them</td></tr>
+          <tr><td><strong>Submitting affiliate and date</strong></td><td>Required. This is the attribution record.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout flag">
+      <span class="k">Known friction</span>
+      <p>Until the platform ships there is no self-serve way to check whether a company is already in the pipeline. Check with Andre before an affiliate approaches a target, not after.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 14 -->
+<section class="section reveal">
+  <div class="wrap">
+    <p class="eyebrow">14 — After the introduction</p>
+    <h1>What you promise, and what actually happens</h1>
+    <p>Affiliates disengage when they stop hearing anything, not when deals fail. Set expectations accurately at signup and the program survives quiet months.</p>
+    <div class="pipe">
+      <span>Submitted</span><span>Contacted</span><span>Call booked</span><span>Client signed</span><span>Placed</span><span>Invoiced</span><span>Commission paid</span>
+    </div>
+    <div class="pipe">
+      <span class="term">Rejected</span><span class="term">Duplicate</span><span class="term">Dormant</span>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <tbody>
+          <tr><td><strong>Payment trigger</strong></td><td>Within 14 days of the client's invoice clearing</td></tr>
+          <tr><td><strong>If a placement fails in the guarantee period</strong></td><td>If no replacement is made, the £1,000 is offset against their next commission. We do not invoice anyone to claw money back.</td></tr>
+          <tr><td><strong>Duplicate leads</strong></td><td>First submission wins, 90-day window on that company, second submitter told the same day</td></tr>
+          <tr><td><strong>Rejected leads</strong></td><td>Tell them, with the reason. Silence costs more than a no.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 15 QUICK CARD -->
+<section class="section card reveal">
+  <div class="wrap-wide">
+    <p class="eyebrow">15 — Quick reference</p>
+    <h1>The card. Screenshot this one.</h1>
+    <div class="cardgrid">
+      <div class="cardblock">
+        <div class="t">Ask first</div>
+        <p>Does their business get better when their client's team gets stronger?</p>
+      </div>
+      <div class="cardblock">
+        <div class="t">Say this</div>
+        <p>“Every deal we do that came from your introduction pays you £1,000.”</p>
+      </div>
+      <div class="cardblock">
+        <div class="t">Capture</div>
+        <ul>
+          <li>Company</li>
+          <li>Contact name and role</li>
+          <li>Email</li>
+          <li>What triggered it</li>
+          <li>Timeline</li>
+          <li>Affiliate and date</li>
+        </ul>
+      </div>
+      <div class="cardblock">
+        <div class="t">Never promise</div>
+        <ul>
+          <li>A higher commission rate</li>
+          <li>Any discount on our fees</li>
+          <li>A specific guarantee</li>
+          <li>A payment date before the client has paid</li>
+        </ul>
+      </div>
+      <div class="cardblock">
+        <div class="t">Walk away from</div>
+        <ul>
+          <li>Media-buying agencies managing spend</li>
+          <li>Anyone who wants to negotiate the rate</li>
+          <li>Companies outside 10 to 100 people, unfunded and unprofitable</li>
+        </ul>
+      </div>
+      <div class="cardblock">
+        <div class="t">You earn</div>
+        <ul>
+          <li>5% override on placements from your affiliates, 12 months</li>
+          <li>15.25% if you also fill the role</li>
+          <li>They stack</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>MakersForge Limited · Internal partner growth manual · Not for distribution outside the team</footer>
+
+<script>
+(function(){
+  var bar=document.getElementById('progress');
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    bar.style.width=(h>0?(window.scrollY/h)*100:0)+'%';
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
+
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        var segs=e.target.querySelectorAll('.seg[data-w]');
+        segs.forEach(function(s){ s.style.width=s.getAttribute('data-w')+'%'; });
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:.15});
+
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+})();
+</script>
+</body>
+</html>
