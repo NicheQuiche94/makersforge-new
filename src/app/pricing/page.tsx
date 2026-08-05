@@ -6,7 +6,7 @@ import { ComparisonStrip } from "@/components/sections/ComparisonStrip";
 export const metadata: Metadata = {
   title: "Pricing · MakersForge",
   description:
-    "Flat monthly fee per specialist engaged. Flat £10,000 for permanent placement. No markup on day rate.",
+    "Flat monthly fee per specialist engaged. Flat £12,500 for permanent placement. No markup on day rate.",
 };
 
 /* Per Andre 2026-05-30 v6: bottom CTABand removed from pricing page.

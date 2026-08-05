@@ -67,6 +67,24 @@ export default function HandbookPage() {
           ))}
         </div>
 
+        <p className={styles.kicker} style={{ margin: "44px 0 16px" }}>
+          Also in here
+        </p>
+        <div className={styles.grid}>
+          <a href="/handbook/job-specs" className={styles.card}>
+            <span className={styles.num}>📁</span>
+            <span className={styles.cardTitle}>Job specs</span>
+            <span className={styles.cardSub}>Role briefs by client</span>
+            <span className={styles.cardDesc}>
+              Every live and upcoming role brief, filed in a folder per client.
+              Read the full spec before you reach out or represent it.
+            </span>
+            <span className={styles.open} aria-hidden="true">
+              Open folder →
+            </span>
+          </a>
+        </div>
+
         <p className={styles.footnote}>
           Private to the MakersForge team. Please don&apos;t share the link or
           the password.
