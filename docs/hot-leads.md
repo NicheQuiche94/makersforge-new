@@ -1,75 +1,76 @@
 # Priority leads — outreach timing
 
-Cadence: **day 10** first check-in · **day 14** jump in · **day 20** second check-in. A role open **14–60d and still unfilled = their search is failing → reach out**. 90d+ / talent-pool treated as evergreen and dropped. 127 live roles, 46 companies. Generated 2026-08-09.
+Cadence: **day 10** first check-in · **day 14** jump in · **day 20** second check-in. A role open **14–60d and still unfilled = their search is failing → reach out**. 90d+ / talent-pool treated as evergreen and dropped. 127 live roles, 46 companies. Generated 2026-08-10.
 
-## 🎯 PRIORITY — 19 companies, role open 14–60d
+## 🎯 PRIORITY — 20 companies, role open 14–60d
 
-- **Almedia** — 🔥 55d — SECOND check-in due, they're stuck
-  - VP of Marketing [User Acquisition] · 55d
-  - UA Manager · 16d
-- **Acorns** — 🔥 54d — SECOND check-in due, they're stuck
-  - Growth Marketing, Sr. Associate · 54d
-  - Growth Partnerships Associate · 16d
-- **SYBO** — 🔥 51d — SECOND check-in due, they're stuck
-  - Marketing Artist · 51d
-- **Homa** — 🔥 48d — SECOND check-in due, they're stuck
-  - Associate Team Lead Growth · 48d
-- **Eloelo** — 🔥 47d — SECOND check-in due, they're stuck
-  - Video Editor - Contract · 47d
-  - Creative Producer · 47d
-  - Senior Creative Producer - Malayalam · 26d
-- **Suno** — 🔥 46d — SECOND check-in due, they're stuck
-  - Motion Designer, Paid Social (Contract) · 46d
-  - Paid Social Creative Strategist (Contract) · 24d
-  - Sr. Paid Social Manager · 18d
-- **Easybrain** — 🔥 46d — SECOND check-in due, they're stuck
-  - User Acquisition Manager · 46d
-  - Junior User Acquisition Manager · 45d
-- **Stillfront Group** — 🔥 38d — SECOND check-in due, they're stuck
-  - Marketing Video Artist · 38d
-  - Growth Marketing Specialist (Web-to-App Funnels) · 23d
-- **Goodgame Studios** — 🔥 38d — SECOND check-in due, they're stuck
-  - Marketing Video Artist · 38d
-- **Pocket Worlds** — 🔥 36d — SECOND check-in due, they're stuck
-  - Motion Designer (Marketing) · 36d
-- **Codeway** — 🔥 34d — SECOND check-in due, they're stuck
-  - Marketing Artist · 34d
-  - Growth Manager, Learna · 34d
-  - Organic Growth Manager, Learna · 34d
-- **Loop Games** — 🔥 32d — SECOND check-in due, they're stuck
-  - Marketing Artist (Motion Designer) · 32d
-- **Midnite** — 🔥 28d — SECOND check-in due, they're stuck
-  - Paid Social Manager · 28d
-- **Jam City** — 🔥 27d — SECOND check-in due, they're stuck
-  - Associate Director, Growth Marketing · 27d
-  - Growth Marketing Manager · 27d
-- **Wildlife Studios** — 🔥 27d — SECOND check-in due, they're stuck
-  - Creative Strategy Intern · 27d
-- **Headway** — 🔥 27d — SECOND check-in due, they're stuck
-  - Lead Brand & Creative Strategist · 27d
-- **Peloton** — 🔥 24d — SECOND check-in due, they're stuck
-  - Associate Manager, Digital Media and Paid Social · 24d
-- **Greenlight** — 🔥 23d — SECOND check-in due, they're stuck
-  - Senior Creative Strategist · 23d
-  - Senior Video Editor, Paid Social · 23d
-- **Oura** — 🔥 20d — SECOND check-in due, they're stuck
-  - Paid Social Specialist (US) · 20d
+- **Almedia** — 🔥 56d — SECOND check-in due, they're stuck
+  - VP of Marketing [User Acquisition] · 56d
+  - UA Manager · 17d
+- **Acorns** — 🔥 55d — SECOND check-in due, they're stuck
+  - Growth Marketing, Sr. Associate · 55d
+  - Growth Partnerships Associate · 17d
+- **SYBO** — 🔥 52d — SECOND check-in due, they're stuck
+  - Marketing Artist · 52d
+- **Homa** — 🔥 49d — SECOND check-in due, they're stuck
+  - Associate Team Lead Growth · 49d
+- **Eloelo** — 🔥 48d — SECOND check-in due, they're stuck
+  - Video Editor - Contract · 48d
+  - Creative Producer · 48d
+  - Senior Creative Producer - Malayalam · 27d
+- **Suno** — 🔥 47d — SECOND check-in due, they're stuck
+  - Motion Designer, Paid Social (Contract) · 47d
+  - Paid Social Creative Strategist (Contract) · 25d
+  - Sr. Paid Social Manager · 19d
+- **Easybrain** — 🔥 47d — SECOND check-in due, they're stuck
+  - User Acquisition Manager · 47d
+  - Junior User Acquisition Manager · 46d
+- **Stillfront Group** — 🔥 39d — SECOND check-in due, they're stuck
+  - Marketing Video Artist · 39d
+  - Growth Marketing Specialist (Web-to-App Funnels) · 24d
+- **Goodgame Studios** — 🔥 39d — SECOND check-in due, they're stuck
+  - Marketing Video Artist · 39d
+- **Pocket Worlds** — 🔥 37d — SECOND check-in due, they're stuck
+  - Motion Designer (Marketing) · 37d
+- **Codeway** — 🔥 35d — SECOND check-in due, they're stuck
+  - Marketing Artist · 35d
+  - Growth Manager, Learna · 35d
+  - Organic Growth Manager, Learna · 35d
+- **Loop Games** — 🔥 33d — SECOND check-in due, they're stuck
+  - Marketing Artist (Motion Designer) · 33d
+- **Midnite** — 🔥 29d — SECOND check-in due, they're stuck
+  - Paid Social Manager · 29d
+- **Jam City** — 🔥 28d — SECOND check-in due, they're stuck
+  - Associate Director, Growth Marketing · 28d
+  - Growth Marketing Manager · 28d
+- **Wildlife Studios** — 🔥 28d — SECOND check-in due, they're stuck
+  - Creative Strategy Intern · 28d
+- **Headway** — 🔥 28d — SECOND check-in due, they're stuck
+  - Lead Brand & Creative Strategist · 28d
+- **Peloton** — 🔥 25d — SECOND check-in due, they're stuck
+  - Associate Manager, Digital Media and Paid Social · 25d
+- **Greenlight** — 🔥 24d — SECOND check-in due, they're stuck
+  - Senior Creative Strategist · 24d
+  - Senior Video Editor, Paid Social · 24d
+- **Oura** — 🔥 21d — SECOND check-in due, they're stuck
+  - Paid Social Specialist (US) · 21d
+- **Nordeus** — 🎯 14d — JUMP IN (crossed 14d)
+  - Marketing Artist · 14d
 
-## First check-in (day 10–13) — 4
+## First check-in (day 10–13) — 3
 
-- **Nordeus** — Marketing Artist · 13d
-- **Duolingo** — Senior Data Science Manager, User Growth · 12d
-- **TapNation** — Experienced UA Manager · 11d
-- **Moon Active** — Mobile User Acquisition Manager · 11d
+- **Duolingo** — Senior Data Science Manager, User Growth · 13d
+- **TapNation** — Experienced UA Manager · 12d
+- **Moon Active** — Mobile User Acquisition Manager · 12d
 
 ## Aging 60–90d (worth a look) — 9
 
-- **AppLovin** — Growth Marketing, Social Content · 88d
-- **Scopely** — Performance Marketing Manager · 86d
-- **Supercell** — UA Creative Producer, Hay Day · 86d
-- **ElevenLabs** — Mobile Growth Manager · 79d
-- **StockGro** — Retention and Growth manager · 74d
-- **PhotoRoom** — Senior Growth Marketing · 72d
-- **Kabam** — Growth Marketing Manager, ASO (Contract) · 66d
-- **Rocket Money** — Senior Data Analyst, Growth Marketing · 65d
-- **Strava** — Lead Marketing Analyst, Growth Marketing · 65d
+- **AppLovin** — Growth Marketing, Social Content · 89d
+- **Scopely** — Performance Marketing Manager · 87d
+- **Supercell** — UA Creative Producer, Hay Day · 87d
+- **ElevenLabs** — Mobile Growth Manager · 80d
+- **StockGro** — Retention and Growth manager · 75d
+- **PhotoRoom** — Senior Growth Marketing · 73d
+- **Kabam** — Growth Marketing Manager, ASO (Contract) · 67d
+- **Rocket Money** — Senior Data Analyst, Growth Marketing · 66d
+- **Strava** — Lead Marketing Analyst, Growth Marketing · 66d
