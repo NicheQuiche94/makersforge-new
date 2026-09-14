@@ -23,6 +23,11 @@ concurrency:
 jobs:
   ingest:
     runs-on: ubuntu-latest
+    # CRM sync + enrichment steps read these. Add them as repo secrets:
+    # Settings → Secrets and variables → Actions → New repository secret.
+    env:
+      FOLK_API_KEY: ${{ secrets.FOLK_API_KEY }}
+      APOLLO_API_KEY: ${{ secrets.APOLLO_API_KEY }}
     steps:
       - uses: actions/checkout@v4
 
@@ -50,3 +55,28 @@ jobs:
           else
             echo "No changes to publish."
           fi
+
+      # --- CRM automation (Folk + Apollo). Runs after the board is committed so
+      # a CRM/API hiccup never blocks the board refresh. Each step is best-effort.
+      # Skipped automatically if the secrets aren't set. ---
+
+      # 1. Sync every tracked company into Folk + refresh the HIRING NOW flag
+      #    from today's board. Free (Folk API only), idempotent, deduped.
+      - name: Folk — sync companies + refresh hiring flags
+        if: ${{ env.FOLK_API_KEY != '' }}
+        continue-on-error: true
+        run: node scripts/folk-sync-radar.mjs --commit
+
+      # 2. Add a decision-maker to newly-added companies that already have a
+      #    domain. Capped at 25/run so credit spend stays bounded.
+      - name: Apollo — enrich new domained leads (cap 25)
+        if: ${{ env.FOLK_API_KEY != '' && env.APOLLO_API_KEY != '' }}
+        continue-on-error: true
+        run: node scripts/folk-enrich-contacts.mjs --all --limit=25
+
+      # 3. Resolve a domain (guarded org-search) for name-only leads, then enrich.
+      #    Hard-capped at 25 reveals/run — automation can never overspend.
+      - name: Apollo — resolve domains + enrich name-only leads (cap 25)
+        if: ${{ env.FOLK_API_KEY != '' && env.APOLLO_API_KEY != '' }}
+        continue-on-error: true
+        run: node scripts/apollo-resolve-enrich.mjs --max-reveals=25

@@ -26,6 +26,9 @@ const arg = (name, def) => {
 const LIMIT = Number(arg("limit", Infinity));
 const CHANNELS = arg("channel", "Play Store signal,YC signal").split(",").map((s) => s.trim());
 const DRY = process.argv.includes("--dry-run");
+// --all enriches every company without a contact (ignores the channel filter),
+// used for the radar-sync backfill where leads span many source lanes.
+const ALL = process.argv.includes("--all");
 
 async function main() {
   if (!FOLK || !APOLLO) {
@@ -34,10 +37,12 @@ async function main() {
   }
 
   const companies = await listCompanies(FOLK);
-  const leads = companies.filter((c) => {
-    const ch = c.customFieldValues?.[G_COMPANIES]?.Channel;
-    return ch && CHANNELS.includes(ch);
-  });
+  const leads = ALL
+    ? companies
+    : companies.filter((c) => {
+        const ch = c.customFieldValues?.[G_COMPANIES]?.Channel;
+        return ch && CHANNELS.includes(ch);
+      });
 
   // Which leads already have a linked contact — skip those.
   const people = await listPeople(FOLK);
