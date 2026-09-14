@@ -141,6 +141,52 @@ When works for you?
 
 Best,"`,
       },
+      {
+        slug: "game-artist",
+        title: "Game Artist",
+        status: "open",
+        discipline: "Art",
+        engagement: "Permanent",
+        summary:
+          "Lessmore's second art hire, covering rising art demand across every live title and new prototype. A strong 2D and 3D generalist who implements their own work directly in Unity.",
+        updated: "14 Sep 2026",
+        sections: [
+          {
+            heading: "The role",
+            body: [
+              "Lessmore are looking for a Game Artist. This will be the company's second art hire, alongside a Senior.",
+              "Lessmore's art style is consistent across all titles, by design. As a feature of that design, one artist has been able to do a lot of the heavy lifting: new assets for every title stay stylistically similar, so the job is largely about making things fit thematically.",
+              "Now, with events and features for all live titles being designed faster than before, and new titles coming up through prototyping, demand for art is at an all-time high and one person no longer cuts it. This hire covers art demand across every title.",
+            ],
+          },
+          {
+            heading: "Experience needed",
+            bullets: [
+              "2D art (most important).",
+              "3D art (most important).",
+              "Implementing all their own work directly in Unity (most important).",
+              "UI (slightly less important).",
+              "Animation (slightly less important again).",
+            ],
+          },
+          {
+            heading: "Portfolio",
+            body: [
+              "A portfolio showing mobile gaming work, ideally across a range of styles.",
+              "At least one project fully fleshed out with proper styling, showing all their contributions, concepts, assets and final products, rather than just a quick asset from a UI bank they made.",
+            ],
+          },
+          {
+            heading: "Interview process",
+            bullets: [
+              "Stage 1: portfolio review.",
+              "Stage 2: call with Sam (designer, founder).",
+              "Stage 3: call with Alex (artist), Stuart (product owner) and Jerry (co-founder).",
+              "An art task may be given, depending on the portfolio.",
+            ],
+          },
+        ],
+      },
     ],
   },
   {
