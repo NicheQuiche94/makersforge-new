@@ -20,7 +20,7 @@ const DOORS = [
   {
     kicker: "For companies",
     headline: "Hire a growth team",
-    body: "Vetted UA managers and marketing artists for your game or app, introduced direct, on a flat monthly fee.",
+    body: "Vetted UA managers and marketing artists for your game or app, introduced direct from the lineup or found through a targeted search, on a flat fee.",
     href: "/enquire",
     cta: "Book a briefing",
     tone: "heat" as const,

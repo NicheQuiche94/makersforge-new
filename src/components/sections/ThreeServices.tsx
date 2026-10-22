@@ -18,7 +18,7 @@ const SERVICES = [
   {
     service: "Recruitment",
     who: "For companies",
-    body: "Need a UA manager or marketing artist for your game or app? Tell us the brief and we'll introduce you to people from the lineup who fit, ready to start.",
+    body: "Need a UA manager or marketing artist for your game or app? Tell us the brief and we'll introduce you to people from the lineup who fit, ready to start. Nobody right on the lineup? We'll run a targeted search.",
     href: "/enquire",
     cta: "Book a briefing",
   },

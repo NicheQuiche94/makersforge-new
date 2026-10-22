@@ -2,7 +2,9 @@ import styles from "./Explainer.module.css";
 import { CornerGlow } from "./CornerGlow";
 
 /**
- * Explainer — 'Represented, not searched.'
+ * Explainer — 'Lineup first. Search when you need it.'
+ * (2026-10-22: was 'Represented, not searched.' Andre: search stays as a
+ * supplementary service behind the lineup, same fee, perm + contract.)
  *
  * Sits after the three service cards on home. Purpose: name the model
  * directly so studios understand what MakersForge is vs what a
@@ -26,8 +28,8 @@ const COMPARISON: { them: string; us: string }[] = [
     us: "Indefinite representation, both sides",
   },
   {
-    them: "You brief them; they go find people",
-    us: "You look at the lineup; we set up the call",
+    them: "Every brief starts a cold search",
+    us: "Lineup first; a targeted search if no one fits",
   },
 ];
 
@@ -38,7 +40,7 @@ export function Explainer() {
       <div className={`container ${styles.contentAbove}`}>
         <header className={styles.header}>
           <p className="kicker">The difference</p>
-          <h2 className={styles.h2}>Represented, not searched.</h2>
+          <h2 className={styles.h2}>Lineup first. Search when you need it.</h2>
         </header>
 
         <div className={styles.body}>
@@ -47,7 +49,10 @@ export function Explainer() {
             people they&apos;re finding for you; they go and look. A talent
             agent represents specialists directly. Everyone on the lineup
             is someone we already work with. Ask us for an intro and
-            you&apos;re talking to them the same week.
+            you&apos;re talking to them the same week. If the right person
+            isn&apos;t on the lineup yet, we run the search ourselves, only
+            in the niche we know, so you still meet specialists, not a pile
+            of CVs.
           </p>
         </div>
 

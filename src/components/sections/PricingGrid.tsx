@@ -47,6 +47,7 @@ export function PricingGrid() {
             </p>
             <ul className={styles.points}>
               <li>Flat £12,500 per placement</li>
+              <li>Same fee from the lineup or a targeted search</li>
               <li>No percentage of salary</li>
               <li>UA, ASO, Marketing Art, Product, Design, Engineering</li>
             </ul>
@@ -84,6 +85,7 @@ export function PricingGrid() {
             </p>
             <ul className={`${styles.points} ${styles.pointsLight}`}>
               <li>Flat monthly fee per contractor, billed each month of engagement</li>
+              <li>Same fee from the lineup or a targeted search</li>
               <li>You pay the specialist directly. No markup on their rate</li>
               <li>Fee stops the month engagement ends</li>
               <li>Terms signed up front, nothing hidden</li>
