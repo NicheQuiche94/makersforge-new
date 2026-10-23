@@ -12,11 +12,11 @@ import { DualClose } from "@/components/sections/DualClose";
 export const metadata: Metadata = {
   title: "MakersForge: Hiring for mobile games & consumer apps",
   description:
-    "The home for the teams behind mobile games and consumer apps. Representation for vetted growth, product, design, engineering and art talent, recruitment for the companies hiring them, and a free job board for both.",
+    "The home for the teams behind mobile games and consumer apps. Representation for vetted growth, product, design, engineering and art talent, and recruitment, from our lineup or a targeted search, for the companies hiring them.",
   openGraph: {
     title: "MakersForge: Hiring for mobile games & consumer apps",
     description:
-      "Representation, recruitment and a free job board for growth, product, design, engineering and art talent in mobile games and consumer apps.",
+      "Representation and recruitment for growth, product, design, engineering and art talent in mobile games and consumer apps.",
     type: "website",
   },
 };

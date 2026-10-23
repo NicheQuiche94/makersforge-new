@@ -19,7 +19,7 @@ import type { Cluster } from "@/data/segments";
 const CLUSTERS: Cluster[] = [
   {
     label: "Growth & UA",
-    roles: ["UA managers", "Growth managers", "Performance leads", "ASO managers"],
+    roles: ["UA managers", "Growth managers", "Monetisation managers", "Performance leads", "ASO managers"],
   },
   {
     label: "Art & creative",
@@ -27,7 +27,7 @@ const CLUSTERS: Cluster[] = [
   },
   {
     label: "Product & design",
-    roles: ["Product managers", "Product designers", "UI/UX designers", "Ad monetisation"],
+    roles: ["Product managers", "Game designers", "Product designers", "UI/UX designers"],
   },
   {
     label: "Engineering",

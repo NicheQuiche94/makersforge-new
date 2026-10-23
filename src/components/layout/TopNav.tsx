@@ -83,22 +83,14 @@ export function TopNav({ activeHref }: { activeHref?: string }) {
             className={styles.logoLink}
             aria-label="MakersForge home"
           >
-            <Logo size={38} className={styles.logoFull} />
-            {/* Small phones: hex mark only, so logo + Job board + CTA fit. */}
-            <Logo size={38} variant="mark" className={styles.logoMark} title="" />
+            <Logo size={38} />
           </Link>
         </div>
 
-        {/* Right cluster: the job board gets its OWN pill, sitting apart from
-            the main nav pill. It reads as a distinct product (a board of roles
-            across the industry) rather than "our" openings, and the standalone
-            treatment plus the live dot pulls funnel traffic to it. */}
+        {/* Right cluster. The standalone Job board pill (.jobsPill) is pulled
+            while the board is reworked (Andre 2026-10-23); its styles are
+            kept in the CSS module for when it comes back. */}
         <div className={styles.rightCluster}>
-          <Link href="/jobs" className={styles.jobsPill}>
-            <span className={styles.jobsDot} aria-hidden="true" />
-            Job board
-          </Link>
-
           {/* Main nav pill — adaptive */}
           <div className={styles.rightPill}>
             <ul className={styles.links}>

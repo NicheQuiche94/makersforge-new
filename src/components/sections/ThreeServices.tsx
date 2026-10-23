@@ -18,16 +18,17 @@ const SERVICES = [
   {
     service: "Recruitment",
     who: "For companies",
-    body: "Need a UA manager, a product designer or a Unity engineer for your game or app? Tell us the brief and we'll introduce you to people from the lineup who fit, ready to start. Nobody right on the lineup? We'll run a targeted search.",
+    body: "Need a UA manager, a product designer or a Unity engineer for your game or app? Tell us the brief and we'll introduce you to people from the lineup who fit, ready to start.",
     href: "/enquire",
     cta: "Book a briefing",
   },
   {
-    service: "Job board",
-    who: "For both, free",
-    body: "The only board dedicated to UA, growth and marketing-art roles in games and apps. Browse it, or host your own roles, at no charge.",
-    href: "/jobs",
-    cta: "Open the board",
+    // Replaced the job board card (2026-10-23: board pulled while it's reworked).
+    service: "Targeted search",
+    who: "When the lineup doesn't fit",
+    body: "Nobody right on the lineup? We run the search ourselves, only in games and apps, for permanent and contract roles. Same flat fee either way.",
+    href: "/enquire",
+    cta: "Brief a search",
   },
 ];
 
@@ -46,7 +47,7 @@ export function ThreeServices() {
         <div className={styles.grid}>
           {SERVICES.map((s) => (
             <Link
-              key={s.href}
+              key={s.service}
               href={s.href}
               className={`reveal card-shadow ${styles.card}`}
             >

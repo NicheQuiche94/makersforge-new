@@ -11,7 +11,6 @@ import styles from "./Footer.module.css";
    or join it. */
 const ROSTER_LINKS = [
   { href: "/line-up", label: "All profiles" },
-  { href: "/jobs", label: "Jobs board" },
   { href: "/apply", label: "Join the lineup" },
 ];
 
@@ -30,15 +29,7 @@ const STUDIO_LINKS = [
   { href: "/apps", label: "App companies" },
   { href: "/#how", label: "How it works" },
   { href: "/pricing", label: "Pricing" },
-  { href: "/jobs/post", label: "Post a role" },
   { href: "/enquire", label: "Book a call" },
-];
-
-const JOBS_LINKS = [
-  { href: "/jobs", label: "Browse roles" },
-  { href: "/jobs/standard", label: "Fair Board Standard" },
-  { href: "/jobs/post", label: "Post a role, free" },
-  { href: "/apply", label: "Get represented" },
 ];
 
 const COMPANY_LINKS = [
@@ -96,17 +87,6 @@ export function Footer() {
           </div>
 
           <div className={styles.col}>
-            <h5>Job board</h5>
-            <ul>
-              {JOBS_LINKS.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href}>{link.label}</Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className={styles.col}>
             <h5>For companies</h5>
             <ul>
               {STUDIO_LINKS.map((link) => (
@@ -136,7 +116,7 @@ export function Footer() {
         <div className={styles.bottom}>
           <span className={styles.copy}>
             © {new Date().getFullYear()} MakersForge{" "}
-            <span className={styles.dim}>· growth, on call.</span>
+            <span className={styles.dim}>· the teams behind games and apps.</span>
           </span>
           <span className={styles.legal}>
             <Link href="/legal/privacy">privacy</Link>

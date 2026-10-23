@@ -219,19 +219,7 @@
     margin-left: 0;
   }
 }
-.logoMark {
-  display: none;
-}
 @media (max-width: 420px) {
-  .logoFull {
-    display: none;
-  }
-  .logoMark {
-    display: block;
-  }
-  .logoCard {
-    padding: 6px 10px;
-  }
   .rightCluster {
     gap: 6px;
   }

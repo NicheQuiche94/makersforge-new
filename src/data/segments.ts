@@ -40,7 +40,7 @@ export const SEGMENTS: Record<Segment["slug"], Segment> = {
     clusters: [
       {
         label: "Growth & UA",
-        roles: ["UA managers", "Growth managers", "ASO managers", "Ad monetisation"],
+        roles: ["UA managers", "Growth managers", "Monetisation managers", "ASO managers"],
       },
       {
         label: "Art & creative",
@@ -51,8 +51,8 @@ export const SEGMENTS: Record<Segment["slug"], Segment> = {
         roles: ["Unity & Unreal engineers", "Gameplay engineers", "Backend & live services"],
       },
       {
-        label: "Product & LiveOps",
-        roles: ["Product managers", "LiveOps managers", "Game economy designers"],
+        label: "Product & game design",
+        roles: ["Product managers", "Game designers", "LiveOps managers", "Game economy designers"],
       },
       {
         label: "Data",
@@ -78,7 +78,7 @@ export const SEGMENTS: Record<Segment["slug"], Segment> = {
     clusters: [
       {
         label: "Growth & UA",
-        roles: ["UA managers", "Growth managers", "ASO managers", "CRM & lifecycle"],
+        roles: ["UA managers", "Growth managers", "Monetisation managers", "ASO managers", "CRM & lifecycle"],
       },
       {
         label: "Product & design",

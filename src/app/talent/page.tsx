@@ -101,9 +101,6 @@ function TalentHero() {
             <Button href="#how" variant="ghost">
               How it works
             </Button>
-            <Button href="/jobs" variant="ghost">
-              Open the job board
-            </Button>
           </div>
         </div>
       </div>

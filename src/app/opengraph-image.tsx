@@ -59,8 +59,8 @@ export default function OpengraphImage() {
               maxWidth: 860,
             }}
           >
-            Representation, recruitment and a free job board for growth,
-            product, design, engineering and art talent.
+            Representation and recruitment for growth, product, design,
+            engineering and art talent.
           </div>
         </div>
 

@@ -10,7 +10,7 @@
      Company column wrapped to a second row and floated bottom-left
      (Andre 2026-07-19). Five columns keeps them all on one row. */
   display: grid;
-  grid-template-columns: 1.6fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1.6fr 1fr 1fr 1fr;
   gap: 44px;
   margin-bottom: 50px;
 }
