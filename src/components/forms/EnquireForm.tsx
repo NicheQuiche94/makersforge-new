@@ -19,6 +19,8 @@ import styles from "./EnquireForm.module.css";
  */
 type Props = {
   profileCodename?: string;
+  /** Pre-ticked industry when arriving from /games or /apps. */
+  industry?: "games" | "apps";
 };
 
 const LOCATION_OPTIONS = ["remote", "on-site", "hybrid", "either"];
@@ -94,7 +96,7 @@ const RATE_BANDS = [
   { v: "any", l: "open" },
 ];
 
-export function EnquireForm({ profileCodename }: Props) {
+export function EnquireForm({ profileCodename, industry }: Props) {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
@@ -224,7 +226,7 @@ export function EnquireForm({ profileCodename }: Props) {
         <Field label="industry">
           <div className={styles.checkGroup}>
             {INDUSTRIES.map((v) => (
-              <CheckPill key={v} name="industries" value={v}>
+              <CheckPill key={v} name="industries" value={v} defaultChecked={v === industry}>
                 {v}
               </CheckPill>
             ))}
@@ -401,14 +403,16 @@ function CheckPill({
   name,
   value,
   children,
+  defaultChecked,
 }: {
   name: string;
   value: string;
   children: ReactNode;
+  defaultChecked?: boolean;
 }) {
   return (
     <label className={styles.checkPill}>
-      <input type="checkbox" name={name} value={value} />
+      <input type="checkbox" name={name} value={value} defaultChecked={defaultChecked} />
       {children}
     </label>
   );

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import styles from "./WhatWeCover.module.css";
 import { CornerGlow } from "./CornerGlow";
+import type { Cluster } from "@/data/segments";
 
 /**
  * WhatWeCover — the mobile-growth disciplines we represent, as a row
@@ -11,11 +12,6 @@ import { CornerGlow } from "./CornerGlow";
  * 2026-07-19 so the homepage matches the card UI used across /jobs and
  * the line-up, rather than the interim hairline-column look.
  */
-
-type Cluster = {
-  label: string;
-  roles: string[];
-};
 
 // 2026-10-23: widened from growth-only to the whole team (Andre: most recent
 // hires were design + engineering; don't lose app/game companies who assume
@@ -47,7 +43,11 @@ const CLUSTERS: Cluster[] = [
   },
 ];
 
-export function WhatWeCover() {
+/** Home uses the defaults; /games and /apps pass their own (see segments.ts). */
+export function WhatWeCover({
+  title = "The whole team behind a game or app.",
+  clusters = CLUSTERS,
+}: { title?: string; clusters?: Cluster[] } = {}) {
   return (
     <section className={styles.section}>
       <CornerGlow variant="trSoft" />
@@ -55,12 +55,12 @@ export function WhatWeCover() {
         <header className={styles.header}>
           <p className="kicker">What we cover</p>
           <h2 className={styles.h2}>
-            The whole team behind a game or app.
+            {title}
           </h2>
         </header>
 
         <div className={styles.grid}>
-          {CLUSTERS.map((cluster) => (
+          {clusters.map((cluster) => (
             <div
               key={cluster.label}
               className={`card-shadow ${styles.cluster}`}

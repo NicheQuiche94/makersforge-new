@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Button } from "@/components/atoms/Button";
 import { Logo } from "@/components/atoms/Logo";
 import styles from "./HeroPanel.module.css";
@@ -16,11 +17,56 @@ import styles from "./HeroPanel.module.css";
  *                 (both lines Cal Sans white, flush left, same size)
  *   - Bottom    : 4 uniform glass UI pills + dual CTAs
  */
-export function HeroPanel() {
+/** The three first-screen doors (Andre 2026-10-23): each buyer gets its own
+ *  experience instead of one page trying to speak to everyone. */
+const DOORS = [
+  {
+    href: "/games",
+    kicker: "Hiring",
+    title: "I'm a mobile game studio",
+    sub: "UA, art, Unity & Unreal, LiveOps",
+  },
+  {
+    href: "/apps",
+    kicker: "Hiring",
+    title: "I'm a consumer app company",
+    sub: "Growth, product, design, iOS & Android",
+  },
+  {
+    href: "/talent",
+    kicker: "Get represented",
+    title: "I'm talent",
+    sub: "Join the lineup or find your next role",
+  },
+];
+
+type HeroCta = { href: string; label: string };
+
+type HeroPanelProps = {
+  /** Pulse-dot kicker top-left (segment pages). */
+  kicker?: string;
+  headline?: [string, string, string];
+  lede?: string;
+  /** Segment pages show two CTAs; home shows the three doors instead. */
+  ctas?: { primary: HeroCta; secondary: HeroCta };
+};
+
+export function HeroPanel({
+  kicker,
+  headline = ["The home for", "the teams behind", "games and apps."],
+  lede = "Growth, product, design, engineering and art for mobile games and consumer apps. Tell us who you are:",
+  ctas,
+}: HeroPanelProps = {}) {
   return (
     <section className={`heat-glow ${styles.hero}`} data-nav-gradient>
       <div className={styles.inner}>
         <div className={styles.top}>
+          {kicker ? (
+            <p className={styles.kicker}>
+              <span className={styles.pulseDot} aria-hidden="true" />
+              {kicker}
+            </p>
+          ) : null}
           <div className={styles.masthead}>
             <span>Est. 2024</span>
             <span>a SeedCraft venture</span>
@@ -29,25 +75,38 @@ export function HeroPanel() {
 
         <div className={styles.main}>
           <h1 className={styles.headline}>
-            <span className={styles.headlineLine}>The home for</span>
-            <span className={styles.headlineLine}>the teams behind</span>
-            <span className={styles.headlineLine}>games and apps.</span>
+            {headline.map((line) => (
+              <span key={line} className={styles.headlineLine}>
+                {line}
+              </span>
+            ))}
           </h1>
 
-          <p className={styles.heroLede}>
-            Growth, product, design, engineering and art. Representation for
-            the talent, recruitment for the studios and app companies hiring
-            them, and a job board that&apos;s free for both.
-          </p>
+          <p className={styles.heroLede}>{lede}</p>
 
-          <div className={styles.ctas}>
-            <Button href="/apply" variant="light" arrow>
-              Get represented
-            </Button>
-            <Button href="/enquire" variant="on-dark">
-              Hire a team
-            </Button>
-          </div>
+          {ctas ? (
+            <div className={styles.ctas}>
+              <Button href={ctas.primary.href} variant="light" arrow>
+                {ctas.primary.label}
+              </Button>
+              <Button href={ctas.secondary.href} variant="on-dark">
+                {ctas.secondary.label}
+              </Button>
+            </div>
+          ) : (
+            <nav className={styles.doors} aria-label="Who are you?">
+              {DOORS.map((d) => (
+                <Link key={d.href} href={d.href} className={styles.door}>
+                  <span className={styles.doorKicker}>{d.kicker}</span>
+                  <span className={styles.doorTitle}>{d.title}</span>
+                  <span className={styles.doorSub}>{d.sub}</span>
+                  <span className={styles.doorArrow} aria-hidden="true">
+                    →
+                  </span>
+                </Link>
+              ))}
+            </nav>
+          )}
         </div>
 
         {/* Ghost MF hex bottom-right. Right edge aligns with the

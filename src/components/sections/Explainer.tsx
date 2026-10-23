@@ -21,7 +21,7 @@ const COMPARISON: { them: string; us: string }[] = [
   },
   {
     them: "Per-hire fee or a cut of the salary",
-    us: "Flat monthly fee, paid by the studio",
+    us: "Flat monthly fee, paid by the company",
   },
   {
     them: "Job's done at placement",

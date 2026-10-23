@@ -11,5 +11,8 @@ import { EnquireForm } from "@/components/forms/EnquireForm";
 export function EnquireFormWrapper() {
   const params = useSearchParams();
   const profile = params.get("profile") ?? undefined;
-  return <EnquireForm profileCodename={profile} />;
+  // ?industry=games|apps from the /games and /apps doors pre-ticks industry.
+  const ind = params.get("industry");
+  const industry = ind === "games" || ind === "apps" ? ind : undefined;
+  return <EnquireForm profileCodename={profile} industry={industry} />;
 }
