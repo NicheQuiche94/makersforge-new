@@ -10,13 +10,13 @@ import { HeatBreak } from "@/components/sections/HeatBreak";
 import { DualClose } from "@/components/sections/DualClose";
 
 export const metadata: Metadata = {
-  title: "MakersForge: The home for growth teams in games & apps",
+  title: "MakersForge: Hiring for mobile games & consumer apps",
   description:
-    "The home for mobile games and consumer app growth teams. Representation for vetted UA, growth and marketing-art talent, recruitment for the studios hiring them, and a free job board for both.",
+    "The home for the teams behind mobile games and consumer apps. Representation for vetted growth, product, design, engineering and art talent, recruitment for the companies hiring them, and a free job board for both.",
   openGraph: {
-    title: "MakersForge: The home for growth teams in games & apps",
+    title: "MakersForge: Hiring for mobile games & consumer apps",
     description:
-      "Representation, recruitment and a free job board for UA, growth and marketing-art talent in mobile games and consumer apps.",
+      "Representation, recruitment and a free job board for growth, product, design, engineering and art talent in mobile games and consumer apps.",
     type: "website",
   },
 };

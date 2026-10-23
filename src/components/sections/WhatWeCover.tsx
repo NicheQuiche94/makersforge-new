@@ -17,31 +17,33 @@ type Cluster = {
   roles: string[];
 };
 
+// 2026-10-23: widened from growth-only to the whole team (Andre: most recent
+// hires were design + engineering; don't lose app/game companies who assume
+// we only do UA). Growth stays first — it's still the sharpest edge.
 const CLUSTERS: Cluster[] = [
   {
-    label: "User acquisition",
-    roles: ["UA managers", "Growth managers", "Performance leads"],
+    label: "Growth & UA",
+    roles: ["UA managers", "Growth managers", "Performance leads", "ASO managers"],
   },
   {
-    label: "Creative",
-    roles: [
-      "Marketing artists",
-      "Motion designers",
-      "Creative producers",
-      "ASO managers",
-    ],
+    label: "Art & creative",
+    roles: ["Game artists", "Marketing artists", "Motion designers", "Creative producers"],
   },
   {
-    label: "Product",
-    roles: ["Product leads", "Ad monetisation", "General managers"],
+    label: "Product & design",
+    roles: ["Product managers", "Product designers", "UI/UX designers", "Ad monetisation"],
   },
   {
-    label: "Analytics",
-    roles: ["Data analysts", "Analytics engineers"],
+    label: "Engineering",
+    roles: ["iOS & Android engineers", "Unity & Unreal engineers", "Backend engineers"],
+  },
+  {
+    label: "Data",
+    roles: ["Data analysts", "Analytics engineers", "Data scientists"],
   },
   {
     label: "Leadership",
-    roles: ["Heads of Growth", "Heads of Marketing", "Fractional Heads"],
+    roles: ["Heads of Growth", "Heads of Engineering", "Fractional heads"],
   },
 ];
 
@@ -53,7 +55,7 @@ export function WhatWeCover() {
         <header className={styles.header}>
           <p className="kicker">What we cover</p>
           <h2 className={styles.h2}>
-            Growth teams for mobile apps and games.
+            The whole team behind a game or app.
           </h2>
         </header>
 

@@ -11,14 +11,14 @@ const SERVICES = [
   {
     service: "Representation",
     who: "For talent",
-    body: "We represent the best UA, growth and marketing-art operators indefinitely, and put you in front of the studios asking for intros.",
+    body: "We represent the best growth, product, design, engineering and art talent in games and apps indefinitely, and put you in front of the companies asking for intros.",
     href: "/apply",
     cta: "Join the line-up",
   },
   {
     service: "Recruitment",
     who: "For companies",
-    body: "Need a UA manager or marketing artist for your game or app? Tell us the brief and we'll introduce you to people from the lineup who fit, ready to start. Nobody right on the lineup? We'll run a targeted search.",
+    body: "Need a UA manager, a product designer or a Unity engineer for your game or app? Tell us the brief and we'll introduce you to people from the lineup who fit, ready to start. Nobody right on the lineup? We'll run a targeted search.",
     href: "/enquire",
     cta: "Book a briefing",
   },
@@ -39,7 +39,7 @@ export function ThreeServices() {
         <header className={styles.head}>
           <p className="kicker">One home, three services</p>
           <h2 className={styles.h2}>
-            Everything a growth team needs, in one place.
+            Everything your team needs, in one place.
           </h2>
         </header>
 

@@ -26,7 +26,7 @@ import styles from "../legal.module.css";
 export const metadata: Metadata = {
   title: "Terms · MakersForge",
   description:
-    "Terms of use for MakersForge. Talent agency for growth specialists in mobile apps and games.",
+    "Terms of use for MakersForge. Talent agency for growth, product, design, engineering and art specialists in mobile apps and games.",
 };
 
 export default function TermsPage() {
@@ -80,7 +80,7 @@ export default function TermsPage() {
           <Section num="02" title="what makersforge is">
             <p className={styles.p}>
               MakersForge is a talent agency. We represent senior
-              growth specialists, UA managers and marketing artists,
+              growth, product, design, engineering and art specialists
               working in mobile apps and games. When a studio briefs us
               on a hire, we put the specialists we already represent
               forward.

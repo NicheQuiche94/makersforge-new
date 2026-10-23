@@ -6,6 +6,7 @@ import "./globals.css";
 
 import { TopNav } from "@/components/layout/TopNav";
 import { Footer } from "@/components/layout/Footer";
+import { ChromeGate } from "@/components/layout/ChromeGate";
 import { ScrollRevealRoot } from "@/components/atoms/ScrollRevealRoot";
 import { SiteSchema } from "@/components/seo/SiteSchema";
 import { SITE_URL } from "@/lib/site";
@@ -20,9 +21,9 @@ const figtree = Figtree({
 
 const SITE_NAME = "MakersForge";
 const DEFAULT_TITLE =
-  "MakersForge: Growth team specialists for mobile apps & games";
+  "MakersForge: Hiring for mobile games & consumer apps";
 const DEFAULT_DESC =
-  "A live lineup of vetted UA managers and marketing artists for mobile apps and games. Pay them direct, pay us a flat monthly fee. No percentage games.";
+  "A live lineup of vetted growth, product, design, engineering and art talent for mobile apps and games, plus targeted search. Flat fees, no percentage games.";
 
 export const metadata: Metadata = {
   // Resolves every relative URL (per-page canonicals, the OG image) to an
@@ -72,9 +73,13 @@ export default function RootLayout({
         <a href="#main" className="skip-link">
           Skip to content
         </a>
-        <TopNav />
+        <ChromeGate>
+          <TopNav />
+        </ChromeGate>
         <main id="main">{children}</main>
-        <Footer />
+        <ChromeGate>
+          <Footer />
+        </ChromeGate>
         <ScrollRevealRoot />
       </body>
     </html>

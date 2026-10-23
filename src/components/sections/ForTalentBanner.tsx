@@ -21,13 +21,13 @@ export function ForTalentBanner() {
             <p className="kicker">For specialists</p>
             <h2 className={styles.h2}>
               Are you a{" "}
-              <span className="gr">growth specialist</span> looking for your
-              next engagement?
+              <span className="gr">games or apps specialist</span> looking for
+              your next engagement?
             </h2>
             <p className={styles.body}>
-              UA managers, ASO managers, marketing artists, motion designers,
-              creative producers. We represent strong operators indefinitely
-              and put you in front of the studios asking for intros.
+              Growth and UA, product, design, engineering, art and data. We
+              represent strong people indefinitely and put you in front of the
+              companies asking for intros.
             </p>
           </div>
           <div className={styles.ctas}>

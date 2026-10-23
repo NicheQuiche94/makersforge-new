@@ -30,13 +30,14 @@ export function HeroPanel() {
         <div className={styles.main}>
           <h1 className={styles.headline}>
             <span className={styles.headlineLine}>The home for</span>
-            <span className={styles.headlineLine}>growth teams in</span>
+            <span className={styles.headlineLine}>the teams behind</span>
             <span className={styles.headlineLine}>games and apps.</span>
           </h1>
 
           <p className={styles.heroLede}>
-            Representation for the talent, recruitment for the studios, and a
-            job board that&apos;s free for both.
+            Growth, product, design, engineering and art. Representation for
+            the talent, recruitment for the studios and app companies hiring
+            them, and a job board that&apos;s free for both.
           </p>
 
           <div className={styles.ctas}>

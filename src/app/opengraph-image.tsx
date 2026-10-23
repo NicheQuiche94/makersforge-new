@@ -6,7 +6,7 @@ import { ImageResponse } from "next/og";
  * (keeps the build robust) while staying on-brand.
  */
 export const alt =
-  "MakersForge — the home for growth teams in games and apps";
+  "MakersForge — the home for the teams behind games and apps";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -49,7 +49,7 @@ export default function OpengraphImage() {
               maxWidth: 940,
             }}
           >
-            The home for growth teams in games and apps
+            The home for the teams behind games and apps
           </div>
           <div
             style={{
@@ -59,8 +59,8 @@ export default function OpengraphImage() {
               maxWidth: 860,
             }}
           >
-            Representation, recruitment and a free job board for UA, growth and
-            marketing-art talent.
+            Representation, recruitment and a free job board for growth,
+            product, design, engineering and art talent.
           </div>
         </div>
 
