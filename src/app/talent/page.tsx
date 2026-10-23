@@ -24,7 +24,7 @@ import styles from "./talent.module.css";
 export const metadata: Metadata = {
   title: "For talent · MakersForge",
   description:
-    "Represented, not recruited. A talent agency for vetted growth specialists in mobile apps and games.",
+    "Represented, not recruited. A talent agency for vetted growth, product, design, engineering and art specialists in mobile apps and games.",
 };
 
 export default function TalentPage() {
@@ -89,9 +89,9 @@ function TalentHero() {
             Represented, <span className="gr">not recruited.</span>
           </h1>
           <p className={styles.heroSub}>
-            A talent agency for vetted growth people in mobile apps and games.
-            UA managers, ASO managers, marketing artists, motion designers and
-            creative producers. We host you in front of hiring studios and run
+            A talent agency for vetted specialists in mobile apps and games:
+            growth and UA, product, design, engineering, art and data. We host
+            you in front of hiring studios and run
             the whole process, from first intro to signed.
           </p>
           <div className={styles.heroCtas}>

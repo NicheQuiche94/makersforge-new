@@ -26,6 +26,8 @@ const ROSTER_LINKS = [
      already appears in the bottom collab line, having it twice felt
      off. */
 const STUDIO_LINKS = [
+  { href: "/games", label: "Game studios" },
+  { href: "/apps", label: "App companies" },
   { href: "/#how", label: "How it works" },
   { href: "/pricing", label: "Pricing" },
   { href: "/jobs/post", label: "Post a role" },
@@ -53,7 +55,7 @@ export function Footer() {
               <Logo size={52} />
             </Link>
             <p className={styles.tagline}>
-              Growth team specialists for mobile apps and games.
+              The teams behind mobile games and consumer apps.
             </p>
             <div className={styles.socials}>
               <a
@@ -105,7 +107,7 @@ export function Footer() {
           </div>
 
           <div className={styles.col}>
-            <h5>For studios</h5>
+            <h5>For companies</h5>
             <ul>
               {STUDIO_LINKS.map((link) => (
                 <li key={link.href}>

@@ -30,7 +30,7 @@ const ROWS: Row[] = [
   },
   {
     label: "Bench you're hiring from",
-    us: "Vetted specialists we represent",
+    us: "Our lineup first, then a specialist search",
     them: "Job-board candidate pool",
   },
 ];
@@ -47,7 +47,7 @@ export function ComparisonStrip() {
           <p className={styles.body}>
             Most recruiters either take 20–30% of first-year salary or pocket
             a markup off every day rate. Our fee is a flat monthly to the
-            studio. Whatever the specialist negotiates is theirs.
+            company. Whatever the specialist negotiates is theirs.
           </p>
         </div>
 

@@ -29,7 +29,7 @@ export function LogoWall() {
   return (
     <section className={styles.section}>
       <div className="container">
-        <p className={styles.cap}>Where we placed growth hires</p>
+        <p className={styles.cap}>Where we&apos;ve placed hires</p>
         <div className={styles.row}>
           {HOME_LOGOS.map((logo) => (
             <span key={logo.name} className={styles.chip}>

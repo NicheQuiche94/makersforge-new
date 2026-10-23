@@ -16,19 +16,19 @@
    as a balanced shelf (Andre 2026-07-19; +Triple Tap 2026-07-23). */
 .row {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 16px;
   max-width: 1160px;
   margin: 0 auto;
 }
 @media (max-width: 900px) {
   .row {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 @media (max-width: 560px) {
   .row {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -47,7 +47,8 @@
    read as large as Lessmore's wide wordmark (which caps on width). */
 .logo {
   max-height: 54px;
-  max-width: 150px;
+  /* 100% so a wide wordmark can't push its chip past a phone's width. */
+  max-width: min(150px, 100%);
   width: auto;
   height: auto;
   object-fit: contain;

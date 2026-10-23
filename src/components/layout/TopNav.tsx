@@ -83,7 +83,9 @@ export function TopNav({ activeHref }: { activeHref?: string }) {
             className={styles.logoLink}
             aria-label="MakersForge home"
           >
-            <Logo size={38} />
+            <Logo size={38} className={styles.logoFull} />
+            {/* Small phones: hex mark only, so logo + Job board + CTA fit. */}
+            <Logo size={38} variant="mark" className={styles.logoMark} title="" />
           </Link>
         </div>
 

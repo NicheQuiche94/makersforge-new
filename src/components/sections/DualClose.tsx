@@ -12,15 +12,15 @@ const DOORS = [
   {
     kicker: "For talent",
     headline: "Get represented",
-    body: "Indefinite representation for the best UA, growth and marketing-art operators. Studios come to us; you keep your full rate.",
+    body: "Indefinite representation for the best growth, product, design, engineering and art talent in games and apps. Companies come to us; you keep your full rate.",
     href: "/apply",
     cta: "Join the line-up",
     tone: "dark" as const,
   },
   {
     kicker: "For companies",
-    headline: "Hire a growth team",
-    body: "Vetted UA managers and marketing artists for your game or app, introduced direct, on a flat monthly fee.",
+    headline: "Build your team",
+    body: "Vetted growth, product, design, engineering and art talent for your game or app, introduced direct from the lineup or found through a targeted search, on a flat fee.",
     href: "/enquire",
     cta: "Book a briefing",
     tone: "heat" as const,

@@ -27,7 +27,7 @@ import styles from "../legal.module.css";
 export const metadata: Metadata = {
   title: "Privacy · MakersForge",
   description:
-    "How MakersForge collects, uses, and protects personal data. Talent agency for growth specialists in mobile apps and games.",
+    "How MakersForge collects, uses, and protects personal data. Talent agency for growth, product, design, engineering and art specialists in mobile apps and games.",
 };
 
 export default function PrivacyPage() {

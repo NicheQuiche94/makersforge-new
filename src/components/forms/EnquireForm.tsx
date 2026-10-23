@@ -19,14 +19,19 @@ import styles from "./EnquireForm.module.css";
  */
 type Props = {
   profileCodename?: string;
+  /** Pre-ticked industry when arriving from /games or /apps. */
+  industry?: "games" | "apps";
 };
 
 const LOCATION_OPTIONS = ["remote", "on-site", "hybrid", "either"];
 const DISCIPLINES = [
-  { v: "ua", l: "ua manager" },
-  { v: "creative", l: "marketing artist" },
+  { v: "ua", l: "growth / ua" },
+  { v: "creative", l: "art & creative" },
   { v: "aso", l: "aso manager" },
   { v: "product", l: "product / monetisation" },
+  { v: "design", l: "design" },
+  { v: "engineering", l: "engineering" },
+  { v: "data", l: "data / analytics" },
   { v: "either", l: "either / not sure yet" },
 ];
 const INDUSTRIES = ["games", "apps"];
@@ -91,7 +96,7 @@ const RATE_BANDS = [
   { v: "any", l: "open" },
 ];
 
-export function EnquireForm({ profileCodename }: Props) {
+export function EnquireForm({ profileCodename, industry }: Props) {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
@@ -181,7 +186,7 @@ export function EnquireForm({ profileCodename }: Props) {
             name="titleOfHire"
             type="text"
             required
-            placeholder="e.g. ua manager, aso manager, marketing artist, creative producer"
+            placeholder="e.g. ua manager, product designer, unity engineer, game artist"
             className={styles.input}
           />
         </Field>
@@ -221,7 +226,7 @@ export function EnquireForm({ profileCodename }: Props) {
         <Field label="industry">
           <div className={styles.checkGroup}>
             {INDUSTRIES.map((v) => (
-              <CheckPill key={v} name="industries" value={v}>
+              <CheckPill key={v} name="industries" value={v} defaultChecked={v === industry}>
                 {v}
               </CheckPill>
             ))}
@@ -398,14 +403,16 @@ function CheckPill({
   name,
   value,
   children,
+  defaultChecked,
 }: {
   name: string;
   value: string;
   children: ReactNode;
+  defaultChecked?: boolean;
 }) {
   return (
     <label className={styles.checkPill}>
-      <input type="checkbox" name={name} value={value} />
+      <input type="checkbox" name={name} value={value} defaultChecked={defaultChecked} />
       {children}
     </label>
   );

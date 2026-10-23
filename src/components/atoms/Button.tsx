@@ -81,7 +81,7 @@ export function Button(props: ButtonProps) {
   const cls = classes({ variant, size, className });
 
   if ("href" in props && props.href) {
-    const { href, external, ...rest } = props as AsLink;
+    const { href, external, variant: _variant, size: _size, arrow: _arrow, ...rest } = props as AsLink;
     if (external || href.startsWith("mailto:") || href.startsWith("http")) {
       return (
         <a
@@ -106,7 +106,15 @@ export function Button(props: ButtonProps) {
     );
   }
 
-  const { href: _ignored, ...rest } = props as AsButton & { href?: undefined };
+  // Strip our own props so they don't land on the DOM <button> as attributes
+  // (React warned "non-boolean attribute `arrow`" on the enquire form).
+  const {
+    href: _ignored,
+    variant: _variant,
+    size: _size,
+    arrow: _arrow,
+    ...rest
+  } = props as AsButton & { href?: undefined };
   return (
     <button className={cls} {...(rest as ComponentProps<"button">)}>
       <Inner variant={variant} arrow={arrow}>

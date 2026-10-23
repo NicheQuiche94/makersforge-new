@@ -23,7 +23,7 @@ const PRINCIPLES: Principle[] = [
   },
   {
     title: "We work for both sides.",
-    body: "A recruiter's job is done when someone gets hired. Ours is done when the specialist wants to come back to the lineup and the studio wants to work with us again.",
+    body: "A recruiter's job is done when someone gets hired. Ours is done when the specialist wants to come back to the lineup and the company wants to work with us again.",
   },
   {
     title: "Indefinite representation.",

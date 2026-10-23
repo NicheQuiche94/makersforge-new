@@ -3,7 +3,7 @@
 import { useState, type FormEvent, type ReactNode } from "react";
 import styles from "./ApplyForm.module.css";
 
-type Discipline = "ua" | "creative" | "aso" | "product";
+type Discipline = "ua" | "creative" | "aso" | "product" | "design" | "engineering" | "data";
 
 type Status = "idle" | "submitting" | "ok" | "error";
 
@@ -106,14 +106,14 @@ export function ApplyForm() {
               value="ua"
               checked={discipline === "ua"}
               onChange={() => setDiscipline("ua")}
-              label="UA manager"
+              label="Growth / UA"
             />
             <RadioPill
               name="discipline"
               value="creative"
               checked={discipline === "creative"}
               onChange={() => setDiscipline("creative")}
-              label="Creative production"
+              label="Art & creative"
             />
             <RadioPill
               name="discipline"
@@ -129,10 +129,31 @@ export function ApplyForm() {
               onChange={() => setDiscipline("product")}
               label="Product / Monetisation"
             />
+            <RadioPill
+              name="discipline"
+              value="design"
+              checked={discipline === "design"}
+              onChange={() => setDiscipline("design")}
+              label="Design"
+            />
+            <RadioPill
+              name="discipline"
+              value="engineering"
+              checked={discipline === "engineering"}
+              onChange={() => setDiscipline("engineering")}
+              label="Engineering"
+            />
+            <RadioPill
+              name="discipline"
+              value="data"
+              checked={discipline === "data"}
+              onChange={() => setDiscipline("data")}
+              label="Data"
+            />
           </div>
         </Field>
         <div className={styles.split}>
-          <Field label="role" required hint="e.g. ua manager, aso manager, marketing artist, creative producer, head of product">
+          <Field label="role" required hint="e.g. ua manager, game artist, product designer, unity engineer, head of product">
             <input name="role" type="text" required className={styles.input} />
           </Field>
           <Field label="background" required hint="e.g. ex-Supercell">
