@@ -208,6 +208,36 @@
   .links {
     display: none;
   }
+  /* With the links hidden the pill only holds the CTA — drop the desktop
+     left padding + CTA margin so the bar fits a 390px phone (was ~15px
+     past the viewport, causing sideways scroll). */
+  .rightPill {
+    padding: 6px;
+  }
+  /* Two-class selector so it beats the base .cta rule declared below. */
+  .rightPill .cta {
+    margin-left: 0;
+  }
+}
+.logoMark {
+  display: none;
+}
+@media (max-width: 420px) {
+  .logoFull {
+    display: none;
+  }
+  .logoMark {
+    display: block;
+  }
+  .logoCard {
+    padding: 6px 10px;
+  }
+  .rightCluster {
+    gap: 6px;
+  }
+  .jobsPill {
+    padding: 10px 14px;
+  }
 }
 
 /* ============================================================
