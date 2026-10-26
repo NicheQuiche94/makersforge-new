@@ -1,12 +1,10 @@
 /**
- * Brand splash (2026-10-27): the MakersForge hexagon draws itself around,
- * each side in a discipline colour from the Talent Directory tiles, then
- * the anvil lands and the overlay fades away.
+ * Brand splash (2026-10-27): the MakersForge hexagon draws itself around
+ * in the six discipline colours as one continuous sweep (same as the
+ * spectrum rings on the site), then the anvil lands and the overlay fades.
  *
- * Corners: one continuous mitred outline, drawn six times, each copy
- * clipped to a wedge from the centre through its two corners. So colour
- * changes are straight cuts through the corners, matching the mark
- * (Andre: no rounded line ends).
+ * Corners: one continuous mitred outline (square corners, matching the
+ * mark), coloured as a continuous sweep like the site rings (see below).
  *
  * Pure CSS so it never blocks the page if JS is slow. Shown once per
  * browser session and never with prefers-reduced-motion: the inline script
@@ -26,11 +24,32 @@ const V = [
   [3.5, 157.74], // lower left
   [3.5, 55.23], // upper left
 ];
-// Side i runs V[i] -> V[i+1].
-const COLOURS = ["#ff5d00", "#f5b300", "#22c55e", "#3b82f6", "#8b5cf6", "#ec4899"];
-
-const out = (p: number[]) => [C[0] + (p[0] - C[0]) * 1.5, C[1] + (p[1] - C[1]) * 1.5];
-const wedge = (i: number) => [C, out(V[i]), out(V[(i + 1) % 6])].map((p) => p.join(",")).join(" ");
+// Continuous colour sweep, matching the CSS conic-gradient rings used on
+// the site (from 0deg = top, clockwise). SVG has no conic gradient, so the
+// outline is drawn SLICES times, each copy clipped to a thin angular wedge
+// in its own interpolated colour: reads as one smooth blend everywhere.
+const STOPS = ["#ff5d00", "#f5b300", "#22c55e", "#3b82f6", "#8b5cf6", "#ec4899", "#ff5d00"];
+const SLICES = 120;
+const hex = (h: string) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+function colourAt(t: number) {
+  const x = t * (STOPS.length - 1);
+  const i = Math.min(Math.floor(x), STOPS.length - 2);
+  const a = hex(STOPS[i]);
+  const b = hex(STOPS[i + 1]);
+  const k = x - i;
+  return `rgb(${a.map((v, j) => Math.round(v + (b[j] - v) * k)).join(",")})`;
+}
+const R = 200; // well outside the hexagon
+const at = (deg: number) => {
+  const r = (deg * Math.PI) / 180;
+  // Rounded: server (Node) and browser trig differ in the last digits,
+  // which would otherwise cause a hydration mismatch.
+  return [+(C[0] + R * Math.sin(r)).toFixed(2), +(C[1] - R * Math.cos(r)).toFixed(2)];
+};
+// Each wedge overlaps the next by a hair so no seams show.
+const wedge = (i: number) =>
+  [C, at((i * 360) / SLICES - 0.3), at(((i + 1) * 360) / SLICES + 0.3)].map((p) => p.join(",")).join(" ");
+const SLICE_COLOURS = Array.from({ length: SLICES }, (_, i) => colourAt((i + 0.5) / SLICES));
 
 // Start mid-way along the last (pink) side so the dash seam sits in the
 // middle of a side, never on a corner.
@@ -47,13 +66,13 @@ export function Splash() {
       <div id="mf-splash" className={styles.splash} aria-hidden="true">
         <svg className={styles.mark} viewBox="-8 -8 213 229">
           <defs>
-            {COLOURS.map((_, i) => (
+            {SLICE_COLOURS.map((_, i) => (
               <clipPath key={i} id={`mf-side-${i}`}>
                 <polygon points={wedge(i)} />
               </clipPath>
             ))}
           </defs>
-          {COLOURS.map((colour, i) => (
+          {SLICE_COLOURS.map((colour, i) => (
             <path
               key={i}
               d={HEX}
