@@ -15,7 +15,7 @@ export function CaseStudy() {
       <div className={`container ${styles.contentAbove}`}>
         <header className={styles.header}>
           <p className="kicker">Case study</p>
-          <h2 className={styles.h2}>22 hires. They only had to decide.</h2>
+          <h2 className={styles.h2}>22 hires in 3.5 years. None of the admin.</h2>
         </header>
 
         <div className={styles.caseGrid}>
