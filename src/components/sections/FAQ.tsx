@@ -8,26 +8,55 @@ type Item = {
   a: ReactNode;
 };
 
+// 2026-10-27 drafts from the handbook; [ANDRE: …] = needs his policy/number.
 const ITEMS: Item[] = [
   {
-    q: "question one goes here",
-    a: <p>Answer to question one. Andre to write.</p>,
+    q: "Why 5 candidates, not more?",
+    a: (
+      <p>
+        Because you don&apos;t need 50, you need the right one. We do the
+        screening and assessment up front, so every one of the 5 is someone
+        you&apos;d genuinely consider, each with a written summary of why.
+      </p>
+    ),
   },
   {
-    q: "question two goes here",
-    a: <p>Answer to question two. Andre to write.</p>,
+    q: "What if none of the 5 are right?",
+    a: (
+      <p>
+        Tell us why and we go again, sharper for it. [ANDRE: confirm what you
+        offer here, e.g. a second shortlist at no extra cost.]
+      </p>
+    ),
   },
   {
-    q: "question three goes here",
-    a: <p>Answer to question three. Andre to write.</p>,
+    q: "How much does it cost?",
+    a: (
+      <p>
+        A flat £12,500 per permanent hire, not 20–30% of salary. Contractors
+        are a flat monthly fee per person, and you pay their rate directly
+        with no markup. You only pay when someone is hired.
+      </p>
+    ),
   },
   {
-    q: "question four goes here",
-    a: <p>Answer to question four. Andre to write.</p>,
+    q: "Which roles do you hire for?",
+    a: (
+      <p>
+        The whole team at mobile games and consumer app companies: UA and
+        growth, art and creative, game design, Unity and mobile engineering,
+        product and data. Permanent or contract.
+      </p>
+    ),
   },
   {
-    q: "question five goes here",
-    a: <p>Answer to question five. Andre to write.</p>,
+    q: "Is there a guarantee if a hire doesn't work out?",
+    a: (
+      <p>
+        [ANDRE: your replacement terms, e.g. a free replacement if someone
+        leaves within the first 3 months.]
+      </p>
+    ),
   },
 ];
 
@@ -42,7 +71,7 @@ export function FAQ() {
           <div>
             <span className="kicker">FAQ</span>
             <h3 className={styles.h3}>
-              questions <span className="gr">studios usually ask.</span>
+              Questions <span className="gr">studios usually ask.</span>
             </h3>
           </div>
           <p className={styles.intro}>

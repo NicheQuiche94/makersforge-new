@@ -272,3 +272,25 @@
     gap: 3px;
   }
 }
+
+/* Quiet secondary links under the hero CTAs (500→5 home, 2026-10-27). */
+.heroLinks {
+  flex-basis: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  margin-top: 10px;
+}
+.heroLinks a {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.86);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+  padding-bottom: 2px;
+}
+.heroLinks a:hover {
+  color: #fff;
+  border-bottom-color: #fff;
+}

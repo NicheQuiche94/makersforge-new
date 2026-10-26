@@ -2,34 +2,30 @@ import styles from "./Explainer.module.css";
 import { CornerGlow } from "./CornerGlow";
 
 /**
- * Explainer — 'Lineup first. Search when you need it.'
- * (2026-10-22: was 'Represented, not searched.' Andre: search stays as a
- * supplementary service behind the lineup, same fee, perm + contract.)
+ * Explainer — 'Post a job ad, or brief us.'
  *
- * Sits after the three service cards on home. Purpose: name the model
- * directly so studios understand what MakersForge is vs what a
- * recruitment agency is. Kicker + header + prose paragraph + two
- * comparison cards (recruiter vs talent agent) on four dimensions.
- * Andre floated this as a candidate for its own /page + nav item
- * later; started as a home section so the model lands on first visit.
+ * 2026-10-27: back to the service Andre sells and the outreach pitches
+ * ("From 500 candidates to 5"). Was 'Lineup first. Search when you need it.'
+ * (talent-agent model). Same two-card comparison layout: what a job ad gets
+ * you vs what a MakersForge brief gets you.
  */
 
 const COMPARISON: { them: string; us: string }[] = [
   {
-    them: "Sells search to companies",
-    us: "Represents specialists directly",
+    them: "500 applicants, most of them a no",
+    us: "5 candidates, every one worth a call",
   },
   {
-    them: "Per-hire fee or a cut of the salary",
-    us: "Flat monthly fee, paid by the company",
+    them: "The best people never see it",
+    us: "We approach the people who aren't looking",
   },
   {
-    them: "Job's done at placement",
-    us: "Indefinite representation, both sides",
+    them: "Weeks of sifting and first calls",
+    us: "Hours of your time, not weeks",
   },
   {
-    them: "Every brief starts a cold search",
-    us: "Lineup first; a targeted search if no one fits",
+    them: "Or an agency at 20–30% of salary",
+    us: "One flat fee: £12,500 per hire",
   },
 ];
 
@@ -40,25 +36,22 @@ export function Explainer() {
       <div className={`container ${styles.contentAbove}`}>
         <header className={styles.header}>
           <p className="kicker">The difference</p>
-          <h2 className={styles.h2}>Lineup first. Search when you need it.</h2>
+          <h2 className={styles.h2}>Post a job ad, or brief us.</h2>
         </header>
 
         <div className={styles.body}>
           <p className={styles.p}>
-            A recruitment agency runs searches. They don&apos;t know the
-            people they&apos;re finding for you; they go and look. A talent
-            agent represents specialists directly. Everyone on the lineup
-            is someone we already work with. Ask us for an intro and
-            you&apos;re talking to them the same week. If the right person
-            isn&apos;t on the lineup yet, we run the search ourselves, only
-            in the niche we know, so you still meet specialists, not a pile
-            of CVs.
+            The senior UA managers, artists and engineers you want are busy
+            doing great work somewhere else. They&apos;re not trawling job
+            boards. We find them, talk to them properly, and only bring you
+            the ones who fit, with a written summary on each so you know why
+            before the first call.
           </p>
         </div>
 
         <div className={styles.compare}>
           <div className={`card-shadow ${styles.compareCard}`}>
-            <p className={styles.compareLabel}>Recruitment agency</p>
+            <p className={styles.compareLabel}>Posting a job ad</p>
             <ul className={styles.compareList}>
               {COMPARISON.map((row, i) => (
                 <li key={i} className={styles.compareItem}>
@@ -71,7 +64,7 @@ export function Explainer() {
             className={`card-shadow ${styles.compareCard} ${styles.compareCardUs}`}
           >
             <p className={`${styles.compareLabel} ${styles.compareLabelUs}`}>
-              Talent agent
+              Briefing MakersForge
             </p>
             <ul className={styles.compareList}>
               {COMPARISON.map((row, i) => (

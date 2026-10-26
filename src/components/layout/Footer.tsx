@@ -10,8 +10,8 @@ import styles from "./Footer.module.css";
    the two links that always make sense: browse the whole lineup,
    or join it. */
 const ROSTER_LINKS = [
-  { href: "/line-up", label: "All profiles" },
-  { href: "/apply", label: "Join the lineup" },
+  { href: "/line-up", label: "Browse the directory" },
+  { href: "/apply", label: "Join the directory" },
 ];
 
 /* Per cofounder pass FT1–FT4:
@@ -76,7 +76,7 @@ export function Footer() {
           </div>
 
           <div className={styles.col}>
-            <h5>The lineup</h5>
+            <h5>Talent directory</h5>
             <ul>
               {ROSTER_LINKS.map((link) => (
                 <li key={link.href}>

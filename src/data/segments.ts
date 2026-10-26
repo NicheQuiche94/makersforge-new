@@ -30,12 +30,12 @@ export const SEGMENTS: Record<Segment["slug"], Segment> = {
   games: {
     slug: "games",
     industry: "games",
-    metaTitle: "Hiring for mobile game studios · MakersForge",
+    metaTitle: "From 500 candidates to 5 · Recruitment for mobile game studios · MakersForge",
     metaDescription:
-      "UA and growth, game and marketing art, Unity engineers, product, LiveOps and data for mobile game studios. From our lineup, or a targeted search. Flat fees.",
+      "We headhunt UA, art, game design, Unity, product and LiveOps people for mobile game studios and hand you 5 screened candidates in 5 working days. Flat £12,500 per hire.",
     kicker: "For mobile game studios",
-    headline: ["Hiring for", "mobile game", "studios."],
-    lede: "UA and growth, game and marketing art, Unity engineers, product, LiveOps and data. Straight from our lineup, or a targeted search when no one on it fits. Flat fees, never a cut of salary.",
+    headline: ["From 500", "candidates", "to 5."],
+    lede: "UA managers, artists, game designers, Unity engineers and LiveOps people who'll never see your job ad. We find them, screen them and hand you 5 worth hiring, within 5 working days.",
     coverTitle: "Every seat in a mobile game studio.",
     clusters: [
       {
@@ -68,12 +68,12 @@ export const SEGMENTS: Record<Segment["slug"], Segment> = {
   apps: {
     slug: "apps",
     industry: "apps",
-    metaTitle: "Hiring for consumer app companies · MakersForge",
+    metaTitle: "From 500 candidates to 5 · Recruitment for consumer app companies · MakersForge",
     metaDescription:
-      "Growth and UA, product managers and designers, iOS and Android engineers, creative and data for consumer app companies. From our lineup, or a targeted search. Flat fees.",
+      "We headhunt growth, UA, product, design, iOS and Android people for consumer app companies and hand you 5 screened candidates in 5 working days. Flat £12,500 per hire.",
     kicker: "For consumer app companies",
-    headline: ["Hiring for", "consumer app", "companies."],
-    lede: "Growth and UA, product managers and designers, iOS and Android engineers, creative and data. Straight from our lineup, or a targeted search when no one on it fits. Flat fees, never a cut of salary.",
+    headline: ["From 500", "candidates", "to 5."],
+    lede: "Growth and UA leads, product managers, designers and iOS and Android engineers who'll never see your job ad. We find them, screen them and hand you 5 worth hiring, within 5 working days.",
     coverTitle: "Every seat in a consumer app team.",
     clusters: [
       {

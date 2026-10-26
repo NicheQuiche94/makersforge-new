@@ -30,8 +30,8 @@ const ROWS: Row[] = [
   },
   {
     label: "Bench you're hiring from",
-    us: "Our lineup first, then a specialist search",
-    them: "Job-board candidate pool",
+    us: "Headhunted, plus 371 specialists we've interviewed",
+    them: "Whoever answers the job ad",
   },
 ];
 

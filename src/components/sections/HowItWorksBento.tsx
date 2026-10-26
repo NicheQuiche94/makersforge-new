@@ -17,26 +17,28 @@ type Stage = {
   body: string;
 };
 
+// 2026-10-27: back to the service Andre sells and the emails pitch —
+// "from 500 candidates to 5" — not the lineup-first access model.
 const STAGES: Stage[] = [
   {
-    title: "Have a look at the lineup.",
-    body: "Filter by role, discipline, or availability. Every profile is someone we currently represent.",
+    title: "Brief us in 30 minutes.",
+    body: "One call about the role, the team and what great looks like. That's all the admin you'll do.",
   },
   {
-    title: "Tell us who to introduce you to.",
-    body: "Once someone catches your eye, request an intro through their profile. We reply the same day and set up the call that week.",
+    title: "We headhunt the people who aren't looking.",
+    body: "The best candidates never see your job ad. We approach them, qualify them and sell them the role, starting from the 371 specialists we already know.",
   },
   {
-    title: "Meet the specialist.",
-    body: "One call. You and the person doing the work. We don't sit in.",
+    title: "5 candidates in 5 working days.",
+    body: "Screened, assessed and shortlisted, each with a written recruiter summary. Not 500 CVs to sift.",
   },
   {
-    title: "You contract with the specialist.",
-    body: "Day rate, hours, scope, you and the specialist agree it directly. We invoice a flat monthly fee for the engagement. Simple.",
+    title: "Interview and hire.",
+    body: "A 3-stage interview process you can finish within 3 weeks. We run the logistics and keep everyone moving.",
   },
   {
-    title: "The relationship keeps running.",
-    body: "When the engagement ends, the specialist stays on the lineup. Need the next one, same process.",
+    title: "One flat fee.",
+    body: "£12,500 per permanent hire, not a percentage of salary. Contractors on a flat monthly fee.",
   },
 ];
 
@@ -48,18 +50,17 @@ export function HowItWorksBento() {
         <div className={styles.split}>
           <div className={styles.left}>
             <p className="kicker">How it works</p>
-            <h2 className={styles.header}>How it works.</h2>
+            <h2 className={styles.header}>From 500 to 5.</h2>
             <p className={styles.body}>
-              Recruitment agencies run searches. We represent people directly,
-              so you don&apos;t need to. Look at the lineup, tell us who to
-              introduce you to, and take the call. If it&apos;s a fit, you
-              contract with them.
+              A job ad gets you hundreds of applicants and hours of sifting,
+              while the people you actually want never apply. We go and get
+              them, and you spend hours on hiring, not weeks.
             </p>
-            <Link href="/enquire" className={styles.cta}>
+            <Link href="#brief" className={styles.cta}>
               <span className={styles.ctaArrow} aria-hidden="true">
                 ↳
               </span>
-              Get in touch
+              Brief us a role
             </Link>
           </div>
 

@@ -6,14 +6,14 @@ import { Explainer } from "./Explainer";
 import { HeatBreak } from "./HeatBreak";
 import { HowItWorksBento } from "./HowItWorksBento";
 import { ComparisonStrip } from "./ComparisonStrip";
-import { Principles } from "./Principles";
-import { DualClose } from "./DualClose";
+import { FAQ } from "./FAQ";
+import { CaseStudy, TalentDirectory, Testimonials } from "./ProofSections";
+import { QuickBrief } from "./QuickBrief";
 
 /**
- * /games and /apps — the two company doors from the homepage. Same
- * sections as home, minus the three-services overview (this visitor has
- * already told us they're hiring), plus the pricing comparison so the flat
- * fee lands before the close. Copy + roles come from segments.ts.
+ * /games and /apps — where most email clicks land. 2026-10-27: same
+ * "From 500 candidates to 5" story as home (promise → proof → how → bench →
+ * brief), with the segment's own kicker, lede and roles from segments.ts.
  */
 export function SegmentPage({ segment }: { segment: Segment }) {
   return (
@@ -23,19 +23,22 @@ export function SegmentPage({ segment }: { segment: Segment }) {
         headline={segment.headline}
         lede={segment.lede}
         ctas={{
-          primary: { href: `/enquire?industry=${segment.industry}`, label: "Brief us on a hire" },
-          secondary: { href: "/line-up", label: "See the lineup" },
+          primary: { href: "#brief", label: "Brief us a role" },
+          secondary: { href: `/enquire?industry=${segment.industry}`, label: "Book a 15-min call" },
         }}
       />
       {segment.showLogoWall ? <LogoWall /> : null}
-      <WhatWeCover title={segment.coverTitle} clusters={segment.clusters} />
+      <CaseStudy />
       <Explainer />
       <HeatBreak />
       <HowItWorksBento />
+      <TalentDirectory />
+      <Testimonials />
+      <WhatWeCover title={segment.coverTitle} clusters={segment.clusters} />
       <ComparisonStrip />
+      <FAQ />
       <HeatBreak />
-      <Principles />
-      <DualClose />
+      <QuickBrief industry={segment.industry} />
     </>
   );
 }

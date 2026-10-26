@@ -1,0 +1,302 @@
+/* Shared styles for the 500→5 proof sections (2026-10-27): Lessmore case
+   study, Talent Directory, testimonials, quick brief. Same section rhythm,
+   type scale and card treatment as Explainer / WhatWeCover. */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+  padding: 100px 0 110px;
+  color: var(--ink);
+}
+.sectionAlt {
+  background: var(--bg-card);
+}
+.contentAbove {
+  position: relative;
+  z-index: 1;
+}
+.header {
+  max-width: 960px;
+  margin: 0 auto 40px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.h2 {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(34px, 4.6vw, 60px);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  margin: 4px 0 0;
+}
+.lede {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: clamp(17px, 1.5vw, 20px);
+  line-height: 1.6;
+  color: var(--dim);
+  margin: 0 auto;
+  max-width: 720px;
+  text-align: center;
+}
+
+/* Placeholder: content Andre still has to supply. Loud on purpose. */
+.todo {
+  outline: 2px dashed #ff5d00;
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+.todoTag {
+  display: inline-block;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #e14b00;
+  background: rgba(255, 93, 0, 0.1);
+  border-radius: 4px;
+  padding: 3px 7px;
+  margin-bottom: 8px;
+}
+
+/* ---- Case study ---- */
+.caseGrid {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 18px;
+  align-items: stretch;
+}
+.card {
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  border-radius: 16px;
+  padding: 32px;
+}
+.caseStory p {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  margin: 0 0 14px;
+}
+.caseStory p:last-child {
+  margin-bottom: 0;
+}
+.caseKicker {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #e14b00;
+  margin: 0 0 10px;
+}
+.caseTitle {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-size: clamp(24px, 2.4vw, 32px);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 0 0 16px;
+}
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.stat {
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  border-radius: 14px;
+  padding: 18px 16px;
+}
+.statValue {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-size: clamp(28px, 3vw, 40px);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--ink);
+}
+.statLabel {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--dim);
+  margin-top: 8px;
+}
+.quote {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 18px;
+  line-height: 1.55;
+  font-weight: 500;
+  color: var(--ink);
+  margin: 0 0 14px;
+}
+.quoteBy {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 14px;
+  color: var(--dim);
+  margin: 0;
+}
+.quoteBy strong {
+  color: var(--ink);
+}
+
+/* ---- Talent Directory ---- */
+.directory {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 40px;
+  align-items: center;
+}
+.bigNumber {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-size: clamp(96px, 14vw, 180px);
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  background: linear-gradient(135deg, #ff8a00, #ff3d00);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.bigNumberLabel {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--dim);
+  margin-top: 8px;
+  max-width: 220px;
+}
+.directoryText h2 {
+  text-align: left;
+}
+.directoryText p {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin: 14px 0 0;
+}
+.textLink {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 22px;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--ink);
+  text-decoration: none;
+}
+.textLink:hover {
+  color: #e14b00;
+}
+
+/* ---- Testimonials ---- */
+.quotes {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+/* ---- Quick brief ---- */
+.briefWrap {
+  max-width: 760px;
+  margin: 0 auto;
+}
+.form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.full {
+  grid-column: 1 / -1;
+}
+.label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+.input {
+  font: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 13px 14px;
+  border: 1px solid var(--hair-strong);
+  border-radius: 10px;
+  background: var(--paper);
+  color: var(--ink);
+}
+.input:focus {
+  outline: 2px solid #ff5d00;
+  outline-offset: 1px;
+}
+.formFoot {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 6px;
+}
+.formNote {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 14px;
+  color: var(--dim);
+  margin: 0;
+}
+.formNote a {
+  color: var(--ink);
+  font-weight: 600;
+}
+.error {
+  grid-column: 1 / -1;
+  color: #c72e00;
+  font-size: 14px;
+  margin: 0;
+}
+.done {
+  text-align: center;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+@media (max-width: 860px) {
+  .caseGrid,
+  .quotes {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .directory {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+    text-align: left;
+  }
+  .card {
+    padding: 24px;
+  }
+}
+@media (max-width: 560px) {
+  .form {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .stats {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

@@ -82,7 +82,7 @@ export function WhatWeCover({
             <span className={styles.ctaArrow} aria-hidden="true">
               ↳
             </span>
-            See the lineup
+            Browse the Talent Directory
           </Link>
         </div>
       </div>

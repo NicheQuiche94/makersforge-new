@@ -47,8 +47,10 @@ type HeroPanelProps = {
   kicker?: string;
   headline?: [string, string, string];
   lede?: string;
-  /** Segment pages show two CTAs; home shows the three doors instead. */
+  /** Two CTAs; without them the hero falls back to the three doors. */
   ctas?: { primary: HeroCta; secondary: HeroCta };
+  /** Quiet text links under the CTAs (e.g. studio / apps / talent). */
+  links?: HeroCta[];
 };
 
 export function HeroPanel({
@@ -56,6 +58,7 @@ export function HeroPanel({
   headline = ["The home for", "the teams behind", "games and apps."],
   lede = "Growth, product, design, engineering and art for mobile games and consumer apps. Tell us who you are:",
   ctas,
+  links,
 }: HeroPanelProps = {}) {
   return (
     <section className={`heat-glow ${styles.hero}`} data-nav-gradient>
@@ -92,6 +95,15 @@ export function HeroPanel({
               <Button href={ctas.secondary.href} variant="on-dark">
                 {ctas.secondary.label}
               </Button>
+              {links?.length ? (
+                <nav className={styles.heroLinks} aria-label="More">
+                  {links.map((l) => (
+                    <Link key={l.href} href={l.href}>
+                      {l.label} <span aria-hidden="true">→</span>
+                    </Link>
+                  ))}
+                </nav>
+              ) : null}
             </div>
           ) : (
             <nav className={styles.doors} aria-label="Who are you?">

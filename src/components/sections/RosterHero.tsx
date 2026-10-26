@@ -5,9 +5,9 @@ export function RosterHero() {
     <section className={styles.section}>
       <div className="container">
         <div className={styles.inner}>
-          <span className={`kicker ${styles.kicker}`}>The lineup</span>
+          <span className={`kicker ${styles.kicker}`}>MakersForge Talent Directory</span>
           <h1 className={styles.headline}>
-            The lineup, <em className={styles.em}>on call.</em>
+            People we know, <em className={styles.em}>not strangers.</em>
           </h1>
         </div>
       </div>

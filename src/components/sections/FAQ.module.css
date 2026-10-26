@@ -16,7 +16,7 @@
   font-size: clamp(32px, 4vw, 52px);
   line-height: 0.94;
   letter-spacing: -0.03em;
-  text-transform: lowercase;
+  text-transform: none;
   margin: 14px 0 0;
 }
 .intro {
@@ -42,7 +42,7 @@
   font-weight: 400;
   font-size: 24px;
   letter-spacing: -0.02em;
-  text-transform: lowercase;
+  text-transform: none;
   padding: 22px 0;
   cursor: pointer;
   display: flex;
