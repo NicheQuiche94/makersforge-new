@@ -5,7 +5,6 @@ import { Explainer } from "@/components/sections/Explainer";
 import { WhatWeCover } from "@/components/sections/WhatWeCover";
 import { HowItWorksBento } from "@/components/sections/HowItWorksBento";
 import { HeatBreak } from "@/components/sections/HeatBreak";
-import { ComparisonStrip } from "@/components/sections/ComparisonStrip";
 import { FAQ } from "@/components/sections/FAQ";
 import { CaseStudy, TalentDirectory, Testimonials } from "@/components/sections/ProofSections";
 import { QuickBrief } from "@/components/sections/QuickBrief";
@@ -42,15 +41,16 @@ export default function HomePage() {
           { href: "/talent", label: "Looking for a role?" },
         ]}
       />
+      {/* 2026-10-27 flow: outcome → how → proof → why not an ad → bench
+          → roles → doubts → brief. Comparison table lives on /pricing. */}
       <LogoWall />
-      <CaseStudy />
-      <Explainer />
-      <HeatBreak />
       <HowItWorksBento />
-      <TalentDirectory />
+      <CaseStudy />
       <Testimonials />
+      <HeatBreak />
+      <Explainer />
+      <TalentDirectory />
       <WhatWeCover title="Who we hire for." />
-      <ComparisonStrip />
       <FAQ />
       <HeatBreak />
       <QuickBrief />

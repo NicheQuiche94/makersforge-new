@@ -17,6 +17,15 @@
 .honest strong {
   color: var(--ink);
 }
+.honest {
+  margin-bottom: 6px;
+}
+.honestNote {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 14px;
+  color: var(--mute);
+  margin: 0 0 22px;
+}
 
 /* ---- Discipline tiles ---- */
 .tiles {
@@ -47,8 +56,17 @@
 }
 .tileOn {
   opacity: 1;
-  box-shadow: 0 0 0 3px var(--bg), 0 0 0 6px var(--ink);
+  /* Selected ring takes the tile's own colour (Andre 2026-10-27). */
+  box-shadow: 0 0 0 3px var(--bg), 0 0 0 6px var(--ring, var(--ink));
 }
+.tone_ink { --ring: #0e0f11; }
+.tone_heat { --ring: #ff5d00; }
+.tone_violet { --ring: #7c3aed; }
+.tone_teal { --ring: #0d9488; }
+.tone_blue { --ring: #2563eb; }
+.tone_pink { --ring: #db2777; }
+.tone_green { --ring: #16a34a; }
+.tone_amber { --ring: #d97706; }
 .tile:focus-visible {
   outline: 3px solid var(--ink);
   outline-offset: 3px;

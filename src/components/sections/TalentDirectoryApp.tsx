@@ -120,6 +120,10 @@ export function TalentDirectoryApp() {
           <strong>{ROSTER.length}</strong> with a public profile ·{" "}
           <strong>{available}</strong> available now
         </p>
+        <p className={styles.honestNote}>
+          Profiles go up as people opt in, so new ones land every week. Brief
+          us and we search all {INTERVIEWED}, not just the ones live here.
+        </p>
 
         {/* Discipline picker — Spotify "browse all" style tiles */}
         <div className={styles.tiles} role="group" aria-label="Filter by discipline">

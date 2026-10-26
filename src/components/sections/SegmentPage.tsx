@@ -27,14 +27,13 @@ export function SegmentPage({ segment }: { segment: Segment }) {
         }}
       />
       {segment.showLogoWall ? <LogoWall /> : null}
-      <CaseStudy />
-      <Explainer />
-      <HeatBreak />
       <HowItWorksBento />
-      <TalentDirectory />
+      <CaseStudy />
       <Testimonials />
+      <HeatBreak />
+      <Explainer />
+      <TalentDirectory />
       <WhatWeCover title={segment.coverTitle} clusters={segment.clusters} />
-      <ComparisonStrip />
       <FAQ />
       <HeatBreak />
       <QuickBrief industry={segment.industry} />
