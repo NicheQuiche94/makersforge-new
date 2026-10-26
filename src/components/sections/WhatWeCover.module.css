@@ -149,3 +149,49 @@
   font-size: 22px;
   line-height: 1;
 }
+
+/* Toned cards (2026-10-27): each discipline in its Talent Directory tile
+   colour, white type, and the same tilted corner block, so disciplines
+   read as one colour system across the site. */
+.toned {
+  position: relative;
+  overflow: hidden;
+  border: 0;
+  color: #fff;
+}
+.toned .clusterLabel {
+  position: relative;
+  z-index: 1;
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(22px, 1.9vw, 26px);
+  letter-spacing: -0.02em;
+  color: #fff;
+  border-bottom-color: rgba(255, 255, 255, 0.28);
+}
+.toned .role {
+  position: relative;
+  z-index: 1;
+  color: rgba(255, 255, 255, 0.92);
+}
+.toned .role::before {
+  background: #fff;
+}
+.shape {
+  position: absolute;
+  right: -22px;
+  bottom: -26px;
+  width: 96px;
+  height: 96px;
+  border-radius: 14px;
+  transform: rotate(25deg);
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
+}
+.tone_heat { background: linear-gradient(135deg, #ff8a00, #ff3d00); }
+.tone_violet { background: linear-gradient(135deg, #8b5cf6, #5b21b6); }
+.tone_blue { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+.tone_pink { background: linear-gradient(135deg, #ec4899, #be185d); }
+.tone_green { background: linear-gradient(135deg, #22c55e, #15803d); }
+.tone_amber { background: linear-gradient(135deg, #f59e0b, #b45309); }
+.tone_ink { background: linear-gradient(135deg, #2a2b30, #0e0f11); }

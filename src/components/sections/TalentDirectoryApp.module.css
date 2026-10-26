@@ -169,7 +169,7 @@
   cursor: pointer;
 }
 .seg button.segOn {
-  background: var(--ink);
+  background: linear-gradient(135deg, #ff8a00, #ff3d00);
   color: #fff;
 }
 .toggle {

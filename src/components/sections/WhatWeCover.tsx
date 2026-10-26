@@ -43,6 +43,20 @@ const CLUSTERS: Cluster[] = [
   },
 ];
 
+/** Same discipline → colour mapping as the Talent Directory tiles, so a
+ *  discipline is the same colour everywhere on the site (2026-10-27). */
+function toneFor(label: string) {
+  const l = label.toLowerCase();
+  if (l.includes("growth")) return "heat";
+  if (l.includes("art") || l.includes("creative")) return "violet";
+  if (l.includes("engineering")) return "green";
+  if (l.includes("data")) return "amber";
+  if (l.includes("leadership")) return "ink";
+  if (l.includes("product")) return "blue";
+  if (l.includes("design")) return "pink";
+  return "ink";
+}
+
 /** Home uses the defaults; /games and /apps pass their own (see segments.ts). */
 export function WhatWeCover({
   title = "The whole team behind a game or app.",
@@ -63,8 +77,9 @@ export function WhatWeCover({
           {clusters.map((cluster) => (
             <div
               key={cluster.label}
-              className={`card-shadow ${styles.cluster}`}
+              className={`card-shadow ${styles.cluster} ${styles.toned} ${styles[`tone_${toneFor(cluster.label)}`]}`}
             >
+              <span className={styles.shape} aria-hidden="true" />
               <h3 className={styles.clusterLabel}>{cluster.label}</h3>
               <ul className={styles.roleList}>
                 {cluster.roles.map((role) => (

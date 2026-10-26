@@ -33,4 +33,11 @@
   background-clip: text;
   -webkit-text-fill-color: transparent;
   padding-inline: 0.08em;
+  /* Italic glyphs overhang their box; when the phrase wraps, each line
+     fragment needs its own padded gradient box or the overhang is clipped
+     ("not" was cut off at the line end, 2026-10-27). */
+  padding-inline-start: 0;
+  padding-inline-end: 0.18em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }

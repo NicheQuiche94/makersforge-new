@@ -30,6 +30,25 @@ const DISCIPLINES: Record<string, { label: string; tone: string }> = {
 
 const initials = (p: Profile) => p.codename.split(/[·.\s-]/)[0].slice(0, 2).toUpperCase();
 
+// Region codes some profiles still carry instead of a real city/country.
+const REGION_LABELS: Record<string, string> = { eu: "Europe", uk: "United Kingdom", us: "United States" };
+/** "eu · remote" → "Europe · Remote"; real "City, Country" labels pass through. */
+function locationLabel(p: Profile) {
+  const raw = p.location.label.trim();
+  if (/[A-Z]/.test(raw)) return raw;
+  return raw
+    .split(/\s*·\s*/)
+    .map((part) => REGION_LABELS[part] || part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" · ");
+}
+
+/** Price to show for the chosen engagement type: none for "any". */
+function priceLabel(p: Profile, type: "any" | "contract" | "permanent") {
+  if (type === "contract") return p.dayRateLabel || "";
+  if (type === "permanent") return p.salaryAnnualLabel || "";
+  return "";
+}
+
 export function TalentDirectoryApp() {
   const [picked, setPicked] = useState<Set<string>>(new Set());
   const [query, setQuery] = useState("");
@@ -171,14 +190,14 @@ export function TalentDirectoryApp() {
                   <span className={styles.main}>
                     <span className={styles.role}>{p.role}</span>
                     <span className={styles.sub}>
-                      <span>{p.location.label}</span>
+                      <span>{locationLabel(p)}</span>
                       <span className={styles.dot}>·</span>
                       <span>{p.industries.map((i) => (i === "games" ? "Games" : "Apps")).join(" & ")}</span>
                       <span className={styles.tag}>{d.label}</span>
                     </span>
                   </span>
                   <span className={styles.right}>
-                    {p.dayRateLabel ? <span className={styles.rate}>{p.dayRateLabel}</span> : null}
+                    {priceLabel(p, type) ? <span className={styles.rate}>{priceLabel(p, type)}</span> : null}
                     <span className={p.available ? styles.avail : styles.unavail}>
                       {p.available ? "Available" : "Not available"}
                     </span>
