@@ -1,0 +1,370 @@
+/* Talent Directory (2026-10-27): Spotify-style discipline tiles + job-board
+   rows. Row treatment mirrors components/jobs/JobCard (white card, square
+   gradient avatar, Cal Sans title, meta line, pills right). */
+
+.section {
+  background: var(--bg);
+  padding: 40px 0 100px;
+  color: var(--ink);
+}
+
+.honest {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 15px;
+  color: var(--dim);
+  margin: 0 0 22px;
+}
+.honest strong {
+  color: var(--ink);
+}
+
+/* ---- Discipline tiles ---- */
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 22px;
+}
+.tile {
+  position: relative;
+  overflow: hidden;
+  min-height: 108px;
+  border: 0;
+  border-radius: 14px;
+  padding: 16px 18px;
+  text-align: left;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+  opacity: 0.86;
+}
+.tile:hover {
+  transform: translateY(-2px);
+  opacity: 1;
+}
+.tileOn {
+  opacity: 1;
+  box-shadow: 0 0 0 3px var(--bg), 0 0 0 6px var(--ink);
+}
+.tile:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+}
+.tileLabel {
+  position: relative;
+  z-index: 1;
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-size: 22px;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  max-width: 75%;
+}
+.tileCount {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0.9;
+}
+.tileCheck {
+  position: absolute;
+  z-index: 1;
+  top: 12px;
+  right: 14px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  font-weight: 800;
+}
+/* The tilted "album art" block in the corner, Spotify-genre style. */
+.tileShape {
+  position: absolute;
+  right: -18px;
+  bottom: -22px;
+  width: 84px;
+  height: 84px;
+  border-radius: 12px;
+  transform: rotate(25deg);
+  background: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+
+.toneInk,
+.tone_ink {
+  background: linear-gradient(135deg, #2a2b30, #0e0f11);
+}
+.tone_heat {
+  background: linear-gradient(135deg, #ff8a00, #ff3d00);
+}
+.tone_violet {
+  background: linear-gradient(135deg, #8b5cf6, #5b21b6);
+}
+.tone_teal {
+  background: linear-gradient(135deg, #14b8a6, #0f766e);
+}
+.tone_blue {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+}
+.tone_pink {
+  background: linear-gradient(135deg, #ec4899, #be185d);
+}
+.tone_green {
+  background: linear-gradient(135deg, #22c55e, #15803d);
+}
+.tone_amber {
+  background: linear-gradient(135deg, #f59e0b, #b45309);
+}
+
+/* ---- Quick filters ---- */
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  border-radius: 14px;
+  padding: 12px;
+}
+.search {
+  flex: 1 1 240px;
+  font: inherit;
+  font-size: 15px;
+  padding: 11px 14px;
+  border: 1px solid var(--hair-strong);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--ink);
+}
+.search:focus {
+  outline: 2px solid #ff5d00;
+  outline-offset: 1px;
+}
+.seg {
+  display: inline-flex;
+  border: 1px solid var(--hair-strong);
+  border-radius: 999px;
+  padding: 3px;
+  background: var(--bg);
+}
+.seg button {
+  font: inherit;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  border: 0;
+  background: transparent;
+  color: var(--dim);
+  padding: 7px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.seg button.segOn {
+  background: var(--ink);
+  color: #fff;
+}
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  cursor: pointer;
+  padding: 0 6px;
+}
+.toggle input {
+  width: 18px;
+  height: 18px;
+  accent-color: #ff5d00;
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 22px 2px 12px;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 15px;
+  color: var(--dim);
+}
+.meta strong {
+  color: #e14b00;
+}
+.clear {
+  font: inherit;
+  font-weight: 600;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ---- Rows (JobCard-style) ---- */
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  border-radius: 14px;
+  padding: 16px 20px;
+  color: var(--ink);
+  text-decoration: none;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+.row:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 93, 0, 0.35);
+}
+.avatar {
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-size: 16px;
+}
+.main {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.role {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-size: 20px;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+.sub {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 14px;
+  color: var(--dim);
+}
+.dot {
+  opacity: 0.6;
+}
+.tag {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #e14b00;
+  border: 1px solid rgba(255, 93, 0, 0.3);
+  border-radius: 999px;
+  padding: 2px 8px;
+  margin-left: 4px;
+}
+.right {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.rate {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #e14b00;
+  background: rgba(255, 93, 0, 0.08);
+  border: 1px solid rgba(255, 93, 0, 0.25);
+  border-radius: 999px;
+  padding: 6px 12px;
+  white-space: nowrap;
+}
+.avail,
+.unavail {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  padding: 6px 10px;
+  white-space: nowrap;
+}
+.avail {
+  color: #15803d;
+  background: rgba(34, 197, 94, 0.12);
+}
+.unavail {
+  color: var(--dim);
+  background: var(--bg);
+}
+.view {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+.empty {
+  text-align: center;
+  padding: 40px 20px;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 17px;
+  color: var(--dim);
+}
+.emptyCta {
+  display: inline-flex;
+  gap: 8px;
+  margin-top: 10px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+@media (max-width: 760px) {
+  .tiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .tile {
+    min-height: 92px;
+  }
+  .tileLabel {
+    font-size: 18px;
+  }
+  .row {
+    flex-wrap: wrap;
+    padding: 14px 16px;
+  }
+  .right {
+    width: 100%;
+    padding-left: 60px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .view {
+    margin-left: auto;
+  }
+  .seg {
+    flex: 1 1 auto;
+    justify-content: space-between;
+  }
+}

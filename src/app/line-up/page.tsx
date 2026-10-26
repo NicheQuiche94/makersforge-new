@@ -1,38 +1,34 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
 import { RosterHero } from "@/components/sections/RosterHero";
-import { RosterLiveStrip } from "@/components/sections/RosterLiveStrip";
-import { RosterApp } from "@/components/sections/RosterApp";
+import { TalentDirectoryApp } from "@/components/sections/TalentDirectoryApp";
 import { CTABand } from "@/components/sections/CTABand";
 
 export const metadata: Metadata = {
-  title: "The lineup · MakersForge",
+  title: "Talent Directory · MakersForge",
   description:
-    "Filter the vetted games and apps specialists we represent. Profiles anonymised; real identities reveal after a brief.",
+    "Mobile games and app specialists we've personally interviewed: growth and UA, art, product and more. Profiles anonymised; we make the intro after a brief.",
 };
 
-/* Per Andre 2026-05-30 v6: the pricing-style compact CTABand moved
-   here. When a studio doesn't find the right fit on the lineup, the
-   bottom CTA lets them brief us directly so we can shortlist by hand
-   from our wider network. */
+/* 2026-10-27: the lineup became the MakersForge Talent Directory — the bench
+   behind the "5 candidates in 5 working days" promise. Job-board-style rows
+   with a Spotify-style discipline picker (TalentDirectoryApp) replace the
+   old card grid + live strip. The bottom CTA sends anyone who doesn't see a
+   fit to the brief: we search all 371, not just the public profiles. */
 export default function RosterPage() {
   return (
     <>
       <RosterHero />
-      <RosterLiveStrip />
-      <Suspense fallback={<div style={{ padding: 60 }} />}>
-        <RosterApp />
-      </Suspense>
+      <TalentDirectoryApp />
       <CTABand
         compact
         headline={
           <>
-            Can&apos;t find the right{" "}
-            <em style={{ fontStyle: "italic", color: "#fff" }}>fit?</em>
+            Don&apos;t see the{" "}
+            <em style={{ fontStyle: "italic", color: "#fff" }}>right person?</em>
           </>
         }
-        body="Tell us about you, your company, your culture, your product and a few other details so we can personalise your talent pipeline."
-        cta={{ label: "Book a briefing", href: "/enquire" }}
+        body="These are only the specialists who've opted in to a public profile. Brief us and we'll search everyone we know, then headhunt beyond them: 5 candidates in 5 working days."
+        cta={{ label: "Brief us a role", href: "/#brief" }}
       />
     </>
   );
