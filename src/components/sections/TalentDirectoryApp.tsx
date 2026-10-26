@@ -1,8 +1,16 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { ROSTER, type Profile } from "@/data/roster";
+import {
+  CURRENCIES,
+  CURRENCY_SYMBOLS,
+  type Currency,
+  formatRate,
+  readStoredCurrency,
+  writeStoredCurrency,
+} from "@/lib/currency";
 import styles from "./TalentDirectoryApp.module.css";
 
 /**
@@ -11,11 +19,11 @@ import styles from "./TalentDirectoryApp.module.css";
  * "browse genres" style discipline picker: big colourful tiles, tap one or
  * several to filter. Everything filters instantly on the client.
  *
- * Honest framing: 371 specialists interviewed; only those who've opted in to
+ * Honest framing: 250 specialists interviewed; only those who've opted in to
  * a public profile appear here (the list grows as consent comes in).
  */
 
-const INTERVIEWED = 371;
+const INTERVIEWED = 250;
 
 type Disc = Profile["discipline"];
 const DISCIPLINES: Record<string, { label: string; tone: string }> = {
@@ -42,10 +50,13 @@ function locationLabel(p: Profile) {
     .join(" · ");
 }
 
-/** Price to show for the chosen engagement type: none for "any". */
-function priceLabel(p: Profile, type: "any" | "contract" | "permanent") {
-  if (type === "contract") return p.dayRateLabel || "";
-  if (type === "permanent") return p.salaryAnnualLabel || "";
+/** Price to show for the chosen engagement type (none for "any"),
+ *  converted into the viewer's currency from the stored GBP figures. */
+function priceLabel(p: Profile, type: "any" | "contract" | "permanent", currency: Currency) {
+  if (type === "contract" && p.availableFor.includes("contract") && p.rateMin)
+    return formatRate(p.rateMin, currency, "day", p.rateMax);
+  if (type === "permanent" && p.salaryAnnual)
+    return formatRate(p.salaryAnnual, currency, "year", p.salaryAnnualMax);
   return "";
 }
 
@@ -55,6 +66,13 @@ export function TalentDirectoryApp() {
   const [sector, setSector] = useState<"all" | "games" | "apps">("all");
   const [availableOnly, setAvailableOnly] = useState(false);
   const [type, setType] = useState<"any" | "contract" | "permanent">("any");
+  // £ / € / $ — shared with the profile pages via localStorage.
+  const [currency, setCurrency] = useState<Currency>("GBP");
+  useEffect(() => setCurrency(readStoredCurrency()), []);
+  const pickCurrency = (c: Currency) => {
+    setCurrency(c);
+    writeStoredCurrency(c);
+  };
 
   const counts = useMemo(() => {
     const c: Record<string, number> = {};
@@ -160,6 +178,20 @@ export function TalentDirectoryApp() {
               </button>
             ))}
           </div>
+          <div className={styles.seg} role="group" aria-label="Currency">
+            {CURRENCIES.map((c) => (
+              <button
+                key={c}
+                type="button"
+                className={currency === c ? styles.segOn : ""}
+                onClick={() => pickCurrency(c)}
+                aria-pressed={currency === c}
+                aria-label={`Show rates in ${c}`}
+              >
+                {CURRENCY_SYMBOLS[c]}
+              </button>
+            ))}
+          </div>
           <label className={styles.toggle}>
             <input type="checkbox" checked={availableOnly} onChange={(e) => setAvailableOnly(e.target.checked)} />
             Available now
@@ -197,7 +229,7 @@ export function TalentDirectoryApp() {
                     </span>
                   </span>
                   <span className={styles.right}>
-                    {priceLabel(p, type) ? <span className={styles.rate}>{priceLabel(p, type)}</span> : null}
+                    {priceLabel(p, type, currency) ? <span className={styles.rate}>{priceLabel(p, type, currency)}</span> : null}
                     <span className={p.available ? styles.avail : styles.unavail}>
                       {p.available ? "Available" : "Not available"}
                     </span>

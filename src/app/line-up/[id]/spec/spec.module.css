@@ -461,3 +461,33 @@
     print-color-adjust: exact;
   }
 }
+
+/* £ / € / $ switcher above the rates (2026-10-27). Shares the saved
+   choice with the Talent Directory list. */
+.currencySeg {
+  display: inline-flex;
+  border: 1px solid var(--hair-strong);
+  border-radius: 999px;
+  padding: 3px;
+  margin: 0 0 12px;
+}
+.currencySeg button {
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  border: 0;
+  background: transparent;
+  color: var(--dim);
+  padding: 5px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.currencySeg button.currencyOn {
+  background: linear-gradient(135deg, #ff8a00, #ff3d00);
+  color: #fff;
+}
+@media print {
+  .currencySeg {
+    display: none;
+  }
+}

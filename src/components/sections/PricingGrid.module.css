@@ -78,15 +78,17 @@
   border-radius: 50%;
   background: #fff;
 }
+/* Contract card wears violet (2026-10-27) so the two offers read as two
+   things, and Permanent stays the one heat card on the page. */
 .pcTagOnLight {
-  background: rgba(255, 93, 0, 0.1);
-  color: #c72e00;
+  background: rgba(139, 92, 246, 0.12);
+  color: #5b21b6;
 }
 .dotSmLight {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--heat-radial);
+  background: var(--tone-violet);
 }
 
 .optLabel {
@@ -114,6 +116,14 @@
 .emLight {
   font-style: italic;
   color: var(--ink);
+}
+/* Beats the global heat `.gr` so the contract card stays violet. */
+.largeH .emLight {
+  background: var(--tone-violet);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding-right: 0.12em;
 }
 
 /* Smaller Permanent heading — gradient surface, white text. */
@@ -161,7 +171,8 @@
 }
 .figureLight {
   font-size: clamp(36px, 4.6vw, 54px);
-  background: var(--heat-text);
+  padding-right: 0.06em;
+  background: var(--tone-violet);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -239,8 +250,24 @@
   color: var(--dim);
   font-size: 14px;
 }
+/* Hex bullets step through the palette. */
 .pointsLight li::before {
-  background: var(--heat-h);
+  background: var(--tone-violet);
+}
+.pointsLight li:nth-child(5n + 2)::before { background: var(--tone-blue); }
+.pointsLight li:nth-child(5n + 3)::before { background: var(--tone-green); }
+.pointsLight li:nth-child(5n + 4)::before { background: var(--tone-gold); }
+.pointsLight li:nth-child(5n + 5)::before { background: var(--tone-heat); }
+
+/* Spectrum top edge on the paper card instead of a plain border. */
+.cardLarge::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--spectrum);
 }
 
 .ctaWrap {

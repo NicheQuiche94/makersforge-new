@@ -11,7 +11,7 @@
 
 export type Profile = {
   id: string;
-  discipline: "ua" | "creative" | "aso" | "product";
+  discipline: "ua" | "creative" | "aso" | "product" | "design";
   codename: string;
   role: string;
   background: string;
@@ -689,6 +689,62 @@ export const ROSTER: Profile[] = [
       "Complete growth operator: 11 years covering production, ad-network UA, publishing build-out. Managing UA on titles with 500M+ downloads and 7-figure monthly budgets. Strong on measurement, creative testing, ASO, and ad-mon, and fluent across every major network.",
       "Leadership is the clear next step and a real strength: built an 11-person department from scratch, led 5-person cross-functional growth teams (UA, data, LiveOps), mentored and onboarded growth hires, and set up scalable processes and KPIs.",
       "Distinctive breadth from having sat on all sides of mobile growth (producer, ad network, publisher, and studio) and across both a large regional home market and the global market after relocating to Germany.",
+    ],
+  },
+  // Consent 2026-10-26; copy approved by Andre 2026-10-27.
+  {
+    id: "gd-01",
+    discipline: "design",
+    codename: "gd·01",
+    role: "Game Designer, Economy & UI/UX",
+    background:
+      "Mobile F2P game designer specialising in economy balancing, UI/UX and rapid prototyping, most recently at a top-tier casual games studio.",
+    location: { code: "fr", label: "France · Remote" },
+    industries: ["games"],
+    gamesCat: ["casual", "hypercasual"],
+    appsCat: [],
+    genre: ["puzzle"],
+    expertise: ["liveops"],
+    // Stored in GBP (site converts): ≈ €300 to €350 / day, €36,000 to €40,000 / year.
+    dayRateLabel: "€300 to €350 / day",
+    dayRateBand: 0,
+    rateMin: 254,
+    rateMax: 297,
+    salaryAnnualLabel: "€36,000 to €40,000 / year",
+    salaryAnnual: 30508,
+    salaryAnnualMax: 33898,
+    available: true,
+    availableFor: ["contract", "permanent"],
+    summary:
+      "A balancing specialist who also designs the screens. Learned his trade inside a fail-fast prototyping pipeline at a top-tier casual studio, owning every UI mock-up and visual flow on one-week turnarounds and going into Unity himself to fix implementations. Former producers from that studio have since rehired him to do economy and UI work on new titles.",
+    skills: [
+      "Game economy & balancing",
+      "Mobile F2P",
+      "Feature design",
+      "LiveOps",
+      "UI/UX",
+      "Wireframing & visual mock-ups",
+      "Figma",
+      "Rapid prototyping",
+      "Unity",
+      "Data analytics",
+      "Spreadsheet balancing",
+      "Remote, async collaboration",
+    ],
+    experience: [
+      "Mobile F2P game designer specialising in economy balancing, UI/UX and rapid prototyping, across live titles, new games and prototypes.",
+      "At a top-tier casual games studio, hired to continue design on launched games and brought onto a fully remote action-adventure title struggling with retention, helping lead its design: proposing new features and producing mock-ups for the art team, all asynchronously.",
+      "Moved into the studio's prototyping pod, which crash-tested new games against hard KPIs and killed what didn't work. On one-week turnarounds every screen was being tested, so the visuals had to be right first time; his lead had no bandwidth, so he owned all mock-up work.",
+      "Studio policy meant artists took a final pass on his mock-ups, so he went into Unity himself to sort out implementation and close the gap between design and build.",
+      "Freelanced afterwards with former producers from that studio on UI and balancing for new titles in the board/dice-progression genre (Monopoly GO-style). Repeat work from the same collaborators.",
+      "Short contract at a large European mobile studio on pure UI design plus economy balancing for an unannounced title.",
+    ],
+    motivations:
+      "Lives and breathes game design, and is always prototyping his own ideas outside work. Thrives in fast, fail-fast environments where ideas are tested quickly and the data decides. Knows that prototyping model from the inside and wants to keep working that way, close to the numbers and close to the screens.",
+    recruiterNotes: [
+      "Balancing is his home turf. He fills Figma with proposals and mocks how each one looks on the phone, so teams see the idea, not a document.",
+      "Rare mix of economy depth and screen-level UI skill: he can balance the system and design the screens that explain it to players, then get into Unity to see it built properly.",
+      "Proven in remote, asynchronous teams, and trusted enough that former producers have come back to hire him again.",
     ],
   },
 ];

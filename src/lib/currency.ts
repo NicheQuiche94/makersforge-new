@@ -73,7 +73,9 @@ export function formatRate(
 ): string {
   const symbol = CURRENCY_SYMBOLS[currency];
   const rate = RATES[currency];
-  const unit = period === "year" ? 1000 : 100;
+  // Day-rate ranges round to 50 so "€300 to €350" doesn't become
+  // "€300 to €400"; single day rates keep the original 100 (2026-10-27).
+  const unit = period === "year" ? 1000 : maxInGbp !== undefined ? 50 : 100;
   const convert = (n: number) => {
     const rounded = Math.round((n * rate) / unit) * unit;
     return new Intl.NumberFormat("en-GB").format(rounded);

@@ -74,6 +74,17 @@
      Both tones clear the AA contrast floor on --bg and --bg-deep. */
   --dim: rgba(14, 15, 17, 0.72);
   --mute: rgba(14, 15, 17, 0.52);
+
+  /* Discipline palette (2026-10-27): the Talent Directory tile colours,
+     shared so the same colour means the same thing site-wide. Heat stays
+     the one loud accent; these are for tiles, stats and dividers. */
+  --tone-heat: linear-gradient(135deg, #ff8a00, #ff3d00);
+  --tone-violet: linear-gradient(135deg, #8b5cf6, #5b21b6);
+  --tone-blue: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  --tone-green: linear-gradient(135deg, #22c55e, #15803d);
+  --tone-gold: linear-gradient(135deg, #f5b300, #c27c00);
+  /* A sweep through the palette (contract pricing card top edge). */
+  --spectrum: linear-gradient(90deg, #ff6a00, #f5b300, #22c55e, #3b82f6, #8b5cf6);
 }
 
 /* =========================================================

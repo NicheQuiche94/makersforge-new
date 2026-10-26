@@ -70,3 +70,6 @@ docs/companies-radar.md
 src/data/aggregator-companies.json
 docs/aggregator-roles.md
 src/data/ats-resolved.json
+
+# Talent Directory source — candidate PII (names, salaries, call notes). NEVER commit; repo is public.
+/talent/

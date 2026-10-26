@@ -19,7 +19,6 @@ export function SegmentPage({ segment }: { segment: Segment }) {
   return (
     <>
       <HeroPanel
-        kicker={segment.kicker}
         headline={segment.headline}
         lede={segment.lede}
         ctas={{

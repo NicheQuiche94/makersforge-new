@@ -27,6 +27,7 @@ const DISCIPLINE_CATEGORIES: Record<Profile["discipline"], JobCategory[]> = {
   creative: ["marketing-art", "creative-strategy"],
   aso: ["aso"],
   product: [],
+  design: [],
 };
 
 export type LocationFit =

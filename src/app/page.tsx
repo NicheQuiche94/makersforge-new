@@ -30,8 +30,7 @@ export default function HomePage() {
   return (
     <>
       <HeroPanel
-        kicker="Recruitment for mobile games & apps"
-        headline={["From 500", "candidates", "to 5."]}
+        headline={["500 candidates to 5."]}
         lede="We headhunt the people who'll never see your job ad, screen them properly, and hand you 5 you'd want to hire, within 5 working days."
         ctas={{
           primary: { href: "#brief", label: "Brief us a role" },

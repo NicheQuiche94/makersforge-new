@@ -97,7 +97,7 @@
   font-weight: 400;
   /* Three lines now, so a calmer cap (was 168px, felt like too much
      over-long lines per Andre 2026-07-19). */
-  font-size: clamp(44px, 7.5vw, 120px);
+  font-size: clamp(44px, 9.5vw, 150px);
   line-height: 0.94;
   letter-spacing: -0.04em;
   /* text-transform: lowercase dropped per Andre 2026-05-30 v4 — the
@@ -112,6 +112,9 @@
 .headlineLine {
   display: block;
   color: #fff;
+  /* One-line headline wraps evenly on narrow screens ("500 candidates
+     / to 5.") rather than leaving a lone word behind. */
+  text-wrap: balance;
 }
 
 /* Hero lede — supports the headline, doesn't compete with it. Lighter

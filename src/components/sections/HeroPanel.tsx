@@ -45,7 +45,7 @@ type HeroCta = { href: string; label: string };
 type HeroPanelProps = {
   /** Pulse-dot kicker top-left (segment pages). */
   kicker?: string;
-  headline?: [string, string, string];
+  headline?: string[];
   lede?: string;
   /** Two CTAs; without them the hero falls back to the three doors. */
   ctas?: { primary: HeroCta; secondary: HeroCta };
@@ -63,18 +63,21 @@ export function HeroPanel({
   return (
     <section className={`heat-glow ${styles.hero}`} data-nav-gradient>
       <div className={styles.inner}>
-        <div className={styles.top}>
-          {kicker ? (
+        {/* Without a kicker the masthead would sit alone above the
+            headline as a stray eyebrow (Andre 2026-10-27), so the whole
+            top row goes. */}
+        {kicker ? (
+          <div className={styles.top}>
             <p className={styles.kicker}>
               <span className={styles.pulseDot} aria-hidden="true" />
               {kicker}
             </p>
-          ) : null}
-          <div className={styles.masthead}>
-            <span>Est. 2024</span>
-            <span>a SeedCraft venture</span>
+            <div className={styles.masthead}>
+              <span>Est. 2024</span>
+              <span>a SeedCraft venture</span>
+            </div>
           </div>
-        </div>
+        ) : null}
 
         <div className={styles.main}>
           <h1 className={styles.headline}>

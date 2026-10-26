@@ -15,45 +15,45 @@ export function CaseStudy() {
       <div className={`container ${styles.contentAbove}`}>
         <header className={styles.header}>
           <p className="kicker">Case study</p>
-          <h2 className={styles.h2}>3.5 years. Every hire, the same way.</h2>
+          <h2 className={styles.h2}>22 hires. They only had to decide.</h2>
         </header>
 
         <div className={styles.caseGrid}>
           <div className={`card-shadow ${styles.card} ${styles.caseStory}`}>
-            <p className={styles.caseKicker}>Lessmore · Forge Master, We Are Warriors</p>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logos/lessmore.png" alt="Lessmore" className={styles.caseLogo} />
+            <p className={styles.caseKicker}>Forge Master · We Are Warriors</p>
             <h3 className={styles.caseTitle}>No job ads. No 500-CV inbox.</h3>
             <p>
-              Lessmore, the studio behind Forge Master and We Are Warriors, has
-              recruited this way for the past 3.5 years: 22 hires across their
-              teams, and 16 of them still there a year on. Every time they need
-              someone, they brief us, and within 5 working days they have 5
-              candidates worth meeting.
+              Over 3.5 years we&apos;ve made 22 hires for Lessmore, the studio
+              behind Forge Master and We Are Warriors, and 16 of them are still
+              there a year on. Each one started with a single brief and ended
+              with 5 candidates worth meeting, within 5 working days.
             </p>
             <p>
-              The time it saves them is huge: they make fast decisions without
-              compromising on quality, and their team stays focused on shipping
-              games.
+              Everything between the brief and the start date was ours, so
+              their team kept shipping games while the hiring got done.
             </p>
+
           </div>
 
-          <div>
+          <div className={styles.caseSide}>
             <div className={styles.stats}>
-              <div className={styles.stat}>
+              <div className={`card-shadow ${styles.stat} ${styles.statHeat}`}>
                 <div className={styles.statValue}>22</div>
                 <div className={styles.statLabel}>hires for Lessmore</div>
               </div>
-              <div className={styles.stat}>
+              <div className={`card-shadow ${styles.stat} ${styles.statViolet}`}>
                 <div className={styles.statValue}>5</div>
                 <div className={styles.statLabel}>working days, brief to shortlist</div>
               </div>
-              <div className={styles.stat}>
+              <div className={`card-shadow ${styles.stat} ${styles.statGreen}`}>
                 <div className={styles.statValue}>16</div>
                 <div className={styles.statLabel}>of them still there after a year</div>
               </div>
             </div>
-            <div style={{ height: 18 }} />
-            <div className={`card-shadow ${styles.card}`}>
-              <p className={styles.quote}>
+            <div className={`card-shadow ${styles.card} ${styles.caseQuote}`}>
+              <p className={`${styles.quote} ${styles.caseQuoteText}`}>
                 “One of the best recruiters I&apos;ve had the pleasure of
                 working with. Andre is fast, efficient and focuses on the
                 things that matter!”
@@ -63,6 +63,30 @@ export function CaseStudy() {
               </p>
             </div>
           </div>
+        {/* Who did what, per hire (Andre 2026-10-27). */}
+        <div className={`card-shadow ${styles.card} ${styles.split}`}>
+          <div>
+            <p className={styles.splitHead}>We handled</p>
+            <ul className={styles.splitList}>
+              <li>Headhunting and first calls</li>
+              <li>A written summary for every candidate</li>
+              <li>Booking and scheduling every interview</li>
+              <li>Feedback calls after each round</li>
+              <li>Rejections, handled properly</li>
+              <li>Offers and start dates, confirmed</li>
+            </ul>
+          </div>
+          <div>
+            <p className={`${styles.splitHead} ${styles.splitHeadThem}`}>Lessmore did</p>
+            <ul className={`${styles.splitList} ${styles.splitListThem}`}>
+              <li>Review</li>
+              <li>Interview</li>
+              <li>
+                Decide <span className={styles.thatsIt}>and that&apos;s it.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
         </div>
       </div>
     </section>
@@ -75,7 +99,7 @@ export function TalentDirectory() {
       <div className={`container ${styles.contentAbove}`}>
         <div className={styles.directory}>
           <div>
-            <div className={styles.bigNumber}>371</div>
+            <div className={styles.bigNumber}>250</div>
             <div className={styles.bigNumberLabel}>
               specialists we&apos;ve personally interviewed
             </div>

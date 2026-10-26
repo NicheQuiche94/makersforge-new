@@ -26,7 +26,7 @@ const STAGES: Stage[] = [
   },
   {
     title: "We headhunt the people who aren't looking.",
-    body: "The best candidates never see your job ad. We approach them, qualify them and sell them the role, starting from the 371 specialists we already know.",
+    body: "The best candidates never see your job ad. We approach them, qualify them and sell them the role, starting from the 250 specialists we already know.",
   },
   {
     title: "5 candidates in 5 working days.",

@@ -13,7 +13,7 @@ export const metadata: Metadata = {
    behind the "5 candidates in 5 working days" promise. Job-board-style rows
    with a Spotify-style discipline picker (TalentDirectoryApp) replace the
    old card grid + live strip. The bottom CTA sends anyone who doesn't see a
-   fit to the brief: we search all 371, not just the public profiles. */
+   fit to the brief: we search all 250, not just the public profiles. */
 export default function RosterPage() {
   return (
     <>

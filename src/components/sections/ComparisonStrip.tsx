@@ -30,7 +30,7 @@ const ROWS: Row[] = [
   },
   {
     label: "Bench you're hiring from",
-    us: "Headhunted, plus 371 specialists we've interviewed",
+    us: "Headhunted, plus 250 specialists we've interviewed",
     them: "Whoever answers the job ad",
   },
 ];
@@ -52,7 +52,6 @@ export function ComparisonStrip() {
         </div>
 
         <div className={styles.tableWrap}>
-          <div className={styles.usColumn} aria-hidden="true" />
 
           <div className={styles.table}>
             <div className={`${styles.cell} ${styles.head} ${styles.headLabel}`}>

@@ -6,9 +6,12 @@ import { useParams } from "next/navigation";
 import { Logo } from "@/components/atoms/Logo";
 import { ROSTER, BUDGET_LABELS } from "@/data/roster";
 import {
+  CURRENCIES,
+  CURRENCY_SYMBOLS,
   type Currency,
   formatRate,
   readStoredCurrency,
+  writeStoredCurrency,
 } from "@/lib/currency";
 import styles from "./spec.module.css";
 
@@ -55,7 +58,9 @@ export default function SpecPage() {
       ? "Creative production"
       : profile.discipline === "product"
         ? "Product / Monetisation"
-        : profile.discipline.toUpperCase();
+        : profile.discipline === "design"
+          ? "Game design"
+          : profile.discipline.toUpperCase();
   const openToCopy = profile.availableFor
     .map((k) => k[0].toUpperCase() + k.slice(1))
     .join(" · ");
@@ -121,11 +126,31 @@ export default function SpecPage() {
           )}
 
           <Section h="Commercials">
+            <div className={styles.currencySeg} role="group" aria-label="Currency">
+              {CURRENCIES.map((c) => (
+                <button
+                  key={c}
+                  type="button"
+                  className={currency === c ? styles.currencyOn : ""}
+                  onClick={() => {
+                    setCurrency(c);
+                    writeStoredCurrency(c);
+                  }}
+                  aria-pressed={currency === c}
+                  aria-label={`Show rates in ${c}`}
+                >
+                  {CURRENCY_SYMBOLS[c]}
+                </button>
+              ))}
+            </div>
             <dl className={styles.rates}>
-              <RateRow
-                k="Day rate (contract)"
-                v={formatRate(profile.rateMin, currency, "day", profile.rateMax)}
-              />
+              {/* Permanent-only profiles have no day rate to show. */}
+              {profile.availableFor.includes("contract") && (
+                <RateRow
+                  k="Day rate (contract)"
+                  v={formatRate(profile.rateMin, currency, "day", profile.rateMax)}
+                />
+              )}
               {profile.salaryAnnual !== undefined && (
                 <RateRow
                   k="Annual salary (permanent)"
