@@ -1,3 +1,4 @@
+import { BOOKING_URL } from "@/lib/site";
 import Link from "next/link";
 import { Logo } from "@/components/atoms/Logo";
 import styles from "./Footer.module.css";
@@ -15,7 +16,7 @@ const ROSTER_LINKS = [
 ];
 
 /* Per cofounder pass FT1–FT4:
-   - "Book a call" now points to /enquire (was the dead # placeholder).
+   - "Book a call" goes to the Cal.com booking page (2026-10-27).
    - Contact email removed from the For studios column; lives with the
      socials only (and is visible as plain text below the icon row).
    - About removed from the Company column (the link went to /#about
@@ -29,7 +30,7 @@ const STUDIO_LINKS = [
   { href: "/apps", label: "App companies" },
   { href: "/#how", label: "How it works" },
   { href: "/pricing", label: "Pricing" },
-  { href: "/enquire", label: "Book a call" },
+  { href: BOOKING_URL, label: "Book a call" },
 ];
 
 const COMPANY_LINKS = [

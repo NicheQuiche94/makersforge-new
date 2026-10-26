@@ -194,7 +194,7 @@ async function main() {
       skills,
       missing,
       contact: {
-        email: emails[0] || "",
+        email: emails[0] || p.contact?.email || "",
         otherEmails: emails.slice(1),
         linkedin: links.linkedin || folkLinkedin,
         portfolio: links.portfolio,
@@ -211,6 +211,9 @@ async function main() {
       consent: p.consent || { status: "not-asked", date: null, channel: null, note: "" },
       published: p.published || null,
       extra: p.extra || {},
+      // Added later by talent-categories.mjs and the Airtable sync; keep them.
+      ...(p.classification ? { classification: p.classification } : {}),
+      ...(p.airtableId ? { airtableId: p.airtableId, airtable: p.airtable } : {}),
     });
   }
 

@@ -13,6 +13,13 @@ const nextConfig: NextConfig = {
         destination: "/line-up",
         permanent: true,
       },
+      /* The long enquiry form never converted; it now goes straight to
+         the 15-minute Cal.com booking page (2026-10-27). */
+      {
+        source: "/enquire",
+        destination: "https://cal.com/makersforge/15",
+        permanent: false,
+      },
       {
         source: "/roster/:path*",
         destination: "/line-up/:path*",

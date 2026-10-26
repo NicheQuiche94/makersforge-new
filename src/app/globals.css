@@ -83,8 +83,9 @@
   --tone-blue: linear-gradient(135deg, #3b82f6, #1d4ed8);
   --tone-green: linear-gradient(135deg, #22c55e, #15803d);
   --tone-gold: linear-gradient(135deg, #f5b300, #c27c00);
-  /* A sweep through the palette (contract pricing card top edge). */
-  --spectrum: linear-gradient(90deg, #ff6a00, #f5b300, #22c55e, #3b82f6, #8b5cf6);
+  /* Signature spectrum: the six discipline colours of the splash hexagon.
+     Used sparingly as a top edge (contract card, free-candidates form, footer). */
+  --spectrum: linear-gradient(90deg, #ff5d00, #f5b300, #22c55e, #3b82f6, #8b5cf6, #ec4899);
 }
 
 /* =========================================================

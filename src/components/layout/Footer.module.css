@@ -201,3 +201,20 @@
 .collab a:hover {
   text-decoration-color: #ff5d00;
 }
+
+/* Signature spectrum edge (2026-10-27): the six discipline colours from
+   the splash hexagon, used sparingly (contract card, free-candidates form,
+   here). */
+.foot {
+  position: relative;
+  border-top: 0;
+}
+.foot::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--spectrum);
+}

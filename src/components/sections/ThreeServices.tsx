@@ -1,3 +1,4 @@
+import { BOOKING_URL } from "@/lib/site";
 import Link from "next/link";
 import styles from "./ThreeServices.module.css";
 import { CornerGlow } from "./CornerGlow";
@@ -19,7 +20,7 @@ const SERVICES = [
     service: "Recruitment",
     who: "For companies",
     body: "Need a UA manager, a product designer or a Unity engineer for your game or app? Tell us the brief and we'll introduce you to people from the lineup who fit, ready to start.",
-    href: "/enquire",
+    href: BOOKING_URL,
     cta: "Book a briefing",
   },
   {
@@ -27,7 +28,7 @@ const SERVICES = [
     service: "Targeted search",
     who: "When the lineup doesn't fit",
     body: "Nobody right on the lineup? We run the search ourselves, only in games and apps, for permanent and contract roles. Same flat fee either way.",
-    href: "/enquire",
+    href: BOOKING_URL,
     cta: "Brief a search",
   },
 ];

@@ -1,3 +1,4 @@
+import { BOOKING_URL } from "@/lib/site";
 import Link from "next/link";
 import styles from "./JobCtas.module.css";
 
@@ -42,7 +43,7 @@ export function HiringCTA() {
           A vetted bench of UA managers and marketing artists, ready when you
           are.
         </p>
-        <Link href="/enquire" className={`btn btn-light ${styles.btn}`}>
+        <Link href={BOOKING_URL} className={`btn btn-light ${styles.btn}`}>
           <span>Talk to MakersForge</span>
           <span aria-hidden="true">→</span>
         </Link>

@@ -1,3 +1,4 @@
+import { BOOKING_URL } from "@/lib/site";
 import type { Metadata } from "next";
 import { HeroPanel } from "@/components/sections/HeroPanel";
 import { LogoWall } from "@/components/sections/LogoWall";
@@ -31,10 +32,10 @@ export default function HomePage() {
       <HeroPanel
         headline={["500 candidates to 5."]}
         ledeLead="A job ad gets you 500 CVs to sift through."
-        lede="Brief us instead: we headhunt, call and screen, then hand you the 5 worth meeting, within 5 working days."
+        lede="Brief us instead: we headhunt, call and screen, then hand you a shortlist of 5 you'd want to hire, within 5 working days."
         ctas={{
-          primary: { href: "#brief", label: "Brief us a role" },
-          secondary: { href: "/enquire", label: "Book a 15-min call" },
+          primary: { href: "#brief", label: "Try us: 3 free profiles" },
+          secondary: { href: BOOKING_URL, label: "Book a 15-min call" },
         }}
         links={[
           { href: "/games", label: "For mobile game studios" },
@@ -52,9 +53,9 @@ export default function HomePage() {
       <Explainer />
       <TalentDirectory />
       <WhatWeCover title="Who we hire for." />
-      <FAQ />
       <HeatBreak />
       <QuickBrief />
+      <FAQ />
     </>
   );
 }

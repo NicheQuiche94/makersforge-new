@@ -98,7 +98,7 @@ export function HeroPanel({
 
           {ctas ? (
             <div className={styles.ctas}>
-              <Button href={ctas.primary.href} variant="light" arrow>
+              <Button href={ctas.primary.href} variant="light" arrow className={styles.spectrumBtn}>
                 {ctas.primary.label}
               </Button>
               <Button href={ctas.secondary.href} variant="on-dark">

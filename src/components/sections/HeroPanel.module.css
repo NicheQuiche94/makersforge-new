@@ -314,3 +314,45 @@
   color: #fff;
   border-bottom-color: #fff;
 }
+
+/* Hero entrance (2026-10-27). --hero-delay is 1.5s on a first visit so it
+   plays as the splash fades; the splash skip-script sets it to 0. */
+@keyframes heroIn {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.headlineLine,
+.heroLede,
+.ctas {
+  animation: heroIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--hero-delay, 0s);
+}
+.heroLede {
+  animation-delay: calc(var(--hero-delay, 0s) + 0.12s);
+}
+.ctas {
+  animation-delay: calc(var(--hero-delay, 0s) + 0.24s);
+}
+
+/* Signature spectrum ring on the lead CTA (2026-10-27). The white fill sits
+   in the padding box; the six-colour sweep shows through the border. */
+.spectrumBtn {
+  border: 3px solid transparent !important;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    conic-gradient(from 0deg, #ff5d00, #f5b300, #22c55e, #3b82f6, #8b5cf6, #ec4899, #ff5d00) border-box !important;
+}
+/* Hover matches the site's light-button invert (ink fill, white text) with
+   the ring kept; the white fill above was blocking it and hid the label. */
+.spectrumBtn:hover {
+  color: #fff !important;
+  background:
+    linear-gradient(var(--ink), var(--ink)) padding-box,
+    conic-gradient(from 0deg, #ff5d00, #f5b300, #22c55e, #3b82f6, #8b5cf6, #ec4899, #ff5d00) border-box !important;
+}

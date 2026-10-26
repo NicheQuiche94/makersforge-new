@@ -23,13 +23,13 @@ export function Explainer() {
     <section className={styles.section}>
       <CornerGlow variant="tlSoft" />
       <div className={`container ${styles.contentAbove}`}>
-        <header className={styles.header}>
+        <header className={`reveal ${styles.header}`}>
           <p className="kicker">The difference</p>
           <h2 className={styles.h2}>Post a job ad, or brief us.</h2>
         </header>
 
         <div className={styles.versus}>
-          <div className={`card-shadow ${styles.vsPanel} ${styles.vsThem}`}>
+          <div className={`reveal card-shadow ${styles.vsPanel} ${styles.vsThem}`}>
             <div className={styles.vsNumber}>500</div>
             <p className={styles.vsLabel}>applicants from a job ad</p>
             <ul className={styles.vsList}>
@@ -40,7 +40,7 @@ export function Explainer() {
               ))}
             </ul>
           </div>
-          <div className={`card-shadow ${styles.vsPanel} ${styles.vsUs}`}>
+          <div className={`reveal d1 card-shadow ${styles.vsPanel} ${styles.vsUs}`}>
             <div className={styles.vsNumber}>5</div>
             <p className={styles.vsLabel}>candidates from a MakersForge brief</p>
             <ul className={styles.vsList}>

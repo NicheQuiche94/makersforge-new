@@ -122,7 +122,10 @@ export function TalentDirectoryApp() {
         </p>
         <p className={styles.honestNote}>
           Profiles go up as people opt in, so new ones land every week. Brief
-          us and we search all {INTERVIEWED}, not just the ones live here.
+          us and we search all {INTERVIEWED}, not just the ones live here.{" "}
+          <Link href="/#brief" className={styles.honestLink}>
+            Hiring for a role? Try us: 3 matching profiles, free <span aria-hidden="true">→</span>
+          </Link>
         </p>
 
         {/* Discipline picker — Spotify "browse all" style tiles */}
@@ -254,7 +257,7 @@ export function TalentDirectoryApp() {
               who&apos;ve opted in. We&apos;ll search all {INTERVIEWED} for you.
             </p>
             <Link href="/#brief" className={styles.emptyCta}>
-              Brief us a role <span aria-hidden="true">→</span>
+              Try us free <span aria-hidden="true">→</span>
             </Link>
           </div>
         ) : null}

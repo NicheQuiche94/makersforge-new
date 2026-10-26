@@ -66,7 +66,7 @@ export function WhatWeCover({
     <section className={styles.section}>
       <CornerGlow variant="trSoft" />
       <div className={`container ${styles.contentAbove}`}>
-        <header className={styles.header}>
+        <header className={`reveal ${styles.header}`}>
           <p className="kicker">What we cover</p>
           <h2 className={styles.h2}>
             {title}
@@ -74,10 +74,11 @@ export function WhatWeCover({
         </header>
 
         <div className={styles.grid}>
-          {clusters.map((cluster) => (
+          {clusters.map((cluster, i) => (
             <div
               key={cluster.label}
-              className={`card-shadow ${styles.cluster} ${styles.toned} ${styles[`tone_${toneFor(cluster.label)}`]}`}
+              className={`reveal card-shadow ${styles.cluster} ${styles.toned} ${styles[`tone_${toneFor(cluster.label)}`]}`}
+              style={{ transitionDelay: `${i * 0.08}s` }}
             >
               <span className={styles.shape} aria-hidden="true" />
               <h3 className={styles.clusterLabel}>{cluster.label}</h3>

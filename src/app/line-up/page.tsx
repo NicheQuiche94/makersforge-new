@@ -27,8 +27,8 @@ export default function RosterPage() {
             <em style={{ fontStyle: "italic", color: "#fff" }}>right person?</em>
           </>
         }
-        body="These are only the specialists who've opted in to a public profile. Brief us and we'll search everyone we know, then headhunt beyond them: 5 candidates in 5 working days."
-        cta={{ label: "Brief us a role", href: "/#brief" }}
+        body="These are only the specialists who've opted in to a public profile. Send us the role and we'll send 3 matching profiles from everyone we know, free, so you can judge us before agreeing anything."
+        cta={{ label: "Try us free", href: "/#brief" }}
       />
     </>
   );

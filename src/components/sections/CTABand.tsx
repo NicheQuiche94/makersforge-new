@@ -1,3 +1,4 @@
+import { BOOKING_URL } from "@/lib/site";
 import type { ReactNode } from "react";
 import { Button } from "@/components/atoms/Button";
 import { Logo } from "@/components/atoms/Logo";
@@ -17,7 +18,7 @@ type CTABandProps = {
 export function CTABand({
   headline,
   body,
-  cta = { label: "book a 20-min call", href: "/enquire" },
+  cta = { label: "book a 20-min call", href: BOOKING_URL },
   compact = false,
 }: CTABandProps) {
   return (

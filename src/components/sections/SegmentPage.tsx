@@ -1,3 +1,4 @@
+import { BOOKING_URL } from "@/lib/site";
 import type { Segment } from "@/data/segments";
 import { HeroPanel } from "./HeroPanel";
 import { LogoWall } from "./LogoWall";
@@ -23,8 +24,8 @@ export function SegmentPage({ segment }: { segment: Segment }) {
         ledeLead="A job ad gets you 500 CVs to sift through."
         lede={segment.lede}
         ctas={{
-          primary: { href: "#brief", label: "Brief us a role" },
-          secondary: { href: `/enquire?industry=${segment.industry}`, label: "Book a 15-min call" },
+          primary: { href: "#brief", label: "Try us: 3 free profiles" },
+          secondary: { href: BOOKING_URL, label: "Book a 15-min call" },
         }}
       />
       {segment.showLogoWall ? <LogoWall /> : null}
@@ -35,9 +36,9 @@ export function SegmentPage({ segment }: { segment: Segment }) {
       <Explainer />
       <TalentDirectory />
       <WhatWeCover title={segment.coverTitle} clusters={segment.clusters} />
-      <FAQ />
       <HeatBreak />
       <QuickBrief industry={segment.industry} />
+      <FAQ />
     </>
   );
 }

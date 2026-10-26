@@ -1,3 +1,4 @@
+import { BOOKING_URL } from "@/lib/site";
 import Link from "next/link";
 import styles from "./DualClose.module.css";
 
@@ -21,7 +22,7 @@ const DOORS = [
     kicker: "For companies",
     headline: "Build your team",
     body: "Vetted growth, product, design, engineering and art talent for your game or app, introduced direct from the lineup or found through a targeted search, on a flat fee.",
-    href: "/enquire",
+    href: BOOKING_URL,
     cta: "Book a briefing",
     tone: "heat" as const,
   },

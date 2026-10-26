@@ -7,3 +7,13 @@ export const SITE_URL = (
 export function absoluteUrl(path: string): string {
   return `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`;
 }
+
+/** 15-minute intro call (Cal.com, synced to Andre's Gmail calendar).
+ *  Replaced the long /enquire form everywhere on 2026-10-27; /enquire now
+ *  redirects here. */
+export const BOOKING_URL = "https://cal.com/makersforge/15";
+
+/** Booking link with a note pre-filled, e.g. which profile they asked about. */
+export function bookingUrl(notes?: string): string {
+  return notes ? `${BOOKING_URL}?notes=${encodeURIComponent(notes)}` : BOOKING_URL;
+}

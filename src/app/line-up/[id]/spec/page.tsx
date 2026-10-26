@@ -1,5 +1,6 @@
 "use client";
 
+import { InterviewRequest } from "@/components/sections/InterviewRequest";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -250,26 +251,9 @@ export default function SpecPage() {
             </dl>
           </Section>
 
-          {/* Primary action lives on the spec page (moved off the
-              lineup card so the card stayed clean). Request Interview
-              flows through /enquire with the codename pre-attached. */}
-          <div className={styles.ctaBand}>
-            <div className={styles.ctaBandInner}>
-              <p className={styles.ctaBandCopy}>
-                Like what you see? We'll set up a call so you can meet{" "}
-                <span className={styles.ctaBandCodename}>
-                  {profile.codename}
-                </span>{" "}
-                directly.
-              </p>
-              <Link
-                href={`/enquire?profile=${encodeURIComponent(profile.codename)}`}
-                className={styles.ctaBandBtn}
-              >
-                Request interview <span aria-hidden="true">→</span>
-              </Link>
-            </div>
-          </div>
+          {/* Two routes to the interview: in writing, or a call with us
+              (never mistaken for a call with the candidate). 2026-10-27. */}
+          <InterviewRequest codename={profile.codename} />
         </div>
 
         <footer className={styles.foot}>

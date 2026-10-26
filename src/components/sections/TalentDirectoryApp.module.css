@@ -20,6 +20,11 @@
 .honest {
   margin-bottom: 6px;
 }
+.honestLink {
+  color: var(--ink);
+  font-weight: 600;
+  white-space: nowrap;
+}
 .honestNote {
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-size: 14px;
@@ -153,19 +158,25 @@
   border-radius: 14px;
   padding: 12px;
 }
+/* Same 2px border at rest and on focus so nothing jumps: grey at rest,
+   the signature spectrum ring while typing (2026-10-27). */
 .search {
   flex: 1 1 240px;
   font: inherit;
   font-size: 15px;
-  padding: 11px 14px;
-  border: 1px solid var(--hair-strong);
+  padding: 10px 13px;
+  border: 2px solid transparent;
   border-radius: 10px;
-  background: var(--bg);
+  background:
+    linear-gradient(var(--bg), var(--bg)) padding-box,
+    linear-gradient(var(--hair-strong), var(--hair-strong)) border-box;
   color: var(--ink);
 }
 .search:focus {
-  outline: 2px solid #ff5d00;
-  outline-offset: 1px;
+  outline: none;
+  background:
+    linear-gradient(var(--paper), var(--paper)) padding-box,
+    conic-gradient(from 0deg, #ff5d00, #f5b300, #22c55e, #3b82f6, #8b5cf6, #ec4899, #ff5d00) border-box;
 }
 .seg {
   display: inline-flex;

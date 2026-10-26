@@ -21,12 +21,12 @@ type Stage = {
 // "from 500 candidates to 5" — not the lineup-first access model.
 const STAGES: Stage[] = [
   {
-    title: "Brief us in 30 minutes.",
-    body: "One call about the role, the team and what great looks like. That's all the admin you'll do.",
+    title: "Try us free.",
+    body: "Send us a role or a job spec and we'll send 3 anonymised profiles from people we've already interviewed. No terms, no obligation.",
   },
   {
-    title: "We headhunt the people who aren't looking.",
-    body: "The best candidates never see your job ad. We approach them, qualify them and sell them the role, starting from the 250 specialists we already know.",
+    title: "Brief us. We headhunt.",
+    body: "Like what you see? Agree terms, give us 30 minutes on the role, and we headhunt the people who never see your job ad, starting from the 250 specialists we know.",
   },
   {
     title: "5 candidates in 5 working days.",
@@ -48,23 +48,23 @@ export function HowItWorksBento() {
       <CornerGlow variant="tlSoft" />
       <div className={`container ${styles.contentAbove}`}>
         <div className={styles.split}>
-          <div className={styles.left}>
+          <div className={`reveal ${styles.left}`}>
             <p className="kicker">How it works</p>
             <h2 className={styles.header}>From 500 to 5.</h2>
             <p className={styles.body}>
-              Five steps from a 30-minute brief to your next hire.
+              Five steps from 3 free profiles to your next hire.
             </p>
             <Link href="#brief" className={styles.cta}>
               <span className={styles.ctaArrow} aria-hidden="true">
                 ↳
               </span>
-              Brief us a role
+              Try us free
             </Link>
           </div>
 
           <div className={styles.right}>
             {STAGES.map((stage, i) => (
-              <div key={i} className={`card-shadow ${styles.stage} ${styles[`tone${i}`]}`}>
+              <div key={i} className={`reveal card-shadow ${styles.stage} ${styles[`tone${i}`]}`} style={{ transitionDelay: `${i * 0.08}s` }}>
                 <span className={styles.stageNum} aria-hidden="true">
                   {String(i + 1).padStart(2, "0")}
                 </span>

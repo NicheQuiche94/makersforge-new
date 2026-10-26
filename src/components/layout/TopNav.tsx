@@ -105,8 +105,9 @@ export function TopNav({ activeHref }: { activeHref?: string }) {
                 </li>
               ))}
             </ul>
-            <Link href="/enquire" className={styles.cta}>
-              Book a call
+            {/* Lead offer (Andre 2026-10-27): free candidates, not a call. */}
+            <Link href="/#brief" className={styles.cta}>
+              Try us free
             </Link>
           </div>
         </div>

@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { Splash } from "./Splash";
 
 /**
  * Mount once near the top of the layout to activate scroll-reveal
@@ -14,5 +15,8 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 export function ScrollRevealRoot() {
   const pathname = usePathname();
   useScrollReveal(undefined, pathname);
-  return null;
+  // Brand splash rides along here so it needs no layout change. This
+  // component persists across client navigations, so the CSS animation
+  // only ever plays on a full page load (and once per session, see Splash).
+  return <Splash />;
 }

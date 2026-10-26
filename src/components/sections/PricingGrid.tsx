@@ -1,3 +1,4 @@
+import { BOOKING_URL } from "@/lib/site";
 import { Button } from "@/components/atoms/Button";
 import styles from "./PricingGrid.module.css";
 
@@ -52,7 +53,7 @@ export function PricingGrid() {
               <li>Growth, UA, Product, Design, Engineering, Art, Data</li>
             </ul>
             <div className={styles.ctaWrap}>
-              <Button href="/enquire" variant="light" arrow>
+              <Button href={BOOKING_URL} variant="light" arrow>
                 Enquire about permanent
               </Button>
             </div>
@@ -92,7 +93,7 @@ export function PricingGrid() {
               <li>Scale up or down month-to-month</li>
             </ul>
             <div className={styles.ctaWrap}>
-              <Button href="/enquire" variant="primary" arrow>
+              <Button href={BOOKING_URL} variant="primary" arrow>
                 Talk to us about a hire
               </Button>
             </div>

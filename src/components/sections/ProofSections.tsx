@@ -13,13 +13,13 @@ export function CaseStudy() {
     <section className={styles.section} id="proof">
       <CornerGlow variant="trSoft" />
       <div className={`container ${styles.contentAbove}`}>
-        <header className={styles.header}>
+        <header className={`reveal ${styles.header}`}>
           <p className="kicker">Case study</p>
           <h2 className={styles.h2}>22 hires without the fuss.</h2>
         </header>
 
         <div className={styles.caseGrid}>
-          <div className={`card-shadow ${styles.card} ${styles.caseStory}`}>
+          <div className={`reveal card-shadow ${styles.card} ${styles.caseStory}`}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/logos/lessmore.png" alt="Lessmore" className={styles.caseLogo} />
             <p className={styles.caseKicker}>Forge Master · We Are Warriors</p>
@@ -43,7 +43,7 @@ export function CaseStudy() {
 
           </div>
 
-          <div className={styles.caseSide}>
+          <div className={`reveal d1 ${styles.caseSide}`}>
             <div className={styles.stats}>
               <div className={`card-shadow ${styles.stat} ${styles.statHeat}`}>
                 <div className={styles.statValue}>22</div>
@@ -70,7 +70,7 @@ export function CaseStudy() {
             </div>
           </div>
         {/* Who did what, per hire (Andre 2026-10-27). */}
-        <div className={`card-shadow ${styles.card} ${styles.split}`}>
+        <div className={`reveal card-shadow ${styles.card} ${styles.split}`}>
           <div>
             <p className={styles.splitHead}>We handled</p>
             <ul className={styles.splitList}>
@@ -103,7 +103,7 @@ export function TalentDirectory() {
   return (
     <section className={`${styles.section} ${styles.sectionAlt}`}>
       <div className={`container ${styles.contentAbove}`}>
-        <div className={styles.directory}>
+        <div className={`reveal ${styles.directory}`}>
           <div>
             <div className={styles.bigNumber}>250</div>
             <div className={styles.bigNumberLabel}>
@@ -157,13 +157,13 @@ export function Testimonials() {
     <section className={styles.section}>
       <CornerGlow variant="tlSoft" />
       <div className={`container ${styles.contentAbove}`}>
-        <header className={styles.header}>
+        <header className={`reveal ${styles.header}`}>
           <p className="kicker">What studios say</p>
           <h2 className={styles.h2}>Hiring teams who&apos;ve done it this way.</h2>
         </header>
         <div className={`${styles.quotes} ${styles.quotesTwo}`}>
           {TESTIMONIALS.map((t) => (
-            <figure key={t.name} className={`card-shadow ${styles.card}`} style={{ margin: 0 }}>
+            <figure key={t.name} className={`reveal card-shadow ${styles.card}`} style={{ margin: 0, transitionDelay: `${TESTIMONIALS.indexOf(t) * 0.1}s` }}>
               <blockquote className={styles.quote} style={{ margin: "0 0 14px" }}>
                 “{t.quote}”
               </blockquote>

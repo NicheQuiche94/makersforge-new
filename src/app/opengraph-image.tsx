@@ -72,7 +72,7 @@ export default async function OpengraphImage() {
             A job ad gets you 500 CVs to sift through.
           </div>
           <div style={{ display: "flex", fontSize: 30, marginTop: 10, letterSpacing: -0.3, opacity: 0.86, maxWidth: 900 }}>
-            We hand you the 5 worth meeting, in 5 working days.
+            We hand you a shortlist of 5, in 5 working days.
           </div>
         </div>
 
