@@ -32,10 +32,10 @@ export const SEGMENTS: Record<Segment["slug"], Segment> = {
     industry: "games",
     metaTitle: "Hiring for mobile game studios · MakersForge",
     metaDescription:
-      "UA and growth, game and marketing art, Unity and Unreal engineers, product, LiveOps and data for mobile game studios. From our lineup, or a targeted search. Flat fees.",
+      "UA and growth, game and marketing art, Unity engineers, product, LiveOps and data for mobile game studios. From our lineup, or a targeted search. Flat fees.",
     kicker: "For mobile game studios",
     headline: ["Hiring for", "mobile game", "studios."],
-    lede: "UA and growth, game and marketing art, Unity and Unreal engineers, product, LiveOps and data. Straight from our lineup, or a targeted search when no one on it fits. Flat fees, never a cut of salary.",
+    lede: "UA and growth, game and marketing art, Unity engineers, product, LiveOps and data. Straight from our lineup, or a targeted search when no one on it fits. Flat fees, never a cut of salary.",
     coverTitle: "Every seat in a mobile game studio.",
     clusters: [
       {
@@ -48,7 +48,7 @@ export const SEGMENTS: Record<Segment["slug"], Segment> = {
       },
       {
         label: "Engineering",
-        roles: ["Unity & Unreal engineers", "Gameplay engineers", "Backend & live services"],
+        roles: ["Unity engineers", "Gameplay engineers", "Backend & live services"],
       },
       {
         label: "Product & game design",

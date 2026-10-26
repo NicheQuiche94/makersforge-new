@@ -31,7 +31,7 @@ const CLUSTERS: Cluster[] = [
   },
   {
     label: "Engineering",
-    roles: ["iOS & Android engineers", "Unity & Unreal engineers", "Backend engineers"],
+    roles: ["iOS & Android engineers", "Unity engineers", "Backend engineers"],
   },
   {
     label: "Data",

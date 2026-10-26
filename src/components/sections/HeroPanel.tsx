@@ -24,7 +24,7 @@ const DOORS = [
     href: "/games",
     kicker: "Hiring",
     title: "I'm a mobile game studio",
-    sub: "UA, art, Unity & Unreal, LiveOps",
+    sub: "UA, art, Unity, LiveOps",
   },
   {
     href: "/apps",
