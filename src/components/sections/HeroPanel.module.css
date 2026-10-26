@@ -126,9 +126,26 @@
   font-weight: 500;
   font-size: clamp(16px, 1.4vw, 20px);
   line-height: 1.45;
-  color: rgba(255, 255, 255, 0.82);
+  /* Brighter than before so it isn't skimmed past, still below the
+     pure-white headline (Andre 2026-10-27). */
+  color: rgba(255, 255, 255, 0.92);
   margin: 0;
-  max-width: 560px;
+  max-width: 600px;
+}
+/* The "job ad" line: the problem, on its own line, a step up in size. */
+.ledeLead {
+  display: block;
+  /* Figtree semibold, not Cal Sans: at this size the display face
+     felt heavy and cramped (Andre 2026-10-27). */
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: clamp(22px, 2.2vw, 30px);
+  line-height: 1.2;
+  /* Figtree semibold reads loose at default tracking; pull it in to sit
+     between the Cal Sans headline and the body text. */
+  letter-spacing: -0.022em;
+  color: rgba(255, 255, 255, 0.96);
+  margin-bottom: 12px;
 }
 
 .ctas {

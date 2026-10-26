@@ -20,6 +20,7 @@ export function SegmentPage({ segment }: { segment: Segment }) {
     <>
       <HeroPanel
         headline={segment.headline}
+        ledeLead="A job ad gets you 500 CVs to sift through."
         lede={segment.lede}
         ctas={{
           primary: { href: "#brief", label: "Brief us a role" },

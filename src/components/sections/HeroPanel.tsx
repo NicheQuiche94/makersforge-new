@@ -47,6 +47,8 @@ type HeroPanelProps = {
   kicker?: string;
   headline?: string[];
   lede?: string;
+  /** Optional first line of the lede, set larger on its own line. */
+  ledeLead?: string;
   /** Two CTAs; without them the hero falls back to the three doors. */
   ctas?: { primary: HeroCta; secondary: HeroCta };
   /** Quiet text links under the CTAs (e.g. studio / apps / talent). */
@@ -57,6 +59,7 @@ export function HeroPanel({
   kicker,
   headline = ["The home for", "the teams behind", "games and apps."],
   lede = "Growth, product, design, engineering and art for mobile games and consumer apps. Tell us who you are:",
+  ledeLead,
   ctas,
   links,
 }: HeroPanelProps = {}) {
@@ -88,7 +91,10 @@ export function HeroPanel({
             ))}
           </h1>
 
-          <p className={styles.heroLede}>{lede}</p>
+          <p className={styles.heroLede}>
+            {ledeLead ? <span className={styles.ledeLead}>{ledeLead}</span> : null}
+            {lede}
+          </p>
 
           {ctas ? (
             <div className={styles.ctas}>
