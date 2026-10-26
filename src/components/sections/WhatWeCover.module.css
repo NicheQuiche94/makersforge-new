@@ -195,3 +195,39 @@
 .tone_green { background: linear-gradient(135deg, #22c55e, #15803d); }
 .tone_amber { background: linear-gradient(135deg, #f59e0b, #b45309); }
 .tone_ink { background: linear-gradient(135deg, #2a2b30, #0e0f11); }
+
+/* 2026-10-27 — compact: roles as chips, not a tall bulleted list. */
+.section {
+  padding: 80px 0 90px;
+}
+.header {
+  margin-bottom: 36px;
+}
+.toned {
+  padding: 20px 20px 22px;
+}
+.toned .clusterLabel {
+  margin: 0 0 14px;
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+.toned .roleList {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.toned .role {
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #fff;
+}
+.toned .role::before {
+  content: none;
+}
+.ctaRow {
+  padding-top: 26px;
+}

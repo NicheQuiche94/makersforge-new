@@ -52,9 +52,7 @@ export function HowItWorksBento() {
             <p className="kicker">How it works</p>
             <h2 className={styles.header}>From 500 to 5.</h2>
             <p className={styles.body}>
-              A job ad gets you hundreds of applicants and hours of sifting,
-              while the people you actually want never apply. We go and get
-              them, and you spend hours on hiring, not weeks.
+              Five steps from a 30-minute brief to your next hire.
             </p>
             <Link href="#brief" className={styles.cta}>
               <span className={styles.ctaArrow} aria-hidden="true">
@@ -66,7 +64,7 @@ export function HowItWorksBento() {
 
           <div className={styles.right}>
             {STAGES.map((stage, i) => (
-              <div key={i} className={`card-shadow ${styles.stage}`}>
+              <div key={i} className={`card-shadow ${styles.stage} ${styles[`tone${i}`]}`}>
                 <span className={styles.stageNum} aria-hidden="true">
                   {String(i + 1).padStart(2, "0")}
                 </span>

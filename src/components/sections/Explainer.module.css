@@ -130,3 +130,104 @@
   left: 3px;
   color: #c72e00;
 }
+
+/* ============================================================
+   2026-10-27 — "500 vs 5" split (replaces paragraph + comparison cards).
+   ============================================================ */
+.section {
+  padding: 80px 0 90px;
+}
+.versus {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.vsPanel {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  padding: 30px 32px 32px;
+}
+.vsThem {
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  color: var(--dim);
+}
+.vsUs {
+  background: linear-gradient(135deg, #ff8a00, #ff3d00);
+  color: #fff;
+}
+.vsUs::after {
+  content: "";
+  position: absolute;
+  right: -30px;
+  bottom: -40px;
+  width: 140px;
+  height: 140px;
+  border-radius: 20px;
+  transform: rotate(25deg);
+  background: rgba(255, 255, 255, 0.16);
+}
+.vsNumber {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-size: clamp(88px, 10vw, 140px);
+  line-height: 0.85;
+  letter-spacing: -0.05em;
+}
+.vsThem .vsNumber {
+  color: #c9c6bf;
+  text-decoration: line-through;
+  text-decoration-thickness: 6px;
+  text-decoration-color: rgba(14, 15, 17, 0.25);
+}
+.vsLabel {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 12px 0 20px;
+}
+.vsThem .vsLabel {
+  color: var(--dim);
+}
+.vsList {
+  position: relative;
+  z-index: 1;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.vsItemThem,
+.vsItemUs {
+  position: relative;
+  padding-left: 28px;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+.vsItemThem::before,
+.vsItemUs::before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-weight: 800;
+}
+.vsItemThem::before {
+  content: "×";
+  color: rgba(14, 15, 17, 0.35);
+}
+.vsItemUs::before {
+  content: "✓";
+  color: #fff;
+}
+@media (max-width: 760px) {
+  .versus {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

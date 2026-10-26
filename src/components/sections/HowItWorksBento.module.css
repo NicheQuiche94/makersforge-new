@@ -163,3 +163,86 @@
     height: 34px;
   }
 }
+
+/* ============================================================
+   2026-10-27 — horizontal track. The stacked 5-card column made this the
+   tallest section on the page (~1,300px). Now the 5 steps sit side by side
+   as tiles in the Talent Directory colours (one per step), so the sequence
+   reads left→right in roughly half the height. Stacks on narrow screens.
+   ============================================================ */
+.section {
+  padding: 80px 0 90px;
+}
+.left {
+  margin-bottom: 34px;
+}
+.right {
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+}
+.right .stage {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 0;
+  color: #fff;
+  padding: 20px 18px 22px;
+  min-height: 230px;
+}
+.right .stage::after {
+  content: "";
+  position: absolute;
+  right: -20px;
+  bottom: -24px;
+  width: 80px;
+  height: 80px;
+  border-radius: 12px;
+  transform: rotate(25deg);
+  background: rgba(255, 255, 255, 0.18);
+}
+.right .stageNum {
+  color: rgba(255, 255, 255, 0.85);
+}
+.right .stageTitle {
+  color: #fff;
+  font-size: 19px;
+  line-height: 1.15;
+}
+.right .stageBody {
+  position: relative;
+  z-index: 1;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+  line-height: 1.45;
+}
+.tone0 { background: linear-gradient(135deg, #ff8a00, #ff3d00); }
+.tone1 { background: linear-gradient(135deg, #8b5cf6, #5b21b6); }
+.tone2 { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+.tone3 { background: linear-gradient(135deg, #22c55e, #15803d); }
+.tone4 { background: linear-gradient(135deg, #2a2b30, #0e0f11); }
+
+@media (max-width: 1000px) {
+  .right {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .right .stage {
+    min-height: 0;
+  }
+}
+@media (max-width: 560px) {
+  .right {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.right .stageNum {
+  background: #fff;
+  color: var(--ink);
+  border: 0;
+  width: 34px;
+  height: 34px;
+  font-size: 14px;
+}
