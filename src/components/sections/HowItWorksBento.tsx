@@ -38,7 +38,7 @@ const STAGES: Stage[] = [
   },
   {
     title: "One flat fee.",
-    body: "£12,500 per permanent hire, not a percentage of salary. Contractors on a flat monthly fee.",
+    body: "£12,000 per permanent hire, not a percentage of salary. Contractors on a flat monthly fee.",
   },
 ];
 

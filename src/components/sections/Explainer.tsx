@@ -25,7 +25,7 @@ const COMPARISON: { them: string; us: string }[] = [
   },
   {
     them: "Or an agency at 20–30% of salary",
-    us: "One flat fee: £12,500 per hire",
+    us: "One flat fee: £12,000 per hire",
   },
 ];
 

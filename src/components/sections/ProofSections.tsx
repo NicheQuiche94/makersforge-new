@@ -5,18 +5,8 @@ import { CornerGlow } from "./CornerGlow";
 /**
  * Proof for the 500→5 service (2026-10-27): the Lessmore case study, the
  * MakersForge Talent Directory (the bench behind the promise) and client
- * testimonials. Anything in <Todo> is a placeholder Andre still has to
- * supply — it renders with a loud dashed outline so it can't ship unnoticed.
+ * testimonials (Lessmore figures + quotes from Andre, 2026-10-27).
  */
-
-function Todo({ note, children }: { note: string; children: React.ReactNode }) {
-  return (
-    <div className={styles.todo}>
-      <span className={styles.todoTag}>Andre: {note}</span>
-      {children}
-    </div>
-  );
-}
 
 export function CaseStudy() {
   return (
@@ -34,8 +24,9 @@ export function CaseStudy() {
             <h3 className={styles.caseTitle}>No job ads. No 500-CV inbox.</h3>
             <p>
               Lessmore, the studio behind Forge Master and We Are Warriors, has
-              recruited this way for the past 3.5 years. Every time they need
-              someone, they brief us, and 5 working days later they have 5
+              recruited this way for the past 3.5 years: 22 hires across their
+              teams, and 16 of them still there a year on. Every time they need
+              someone, they brief us, and within 5 working days they have 5
               candidates worth meeting.
             </p>
             <p>
@@ -46,34 +37,31 @@ export function CaseStudy() {
           </div>
 
           <div>
-            <Todo note="Lessmore numbers">
-              <div className={styles.stats}>
-                <div className={styles.stat}>
-                  <div className={styles.statValue}>XX</div>
-                  <div className={styles.statLabel}>hires made</div>
-                </div>
-                <div className={styles.stat}>
-                  <div className={styles.statValue}>5 days</div>
-                  <div className={styles.statLabel}>brief to shortlist</div>
-                </div>
-                <div className={styles.stat}>
-                  <div className={styles.statValue}>XX%</div>
-                  <div className={styles.statLabel}>still there after a year</div>
-                </div>
+            <div className={styles.stats}>
+              <div className={styles.stat}>
+                <div className={styles.statValue}>22</div>
+                <div className={styles.statLabel}>hires for Lessmore</div>
               </div>
-            </Todo>
+              <div className={styles.stat}>
+                <div className={styles.statValue}>5</div>
+                <div className={styles.statLabel}>working days, brief to shortlist</div>
+              </div>
+              <div className={styles.stat}>
+                <div className={styles.statValue}>16</div>
+                <div className={styles.statLabel}>of them still there after a year</div>
+              </div>
+            </div>
             <div style={{ height: 18 }} />
-            <Todo note="Lessmore quote + name">
-              <div className={`card-shadow ${styles.card}`}>
-                <p className={styles.quote}>
-                  “A one or two sentence quote from Lessmore about what working
-                  with MakersForge is like, ideally mentioning speed and quality.”
-                </p>
-                <p className={styles.quoteBy}>
-                  <strong>Name Surname</strong> · Role, Lessmore
-                </p>
-              </div>
-            </Todo>
+            <div className={`card-shadow ${styles.card}`}>
+              <p className={styles.quote}>
+                “One of the best recruiters I&apos;ve had the pleasure of
+                working with. Andre is fast, efficient and focuses on the
+                things that matter!”
+              </p>
+              <p className={styles.quoteBy}>
+                <strong>Samer Al Dafai</strong> · Co-Founder, Lessmore
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -95,7 +83,7 @@ export function TalentDirectory() {
           <div className={styles.directoryText}>
             <p className="kicker">The MakersForge Talent Directory</p>
             <h2 className={styles.h2} style={{ textAlign: "left" }}>
-              Why 5 days is possible.
+              How we hit 5 working days.
             </h2>
             <p>
               Every person in our Talent Directory has spent 30 to 90 minutes
@@ -119,8 +107,22 @@ export function TalentDirectory() {
   );
 }
 
+const TESTIMONIALS = [
+  {
+    quote:
+      "André has successfully sourced many candidates for different teams in our company. He's proven to take care of all requests reliably, whilst always treating his clients with respect and interest in understanding their products and specific employment needs. We can recommend working with André on a broad variety of roles for any studio.",
+    name: "Sophie Baker",
+    role: "Head of Operations, Lessmore",
+  },
+  {
+    quote:
+      "Andre was our go-to recruiter at Skunkworks and sourced some incredible talent for our growing company. This guy seems to have The Midas Touch when it comes to identifying potential hires, but in reality, Andre understood our business and our needs extremely well and was able to execute to close some of the best hires I've made in my career. I'm sure that's just a normal Tuesday for him.",
+    name: "James Cramer",
+    role: "Founder, Skunkworks",
+  },
+];
+
 export function Testimonials() {
-  const placeholders = [1, 2, 3];
   return (
     <section className={styles.section}>
       <CornerGlow variant="tlSoft" />
@@ -129,19 +131,16 @@ export function Testimonials() {
           <p className="kicker">What studios say</p>
           <h2 className={styles.h2}>Hiring teams who&apos;ve done it this way.</h2>
         </header>
-        <div className={styles.quotes}>
-          {placeholders.map((n) => (
-            <Todo key={n} note={`testimonial ${n}`}>
-              <div className={`card-shadow ${styles.card}`}>
-                <p className={styles.quote}>
-                  “Client quote. One or two sentences about the result: who we
-                  found, how fast, and what difference it made.”
-                </p>
-                <p className={styles.quoteBy}>
-                  <strong>Name Surname</strong> · Title, Studio
-                </p>
-              </div>
-            </Todo>
+        <div className={`${styles.quotes} ${styles.quotesTwo}`}>
+          {TESTIMONIALS.map((t) => (
+            <figure key={t.name} className={`card-shadow ${styles.card}`} style={{ margin: 0 }}>
+              <blockquote className={styles.quote} style={{ margin: "0 0 14px" }}>
+                “{t.quote}”
+              </blockquote>
+              <figcaption className={styles.quoteBy}>
+                <strong>{t.name}</strong> · {t.role}
+              </figcaption>
+            </figure>
           ))}
         </div>
       </div>

@@ -8,7 +8,8 @@ type Item = {
   a: ReactNode;
 };
 
-// 2026-10-27 drafts from the handbook; [ANDRE: …] = needs his policy/number.
+// 2026-10-27, from the handbook + Andre: no guarantee; repeat searches free
+// (fee is tied to the placement, not the process); 5 WORKING days to shortlist.
 const ITEMS: Item[] = [
   {
     q: "Why 5 candidates, not more?",
@@ -24,8 +25,9 @@ const ITEMS: Item[] = [
     q: "What if none of the 5 are right?",
     a: (
       <p>
-        Tell us why and we go again, sharper for it. [ANDRE: confirm what you
-        offer here, e.g. a second shortlist at no extra cost.]
+        Tell us why and we go again, sharper for it, at no extra cost. Our fee
+        is tied to the placement, not the process, so you only ever pay when
+        you hire.
       </p>
     ),
   },
@@ -33,7 +35,7 @@ const ITEMS: Item[] = [
     q: "How much does it cost?",
     a: (
       <p>
-        A flat £12,500 per permanent hire, not 20–30% of salary. Contractors
+        A flat £12,000 per permanent hire, not 20–30% of salary. Contractors
         are a flat monthly fee per person, and you pay their rate directly
         with no markup. You only pay when someone is hired.
       </p>
@@ -50,11 +52,12 @@ const ITEMS: Item[] = [
     ),
   },
   {
-    q: "Is there a guarantee if a hire doesn't work out?",
+    q: "How quickly do we see candidates?",
     a: (
       <p>
-        [ANDRE: your replacement terms, e.g. a free replacement if someone
-        leaves within the first 3 months.]
+        Your shortlist of 5 lands within 5 working days of the brief, so a
+        Wednesday brief means candidates by the following Wednesday. Most
+        studios then run a 3-stage process that&apos;s done within 3 weeks.
       </p>
     ),
   },

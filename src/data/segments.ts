@@ -32,7 +32,7 @@ export const SEGMENTS: Record<Segment["slug"], Segment> = {
     industry: "games",
     metaTitle: "From 500 candidates to 5 · Recruitment for mobile game studios · MakersForge",
     metaDescription:
-      "We headhunt UA, art, game design, Unity, product and LiveOps people for mobile game studios and hand you 5 screened candidates in 5 working days. Flat £12,500 per hire.",
+      "We headhunt UA, art, game design, Unity, product and LiveOps people for mobile game studios and hand you 5 screened candidates in 5 working days. Flat £12,000 per hire.",
     kicker: "For mobile game studios",
     headline: ["From 500", "candidates", "to 5."],
     lede: "UA managers, artists, game designers, Unity engineers and LiveOps people who'll never see your job ad. We find them, screen them and hand you 5 worth hiring, within 5 working days.",
@@ -70,7 +70,7 @@ export const SEGMENTS: Record<Segment["slug"], Segment> = {
     industry: "apps",
     metaTitle: "From 500 candidates to 5 · Recruitment for consumer app companies · MakersForge",
     metaDescription:
-      "We headhunt growth, UA, product, design, iOS and Android people for consumer app companies and hand you 5 screened candidates in 5 working days. Flat £12,500 per hire.",
+      "We headhunt growth, UA, product, design, iOS and Android people for consumer app companies and hand you 5 screened candidates in 5 working days. Flat £12,000 per hire.",
     kicker: "For consumer app companies",
     headline: ["From 500", "candidates", "to 5."],
     lede: "Growth and UA leads, product managers, designers and iOS and Android engineers who'll never see your job ad. We find them, screen them and hand you 5 worth hiring, within 5 working days.",

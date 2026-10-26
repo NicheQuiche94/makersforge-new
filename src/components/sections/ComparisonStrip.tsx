@@ -20,7 +20,7 @@ const ROWS: Row[] = [
   },
   {
     label: "Permanent placement",
-    us: "Flat £12,500",
+    us: "Flat £12,000",
     them: "20–30% of first-year salary",
   },
   {

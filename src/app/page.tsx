@@ -14,7 +14,7 @@ import { QuickBrief } from "@/components/sections/QuickBrief";
 // pitches — "From 500 candidates to 5" — so a click from an email lands on
 // page two of that email: promise → proof → how → bench → brief.
 const DESCRIPTION =
-  "Recruitment for mobile games and consumer apps. We headhunt the people who never see your job ad and hand you 5 screened candidates in 5 working days. Flat £12,500 per hire.";
+  "Recruitment for mobile games and consumer apps. We headhunt the people who never see your job ad and hand you 5 screened candidates in 5 working days. Flat £12,000 per hire.";
 
 export const metadata: Metadata = {
   title: "MakersForge: From 500 candidates to 5 · Mobile games & apps recruitment",

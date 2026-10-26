@@ -39,14 +39,14 @@ export function PricingGrid() {
             </h2>
             <div className={styles.amount}>
               <span className={styles.currency}>£</span>
-              <span className={styles.figure}>12,500</span>
+              <span className={styles.figure}>12,000</span>
             </div>
             <p className={styles.lede}>
               Want to bring someone on permanently instead? We headhunt and
               place them for a single flat fee. No percentage of salary, ever.
             </p>
             <ul className={styles.points}>
-              <li>Flat £12,500 per placement</li>
+              <li>Flat £12,000 per placement</li>
               <li>Same fee from the lineup or a targeted search</li>
               <li>No percentage of salary</li>
               <li>Growth, UA, Product, Design, Engineering, Art, Data</li>
