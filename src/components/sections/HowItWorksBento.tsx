@@ -34,7 +34,7 @@ const STAGES: Stage[] = [
   },
   {
     title: "Interview and hire.",
-    body: "Your process, your call. We book every interview, run feedback calls and rejections, and confirm the offer, so all you do is meet them and decide.",
+    body: "Your process, your call. We book every interview, run feedback calls and rejections, and negotiate the offer through to acceptance. You meet them, decide, and sort the contract.",
   },
   {
     title: "One flat fee.",

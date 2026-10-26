@@ -15,7 +15,7 @@ export function CaseStudy() {
       <div className={`container ${styles.contentAbove}`}>
         <header className={styles.header}>
           <p className="kicker">Case study</p>
-          <h2 className={styles.h2}>22 hires in 3.5 years. None of the admin.</h2>
+          <h2 className={styles.h2}>22 hires without the fuss.</h2>
         </header>
 
         <div className={styles.caseGrid}>
@@ -26,13 +26,19 @@ export function CaseStudy() {
             <h3 className={styles.caseTitle}>No job ads. No 500-CV inbox.</h3>
             <p>
               Over 3.5 years we&apos;ve made 22 hires for Lessmore, the studio
-              behind Forge Master and We Are Warriors, and 16 of them are still
-              there a year on. Each one started with a single brief and ended
-              with 5 candidates worth meeting, within 5 working days.
+              behind Forge Master and We Are Warriors. 16 of them are still
+              there a year on, and every one followed the same process: we
+              qualify the role, speak to the talent in our directory and then
+              the wider market, and deliver a batch of 5 candidates we believe
+              in.
             </p>
             <p>
-              Everything between the brief and the start date was ours, so
-              their team kept shipping games while the hiring got done.
+              We then manage the interviews, scheduling, feedback, rejections,
+              and the offer negotiation through to acceptance.
+            </p>
+            <p>
+              Every hire was made within a month, most in under 3 weeks, and
+              some in as little as 6 days when the need was urgent.
             </p>
 
           </div>
@@ -73,7 +79,7 @@ export function CaseStudy() {
               <li>Booking and scheduling every interview</li>
               <li>Feedback calls after each round</li>
               <li>Rejections, handled properly</li>
-              <li>Offers and start dates, confirmed</li>
+              <li>Offer negotiation through to acceptance</li>
             </ul>
           </div>
           <div>
