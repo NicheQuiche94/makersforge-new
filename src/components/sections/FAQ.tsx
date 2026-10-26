@@ -56,8 +56,9 @@ const ITEMS: Item[] = [
     a: (
       <p>
         Your shortlist of 5 lands within 5 working days of the brief, so a
-        Wednesday brief means candidates by the following Wednesday. Most
-        studios then run a 3-stage process that&apos;s done within 3 weeks.
+        Wednesday brief means candidates by the following Wednesday. From
+        there you run your own interview process; we handle the scheduling
+        and the follow-ups so it keeps moving.
       </p>
     ),
   },

@@ -34,7 +34,7 @@ const STAGES: Stage[] = [
   },
   {
     title: "Interview and hire.",
-    body: "A 3-stage interview process you can finish within 3 weeks. We run the logistics and keep everyone moving.",
+    body: "Your process, your call. We book every interview, run feedback calls and rejections, and confirm the offer, so all you do is meet them and decide.",
   },
   {
     title: "One flat fee.",
