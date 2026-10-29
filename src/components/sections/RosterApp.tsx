@@ -371,8 +371,8 @@ export function RosterApp() {
 
               <FRow label="Special expertise">
                 <ChipGroup
-                  values={["incrementality", "skan", "scaling", "liveops", "reactivation", "audience"]}
-                  labels={["Incrementality", "SKAN / measurement", "Creative scaling", "LiveOps", "Reactivation", "Audience strategy"]}
+                  values={["incrementality", "skan", "scaling", "liveops", "economy", "reactivation", "audience"]}
+                  labels={["Incrementality", "SKAN / measurement", "Creative scaling", "LiveOps", "Economy & balancing", "Reactivation", "Audience strategy"]}
                   active={filters.expertise}
                   onToggle={(v) => toggleFilter("expertise", v)}
                 />

@@ -58,6 +58,7 @@ export type Profile = {
     | "liveops"
     | "reactivation"
     | "audience"
+    | "economy"
   )[];
   dayRateLabel: string;
   dayRateBand: 0 | 1 | 2;
@@ -703,8 +704,9 @@ export const ROSTER: Profile[] = [
     industries: ["games"],
     gamesCat: ["casual", "hypercasual"],
     appsCat: [],
-    genre: ["puzzle"],
-    expertise: ["liveops"],
+    // Teliau's request 2026-10-29: RPG + board/dice (Tabletop) instead of puzzle; economy alongside LiveOps.
+    genre: ["rpg", "cards"],
+    expertise: ["economy", "liveops"],
     // Stored in GBP (site converts): ≈ €300 to €350 / day, €36,000 to €40,000 / year.
     dayRateLabel: "€300 to €350 / day",
     dayRateBand: 0,
