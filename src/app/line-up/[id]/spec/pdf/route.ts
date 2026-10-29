@@ -1,4 +1,4 @@
-import chromium from "@sparticuz/chromium";
+import chromium from "@sparticuz/chromium-min";
 import puppeteer from "puppeteer-core";
 import { ROSTER } from "@/data/roster";
 import { isCurrency } from "@/lib/currency";
@@ -9,11 +9,16 @@ import { isCurrency } from "@/lib/currency";
  * One-click PDF download of the talent spec for studios (2026-10-29).
  * Renders the spec page in headless Chrome with print CSS and streams
  * back a real A4 PDF (selectable text, not a screenshot). On Vercel it
- * uses @sparticuz/chromium; locally it uses the installed Chrome
- * (override with CHROME_PATH).
+ * uses @sparticuz/chromium-min, which downloads the Chromium pack below
+ * on a cold start and caches it in /tmp (bundling the full package kept
+ * losing its binaries). Locally it uses the installed Chrome (override
+ * with CHROME_PATH). Keep CHROMIUM_PACK in step with the package version.
  */
 export const runtime = "nodejs";
 export const maxDuration = 60;
+
+const CHROMIUM_PACK =
+  "https://github.com/Sparticuz/chromium/releases/download/v153.0.0/chromium-v153.0.0-pack.x64.tar";
 
 const LOCAL_CHROME =
   process.env.CHROME_PATH ??
@@ -41,7 +46,7 @@ export async function GET(
   try {
     browser = await puppeteer.launch({
       args: onVercel ? chromium.args : ["--no-sandbox"],
-      executablePath: onVercel ? await chromium.executablePath() : LOCAL_CHROME,
+      executablePath: onVercel ? await chromium.executablePath(CHROMIUM_PACK) : LOCAL_CHROME,
       headless: true,
     });
   } catch (err) {

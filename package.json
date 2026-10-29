@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@fontsource/cal-sans": "^5.2.3",
-    "@sparticuz/chromium": "^153.0.0",
+    "@sparticuz/chromium-min": "^153.0.0",
     "@supabase/supabase-js": "^2.89.0",
     "autoprefixer": "^10.4.23",
     "date-fns": "^4.1.0",
