@@ -85,6 +85,11 @@ export type Profile = {
 
   summary?: string;
 
+  /* Personal touch from the consent email (2026-10-29): shown as a strip
+     under the spec header and used in highlight videos. Song is text
+     only (no audio, licensing). colourHex drives the swatch. */
+  favourites?: { song?: string; colour?: string; colourHex?: string; game?: string };
+
   /* Long-form profile content — lifted from the talent intake doc.
      All optional so older profiles keep rendering; the modal hides
      each section when its field is missing. */

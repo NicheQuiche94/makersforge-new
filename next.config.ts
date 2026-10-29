@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  /* Headless Chrome for the one-click spec PDF; keep it out of the bundle. */
+  serverExternalPackages: ["@sparticuz/chromium", "puppeteer-core"],
   /* /roster renamed to /line-up 2026-07-02 to match the nav label.
      Permanent redirect so any external links, prior share URLs, or
      cached search results still resolve. Covers the base path plus

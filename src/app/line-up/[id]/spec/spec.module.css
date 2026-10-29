@@ -194,6 +194,50 @@
 }
 
 /* BODY — paper sections. */
+/* Favourites strip (2026-10-29): full width between the heat header
+   and the body. A quiet personal note, not a section. */
+.favs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 36px;
+  margin: 0;
+  padding: 14px 40px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--hair);
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.fav dt {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin: 0 0 3px;
+}
+.fav dd {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0;
+}
+.swatch {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  flex: none;
+}
+@media (max-width: 600px) {
+  .favs {
+    padding: 14px 24px;
+    flex-direction: column;
+  }
+}
+
 .body {
   padding: 32px 40px 32px;
   color: var(--ink);
@@ -321,7 +365,6 @@
   color: var(--ink);
   margin: 0;
   text-align: right;
-  text-transform: capitalize;
 }
 
 /* Filters block — two-column layout, label and value. */
@@ -350,7 +393,6 @@
   color: var(--ink);
   margin: 0;
   text-align: right;
-  text-transform: capitalize;
 }
 
 /* FOOTER. */
@@ -437,7 +479,13 @@
 }
 
 @media print {
-  .toolbar {
+  /* Otherwise the site's cream background fills the rest of the last page. */
+  :global(html),
+  :global(body) {
+    background: white !important;
+  }
+  .toolbar,
+  .printBtn {
     display: none;
   }
   .page {

@@ -11,6 +11,7 @@ import {
   CURRENCY_SYMBOLS,
   type Currency,
   formatRate,
+  isCurrency,
   readStoredCurrency,
   writeStoredCurrency,
 } from "@/lib/currency";
@@ -21,10 +22,11 @@ import styles from "./spec.module.css";
  *
  * Printable single-page candidate spec. Linked from the "Download spec"
  * button on the lineup modal. Layout is intentionally calm and content-
- * dense so the user can either read it on screen or save it as PDF via
- * the browser print dialog (the toolbar's "Save as PDF" button just
- * calls window.print(); print CSS hides the toolbar, forces colours,
- * and constrains to A4).
+ * dense so the user can either read it on screen or download it as a
+ * PDF. "Download PDF" fetches ./pdf, which renders this page in headless
+ * Chrome with the print CSS (hides the toolbar, forces colours, A4) and
+ * returns a real file; if that fails it falls back to window.print().
+ * The PDF route passes ?currency= so the file matches what was on screen.
  *
  * Studios often use the spec to circulate to teammates who don't have
  * the site URL handy, so it has to stand alone as a document.
@@ -39,8 +41,29 @@ export default function SpecPage() {
      on SSR; reads localStorage after mount. */
   const [currency, setCurrency] = useState<Currency>("GBP");
   useEffect(() => {
-    setCurrency(readStoredCurrency());
+    const fromUrl = new URLSearchParams(window.location.search).get("currency");
+    setCurrency(isCurrency(fromUrl) ? fromUrl : readStoredCurrency());
   }, []);
+
+  const [downloading, setDownloading] = useState(false);
+  async function downloadPdf() {
+    if (!profile) return;
+    setDownloading(true);
+    try {
+      const res = await fetch(`/line-up/${profile.id}/spec/pdf?currency=${currency}`);
+      if (!res.ok) throw new Error(String(res.status));
+      const href = URL.createObjectURL(await res.blob());
+      const a = document.createElement("a");
+      a.href = href;
+      a.download = `MakersForge-${profile.codename.replace("·", "-")}.pdf`;
+      a.click();
+      URL.revokeObjectURL(href);
+    } catch {
+      window.print();
+    } finally {
+      setDownloading(false);
+    }
+  }
 
   if (!profile) {
     return (
@@ -62,6 +85,7 @@ export default function SpecPage() {
         : profile.discipline === "design"
           ? "Game design"
           : profile.discipline.toUpperCase();
+  const list = (keys: string[]) => keys.map(label).join(" · ");
   const openToCopy = profile.availableFor
     .map((k) => k[0].toUpperCase() + k.slice(1))
     .join(" · ");
@@ -92,9 +116,10 @@ export default function SpecPage() {
               <button
                 type="button"
                 className={styles.printBtn}
-                onClick={() => window.print()}
+                onClick={downloadPdf}
+                disabled={downloading}
               >
-                Save as PDF
+                {downloading ? "Preparing PDF…" : "Download PDF"}
               </button>
             </div>
             <div className={styles.codeRow}>
@@ -118,6 +143,37 @@ export default function SpecPage() {
             </div>
           </div>
         </header>
+
+        {profile.favourites && (
+          <dl className={styles.favs}>
+            {profile.favourites.song && (
+              <div className={styles.fav}>
+                <dt>Favourite song</dt>
+                <dd>{profile.favourites.song}</dd>
+              </div>
+            )}
+            {profile.favourites.colour && (
+              <div className={styles.fav}>
+                <dt>Favourite colour</dt>
+                <dd>
+                  {profile.favourites.colourHex && (
+                    <span
+                      className={styles.swatch}
+                      style={{ background: profile.favourites.colourHex }}
+                    />
+                  )}
+                  {profile.favourites.colour}
+                </dd>
+              </div>
+            )}
+            {profile.favourites.game && (
+              <div className={styles.fav}>
+                <dt>Favourite game</dt>
+                <dd>{profile.favourites.game}</dd>
+              </div>
+            )}
+          </dl>
+        )}
 
         <div className={styles.body}>
           {profile.summary && (
@@ -218,17 +274,17 @@ export default function SpecPage() {
           <Section h="Profile filters">
             <dl className={styles.filterGrid}>
               <FilterRow k="Discipline" v={disciplineLabel} />
-              <FilterRow k="Industry" v={profile.industries.join(" · ")} />
+              <FilterRow k="Industry" v={list(profile.industries)} />
               {cats.length > 0 && (
-                <FilterRow k="Categories" v={cats.join(" · ")} />
+                <FilterRow k="Categories" v={list(cats)} />
               )}
               {profile.genre.length > 0 && (
-                <FilterRow k="Genres" v={profile.genre.join(" · ")} />
+                <FilterRow k="Genres" v={list(profile.genre)} />
               )}
               {profile.discipline === "ua" &&
                 profile.channels &&
                 profile.channels.length > 0 && (
-                  <FilterRow k="Channels" v={profile.channels.join(" · ")} />
+                  <FilterRow k="Channels" v={list(profile.channels)} />
                 )}
               {profile.discipline === "ua" &&
                 profile.monetisation &&
@@ -243,10 +299,10 @@ export default function SpecPage() {
                 profile.formats.length > 0 && (
                   <FilterRow
                     k="Creative formats"
-                    v={profile.formats.join(" · ")}
+                    v={list(profile.formats)}
                   />
                 )}
-              <FilterRow k="Expertise" v={profile.expertise.join(" · ")} />
+              <FilterRow k="Expertise" v={list(profile.expertise)} />
               <FilterRow k="Location" v={profile.location.label} />
             </dl>
           </Section>
@@ -263,6 +319,32 @@ export default function SpecPage() {
       </article>
     </div>
   );
+}
+
+/* Display names for filter keys; matches the chip labels on the lineup.
+   Anything not listed just gets a capital first letter. */
+const LABELS: Record<string, string> = {
+  hypercasual: "Hypercasual",
+  hybridcasual: "Hybrid-casual",
+  midcore: "Midcore",
+  rpg: "RPG",
+  sports: "Sports/racing",
+  cards: "Tabletop/cards",
+  health: "Health & fitness",
+  photo: "Photo & video",
+  meta: "Meta",
+  asa: "Apple Search Ads",
+  tiktok: "TikTok",
+  ugc: "UGC",
+  skan: "SKAN / measurement",
+  scaling: "Creative scaling",
+  liveops: "LiveOps",
+  economy: "Economy & balancing",
+  audience: "Audience strategy",
+};
+
+function label(key: string) {
+  return LABELS[key] ?? key[0].toUpperCase() + key.slice(1);
 }
 
 function Section({
