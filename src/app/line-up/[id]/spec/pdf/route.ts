@@ -37,11 +37,19 @@ export async function GET(
   const target = `${url.origin}/line-up/${id}/spec?currency=${currency}`;
 
   const onVercel = !!process.env.VERCEL;
-  const browser = await puppeteer.launch({
-    args: onVercel ? chromium.args : ["--no-sandbox"],
-    executablePath: onVercel ? await chromium.executablePath() : LOCAL_CHROME,
-    headless: true,
-  });
+  let browser;
+  try {
+    browser = await puppeteer.launch({
+      args: onVercel ? chromium.args : ["--no-sandbox"],
+      executablePath: onVercel ? await chromium.executablePath() : LOCAL_CHROME,
+      headless: true,
+    });
+  } catch (err) {
+    console.error("spec pdf: browser launch failed", err);
+    // ?debug=1 shows the reason (no secrets in it); otherwise stay generic.
+    const why = url.searchParams.has("debug") ? `: ${String(err)}` : "";
+    return new Response(`PDF unavailable${why}`, { status: 500 });
+  }
 
   try {
     const page = await browser.newPage();
