@@ -1,6 +1,6 @@
 [
   {
-    "slug": "codeway-associate-mid-growth-manager",
+    "slug": "codeway-associate-mid-growth-manager-2",
     "title": "Associate/Mid Growth Manager",
     "company": {
       "slug": "codeway",
@@ -20,11 +20,35 @@
     "apply_url": "https://jobs.ashbyhq.com/codeway/08bb9f17-6243-470e-b3d1-014d3ba54870",
     "source": "ashby",
     "posted_at": "2026-10-29",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "spcareers-ua-manager",
+    "slug": "outfit7-ad-monetization-expert",
+    "title": "Ad Monetization Expert",
+    "company": {
+      "slug": "outfit7",
+      "name": "Outfit7",
+      "url": "https://outfit7.com",
+      "blurb": "Cyprus-based studio behind the Talking Tom & Friends franchise, 6B+ downloads.",
+      "size": "500+",
+      "sector": "games"
+    },
+    "category": "growth",
+    "location": "Ljubljana, Slovenia",
+    "region": "emea",
+    "remote": "onsite",
+    "employment_type": "FULL_TIME",
+    "salary": null,
+    "description_md": "Excited about turning data into impact? Advertising is one of the fastest moving parts of our business, and we’re seeking a sharp mind to help push it further.\nJoin our Ad Monetization team and turn data into revenue, owning experiments, insights, and strategies that shape the future of our ad business. As an Ad Monetization Expert, you will work across teams to optimize systems, design A/B tests, and translate data into decisions that drive growth.\n\nYour mission is to maximize revenue by combining analytical expertise, technical understanding, and strong business acumen. If that’s a mission you want to accept, then take this opportunity to make your mark.\n\n**In this role, you will**\n\n- Perform daily performance monitoring and analyses to support decision-making, including gathering requirements, preparing datasets, interpreting results, and communicating insights.\n\n- Apply a proactive 'get-it-done' mindset to daily operations to maintain consistent performance and operational stability.\n\n- Collaborate on AB testing, including planning, creating test setup, monitoring performance during the tests, and preparing post-test reports and recommendations to support evidence-based decisions.\n\n- Design, develop, and maintain monitoring tools, dashboards, and reports to track key performance indicators and business metrics.\n\n- Collaborate with different teams to align outcomes and process improvements with strategic business goals.\n\n- Coordinate and support cross-functional projects, ensuring alignment between sales, tech, and analytical teams.\n\n- Actively contribute to the development and refinement of business strategies aimed at revenue growth and improved operational performance.\n\n- Challenge existing workflows and procedures with a continuous improvement mindset, using data to support change initiatives.\n\n- Stay up to date with internal tools, systems, and data sources to remain effective in analysis, monitoring, and coordination efforts.\n\n**What we’re looking for**\n\n- An analytical & technical mindset with a \"hands-on\" approach and good attention to detail.\n\n-  The ability to work with large datasets, interpret trends, and translate complex data into simple, actionable insights.\n\n- A pragmatic mindset with good business sense.\n\n- Ability to work in a fast-paced environment - comfortable working in a dynamic environment with shifting priorities.\n\n- Positive, make-it-happen, lead-by-example attitude.\n\n- Ability to work with different teams (Analytics team, BE, Adtech, QA).\n\n- Strong interpersonal skills, with the ability to work effectively as part of a team.\n\n- Strong communication skills, with fluency in the English language (both written and spoken).\n\n**Your experience**\n\n- 3+ years of experience in roles with a strong focus on data-driven operations, business support, or performance monitoring.\n\n- Experience working with cross-functional teams, acting as a bridge between technical and business departments.\n\n- Experience with coordinating/ in managing projects across multiple departments.\n\n- Hands-on experience with data analysis, reporting, and performance monitoring.\n\n- Proficiency with Excel and BI tools (e.g., Tableau, Power BI) to support day-to-day decision-making.\n\n- Experience with SQL is a plus.\n\n- Knowledge of the advertising industry is a plus.\n\n**What we offer**\n\n- Employment relationship with Ekipa2 d.o.o. for an indefinite period of time, with a six-month probationary period.\n\n- Diverse work with exciting daily challenges, working as part of a team in a fun, relaxed environment.\n\n- Participation in attractive projects.\n\n- Development opportunities through training, seminars, and conferences.\n\n- Choice of sport, fitness, educational, and entertainment activities outside of work.\n\n- Healthy meals in the office.\n\n- Flexible working hours.\n\n- 24 days of paid vacation.\n\n- Participation in a discretionary bonus plan.\n\n- Christmas bonus (subject to internal policies).\n\n**Povzetek delovnega mesta:**\n\nStrokovnjak za oglasno platformo III / Ad Platform Expert (M/Ž)\n\nZahtevane so izkušnje iz področja podatkovne analitike. Sklenitev delovnega razmerja nudimo za nedoločen delovni čas s šestmesečnim poskusnim delom v podjetju Ekipa2 d.o.o., s sedežem v Ljubljani. Rok za prijavo: 30.5.2026.\n\n**Note: **With application to selected job position I hereby confirm that I have read and understood Outfit7's Candidate Privacy Policy.",
+    "apply_url": "https://outfit7.com/careers/jobs?gh_jid=8077418003",
+    "source": "greenhouse",
+    "posted_at": "2026-10-29",
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
+  },
+  {
+    "slug": "spcareers-ua-manager-2",
     "title": "UA Manager",
     "company": {
       "slug": "spcareers",
@@ -44,11 +68,11 @@
     "apply_url": "https://job-boards.greenhouse.io/spcareers/jobs/6237345004",
     "source": "greenhouse",
     "posted_at": "2026-10-28",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "voodoo-growth-associate-playable-end-of-study-internship",
+    "slug": "voodoo-growth-associate-playable-end-of-study-internship-2",
     "title": "Growth Associate Playable - end of study internship",
     "company": {
       "slug": "voodoo",
@@ -68,11 +92,11 @@
     "apply_url": "https://jobs.ashbyhq.com/voodoo/d284a256-2429-4c44-ab5d-a50642f4bfc6",
     "source": "ashby",
     "posted_at": "2026-10-26",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "duolingo-performance-marketing-lead",
+    "slug": "duolingo-performance-marketing-lead-2",
     "title": "Performance Marketing Lead",
     "company": {
       "slug": "duolingo",
@@ -92,11 +116,11 @@
     "apply_url": "https://careers.duolingo.com/jobs/8917787002?gh_jid=8917787002",
     "source": "greenhouse",
     "posted_at": "2026-10-26",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "homa-games-growth-associate-gaming",
+    "slug": "homa-games-growth-associate-gaming-2",
     "title": "Growth Associate - Gaming",
     "company": {
       "slug": "homa-games",
@@ -116,11 +140,11 @@
     "apply_url": "https://apply.workable.com/j/AA9BC37C4A",
     "source": "workable",
     "posted_at": "2026-10-26",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "flohealth-freelance-motion-designer-pl-ua",
+    "slug": "flohealth-freelance-motion-designer-pl-ua-2",
     "title": "Freelance Motion Designer (PL/UA)",
     "company": {
       "slug": "flohealth",
@@ -140,11 +164,11 @@
     "apply_url": "https://job-boards.greenhouse.io/flohealth/jobs/8041543003",
     "source": "greenhouse",
     "posted_at": "2026-10-23",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "headway-field-growth-associate-care-partnerships-2",
+    "slug": "headway-field-growth-associate-care-partnerships",
     "title": "Field Growth Associate, Care Partnerships",
     "company": {
       "slug": "headway",
@@ -159,16 +183,16 @@
     "region": "americas",
     "remote": "remote",
     "employment_type": "FULL_TIME",
-    "salary": "$77K • Offers Equity",
+    "salary": "$77K • Offers Equity • Offers Commission",
     "description_md": "1 in 4 people in the US have a treatable mental health condition, but most providers don't accept insurance, making therapy too expensive for most people. **Headway’s mission is to fix this by building a new mental healthcare system everyone can access.** We started by solving the biggest barrier to care: insurance. The admin work - credentialing, claims, payment reconciliation - is a nightmare. We've automated that.\n\nBut we're going further. Over 90,000 providers across all 50 states run their practice on our software, serving over 2.6 million patients. We are building the best tools for therapists to run their entire practice, reimagining the experience of finding a therapist, and investing in the platform foundations to enable this at scale, and building much of it with AI. We aren't just a billing layer; we are becoming the platform where care actually happens.\n\nWe're a Series D company with $325M+ in funding (a16z, Accel, Spark Capital, etc.), looking for exceptional people to help us achieve this mission. We want your time here to be the most meaningful experience of your career. Join us, and help change mental healthcare for the better.\n\n**About The RoleNYC office based: **NY side, NJ side, and PA side (Philadelphia focus)\n\n**2 resident reps: **Dallas-Fort Worth (preferred), Houston, Miami (preferred), Orlando\n\nHeadway's Care Partnerships team is on a mission to become the behavioral health partner of choice for every health system in the US. We make it easy for care management, social work, and clinical teams to refer their patients into high-quality outpatient behavioral health care ,  and we're growing fast.\n\nWe're building a dedicated field sales motion to grow that footprint street by street. As a Field Growth Associate, you'll own an assigned market ,  cold calling, dropping in on local provider offices, running lunch & learns, and showing up at networking events ,  to build the referral partnerships that drive patient access to care. You'll also own the relationships you create, growing and deepening them over time so a first referral turns into a long-term partner.\n\nThis is a ground-floor opportunity to build a field sales function in a market where the playbook is still being written, using a product that's already proven to work.\n\n**You will:**\n\n- Drive new referral partnerships in your assigned market through cold calling and in-field engagement ,  flyer drop-offs, lunch & learns, networking events, and any creative method that gets a foot in the door\n\n- Travel within a 40-50 mile radius of your territory.\n\n- Grow and manage your existing book of referral partners, delivering ongoing partner success and reporting that deepens the relationship and expands practice growth\n\n- Own your pipeline in Salesforce, keeping activity and forecasts current and organized\n\n- Document learnings on messaging, sequencing, and conversion performance, and share weekly metrics with the BD team to sharpen the playbook\n\n- Build trust across every level of a practice ,  receptionist, practice manager, clinician ,  and understand what that office is actually trying to solve\n\n- Treat every referral as the start of a relationship, not the end of a sale\n\n**You will love this role if:**\n\n- You have 1-3 years of field sales, outside sales, or high-volume outbound experience (BDR, SDR, physician liaison, territory rep) and can point to a track record of hitting activity and quota targets\n\n- You have grit ,  you can absorb a door closed in your face and go knock on the next one, day after day\n\n- You are curious and coachable ,  this is 0-to-1 work, so you learn fast, take feedback, and shift your approach when something isn't working\n\n- You build relationships and rapport quickly, and you can earn buy-in from a front desk to a physician in 90 seconds\n\n- You are organized and disciplined about keeping your pipeline and activity up to date in real time\n\n- You are motivated by the opportunity to help solve one of our generation's defining problems: access to mental healthcare\n\n**Bonus points if:**\n\n- You have experience selling into physician offices, health systems, or in a related field (DME, wound care, orthopedics, surgical, physical therapy, or home health)\n\n- You have familiarity with Salesforce or similar CRM/pipeline tools\n\n- You've worked in a fast-growing startup environment\n\n**Compensation and Benefits:**\n\n- Salary information is based on a single salary target per role and is differentiated based on geographic location.\n\n- Group A = $77,000 - New York City, San Francisco/Bay Area, Los Angeles / Orange County Area, San Diego, Seattle, Boston, Austin\n\n- Group B = $69,300 - Chicago, Denver, Washington DC, Philadelphia, Atlanta, Nashville, Phoenix, and Portland\n\n- Group C= $61,600 - all other cities\n\n- Other compensation includes commission. Commission payments are monthly.\n\n**Benefits offered include:**\n\n- Equity Compensation\n\n- Medical, Dental, and Vision coverage\n\n- HSA / FSA\n\n- 401K\n\n- Work-from-Home Stipend\n\n- Therapy Reimbursement\n\n- 16-week parental leave for eligible employees\n\n- Carrot Fertility annual reimbursement and membership\n\n- 13 paid holidays each year as well as a Holiday Break during the week between December\n\n- 25th and December 31st\n\n- Flexible PTO\n\n- Employee Assistance Program (EAP)\n\n- Training and professional development\n\nWe believe a team's strength is in its people, and we cannot achieve this mission without a team that reflects the diversity of this problem – across race, ethnicity, gender, sexuality, age, national origin, religion, family status, disability, military status, and experience. Headway is committed to the full inclusion of all qualified individuals. As part of this commitment, Headway will ensure that persons with disabilities are provided with reasonable accommodations. If reasonable accommodation is needed to participate in the job application or interview process, to perform essential job functions, and/or receive other benefits and privileges of employment, please inform the recruiter when they contact you to schedule your interview.\n\nHeadway participates in E-Verify. To learn more, click here.\n\nA notice to Headway applicants: To protect yourself against phishing and recruitment fraud, please note that Headway only accepts applications through our official careers page at https://headway.co/careers. Headway will never refer you to external websites, ask for payment or personal information, or conduct interviews via messaging apps. All official communication will come from a @findheadway.com email address. If you are contacted by someone claiming to be from Headway via an unofficial channel, please do not share any information and report it as spam.",
     "apply_url": "https://jobs.ashbyhq.com/headway/77019d1e-1410-47ff-954c-03f280725155",
     "source": "ashby",
     "posted_at": "2026-10-23",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "vc-eloelo-2-video-editor-dolphin-contract-2",
+    "slug": "vc-eloelo-2-video-editor-dolphin-contract",
     "title": "Video Editor - Dolphin (Contract)",
     "company": {
       "slug": "vc-eloelo-2",
@@ -189,11 +213,11 @@
     "apply_url": "https://eloelo.keka.com/careers/jobdetails/167690",
     "source": "getro",
     "posted_at": "2026-10-23",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "scopely-senior-analyst-ad-monetization-2",
+    "slug": "scopely-senior-analyst-ad-monetization",
     "title": "Senior Analyst, Ad Monetization",
     "company": {
       "slug": "scopely",
@@ -213,11 +237,11 @@
     "apply_url": "https://job-boards.greenhouse.io/scopely/jobs/5444465008?gh_jid=5444465008",
     "source": "greenhouse",
     "posted_at": "2026-10-22",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "tripledotstudios-growth-director-2",
+    "slug": "tripledotstudios-growth-director",
     "title": "Growth Director",
     "company": {
       "slug": "tripledotstudios",
@@ -228,44 +252,20 @@
       "sector": "games"
     },
     "category": "growth",
-    "location": "Montreal",
+    "location": "Toronto",
     "region": "americas",
     "remote": "onsite",
     "employment_type": "FULL_TIME",
     "salary": null,
     "description_md": "Who are we?\n\n**TripledotStudios** is one of the largest independent mobile games companies in the world.\n\nWe are a multi-award-winning organisation, with a global 2,500+ strong team across 12 studios.\n\nOur expanded portfolio includes some of the biggest titles in mobile gaming, collectively reaching top chart positions around the world and engaging over 25 million daily active users.\n\nTripledot’s guiding principle is that when people love what they do, what they do will be loved by others.\n\nWe’re building a company we’re proud of. One filled with driven, incredibly smart and detail-orientated people, who **LOVE** making games.\n\nOur ambition is to be the most successful games company in the world, and we’re just getting started.\n\nThis role will be working at our Clipwire Games studio.\n\nClipwire Games is one of Canada's top grossing mobile game developers, and the creator of Monopoly: Bingo!, TPIR: Bingo! and Bingo Story. Founded in Toronto over 10 years ago, we’ve had tremendous success and are poised for another decade of record growth. Our studio is built on strong values, work ethic, and intelligent data driven growth. We work hard, have fun, innovate, and level-up every day.\n\nTo work at Clipwire means becoming part of our future right now. We have reached our current growth rate because we support, promote, and develop our team so that they can make great games. Come find out what all the buzz is about!\n\n**Role Overview**\n\nWe’re looking for a Growth Director to own how Clipwire’s games find and keep their players. You’ll lead paid and organic acquisition, ad monetisation, UA creative, creative production, lifecycle, social, and VIP player support, with accountability for profitable growth across our three live titles.\nThis isn’t just a UA role. You’ll shape how acquisition, creative, measurement, monetisation, and product work together to grow the business. This is a senior leadership role reporting to the CEO, leading our Growth organization through its functional leads.\n\n**\nResponsibilities**\n\n- Own the growth strategy, annual plan, budget, and performance targets across our portfolio of live games.\n\n- Lead our UA, creative, monetisation, and lifecycle functions, developing strong leaders and high-performing teams.\n\n- Own paid and organic acquisition strategy, investment allocation, measurement, attribution, and experimentation.\n\n- Own ad monetisation strategy and revenue, including mediation, network partnerships, bidding, and eCPM optimization, partnering with Product on placements and frequency to balance ad revenue with player experience.\n\n- Make creative a major growth lever, setting the strategy and bar for creative testing, velocity, innovation, and performance.\n\n- Use data to uncover opportunities across acquisition, retention, monetisation, and product, and turn them into high-impact growth experiments.\n\n- Partner closely with Product, LiveOps, Economy Design, Creative, and Data Science to improve LTV and unlock new opportunities for scale.\n\n- Own lifecycle management across our player base, leading win-back and reactivation of lapsed players and VIP programs that retain and grow our highest-value players.\n\n- Champion the use of AI across the Growth team, building AI-powered processes and workflows across UA, creative, lifecycle, and VIP support to increase speed, scale, and quality.\n\n- Establish clear operating rhythms and report growth performance, opportunities, and investment recommendations to senior leadership.\n\n**Requirements**\n\n- 5+ years of experience in mobile gaming growth, performance marketing, or user acquisition, including experience at significant scale.\n\n- Proven experience owning and scaling multi-million-dollar UA budgets across major mobile advertising channels.\n\n- Deep understanding of mobile growth economics, including LTV, ROAS, attribution, incrementality, and performance measurement.\n\n- Strong creative strategy and testing experience, with a track record of using creative to drive UA performance.\n\n- Experience identifying and driving growth opportunities across UA, monetisation, retention, and product.\n\n- An analytical and experimental mindset, with the ability to make high-value decisions quickly from imperfect data.\n\n- Strong cross-functional and executive communication skills, with the autonomy to set direction and influence senior stakeholders.\n\n- Experience in free-to-play mobile games, strong preference for casual, casino, or other hybrid monetisation models\n\n**Working at Tripledot**\n\n- **Comprehensive Health & Wellness Coverage** - We offer extended health, dental, and wellness benefits. Coverage becomes effective on your start date, provided your enrolment forms have been completed.\n\n- **Wellness Spending Account **- Employees receive a $500 annual Wellness Spending Account to support their physical well-being, personal development and lifestyle interests.\n\n- **Generous Vacation Time **- Employees receive 25 vacation days annually, in addition to statutory holidays.\n\n- **Paid Volunteer Days **- Employees receive 2 paid volunteer days each year, giving employees the opportunity to support causes that matter to them.\n\n- **Parental Leave & Family Support **- We offer a generous parental leave program and foster a supportive, family-friendly workplace culture.\n\n- **RRSP Matching Program** - We match 100% of employee RRSP contributions up to 3.5% of annual salary, helping you build long-term financial security.\n\n- **Employee Recognition Program **- Each month, one or more employees are recognized for outstanding performance, dedication, or contributions. Recipients receive a $400 award.\n\n- **Charitable Donation Matching** - We match employee donations to registered charities dollar-for-dollar, up to $1,000 per calendar year.\n\n- **Employee Assistance Program** - Confidential support and resources are available whenever needed through our Employee Assistance Program.\n\n- **Hybrid Work Environment **- We operate on a hybrid work model, with in-office collaboration Monday through Thursday and a flexible work-from-home day on Fridays. Employees also enjoy complimentary breakfast, lunch and evening snack on all office days.\n\n- **Team Events & Celebrations **- We regularly host social events and celebrations to recognize achievements, strengthen connections, and build a positive workplace culture.\n\n- **Professional Development **- We are committed to employee growth and encourage career advancement through ongoing learning and professional development opportunities.\n\nThe anticipated base salary range for this role is CAD $155,000–$200,000. Compensation decisions are made based on the unique qualifications, experience and circumstances of each candidate. Actual compensation is determined based on a variety of factors, including, but not limited to an individual's skills, experience, education, training, licenses and certifications (where applicable), as well as business and organizational needs. The final compensation package will be based on the specific position offered in addition to a full range of medical and other benefits.\n\nTripledot Studios is proud to be an equal-opportunity employer that is committed to inclusion and diversity. All applicants will be considered for employment without attention to race, color, religion, sex, sexual orientation, gender identity, national origin, veteran or disability status, or other legally protected characteristics.\n\nAs part of our interview process, we may use AI-enabled tools to assist with note-taking and summarizing conversations. These tools are used only to support our recruiters and interviewers. They are not used to screen applications or make hiring decisions. All candidate evaluations and hiring decisions are made by people.\n\nThis opening is for an existing vacancy.\n\nAll legitimate Tripledot roles are only posted on our official careers page and LinkedIn and we do not conduct job interviews via messaging apps like WhatsApp, Telegram or others. We never ask for personal or financial information during interviews. Sensitive information is only ever requested after a formal written offer through official channels.  Any attempt to do so may be the result of a scam or phishing attack, and you should not engage. Our in-house recruitment team will only contact individuals through their official Company email addresses (tripledotstudios.com)",
-    "apply_url": "https://job-boards.eu.greenhouse.io/tripledotstudios/jobs/5012776101",
+    "apply_url": "https://job-boards.eu.greenhouse.io/tripledotstudios/jobs/5012753101",
     "source": "greenhouse",
     "posted_at": "2026-10-21",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "vc-carry1st-head-of-growth-marketing-2",
-    "title": "Head of Growth Marketing",
-    "company": {
-      "slug": "vc-carry1st",
-      "name": "Carry1st",
-      "url": "https://za.linkedin.com/jobs/view/head-of-growth-marketing-at-carry1st-4478261499",
-      "blurb": "Carry1st, Apps, Bible App, Bible Community. Backed by BITKRAFT Ventures.",
-      "size": "50-200",
-      "sector": "apps"
-    },
-    "category": "ua",
-    "location": "South Africa",
-    "region": "emea",
-    "remote": "onsite",
-    "employment_type": "FULL_TIME",
-    "salary": null,
-    "description_md": "Carry1st is hiring a Head of Growth Marketing in South Africa.\n\nFocus areas include Growth Strategies, Customer Relationship Management, Customer Lifecycle Management, Data Analysis, Creative Strategies, Team Leadership.\n\nRead the full brief and apply on Carry1st's own posting.",
-    "apply_url": "https://za.linkedin.com/jobs/view/head-of-growth-marketing-at-carry1st-4478261499",
-    "source": "getro",
-    "posted_at": "2026-10-21",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
-  },
-  {
-    "slug": "applovin-creative-producer-growth-marketing",
+    "slug": "applovin-creative-producer-growth-marketing-2",
     "title": "Creative Producer, Growth Marketing",
     "company": {
       "slug": "applovin",
@@ -285,11 +285,11 @@
     "apply_url": "https://boards.greenhouse.io/applovin/jobs/4723285006?gh_jid=4723285006",
     "source": "greenhouse",
     "posted_at": "2026-10-20",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "flohealth-creative-strategist",
+    "slug": "flohealth-creative-strategist-2",
     "title": "Creative Strategist",
     "company": {
       "slug": "flohealth",
@@ -309,11 +309,11 @@
     "apply_url": "https://job-boards.greenhouse.io/flohealth/jobs/7662987003",
     "source": "greenhouse",
     "posted_at": "2026-10-20",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "nordeus-senior-user-acquisition-manager-2",
+    "slug": "nordeus-senior-user-acquisition-manager",
     "title": "Senior User Acquisition Manager",
     "company": {
       "slug": "nordeus",
@@ -333,11 +333,11 @@
     "apply_url": "http://www.nordeus.com/careers?gh_jid=8278352",
     "source": "greenhouse",
     "posted_at": "2026-10-20",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "vc-starform-performance-marketing-ai-content-strategist-2",
+    "slug": "vc-starform-performance-marketing-ai-content-strategist",
     "title": "Performance Marketing AI Content Strategist",
     "company": {
       "slug": "vc-starform",
@@ -358,11 +358,11 @@
     "apply_url": "https://ca.linkedin.com/jobs/view/performance-marketing-ai-content-strategist-at-starform-4476824806",
     "source": "getro",
     "posted_at": "2026-10-20",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "monzo-senior-growth-marketing-executive-business-banking-eu",
+    "slug": "monzo-senior-growth-marketing-executive-business-banking-eu-2",
     "title": "Senior Growth Marketing Executive, Business Banking EU",
     "company": {
       "slug": "monzo",
@@ -382,11 +382,11 @@
     "apply_url": "https://job-boards.greenhouse.io/monzo/jobs/8300323",
     "source": "greenhouse",
     "posted_at": "2026-10-19",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "loora-user-acquisition-manager-google-ads-2",
+    "slug": "loora-user-acquisition-manager-google-ads",
     "title": "User Acquisition Manager- Google Ads",
     "company": {
       "slug": "loora",
@@ -401,15 +401,15 @@
     "remote": "remote",
     "employment_type": "FULL_TIME",
     "salary": null,
-    "description_md": "Loora is on a mission to revolutionize education and break down language barriers with its cutting-edge AI, building the first-ever personal AI English tutor. Loora offers its users an AI tutor that is always available to talk about whatever they want, give immediate feedback on English skills, and guide them on their journey to fluency.\n\nAs we scale globally, we’re looking for a data-driven User Acquisition Manager to manage and lead Google Ads as well as our Web2App engine. You will own the UA strategy, budget, and channel mix to build high-converting web quiz funnels that drive quality users into the mobile app. This is a high-impact role with end-to-end responsibility across web funnels and paid performance channels, cross-functional ownership and a direct line to the company’s growth trajectory.\n\n     **What You’ll Do:\n**\n\n- Run and scale campaigns across Google Ads (Search, Demand Gen etc) and other paid channels with a focus on revenue-based goals.\n\n- Define and lead the company’s Web2App strategy optimizing quiz-based funnels to drive high-intent users into the app.\n\n- Analyze funnel performance end-to-end to identify and eliminate conversion bottlenecks.\n\n- Manage $1M+ monthly budgets, optimizing for CAC, LTV, and ROAS.\n\n- Collaborate with Product, Data, and Creative teams to ideate, test, and launch growth experiments quickly.\n\n- Introduce new ideas, tools, and approaches to continuously improve acquisition efficiency.\n\n**Requirements**:\n\n- 4–6 years of hands-on User Acquisition / Performance Marketing experience, with strong focus on Google Ads (Search, Demand Gen) and Web2App funnels.\n\n- Proven success managing $1M+ monthly budgets with strong ROAS for subscription-based products.\n\n- Deep understanding of web funnels and Web2App conversion flows- advantage\n\n- Data-fluent: experienced with AppsFlyer (or similar MMP), GA4 and BI tools.\n\n- AI-savvy, comfortable with AI tools and utilizes them in your day to day\n\n- Hands-on, curious, and comfortable taking bold bets and learning fast.\nFluent in English",
+    "description_md": "Loora is on a mission to revolutionize education and break down language barriers with its cutting-edge AI, building the first-ever personal AI English tutor. Loora offers its users an AI tutor that is always available to talk about whatever they want, give immediate feedback on English skills, and guide them on their journey to fluency.\n\nAs we scale globally, we’re looking for a data-driven User Acquisition Manager to manage and lead Google Ads as well as our Web2App engine. You will own the UA strategy, budget, and channel mix to build high-converting web quiz funnels that drive quality users into the mobile app. This is a high-impact role with end-to-end responsibility across web funnels and paid performance channels, cross-functional ownership and a direct line to the company’s growth trajectory.\n\n     **What You’ll Do:\n**\n\n- Run and scale campaigns across Google Ads (Search, Demand Gen etc) and other paid channels with a focus on revenue-based goals.\n\n- Analyze funnel performance end-to-end to identify and eliminate conversion bottlenecks.\n\n- Manage $1M+ monthly budgets, optimizing for CAC, LTV, and ROAS.\n\n- Collaborate with Product, Data, and Creative teams to ideate, test, and launch growth experiments quickly.\n\n- Introduce new ideas, tools, and approaches to continuously improve acquisition efficiency.\n\n**Requirements**:\n\n- 4–6 years of hands-on User Acquisition / Performance Marketing experience, with strong focus on Google Ads (Search, Demand Gen) and Web2App funnels.\n\n- Proven success managing $1M+ monthly budgets with strong ROAS for subscription-based products.\n\n- Deep understanding of web funnels and Web2App conversion flows- advantage\n\n- Data-fluent: experienced with AppsFlyer (or similar MMP), GA4 and BI tools.\n\n- AI-savvy, comfortable with AI tools and utilizes them in your day to day\n\n- Hands-on, curious, and comfortable taking bold bets and learning fast.\nFluent in English",
     "apply_url": "https://jobs.ashbyhq.com/loora/584dba4c-139a-4943-bcf0-4757242d1b1e",
     "source": "ashby",
     "posted_at": "2026-10-17",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "duolingo-senior-director-of-performance-marketing",
+    "slug": "duolingo-senior-director-of-performance-marketing-2",
     "title": "Senior Director of Performance Marketing",
     "company": {
       "slug": "duolingo",
@@ -429,11 +429,11 @@
     "apply_url": "https://careers.duolingo.com/jobs/8895215002?gh_jid=8895215002",
     "source": "greenhouse",
     "posted_at": "2026-10-16",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "preply-video-editor-growth-paid-media",
+    "slug": "preply-video-editor-growth-paid-media-2",
     "title": "Video Editor (Growth/Paid Media)",
     "company": {
       "slug": "preply",
@@ -453,11 +453,11 @@
     "apply_url": "https://jobs.ashbyhq.com/preply/e5345e2d-c93e-40c7-a42d-584908a536cf",
     "source": "ashby",
     "posted_at": "2026-10-16",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "supercell-aso-specialist-2",
+    "slug": "supercell-aso-specialist",
     "title": "ASO Specialist",
     "company": {
       "slug": "supercell",
@@ -477,11 +477,11 @@
     "apply_url": "https://jobs.ashbyhq.com/supercell/22572ef7-36ef-4cef-8185-144c94800a85",
     "source": "ashby",
     "posted_at": "2026-10-15",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "vc-eloelo-2-creative-producer-2",
+    "slug": "vc-eloelo-2-creative-producer",
     "title": "Creative Producer",
     "company": {
       "slug": "vc-eloelo-2",
@@ -502,11 +502,11 @@
     "apply_url": "https://eloelo.keka.com/careers/jobdetails/166796",
     "source": "getro",
     "posted_at": "2026-10-15",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "vc-eloelo-2-ai-enabled-creative-producer-2",
+    "slug": "vc-eloelo-2-ai-enabled-creative-producer",
     "title": "AI-Enabled Creative Producer",
     "company": {
       "slug": "vc-eloelo-2",
@@ -527,11 +527,11 @@
     "apply_url": "https://eloelo.keka.com/careers/jobdetails/166737",
     "source": "getro",
     "posted_at": "2026-10-15",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "voodoo-marketing-video-artist-paper-io-2",
+    "slug": "voodoo-marketing-video-artist-paper-io-2-2",
     "title": "Marketing Video Artist - Paper.io 2",
     "company": {
       "slug": "voodoo",
@@ -551,11 +551,11 @@
     "apply_url": "https://jobs.ashbyhq.com/voodoo/8ef4d41c-825f-4e47-8264-92594bb8fe8f",
     "source": "ashby",
     "posted_at": "2026-10-14",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "truecaller-head-of-user-growth-hq-sweden",
+    "slug": "truecaller-head-of-user-growth-hq-sweden-2",
     "title": "Head of User Growth - HQ, Sweden",
     "company": {
       "slug": "truecaller",
@@ -575,11 +575,11 @@
     "apply_url": "https://job-boards.greenhouse.io/truecaller/jobs/8275890",
     "source": "greenhouse",
     "posted_at": "2026-10-13",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "spcareers-aso-specialist",
+    "slug": "spcareers-aso-specialist-2",
     "title": "ASO Specialist",
     "company": {
       "slug": "spcareers",
@@ -599,11 +599,11 @@
     "apply_url": "https://job-boards.greenhouse.io/spcareers/jobs/6222941004",
     "source": "greenhouse",
     "posted_at": "2026-10-13",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "vc-cypher-games-growth-specialist-new-grad",
+    "slug": "vc-cypher-games-growth-specialist-new-grad-2",
     "title": "Growth Specialist (New Grad)",
     "company": {
       "slug": "vc-cypher-games",
@@ -623,11 +623,11 @@
     "apply_url": "https://jobs.lever.co/cypher-games/586fa089-d4a5-4440-9e98-103b7defd394",
     "source": "getro",
     "posted_at": "2026-10-13",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "voodoo-marketing-artist-blitz-2",
+    "slug": "voodoo-marketing-artist-blitz",
     "title": "Marketing Artist- Blitz",
     "company": {
       "slug": "voodoo",
@@ -647,11 +647,11 @@
     "apply_url": "https://jobs.ashbyhq.com/voodoo/21110f4f-a1fa-4557-aa44-cdfdd2d0f9c0",
     "source": "ashby",
     "posted_at": "2026-10-12",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "tripledotstudios-motion-designer",
+    "slug": "tripledotstudios-motion-designer-2",
     "title": "Motion Designer",
     "company": {
       "slug": "tripledotstudios",
@@ -671,11 +671,11 @@
     "apply_url": "https://job-boards.eu.greenhouse.io/tripledotstudios/jobs/5002870101",
     "source": "greenhouse",
     "posted_at": "2026-10-10",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "tripledotstudios-2d-marketing-artist-2",
+    "slug": "tripledotstudios-2d-marketing-artist",
     "title": "2D Marketing Artist",
     "company": {
       "slug": "tripledotstudios",
@@ -695,11 +695,11 @@
     "apply_url": "https://job-boards.eu.greenhouse.io/tripledotstudios/jobs/5000303101",
     "source": "greenhouse",
     "posted_at": "2026-10-08",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "suno-manager-performance-creative-strategy-paid-media",
+    "slug": "suno-manager-performance-creative-strategy-paid-media-2",
     "title": "Manager, Performance Creative Strategy (Paid Media)",
     "company": {
       "slug": "suno",
@@ -719,11 +719,11 @@
     "apply_url": "https://jobs.ashbyhq.com/suno/9653bcfe-9041-4606-98a5-9a259690e3e8",
     "source": "ashby",
     "posted_at": "2026-10-07",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "suno-creative-strategy-lead-performance-marketing",
+    "slug": "suno-creative-strategy-lead-performance-marketing-2",
     "title": "Creative Strategy Lead, Performance Marketing",
     "company": {
       "slug": "suno",
@@ -743,11 +743,11 @@
     "apply_url": "https://jobs.ashbyhq.com/suno/e65f5875-93aa-4f3f-901b-b83c61a86a89",
     "source": "ashby",
     "posted_at": "2026-10-06",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "stillfrontgroup-associate-senior-associate-ua-2",
+    "slug": "stillfrontgroup-associate-senior-associate-ua",
     "title": "Associate/Senior Associate- UA",
     "company": {
       "slug": "stillfrontgroup",
@@ -767,11 +767,11 @@
     "apply_url": "https://stillfrontgroup.teamtailor.com/jobs/8502190-associate-senior-associate-ua",
     "source": "teamtailor",
     "posted_at": "2026-10-06",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "headway-director-provider-growth-marketing-2",
+    "slug": "headway-director-provider-growth-marketing",
     "title": "Director, Provider Growth Marketing",
     "company": {
       "slug": "headway",
@@ -791,11 +791,11 @@
     "apply_url": "https://jobs.ashbyhq.com/headway/494a4c37-11e2-4cc7-9233-9b86319f0aaa",
     "source": "ashby",
     "posted_at": "2026-10-05",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "wildlifestudios-business-analyst-growth-user-acquisition",
+    "slug": "wildlifestudios-business-analyst-growth-user-acquisition-2",
     "title": "Business Analyst - Growth & User Acquisition",
     "company": {
       "slug": "wildlifestudios",
@@ -815,11 +815,11 @@
     "apply_url": "https://job-boards.greenhouse.io/wildlifestudios/jobs/8864832002",
     "source": "greenhouse",
     "posted_at": "2026-10-02",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "kabam-growth-marketing-manager-contractor-2",
+    "slug": "kabam-growth-marketing-manager-contractor",
     "title": "Growth Marketing Manager (Contractor)",
     "company": {
       "slug": "kabam",
@@ -839,11 +839,11 @@
     "apply_url": "https://jobs.lever.co/kabam/0f341ed2-d024-4f7e-801c-a744727ae160",
     "source": "lever",
     "posted_at": "2026-10-02",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "voodoo-marketing-artist-cortex-2",
+    "slug": "voodoo-marketing-artist-cortex",
     "title": "Marketing Artist- Cortex",
     "company": {
       "slug": "voodoo",
@@ -863,11 +863,11 @@
     "apply_url": "https://jobs.ashbyhq.com/voodoo/58bc3216-c0c2-4bc5-98d0-28b670ae0d23",
     "source": "ashby",
     "posted_at": "2026-10-01",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "stillfrontgroup-aso-manager-big-franchise",
+    "slug": "stillfrontgroup-aso-manager-big-franchise-2",
     "title": "ASO Manager - BIG Franchise",
     "company": {
       "slug": "stillfrontgroup",
@@ -879,19 +879,19 @@
     },
     "category": "aso",
     "location": "See posting",
-    "region": "emea",
-    "remote": "onsite",
+    "region": "global",
+    "remote": "remote",
     "employment_type": "FULL_TIME",
     "salary": null,
     "description_md": "Freelance engagement on a 12 month contract, with the option to extend.\n\nWe are looking for an ASO Manager to own and scale our global store presence across the BIG games portfolio. This is a 12-month freelance engagement, with potential to extend based on business needs. In this hands-on role, you will take full ownership of our App Store, Google Play, Samsung & Microsoft store performance, driving organic growth and maximizing conversion rates worldwide.\n\nAligning closely with studio goals, you will bridge data-driven strategy with high-impact execution ,  testing hypotheses, refining store assets, and optimizing metadata to turn store pages into high-converting growth drivers, while working in close collaboration with UA and Product to ensure full-funnel alignment.\n\n**YOUR MISSIONASO Strategy & Conversion Rate Optimization (CRO)**\n\n- Own end-to-end ASO strategy across App Store, Google Play, Samsung Galaxy Store, and Microsoft Store - from new launches to mature live titles.\n\n- Build and prioritize a continuous CRO testing backlog (A/B, store-page experiments) informed by creative and competitive analysis, using CPP/CSL to tailor journeys by campaign and segment.\n\n- Lead store page localization and culturalization across key markets - metadata, visuals, and messaging adapted to local audiences.\n\n- Shape a cohesive, franchise-level store identity and positioning across the portfolio, beyond single-title optimization.\n\n**Platform Program & Policy Management**\n\n- Track platform feature releases and store roll-outs across App Store, Google Play, Samsung, and Microsoft, assessing relevance to our portfolio.\n\n- Evaluate and manage participation in platform growth/loyalty programs (e.g., Google Play's Level Up), weighing trade-offs before enrollment.\n\n- Monitor store algorithm, guideline, and regulatory changes, adjusting metadata and tactics to protect organic traffic.\n\n**Search & Discoverability**\n\n- Drive keyword research, clustering, and metadata creation tailored to each store's algorithm and local markets.\n\n- Use AI-driven tools to scale semantic expansion, metadata generation, and sentiment analysis.\n\n- Optimize for AEO, ensuring visibility across both legacy search and emerging AI-driven discovery.\n\n- Own search visibility end to end - across app stores (ASO) and our website (SEO) - including AEO (Answer Engine Optimization) and GEO (Generative Engine Optimization), ensuring discoverability across traditional search, app store search, and emerging AI-driven answer engines.\n\n**Full-Funnel Collaboration, AI & Reporting**\n\n- Partner with UA and Product for full-funnel alignment - connecting ASO to paid strategy, creative themes, and update roadmaps.\n\n- Spot optimization opportunities and quick wins across the portfolio, prioritized by impact and effort.\n\n- Own regular KPI reporting and stakeholder check-ins.\n\n- Oversee review and rating management - surfacing sentiment and UX/product insights.\n\n- High AI affinity: you actively explore new AI tools, build them into your daily work, and stay curious about what they can change in ASO and search.\n\n- Proven AI-driven ASO results: you have built and tested AI-assisted workflows (e.g. keyword research, metadata and asset testing, review sentiment) through structured experiments, and can show what they improved.\n\n**YOUR PROFILE**\n\n- 4+ years of hands-on experience in ASO, ideally within the mobile gaming industry.\n\n- Proven track record of driving measurable growth in store visibility, keyword rankings, and organic conversion rate across global markets.\n\n- Deep understanding of mobile gaming audiences, player motivations, and trends (experience with casual or simulation games is a strong plus).\n\n- Excellent balance between analytical rigor (hypothesis testing, performance tracking) and creative intuition (visual asset storytelling, messaging).\n\n- Proficiency with industry-standard ASO and analytics platforms (e.g., AppTweak, Sensor Tower, SplitMetrics, or similar).\n\n- Experience navigating platform program enrollment decisions (e.g., Google Play's Level Up or similar loyalty/growth programs) is a strong plus.\n\n- Experience in review management is a plus",
     "apply_url": "https://stillfrontgroup.teamtailor.com/jobs/8484707-aso-manager-big-franchise",
     "source": "teamtailor",
     "posted_at": "2026-10-01",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "voodoo-growth-strategy-ad-monetization-manager",
+    "slug": "voodoo-growth-strategy-ad-monetization-manager-2",
     "title": "Growth Strategy & Ad Monetization Manager",
     "company": {
       "slug": "voodoo",
@@ -911,11 +911,11 @@
     "apply_url": "https://jobs.ashbyhq.com/voodoo/b41e00b5-b862-4e04-8b36-f6d6cf125186",
     "source": "ashby",
     "posted_at": "2026-09-29",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "mistplay-motion-designer-2",
+    "slug": "mistplay-motion-designer",
     "title": "Motion Designer",
     "company": {
       "slug": "mistplay",
@@ -935,11 +935,11 @@
     "apply_url": "https://jobs.lever.co/mistplay/d3e20225-5801-4aff-a060-6c9f69512a78",
     "source": "lever",
     "posted_at": "2026-09-29",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "krea-motion-designer-2",
+    "slug": "krea-motion-designer",
     "title": "Motion Designer",
     "company": {
       "slug": "krea",
@@ -959,11 +959,11 @@
     "apply_url": "https://jobs.ashbyhq.com/krea/a18b2fa2-e435-478f-9554-ed2e418987d6",
     "source": "ashby",
     "posted_at": "2026-09-29",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "vc-ccp-games-user-acquisition-specialist-2",
+    "slug": "vc-ccp-games-user-acquisition-specialist",
     "title": "User Acquisition Specialist",
     "company": {
       "slug": "vc-ccp-games",
@@ -983,11 +983,11 @@
     "apply_url": "https://careers.ccpgames.com/en/postings/e31a72b9-9a34-4705-abc4-08b5251a3768",
     "source": "getro",
     "posted_at": "2026-09-29",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "voodoo-marketing-video-artist-growth-2",
+    "slug": "voodoo-marketing-video-artist-growth",
     "title": "Marketing Video Artist - Growth",
     "company": {
       "slug": "voodoo",
@@ -1007,11 +1007,11 @@
     "apply_url": "https://jobs.ashbyhq.com/voodoo/0a2e0221-fc2b-4239-b973-ed4ab11f9c3a",
     "source": "ashby",
     "posted_at": "2026-09-28",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "scopely-senior-2d-marketing-artist-2",
+    "slug": "scopely-senior-2d-marketing-artist",
     "title": "Senior 2D Marketing Artist",
     "company": {
       "slug": "scopely",
@@ -1031,11 +1031,11 @@
     "apply_url": "https://job-boards.greenhouse.io/scopely/jobs/5423485008?gh_jid=5423485008",
     "source": "greenhouse",
     "posted_at": "2026-09-28",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "loopgames-marketing-artist-motion-designer-2",
+    "slug": "loopgames-marketing-artist-motion-designer",
     "title": "Marketing Artist (Motion Designer)",
     "company": {
       "slug": "loopgames",
@@ -1055,11 +1055,11 @@
     "apply_url": "https://jobs.lever.co/loopgames/8c069124-dda5-4dc1-9611-3d4eea90a312",
     "source": "lever",
     "posted_at": "2026-09-28",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "flohealth-freelancer-video-editor-part-time-remote-2",
+    "slug": "flohealth-freelancer-video-editor-part-time-remote",
     "title": "Freelancer - Video Editor (Part-Time, Remote)",
     "company": {
       "slug": "flohealth",
@@ -1079,11 +1079,11 @@
     "apply_url": "https://job-boards.greenhouse.io/flohealth/jobs/8004575003",
     "source": "greenhouse",
     "posted_at": "2026-09-25",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "suno-motion-designer-paid-social-contract-2",
+    "slug": "suno-motion-designer-paid-social-contract",
     "title": "Motion Designer, Paid Social (Contract)",
     "company": {
       "slug": "suno",
@@ -1103,11 +1103,11 @@
     "apply_url": "https://jobs.ashbyhq.com/suno/3da14a90-a4fb-47b9-a17e-7412a63882d4",
     "source": "ashby",
     "posted_at": "2026-09-25",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "scopely-performance-marketing-manager-forecasting-market-intelligence",
+    "slug": "scopely-performance-marketing-manager-forecasting-market-intelligence-2",
     "title": "Performance Marketing Manager, Forecasting & Market Intelligence",
     "company": {
       "slug": "scopely",
@@ -1127,11 +1127,11 @@
     "apply_url": "https://job-boards.greenhouse.io/scopely/jobs/5427787008?gh_jid=5427787008",
     "source": "greenhouse",
     "posted_at": "2026-09-24",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "applovin-content-marketing-manager-growth-marketing",
+    "slug": "applovin-content-marketing-manager-growth-marketing-2",
     "title": "Content Marketing Manager - Growth Marketing",
     "company": {
       "slug": "applovin",
@@ -1151,11 +1151,11 @@
     "apply_url": "https://boards.greenhouse.io/applovin/jobs/4715902006?gh_jid=4715902006",
     "source": "greenhouse",
     "posted_at": "2026-09-23",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "wooga-senior-user-acquisition-manager-2",
+    "slug": "wooga-senior-user-acquisition-manager",
     "title": "Senior User Acquisition Manager",
     "company": {
       "slug": "wooga",
@@ -1175,11 +1175,11 @@
     "apply_url": "https://job-boards.greenhouse.io/wooga/jobs/8213368",
     "source": "greenhouse",
     "posted_at": "2026-09-23",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "voodoo-talent-acquisition-associate-growth-turkiye",
+    "slug": "voodoo-talent-acquisition-associate-growth-turkiye-2",
     "title": "Talent Acquisition Associate - Growth - Türkiye",
     "company": {
       "slug": "voodoo",
@@ -1199,11 +1199,11 @@
     "apply_url": "https://jobs.ashbyhq.com/voodoo/ab4f3ef3-bf29-4ec7-b8a2-1a0e67b48a44",
     "source": "ashby",
     "posted_at": "2026-09-22",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "tripledotstudios-senior-growth-manager-2",
+    "slug": "tripledotstudios-senior-growth-manager",
     "title": "Senior Growth Manager",
     "company": {
       "slug": "tripledotstudios",
@@ -1223,11 +1223,11 @@
     "apply_url": "https://job-boards.eu.greenhouse.io/tripledotstudios/jobs/4981480101",
     "source": "greenhouse",
     "posted_at": "2026-09-22",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "preply-senior-manager-growth-strategy-operations-plg-pricing-2",
+    "slug": "preply-senior-manager-growth-strategy-operations-plg-pricing",
     "title": "Senior Manager, Growth Strategy & Operations (PLG & Pricing)",
     "company": {
       "slug": "preply",
@@ -1247,11 +1247,11 @@
     "apply_url": "https://jobs.ashbyhq.com/preply/12d61a96-2f0e-48a3-a07f-b730fb5f164c",
     "source": "ashby",
     "posted_at": "2026-09-22",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "acorns-growth-marketing-sr-associate-podcasts-ctv",
+    "slug": "acorns-growth-marketing-sr-associate-podcasts-ctv-2",
     "title": "Growth Marketing Sr. Associate, Podcasts & CTV",
     "company": {
       "slug": "acorns",
@@ -1271,11 +1271,11 @@
     "apply_url": "https://jobs.ashbyhq.com/acorns/7bbbdcf6-7301-4440-8a19-60d9d633d1ea",
     "source": "ashby",
     "posted_at": "2026-09-17",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "voodoo-head-of-growth-2",
+    "slug": "voodoo-head-of-growth",
     "title": "Head of Growth",
     "company": {
       "slug": "voodoo",
@@ -1295,11 +1295,11 @@
     "apply_url": "https://jobs.ashbyhq.com/voodoo/3f4faf3b-15e6-4f08-8b04-1870dba1b124",
     "source": "ashby",
     "posted_at": "2026-09-15",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "vc-stockgro-growth-and-retention-manager-2",
+    "slug": "vc-stockgro-growth-and-retention-manager",
     "title": "Growth and Retention Manager",
     "company": {
       "slug": "vc-stockgro",
@@ -1320,11 +1320,11 @@
     "apply_url": "https://in.linkedin.com/jobs/view/growth-and-retention-manager-at-stockgro-4418946707",
     "source": "getro",
     "posted_at": "2026-09-09",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "acorns-growth-marketing-sr-associate-new-channels-2",
+    "slug": "acorns-growth-marketing-sr-associate-new-channels",
     "title": "Growth Marketing Sr. Associate, New Channels",
     "company": {
       "slug": "acorns",
@@ -1344,11 +1344,11 @@
     "apply_url": "https://jobs.ashbyhq.com/acorns/f221bf93-f4e3-41cd-9beb-c745bf8c0123",
     "source": "ashby",
     "posted_at": "2026-09-08",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "suno-sr-growth-marketing-manager-paid-social-media-2",
+    "slug": "suno-sr-growth-marketing-manager-paid-social-media",
     "title": "Sr. Growth Marketing Manager, Paid Social Media",
     "company": {
       "slug": "suno",
@@ -1368,11 +1368,11 @@
     "apply_url": "https://jobs.ashbyhq.com/suno/32eaac2d-5530-44bf-b0f1-a0e1e82ecf15",
     "source": "ashby",
     "posted_at": "2026-09-05",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "vc-midnite-2-05ded3cb-add8-4ec9-b8cb-7a414f5518cb-head-of-growth",
+    "slug": "vc-midnite-2-05ded3cb-add8-4ec9-b8cb-7a414f5518cb-head-of-growth-2",
     "title": "Head of Growth",
     "company": {
       "slug": "vc-midnite-2-05ded3cb-add8-4ec9-b8cb-7a414f5518cb",
@@ -1393,11 +1393,11 @@
     "apply_url": "https://ca.linkedin.com/jobs/view/head-of-growth-at-midnite-4461335858",
     "source": "getro",
     "posted_at": "2026-09-04",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "voodoo-growth-manager-new-apps-2",
+    "slug": "voodoo-growth-manager-new-apps",
     "title": "Growth Manager - New Apps",
     "company": {
       "slug": "voodoo",
@@ -1417,35 +1417,11 @@
     "apply_url": "https://jobs.ashbyhq.com/voodoo/45fb87c4-9cd0-4681-976d-2b6312933d12",
     "source": "ashby",
     "posted_at": "2026-09-03",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "duolingo-senior-performance-marketing-manager",
-    "title": "Senior Performance Marketing Manager",
-    "company": {
-      "slug": "duolingo",
-      "name": "Duolingo",
-      "url": "https://www.duolingo.com",
-      "blurb": "The world's most popular language-learning app, 100M+ monthly users.",
-      "size": "500+",
-      "sector": "apps"
-    },
-    "category": "ua",
-    "location": "New York, NY",
-    "region": "americas",
-    "remote": "onsite",
-    "employment_type": "FULL_TIME",
-    "salary": null,
-    "description_md": "Our mission at Duolingo is to develop the best education in the world and make it universally available. It’s a big mission, and that’s where you come in!\n\nAt Duolingo, you’ll join a team that cares about educating our users, experimenting with big ideas, making fact-based decisions, and finding innovative solutions to complex problems. You’ll have limitless learning opportunities and daily collaborations with world-class minds ,  while doing work that’s both meaningful and fun.\n\nJoin our life-changing mission to develop education for our half a billion (and growing!) learners around the world.\n\nRead our blog to learn more.\n\n**About the role...**\n\nWe’re looking for a Senior Performance Marketing Manager to drive Duolingo’s global user acquisition campaigns across multiple channels. In this hands-on role, you’ll be directly responsible for running and optimizing mobile acquisition at scale, supporting an eight-figure annual budget in close partnership with our agency partners and internal teams. This is a unique opportunity to do high-impact, executional work on one of the world’s most beloved and innovative brands, reaching millions of learners worldwide.\n\n**🧠  You will...**\n\n- Own day-to-day execution of global performance marketing campaigns, including setting the creative strategy, with a primary focus on mobile user acquisition and growth.\n\n- Strategically run and optimize mobile install campaigns across major platforms, such as Google UAC, Meta. Tiktok,  and programmatic partners, focusing on high LTV/CAC, efficient spend, and sustainable global growth.\n\n- Manage and hold accountable Duolingo’s performance marketing agency partners, ensuring alignment on goals, pacing, and quality of execution.\n\n- Leverage deep, data-driven insights to guide decisions, constantly improving key KPIs like CPI, retention, and monetization metrics.\n\n- Collaborate cross-functionally with teams across Marketing Analytics, Creative, Engineering, and Finance to align efforts and maximize impact.\n\n- Champion a culture of experimentation, continuously testing new channels, creative approaches, and optimization strategies to unlock new growth opportunities.\n\n- Develop and present strategic recommendations to marketing leadership, translating campaign performance into actionable insights and proposals.\n\n**✅  You have...**\n\n- Experience running large-scale, global mobile acquisition campaigns.\n\n- Strong analytical skills, with expertise in mobile attribution and marketing analytics.\n\n- A successful track record of owning and optimizing large performance marketing budgets with direct, hands-on execution.\n\n- Deep knowledge of the mobile user acquisition ecosystem, including platforms, attribution technologies, industry trends, and best practices.\n\n- Exceptional ability to translate data into strategy and clearly communicate findings to stakeholders at all levels.\n\n- Experience working with and managing agency partners to deliver against performance targets.\n\n**⭐  Exceptional candidates will have...**\n\n- Experience in running performance marketing for a top subscription-based mobile app.\n\n- Familiarity with incremental measurement methodologies (e.g., geo-lift, incrementality testing, media mix modeling).\n\n- A passion about Duolingo’s mission to make education universally accessible.\n\nThe offered salary is dependent upon several factors, including work experience, skills, and internal peer comparisons. The posted range is subject to change in the future. For this role, base salary is supplemented by equity compensation. We encourage you to talk with your recruiter for more information related to compensation for this role!\n\nSalary Range:\n\n$142,800, $193,200 USD\n\n**Benefits:** Take a peek at how we care for our employees' holistic well-being with our benefits here.\n\n**Job Alerts:** Sign up for job alerts here.\n\n**Accommodations: **We will do everything we can within reason to make sure that your interview takes place in an environment that fairly and accurately assesses your skills. If you need assistance or accommodation, please contact accommodations@duolingo.com.\n\n**Equal Employment Opportunity: **Duolingo is proud to be an Equal Employment Opportunity employer. We do not discriminate based upon race, religion, color, national origin, gender (including pregnancy, childbirth, or related medical conditions), sexual orientation, gender identity, gender expression, age, status as a protected veteran, status as an individual with a disability, or other applicable legally protected characteristics.\n\n**Fraud Warning: **Unfortunately, there is a rise in scammers pretending to be real Duolingo employees. Duolingo and our employees will never ask for your Social Security number, bank details, or passport info, and we’ll never ask you to deposit a check, purchase equipment, or exchange money during the interview process. Real Duolingo employees always use an email that ends in @duolingo.com or @recruiting.duolingo.com. Stay alert and double-check these details before sharing any information.\n\nBy applying for this position your data will be processed as per the Duolingo Applicant Privacy Notice.",
-    "apply_url": "https://careers.duolingo.com/jobs/8778318002?gh_jid=8778318002",
-    "source": "greenhouse",
-    "posted_at": "2026-09-02",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
-  },
-  {
-    "slug": "perplexity-motion-designer",
+    "slug": "perplexity-motion-designer-2",
     "title": "Motion Designer",
     "company": {
       "slug": "perplexity",
@@ -1465,11 +1441,11 @@
     "apply_url": "https://jobs.ashbyhq.com/perplexity/39d520eb-6b81-4b61-8b23-5efcdac4cad9",
     "source": "ashby",
     "posted_at": "2026-09-02",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "rocket-money-growth-marketing-manager-tv-2",
+    "slug": "rocket-money-growth-marketing-manager-tv",
     "title": "Growth Marketing Manager - TV",
     "company": {
       "slug": "rocket-money",
@@ -1489,11 +1465,11 @@
     "apply_url": "https://job-boards.greenhouse.io/truebill/jobs/7983531003",
     "source": "greenhouse",
     "posted_at": "2026-09-01",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "scopely-senior-motion-designer",
+    "slug": "scopely-senior-motion-designer-2",
     "title": "Senior Motion Designer",
     "company": {
       "slug": "scopely",
@@ -1513,11 +1489,11 @@
     "apply_url": "https://job-boards.greenhouse.io/scopely/jobs/5394587008?gh_jid=5394587008",
     "source": "greenhouse",
     "posted_at": "2026-08-31",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "vc-mighty-bear-games-creative-designer-forward-deployed-creative",
+    "slug": "vc-mighty-bear-games-creative-designer-forward-deployed-creative-2",
     "title": "Creative Designer (Forward Deployed Creative)",
     "company": {
       "slug": "vc-mighty-bear-games",
@@ -1538,11 +1514,11 @@
     "apply_url": "https://jobs.gohire.io/wearemighty-tqlek6ys/creative-designer-forward-deployed-creative-296413/",
     "source": "getro",
     "posted_at": "2026-08-28",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "tripledotstudios-senior-ad-monetisation-analyst",
+    "slug": "tripledotstudios-senior-ad-monetisation-analyst-2",
     "title": "Senior Ad Monetisation Analyst",
     "company": {
       "slug": "tripledotstudios",
@@ -1553,20 +1529,20 @@
       "sector": "games"
     },
     "category": "growth",
-    "location": "London",
+    "location": "Remote Europe",
     "region": "emea",
-    "remote": "onsite",
+    "remote": "remote",
     "employment_type": "FULL_TIME",
     "salary": null,
-    "description_md": "Who are we?\n\n**TripledotStudios** is one of the largest independent mobile games companies in the world.\n\nWe are a multi-award-winning organisation, with a global 2,500+ strong team across 12 studios.\n\nOur expanded portfolio includes some of the biggest titles in mobile gaming, collectively reaching top chart positions around the world and engaging over 25 million daily active users.\n\nTripledot’s guiding principle is that when people love what they do, what they do will be loved by others.\n\nWe’re building a company we’re proud of. One filled with driven, incredibly smart and detail-orientated people, who **LOVE** making games.\n\nOur ambition is to be the most successful games company in the world, and we’re just getting started.\n\n**The role is working within our studio: Lion Studios**\n\nLion Studios is a mobile games publisher that works with mobile developers to get their games discovered by players around the world. Headquartered in San Francisco, Lion Studios’ creative and strategy teams utilize their expertise to help game developers break through the noise and grow their businesses.\n\nSince launching in 2018, Lion Studios has driven 90% of its games to the Top 10 in the App Store and Google Play and helped drive 16 games to #1 in the US App Store’s Top Free chart.\n\n**Role Overview**\n\nAs our **Ad Monetisation Analyst**, you’ll take ownership of the ad monetisation strategy for a diverse portfolio of games, guiding them from their initial prototype phase all the way to a full launch. Your responsibilities will include building and optimizing ad waterfalls, managing all ad monetisation setups, and conducting A/B tests to continuously improve performance. You will be expected to consistently generate and test new ideas for monetisation innovations.\n\nA key part of the role is to foster strong relationships with external partners to secure the best deals and ensure robust business relations. Internally, you will work closely with the product and growth teams to ensure a cohesive strategy and maximize ad revenue across the portfolio..\n\n**Key Responsibilities**\n\n- Own ad monetisation strategy for a portfolio of games: build, optimize, and manage monetisation setups to maximize revenue across Lion Studios.\n\n- Design and execute monetisation-related product decisions.\n\n- Lead integration, testing, and rollout of new monetisation partners.\n\n- Manage relationships with ad providers.\n\n- Propose and drive new monetization initiatives, partnering with engineering to scope and build the solutions behind them\n\n- Track eCPM, fill rate, ARPDAU, and other core KPIs, and report performance and insights to Product, UA, and leadership\n\n- Serve as a primary point of contact for ad network ,  technical troubleshooting, escalations, and holding partners accountable to commitments\n\n- Comfort designing and reading A/B tests with statistical rigor\n\n- Collaborate with Product, QA, and User Acquisition teams to share insights, enhance workflows, and drive efficiency\n\n**Required Skills, Knowledge and Expertise**\n\n- More than 3  years of experience in ad monetisation in gaming.\n\n- Hands-on experience with MAX mediation platform.\n\n- Ability to adapt quickly to new tools, dashboards, or analytical frameworks.\n\n- Self-sufficient, autonomous, and able to juggle multiple projects in a fast-changing environment.\n\n- Knowledge of Looker for analytics and reporting is a plus\n\n**Working at Tripledot**\n\n- **25 days paid holiday** in addition to bank holidays to relax and refresh throughout the year\n\n- **Hybrid Working**\n\n- **20 days remote working: **Work from anywhere in the world, or use the time to cover mandatory office days to WFH, 20 days of the year.\n\n- **Daily Free Lunch:** when in the office you get £12 every day to order from JustEat.\n\n- **Regular company events and rewards: **quarterly on-site and off-site events that celebrate cultural events, our achievements and our team spirit.\n\n- **Employee Assistance Program: **Anytime you need it, tap into confidential, caring support with our Employee Assistance Program, always here to lend an ear and a helping hand.\n\n- **Family Forming Support:** Receive vital support on your family forming/ fertility journey with our support program [subject to policy]\n\n- **Life Assurance & Group Income Cover: **Financial protection for you and your loved ones.\n\n- **Continuous Professional Development: **Propel your career with continuous opportunities for professional development.\n\n- **Private Medical Cover& Health Cash Plan: **Opt-in (P11d benefit) comprehensive private medical cover with Bupa and cash plan with Medicash.\n\n- **Dental Cover: **Opt-in (P11d benefit).\n\n- **Cycle to Work Scheme:** Salary sacrifice bike purchase scheme.\n\n- **Pension Plan: **Qualifying earnings or opt-in 4% contributory match schemes offered.",
-    "apply_url": "https://job-boards.eu.greenhouse.io/tripledotstudios/jobs/4962297101",
+    "description_md": "Who are we?\n\n**TripledotStudios** is one of the largest independent mobile games companies in the world.\n\nWe are a multi-award-winning organisation, with a global 2,500+ strong team across 12 studios.\n\nOur expanded portfolio includes some of the biggest titles in mobile gaming, collectively reaching top chart positions around the world and engaging over 25 million daily active users.\n\nTripledot’s guiding principle is that when people love what they do, what they do will be loved by others.\n\nWe’re building a company we’re proud of. One filled with driven, incredibly smart and detail-orientated people, who **LOVE** making games.\n\nOur ambition is to be the most successful games company in the world, and we’re just getting started.\n\n**The role is working within our studio: Lion Studios**\n\nLion Studios is a mobile games publisher that works with mobile developers to get their games discovered by players around the world. Headquartered in San Francisco, Lion Studios’ creative and strategy teams utilize their expertise to help game developers break through the noise and grow their businesses.\n\nSince launching in 2018, Lion Studios has driven 90% of its games to the Top 10 in the App Store and Google Play and helped drive 16 games to #1 in the US App Store’s Top Free chart.\n\n**Role Overview**\n\nAs our **Ad Monetisation Analyst**, you’ll take ownership of the ad monetisation strategy for a diverse portfolio of games, guiding them from their initial prototype phase all the way to a full launch. Your responsibilities will include building and optimizing ad waterfalls, managing all ad monetisation setups, and conducting A/B tests to continuously improve performance. You will be expected to consistently generate and test new ideas for monetisation innovations.\n\nA key part of the role is to foster strong relationships with external partners to secure the best deals and ensure robust business relations. Internally, you will work closely with the product and growth teams to ensure a cohesive strategy and maximize ad revenue across the portfolio..\n\n**Key Responsibilities**\n\n- Own ad monetisation strategy for a portfolio of games: build, optimize, and manage monetisation setups to maximize revenue across Lion Studios.\n\n- Design and execute monetisation-related product decisions.\n\n- Lead integration, testing, and rollout of new monetisation partners.\n\n- Manage relationships with ad providers.\n\n- Propose and drive new monetization initiatives, partnering with engineering to scope and build the solutions behind them\n\n- Track eCPM, fill rate, ARPDAU, and other core KPIs, and report performance and insights to Product, UA, and leadership\n\n- Serve as a primary point of contact for ad network ,  technical troubleshooting, escalations, and holding partners accountable to commitments\n\n- Comfort designing and reading A/B tests with statistical rigor\n\n- Collaborate with Product, QA, and User Acquisition teams to share insights, enhance workflows, and drive efficiency\n\n**Required Skills, Knowledge and Expertise**\n\n- More than 3  years of experience in ad monetisation in gaming.\n\n- Hands-on experience with MAX mediation platform.\n\n- Ability to adapt quickly to new tools, dashboards, or analytical frameworks.\n\n- Self-sufficient, autonomous, and able to juggle multiple projects in a fast-changing environment.\n\n- Knowledge of Looker for analytics and reporting is a plus\n\n**Working at Tripledot**\n\nTime Off: Flexible Discretionary Time Off policy in addition to bank holidays to relax and refresh throughout the year.\n\nFinancial: Generous 401k match, discretionary bonuses, and competitive salaries.\n\nHealth & Wellness: Comprehensive Medical, Dental, and Vision coverage.\n\nContinuous Professional Development: Propel your career with continuous opportunities for professional development.\n\nFamily-Friendly Culture: A generous parental leave policy and a supportive, family-friendly culture.\n\nRegular company events: Yearly on-site events that celebrate our achievements and our team spirit.",
+    "apply_url": "https://job-boards.eu.greenhouse.io/tripledotstudios/jobs/4960068101",
     "source": "greenhouse",
-    "posted_at": "2026-08-27",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "posted_at": "2026-08-25",
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "scopely-manager-i-performance-marketing",
+    "slug": "scopely-manager-i-performance-marketing-2",
     "title": "Manager I, Performance Marketing",
     "company": {
       "slug": "scopely",
@@ -1586,11 +1562,11 @@
     "apply_url": "https://job-boards.greenhouse.io/scopely/jobs/5193836008?gh_jid=5193836008",
     "source": "greenhouse",
     "posted_at": "2026-08-25",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "vc-eloelo-2-manager-performance-marketing",
+    "slug": "vc-eloelo-2-manager-performance-marketing-2",
     "title": "Manager - Performance Marketing",
     "company": {
       "slug": "vc-eloelo-2",
@@ -1611,11 +1587,11 @@
     "apply_url": "https://eloelo.keka.com/careers/jobdetails/158167",
     "source": "getro",
     "posted_at": "2026-08-25",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "kabam-video-artist-6-month-contract",
+    "slug": "kabam-video-artist-6-month-contract-2",
     "title": "Video Artist (6 Month Contract)",
     "company": {
       "slug": "kabam",
@@ -1635,11 +1611,11 @@
     "apply_url": "https://jobs.lever.co/kabam/d07a353f-e077-4ff5-b78e-3d5d4785eb84",
     "source": "lever",
     "posted_at": "2026-08-24",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "voodoo-growth-associate-end-of-study-internship",
+    "slug": "voodoo-growth-associate-end-of-study-internship-2",
     "title": "Growth Associate - End of study internship",
     "company": {
       "slug": "voodoo",
@@ -1659,11 +1635,11 @@
     "apply_url": "https://jobs.ashbyhq.com/voodoo/ec35f065-70a7-4205-83f7-98368adb9388",
     "source": "ashby",
     "posted_at": "2026-08-21",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "scopely-sr-marketing-artist-2",
+    "slug": "scopely-sr-marketing-artist",
     "title": "Sr Marketing Artist",
     "company": {
       "slug": "scopely",
@@ -1683,11 +1659,11 @@
     "apply_url": "https://job-boards.greenhouse.io/scopely/jobs/5394718008?gh_jid=5394718008",
     "source": "greenhouse",
     "posted_at": "2026-08-20",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "scopely-sr-motion-designer-2",
+    "slug": "scopely-sr-motion-designer",
     "title": "Sr Motion Designer",
     "company": {
       "slug": "scopely",
@@ -1707,11 +1683,11 @@
     "apply_url": "https://job-boards.greenhouse.io/scopely/jobs/5393059008?gh_jid=5393059008",
     "source": "greenhouse",
     "posted_at": "2026-08-18",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "wildlifestudios-creative-producer-2",
+    "slug": "wildlifestudios-creative-producer",
     "title": "Creative Producer",
     "company": {
       "slug": "wildlifestudios",
@@ -1731,11 +1707,11 @@
     "apply_url": "https://job-boards.greenhouse.io/wildlifestudios/jobs/8726055002",
     "source": "greenhouse",
     "posted_at": "2026-08-18",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "suno-growth-marketing-manager-conversion",
+    "slug": "suno-growth-marketing-manager-conversion-2",
     "title": "Growth Marketing Manager, Conversion",
     "company": {
       "slug": "suno",
@@ -1755,11 +1731,11 @@
     "apply_url": "https://jobs.ashbyhq.com/suno/fc1a2f15-3511-4fa5-9d3a-3eadfc7499e8",
     "source": "ashby",
     "posted_at": "2026-08-17",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "flohealth-senior-user-acquisition-manager-web",
+    "slug": "flohealth-senior-user-acquisition-manager-web-2",
     "title": "Senior User Acquisition Manager (Web)",
     "company": {
       "slug": "flohealth",
@@ -1770,20 +1746,20 @@
       "sector": "apps"
     },
     "category": "ua",
-    "location": "Warsaw",
+    "location": "Ukraine",
     "region": "emea",
     "remote": "onsite",
     "employment_type": "FULL_TIME",
     "salary": null,
     "description_md": "**500M+ downloads. 80M+ monthly users. A decade of building – and we’re still accelerating.**\n\nFlo is the world’s #1 health & fitness app worldwide on a mission to build a better future for female health. Backed by a $200M investment led by General Atlantic, we became the first product of our kind to reach a $1B valuation in 2024 – and we’re not slowing down.\n\nWith 7M paid subscribers and the highest-rated experience in the App Store’s health category, we’ve spent 10 years earning trust at scale. Now, we’re building the next generation of digital health – AI-powered, privacy-first, clinically backed – to help our users know their body better.\n\n**The job**\n\n- Plan, execute, and scale web user acquisition campaigns across Meta (Facebook/Instagram), Google Ads, TikTok, and Snapchat ,  building a scalable UA engine\n\n- Own your strategy and KPIs end-to-end: we provide the resources and the \"why,\" you define the \"how.\" No hand-holding, no micro-management ,  just results\n\n- Monitor and optimize account structure, bidding models, and audience segmentation across platforms\n\n- Lead creative testing frameworks ,  build and manage scalable systems for testing high volumes of creatives, identify what wins and why, and replicate success at scale\n\n- Drive incremental growth through performance-focused strategy and rapid experimentation\n\n- Own dynamic budget allocation to maximize ROAS\n\n- Use AI tools and automation to streamline reporting, creative testing analysis, campaign optimization, and other recurring UA workflows\n\n- Collaborate closely with analytics, creative, MarTech, and growth teams ,  guide creative focus, forecast asset delivery, and write clear technical requirements\n\n- Dig into LTV, monetization, and web funnels; when a number moves, you're the first to ask why\n\n- Generate insights from performance data, proactively surface opportunities, and produce regular performance reports and strategic recommendations\n\n- Stay current on industry trends, platform updates, evolving privacy regulations, and emerging AI capabilities relevant to performance marketing\n\n**Must Have**\n\n- 5+ years of performance marketing experience in user acquisition, ideally in high-growth environments\n\n- Expert-level experience managing campaigns across Meta Ads and/or Google Ads (incl. DemGen/YT) at scale, with hands-on experience in TikTok Ads and/or Snapchat Ads\n\n- Proven track record managing significant monthly budgets and optimizing for ROAS, CPA, and LTV\n\n- Solid understanding of web attribution principles and experience with tracking/analytics platforms\n\n- Proficiency in BI tools (Looker, Tableau, PowerBI, or similar); comfortable pulling and analyzing data via SQL and/or advanced Excel or Google Sheets\n\n- Practical experience using AI tools to automate or accelerate marketing workflows ,  reporting, creative analysis, campaign optimization, or process automation more broadly\n\n- Strong communication and project management skills ,  able to sell ideas and negotiate priorities cross-functionally with stakeholders who don't report to you\n\n- Comfortable with ambiguity: when the roadmap shifts or a problem has no clear playbook, you build the solution rather than wait for one\n\n- Direct communicator who gives and welcomes honest feedback; willing to challenge a broken process or a wrong call\n\n- You care about how UA affects LTV, product retention, and the business bottom line ,  business owner first, media buyer second\n\n- Upper-intermediate or advanced English proficiency\n\n- Ability to conduct market research and competitor analysis\n\n- Experience in healthtech, wellness, or other strictly regulated verticals is a strong advantage\n\n#LI-Remote\n\nSalary Range - gross per month (ranges may vary based on skills and experience)\n\n€4.800, €5.800 EUR\n\n**How we work**\n\nWe’re a mission-led, product-driven team. We move fast, stay focused and take ownership – from brief to build to impact. Debate is encouraged. Decisions are shared. We care about craft, ship with purpose, and always raise the bar.\n\nYou’ll be working with people who take their work seriously, not themselves. It takes commitment, resilience, and the drive to keep going when things get tough. Because better health outcomes are worth it.\n\n**What you'll get**\n\nWe support impact with meaningful reward. Here’s what that looks like:\n\n- Competitive salary and annual reviews\n\n- Opportunity to participate in Flo’s performance incentive scheme\n\n- Paid holiday, sick leave, and female health leave\n\n- Enhanced parental leave and pay for maternity, paternity, same-sex and adoptive parents\n\n- Accelerated professional growth through world-changing work and learning support\n\n- In-person collaboration and work in a hybrid model, with 3 days per week spent in the office\n\n- 5-week fully paid sabbatical at 5-year Floversary\n\n- Flo Premium for friends & family, plus more health, pension and wellbeing perks\n\n**Diversity, equity and inclusion**\n\nOur strength is in our differences. At Flo, hiring is based on merit, skill and what you bring to the role – nothing else. We’re proud to be an equal opportunity employer, and we welcome applicants from all backgrounds, communities and identities. Read our privacy notice for job applicants.",
-    "apply_url": "https://job-boards.greenhouse.io/flohealth/jobs/7854045003",
+    "apply_url": "https://job-boards.greenhouse.io/flohealth/jobs/7857807003",
     "source": "greenhouse",
     "posted_at": "2026-08-12",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "vc-cypher-games-growth-manager-senior-growth-manager-2",
+    "slug": "vc-cypher-games-growth-manager-senior-growth-manager",
     "title": "Growth Manager/Senior Growth Manager",
     "company": {
       "slug": "vc-cypher-games",
@@ -1803,11 +1779,11 @@
     "apply_url": "https://jobs.lever.co/cypher-games/fa5b81fd-a826-4001-a362-1e041c84206e",
     "source": "getro",
     "posted_at": "2026-08-12",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "voodoo-growth-manager",
+    "slug": "voodoo-growth-manager-2",
     "title": "Growth Manager",
     "company": {
       "slug": "voodoo",
@@ -1827,11 +1803,11 @@
     "apply_url": "https://jobs.ashbyhq.com/voodoo/93fa8d2a-06e2-460f-ba3b-21214b749a05",
     "source": "ashby",
     "posted_at": "2026-08-10",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "huuuge-head-of-user-acquisition",
+    "slug": "huuuge-head-of-user-acquisition-2",
     "title": "Head of User Acquisition",
     "company": {
       "slug": "huuuge",
@@ -1851,11 +1827,11 @@
     "apply_url": "https://huuuge.recruitee.com/o/head-of-user-acquisition",
     "source": "recruitee",
     "posted_at": "2026-08-07",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "voodoo-ad-monetization-manager-gaming",
+    "slug": "voodoo-ad-monetization-manager-gaming-2",
     "title": "Ad Monetization Manager - Gaming",
     "company": {
       "slug": "voodoo",
@@ -1875,11 +1851,11 @@
     "apply_url": "https://jobs.ashbyhq.com/voodoo/b8b145f2-0bbc-40dd-9cd5-ec70c9e0f962",
     "source": "ashby",
     "posted_at": "2026-08-06",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "voodoo-senior-data-analyst-growth",
+    "slug": "voodoo-senior-data-analyst-growth-2",
     "title": "Senior Data Analyst - Growth",
     "company": {
       "slug": "voodoo",
@@ -1899,11 +1875,11 @@
     "apply_url": "https://jobs.ashbyhq.com/voodoo/b4b69245-4fe2-4934-9e59-994adfd4ec5e",
     "source": "ashby",
     "posted_at": "2026-08-05",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "suno-senior-cro-manager-growth-marketing-2",
+    "slug": "suno-senior-cro-manager-growth-marketing",
     "title": "Senior CRO Manager, Growth Marketing",
     "company": {
       "slug": "suno",
@@ -1923,11 +1899,11 @@
     "apply_url": "https://jobs.ashbyhq.com/suno/12b86885-63c7-446c-ab5e-514fe8adba01",
     "source": "ashby",
     "posted_at": "2026-08-04",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "voodoo-strategic-project-manager-growth",
+    "slug": "voodoo-strategic-project-manager-growth-2",
     "title": "Strategic Project Manager - Growth",
     "company": {
       "slug": "voodoo",
@@ -1947,11 +1923,11 @@
     "apply_url": "https://jobs.ashbyhq.com/voodoo/699db8ca-ce3f-42d0-9eb0-c414aa8090cf",
     "source": "ashby",
     "posted_at": "2026-08-03",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "suno-graphic-designer-performance-marketing-contractor-2",
+    "slug": "suno-graphic-designer-performance-marketing-contractor",
     "title": "Graphic Designer, Performance Marketing (Contractor)",
     "company": {
       "slug": "suno",
@@ -1971,11 +1947,11 @@
     "apply_url": "https://jobs.ashbyhq.com/suno/8ec095a8-286e-4c6a-aeb2-3ec0c6319c48",
     "source": "ashby",
     "posted_at": "2026-08-03",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "moonactive-mobile-user-acquisition-manager",
+    "slug": "moonactive-mobile-user-acquisition-manager-2",
     "title": "Mobile User Acquisition Manager",
     "company": {
       "slug": "moonactive",
@@ -1995,11 +1971,11 @@
     "apply_url": "https://jobs.ashbyhq.com/moonactive/97952ab6-4175-4727-8c16-914895df3726",
     "source": "ashby",
     "posted_at": "2026-07-29",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "moonactive-product-monetization-manager",
+    "slug": "moonactive-product-monetization-manager-2",
     "title": "Product Monetization Manager",
     "company": {
       "slug": "moonactive",
@@ -2019,11 +1995,11 @@
     "apply_url": "https://jobs.ashbyhq.com/moonactive/1bf17c68-9808-4e48-943b-7c76d75a3803",
     "source": "ashby",
     "posted_at": "2026-07-29",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "moonactive-junior-user-acquisition-manager",
+    "slug": "moonactive-junior-user-acquisition-manager-2",
     "title": "Junior User Acquisition Manager",
     "company": {
       "slug": "moonactive",
@@ -2043,11 +2019,36 @@
     "apply_url": "https://jobs.ashbyhq.com/moonactive/7d9ea95d-4eda-405f-a525-229092a6b989",
     "source": "ashby",
     "posted_at": "2026-07-29",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "suno-sr-paid-social-manager-2",
+    "slug": "vc-eloelo-2-ai-video-editor-contract-master",
+    "title": "AI Video Editor - Contract (Master)",
+    "company": {
+      "slug": "vc-eloelo-2",
+      "name": "Eloelo",
+      "url": "https://eloelo.keka.com/careers/jobdetails/153106",
+      "blurb": "Eloelo, Application Software, Commerce and Shopping, Content · Series B. Backed by Play Ventures.",
+      "size": "200-500",
+      "sector": "games",
+      "stage": "Series B"
+    },
+    "category": "marketing-art",
+    "location": "See posting",
+    "region": "emea",
+    "remote": "onsite",
+    "employment_type": "CONTRACTOR",
+    "salary": null,
+    "description_md": "Eloelo is hiring a AI Video Editor - Contract (Master).\n\nFocus areas include Video Editing, Adobe Premiere Pro, Content Creation, Collaboration, Software Project Management, Storytelling.\n\nRead the full brief and apply on Eloelo's own posting.",
+    "apply_url": "https://eloelo.keka.com/careers/jobdetails/153106",
+    "source": "getro",
+    "posted_at": "2026-07-24",
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
+  },
+  {
+    "slug": "suno-sr-paid-social-manager",
     "title": "Sr. Paid Social Manager",
     "company": {
       "slug": "suno",
@@ -2067,11 +2068,11 @@
     "apply_url": "https://jobs.ashbyhq.com/suno/847c09f5-60bd-40a7-8065-f553fe6a6360",
     "source": "ashby",
     "posted_at": "2026-07-22",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "suno-sr-performance-marketing-manager-paid-social-2",
+    "slug": "suno-sr-performance-marketing-manager-paid-social",
     "title": "Sr. Performance Marketing Manager, Paid Social",
     "company": {
       "slug": "suno",
@@ -2091,11 +2092,11 @@
     "apply_url": "https://jobs.ashbyhq.com/suno/3824c2c9-cc54-4bd4-a368-22849fc57539",
     "source": "ashby",
     "posted_at": "2026-07-22",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "codeway-associate-marketing-artist",
+    "slug": "codeway-associate-marketing-artist-2",
     "title": "Associate Marketing Artist",
     "company": {
       "slug": "codeway",
@@ -2115,11 +2116,11 @@
     "apply_url": "https://jobs.ashbyhq.com/codeway/f90494ee-f6ee-471b-97bd-9a0609d952bb",
     "source": "ashby",
     "posted_at": "2026-07-22",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "applovin-media-buyer-emerging-channels-growth-marketing",
+    "slug": "applovin-media-buyer-emerging-channels-growth-marketing-2",
     "title": "Media Buyer, Emerging Channels - Growth Marketing",
     "company": {
       "slug": "applovin",
@@ -2139,11 +2140,11 @@
     "apply_url": "https://boards.greenhouse.io/applovin/jobs/4698111006?gh_jid=4698111006",
     "source": "greenhouse",
     "posted_at": "2026-07-17",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "stillfrontgroup-growth-marketing-specialist-web-to-app-funnels-2",
+    "slug": "stillfrontgroup-growth-marketing-specialist-web-to-app-funnels",
     "title": "Growth Marketing Specialist (Web-to-App Funnels)",
     "company": {
       "slug": "stillfrontgroup",
@@ -2163,11 +2164,11 @@
     "apply_url": "https://stillfrontgroup.teamtailor.com/jobs/8086617-growth-marketing-specialist-web-to-app-funnels",
     "source": "teamtailor",
     "posted_at": "2026-07-17",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "suno-paid-social-creative-strategist-contract",
+    "slug": "suno-paid-social-creative-strategist-contract-2",
     "title": "Paid Social Creative Strategist (Contract)",
     "company": {
       "slug": "suno",
@@ -2187,11 +2188,11 @@
     "apply_url": "https://jobs.ashbyhq.com/suno/984a5e2f-9370-4912-95f5-17ea1988171c",
     "source": "ashby",
     "posted_at": "2026-07-16",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "wildlifestudios-creative-strategy-intern",
+    "slug": "wildlifestudios-creative-strategy-intern-2",
     "title": "Creative Strategy Intern",
     "company": {
       "slug": "wildlifestudios",
@@ -2211,11 +2212,11 @@
     "apply_url": "https://job-boards.greenhouse.io/wildlifestudios/jobs/8631628002",
     "source": "greenhouse",
     "posted_at": "2026-07-13",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "scopely-creative-production-manager-user-acquisition",
+    "slug": "scopely-creative-production-manager-user-acquisition-2",
     "title": "Creative Production Manager, User Acquisition",
     "company": {
       "slug": "scopely",
@@ -2235,11 +2236,11 @@
     "apply_url": "https://job-boards.greenhouse.io/scopely/jobs/5238543008?gh_jid=5238543008",
     "source": "greenhouse",
     "posted_at": "2026-07-10",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "scopely-performance-marketing-director",
+    "slug": "scopely-performance-marketing-director-2",
     "title": "Performance Marketing Director",
     "company": {
       "slug": "scopely",
@@ -2259,11 +2260,11 @@
     "apply_url": "https://job-boards.greenhouse.io/scopely/jobs/5282076008?gh_jid=5282076008",
     "source": "greenhouse",
     "posted_at": "2026-07-09",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "voodoo-playable-ads-strategist",
+    "slug": "voodoo-playable-ads-strategist-2",
     "title": "Playable Ads Strategist",
     "company": {
       "slug": "voodoo",
@@ -2283,11 +2284,11 @@
     "apply_url": "https://jobs.ashbyhq.com/voodoo/1d82a61f-0769-44f7-83c6-8d0b2db2b043",
     "source": "ashby",
     "posted_at": "2026-07-08",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "rocket-money-creative-strategist",
+    "slug": "rocket-money-creative-strategist-2",
     "title": "Creative Strategist",
     "company": {
       "slug": "rocket-money",
@@ -2307,11 +2308,11 @@
     "apply_url": "https://job-boards.greenhouse.io/truebill/jobs/7798870003",
     "source": "greenhouse",
     "posted_at": "2026-07-08",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "codeway-marketing-artist-2",
+    "slug": "codeway-marketing-artist",
     "title": "Marketing Artist",
     "company": {
       "slug": "codeway",
@@ -2331,11 +2332,11 @@
     "apply_url": "https://jobs.ashbyhq.com/codeway/e039f968-aa6a-4df6-8d90-1cb931aef5b3",
     "source": "ashby",
     "posted_at": "2026-07-06",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "supercell-gameplay-capture-video-artist-creative-studio",
+    "slug": "supercell-gameplay-capture-video-artist-creative-studio-2",
     "title": "Gameplay Capture & Video Artist, Creative Studio",
     "company": {
       "slug": "supercell",
@@ -2355,11 +2356,11 @@
     "apply_url": "https://jobs.ashbyhq.com/supercell/a91f0f17-3e71-4767-a448-94bd86dbb525",
     "source": "ashby",
     "posted_at": "2026-07-03",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "voodoo-creative-strategist",
+    "slug": "voodoo-creative-strategist-2",
     "title": "Creative Strategist",
     "company": {
       "slug": "voodoo",
@@ -2379,11 +2380,11 @@
     "apply_url": "https://jobs.ashbyhq.com/voodoo/698aaa1c-f530-47cf-b82b-f0c7eaec2109",
     "source": "ashby",
     "posted_at": "2026-07-02",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "codeway-marketing-localization-artist-motion-designer-2",
+    "slug": "codeway-marketing-localization-artist-motion-designer",
     "title": "Marketing Localization Artist (Motion Designer)",
     "company": {
       "slug": "codeway",
@@ -2403,11 +2404,11 @@
     "apply_url": "https://jobs.ashbyhq.com/codeway/b5e64151-d084-45c8-a5db-54dc06529fda",
     "source": "ashby",
     "posted_at": "2026-06-29",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "scopely-director-performance-marketing",
+    "slug": "scopely-director-performance-marketing-2",
     "title": "Director, Performance Marketing",
     "company": {
       "slug": "scopely",
@@ -2427,11 +2428,11 @@
     "apply_url": "https://job-boards.greenhouse.io/scopely/jobs/5281535008?gh_jid=5281535008",
     "source": "greenhouse",
     "posted_at": "2026-06-24",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "homa-games-associate-team-lead-growth-2",
+    "slug": "homa-games-associate-team-lead-growth",
     "title": "Associate Team Lead Growth",
     "company": {
       "slug": "homa-games",
@@ -2451,11 +2452,11 @@
     "apply_url": "https://apply.workable.com/j/4959AB03BD",
     "source": "workable",
     "posted_at": "2026-06-22",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "scopely-director-performance-marketing-unannounced-arpg-mobile-game",
+    "slug": "scopely-director-performance-marketing-unannounced-arpg-mobile-game-2",
     "title": "Director, Performance Marketing - Unannounced ARPG Mobile Game",
     "company": {
       "slug": "scopely",
@@ -2475,11 +2476,11 @@
     "apply_url": "https://job-boards.greenhouse.io/scopely/jobs/5239651008?gh_jid=5239651008",
     "source": "greenhouse",
     "posted_at": "2026-06-08",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "kabam-growth-marketing-manager-aso-contract",
+    "slug": "kabam-growth-marketing-manager-aso-contract-2",
     "title": "Growth Marketing Manager, ASO (Contract)",
     "company": {
       "slug": "kabam",
@@ -2499,11 +2500,11 @@
     "apply_url": "https://jobs.lever.co/kabam/b974a409-510c-4d1a-946e-32cd10c2a9e9",
     "source": "lever",
     "posted_at": "2026-06-04",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "applovin-social-media-manager-growth-marketing-2",
+    "slug": "applovin-social-media-manager-growth-marketing",
     "title": "Social Media Manager, Growth Marketing",
     "company": {
       "slug": "applovin",
@@ -2523,11 +2524,11 @@
     "apply_url": "https://boards.greenhouse.io/applovin/jobs/4681220006?gh_jid=4681220006",
     "source": "greenhouse",
     "posted_at": "2026-05-13",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   },
   {
-    "slug": "huuuge-monetization-specialist",
+    "slug": "huuuge-monetization-specialist-2",
     "title": "Monetization Specialist",
     "company": {
       "slug": "huuuge",
@@ -2547,7 +2548,7 @@
     "apply_url": "https://huuuge.recruitee.com/o/monetization-specialist-7",
     "source": "recruitee",
     "posted_at": "2026-05-12",
-    "expires_at": "2026-12-13",
-    "ingested_at": "2026-10-29"
+    "expires_at": "2026-12-14",
+    "ingested_at": "2026-10-30"
   }
 ]
