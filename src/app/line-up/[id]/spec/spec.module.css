@@ -54,6 +54,73 @@
   cursor: pointer;
   transition: background 0.18s, transform 0.15s;
 }
+.headBtns {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+/* The highlight video (2026-10-30): white, so it reads as the lead action
+   next to the glassy Download button. */
+.watchBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: #e14b00;
+  background: #fff;
+  border: 0;
+  border-radius: 999px;
+  padding: 8px 18px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(122, 31, 0, 0.25);
+  transition: transform 0.15s;
+}
+.watchBtn:hover {
+  transform: translateY(-1px);
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(14, 15, 17, 0.82);
+  backdrop-filter: blur(6px);
+}
+.player {
+  position: relative;
+  width: min(520px, 100%);
+}
+.player video {
+  display: block;
+  width: 100%;
+  max-height: calc(100vh - 48px);
+  border-radius: 18px;
+  background: #000;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+}
+.close {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 0;
+  background: #fff;
+  color: var(--ink);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+}
+
 .printBtn:hover {
   background: rgba(255, 255, 255, 0.26);
   transform: translateY(-1px);
@@ -501,7 +568,9 @@
     background: white !important;
   }
   .toolbar,
-  .printBtn {
+  .printBtn,
+  .watchBtn,
+  .lightbox {
     display: none;
   }
   .page {

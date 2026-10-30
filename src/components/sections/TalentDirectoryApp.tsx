@@ -2,7 +2,8 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { ROSTER, type Profile } from "@/data/roster";
+import { useRouter } from "next/navigation";
+import { ROSTER, availabilityLabel, type Profile } from "@/data/roster";
 import {
   CURRENCIES,
   CURRENCY_SYMBOLS,
@@ -60,7 +61,11 @@ function priceLabel(p: Profile, type: "any" | "contract" | "permanent", currency
   return "";
 }
 
+/** Available now first, then those with notice, then in contract. */
+const rank = (p: Profile) => (p.available ? 0 : p.notice ? 1 : 2);
+
 export function TalentDirectoryApp() {
+  const router = useRouter();
   const [picked, setPicked] = useState<Set<string>>(new Set());
   const [query, setQuery] = useState("");
   const [sector, setSector] = useState<"all" | "games" | "apps">("all");
@@ -99,10 +104,12 @@ export function TalentDirectoryApp() {
       if (!q) return true;
       const hay = [p.role, p.background, p.location.label, ...(p.skills || [])].join(" ").toLowerCase();
       return hay.includes(q);
-    }).sort((a, b) => Number(b.available) - Number(a.available));
+    }).sort((a, b) => rank(a) - rank(b));
   }, [picked, query, sector, availableOnly, type]);
 
   const available = ROSTER.filter((p) => p.available).length;
+  const withNotice = ROSTER.filter((p) => !p.available && p.notice).length;
+  const inContract = ROSTER.length - available - withNotice;
   const anyFilter = picked.size || query || sector !== "all" || availableOnly || type !== "any";
   const reset = () => {
     setPicked(new Set());
@@ -119,6 +126,18 @@ export function TalentDirectoryApp() {
           <strong>{INTERVIEWED}</strong> specialists interviewed by us ·{" "}
           <strong>{ROSTER.length}</strong> with a public profile ·{" "}
           <strong>{available}</strong> available now
+          {withNotice > 0 && (
+            <>
+              {" · "}
+              <strong>{withNotice}</strong> available with notice
+            </>
+          )}
+          {inContract > 0 && (
+            <>
+              {" · "}
+              <strong>{inContract}</strong> in contract
+            </>
+          )}
         </p>
         <p className={styles.honestNote}>
           Profiles go up as people opt in, so new ones land every week. Brief
@@ -236,9 +255,32 @@ export function TalentDirectoryApp() {
                     </span>
                   </span>
                   <span className={styles.right}>
+                    {p.video ? (
+                      <span
+                        role="button"
+                        tabIndex={0}
+                        className={styles.watch}
+                        title="Watch their talent highlight"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          router.push(`/line-up/${p.id}/spec?watch=1`);
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" || e.key === " ") {
+                            e.preventDefault();
+                            router.push(`/line-up/${p.id}/spec?watch=1`);
+                          }
+                        }}
+                      >
+                        <svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true">
+                          <path fill="currentColor" d="M8 5.14v13.72a1 1 0 0 0 1.52.85l10.6-6.86a1 1 0 0 0 0-1.7L9.52 4.29A1 1 0 0 0 8 5.14Z" />
+                        </svg>
+                        Watch
+                      </span>
+                    ) : null}
                     {priceLabel(p, type, currency) ? <span className={styles.rate}>{priceLabel(p, type, currency)}</span> : null}
-                    <span className={p.available ? styles.avail : styles.unavail}>
-                      {p.available ? "Available" : "In contract"}
+                    <span className={p.available || p.notice ? styles.avail : styles.unavail}>
+                      {availabilityLabel(p, true)}
                     </span>
                     <span className={styles.view}>
                       View <span aria-hidden="true">→</span>

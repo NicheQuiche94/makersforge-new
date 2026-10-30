@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { Logo } from "@/components/atoms/Logo";
-import { ROSTER, BUDGET_LABELS } from "@/data/roster";
+import { ROSTER, BUDGET_LABELS, availabilityLabel } from "@/data/roster";
 import {
   CURRENCIES,
   CURRENCY_SYMBOLS,
@@ -44,6 +44,19 @@ export default function SpecPage() {
     const fromUrl = new URLSearchParams(window.location.search).get("currency");
     setCurrency(isCurrency(fromUrl) ? fromUrl : readStoredCurrency());
   }, []);
+
+  /* The highlight video plays in a lightbox; ?watch=1 (from the Watch
+     badge in the directory) opens it on arrival. */
+  const [watching, setWatching] = useState(false);
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get("watch") === "1") setWatching(true);
+  }, []);
+  useEffect(() => {
+    if (!watching) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setWatching(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [watching]);
 
   const [downloading, setDownloading] = useState(false);
   async function downloadPdf() {
@@ -115,20 +128,30 @@ export default function SpecPage() {
                   MakersForge · Talent spec
                 </span>
               </div>
-              <button
-                type="button"
-                className={styles.printBtn}
-                onClick={downloadPdf}
-                disabled={downloading}
-              >
-                {downloading ? "Preparing PDF…" : "Download PDF"}
-              </button>
+              <div className={styles.headBtns}>
+                {profile.video && (
+                  <button type="button" className={styles.watchBtn} onClick={() => setWatching(true)}>
+                    <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+                      <path fill="currentColor" d="M8 5.14v13.72a1 1 0 0 0 1.52.85l10.6-6.86a1 1 0 0 0 0-1.7L9.52 4.29A1 1 0 0 0 8 5.14Z" />
+                    </svg>
+                    Watch highlight
+                  </button>
+                )}
+                <button
+                  type="button"
+                  className={styles.printBtn}
+                  onClick={downloadPdf}
+                  disabled={downloading}
+                >
+                  {downloading ? "Preparing PDF…" : "Download PDF"}
+                </button>
+              </div>
             </div>
             <div className={styles.codeRow}>
               <span className={styles.codename}>{profile.codename}</span>
               <span className={styles.status}>
                 <span className={styles.statusDot} />
-                {profile.available ? "Available now" : "In contract"}
+                {availabilityLabel(profile)}
               </span>
             </div>
             <h1 className={styles.role}>{profile.role}</h1>
@@ -235,7 +258,7 @@ export default function SpecPage() {
               <RateRow k="Open to" v={openToCopy} />
               <RateRow
                 k="Availability"
-                v={profile.available ? "Available now" : "Currently in contract"}
+                v={availabilityLabel(profile)}
               />
               {profile.discipline === "ua" && profile.budget !== undefined && (
                 <RateRow
@@ -330,6 +353,17 @@ export default function SpecPage() {
           <span>makersforge.gg</span>
         </footer>
       </article>
+
+      {watching && profile.video && (
+        <div className={styles.lightbox} role="dialog" aria-modal="true" aria-label={`${profile.codename} talent highlight`} onClick={() => setWatching(false)}>
+          <div className={styles.player} onClick={(e) => e.stopPropagation()}>
+            <video src={profile.video.src} poster={profile.video.poster} controls autoPlay playsInline />
+            <button type="button" className={styles.close} onClick={() => setWatching(false)} aria-label="Close">
+              ×
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

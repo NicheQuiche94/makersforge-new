@@ -81,6 +81,11 @@ export type Profile = {
      candidate can be available now but only for contract, or in 3
      months for permanent, etc. */
   available: boolean;
+  /* Has a job but wants a new one (Andre 2026-10-30): set with
+     `available: false`, e.g. "1 month", and they show as "Available with
+     1 month's notice" rather than "In contract". In contract (no notice)
+     means happy where they are but open to the right thing. */
+  notice?: string;
   availableFor: ("contract" | "permanent")[];
 
   summary?: string;
@@ -89,6 +94,10 @@ export type Profile = {
      under the spec header and used in highlight videos. Song is text
      only (no audio, licensing). colourHex drives the swatch. */
   favourites?: { song?: string; colour?: string; colourHex?: string; game?: string };
+
+  /* Their talent highlight video (2026-10-30): shown from the spec page
+     ("Watch highlight") and flagged on their directory row. */
+  video?: { src: string; poster?: string };
 
   /* Long-form profile content — lifted from the talent intake doc.
      All optional so older profiles keep rendering; the modal hides
@@ -900,6 +909,8 @@ export const ROSTER: Profile[] = [
     salaryAnnualMax: 67797,
     available: true,
     availableFor: ["permanent", "contract"],
+    // The posted cut (CapCut Pro music), compressed for the web: public/video/talent.
+    video: { src: "/video/talent/ge-01.mp4", poster: "/video/talent/ge-01.jpg" },
     favourites: {
       song: "Nebulosa Jade (Rufus T. Firefly)",
       colour: "Purple",
@@ -940,5 +951,16 @@ export const ROSTER: Profile[] = [
     ],
   },
 ];
+
+/** How a profile's availability reads: "Available now", "Available with 1 month's notice" or "In contract".
+ *  short: the compact form for cards and tiles ("Available", "1 month's notice", "In contract"). */
+export function availabilityLabel(p: Pick<Profile, "available" | "notice">, short = false): string {
+  if (p.available) return short ? "Available" : "Available now";
+  if (p.notice) {
+    const n = p.notice.endsWith("s") ? `${p.notice}' notice` : `${p.notice}'s notice`;
+    return short ? n : `Available with ${n}`;
+  }
+  return "In contract";
+}
 
 export const BUDGET_LABELS = ["< £50k", "£50k–250k", "£250k–1m", "£1m+"] as const;

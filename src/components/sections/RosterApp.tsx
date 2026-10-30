@@ -10,7 +10,7 @@ import {
 } from "react";
 import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
-import { ROSTER, BUDGET_LABELS, type Profile } from "@/data/roster";
+import { ROSTER, BUDGET_LABELS, availabilityLabel, type Profile } from "@/data/roster";
 import {
   CURRENCIES,
   CURRENCY_SYMBOLS,
@@ -652,10 +652,10 @@ function ProfileCard({
         <div className={styles.rcardHead}>
           <span className={styles.rcardMono}>{p.codename}</span>
           <span
-            className={`${styles.pcStatus} ${p.available ? styles.pcStatusAv : styles.pcStatusCt}`}
+            className={`${styles.pcStatus} ${p.available || p.notice ? styles.pcStatusAv : styles.pcStatusCt}`}
           >
             <span className={styles.pcDot} />
-            {p.available ? "available" : "in contract"}
+            {availabilityLabel(p, true).toLowerCase()}
           </span>
         </div>
 

@@ -328,6 +328,29 @@
   padding: 6px 12px;
   white-space: nowrap;
 }
+/* Talent highlight badge (2026-10-30): opens the spec with the video playing. */
+.watch {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #fff;
+  background: linear-gradient(135deg, #ff8a00, #ff3d00);
+  border-radius: 999px;
+  padding: 6px 11px;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(255, 61, 0, 0.25);
+  transition: transform 0.15s;
+}
+.watch:hover {
+  transform: translateY(-1px);
+}
+
 .avail,
 .unavail {
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
