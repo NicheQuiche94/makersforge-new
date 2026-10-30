@@ -674,7 +674,10 @@ function ProfileCard({
 
         <div className={styles.rcardMeta}>
           <MetaRow k="Location" v={p.location.label} />
-          <MetaRow k="Day rate" v={formatRate(p.rateMin, currency, "day", p.rateMax)} />
+          <MetaRow
+            k="Day rate"
+            v={p.rateMin ? formatRate(p.rateMin, currency, "day", p.rateMax) : "On request"}
+          />
           {thirdRow && <MetaRow k={thirdRow.k} v={thirdRow.v} />}
         </div>
       </Link>

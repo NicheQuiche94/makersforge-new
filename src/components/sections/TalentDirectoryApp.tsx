@@ -238,7 +238,7 @@ export function TalentDirectoryApp() {
                   <span className={styles.right}>
                     {priceLabel(p, type, currency) ? <span className={styles.rate}>{priceLabel(p, type, currency)}</span> : null}
                     <span className={p.available ? styles.avail : styles.unavail}>
-                      {p.available ? "Available" : "Not available"}
+                      {p.available ? "Available" : "In contract"}
                     </span>
                     <span className={styles.view}>
                       View <span aria-hidden="true">→</span>

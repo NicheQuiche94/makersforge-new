@@ -11,7 +11,7 @@
 
 export type Profile = {
   id: string;
-  discipline: "ua" | "creative" | "aso" | "product" | "design";
+  discipline: "ua" | "creative" | "aso" | "product" | "design" | "engineering";
   codename: string;
   role: string;
   background: string;
@@ -874,6 +874,69 @@ export const ROSTER: Profile[] = [
       "The retention turnaround is the headline: D1 from 3% to 17% in two months on a live shooter, through combat, economy and FTUE work.",
       "A natural fit for small teams and early-stage studios: he designs it, builds the UI, makes the art and knows how to test it.",
       "His QA and test-lead years show in his design: he thinks about edge cases, soft launches and what breaks before it ships.",
+    ],
+  },
+  // Consent 2026-10-30; copy approved by Andre and the candidate 2026-10-30.
+  {
+    id: "ge-01",
+    discipline: "engineering",
+    codename: "ge·01",
+    role: "Senior / Lead Unity Engineer",
+    background:
+      "Senior Unity engineer with 9+ years in mobile games, from gameplay and multiplayer on a $100M+ strategy title to leading a word game from scratch to soft launch and acquisition.",
+    location: { code: "es", label: "Barcelona, Spain · Not relocating" },
+    industries: ["games"],
+    gamesCat: ["casual", "midcore"],
+    appsCat: [],
+    genre: ["strategy", "puzzle", "rpg"],
+    expertise: ["liveops"],
+    // Stored in GBP (site converts). His figures: €60/hour contract
+    // (≈ €480/day) and €60,000 to €80,000/year permanent.
+    dayRateLabel: "€480 / day",
+    dayRateBand: 1,
+    rateMin: 407,
+    salaryAnnualLabel: "€60,000 to €80,000 / year",
+    salaryAnnual: 50847,
+    salaryAnnualMax: 67797,
+    available: true,
+    availableFor: ["permanent", "contract"],
+    favourites: {
+      song: "Nebulosa Jade (Rufus T. Firefly)",
+      colour: "Purple",
+      colourHex: "#7c3aed",
+      game: "Hollow Knight: Silksong",
+    },
+    summary:
+      "A senior Unity engineer and natural team lead who has built mobile games from the first line of code to soft launch. Spent six and a half years at a mobile studio that grew from 20 to 200 people, on gameplay, metagame, multiplayer and tools across hit and new titles, then led engineering on a word game from scratch through to soft launch and its acquisition by a major mobile publisher.",
+    skills: [
+      "Unity",
+      "C#",
+      "Gameplay programming",
+      "Multiplayer & networking",
+      "Backend & server architecture",
+      "PlayFab",
+      "Tools development",
+      "UI & MVVM architecture",
+      "SDK integration (Firebase, AppsFlyer)",
+      "DOTS",
+      "C++",
+      "Team leadership & mentoring",
+    ],
+    experience: [
+      "9+ years of professional Unity development: gameplay, UI, animation, features, tools and server infrastructure, with a strong generalist range.",
+      "Most recently Senior & Lead Engineer in the mobile division of a well-known UK studio, leading teams of up to five. On a word game he built the core gameplay, features, PlayFab backend, MVVM architecture and SDK integrations (Firebase, AppsFlyer) from scratch to soft launch, before a major mobile publisher acquired the game.",
+      "Also led engineering on a difficult racing project there, with a coaching and mentoring role keeping the team's morale high.",
+      "Six and a half years at a mobile studio that grew from a 20-person startup to 200 people after acquisition by a major publisher. On its sci-fi strategy title ($100M+ revenue) he implemented gameplay, metagame and UI systems.",
+      "Spent three years on gameplay and tools for an unreleased AAA turn-based RPG built on a major licensed IP: visual scripting tools so designers and artists could build character abilities and cinematics, and a custom animation system on Timeline and Playables. Became the de facto technical lead, mentoring junior developers.",
+      "Built the multiplayer layer and real-time features for a MOBA-style mobile game: battle behaviours, character abilities, VFX and networking. Also set up the full foundation and level tooling for a city-building puzzle game.",
+    ],
+    motivations:
+      "Wants a role that uses all of his experience in a smaller, solid team, with autonomy and room to keep learning.",
+    recruiterNotes: [
+      "Has done the whole journey: scratch to soft launch to acquisition, so he knows what a small team needs from its lead engineer at each stage.",
+      "A knack for leading. He adapts to whatever the project needs and has kept a team motivated through a tough project.",
+      "Full-stack for mobile games: gameplay and UI on the client, PlayFab and server architecture on the back end, plus the tools that let designers ship content without engineers.",
+      "Available now.",
     ],
   },
 ];

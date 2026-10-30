@@ -84,7 +84,9 @@ export default function SpecPage() {
         ? "Product / Monetisation"
         : profile.discipline === "design"
           ? "Game design"
-          : profile.discipline.toUpperCase();
+          : profile.discipline === "engineering"
+            ? "Game engineering"
+            : profile.discipline.toUpperCase();
   const list = (keys: string[]) => keys.map(label).join(" · ");
   const openToCopy = profile.availableFor
     .map((k) => k[0].toUpperCase() + k.slice(1))
@@ -212,7 +214,11 @@ export default function SpecPage() {
               {profile.availableFor.includes("contract") && (
                 <RateRow
                   k="Day rate (contract)"
-                  v={formatRate(profile.rateMin, currency, "day", profile.rateMax)}
+                  v={
+                    profile.rateMin
+                      ? formatRate(profile.rateMin, currency, "day", profile.rateMax)
+                      : "On request"
+                  }
                 />
               )}
               {profile.salaryAnnual !== undefined && (

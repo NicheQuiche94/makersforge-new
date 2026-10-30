@@ -28,6 +28,7 @@ const DISCIPLINE_CATEGORIES: Record<Profile["discipline"], JobCategory[]> = {
   aso: ["aso"],
   product: [],
   design: [],
+  engineering: [],
 };
 
 export type LocationFit =
