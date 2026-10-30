@@ -130,9 +130,16 @@ export default function SpecPage() {
               </span>
             </div>
             <h1 className={styles.role}>{profile.role}</h1>
-            <p className={styles.bgLine}>
-              {profile.background} · {profile.location.label}
+            <p className={styles.location}>
+              <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
+                <path
+                  fill="currentColor"
+                  d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"
+                />
+              </svg>
+              {profile.location.label}
             </p>
+            <p className={styles.bgLine}>{profile.background}</p>
             <div className={styles.openTo}>
               <span className={styles.openToLabel}>Open to</span>
               {profile.availableFor.map((kind) => (

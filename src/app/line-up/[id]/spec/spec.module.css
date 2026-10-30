@@ -159,6 +159,22 @@
   color: #fff;
 }
 
+/* Location gets its own line under the role (2026-10-29): it was lost
+   at the end of the background sentence. Full white, a step above it. */
+.location {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 10px;
+}
+.location svg {
+  flex: none;
+}
+
 .bgLine {
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-size: 14px;

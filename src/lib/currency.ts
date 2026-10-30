@@ -55,7 +55,7 @@ export function writeStoredCurrency(c: Currency): void {
  * numbers no matter which currency is picked:
  *
  *   period === "year" → nearest 1,000
- *   period === "day"  → nearest 50
+ *   period === "day"  → nearest 10
  *
  * With `maxInGbp` supplied and different from the min, renders as a
  * range using ' to ' (no dashes — Andre's site rule kills all em/en
@@ -73,9 +73,9 @@ export function formatRate(
 ): string {
   const symbol = CURRENCY_SYMBOLS[currency];
   const rate = RATES[currency];
-  // Day rates round to 50 so "€300 to €350" doesn't become "€300 to
-  // €400" (2026-10-27), and a €250 ask isn't shown as €300 (2026-10-29).
-  const unit = period === "year" ? 1000 : 50;
+  // Day rates round to 10 so a candidate's own figure survives the
+  // conversion (€250 not €300, €160 not €150; 2026-10-29).
+  const unit = period === "year" ? 1000 : 10;
   const convert = (n: number) => {
     const rounded = Math.round((n * rate) / unit) * unit;
     return new Intl.NumberFormat("en-GB").format(rounded);
