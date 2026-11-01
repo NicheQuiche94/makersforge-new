@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Figtree } from "next/font/google";
-import Script from "next/script";
 import "@fontsource/cal-sans";
 import "./globals.css";
 
@@ -8,6 +7,7 @@ import { TopNav } from "@/components/layout/TopNav";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollRevealRoot } from "@/components/atoms/ScrollRevealRoot";
 import { SiteSchema } from "@/components/seo/SiteSchema";
+import { Consent } from "@/components/consent/Consent";
 import { SITE_URL } from "@/lib/site";
 
 const figtree = Figtree({
@@ -53,20 +53,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={figtree.variable}>
-      <head>
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-N2YM0TCEXQ"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-N2YM0TCEXQ');
-          `}
-        </Script>
-      </head>
       <body>
         <SiteSchema />
         <a href="#main" className="skip-link">
@@ -76,6 +62,8 @@ export default function RootLayout({
         <main id="main">{children}</main>
         <Footer />
         <ScrollRevealRoot />
+        {/* Analytics + Apollo load only after the visitor accepts */}
+        <Consent />
       </body>
     </html>
   );

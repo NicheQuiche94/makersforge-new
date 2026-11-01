@@ -1,6 +1,7 @@
 import { BOOKING_URL } from "@/lib/site";
 import Link from "next/link";
 import { Logo } from "@/components/atoms/Logo";
+import { CookieSettingsLink } from "@/components/consent/Consent";
 import styles from "./Footer.module.css";
 
 /* Condensed 2026-07-02 — the per-discipline deep links were pointing
@@ -122,6 +123,7 @@ export function Footer() {
           <span className={styles.legal}>
             <Link href="/legal/privacy">privacy</Link>
             <Link href="/legal/terms">terms</Link>
+            <CookieSettingsLink className={styles.legalBtn} />
           </span>
         </div>
 

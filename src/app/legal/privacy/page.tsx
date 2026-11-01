@@ -43,7 +43,7 @@ export default function PrivacyPage() {
           <div className={styles.meta}>
             <span className={styles.metaItem}>
               <span className={styles.metaLabel}>Last updated</span>
-              <span className={styles.metaValue}>30 May 2026</span>
+              <span className={styles.metaValue}>1 November 2026</span>
             </span>
             <span className={styles.metaItem}>
               <span className={styles.metaLabel}>Data controller</span>
@@ -113,10 +113,19 @@ export default function PrivacyPage() {
               diagnostics and abuse detection.
             </p>
 
+            <h3 className={styles.subH}>analytics (only if you accept)</h3>
             <p className={styles.p}>
-              <strong>What we don&apos;t collect:</strong> cross-site
-              tracking, advertising cookies, device fingerprinting, or
-              personal details we don&apos;t need to do our job.
+              If you accept cookies, analytics tools record how the site
+              is used, and use your IP address to identify the company
+              you&apos;re browsing from (not you as a person), so we know
+              which studios are interested. See section 11.
+            </p>
+
+            <p className={styles.p}>
+              <strong>What we don&apos;t collect:</strong> advertising
+              cookies, device fingerprinting, tracking across other
+              websites, or personal details we don&apos;t need to do our
+              job.
             </p>
           </Section>
 
@@ -189,8 +198,9 @@ export default function PrivacyPage() {
                 prevention, security monitoring. Minimised collection.
               </li>
               <li>
-                <strong>Consent.</strong> Optional features only
-                processed with your agreement. Withdrawable at any time.
+                <strong>Consent.</strong> Optional features, including
+                analytics and company-level visitor identification, only
+                with your agreement. Withdrawable at any time.
               </li>
               <li>
                 <strong>Legal obligation.</strong> Responding to lawful
@@ -214,6 +224,9 @@ export default function PrivacyPage() {
               </li>
               <li>
                 <strong>Resend.</strong> Transactional email delivery for application acknowledgements and account notices.
+              </li>
+              <li>
+                <strong>Analytics providers.</strong> Site usage statistics, and identifying the companies visiting the site from IP address. Only if you accept cookies.
               </li>
               <li>
                 <strong>Studios with confirmed briefs.</strong> When a studio briefs us and a shortlist is generated, the matched specialists&apos; real identities and detailed profiles are shared with that studio for the purpose of interview and engagement.
@@ -332,12 +345,29 @@ export default function PrivacyPage() {
             </p>
           </Section>
 
-          <Section num="11" title="cookies and similar things">
+          <Section num="11" title="cookies and similar things" id="cookies">
             <p className={styles.p}>
-              Essential cookies maintain sign-in status and preferences.
-              No advertising cookies, cross-site trackers, or
-              third-party profiling analytics are used. Browser blocking
-              may impair functionality.
+              Essential storage keeps sign-in, your preferences and your
+              cookie choice working. It doesn&apos;t need your consent.
+            </p>
+            <p className={styles.p}>With your consent only, we also use:</p>
+            <ul className={styles.ul}>
+              <li>
+                <strong>Analytics cookies</strong>, to see how the site is
+                used: pages visited, rough location and device type.
+              </li>
+              <li>
+                <strong>Company identification</strong>, which uses your
+                IP address to identify the company you&apos;re browsing
+                from, not you as a person, so we can see which studios
+                are interested.
+              </li>
+            </ul>
+            <p className={styles.p}>
+              Neither loads until you click Accept on the cookie banner,
+              and you can change your mind at any time from &ldquo;cookie
+              settings&rdquo; in the footer. We don&apos;t use advertising
+              cookies or device fingerprinting.
             </p>
           </Section>
 
@@ -380,14 +410,16 @@ export default function PrivacyPage() {
 function Section({
   num,
   title,
+  id,
   children,
 }: {
   num: string;
   title: string;
+  id?: string;
   children: React.ReactNode;
 }) {
   return (
-    <section className={`reveal ${styles.section}`}>
+    <section id={id} className={`reveal ${styles.section}`}>
       <span className={styles.sectionNum}>{num}</span>
       <h2 className={styles.sectionH}>{title}</h2>
       {children}

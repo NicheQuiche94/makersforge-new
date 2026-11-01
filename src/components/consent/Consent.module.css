@@ -1,0 +1,70 @@
+/* Cookie banner: a small paper card, bottom-left, out of the way of the page. */
+.banner {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 90;
+  max-width: 420px;
+  padding: 18px 20px;
+  border-radius: 16px;
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  box-shadow: 0 14px 44px rgba(14, 15, 17, 0.14);
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+}
+.text {
+  margin: 0 0 14px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.link {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+.accept,
+.decline {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 9px 20px;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+.accept {
+  color: #fff;
+  border: 0;
+  background: linear-gradient(135deg, #ff8a00, #ff3d00);
+  box-shadow: 0 6px 16px rgba(255, 61, 0, 0.25);
+}
+.decline {
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--hair);
+}
+.accept:hover,
+.decline:hover {
+  transform: translateY(-1px);
+}
+
+@media (max-width: 600px) {
+  .banner {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    max-width: none;
+  }
+}
+
+@media print {
+  .banner {
+    display: none;
+  }
+}

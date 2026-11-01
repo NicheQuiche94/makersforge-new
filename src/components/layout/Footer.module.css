@@ -182,6 +182,19 @@
 .legal a:hover {
   color: #fff;
 }
+/* "cookie settings" is a button (it reopens the consent banner) styled as a link */
+.legalBtn {
+  font: inherit;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.55);
+  transition: color 0.2s;
+}
+.legalBtn:hover {
+  color: #fff;
+}
 
 .collab {
   padding-top: 18px;
