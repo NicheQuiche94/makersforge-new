@@ -1,0 +1,306 @@
+/* Client portal preview (PROTOTYPE 2026-11-02) */
+.page {
+  min-height: 100vh;
+  padding: 110px 20px 60px;
+  background: var(--bg);
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  color: var(--ink);
+}
+.proto {
+  max-width: 960px;
+  margin: 0 auto 14px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #e14b00;
+}
+.top,
+.tabs,
+.main {
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+.brand {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-size: 22px;
+  color: var(--ink);
+  text-decoration: none;
+}
+.company {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--dim);
+  padding-left: 14px;
+  border-left: 1px solid var(--hair);
+}
+.bellWrap {
+  margin-left: auto;
+  position: relative;
+}
+.bell {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--hair);
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+.badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: #ff3d00;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+}
+.notes {
+  position: absolute;
+  right: 0;
+  top: 48px;
+  z-index: 10;
+  width: 320px;
+  list-style: none;
+  margin: 0;
+  padding: 8px;
+  border-radius: 14px;
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  box-shadow: 0 14px 44px rgba(14, 15, 17, 0.14);
+  font-size: 14px;
+}
+.notes li {
+  padding: 10px;
+  border-bottom: 1px solid var(--hair);
+}
+.notes li span {
+  display: block;
+  font-size: 12px;
+  color: var(--mute);
+}
+.notes .notesFoot {
+  border: 0;
+  font-size: 12.5px;
+  color: var(--dim);
+}
+.tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+.tabs button {
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 9px 16px;
+  border-radius: 999px;
+  border: 0;
+  background: none;
+  color: var(--dim);
+  cursor: pointer;
+}
+.tabs .tabOn {
+  background: var(--ink);
+  color: #fff;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+@media (max-width: 800px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+.wide {
+  grid-column: 1 / -1;
+}
+.card {
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  border-radius: 16px;
+  padding: 22px;
+}
+.card h2 {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin: 0 0 8px;
+}
+.big {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-size: 26px;
+  letter-spacing: -0.01em;
+  margin: 0 0 6px;
+}
+.meta {
+  font-size: 14px;
+  color: var(--dim);
+  margin: 0 0 10px;
+}
+.meter {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--bg);
+  overflow: hidden;
+  margin: 10px 0 8px;
+}
+.meter span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #ff8a00, #ff3d00);
+}
+.roleRow {
+  font: inherit;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 2fr 1.4fr 1fr;
+  gap: 10px;
+  text-align: left;
+  padding: 12px 0;
+  border: 0;
+  border-bottom: 1px solid var(--hair);
+  background: none;
+  cursor: pointer;
+  color: var(--ink);
+  font-size: 15px;
+}
+.roleRow span {
+  color: var(--dim);
+}
+.role {
+  margin-bottom: 14px;
+}
+.roleHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.roleTitle {
+  font-family: "Cal Sans", system-ui, sans-serif;
+  font-size: 24px !important;
+  font-weight: 400;
+  letter-spacing: -0.01em !important;
+  text-transform: none !important;
+  color: var(--ink) !important;
+  margin: 0 !important;
+}
+.pill {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--dim);
+}
+.stages {
+  display: flex;
+  gap: 4px;
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 10px;
+}
+.stages li {
+  flex: 1;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--mute);
+  padding-top: 8px;
+  border-top: 3px solid var(--hair);
+}
+.stages .stDone {
+  color: var(--dim);
+  border-top-color: #22c55e;
+}
+.stages .stNow {
+  color: var(--ink);
+  border-top-color: #ff5d00;
+}
+@media (max-width: 700px) {
+  .stages li {
+    font-size: 0;
+  }
+  .stages .stNow {
+    font-size: 12px;
+  }
+}
+.cands {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
+.cand {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: var(--bg);
+  font-size: 15px;
+}
+.passed {
+  opacity: 0.5;
+}
+.small {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.verdict {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.vIn {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #15803d;
+}
+.vOut {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--mute);
+}
+.invoices {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.invoices li {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--hair);
+  font-size: 15px;
+}
+
+/* v2 (2026-11-02): the tracker is the main way in, so it carries the spectrum ring */
+.tracker {
+  border: 3px solid transparent;
+  background:
+    linear-gradient(var(--paper), var(--paper)) padding-box,
+    conic-gradient(from 0deg, #ff5d00, #f5b300, #22c55e, #3b82f6, #8b5cf6, #ec4899, #ff5d00) border-box;
+}

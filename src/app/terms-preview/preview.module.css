@@ -1,0 +1,137 @@
+/* Terms review (PROTOTYPE 2026-11-02) */
+.page {
+  min-height: 100vh;
+  padding: 120px 20px 80px;
+  background: var(--bg);
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  color: var(--ink);
+}
+.proto {
+  max-width: 820px;
+  margin: 0 auto 14px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #e14b00;
+}
+.bar {
+  max-width: 820px;
+  margin: 0 auto 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.bar button {
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--hair);
+  background: var(--paper);
+  cursor: pointer;
+}
+.bar .on {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+.toggle {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.legend {
+  max-width: 820px;
+  margin: 0 auto 18px;
+  font-size: 13.5px;
+  color: var(--dim);
+}
+.lNew,
+.lFixed {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 6px;
+  margin-right: 6px;
+  font-weight: 700;
+}
+.lNew {
+  background: rgba(255, 93, 0, 0.12);
+  color: #b13a00;
+}
+.lFixed {
+  background: rgba(59, 130, 246, 0.12);
+  color: #1d4ed8;
+}
+.doc {
+  max-width: 820px;
+  margin: 0 auto;
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  border-radius: 16px;
+  padding: 40px 48px;
+  font-size: 15px;
+  line-height: 1.6;
+}
+.doc h2 {
+  font-size: 16px;
+  font-weight: 800;
+  margin: 28px 0 10px;
+}
+.clause p {
+  margin: 0 0 8px;
+}
+.num {
+  font-weight: 700;
+  margin-right: 8px;
+}
+.subClause {
+  padding-left: 26px;
+}
+.new {
+  border-left: 3px solid #ff8a00;
+  background: rgba(255, 93, 0, 0.05);
+  padding: 8px 10px 2px;
+  margin: 0 0 8px -13px;
+}
+.fixed {
+  border-left: 3px solid #3b82f6;
+  background: rgba(59, 130, 246, 0.05);
+  padding: 8px 10px 2px;
+  margin: 0 0 8px -13px;
+}
+.note {
+  font-size: 13px;
+  font-weight: 600;
+  color: #b13a00;
+}
+.fixed .note {
+  color: #1d4ed8;
+}
+.signed {
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid var(--hair);
+}
+@media (max-width: 640px) {
+  .doc {
+    padding: 24px 20px;
+  }
+}
+.select {
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--hair);
+  background: var(--paper);
+}
+.bar .toggle + .toggle {
+  margin-left: 0;
+}

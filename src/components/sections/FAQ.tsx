@@ -66,10 +66,24 @@ const ITEMS: Item[] = [
     q: "How quickly do we see candidates?",
     a: (
       <p>
-        Your shortlist of 5 lands within 5 working days of the brief, so a
-        Wednesday brief means candidates by the following Wednesday. From
-        there you run your own interview process; we handle the scheduling
-        and the follow-ups so it keeps moving.
+        You book a search week. We headhunt and call that week, and your
+        shortlist of 5 lands the Monday after, so a search week starting
+        Monday the 9th means candidates on Monday the 16th. We run 2 searches
+        a week, so you can see availability and book weeks ahead. From there
+        you run your own interviews; we handle the scheduling and follow-ups
+        so it keeps moving.
+      </p>
+    ),
+  },
+  // PROTOTYPE 2026-11-02 (self-onboarding): the late fee lives here and in the
+  // full terms, not in the five-line summary. Wording awaits Andre's OK.
+  {
+    q: "What if we need to cancel our search week?",
+    a: (
+      <p>
+        Cancel free up to 48 hours before it starts. After that there&apos;s a
+        £1,500 fee, because by then we&apos;ve already done the prep to deliver
+        your shortlist on time.
       </p>
     ),
   },

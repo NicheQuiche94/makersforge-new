@@ -1,4 +1,3 @@
-import { BOOKING_URL } from "@/lib/site";
 import type { Metadata } from "next";
 import { HeroPanel } from "@/components/sections/HeroPanel";
 import { LogoWall } from "@/components/sections/LogoWall";
@@ -9,6 +8,7 @@ import { HeatBreak } from "@/components/sections/HeatBreak";
 import { FAQ } from "@/components/sections/FAQ";
 import { CaseStudy, TalentDirectory, Testimonials } from "@/components/sections/ProofSections";
 import { QuickBrief } from "@/components/sections/QuickBrief";
+import { GetStarted } from "@/components/onboard/GetStarted";
 
 // 2026-10-27: home rebuilt around the service Andre sells and the outreach
 // pitches — "From 500 candidates to 5" — so a click from an email lands on
@@ -35,13 +35,9 @@ export default function HomePage() {
         lede="Brief us instead: we headhunt, call and screen, then hand you a shortlist of 5 you'd want to hire, within 5 working days."
         ctas={{
           primary: { href: "#brief", label: "Try us: 3 free profiles" },
-          secondary: { href: BOOKING_URL, label: "Book a 15-min call" },
+          // PROTOTYPE 2026-11-02: self-onboarding replaces the call; the hero links go (Andre).
+          secondary: { href: "/start", label: "Get started" },
         }}
-        links={[
-          { href: "/games", label: "For mobile game studios" },
-          { href: "/apps", label: "For app companies" },
-          { href: "/talent", label: "Looking for a role?" },
-        ]}
       />
       {/* 2026-10-27 flow: outcome → how → proof → why not an ad → bench
           → roles → doubts → brief. Comparison table lives on /pricing. */}
@@ -55,6 +51,7 @@ export default function HomePage() {
       <WhatWeCover title="Who we hire for." />
       <HeatBreak />
       <QuickBrief />
+      <GetStarted />
       <FAQ />
     </>
   );

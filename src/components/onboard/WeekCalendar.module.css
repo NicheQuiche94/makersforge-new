@@ -1,0 +1,166 @@
+/* Search-week calendar (PROTOTYPE 2026-11-02): a familiar month date picker. */
+.cal {
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  border-radius: 16px;
+  padding: 16px 16px 12px;
+}
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 10px;
+  font-size: 16px;
+}
+.navBtn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--hair);
+  background: var(--bg);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+.navBtn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  row-gap: 4px;
+}
+.dow {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--mute);
+  padding: 4px 0 8px;
+}
+.day {
+  font: inherit;
+  position: relative;
+  height: 52px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border: 0;
+  background: none;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  border-radius: 10px;
+}
+.day:not(:disabled):hover {
+  background: rgba(255, 93, 0, 0.08);
+}
+.day:disabled {
+  cursor: default;
+}
+.outside {
+  opacity: 0.35;
+}
+.weekend {
+  color: var(--mute);
+  font-weight: 500;
+}
+.unavailable {
+  color: var(--mute);
+  font-weight: 500;
+}
+.full span:first-child {
+  color: var(--mute);
+  text-decoration: line-through;
+  text-decoration-color: rgba(14, 15, 17, 0.25);
+}
+/* The selected week reads as one range, Monday to Friday. */
+.sel {
+  background: rgba(255, 93, 0, 0.12);
+  border-radius: 0;
+  color: #b13a00;
+}
+.sel:hover {
+  background: rgba(255, 93, 0, 0.16) !important;
+}
+.selStart {
+  border-radius: 10px 0 0 10px;
+  background: linear-gradient(135deg, #ff8a00, #ff3d00);
+  color: #fff;
+}
+.selEnd {
+  border-radius: 0 10px 10px 0;
+}
+.dots {
+  display: inline-flex;
+  gap: 3px;
+}
+.dots i,
+.key i {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+.dotOpen {
+  background: #22c55e;
+}
+.dotTaken {
+  background: rgba(14, 15, 17, 0.18);
+}
+.selStart .dotOpen {
+  background: #fff;
+}
+.selStart .dotTaken {
+  background: rgba(255, 255, 255, 0.4);
+}
+.key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  align-items: center;
+  margin: 10px 4px 0;
+  padding-top: 10px;
+  border-top: 1px solid var(--hair);
+  font-size: 12.5px;
+  color: var(--dim);
+}
+.key span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.keyFull {
+  width: 14px !important;
+  height: 2px !important;
+  border-radius: 0 !important;
+  background: rgba(14, 15, 17, 0.3);
+}
+.keyNote {
+  margin-left: auto;
+}
+@media (max-width: 520px) {
+  .day {
+    height: 44px;
+    font-size: 14px;
+  }
+  .keyNote {
+    margin-left: 0;
+  }
+}
+/* Keep the selected Monday solid even under the pointer. */
+.selStart,
+.selStart:hover {
+  background: linear-gradient(135deg, #ff8a00, #ff3d00) !important;
+  color: #fff;
+}
+
+/* View-only on /pricing and the homepage: the open dates read normally, nothing is clickable. */
+.readOnly .day:disabled:not(.unavailable):not(.full):not(.weekend):not(.outside) {
+  color: var(--ink);
+}

@@ -9,7 +9,7 @@ const LINKS = [
   { href: "/#how", label: "How it works" },
   { href: "/#proof", label: "Case study" },
   { href: "/line-up", label: "Talent directory" },
-  { href: "/pricing", label: "Pricing" },
+  { href: "/pricing", label: "Plans & pricing" },
 ];
 
 /**
@@ -105,9 +105,9 @@ export function TopNav({ activeHref }: { activeHref?: string }) {
                 </li>
               ))}
             </ul>
-            {/* Lead offer (Andre 2026-10-27): free candidates, not a call. */}
-            <Link href="/#brief" className={styles.cta}>
-              Try us free
+            {/* PROTOTYPE 2026-11-02: self-onboarding is the nav action (Andre). */}
+            <Link href="/start" className={styles.cta}>
+              Get started
             </Link>
           </div>
         </div>

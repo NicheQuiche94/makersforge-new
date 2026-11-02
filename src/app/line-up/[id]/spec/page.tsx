@@ -129,8 +129,13 @@ export default function SpecPage() {
                 </span>
               </div>
               <div className={styles.headBtns}>
+                {/* PROTOTYPE 2026-11-02: Request interview is the lead action (white);
+                    Watch and Download sit beside it in the quieter glass style. */}
+                <Link href={`/pricing?candidate=${profile.id}#plans`} className={styles.watchBtn}>
+                  Request interview
+                </Link>
                 {profile.video && (
-                  <button type="button" className={styles.watchBtn} onClick={() => setWatching(true)}>
+                  <button type="button" className={styles.printBtn} onClick={() => setWatching(true)}>
                     <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
                       <path fill="currentColor" d="M8 5.14v13.72a1 1 0 0 0 1.52.85l10.6-6.86a1 1 0 0 0 0-1.7L9.52 4.29A1 1 0 0 0 8 5.14Z" />
                     </svg>

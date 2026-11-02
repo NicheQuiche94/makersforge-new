@@ -43,6 +43,9 @@
    reads against the heat gradient without competing with the brand
    text or the codename. */
 .printBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-weight: 600;
   font-size: 13px;
@@ -67,6 +70,7 @@
   display: inline-flex;
   align-items: center;
   gap: 7px;
+  text-decoration: none;
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-weight: 700;
   font-size: 13px;

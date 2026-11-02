@@ -282,8 +282,24 @@ export function TalentDirectoryApp() {
                     <span className={p.available || p.notice ? styles.avail : styles.unavail}>
                       {availabilityLabel(p, true)}
                     </span>
-                    <span className={styles.view}>
-                      View <span aria-hidden="true">→</span>
+                    {/* PROTOTYPE 2026-11-02: the row already opens the profile, so its
+                        one text action is the conversion (Andre: keep rows calm). */}
+                    <span
+                      role="button"
+                      tabIndex={0}
+                      className={styles.view}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        router.push(`/pricing?candidate=${p.id}#plans`);
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          router.push(`/pricing?candidate=${p.id}#plans`);
+                        }
+                      }}
+                    >
+                      Request interview <span aria-hidden="true">→</span>
                     </span>
                   </span>
                 </Link>
