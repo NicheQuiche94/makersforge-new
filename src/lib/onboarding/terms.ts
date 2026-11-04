@@ -7,6 +7,7 @@
 import { createHash } from "node:crypto";
 import { buildTerms, MF_NUMBER, MF_OFFICE, type Clause, type TermsVariant } from "@/lib/termsOfBusiness";
 import { TERMS } from "@/lib/plans";
+import { logoSvg } from "@/lib/brand/logoSvg";
 
 export type TermsInput = {
   variant: TermsVariant;
@@ -56,19 +57,28 @@ export function termsHtml(v: TermsInput, sig: { name: string; title: string; ema
   return {
     hash,
     html: `<!doctype html><html><head><meta charset="utf-8"><title>MakersForge Terms of Business</title><style>
-      body{font-family:Helvetica,Arial,sans-serif;font-size:10.5pt;line-height:1.5;color:#16181d}
-      h1{font-size:17pt;margin:0 0 4pt} .muted{color:#5b5f69;font-size:9pt}
-      h2{font-size:11pt;margin:16pt 0 6pt} .c p{margin:0 0 5pt} .sub{padding-left:16pt}
-      .sig{margin-top:22pt;border-top:1px solid #ccc;padding-top:10pt;page-break-inside:avoid}
-      .sig table{width:100%;border-collapse:collapse} .sig td{vertical-align:top;padding:4pt 8pt 4pt 0;width:50%}
+      body{font-family:Helvetica,Arial,sans-serif;font-size:10.5pt;line-height:1.7;color:#16181d}
+      .head{text-align:center;padding:4pt 0 16pt;margin-bottom:20pt;border-bottom:1px solid #e7e1d8}
+      .head svg{display:block;margin:0 auto 14pt}
+      h1{font-size:20pt;letter-spacing:-0.01em;margin:0 0 6pt}
+      .muted{color:#5b5f69;font-size:9pt;line-height:1.5}
+      h2{font-size:11pt;text-transform:uppercase;letter-spacing:0.06em;margin:22pt 0 9pt;padding-bottom:4pt;border-bottom:1px solid #f0ebe3}
+      .c p{margin:0 0 8pt} .sub{padding-left:18pt}
+      .parties{margin-bottom:6pt}
+      .sig{margin-top:28pt;border-top:1px solid #e7e1d8;padding-top:14pt;page-break-inside:avoid}
+      .sig table{width:100%;border-collapse:collapse} .sig td{vertical-align:top;padding:4pt 12pt 4pt 0;width:50%;line-height:1.6}
+      .sig b{display:block;margin-bottom:4pt}
     </style></head><body>
-      <h1>Terms of Business</h1>
-      <p class="muted">MakersForge Ltd · company number ${MF_NUMBER} · ${esc(MF_OFFICE)} · booking ${esc(sig.ref)}</p>
-      ${terms.parties.map(clauseHtml).join("")}
+      <div class="head">
+        ${logoSvg({ height: 40 })}
+        <h1>Terms of Business</h1>
+        <p class="muted">MakersForge Ltd · company number ${MF_NUMBER}<br>${esc(MF_OFFICE)}<br>${sig.ref === "draft" ? "Draft for review, not yet signed" : `Booking reference ${esc(sig.ref)}`}</p>
+      </div>
+      <div class="parties">${terms.parties.map(clauseHtml).join("")}</div>
       ${terms.sections.map((s) => `<h2>${esc(s.title)}</h2>${s.clauses.map(clauseHtml).join("")}`).join("")}
       <div class="sig"><table><tr>
-        <td><b>Signed for MakersForge Ltd</b><br>Andre Lemaitre, Founder<br>${esc(v.date)}</td>
-        <td><b>Signed for ${esc(v.client)}</b><br>${esc(sig.name)}, ${esc(sig.title)}<br>${esc(sig.email)}<br>Signed electronically ${esc(sig.signedAt)}<br><span class="muted">IP ${esc(sig.ip)} · terms version ${hash}</span></td>
+        <td><b>Signed for MakersForge Ltd</b>Andre Lemaitre, Founder<br>${esc(v.date)}</td>
+        <td><b>Signed for ${esc(v.client)}</b>${esc(sig.name)}, ${esc(sig.title)}<br>${esc(sig.email)}<br>Signed electronically ${esc(sig.signedAt)}<br><span class="muted">IP ${esc(sig.ip)} · terms version ${hash}</span></td>
       </tr></table></div>
     </body></html>`,
   };

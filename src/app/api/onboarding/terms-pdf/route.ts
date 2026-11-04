@@ -22,6 +22,8 @@ export async function GET(req: Request) {
     { variant: plan, retained: deal.retained, roles: deal.roles, date, client, clientNumber: (q.get("number") || "").slice(0, 40), clientAddress: (q.get("address") || "").slice(0, 500) },
     { name: "(to be signed)", title: "", email: "", signedAt: "not yet signed", ip: "-", ref: "draft" },
   );
+  // ?html=1 returns the same document as a web page (for checking the layout quickly).
+  if (q.has("html")) return new Response(html, { headers: { "Content-Type": "text/html; charset=utf-8" } });
   try {
     const pdf = await htmlToPdf(html);
     return new Response(new Uint8Array(pdf), {
