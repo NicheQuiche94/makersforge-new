@@ -7,12 +7,15 @@
  * Hidden on Andre's admin pages. Copy awaits Andre's sign-off.
  */
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import styles from "./FounderChat.module.css";
 
 type Msg = { id: number; sender: "visitor" | "andre"; body: string; at: string };
 const KEY = "mf-chat-id";
 const HIDDEN = /^\/(admin|emails-preview|terms-preview)/;
+/** Andre's photo for the button and the chat header (a public/ path), once he sends one. */
+const PHOTO: string | null = null;
 
 /** Andre answers 8am–8pm UK time. */
 function online() {
@@ -132,7 +135,8 @@ export function FounderChat() {
         <section className={`card-shadow ${styles.panel}`} aria-label="Message Andre">
           <header className={styles.head}>
             <span className={styles.avatar} aria-hidden="true">
-              A<i className={isOnline ? styles.on : styles.off} />
+              {PHOTO ? <Image src={PHOTO} alt="" width={40} height={40} className={styles.photo} /> : "A"}
+              <i className={isOnline ? styles.on : styles.off} />
             </span>
             <div>
               <strong>Message Andre</strong>
@@ -189,7 +193,10 @@ export function FounderChat() {
       )}
 
       <button type="button" className={styles.bubble} onClick={toggle} aria-expanded={open}>
-        <span className={styles.dot} data-on={isOnline} aria-hidden="true" />
+        <span className={styles.face} aria-hidden="true">
+          {PHOTO ? <Image src={PHOTO} alt="" width={36} height={36} /> : "A"}
+          <i className={styles.dot} data-on={isOnline} />
+        </span>
         {open ? "Close" : "Message Andre"}
         {unread > 0 && !open && <span className={styles.badge}>{unread}</span>}
       </button>
