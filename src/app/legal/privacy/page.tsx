@@ -121,6 +121,16 @@ export default function PrivacyPage() {
               which studios are interested. See section 11.
             </p>
 
+            <h3 className={styles.subH}>chat messages</h3>
+            <p className={styles.p}>
+              If you message Andre through the chat on the site, we keep
+              your messages, any name and email you give, and the page you
+              were on, so he can reply in the chat or by email. Your
+              browser keeps a random code so the chat remembers your
+              conversation; it doesn&apos;t track you anywhere else. Messages
+              reach Andre through Telegram.
+            </p>
+
             <p className={styles.p}>
               <strong>What we don&apos;t collect:</strong> advertising
               cookies, device fingerprinting, tracking across other
@@ -224,6 +234,9 @@ export default function PrivacyPage() {
               </li>
               <li>
                 <strong>Resend.</strong> Transactional email delivery for application acknowledgements and account notices.
+              </li>
+              <li>
+                <strong>Telegram.</strong> Delivers chat messages from the site to Andre so he can reply.
               </li>
               <li>
                 <strong>Analytics providers.</strong> Site usage statistics, and identifying the companies visiting the site from IP address. Only if you accept cookies.
