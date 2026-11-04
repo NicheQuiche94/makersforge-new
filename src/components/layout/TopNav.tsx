@@ -105,7 +105,11 @@ export function TopNav({ activeHref }: { activeHref?: string }) {
                 </li>
               ))}
             </ul>
-            {/* PROTOTYPE 2026-11-02: self-onboarding is the nav action (Andre). */}
+            {/* The way back into the client portal (Andre 2026-11-04); stays visible on phones. */}
+            <Link href="/account" className={`${styles.login} ${activeHref === "/account" ? styles.activeLink : ""}`}>
+              Client login
+            </Link>
+            {/* Self-onboarding is the nav action (Andre 2026-11-02). */}
             <Link href="/start" className={styles.cta}>
               Get started
             </Link>

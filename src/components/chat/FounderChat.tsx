@@ -15,7 +15,7 @@ type Msg = { id: number; sender: "visitor" | "andre"; body: string; at: string }
 const KEY = "mf-chat-id";
 const HIDDEN = /^\/(admin|emails-preview|terms-preview)/;
 /** Andre's photo for the button and the chat header (a public/ path), once he sends one. */
-const PHOTO: string | null = null;
+const PHOTO: string | null = "/images/andre-chat.jpg";
 
 /** Andre answers 8am–8pm UK time. */
 function online() {
