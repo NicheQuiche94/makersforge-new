@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { toAndre } from "@/lib/chat/telegram";
+import { telegram, toAndre } from "@/lib/chat/telegram";
 import { layout } from "@/lib/clientEmails";
 import { sendMail } from "@/lib/onboarding/mail";
 
@@ -31,14 +31,23 @@ export async function POST(req: Request) {
 
   const db = createAdminClient();
   // Their message, or an earlier reply of Andre's in the same conversation.
-  const { data: hit } = await db.from("chat_messages").select("thread_id").eq("telegram_id", replyTo).limit(1).maybeSingle();
+  let { data: hit } = await db.from("chat_messages").select("thread_id").eq("telegram_id", replyTo).limit(1).maybeSingle();
   if (!hit) {
-    await toAndre("I couldn't match that reply to a conversation. Reply to the visitor's message itself.");
-    return NextResponse.json({ ok: true });
+    // He replied to one of the bot's own notes: if only one person has written in the last 6 hours, it's for them.
+    const since = new Date(Date.now() - 6 * 3600_000).toISOString();
+    const { data: recent } = await db.from("chat_messages").select("thread_id").eq("sender", "visitor").gte("at", since);
+    const threads = [...new Set((recent ?? []).map((r) => r.thread_id))];
+    if (threads.length === 1) hit = { thread_id: threads[0] };
+    else {
+      await toAndre("I couldn't tell who that's for. Reply to the visitor's own message (swipe left on it).");
+      return NextResponse.json({ ok: true });
+    }
   }
   const body = String(msg.text).slice(0, 4000);
   await db.from("chat_messages").insert({ thread_id: hit.thread_id, sender: "andre", body, telegram_id: msg.message_id });
   await db.from("chat_threads").update({ last_message_at: new Date().toISOString() }).eq("id", hit.thread_id);
+  // A silent 👍 on his message = delivered.
+  await telegram("setMessageReaction", { chat_id: msg.chat.id, message_id: msg.message_id, reaction: [{ type: "emoji", emoji: "👍" }] });
 
   // Not on the site in the last 2 minutes and left an email → send it there too.
   const { data: t } = await db.from("chat_threads").select("email, name, last_seen_at").eq("id", hit.thread_id).single();
