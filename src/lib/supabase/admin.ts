@@ -8,11 +8,11 @@ import { createClient } from "@supabase/supabase-js";
  * identity with their submit_token, and the server does the privileged write.
  */
 export function createAdminClient() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const url = process.env.NEXT_PUBLIC_PORTAL_SUPABASE_URL;
+  const key = process.env.PORTAL_SUPABASE_SERVICE_ROLE_KEY;
   if (!url || !key) {
     throw new Error(
-      "Supabase admin client not configured (NEXT_PUBLIC_SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY)."
+      "Supabase admin client not configured (NEXT_PUBLIC_PORTAL_SUPABASE_URL / PORTAL_SUPABASE_SERVICE_ROLE_KEY)."
     );
   }
   return createClient(url, key, {
