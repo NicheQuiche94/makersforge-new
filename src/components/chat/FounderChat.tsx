@@ -150,8 +150,8 @@ export function FounderChat() {
           <div className={styles.list} ref={list}>
             <p className={styles.andre}>
               {isOnline
-                ? "Hi, Andre here (Founder) happy to help or answer Qs :)"
-                : "Hi, Andre here (Founder). I'm offline right now, but leave a message and your email and I'll get back to you first thing :)"}
+                ? "Hi, Andre here, happy to help or answer Qs :)"
+                : "Hi, Andre here. I'm offline right now, but leave a message and your email and I'll get back to you first thing :)"}
             </p>
             {msgs.map((m) => (
               <p key={m.id} className={m.sender === "andre" ? styles.andre : styles.me}>
