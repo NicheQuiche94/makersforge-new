@@ -43,7 +43,7 @@ export default function PrivacyPage() {
           <div className={styles.meta}>
             <span className={styles.metaItem}>
               <span className={styles.metaLabel}>Last updated</span>
-              <span className={styles.metaValue}>1 November 2026</span>
+              <span className={styles.metaValue}>4 November 2026</span>
             </span>
             <span className={styles.metaItem}>
               <span className={styles.metaLabel}>Data controller</span>
@@ -118,7 +118,10 @@ export default function PrivacyPage() {
               If you accept cookies, analytics tools record how the site
               is used, and use your IP address to identify the company
               you&apos;re browsing from (not you as a person), so we know
-              which studios are interested. See section 11.
+              which studios are interested. We may also record how pages
+              are used (clicks, scrolling, where people drop off), with
+              everything typed into forms and your chat messages hidden
+              from the recording. See section 11.
             </p>
 
             <h3 className={styles.subH}>chat messages</h3>
@@ -239,7 +242,7 @@ export default function PrivacyPage() {
                 <strong>Telegram.</strong> Delivers chat messages from the site to Andre so he can reply.
               </li>
               <li>
-                <strong>Analytics providers.</strong> Site usage statistics, and identifying the companies visiting the site from IP address. Only if you accept cookies.
+                <strong>Analytics providers (Google Analytics, PostHog, Apollo).</strong> Site usage statistics, page recordings with form entries hidden, and identifying the companies visiting the site from IP address. Only if you accept cookies. PostHog stores its data in the EU.
               </li>
               <li>
                 <strong>Studios with confirmed briefs.</strong> When a studio briefs us and a shortlist is generated, the matched specialists&apos; real identities and detailed profiles are shared with that studio for the purpose of interview and engagement.
@@ -370,6 +373,12 @@ export default function PrivacyPage() {
                 used: pages visited, rough location and device type.
               </li>
               <li>
+                <strong>Page recordings</strong>, to see where the site is
+                confusing: clicks, scrolling and where people leave.
+                Anything you type into a form and your chat messages are
+                hidden, and nothing is recorded in the client portal.
+              </li>
+              <li>
                 <strong>Company identification</strong>, which uses your
                 IP address to identify the company you&apos;re browsing
                 from, not you as a person, so we can see which studios
@@ -377,7 +386,7 @@ export default function PrivacyPage() {
               </li>
             </ul>
             <p className={styles.p}>
-              Neither loads until you click Accept on the cookie banner,
+              None of these load until you click Accept on the cookie banner,
               and you can change your mind at any time from &ldquo;cookie
               settings&rdquo; in the footer. We don&apos;t use advertising
               cookies or device fingerprinting.

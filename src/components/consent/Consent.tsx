@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Cookie consent (2026-10-30). Google Analytics and Apollo's visitor
+ * Cookie consent (2026-10-30). Google Analytics, PostHog and Apollo's visitor
  * tracker only load after a visitor accepts; until then neither runs. The
  * choice is remembered in localStorage, and the footer's "cookie settings"
  * link reopens the banner (it dispatches OPEN_EVENT).
@@ -9,6 +9,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Script from "next/script";
+import { denyAnalytics, grantAnalytics } from "@/lib/analytics";
 import styles from "./Consent.module.css";
 
 const KEY = "mf-consent";
@@ -42,6 +43,8 @@ export function Consent() {
       localStorage.setItem(KEY, c);
     } catch {}
     // Withdrawing consent after the scripts have loaded needs a reload to unload them.
+    if (c === "granted") grantAnalytics();
+    else denyAnalytics();
     if (choice === "granted" && c === "denied") window.location.reload();
     setChoice(c);
     setOpen(false);

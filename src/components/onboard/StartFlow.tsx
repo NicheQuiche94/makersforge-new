@@ -26,6 +26,7 @@ import { BATCH_MAX, BATCH_SIZES, PLANS, scheduleRoles, SINGLE_FEE, TERMS, batchS
 const fiveDays = (w?: string) => (w ? fiveDaysOf(w) : "…");
 const shortDate = (w?: string) => (w ? shortDateOf(w) : "…");
 const shortlistDate = (w?: string) => (w ? shortlistDateOf(w) : "…");
+import { track } from "@/lib/analytics";
 import { CallLink } from "./Bits";
 import { PayToggle } from "./PlanCards";
 import { WeekCalendar } from "./WeekCalendar";
@@ -157,6 +158,11 @@ export function StartFlow() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
   const next = () => go(order[Math.min(at + 1, order.length - 1)]);
+  // Funnel: which step a visitor reaches (no personal details, just the step and plan).
+  useEffect(() => {
+    track("booking_step", { step, plan: plan ?? "none", retained: isRetained, roles: briefs.length });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step]);
   // Several roles briefed: default to a batch of exactly that many (contractors stay contractors).
   useEffect(() => {
     if (briefs.length < 2) return;

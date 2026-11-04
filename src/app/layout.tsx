@@ -9,6 +9,7 @@ import { ScrollRevealRoot } from "@/components/atoms/ScrollRevealRoot";
 import { SiteSchema } from "@/components/seo/SiteSchema";
 import { Consent } from "@/components/consent/Consent";
 import { FounderChat } from "@/components/chat/FounderChat";
+import { PostHog } from "@/components/consent/PostHog";
 import { SITE_URL } from "@/lib/site";
 
 const figtree = Figtree({
@@ -67,6 +68,7 @@ export default function RootLayout({
         <FounderChat />
         {/* Analytics + Apollo load only after the visitor accepts */}
         <Consent />
+        <PostHog />
       </body>
     </html>
   );

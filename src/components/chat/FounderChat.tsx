@@ -9,6 +9,7 @@
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { track } from "@/lib/analytics";
 import styles from "./FounderChat.module.css";
 
 type Msg = { id: number; sender: "visitor" | "andre"; body: string; at: string };
@@ -124,6 +125,7 @@ export function FounderChat() {
     setBusy(false);
     if (!r.ok) return setError(d.error || "That didn't send. Please try again.");
     setText("");
+    track("chat_message_sent", { first: msgs.length === 0 });
     load();
   };
 
@@ -147,7 +149,7 @@ export function FounderChat() {
             </button>
           </header>
 
-          <div className={styles.list} ref={list}>
+          <div className={`ph-mask ${styles.list}`} ref={list}>
             <p className={styles.andre}>
               {isOnline
                 ? "Hi, Andre here, happy to help or answer Qs :)"
