@@ -140,7 +140,7 @@ export function FounderChat() {
             </span>
             <div>
               <strong>Message Andre</strong>
-              <span>Founder of MakersForge. A real person, not a bot.</span>
+              <span>Founder of MakersForge (yes, it&apos;s really me)</span>
             </div>
             <button type="button" className={styles.close} aria-label="Close" onClick={() => setOpen(false)}>
               ×
