@@ -17,10 +17,10 @@ const HIDDEN = /^\/(admin|emails-preview|terms-preview)/;
 /** Andre's photo for the button and the chat header (a public/ path), once he sends one. */
 const PHOTO: string | null = "/images/andre-chat.jpg";
 
-/** Andre answers 8am–8pm UK time. */
+/** Andre replies fastest 8am–5pm UK time; after that it says replies are slower. */
 function online() {
   const h = Number(new Intl.DateTimeFormat("en-GB", { hour: "numeric", hourCycle: "h23", timeZone: "Europe/London" }).format(new Date()));
-  return h >= 8 && h < 20;
+  return h >= 8 && h < 17;
 }
 
 // Re-checks the clock every minute; the server render assumes online.
@@ -151,7 +151,7 @@ export function FounderChat() {
             <p className={styles.andre}>
               {isOnline
                 ? "Hi, Andre here, happy to help or answer Qs :)"
-                : "Hi, Andre here. I'm offline right now, but leave a message and your email and I'll get back to you first thing :)"}
+                : "Hi! Heads up, after 5pm my replies are slower than they otherwise would be, but I'll respond once I see this :)"}
             </p>
             {msgs.map((m) => (
               <p key={m.id} className={m.sender === "andre" ? styles.andre : styles.me}>
@@ -183,7 +183,7 @@ export function FounderChat() {
                   }
                 }}
               />
-              <button type="submit" disabled={busy || !text.trim() || (!isOnline && firstTime && !email)}>
+              <button type="submit" disabled={busy || !text.trim()}>
                 Send
               </button>
             </div>
