@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Andre's admin on real data (the approved /admin-preview, 2026-11-03).
+ * Andre's admin on real data (design approved 2026-11-03).
  * Needs you (one card per thing waiting on him, one button each), Bookings
  * (everything, with the full record) and Capacity (2 searches a week, block
  * weeks). Every button calls a server action that checks he's an admin.

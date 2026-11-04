@@ -14,7 +14,7 @@ import { updateSession } from "@/lib/supabase/middleware";
  *     signed in. Who may see what is checked in the pages and routes themselves.
  */
 export const config = {
-  matcher: ["/handbook", "/handbook/:path*", "/start", "/account", "/account/:path*", "/admin", "/admin/:path*", "/api/onboarding/:path*"],
+  matcher: ["/handbook", "/handbook/:path*", "/start", "/account", "/account/:path*", "/admin", "/admin/:path*", "/emails-preview", "/terms-preview", "/api/onboarding/:path*"],
 };
 
 export async function proxy(req: NextRequest) {

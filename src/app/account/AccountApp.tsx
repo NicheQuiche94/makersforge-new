@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * The client portal on real data (the approved /portal-preview, 2026-11-03).
+ * The client portal on real data (design approved 2026-11-03).
  * Your hiring: the tracker (once Andre has invited them), the deal, another
  * role, and every role's own search week and progress. Account: signed terms,
  * company details, invoices. Candidates and their comments live in Airtable.
