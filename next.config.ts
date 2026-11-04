@@ -22,6 +22,12 @@ const nextConfig: NextConfig = {
         destination: "https://cal.com/makersforge/15",
         permanent: false,
       },
+      /* Short, sayable address for the client portal (2026-11-04). */
+      {
+        source: "/login",
+        destination: "/account",
+        permanent: false,
+      },
       {
         source: "/roster/:path*",
         destination: "/line-up/:path*",

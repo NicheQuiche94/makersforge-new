@@ -61,7 +61,7 @@ export function layout(body: string, preheader: string) {
 <tr><td style="background:#fff;border-radius:0 0 16px 16px;padding:30px 28px 28px;font-size:15.5px;line-height:1.6">${body}</td></tr>
 <tr><td style="padding:18px 6px;font-size:12px;line-height:1.5;color:#8a8e97;text-align:center">
 MakersForge Ltd · Second Floor, 2 The Waterhouse, Waterhouse Street, Hemel Hempstead HP1 1ES<br>
-<a href="${SITE}" style="color:#8a8e97">makersforge.gg</a>
+<a href="${SITE}" style="color:#8a8e97">makersforge.gg</a> · <a href="${SITE}/account" style="color:#8a8e97">Your client portal</a>
 </td></tr>
 </table></td></tr></table></body></html>`;
 }

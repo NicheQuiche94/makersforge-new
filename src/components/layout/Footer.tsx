@@ -32,6 +32,8 @@ const STUDIO_LINKS = [
   { href: "/#how", label: "How it works" },
   { href: "/pricing", label: "Pricing" },
   { href: BOOKING_URL, label: "Book a call" },
+  /* Self-onboarding (2026-11-04): the way back into the client portal. */
+  { href: "/account", label: "Client login" },
 ];
 
 const COMPANY_LINKS = [
