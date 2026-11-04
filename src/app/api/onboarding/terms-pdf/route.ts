@@ -29,6 +29,8 @@ export async function GET(req: Request) {
     });
   } catch (err) {
     console.error("terms preview pdf", err);
-    return new Response("PDF unavailable right now", { status: 500 });
+    // ?debug=1 shows the reason (no secrets in it), like the talent spec PDF.
+    const why = q.has("debug") ? `: ${String(err)}` : "";
+    return new Response(`PDF unavailable right now${why}`, { status: 500 });
   }
 }

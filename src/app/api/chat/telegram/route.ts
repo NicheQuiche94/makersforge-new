@@ -23,7 +23,9 @@ export async function POST(req: Request) {
 
   const replyTo = msg.reply_to_message?.message_id;
   if (!replyTo) {
-    await toAndre("To answer someone, swipe left on (or long-press → Reply) their message, then type your answer.");
+    // A loose message would otherwise vanish, so explain once; /start is just Telegram opening the chat.
+    if (!String(msg.text).startsWith("/"))
+      await toAndre("To answer someone, swipe left on (or long-press → Reply) their message, then type your answer.");
     return NextResponse.json({ ok: true });
   }
 
