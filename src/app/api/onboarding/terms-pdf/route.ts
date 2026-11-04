@@ -1,0 +1,34 @@
+import { termsHtml } from "@/lib/onboarding/terms";
+import { htmlToPdf } from "@/lib/onboarding/pdf";
+import { priceDeal } from "@/lib/onboarding/pricing";
+import type { PlanId } from "@/lib/plans";
+
+/**
+ * GET ?plan=batch&retained=1&roles=3&client=…&number=…&address=…
+ * The full Terms of Business made out to them, before they sign (the
+ * "Download your terms" link on the terms step). Unsigned; the signed copy
+ * is emailed after they sign.
+ */
+export const runtime = "nodejs";
+export const maxDuration = 60;
+
+export async function GET(req: Request) {
+  const q = new URL(req.url).searchParams;
+  const plan = (["permanent", "contract", "batch"].includes(q.get("plan") || "") ? q.get("plan") : "permanent") as PlanId;
+  const deal = priceDeal(plan, q.get("retained") === "1", Number(q.get("roles")) || 1);
+  const client = (q.get("client") || "").slice(0, 200);
+  const date = new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+  const { html } = termsHtml(
+    { variant: plan, retained: deal.retained, roles: deal.roles, date, client, clientNumber: (q.get("number") || "").slice(0, 40), clientAddress: (q.get("address") || "").slice(0, 500) },
+    { name: "(to be signed)", title: "", email: "", signedAt: "not yet signed", ip: "-", ref: "draft" },
+  );
+  try {
+    const pdf = await htmlToPdf(html);
+    return new Response(new Uint8Array(pdf), {
+      headers: { "Content-Type": "application/pdf", "Content-Disposition": `attachment; filename="MakersForge-Terms-${client.replace(/[^\w]+/g, "") || "draft"}.pdf"`, "Cache-Control": "no-store" },
+    });
+  } catch (err) {
+    console.error("terms preview pdf", err);
+    return new Response("PDF unavailable right now", { status: 500 });
+  }
+}

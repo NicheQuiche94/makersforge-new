@@ -26,6 +26,9 @@ export type EmailData = {
   signedBy: string; // "Sam Patel, Head of Growth"
   signedAt: string; // "2 Nov 2026, 10:42"
   ukClient: boolean;
+  /** Sign-in email only: the one-time code and the magic link. */
+  code?: string;
+  link?: string;
   /** One row per role: [role, search week, shortlist date]. */
   schedule?: [string, string, string][];
 };
@@ -82,15 +85,17 @@ export function clientEmails(d: EmailData): Email[] {
   return [
     {
       id: "signin",
-      label: "1 · Sign-in link",
+      label: "1 · Sign-in code",
       to: d.email,
-      subject: "Your MakersForge sign-in link",
+      subject: `${d.code ?? "123456"} is your MakersForge code`,
       html: layout(
-        h1(`Hi ${d.first}, here's your link`) +
-          p("Click below to carry on with your booking. It works once and expires in an hour.") +
-          button("Continue my booking", `${SITE}/start`) +
-          p(`<span style="color:${DIM};font-size:14px">Didn't ask for this? You can ignore it, nothing happens without the link.</span>`),
-        "Carry on with your booking",
+        h1(`Hi ${d.first}, here's your code`) +
+          p("Type this into the booking page to carry on. It works once and expires in an hour.") +
+          `<p style="margin:6px 0 20px;font-size:32px;font-weight:700;letter-spacing:0.18em;color:${INK}">${d.code ?? "123456"}</p>` +
+          p(`<span style="color:${DIM};font-size:14px">Or sign straight in with this link instead:</span>`) +
+          button("Sign in", d.link ?? `${SITE}/account`) +
+          p(`<span style="color:${DIM};font-size:14px">Didn't ask for this? You can ignore it, nothing happens without the code.</span>`),
+        "Your sign-in code",
       ),
     },
     {

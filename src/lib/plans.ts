@@ -143,9 +143,9 @@ export const CAPACITY = {
  * Booked slots are firm, first come first served: a reserved week is never
  * moved, even when one client holds both slots (Andre: there's a reason for it).
  */
-export function scheduleRoles(start: string, roles: number) {
+export function scheduleRoles(start: string, roles: number, weeks: { start: string; open: number }[] = WEEKS) {
   const out: string[] = [];
-  for (const w of WEEKS) {
+  for (const w of weeks) {
     if (w.start < start) continue;
     for (let i = 0; i < w.open && out.length < roles; i++) out.push(w.start);
     if (out.length >= roles) break;

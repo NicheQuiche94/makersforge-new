@@ -21,9 +21,20 @@ const mondayOf = (d: Date) => {
 };
 const DOW = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-export function WeekCalendar({ selected, onSelect, readOnly = false }: { selected?: string; onSelect?: (week: string) => void; readOnly?: boolean }) {
-  const months = useMemo(() => [...new Set(WEEKS.flatMap((w) => [w.start.slice(0, 7), iso(new Date(atNoon(w.start).getTime() + 4 * 864e5)).slice(0, 7)]))], []);
-  const [mi, setMi] = useState(() => Math.max(0, months.indexOf((selected ?? WEEKS[0].start).slice(0, 7))));
+export function WeekCalendar({
+  selected,
+  onSelect,
+  readOnly = false,
+  weeks = WEEKS,
+}: {
+  selected?: string;
+  onSelect?: (week: string) => void;
+  readOnly?: boolean;
+  /** Live availability from the database; the mock WEEKS only as a fallback. */
+  weeks?: { start: string; open: number }[];
+}) {
+  const months = useMemo(() => [...new Set(weeks.flatMap((w) => [w.start.slice(0, 7), iso(new Date(atNoon(w.start).getTime() + 4 * 864e5)).slice(0, 7)]))], [weeks]);
+  const [mi, setMi] = useState(() => Math.max(0, months.indexOf((selected ?? weeks[0]?.start ?? "").slice(0, 7))));
   const month = months[mi];
   const first = atNoon(`${month}-01`);
   const gridStart = atNoon(mondayOf(first));
@@ -52,7 +63,7 @@ export function WeekCalendar({ selected, onSelect, readOnly = false }: { selecte
         {rows.flat().map((d) => {
           const day = iso(d);
           const weekStart = mondayOf(d);
-          const week = WEEKS.find((w) => w.start === weekStart);
+          const week = weeks.find((w) => w.start === weekStart);
           const weekday = d.getUTCDay() !== 0 && d.getUTCDay() !== 6;
           const inMonth = day.slice(0, 7) === month;
           const open = !!week && week.open > 0;

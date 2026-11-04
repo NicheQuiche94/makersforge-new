@@ -20,7 +20,12 @@ import { useEffect, useRef, useState, type DragEvent } from "react";
 import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/atoms/Button";
 import { ROSTER } from "@/data/roster";
-import { BATCH_MAX, BATCH_SIZES, PLANS, scheduleRoles, SINGLE_FEE, TERMS, WEEKS, batchSteps, batchTotal, fiveDays, gbp, gbpK, planById, retainedPrice, shortDate, shortlistDate, type PayWhen, type PlanId } from "@/lib/plans";
+import { BATCH_MAX, BATCH_SIZES, PLANS, scheduleRoles, SINGLE_FEE, TERMS, batchSteps, batchTotal, fiveDays as fiveDaysOf, gbp, gbpK, planById, retainedPrice, shortDate as shortDateOf, shortlistDate as shortlistDateOf, type PayWhen, type PlanId } from "@/lib/plans";
+
+// Dates show "…" until the live calendar has loaded and a week is picked.
+const fiveDays = (w?: string) => (w ? fiveDaysOf(w) : "…");
+const shortDate = (w?: string) => (w ? shortDateOf(w) : "…");
+const shortlistDate = (w?: string) => (w ? shortlistDateOf(w) : "…");
 import { CallLink } from "./Bits";
 import { PayToggle } from "./PlanCards";
 import { WeekCalendar } from "./WeekCalendar";
@@ -57,11 +62,13 @@ export function StartFlow() {
   const params = useSearchParams();
   const person = ROSTER.find((p) => p.id === params.get("candidate"));
   const preset = planById(params.get("plan"))?.id as PlanId | undefined;
-  const firstOpen = WEEKS.find((w) => w.open > 0)!.start;
-  const urlWeek = WEEKS.find((w) => w.start === params.get("week") && w.open > 0)?.start;
+  // Live search weeks from the database (slots left after other bookings and blocked weeks).
+  const [weeks, setWeeks] = useState<{ start: string; open: number }[] | null>(null);
+  const [weeksError, setWeeksError] = useState(false);
+  const draftStart = useRef<string | null>(null);
 
   const [step, setStep] = useState<Step>("week");
-  const [start, setStart] = useState(urlWeek ?? firstOpen);
+  const [start, setStart] = useState("");
   const [briefs, setBriefs] = useState<Brief[]>([EMPTY_BRIEF]);
   const [cur, setCur] = useState(0);
   const { spec, file, f } = briefs[cur] ?? EMPTY_BRIEF;
@@ -87,11 +94,30 @@ export function StartFlow() {
         if (Array.isArray(d.briefs) && d.briefs.length) setBriefs(d.briefs);
         if (d.you) setYou(d.you);
         if (d.bill) setBill(d.bill);
-        if (!urlWeek && WEEKS.some((w) => w.start === d.start && w.open > 0)) setStart(d.start);
+        if (d.start) draftStart.current = d.start;
       }
     } catch {}
     loaded.current = true;
+  }, []);
+  useEffect(() => {
+    fetch("/api/onboarding/weeks")
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((w: { start: string; open: number }[]) => {
+        setWeeks(w);
+        const ok = (x?: string | null) => !!x && w.some((y) => y.start === x && y.open > 0);
+        const wanted = params.get("week");
+        setStart(ok(wanted) ? wanted! : ok(draftStart.current) ? draftStart.current! : (w.find((y) => y.open > 0)?.start ?? ""));
+      })
+      .catch(() => setWeeksError(true));
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  // Who's signed in already (a returning client skips the email code).
+  const [verified, setVerified] = useState<string | null>(null);
+  useEffect(() => {
+    fetch("/api/onboarding/me")
+      .then((r) => r.json())
+      .then((d) => setVerified(d.email ?? null))
+      .catch(() => undefined);
   }, []);
   useEffect(() => {
     if (!loaded.current) return;
@@ -112,7 +138,7 @@ export function StartFlow() {
   const ret = retainedPrice(full);
   // Each role gets its own search slot; the panel, review and confirmation show when each runs.
   const roleNames = Array.from({ length: n }, (_, i) => (briefs[i] && briefed(briefs[i]) ? roleName(briefs[i], i) : `Role ${i + 1}`));
-  const sched = scheduleRoles(start, Math.max(1, n));
+  const sched = start && weeks ? scheduleRoles(start, Math.max(1, n), weeks) : [];
   const ladder = (k = 1) => fees.map((x) => gbpK(x * k)).join(", ");
   const allFilled = n === 1 ? "" : n === 2 ? " if both are filled" : ` if all ${n} are filled`;
   // The running total in "Your booking": price per role, then what it comes to.
@@ -150,10 +176,69 @@ export function StartFlow() {
   const workEmail = (e: string) => /^[^@\s]+@(?!gmail\.|googlemail\.|outlook\.|hotmail\.|yahoo\.|icloud\.|proton)[^@\s]+\.[^@\s]+$/i.test(e);
   const billingOk = !!(bill.legal && bill.number && bill.address && workEmail(bill.accounts));
 
+  const files = useRef<(File | null)[]>([]);
+  const takeFile = (fl: File | null | undefined) => {
+    files.current[cur] = fl ?? null;
+    setFile(fl?.name ?? null);
+  };
   const onDrop = (e: DragEvent<HTMLLabelElement>) => {
     e.preventDefault();
-    const fl = e.dataTransfer.files?.[0];
-    if (fl) setFile(fl.name);
+    takeFile(e.dataTransfer.files?.[0]);
+  };
+
+  // Email check: a 6-digit code typed in here (no switching tabs).
+  const [code, setCode] = useState({ sent: false, value: "", busy: false, error: "" });
+  const emailOk = verified && verified === you.email.trim().toLowerCase();
+  const sendCode = async () => {
+    setCode({ ...code, busy: true, error: "" });
+    const r = await fetch("/api/onboarding/code", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email: you.email.trim(), first: you.name.split(/\s+/)[0] }) });
+    const d = await r.json().catch(() => ({}));
+    setCode({ sent: r.ok, value: "", busy: false, error: r.ok ? "" : d.error || "Something went wrong. Please try again." });
+  };
+  const checkCode = async () => {
+    setCode({ ...code, busy: true, error: "" });
+    const r = await fetch("/api/onboarding/verify", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email: you.email.trim(), code: code.value }) });
+    const d = await r.json().catch(() => ({}));
+    if (r.ok) {
+      setVerified(you.email.trim().toLowerCase());
+      setCode({ sent: true, value: "", busy: false, error: "" });
+      next();
+    } else setCode({ ...code, busy: false, error: d.error || "That code didn't work." });
+  };
+
+  // Save the booking: everything goes to the server, which re-prices it, books the
+  // slots (refusing if a week has just filled), records the signature, makes the
+  // signed PDF and sends the emails.
+  const [sending, setSending] = useState({ busy: false, error: "", ref: "" });
+  const submit = async (opts: { changeRequest?: string; then: Step }) => {
+    setSending({ busy: true, error: "", ref: "" });
+    const body = new FormData();
+    body.set(
+      "data",
+      JSON.stringify({
+        start,
+        plan,
+        retained: isRetained,
+        roles,
+        briefs: briefs.map((b) => ({ title: b.f.role, location: b.f.location, budget: b.f.budget, musts: b.f.musts, spec: b.spec })),
+        you,
+        bill,
+        sign,
+        changeRequest: opts.changeRequest,
+      }),
+    );
+    files.current.forEach((fl, i) => fl && body.set(`spec-${i}`, fl));
+    const r = await fetch("/api/onboarding/book", { method: "POST", body });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok) {
+      setSending({ busy: false, error: d.error || "Something went wrong saving your booking. Please try again.", ref: "" });
+      return;
+    }
+    try {
+      localStorage.removeItem(DRAFT);
+    } catch {}
+    setSending({ busy: false, error: "", ref: d.ref });
+    go(opts.then);
   };
 
   // What they're buying, in one line (plan step, review, booking panel).
@@ -181,7 +266,6 @@ export function StartFlow() {
 
   return (
     <div className={styles.page}>
-      <p className={styles.proto}>Prototype · nothing is sent or charged</p>
       <div className={styles.layout}>
         <div className={styles.mainCol}>
           <ol className={styles.progress} aria-label="Steps">
@@ -211,8 +295,16 @@ export function StartFlow() {
                     Interview request: <strong>{person.codename}</strong> · {person.role}
                   </p>
                 )}
-                <WeekCalendar selected={start} onSelect={setStart} />
-                <Nav onNext={next} nextOk nextLabel="Reserve this week" />
+                {weeks ? (
+                  <WeekCalendar selected={start} onSelect={setStart} weeks={weeks} />
+                ) : weeksError ? (
+                  <p className={styles.warn}>
+                    We couldn&apos;t load the calendar. Please refresh, or <CallLink className={styles.callBtn}>book 15 minutes with Andre</CallLink>.
+                  </p>
+                ) : (
+                  <p className={styles.sub}>Loading this month&apos;s availability…</p>
+                )}
+                <Nav onNext={next} nextOk={!!start} nextLabel="Reserve this week" />
               </>
             )}
 
@@ -239,12 +331,12 @@ export function StartFlow() {
                     type="file"
                     accept=".pdf,.doc,.docx,.txt"
                     className={styles.fileInput}
-                    onChange={(e) => setFile(e.target.files?.[0]?.name ?? null)}
+                    onChange={(e) => takeFile(e.target.files?.[0])}
                   />
                   {file ? (
                     <span>
                       <strong>{file}</strong> attached ·{" "}
-                      <button type="button" className={styles.link} onClick={(e) => (e.preventDefault(), setFile(null))}>
+                      <button type="button" className={styles.link} onClick={(e) => (e.preventDefault(), takeFile(null))}>
                         remove
                       </button>
                     </span>
@@ -289,7 +381,7 @@ export function StartFlow() {
             {step === "you" && (
               <>
                 <h1 className={styles.h1}>Who are we working with?</h1>
-                <p className={styles.sub}>We&apos;ll email a link to confirm it&apos;s you. No password to remember.</p>
+                <p className={styles.sub}>We&apos;ll email you a 6-digit code to confirm it&apos;s you. No password to remember.</p>
                 <div className={styles.row2}>
                   <Field label="Your name" value={you.name} onChange={(v) => setYou({ ...you, name: v })} />
                   <Field label="Company" value={you.company} onChange={(v) => setYou({ ...you, company: v })} />
@@ -298,13 +390,22 @@ export function StartFlow() {
                 {you.email && !workEmail(you.email) && (
                   <p className={styles.warn}>Please use your work email so we know which studio you&apos;re from.</p>
                 )}
+                {code.sent && !emailOk && (
+                  <div className={styles.codeRow}>
+                    <Field label={`Code we sent to ${you.email}`} value={code.value} onChange={(v) => setCode({ ...code, value: v.replace(/\D/g, "").slice(0, 6) })} placeholder="123456" />
+                    <button type="button" className={styles.link} onClick={sendCode} disabled={code.busy}>
+                      Send a new code
+                    </button>
+                  </div>
+                )}
+                {code.error && <p className={styles.warn}>{code.error}</p>}
                 <Nav
                   onBack={back}
-                  onNext={next}
+                  onNext={emailOk ? next : code.sent ? checkCode : sendCode}
                   onSave={() => setSaved(true)}
                   saved={saved}
-                  nextOk={!!(you.name && you.company && workEmail(you.email))}
-                  nextLabel="Send me the link"
+                  nextOk={!!(you.name && you.company && workEmail(you.email)) && !code.busy && (!code.sent || emailOk || code.value.length === 6)}
+                  nextLabel={emailOk ? "Continue" : code.sent ? "Confirm code" : "Email me a code"}
                 />
               </>
             )}
@@ -391,7 +492,10 @@ export function StartFlow() {
                   ))}
                 </ul>
                 {billingOk ? (
-                  <a className={styles.download} href="#" onClick={(e) => e.preventDefault()}>
+                  <a
+                    className={styles.download}
+                    href={`/api/onboarding/terms-pdf?${new URLSearchParams({ plan: plan ?? "permanent", retained: isRetained ? "1" : "0", roles: String(plan === "batch" ? roles : briefs.length), client: bill.legal, number: bill.number, address: bill.address })}`}
+                  >
                     ↓ Download your terms (PDF), made out to {bill.legal}
                   </a>
                 ) : (
@@ -424,7 +528,7 @@ export function StartFlow() {
                       placeholder="What would you like changed?"
                     />
                     <div className={styles.changeBtns}>
-                      <Button variant="primary" size="sm" disabled={!change.text.trim()} onClick={() => go("requested")}>
+                      <Button variant="primary" size="sm" disabled={!change.text.trim() || sending.busy} onClick={() => submit({ changeRequest: change.text.trim(), then: "requested" })}>
                         Save &amp; send request
                       </Button>
                       <button type="button" className={styles.link} onClick={() => setChange({ open: false, text: "" })}>
@@ -458,6 +562,7 @@ export function StartFlow() {
                   of {shortDate(start)} stays held. When we reply you&apos;ll get a link to pick up right here and sign.
                 </p>
                 <blockquote className={styles.quote}>{change.text}</blockquote>
+                {sending.ref && <p className={styles.subSmall}>Reference {sending.ref}</p>}
                 <Button href="/" variant="ghost" arrow>
                   Back to the site
                 </Button>
@@ -479,7 +584,13 @@ export function StartFlow() {
                   <Row k="Billed to" v={`${bill.legal} · ${bill.number} · ${bill.accounts}`} />
                   <Row k="Terms" v={`Signed by ${sign.name}, ${sign.title}`} />
                 </dl>
-                <Nav onBack={back} onNext={next} nextOk nextLabel={isRetained ? "Continue to your invoice" : "Confirm my booking"} />
+                {sending.error && <p className={styles.warn}>{sending.error}</p>}
+                <Nav
+                  onBack={back}
+                  onNext={isRetained ? next : () => submit({ then: "done" })}
+                  nextOk={!sending.busy}
+                  nextLabel={sending.busy ? "Booking…" : isRetained ? "Continue to your invoice" : "Confirm my booking"}
+                />
               </>
             )}
 
@@ -493,7 +604,8 @@ export function StartFlow() {
                   starts on {shortDate(start)}, and we get moving. It&apos;s credited against your first hires, so after that you only
                   pay the difference.
                 </p>
-                <Nav onBack={back} onNext={next} nextOk nextLabel="Send me the invoice" />
+                {sending.error && <p className={styles.warn}>{sending.error}</p>}
+                <Nav onBack={back} onNext={() => submit({ then: "done" })} nextOk={!sending.busy} nextLabel={sending.busy ? "Booking…" : "Send me the invoice"} />
               </>
             )}
 
@@ -513,8 +625,11 @@ export function StartFlow() {
                     </li>
                   ))}
                 </ul>
-                <p className={styles.sub}>We&apos;ll email you at each step, and it&apos;s all in your portal.</p>
-                <Button href="/portal-preview" variant="primary" arrow>
+                <p className={styles.sub}>
+                  Your signed terms are on their way to {you.email}. We&apos;ll email you at each step, and it&apos;s all in your portal.
+                  {sending.ref && <> Your booking reference is {sending.ref}.</>}
+                </p>
+                <Button href="/account" variant="primary" arrow>
                   Go to your portal
                 </Button>
               </>

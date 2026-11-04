@@ -73,3 +73,6 @@ src/data/ats-resolved.json
 
 # Talent Directory source — candidate PII (names, salaries, call notes). NEVER commit; repo is public.
 /talent/
+
+# local copies of onboarding emails when no Resend key is set
+.onboarding-outbox/

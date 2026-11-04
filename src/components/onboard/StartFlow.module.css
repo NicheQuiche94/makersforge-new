@@ -907,3 +907,18 @@
   font-weight: 500;
   color: var(--ink);
 }
+
+/* v11 (2026-11-04): the email code, typed in place */
+.codeRow {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  max-width: 420px;
+}
+.codeRow .field {
+  flex: 1;
+}
+.codeRow input {
+  letter-spacing: 0.3em;
+  font-size: 20px;
+}

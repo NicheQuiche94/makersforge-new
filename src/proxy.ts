@@ -1,16 +1,26 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { HANDBOOK_COOKIE, handbookPassword, handbookToken } from "@/lib/handbookAuth";
+import { updateSession } from "@/lib/supabase/middleware";
 
 /**
- * Gate for the internal team handbook (/handbook + the manual files under it).
- * Instead of a browser Basic-Auth popup, unauthenticated requests are redirected
- * to a branded /handbook/login page. A valid handbook_ok cookie (set by the
- * login API once the password checks out) lets them through. noindex on top.
+ * Edge proxy (Next 16 middleware) for two separate jobs:
+ *
+ *  1. /handbook: the internal team handbook. Unauthenticated requests are
+ *     redirected to a branded /handbook/login page; a valid handbook_ok cookie
+ *     lets them through. noindex on top.
+ *
+ *  2. Client self-onboarding (/start, /account, /admin, /api/onboarding):
+ *     refreshes the Supabase sign-in session so pages and routes see who's
+ *     signed in. Who may see what is checked in the pages and routes themselves.
  */
-export const config = { matcher: ["/handbook", "/handbook/:path*"] };
+export const config = {
+  matcher: ["/handbook", "/handbook/:path*", "/start", "/account", "/account/:path*", "/admin", "/admin/:path*", "/api/onboarding/:path*"],
+};
 
 export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
+  if (!pathname.startsWith("/handbook")) return updateSession(req);
+
   if (pathname === "/handbook/login") return NextResponse.next(); // the login page is open
 
   const expected = await handbookToken(handbookPassword());
