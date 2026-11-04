@@ -8,6 +8,7 @@ import { Footer } from "@/components/layout/Footer";
 import { ScrollRevealRoot } from "@/components/atoms/ScrollRevealRoot";
 import { SiteSchema } from "@/components/seo/SiteSchema";
 import { Consent } from "@/components/consent/Consent";
+import { FounderChat } from "@/components/chat/FounderChat";
 import { SITE_URL } from "@/lib/site";
 
 const figtree = Figtree({
@@ -62,6 +63,8 @@ export default function RootLayout({
         <main id="main">{children}</main>
         <Footer />
         <ScrollRevealRoot />
+        {/* "Message Andre": goes to his Telegram, not a bot */}
+        <FounderChat />
         {/* Analytics + Apollo load only after the visitor accepts */}
         <Consent />
       </body>

@@ -49,7 +49,7 @@ const ORANGE = "#ff5d00";
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 /** The shared frame: dark band with the mark, a white card, the company footer. */
-function layout(body: string, preheader: string) {
+export function layout(body: string, preheader: string) {
   return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"></head>
 <body style="margin:0;padding:0;background:#f4efe8;font-family:Helvetica,Arial,sans-serif;color:${INK}">
 <span style="display:none;max-height:0;overflow:hidden">${esc(preheader)}</span>
