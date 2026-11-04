@@ -26,6 +26,11 @@ export type EmailData = {
   signedBy: string; // "Sam Patel, Head of Growth"
   signedAt: string; // "2 Nov 2026, 10:42"
   ukClient: boolean;
+  /** Hire invoice email: which hire and what to bill (the preview shows an example). */
+  hire?: { role: string; nth: number; fee: string; credit?: string; amount: string; note?: string };
+  /** Shortlist emails: which role, and the client's Airtable tracker. */
+  shortlistRole?: string;
+  tracker?: string;
   /** Sign-in email only: the one-time code and the magic link. */
   code?: string;
   link?: string;
@@ -79,7 +84,13 @@ const steps = (items: string[]) =>
   `<ol style="margin:0 0 18px;padding-left:20px">${items.map((s) => `<li style="margin:0 0 6px">${s}</li>`).join("")}</ol>`;
 const signoff = p(`Andre<br><span style="color:${DIM};font-size:14px">Founder, MakersForge</span>`);
 
+const ORD = ["1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th"];
+
 export function clientEmails(d: EmailData): Email[] {
+  const hire = d.hire ?? { role: d.roles[1] ?? d.roles[0], nth: 2, fee: "£9,350", note: "2nd hire, 15% retained discount", credit: "−£4,000", amount: "£5,350" };
+  const nth = ORD[hire.nth - 1] ?? `#${hire.nth}`;
+  const tracker = d.tracker || "https://airtable.com";
+  const slRole = d.shortlistRole ?? d.roles[1] ?? d.roles[0];
   const roles = d.roles.length > 1 ? `${d.roles.length} roles: ${d.roles.join(", ")}` : d.roles[0];
   const vatLine = d.ukClient ? "UK client, so VAT applies (included in the fee)" : "Client outside the UK: no VAT unless the candidate is UK-based";
   return [
@@ -173,15 +184,15 @@ export function clientEmails(d: EmailData): Email[] {
       id: "invoice-hire",
       label: "5 · Invoice to raise: a hire (to you)",
       to: "andre@makersforge.gg",
-      subject: `Invoice to raise: ${d.legal}, hire 2 of ${d.roles.length}`,
+      subject: `Invoice to raise: ${d.legal}, ${nth} hire (${hire.amount})`,
       html: layout(
         h1("Invoice to raise") +
-          p(`${esc(d.company)} have made their 2nd hire.`) +
+          p(`${esc(d.company)} have made their ${nth} hire.`) +
           rows([
-            ["Hire", `${d.roles[1] ?? d.roles[0]} (2nd hire)`],
-            ["Fee", "£9,350 (2nd hire, 15% retained discount)"],
-            ["Less retainer credit", "−£4,000"],
-            ["Amount", "<strong>£5,350</strong>"],
+            ["Hire", `${esc(hire.role)} (${nth} hire)`],
+            ["Fee", `${hire.fee}${hire.note ? ` (${hire.note})` : ""}`],
+            ...(hire.credit ? ([["Less retainer credit", hire.credit]] as [string, string][]) : []),
+            ["Amount", `<strong>${hire.amount}</strong>`],
             ["Bill to", `${esc(d.legal)}<br>Company no. ${d.number}<br>${esc(d.address)}`],
             ["Send to", d.accounts],
             ["VAT", vatLine],
@@ -209,33 +220,33 @@ export function clientEmails(d: EmailData): Email[] {
       id: "tracker",
       label: "7 · First shortlist + tracker invite",
       to: d.email,
-      subject: `Your 5 candidates: ${d.roles[0]}`,
+      subject: `Your 5 candidates: ${d.shortlistRole ?? d.roles[0]}`,
       html: layout(
         h1("Your candidates are in") +
-          p(`${d.first}, your 5 candidates for <strong>${d.roles[0]}</strong> are ready, each with a short note on why they're on the list. They're in a private tracker I've set up for ${esc(d.company)}: look out for an email from Airtable inviting you to it.`) +
+          p(`${d.first}, your 5 candidates for <strong>${esc(d.shortlistRole ?? d.roles[0])}</strong> are ready, each with a short note on why they're on the list. They're in a private tracker I've set up for ${esc(d.company)}: look out for an email from Airtable inviting you to it.`) +
           p("<strong>How it works</strong>") +
           steps([
             "Every candidate we put forward appears there with their CV, links and my notes.",
             "Each candidate has their own comments thread. Ask questions or give feedback right on their record, and I'll reply there. No email chains.",
             "Your portal shows where everything is: search week, shortlist, interviews and documents.",
           ]) +
-          button("Open your tracker", "https://airtable.com") +
+          button("Open your tracker", tracker) +
           signoff,
-        `Your 5 candidates for ${d.roles[0]} are ready`,
+        `Your 5 candidates for ${d.shortlistRole ?? d.roles[0]} are ready`,
       ),
     },
     {
       id: "shortlist",
       label: "8 · Next shortlists",
       to: d.email,
-      subject: `Your 5 candidates: ${d.roles[1] ?? d.roles[0]}`,
+      subject: `Your 5 candidates: ${slRole}`,
       html: layout(
         h1("Your shortlist is in") +
-          p(`${d.first}, your 5 candidates for <strong>${d.roles[1] ?? d.roles[0]}</strong> are in your tracker, each with a short note on why they're on the list.`) +
+          p(`${d.first}, your 5 candidates for <strong>${esc(slRole)}</strong> are in your tracker, each with a short note on why they're on the list.`) +
           p("Comment on any of them to tell me who you'd like to meet, and I'll book the interviews.") +
-          button("See your candidates", "https://airtable.com") +
+          button("See your candidates", tracker) +
           signoff,
-        `5 candidates for ${d.roles[1] ?? d.roles[0]}`,
+        `5 candidates for ${slRole}`,
       ),
     },
     {
