@@ -972,6 +972,8 @@ export const ROSTER: Profile[] = [
     available: false,
     notice: "1 month",
     availableFor: ["permanent", "contract"],
+    // The posted cut (Andre added the music), compressed for the web; candidate signed off 2026-11-05.
+    video: { src: "/video/talent/ga-01.mp4", poster: "/video/talent/ga-01.jpg" },
     favourites: {
       song: "Ladyboss (Rachel Bloom)",
       colour: "Green",
