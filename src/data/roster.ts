@@ -950,6 +950,66 @@ export const ROSTER: Profile[] = [
       "Available now.",
     ],
   },
+  // Approved by the candidate 2026-11-05 (consent 2026-10-30).
+  {
+    id: "ga-01",
+    discipline: "creative",
+    codename: "ga·01",
+    role: "Senior Game Artist, UI/UX",
+    background:
+      "Game artist with around 13 years in mobile, with UI running through nearly every role: art direction, characters, icons and full Unity implementation, from hyper-casual to midcore and social casino.",
+    location: { code: "pl", label: "Wrocław or Warsaw, Poland" },
+    industries: ["games"],
+    gamesCat: ["hypercasual", "hybridcasual", "casual", "midcore"],
+    appsCat: [],
+    genre: ["rpg", "casino", "puzzle", "strategy"],
+    formats: ["static"],
+    expertise: [],
+    // Stored in GBP (site converts). Her figure: $25/hour contract (≈ $200/day).
+    dayRateLabel: "$200 / day",
+    dayRateBand: 0,
+    rateMin: 157,
+    available: false,
+    notice: "1 month",
+    availableFor: ["permanent", "contract"],
+    favourites: {
+      song: "Ladyboss (Rachel Bloom)",
+      colour: "Green",
+      colourHex: "#22c55e",
+      game: "Cult of the Lamb",
+    },
+    summary:
+      "A senior game artist whose strongest card is UI, backed by a rare all-round kit: characters, icons, art direction, 2D and 3D, animation, VFX and her own Unity implementation. She has been the only artist on a three-person hyper-casual team, built the visual target for a new game pitch at a leading casual studio, and is now on UI and characters for a midcore idle RPG.",
+    skills: [
+      "UI/UX design",
+      "Character design",
+      "Concept art",
+      "Art direction",
+      "Icon design",
+      "Marketing art",
+      "2D art & illustration",
+      "Spine & Unity animation",
+      "VFX & Shader Graph",
+      "3D in Blender",
+      "Unity implementation",
+      "Photoshop",
+    ],
+    experience: [
+      "Around 13 years in mobile games across casual, hybrid-casual, midcore and social casino, with UI running through nearly every role rather than sitting on the side.",
+      "Currently Senior Game Artist at a mobile studio on a midcore idle RPG, producing UI, character design and assets alongside the art director, and moving onto a tower defence title on UI and characters.",
+      "Senior Game Artist and the only artist in a three-person team making hyper and hybrid-casual games at speed: art direction, characters, icons, UI/UX, simple 3D assets, animation and Unity implementation.",
+      "Art direction, characters, assets, UI, Unity animation, VFX and Shader Graph at a small studio; and 16 months as marketing and game artist on casual and merge titles, covering ad creative, store screenshots, icons and all the 2D art.",
+      "Senior concept artist at a leading casual puzzle studio, building the visual target for a new game pitch, including the UI/UX, with 3D artists working from her concepts.",
+      "Earlier: social casino icons, characters and illustration at a major social casino publisher; three years of art direction, concept and character design at a global mobile publisher; and four and a half years of illustration, assets, icons and UI/UX at a Polish mobile games publisher.",
+      "Builds her own games in her spare time, including a 3D squad-battler and simpler 2D games.",
+    ],
+    motivations:
+      "Loves fast-paced teams, which is where she has done some of her best work, and is open to permanent roles and contract.",
+    recruiterNotes: [
+      "Strongest in UI, and solid across 2D, 3D, animation, VFX and Unity: a studio gets screens that are designed, drawn and implemented by one person.",
+      "Has been the only artist on a small, fast team, so she can carry the whole look of a game, not just a slice of it.",
+    ],
+  },
 ];
 
 /** How a profile's availability reads: "Available now", "Available with 1 month's notice" or "In contract".
