@@ -43,13 +43,6 @@ const LISTED: { step: Step; label: string }[] = [
 ];
 const DRAFT = "mf-start-draft";
 
-// What "Fill in from the spec" would pull out (the real thing reads the JD with AI).
-const SAMPLE = {
-  role: "Senior UA Manager",
-  location: "Remote (UK / EU)",
-  budget: "£70k to £85k",
-  musts: "Scaled Meta + Google past $100k/day · casual or puzzle · creative testing",
-};
 
 const EMPTY_BILLING = { legal: "", number: "", address: "", vat: "", accounts: "", po: "" };
 
@@ -361,9 +354,6 @@ export function StartFlow() {
                     placeholder="The whole spec, or just: Senior UA Manager, remote, scaled Meta past $100k a day…"
                   />
                 </label>
-                <Button variant="ghost" size="sm" className={styles.fill} onClick={() => setF(SAMPLE)}>
-                  ✦ Fill in from the spec
-                </Button>
                 <div className={styles.row2}>
                   <Field label="Role" value={f.role} onChange={(v) => setF({ ...f, role: v })} />
                   <Field label="Location" value={f.location} onChange={(v) => setF({ ...f, location: v })} placeholder="Remote, hybrid, city" />
