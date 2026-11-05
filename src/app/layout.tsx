@@ -10,6 +10,7 @@ import { SiteSchema } from "@/components/seo/SiteSchema";
 import { Consent } from "@/components/consent/Consent";
 import { FounderChat } from "@/components/chat/FounderChat";
 import { PostHog } from "@/components/consent/PostHog";
+import { VercelAnalytics } from "@/components/consent/VercelAnalytics";
 import { SITE_URL } from "@/lib/site";
 
 const figtree = Figtree({
@@ -69,6 +70,7 @@ export default function RootLayout({
         {/* Analytics + Apollo load only after the visitor accepts */}
         <Consent />
         <PostHog />
+        <VercelAnalytics />
       </body>
     </html>
   );

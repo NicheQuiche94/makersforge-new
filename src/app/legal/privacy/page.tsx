@@ -43,7 +43,7 @@ export default function PrivacyPage() {
           <div className={styles.meta}>
             <span className={styles.metaItem}>
               <span className={styles.metaLabel}>Last updated</span>
-              <span className={styles.metaValue}>4 November 2026</span>
+              <span className={styles.metaValue}>5 November 2026</span>
             </span>
             <span className={styles.metaItem}>
               <span className={styles.metaLabel}>Data controller</span>
@@ -390,6 +390,11 @@ export default function PrivacyPage() {
               and you can change your mind at any time from &ldquo;cookie
               settings&rdquo; in the footer. We don&apos;t use advertising
               cookies or device fingerprinting.
+            </p>
+            <p className={styles.p}>
+              We also count visits with Vercel Web Analytics, which uses no
+              cookies and doesn&apos;t identify you; it only gives us totals
+              like page views and where visitors came from.
             </p>
           </Section>
 
