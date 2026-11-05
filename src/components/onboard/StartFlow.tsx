@@ -43,13 +43,6 @@ const LISTED: { step: Step; label: string }[] = [
 ];
 const DRAFT = "mf-start-draft";
 
-// What "Fill in from the spec" would pull out (the real thing reads the JD with AI).
-const SAMPLE = {
-  role: "Senior UA Manager",
-  location: "Remote (UK / EU)",
-  budget: "£70k to £85k",
-  musts: "Scaled Meta + Google past $100k/day · casual or puzzle · creative testing",
-};
 
 const EMPTY_BILLING = { legal: "", number: "", address: "", vat: "", accounts: "", po: "" };
 
@@ -174,15 +167,40 @@ export function StartFlow() {
     setCur(briefs.length);
   };
   const removeRole = (i: number) => {
+    // A removed role comes off the batch too (Ashley's QA: it kept saying 5 roles).
+    setRoles((r) => Math.max(2, Math.min(r, briefs.length - 1)));
+    files.current.splice(i, 1);
     setBriefs((bs) => bs.filter((_, j) => j !== i));
     setCur((c) => Math.max(0, c >= i ? c - 1 : c));
   };
   const back = () => go(order[Math.max(at - 1, 0)]);
+  // The next role still to brief after this one (wrapping round), or -1 when they're all done.
+  const nextBrief = [...briefs.keys()].map((k) => (cur + 1 + k) % briefs.length).find((i) => i !== cur && !briefed(briefs[i])) ?? -1;
   const passed = (s: Step) => at > order.indexOf(s);
   const workEmail = (e: string) => /^[^@\s]+@(?!gmail\.|googlemail\.|outlook\.|hotmail\.|yahoo\.|icloud\.|proton)[^@\s]+\.[^@\s]+$/i.test(e);
   const billingOk = !!(bill.legal && bill.number && bill.address && workEmail(bill.accounts));
 
   const files = useRef<(File | null)[]>([]);
+  // "Fill in from the spec": reads the pasted text or attached PDF (api/onboarding/parse-spec).
+  const [filling, setFilling] = useState<{ busy: boolean; note: string }>({ busy: false, note: "" });
+  const fillFromSpec = async () => {
+    const at = cur;
+    setFilling({ busy: true, note: "" });
+    const body = new FormData();
+    body.set("text", briefs[at]?.spec ?? "");
+    if (files.current[at]) body.set("file", files.current[at]!);
+    const d = await fetch("/api/onboarding/parse-spec", { method: "POST", body })
+      .then((r) => r.json())
+      .catch(() => ({ error: "That didn't work. Please fill the fields in." }));
+    const got = { role: d.role || "", location: d.location || "", budget: d.budget || "", musts: d.musts || "" };
+    const any = Object.values(got).some(Boolean);
+    // Only fill what it found; anything they've typed themselves stays.
+    if (any)
+      setBriefs((bs) =>
+        bs.map((b, i) => (i === at ? { ...b, f: { role: got.role || b.f.role, location: got.location || b.f.location, budget: got.budget || b.f.budget, musts: got.musts || b.f.musts } } : b)),
+      );
+    setFilling({ busy: false, note: d.error || (any ? "Filled in from your spec. Check it over and edit anything." : "We couldn't pick these out of that. Please fill them in.") });
+  };
   const takeFile = (fl: File | null | undefined) => {
     files.current[cur] = fl ?? null;
     setFile(fl?.name ?? null);
@@ -361,9 +379,10 @@ export function StartFlow() {
                     placeholder="The whole spec, or just: Senior UA Manager, remote, scaled Meta past $100k a day…"
                   />
                 </label>
-                <Button variant="ghost" size="sm" className={styles.fill} onClick={() => setF(SAMPLE)}>
-                  ✦ Fill in from the spec
+                <Button variant="ghost" size="sm" className={styles.fill} disabled={filling.busy || !(spec.trim() || file)} onClick={fillFromSpec}>
+                  {filling.busy ? "Reading your spec…" : "✦ Fill in from the spec"}
                 </Button>
+                {filling.note && <p className={styles.fillNote}>{filling.note}</p>}
                 <div className={styles.row2}>
                   <Field label="Role" value={f.role} onChange={(v) => setF({ ...f, role: v })} />
                   <Field label="Location" value={f.location} onChange={(v) => setF({ ...f, location: v })} placeholder="Remote, hybrid, city" />
@@ -380,7 +399,20 @@ export function StartFlow() {
                     + Add another role
                   </button>
                 )}
-                <Nav onBack={back} onNext={next} onSave={() => setSaved(true)} saved={saved} nextOk={briefs.every(briefed)} />
+                {/* Several roles: Continue takes them to the next role still to brief (Ashley's QA). */}
+                <Nav
+                  onBack={back}
+                  onNext={() => {
+                    if (nextBrief < 0) return next();
+                    setCur(nextBrief);
+                    setFilling({ busy: false, note: "" });
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }}
+                  onSave={() => setSaved(true)}
+                  saved={saved}
+                  nextOk={briefed(briefs[cur] ?? EMPTY_BRIEF)}
+                  nextLabel={nextBrief >= 0 ? `Next: ${roleName(briefs[nextBrief], nextBrief)}` : "Continue"}
+                />
               </>
             )}
 
@@ -426,7 +458,7 @@ export function StartFlow() {
                 <PayToggle pay={when} setPay={setWhen} />
                 <div className={styles.planList}>
                   {PLANS.map((x) => (
-                    <PlanOption key={x.id} x={x} pay={when} on={plan === x.id} pick={() => setPlan(x.id)} roles={plan === "batch" ? roles : undefined} />
+                    <PlanOption key={x.id} x={x} pay={when} on={plan === x.id} pick={() => setPlan(x.id)} />
                   ))}
                 </div>
 
@@ -497,6 +529,12 @@ export function StartFlow() {
                     <li key={t}>{t}</li>
                   ))}
                 </ul>
+                <h2 className={styles.h2}>The full terms</h2>
+                <iframe
+                  className={styles.termsFrame}
+                  title="Terms of Business"
+                  src={`/api/onboarding/terms-pdf?${new URLSearchParams({ html: "1", plan: plan ?? "permanent", retained: isRetained ? "1" : "0", roles: String(plan === "batch" ? roles : briefs.length) })}`}
+                />
                 {billingOk ? (
                   <a
                     className={styles.download}
@@ -702,19 +740,31 @@ export function StartFlow() {
 }
 
 /** One plan in the picker; its price follows the On success / Retained switch. */
-function PlanOption({ x, pay, on, pick, roles }: { x: (typeof PLANS)[number]; pay: PayWhen; on: boolean; pick: () => void; roles?: number }) {
+function PlanOption({ x, pay, on, pick }: { x: (typeof PLANS)[number]; pay: PayWhen; on: boolean; pick: () => void }) {
   const base = pay === "retained" && x.retained ? x.retained : x;
   const k = pay === "retained" ? 0.85 : 1;
-  const steps = x.id === "batch" && roles ? batchSteps(roles) : null;
-  const face = steps ? { price: `${gbp(steps[0] * k)} to ${gbp(steps[steps.length - 1] * k)}`, per: `per hire · ${roles} roles` } : base;
+  // Batch shows its first fee and the step-down itself, not a range (Ashley's QA).
+  const ladder = x.id === "batch" ? batchSteps(BATCH_MAX).map((s) => s * k) : null;
+  const face = ladder ? { price: gbp(ladder[0]), per: `first hire, then ${gbp(1000 * k)} less each` } : base;
   const line = pay === "retained" && !x.retained ? "Paid monthly, so there's no retainer" : x.blurb;
   return (
     <button type="button" className={`${styles.planOpt} ${on ? styles.planOn : ""}`} onClick={pick}>
       <span className={styles.planName}>{x.name}</span>
       <span className={styles.planPrice}>
-        {face.price} <small>{face.per}</small>
+        {face.price}
+        <small>{face.per}</small>
       </span>
       <span className={styles.planLine}>{line}</span>
+      {ladder && (
+        <span className={styles.ladder} aria-label="Fee for each hire, in order">
+          {ladder.map((s, i) => (
+            <span key={i}>
+              {i > 0 && <i aria-hidden="true">→</i>}
+              {gbpK(s)}
+            </span>
+          ))}
+        </span>
+      )}
     </button>
   );
 }

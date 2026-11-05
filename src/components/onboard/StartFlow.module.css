@@ -497,9 +497,46 @@
   text-align: right;
 }
 .planPrice small {
+  /* Unit on its own line so every price lines up on the right edge */
+  display: block;
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-size: 12px;
   color: var(--dim);
+}
+/* Batch: the fee for each hire in order */
+.ladder {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 700;
+}
+.ladder > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.ladder i {
+  font-style: normal;
+  font-weight: 400;
+  color: var(--mute);
+}
+.fillNote {
+  margin: -4px 0 14px;
+  font-size: 13.5px;
+  color: var(--dim);
+}
+/* The full Terms of Business, readable before signing */
+.termsFrame {
+  display: block;
+  width: 100%;
+  height: 380px;
+  margin: 0 0 14px;
+  border: 1px solid var(--hair);
+  border-radius: 12px;
+  background: #fff;
 }
 .planLine {
   grid-column: 1 / -1;
