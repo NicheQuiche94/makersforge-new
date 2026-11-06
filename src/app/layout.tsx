@@ -11,6 +11,7 @@ import { Consent } from "@/components/consent/Consent";
 import { FounderChat } from "@/components/chat/FounderChat";
 import { PostHog } from "@/components/consent/PostHog";
 import { VercelAnalytics } from "@/components/consent/VercelAnalytics";
+import { MailRef } from "@/components/consent/MailRef";
 import { SITE_URL } from "@/lib/site";
 
 const figtree = Figtree({
@@ -71,6 +72,7 @@ export default function RootLayout({
         <Consent />
         <PostHog />
         <VercelAnalytics />
+        <MailRef />
       </body>
     </html>
   );

@@ -134,6 +134,16 @@ export default function PrivacyPage() {
               reach Andre through Telegram.
             </p>
 
+            <h3 className={styles.subH}>links in our emails</h3>
+            <p className={styles.p}>
+              Links in emails we send you can carry a short code, so we know
+              you opened the site from that email and which page you landed
+              on. It&apos;s recorded on our side (nothing is stored on your
+              device) and helps us follow up with something useful rather
+              than chase you. If you accept cookies, the rest of that visit is
+              linked to the code too.
+            </p>
+
             <p className={styles.p}>
               <strong>What we don&apos;t collect:</strong> advertising
               cookies, device fingerprinting, tracking across other

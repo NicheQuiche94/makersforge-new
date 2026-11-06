@@ -58,6 +58,8 @@ const consented = () => {
 };
 
 let started = false;
+// Tagged mailshot link (components/consent/MailRef): who this visitor is, kept in memory only.
+let mailRef: string | null = null;
 
 /**
  * Starts PostHog once, only after consent (not even its config script loads
@@ -79,6 +81,13 @@ export function initAnalytics() {
   });
   // Opt in straight away (not in `loaded`) so the first pageview isn't dropped.
   if (consented()) posthog.opt_in_capturing();
+  if (mailRef) posthog.identify(`mail:${mailRef}`);
+}
+
+/** They came from a tagged mailshot link: with consent, PostHog files the visit under that ref. */
+export function setMailRef(ref: string) {
+  mailRef = ref;
+  if (started && consented()) posthog.identify(`mail:${ref}`);
 }
 
 /** The visitor clicked Accept: start recording from this page. */
