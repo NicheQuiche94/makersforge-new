@@ -74,6 +74,29 @@ export function TalentDirectoryApp() {
   // £ / € / $ — shared with the profile pages via localStorage.
   const [currency, setCurrency] = useState<Currency>("GBP");
   useEffect(() => setCurrency(readStoredCurrency()), []);
+
+  // Shareable views (Andre 2026-11-06): the picked disciplines and sector live in
+  // the address, e.g. /line-up?d=ua or /line-up?d=ua&sector=apps, so a mailshot
+  // can link straight to them.
+  const [linked, setLinked] = useState(false);
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search);
+    const d = (q.get("d") || "").split(",").filter((x) => x in DISCIPLINES);
+    if (d.length) setPicked(new Set(d));
+    const s = q.get("sector");
+    if (s === "games" || s === "apps") setSector(s);
+    setLinked(true);
+  }, []);
+  useEffect(() => {
+    if (!linked) return;
+    const url = new URL(window.location.href);
+    const d = Object.keys(DISCIPLINES).filter((k) => picked.has(k));
+    if (d.length) url.searchParams.set("d", d.join(","));
+    else url.searchParams.delete("d");
+    if (sector !== "all") url.searchParams.set("sector", sector);
+    else url.searchParams.delete("sector");
+    window.history.replaceState(window.history.state, "", url.pathname + url.search + url.hash);
+  }, [picked, sector, linked]);
   const pickCurrency = (c: Currency) => {
     setCurrency(c);
     writeStoredCurrency(c);
