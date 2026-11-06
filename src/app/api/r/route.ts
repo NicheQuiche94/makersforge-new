@@ -10,7 +10,7 @@ import { toAndre } from "@/lib/chat/telegram";
  */
 export const runtime = "nodejs";
 
-const REF = /^[a-z0-9]{8}$/;
+const REF = /^[a-z0-9]{6}$/;
 const QUIET_MS = 30 * 60 * 1000;
 
 export async function POST(req: Request) {

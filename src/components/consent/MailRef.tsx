@@ -13,7 +13,7 @@ export function MailRef() {
   useEffect(() => {
     const url = new URL(window.location.href);
     const r = url.searchParams.get("r");
-    if (!r || !/^[a-z0-9]{8}$/.test(r)) return;
+    if (!r || !/^[a-z0-9]{6}$/.test(r)) return;
     fetch("/api/r", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
