@@ -49,7 +49,8 @@ export function applyInternalFlag() {
 }
 
 const consented = () => {
-  if (isInternal()) return false;
+  // Local copies of the site (dev servers, tests) are never tracked.
+  if (isInternal() || /^(localhost|127.|0.0.0.0)/.test(window.location.hostname)) return false;
   try {
     return localStorage.getItem(CONSENT) === "granted";
   } catch {
