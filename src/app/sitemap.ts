@@ -23,7 +23,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/line-up`, changeFrequency: "weekly", priority: 0.8 },
     { url: `${SITE_URL}/talent`, changeFrequency: "monthly", priority: 0.6 },
     { url: `${SITE_URL}/pricing`, changeFrequency: "monthly", priority: 0.6 },
-    { url: `${SITE_URL}/apply`, changeFrequency: "monthly", priority: 0.6 },
   ];
 
   const board: MetadataRoute.Sitemap = [

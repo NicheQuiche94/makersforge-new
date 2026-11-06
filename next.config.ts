@@ -28,6 +28,13 @@ const nextConfig: NextConfig = {
         destination: "/account",
         permanent: false,
       },
+      /* The old UA-only talent application (Andre 2026-11-06): closed until it is
+         reworked. Links to it now email Andre instead. */
+      {
+        source: "/apply",
+        destination: "/talent",
+        permanent: false,
+      },
       /* Short links for mailshots (2026-11-06): plain addresses that open
          the Talent Directory already filtered (?d= picks the discipline). */
       {

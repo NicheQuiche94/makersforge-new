@@ -13,7 +13,7 @@ const SERVICES = [
     service: "Representation",
     who: "For talent",
     body: "We represent the best growth, product, design, engineering and art talent in games and apps indefinitely, and put you in front of the companies asking for intros.",
-    href: "/apply",
+    href: "mailto:andre@makersforge.gg?subject=Joining%20the%20MakersForge%20directory",
     cta: "Join the line-up",
   },
   {

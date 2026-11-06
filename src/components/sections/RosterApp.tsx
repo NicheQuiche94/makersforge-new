@@ -414,7 +414,7 @@ export function RosterApp() {
                 : `${role.toLowerCase()}s`}
             {availOnly && " · available"}
           </p>
-          <Link href="/apply" className={styles.applyCta}>
+          <Link href="mailto:andre@makersforge.gg?subject=Joining%20the%20MakersForge%20directory" className={styles.applyCta}>
             Join the lineup <span aria-hidden="true">→</span>
           </Link>
         </div>

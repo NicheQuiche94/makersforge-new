@@ -14,7 +14,7 @@ const DOORS = [
     kicker: "For talent",
     headline: "Get represented",
     body: "Indefinite representation for the best growth, product, design, engineering and art talent in games and apps. Companies come to us; you keep your full rate.",
-    href: "/apply",
+    href: "mailto:andre@makersforge.gg?subject=Joining%20the%20MakersForge%20directory",
     cta: "Join the line-up",
     tone: "dark" as const,
   },

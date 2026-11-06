@@ -43,7 +43,7 @@ export default function TalentPage() {
           </>
         }
         body="One application. We read every one. If the lineup feels like the right fit, we'll be in touch within the week."
-        cta={{ label: "Apply to the lineup", href: "/apply" }}
+        cta={{ label: "Apply to the lineup", href: "mailto:andre@makersforge.gg?subject=Joining%20the%20MakersForge%20directory" }}
       />
     </>
   );
@@ -95,7 +95,7 @@ function TalentHero() {
             the whole process, from first intro to signed.
           </p>
           <div className={styles.heroCtas}>
-            <Button href="/apply" variant="primary" arrow>
+            <Button href="mailto:andre@makersforge.gg?subject=Joining%20the%20MakersForge%20directory" variant="primary" arrow>
               Apply to the lineup
             </Button>
             <Button href="#how" variant="ghost">

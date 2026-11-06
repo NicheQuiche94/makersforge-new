@@ -22,7 +22,7 @@ export function CandidateCTA() {
         <p className={styles.body}>
           Join the MakersForge bench and companies come to you.
         </p>
-        <Link href="/apply" className={`btn btn-light ${styles.btn}`}>
+        <Link href="mailto:andre@makersforge.gg?subject=Joining%20the%20MakersForge%20directory" className={`btn btn-light ${styles.btn}`}>
           <span>Get represented</span>
           <span aria-hidden="true">→</span>
         </Link>

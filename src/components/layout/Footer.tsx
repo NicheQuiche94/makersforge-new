@@ -13,7 +13,7 @@ import styles from "./Footer.module.css";
    or join it. */
 const ROSTER_LINKS = [
   { href: "/line-up", label: "Browse the directory" },
-  { href: "/apply", label: "Join the directory" },
+  { href: "mailto:andre@makersforge.gg?subject=Joining%20the%20MakersForge%20directory", label: "Join the directory" },
 ];
 
 /* Per cofounder pass FT1–FT4:
