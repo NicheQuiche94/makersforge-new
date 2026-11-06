@@ -28,6 +28,18 @@ const nextConfig: NextConfig = {
         destination: "/account",
         permanent: false,
       },
+      /* Short links for mailshots (2026-11-06): plain addresses that open
+         the Talent Directory already filtered (?d= picks the discipline). */
+      {
+        source: "/growth",
+        destination: "/line-up?d=ua",
+        permanent: false,
+      },
+      {
+        source: "/ua",
+        destination: "/line-up?d=ua",
+        permanent: false,
+      },
       {
         source: "/roster/:path*",
         destination: "/line-up/:path*",
