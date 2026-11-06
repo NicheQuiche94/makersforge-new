@@ -12,6 +12,7 @@ import { FounderChat } from "@/components/chat/FounderChat";
 import { PostHog } from "@/components/consent/PostHog";
 import { VercelAnalytics } from "@/components/consent/VercelAnalytics";
 import { MailRef } from "@/components/consent/MailRef";
+import { PageCounter } from "@/components/consent/PageCounter";
 import { SITE_URL } from "@/lib/site";
 
 const figtree = Figtree({
@@ -73,6 +74,7 @@ export default function RootLayout({
         <PostHog />
         <VercelAnalytics />
         <MailRef />
+        <PageCounter />
       </body>
     </html>
   );

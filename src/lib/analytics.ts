@@ -62,6 +62,26 @@ let started = false;
 // Tagged mailshot link (components/consent/MailRef): who this visitor is, kept in memory only.
 let mailRef: string | null = null;
 
+/*
+ * Campaign tags (Andre 2026-11-06): links carry utm_* so we know where a visit
+ * came from, but "?utm_campaign=…" looks like junk to the person who lands.
+ * Read them once, keep them in memory, and take them off the address bar;
+ * PostHog gets them as session properties so attribution still works.
+ */
+const UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
+let utm: Record<string, string> = {};
+export function captureAndCleanUtm() {
+  const url = new URL(window.location.href);
+  const found = UTM_KEYS.filter((k) => url.searchParams.get(k));
+  if (!found.length) return;
+  utm = Object.fromEntries(found.map((k) => [k, url.searchParams.get(k)!]));
+  found.forEach((k) => url.searchParams.delete(k));
+  window.history.replaceState(window.history.state, "", url.pathname + url.search + url.hash);
+  if (started) posthog.register_for_session(utm);
+}
+/** The campaign tags this visit arrived with (for our own counters). */
+export const arrivalUtm = () => utm;
+
 /**
  * Starts PostHog once, only after consent (not even its config script loads
  * before Accept, as the banner promises), never on an excluded page.
@@ -82,10 +102,14 @@ export function initAnalytics() {
   });
   // Opt in straight away (not in `loaded`) so the first pageview isn't dropped.
   if (consented()) posthog.opt_in_capturing();
+  if (Object.keys(utm).length) posthog.register_for_session(utm);
   if (mailRef) posthog.identify(`mail:${mailRef}`);
 }
 
 /** They came from a tagged mailshot link: with consent, PostHog files the visit under that ref. */
+/** The tagged-link code this visit arrived with, if any (for our own counter). */
+export const currentMailRef = () => mailRef;
+
 export function setMailRef(ref: string) {
   mailRef = ref;
   if (started && consented()) posthog.identify(`mail:${ref}`);

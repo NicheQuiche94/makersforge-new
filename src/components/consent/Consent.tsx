@@ -9,7 +9,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Script from "next/script";
-import { applyInternalFlag, denyAnalytics, grantAnalytics, isInternal } from "@/lib/analytics";
+import { applyInternalFlag, captureAndCleanUtm, denyAnalytics, grantAnalytics, isInternal } from "@/lib/analytics";
 import styles from "./Consent.module.css";
 
 const KEY = "mf-consent";
@@ -33,6 +33,7 @@ export function Consent() {
 
   useEffect(() => {
     applyInternalFlag();
+    captureAndCleanUtm();
     setInternal(isInternal());
     const c = readChoice();
     setChoice(c);

@@ -406,6 +406,14 @@ export default function PrivacyPage() {
               cookies and doesn&apos;t identify you; it only gives us totals
               like page views and where visitors came from.
             </p>
+            <p className={styles.p}>
+              We also keep our own simple count of visits that uses no
+              cookies and stores nothing on your device: the page, how you
+              arrived (such as the site or link you came from), your
+              approximate country and city, the type of device, and how long
+              you stayed. We don&apos;t store your IP address or anything that
+              identifies you.
+            </p>
           </Section>
 
           <Section num="12" title="changes to this policy">
