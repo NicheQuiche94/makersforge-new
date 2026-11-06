@@ -21,7 +21,35 @@ const EXCLUDED = /^\/(account|admin|login|emails-preview|terms-preview)(\/|$)/;
 export const analyticsConfigured = () => typeof KEY === "string" && KEY.startsWith("phc_");
 export const isExcludedPath = (path: string | null | undefined) => !!path && EXCLUDED.test(path);
 
+/**
+ * The team's own browsers (Andre 2026-11-06): open any page with
+ * ?internal=on once per device and that browser is never tracked again
+ * (PostHog, GA, Apollo, Vercel); ?internal=off undoes it.
+ */
+const INTERNAL = "mf-internal";
+export function isInternal() {
+  try {
+    return localStorage.getItem(INTERNAL) === "1";
+  } catch {
+    return false;
+  }
+}
+/** Reads ?internal=on|off, remembers it, and takes it off the address bar. */
+export function applyInternalFlag() {
+  const url = new URL(window.location.href);
+  const v = url.searchParams.get("internal");
+  if (v !== "on" && v !== "off") return;
+  try {
+    if (v === "on") localStorage.setItem(INTERNAL, "1");
+    else localStorage.removeItem(INTERNAL);
+  } catch {}
+  if (v === "on" && started) posthog.opt_out_capturing();
+  url.searchParams.delete("internal");
+  window.history.replaceState(window.history.state, "", url.pathname + url.search + url.hash);
+}
+
 const consented = () => {
+  if (isInternal()) return false;
   try {
     return localStorage.getItem(CONSENT) === "granted";
   } catch {

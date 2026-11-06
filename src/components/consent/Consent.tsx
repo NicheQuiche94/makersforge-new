@@ -9,7 +9,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Script from "next/script";
-import { denyAnalytics, grantAnalytics } from "@/lib/analytics";
+import { applyInternalFlag, denyAnalytics, grantAnalytics, isInternal } from "@/lib/analytics";
 import styles from "./Consent.module.css";
 
 const KEY = "mf-consent";
@@ -28,8 +28,12 @@ function readChoice(): Choice | null {
 export function Consent() {
   const [choice, setChoice] = useState<Choice | null>(null);
   const [open, setOpen] = useState(false);
+  // The team's own browsers load no trackers (lib/analytics applyInternalFlag).
+  const [internal, setInternal] = useState(false);
 
   useEffect(() => {
+    applyInternalFlag();
+    setInternal(isInternal());
     const c = readChoice();
     setChoice(c);
     setOpen(c === null);
@@ -52,7 +56,7 @@ export function Consent() {
 
   return (
     <>
-      {choice === "granted" && (
+      {choice === "granted" && !internal && (
         <>
           <Script src="https://www.googletagmanager.com/gtag/js?id=G-N2YM0TCEXQ" strategy="afterInteractive" />
           <Script id="google-analytics" strategy="afterInteractive">

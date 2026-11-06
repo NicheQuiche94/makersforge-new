@@ -6,8 +6,8 @@
  * Apollo stay consent-gated). The client portal and admin pages are left out.
  */
 import { Analytics } from "@vercel/analytics/next";
-import { isExcludedPath } from "@/lib/analytics";
+import { isExcludedPath, isInternal } from "@/lib/analytics";
 
 export function VercelAnalytics() {
-  return <Analytics beforeSend={(e) => (isExcludedPath(new URL(e.url).pathname) ? null : e)} />;
+  return <Analytics beforeSend={(e) => (isInternal() || isExcludedPath(new URL(e.url).pathname) ? null : e)} />;
 }
