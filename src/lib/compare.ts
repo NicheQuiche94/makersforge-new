@@ -119,7 +119,7 @@ export type Priority = "balanced" | "cost" | "speed" | "hours";
 export type CompareInput = {
   role: string;
   salary: number;
-  start?: string; // yyyy-mm-dd
+  start?: string; // yyyy-mm-dd: the date they need the hire made by (offer accepted)
   budget?: number;
   p: Priority;
   name?: string;
@@ -142,8 +142,9 @@ export function compare(input: CompareInput, now = Date.now()) {
     const real = fee + hours * HOURLY;
     const startWeeks = r.hireWeeks[1] + NOTICE_WEEKS;
     const overBudget = input.budget ? fee > input.budget : false;
-    const tooSlow = weeksToStart != null ? startWeeks > weeksToStart : false;
-    return { r, fee, hours, real, startWeeks, overBudget, tooSlow };
+    const hireBy = r.hireWeeks[1];
+    const tooSlow = weeksToStart != null ? hireBy > weeksToStart : false;
+    return { r, fee, hours, real, startWeeks, hireBy, overBudget, tooSlow };
   });
   const max = (f: (x: (typeof base)[number]) => number) => Math.max(...base.map(f));
   const [mR, mW, mH, mI] = [max((x) => x.real), max((x) => x.startWeeks), max((x) => x.hours), max((x) => x.r.interviews)];
@@ -156,7 +157,7 @@ export function compare(input: CompareInput, now = Date.now()) {
   return {
     rows,
     best: rows[0],
-    lowest: { real: lo((x) => x.real), start: lo((x) => x.startWeeks), hours: lo((x) => x.hours), interviews: lo((x) => x.r.interviews) },
+    lowest: { real: lo((x) => x.real), start: lo((x) => x.startWeeks), hireBy: lo((x) => x.hireBy), hours: lo((x) => x.hours), interviews: lo((x) => x.r.interviews) },
   };
 }
 
@@ -176,6 +177,8 @@ export function decodeInput(s: string): CompareInput | null {
 
 /* ---- The Christmas gift box (DRAFT: Andre to confirm the rewards and odds) ---- */
 export const GIFT_UNTIL = "2026-12-24";
+/** The Christmas pack is for people who need the hire made on or before 24 December. */
+export const wantsChristmasHire = (i: CompareInput) => !!i.start && i.start <= GIFT_UNTIL && Date.now() < Date.parse(GIFT_UNTIL + "T23:59:59");
 export const DROPS = [
   { pct: 5, rarity: "Common", odds: 60, color: "#ffb347" },
   { pct: 10, rarity: "Rare", odds: 30, color: "#ff5d00" },

@@ -61,3 +61,6 @@
 @media (prefers-reduced-motion: reduce) { .cube, .tapHint { animation: none; } }
 
 .reset { margin-top: 14px; border: 0; background: none; color: rgba(255, 255, 255, 0.55); font: inherit; font-size: 12px; text-decoration: underline; cursor: pointer; }
+
+.perk { display: grid; gap: 2px; max-width: 320px; margin-top: 6px; padding: 10px 14px; border-radius: 12px; background: rgba(255, 138, 0, 0.14); border: 1px solid rgba(255, 179, 71, 0.4); font-size: 13.5px; text-align: left; }
+.perk b { color: #ffb347; }

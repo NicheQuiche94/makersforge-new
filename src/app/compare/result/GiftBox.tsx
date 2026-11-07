@@ -86,8 +86,8 @@ export function GiftBox({ lid }: { lid: string }) {
           <span />
         </div>
         <div>
-          <strong>A pre-Christmas gift for you</strong>
-          <p>Open it for money off a search week booked before Christmas.</p>
+          <strong>Hiring before Christmas? Here&apos;s your Christmas pack</strong>
+          <p>Priority on our next search week, plus a gift box with money off.</p>
         </div>
         <button type="button" className={styles.openBtn} onClick={() => setOpen(true)}>
           {phase === "done" ? "See your gift" : "Open your Christmas gift"}
@@ -110,7 +110,7 @@ export function GiftBox({ lid }: { lid: string }) {
                     <span>{d.odds}%</span>
                   </div>
                 ))}
-                <p>One box per comparison. Off one search week booked before 24 December.</p>
+                <p>One box per comparison, for hires needed before 24 December. Off one search week.</p>
               </div>
             )}
 
@@ -138,6 +138,10 @@ export function GiftBox({ lid }: { lid: string }) {
                   your search week: {gbp(price)} instead of {gbp(12000)}.
                 </p>
                 <div className={styles.code}>{prize.code}</div>
+                <div className={styles.perk}>
+                  <b>+ Priority search</b>
+                  <span>Your search goes into our first available week, and we&apos;ll put every effort into getting your hire made before 24 December.</span>
+                </div>
                 <p className={styles.small}>
                   {expired
                     ? "This code has expired."

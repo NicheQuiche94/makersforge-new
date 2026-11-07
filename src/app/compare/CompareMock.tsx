@@ -68,7 +68,7 @@ export function CompareMock() {
                 <input type="number" step={1000} value={salary} onChange={(e) => setSalary(Number(e.target.value) || 0)} />
               </label>
               <label>
-                They need to start by
+                Need the hire made by
                 <input type="date" value={start} onChange={(e) => setStart(e.target.value)} />
               </label>
               <label>

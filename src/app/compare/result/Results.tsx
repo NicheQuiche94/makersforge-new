@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { compare, gbp, wks, day, addWeeks, roleLabel, HOURLY, NOTICE_WEEKS, GIFT_UNTIL, type CompareInput } from "@/lib/compare";
+import { compare, gbp, wks, day, addWeeks, roleLabel, HOURLY, NOTICE_WEEKS, wantsChristmasHire, type CompareInput } from "@/lib/compare";
 import { setMailRef } from "@/lib/analytics";
 import { GiftBox } from "./GiftBox";
 import styles from "../compare.module.css";
@@ -29,7 +29,7 @@ export function Results({ input }: { input: CompareInput | null }) {
   }
   const { rows, best, lowest } = data;
   const role = roleLabel(input.role);
-  const giftOn = Date.now() < Date.parse(GIFT_UNTIL + "T23:59:59");
+  const giftOn = wantsChristmasHire(input);
 
   return (
     <section className={styles.wrap}>
@@ -42,7 +42,7 @@ export function Results({ input }: { input: CompareInput | null }) {
         </h1>
         <p className={styles.summary}>
           {gbp(input.salary)}
-          {input.start ? ` · start by ${day(new Date(input.start))}` : ""}
+          {input.start ? ` · hire needed by ${day(new Date(input.start))}` : ""}
           {input.budget ? ` · budget ${gbp(input.budget)}` : ""} ·{" "}
           {{ balanced: "a balance of everything", cost: "lowest cost first", speed: "starting soonest first", hours: "saving team time first" }[input.p]}
         </p>
@@ -51,7 +51,7 @@ export function Results({ input }: { input: CompareInput | null }) {
           <span className={styles.bestLabel}>Best fit for you</span>
           <strong>{best.r.name}</strong>
           <span>
-            {gbp(best.real)} all in, someone starting around {day(addWeeks(best.startWeeks))}.
+            {gbp(best.real)} all in, hire made by around {day(addWeeks(best.hireBy))}, starting around {day(addWeeks(best.startWeeks))}.
             {!best.r.us && " That's not us, and that's fine: it's the better fit here."}
             {(best.overBudget || best.tooSlow) && " Nothing fits every constraint, so this is the closest."}
           </span>
@@ -61,7 +61,7 @@ export function Results({ input }: { input: CompareInput | null }) {
           <div className={`${styles.tr} ${styles.th}`}>
             <span>Option</span>
             <span>Cost, all in</span>
-            <span>Could start</span>
+            <span>Hire made by</span>
             <span>Team hours</span>
             <span>Interviews</span>
           </div>
@@ -72,10 +72,10 @@ export function Results({ input }: { input: CompareInput | null }) {
                   <i>{i + 1}</i>
                   {x.r.name}
                   {x.overBudget && <em className={styles.warn}>Over budget</em>}
-                  {x.tooSlow && <em className={styles.warn}>Too late for your start date</em>}
+                  {x.tooSlow && <em className={styles.warn}>Too late for your date</em>}
                 </span>
                 <span data-l="Cost" className={x.real === lowest.real ? styles.win : ""}>{gbp(x.real)}</span>
-                <span data-l="Could start" className={x.startWeeks === lowest.start ? styles.win : ""}>{day(addWeeks(x.startWeeks))}</span>
+                <span data-l="Hire made by" className={x.hireBy === lowest.hireBy ? styles.win : ""}>{day(addWeeks(x.hireBy))}</span>
                 <span data-l="Team hours" className={x.hours === lowest.hours ? styles.win : ""}>{x.hours}h</span>
                 <span data-l="Interviews" className={x.r.interviews === lowest.interviews ? styles.win : ""}>{x.r.interviews}</span>
               </button>
@@ -84,7 +84,7 @@ export function Results({ input }: { input: CompareInput | null }) {
                   <p>{x.r.how}.</p>
                   <ul>
                     <li><b>Fee:</b> {gbp(x.fee)} ({x.r.feeNote}), plus {gbp(x.hours * HOURLY)} of team time at {gbp(HOURLY)} an hour.</li>
-                    <li><b>Speed:</b> first shortlist in {x.r.shortlist}, an accepted offer in {wks(x.r.hireWeeks)}, then about {NOTICE_WEEKS} weeks&apos; notice.</li>
+                    <li><b>Speed:</b> first shortlist in {x.r.shortlist}, an accepted offer in {wks(x.r.hireWeeks)}, then about {NOTICE_WEEKS} weeks&apos; notice before they start (around {day(addWeeks(x.startWeeks))}).</li>
                     <li><b>What you get:</b> {x.r.get}, about {x.r.interviews} interviews to make the hire.</li>
                     <li><b>Team hours:</b> {x.r.hours.map((h) => `${h.label} ${h.h}h`).join(", ")}.</li>
                   </ul>
@@ -106,8 +106,8 @@ export function Results({ input }: { input: CompareInput | null }) {
         <details className={styles.how}>
           <summary>How we worked these out</summary>
           <p>
-            Cost is the fee plus your team&apos;s hours at {gbp(HOURLY)} an hour. &ldquo;Could start&rdquo; is the time to an
-            accepted offer plus a typical {NOTICE_WEEKS}-week notice period. Interviews is how many it usually takes to make one
+            Cost is the fee plus your team&apos;s hours at {gbp(HOURLY)} an hour. &ldquo;Hire made by&rdquo; is when an offer is
+            usually accepted; they then typically work a {NOTICE_WEEKS}-week notice period before starting. Interviews is how many it usually takes to make one
             hire. [Andre: replace with your real figures and sources.]
           </p>
         </details>

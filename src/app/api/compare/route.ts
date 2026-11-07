@@ -2,7 +2,7 @@ import { randomBytes } from "node:crypto";
 import { sendMail } from "@/lib/onboarding/mail";
 import { layout } from "@/lib/clientEmails";
 import { toAndre } from "@/lib/chat/telegram";
-import { compare, encodeInput, gbp, day, addWeeks, roleLabel, ROLES, type CompareInput, type Priority } from "@/lib/compare";
+import { compare, encodeInput, gbp, day, addWeeks, roleLabel, wantsChristmasHire, ROLES, type CompareInput, type Priority } from "@/lib/compare";
 
 /**
  * POST the /compare form → emails them a link to their comparison (MOCKUP,
@@ -45,7 +45,7 @@ export async function POST(req: Request) {
 <table role="presentation" cellpadding="0" cellspacing="0" style="margin:6px 0 20px"><tr><td bgcolor="#ff5d00" style="border-radius:999px">
 <a href="${link}" style="display:inline-block;padding:13px 24px;font-weight:700;font-size:15px;color:#fff;text-decoration:none;border-radius:999px">See your comparison →</a>
 </td></tr></table>
-<p style="margin:0 0 14px">There's a little Christmas gift waiting at the bottom of it too. 🎁</p>
+${wantsChristmasHire(input) ? `<p style="margin:0 0 14px">You need this hire made before Christmas, so there's a Christmas pack waiting at the bottom: priority on our next search week, plus a gift. 🎁</p>` : ""}
 <p style="margin:0 0 14px">Hope it's helpful. Any questions, just reply: it comes straight to me.</p>
 <p style="margin:0 0 14px">Andre<br><span style="color:#5b5f69;font-size:14px">Founder, MakersForge</span></p>`,
     `Your ${role} hiring comparison`,
@@ -55,7 +55,7 @@ export async function POST(req: Request) {
 
   if (process.env.RESEND_API_KEY) {
     await toAndre(
-      `📊 Comparison requested: ${role}, ${gbp(input.salary)}${input.start ? `, start by ${day(new Date(input.start))}` : ""}\n` +
+      `📊 Comparison requested: ${role}, ${gbp(input.salary)}${input.start ? `, hire needed by ${day(new Date(input.start))}` : ""}${wantsChristmasHire(input) ? " 🎄" : ""}\n` +
         `${input.name || "No name"}${input.company ? ` (${input.company})` : ""} · ${email}\n` +
         `Best fit for them: ${best.r.name} · headline ${input.hook + 1}`,
     ).catch(() => {});
