@@ -60,3 +60,7 @@
   .item .tr > span[data-l]::before { content: attr(data-l); display: block; font-size: 11px; font-weight: 700; color: var(--mute); text-transform: uppercase; letter-spacing: 0.06em; }
   .detail { padding-left: 16px; }
 }
+.h2 { margin: 0; font-size: 28px; }
+.err { margin: 0; color: #c2410c; font-weight: 700; }
+.dev { margin: 6px 0 0; padding: 12px 14px; border-radius: 12px; background: #fff3cd; color: #7a5600; font-size: 14px; }
+.dev a { font-weight: 800; color: inherit; }
