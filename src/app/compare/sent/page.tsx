@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-/* MOCKUP (Andre 2026-11-07): after "Send me my comparison". A little
+/* (Andre 2026-11-07): after "Send me my comparison". A little
    tension: the gift is inside the email, not here. Draft wording. */
 export default async function SentPage({ searchParams }: { searchParams: Promise<{ gift?: string; dev?: string }> }) {
   const { gift, dev } = await searchParams;

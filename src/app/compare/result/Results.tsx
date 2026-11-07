@@ -124,6 +124,12 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
             Cost is the fee plus your team&apos;s hours at an estimated {money(HOURLY, cur)} an hour. &ldquo;Hire made by&rdquo; is when an
             offer is usually accepted; people then typically work up to {NOTICE_WEEKS} weeks&apos; notice before starting.
           </p>
+          <p>
+            Our figures come from our own searches over the past two and a half years: what clients have actually seen, not a
+            target. The agency and job ad figures are typical across the market, from published hiring reports and what agencies
+            quote themselves. Some agencies beat them and some fall short, so before you sign with one, ask for their numbers on
+            roles like yours.
+          </p>
         </details>
       </div>
     </section>

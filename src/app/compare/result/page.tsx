@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-/* MOCKUP (Andre 2026-11-07): the comparison the email links to. */
+/* (Andre 2026-11-07): the comparison the email links to. */
 export default async function ResultPage({ searchParams }: { searchParams: Promise<{ d?: string }> }) {
   const { d } = await searchParams;
   const input = d ? decodeInput(d) : null;
