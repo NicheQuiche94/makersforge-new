@@ -177,9 +177,9 @@ export function decodeInput(s: string): CompareInput | null {
 /* ---- The Christmas gift box (DRAFT: Andre to confirm the rewards and odds) ---- */
 export const GIFT_UNTIL = "2026-12-24";
 export const DROPS = [
-  { pct: 5, rarity: "Common", odds: 60, color: "#3b82f6" },
-  { pct: 10, rarity: "Rare", odds: 30, color: "#8b5cf6" },
-  { pct: 15, rarity: "Legendary", odds: 10, color: "#f5b300" },
+  { pct: 5, rarity: "Common", odds: 60, color: "#ffb347" },
+  { pct: 10, rarity: "Rare", odds: 30, color: "#ff5d00" },
+  { pct: 15, rarity: "Legendary", odds: 10, color: "#ffd700" },
 ];
 /** Same request, same prize: the roll is seeded by the request id, so reopening never rerolls. */
 export function rollGift(lid: string) {

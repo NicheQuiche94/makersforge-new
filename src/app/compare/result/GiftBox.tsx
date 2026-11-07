@@ -28,6 +28,19 @@ export function GiftBox({ lid }: { lid: string }) {
     } catch {}
   }, [key]);
 
+  // Mockup only: replay the opening.
+  const reset = () => {
+    try {
+      localStorage.removeItem(key);
+    } catch {}
+    setOpenedAt(null);
+    setPhase("idle");
+    if (cube.current) {
+      cube.current.style.transition = "";
+      cube.current.style.transform = "";
+    }
+  };
+
   const unbox = () => {
     if (phase !== "idle") return;
     setPhase("spin");
@@ -131,6 +144,9 @@ export function GiftBox({ lid }: { lid: string }) {
                     : `Valid until ${expires?.toLocaleString("en-GB", { weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}. Enter it when you book.`}
                 </p>
                 {!expired && <Link href={`/start?code=${prize.code}`} className={styles.claim}>Book a search week →</Link>}
+                <button type="button" className={styles.reset} onClick={reset}>
+                  Mockup: reset the box
+                </button>
               </div>
             )}
           </div>
