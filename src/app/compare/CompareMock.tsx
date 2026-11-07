@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { HOOKS, ROLES, GIFT_UNTIL, type Priority } from "@/lib/compare";
 import { CURRENCIES, CURRENCY_SYMBOLS, RATES, readStoredCurrency, writeStoredCurrency, type Currency } from "@/lib/currency";
 import { DatePicker } from "./DatePicker";
+import { setPageVariant } from "@/lib/analytics";
 import styles from "./compare.module.css";
 
 /* /compare (Andre 2026-11-07): one form, one click, the role and their email
@@ -19,17 +20,22 @@ export function CompareMock() {
   // Each visitor gets one headline at random and keeps it; ?hook=1|2|3 forces one for previews.
   const [hook, setHook] = useState(0);
   useEffect(() => {
+    // Our counter records the headline each visitor saw (runs before it in the same render).
+    const show = (i: number) => {
+      setHook(i);
+      setPageVariant(HOOKS[i].accent);
+    };
     const n = Number(new URLSearchParams(window.location.search).get("hook"));
-    if (n >= 1 && n <= HOOKS.length) return setHook(n - 1);
+    if (n >= 1 && n <= HOOKS.length) return show(n - 1);
     try {
       let v = Number(localStorage.getItem("mf-compare-hook"));
       if (!(v >= 1 && v <= HOOKS.length)) {
         v = 1 + Math.floor(Math.random() * HOOKS.length);
         localStorage.setItem("mf-compare-hook", String(v));
       }
-      setHook(v - 1);
+      show(v - 1);
     } catch {
-      setHook(Math.floor(Math.random() * HOOKS.length));
+      show(Math.floor(Math.random() * HOOKS.length));
     }
   }, []);
 

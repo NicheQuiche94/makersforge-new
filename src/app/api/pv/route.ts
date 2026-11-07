@@ -48,6 +48,7 @@ export async function POST(req: Request) {
         content: clip(body.content),
         referrer_host: clip(body.referrer),
         ref: clip(body.ref, 12),
+        variant: clip(body.variant, 40),
         country: req.headers.get("x-vercel-ip-country"),
         city: city ? decodeURIComponent(city) : null,
         device,

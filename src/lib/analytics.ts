@@ -107,6 +107,15 @@ export function initAnalytics() {
 }
 
 /** They came from a tagged mailshot link: with consent, PostHog files the visit under that ref. */
+/* Which A/B variant this page is showing (e.g. the /compare headline), for our own counter. Read once. */
+let pageVariant: string | null = null;
+export const setPageVariant = (v: string) => (pageVariant = v);
+export const takePageVariant = () => {
+  const v = pageVariant;
+  pageVariant = null;
+  return v;
+};
+
 /** The tagged-link code this visit arrived with, if any (for our own counter). */
 export const currentMailRef = () => mailRef;
 

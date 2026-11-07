@@ -8,7 +8,7 @@
  */
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { arrivalUtm, currentMailRef, isExcludedPath, isInternal } from "@/lib/analytics";
+import { arrivalUtm, currentMailRef, isExcludedPath, isInternal, takePageVariant } from "@/lib/analytics";
 
 const LOCAL = /^(localhost|127\.|0\.0\.0\.0)/;
 
@@ -59,6 +59,7 @@ export function PageCounter() {
         content: utm.utm_content,
         referrer: ref,
         ref: currentMailRef(),
+        variant: takePageVariant(),
       }),
       keepalive: true,
     })
