@@ -1,0 +1,6 @@
+.band { padding: 28px 0 8px; }
+.card { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; padding: 26px 30px; border-radius: 22px; background: radial-gradient(ellipse at 100% 0%, rgba(255, 93, 0, 0.35), transparent 55%), #14161b; color: #fff; }
+.h { margin: 0; font-family: "Cal Sans", system-ui, sans-serif; font-weight: 400; font-size: clamp(26px, 3vw, 38px); line-height: 1.05; letter-spacing: -0.02em; }
+.p { margin: 8px 0 0; max-width: 560px; color: rgba(255, 255, 255, 0.78); font-size: 16px; line-height: 1.5; }
+.go { display: inline-flex; align-items: center; white-space: nowrap; padding: 15px 24px; border-radius: 999px; background: linear-gradient(135deg, #ff8a00, #ff3d00); color: #fff; font-weight: 800; text-decoration: none; box-shadow: 0 10px 26px rgba(255, 61, 0, 0.35); }
+@media (max-width: 720px) { .card { grid-template-columns: 1fr; padding: 22px; } .go { justify-self: start; } }

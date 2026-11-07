@@ -10,6 +10,7 @@ const LINKS = [
   { href: "/#proof", label: "Case study" },
   { href: "/line-up", label: "Talent directory" },
   { href: "/pricing", label: "Plans & pricing" },
+  { href: "/compare", label: "Compare routes" },
 ];
 
 /**

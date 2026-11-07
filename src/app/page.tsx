@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { HeroPanel } from "@/components/sections/HeroPanel";
 import { LogoWall } from "@/components/sections/LogoWall";
+import { CompareBand } from "@/components/sections/CompareBand";
 import { Explainer } from "@/components/sections/Explainer";
 import { WhatWeCover } from "@/components/sections/WhatWeCover";
 import { HowItWorksBento } from "@/components/sections/HowItWorksBento";
@@ -41,6 +42,7 @@ export default function HomePage() {
       />
       {/* 2026-10-27 flow: outcome → how → proof → why not an ad → bench
           → roles → doubts → brief. Comparison table lives on /pricing. */}
+      <CompareBand />
       <LogoWall />
       <HowItWorksBento />
       <CaseStudy />

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import { BOOKING_URL } from "@/lib/site";
 import { ROSTER } from "@/data/roster";
@@ -57,6 +58,9 @@ export default async function PricingPage({ searchParams }: { searchParams: Prom
             </p>
           </div>
           <Compare />
+          <p className={styles.talk}>
+            Not sure we&apos;re the right fit? <Link href="/compare">Compare every way to hire for your role</Link>.
+          </p>
           <p className={styles.talk}>
             Prefer to talk first?{" "}
             <a href={BOOKING_URL} target="_blank" rel="noreferrer">
