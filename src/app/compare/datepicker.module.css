@@ -1,0 +1,22 @@
+.wrap { position: relative; }
+.field { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 10px; border: 1px solid var(--hair-strong); border-radius: 12px; padding: 12px 13px; font: inherit; font-size: 15px; font-weight: 500; color: var(--ink); background: var(--bg-card); cursor: pointer; text-align: left; }
+.field:hover { border-color: #ff8a00; }
+.field svg { color: #e14b00; flex-shrink: 0; }
+.empty span { color: var(--mute); }
+.pop { position: absolute; z-index: 30; top: calc(100% + 8px); left: 0; width: 300px; padding: 14px; border-radius: 18px; background: var(--paper); border: 1px solid var(--hair); box-shadow: 0 24px 50px rgba(14, 15, 17, 0.16); }
+.quick { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.quick button { border: 1px solid var(--hair-strong); background: var(--bg); border-radius: 999px; padding: 6px 11px; font: inherit; font-size: 12.5px; font-weight: 700; cursor: pointer; }
+.quick button:hover { border-color: #ff8a00; }
+.quick .quickOn { border-color: transparent; background: var(--tone-heat); color: #fff; }
+.head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.head strong { font-size: 15px; }
+.head button { width: 32px; height: 32px; border: 0; border-radius: 999px; background: var(--bg); font-size: 20px; line-height: 1; cursor: pointer; }
+.head button:disabled { opacity: 0.3; cursor: default; }
+.grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+.dow { text-align: center; font-size: 11px; font-weight: 800; color: var(--mute); padding: 4px 0; }
+.day { aspect-ratio: 1; border: 0; border-radius: 10px; background: none; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
+.day:hover:not(:disabled) { background: rgba(255, 138, 0, 0.14); }
+.day:disabled { color: var(--hair-strong); cursor: default; }
+.today { box-shadow: inset 0 0 0 1.5px #ff8a00; }
+.on { background: var(--tone-heat) !important; color: #fff; }
+@media (max-width: 640px) { .pop { width: min(300px, calc(100vw - 48px)); } }

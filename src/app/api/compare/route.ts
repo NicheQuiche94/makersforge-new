@@ -5,6 +5,7 @@ import { toAndre } from "@/lib/chat/telegram";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { drawPrize, giftCode } from "@/lib/compareGifts";
 import { compare, gbp, day, roleLabel, wantsChristmasHire, ROLES, HOOKS, type CompareInput, type Priority } from "@/lib/compare";
+import { RATES, isCurrency, type Currency } from "@/lib/currency";
 
 /**
  * POST the /compare form (Andre 2026-11-07): saves the request (and draws its
@@ -24,9 +25,11 @@ export async function POST(req: Request) {
   if (!/^\S+@\S+\.\S+$/.test(email) || email.length > 200) return Response.json({ error: "Please enter your work email." }, { status: 400 });
   if (!ROLES.some((r) => r.id === b.role)) return Response.json({ error: "Pick a role." }, { status: 400 });
 
+  const cur: Currency = isCurrency(b.cur) ? b.cur : "GBP";
   const input: CompareInput = {
     role: b.role,
-    salary: Math.max(10000, Math.min(Number(b.salary) || 0, 500000)),
+    salary: Math.round(Math.max(10000, Math.min((Number(b.salary) || 0) / RATES[cur], 500000))),
+    cur,
     start: /^\d{4}-\d{2}-\d{2}$/.test(b.start || "") ? b.start : undefined,
     budget: Number(b.budget) > 0 ? Math.round(Number(b.budget)) : undefined,
     p: P.includes(b.p) ? b.p : "balanced",
@@ -46,6 +49,7 @@ export async function POST(req: Request) {
       name: input.name ?? null,
       role: input.role,
       salary: input.salary,
+      currency: cur,
       need_by: input.start ?? null,
       budget: input.budget ?? null,
       priority: input.p,
@@ -80,7 +84,7 @@ ${christmas ? `<p style="margin:0 0 14px">You need this hire made before Christm
 
   if (process.env.VERCEL_ENV === "production") {
     await toAndre(
-      `📊 Comparison requested: ${role}, ${gbp(input.salary)}${input.start ? `, hire needed by ${day(new Date(input.start))}` : ""}${christmas ? ` 🎄 (${prize!.pct}% box)` : ""}\n` +
+      `📊 Comparison requested: ${role}, ${gbp(input.salary)}${cur !== "GBP" ? ` (entered in ${cur})` : ""}${input.start ? `, hire needed by ${day(new Date(input.start))}` : ""}${christmas ? ` 🎄 (${prize!.pct}% box)` : ""}\n` +
         `${input.name || "No name"} · ${email}\n` +
         `Best fit for them: ${best.r.name} · headline "${HOOKS[input.hook].accent}"`,
     ).catch(() => {});

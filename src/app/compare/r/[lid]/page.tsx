@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { slotsLeft } from "@/lib/compareGifts";
 import type { CompareInput, Priority } from "@/lib/compare";
+import { isCurrency } from "@/lib/currency";
 import { Results } from "../../result/Results";
 
 export const metadata: Metadata = {
@@ -15,7 +16,7 @@ export default async function ComparisonPage({ params }: { params: Promise<{ lid
   const { lid } = await params;
   if (!/^[a-f0-9]{10}$/.test(lid)) return <Results input={null} />;
   const db = createAdminClient();
-  const { data: row } = await db.from("compare_requests").select("lid, name, role, salary, need_by, budget, priority, hook, christmas").eq("lid", lid).maybeSingle();
+  const { data: row } = await db.from("compare_requests").select("lid, name, role, salary, currency, need_by, budget, priority, hook, christmas").eq("lid", lid).maybeSingle();
   if (!row) return <Results input={null} />;
   const input: CompareInput = {
     lid: row.lid,
@@ -26,6 +27,7 @@ export default async function ComparisonPage({ params }: { params: Promise<{ lid
     p: row.priority as Priority,
     name: row.name ?? undefined,
     hook: row.hook,
+    cur: isCurrency(row.currency) ? row.currency : "GBP",
   };
   return <Results input={input} christmas={row.christmas} slots={row.christmas ? await slotsLeft(db) : 0} />;
 }

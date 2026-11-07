@@ -3,15 +3,21 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { HOOKS, ROLES, GIFT_UNTIL, type Priority } from "@/lib/compare";
+import { CURRENCIES, CURRENCY_SYMBOLS, RATES, readStoredCurrency, writeStoredCurrency, type Currency } from "@/lib/currency";
+import { DatePicker } from "./DatePicker";
 import styles from "./compare.module.css";
 
-/* MOCKUP (Andre 2026-11-07): the landing page. One form, one click: the role
-   and their email together, then a thank-you page. Every extra click is a
-   place to lose them. Draft wording. */
+/* /compare (Andre 2026-11-07): one form, one click, the role and their email
+   together, then a thank-you page. Every extra click is a place to lose them.
+   No budget field (Andre: nobody plans a hire by a recruitment budget, and it
+   was being mistaken for the salary). */
+const inCur = (gbp: number, c: Currency) => Math.round((gbp * RATES[c]) / 1000) * 1000;
+const iso = (d: Date) => d.toISOString().slice(0, 10);
+
 export function CompareMock() {
   const router = useRouter();
-  const [hook, setHook] = useState(0);
   // Each visitor gets one headline at random and keeps it; ?hook=1|2|3 forces one for previews.
+  const [hook, setHook] = useState(0);
   useEffect(() => {
     const n = Number(new URLSearchParams(window.location.search).get("hook"));
     if (n >= 1 && n <= HOOKS.length) return setHook(n - 1);
@@ -27,15 +33,33 @@ export function CompareMock() {
     }
   }, []);
 
+  const [cur, setCur] = useState<Currency>("GBP");
   const [role, setRole] = useState("senior-ua");
   const [salary, setSalary] = useState(70000);
+  useEffect(() => {
+    const c = readStoredCurrency();
+    setCur(c);
+    setSalary(inCur(70000, c));
+  }, []);
+  const pickCur = (c: Currency) => {
+    setSalary(Math.round((salary / RATES[cur]) * RATES[c] / 1000) * 1000);
+    setCur(c);
+    writeStoredCurrency(c);
+  };
   const [start, setStart] = useState("");
-  const [budget, setBudget] = useState("");
   const [p, setP] = useState<Priority>("balanced");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+
+  const soon = (weeks: number) => iso(new Date(Date.now() + weeks * 7 * 864e5));
+  const quick = [
+    ...(Date.now() < Date.parse(GIFT_UNTIL) ? [{ label: "Before Christmas", value: GIFT_UNTIL }] : []),
+    { label: "In 4 weeks", value: soon(4) },
+    { label: "In 8 weeks", value: soon(8) },
+    { label: "In 3 months", value: soon(13) },
+  ];
 
   const submit = async () => {
     setBusy(true);
@@ -43,7 +67,7 @@ export function CompareMock() {
     const r = await fetch("/api/compare", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ role, salary, start, budget, p, email, name, hook }),
+      body: JSON.stringify({ role, salary, cur, start, p, email, name, hook }),
     })
       .then((x) => x.json())
       .catch(() => ({ error: "That didn't go through. Please try again." }));
@@ -78,23 +102,28 @@ export function CompareMock() {
           <div className={styles.formGrid}>
             <label className={styles.wide}>
               <span className={styles.lbl}>Role</span>
-              <select value={role} onChange={(e) => { setRole(e.target.value); setSalary(ROLES.find((r) => r.id === e.target.value)!.salary); }}>
+              <select value={role} onChange={(e) => { setRole(e.target.value); setSalary(inCur(ROLES.find((r) => r.id === e.target.value)!.salary, cur)); }}>
                 {ROLES.map((r) => <option key={r.id} value={r.id}>{r.label}</option>)}
               </select>
             </label>
-            <label className={styles.narrow}>
-              <span className={styles.lbl}>Salary (£)</span>
-              <input type="number" step={1000} value={salary} onChange={(e) => setSalary(Number(e.target.value) || 0)} />
-            </label>
-            <label className={styles.third}>
+            <div className={`${styles.narrow} ${styles.field}`}>
+              <span className={styles.lblRow}>
+                <span className={styles.lbl}>Salary</span>
+                <span className={styles.curSeg} role="group" aria-label="Currency">
+                  {CURRENCIES.map((c) => (
+                    <button key={c} type="button" className={cur === c ? styles.curOn : ""} onClick={() => pickCur(c)} aria-pressed={cur === c}>
+                      {CURRENCY_SYMBOLS[c]}
+                    </button>
+                  ))}
+                </span>
+              </span>
+              <input type="number" step={1000} aria-label={`Salary in ${cur}`} value={salary} onChange={(e) => setSalary(Number(e.target.value) || 0)} />
+            </div>
+            <div className={`${styles.half} ${styles.field}`}>
               <span className={styles.lbl}>Need the hire made by</span>
-              <input type="date" value={start} onChange={(e) => setStart(e.target.value)} />
-            </label>
-            <label className={styles.third}>
-              <span className={styles.lbl}>Budget (£) <i>optional</i></span>
-              <input type="number" step={1000} placeholder="e.g. 10000" value={budget} onChange={(e) => setBudget(e.target.value)} />
-            </label>
-            <label className={styles.third}>
+              <DatePicker value={start} onChange={setStart} placeholder="Pick a date" quick={quick} />
+            </div>
+            <label className={styles.half}>
               <span className={styles.lbl}>What matters most</span>
               <select value={p} onChange={(e) => setP(e.target.value as Priority)}>
                 <option value="balanced">A balance of everything</option>

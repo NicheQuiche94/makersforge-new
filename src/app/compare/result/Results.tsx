@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { compare, gbp, wks, day, addWeeks, roleLabel, HOURLY, NOTICE_WEEKS, wantsChristmasHire, type CompareInput } from "@/lib/compare";
+import { compare, money, wks, day, addWeeks, roleLabel, HOURLY, NOTICE_WEEKS, wantsChristmasHire, type CompareInput } from "@/lib/compare";
 import { setMailRef } from "@/lib/analytics";
 import { GiftBox } from "./GiftBox";
 import styles from "../compare.module.css";
@@ -29,6 +29,7 @@ export function Results({ input, christmas = false, slots = 0 }: { input: Compar
   }
   const { rows, best, lowest } = data;
   const role = roleLabel(input.role);
+  const cur = input.cur ?? "GBP";
   const giftOn = christmas && wantsChristmasHire(input);
 
   return (
@@ -40,9 +41,9 @@ export function Results({ input, christmas = false, slots = 0 }: { input: Compar
         </h1>
         <p className={styles.summaryCenter}>
           {input.company ? `${input.company} · ` : ""}
-          {gbp(input.salary)}
+          {money(input.salary, cur)}
           {input.start ? ` · hire needed by ${day(new Date(input.start))}` : ""}
-          {input.budget ? ` · budget ${gbp(input.budget)}` : ""} ·{" "}
+          {input.budget ? ` · budget ${money(input.budget, cur)}` : ""} ·{" "}
           {{ balanced: "a balance of everything", cost: "lowest cost first", speed: "starting soonest first", hours: "saving team time first" }[input.p]}
         </p>
         </div>
@@ -51,7 +52,7 @@ export function Results({ input, christmas = false, slots = 0 }: { input: Compar
           <span className={styles.bestLabel}>Best fit for you</span>
           <strong>{best.r.name}</strong>
           <span>
-            {gbp(best.real)} all in, hire made by around {day(addWeeks(best.hireBy))}, starting around {day(addWeeks(best.startWeeks))}.
+            {money(best.real, cur)} all in, hire made by around {day(addWeeks(best.hireBy))}, starting around {day(addWeeks(best.startWeeks))}.
             {!best.r.us && " That's not us, and that's fine: it's the better fit here."}
             {(best.overBudget || best.tooSlow) && " Nothing fits every constraint, so this is the closest."}
           </span>
@@ -74,7 +75,7 @@ export function Results({ input, christmas = false, slots = 0 }: { input: Compar
                   {x.overBudget && <em className={styles.warn}>Over budget</em>}
                   {x.tooSlow && <em className={styles.warn}>Too late for your date</em>}
                 </span>
-                <span data-l="Cost" className={x.real === lowest.real ? styles.win : ""}>{gbp(x.real)}</span>
+                <span data-l="Cost" className={x.real === lowest.real ? styles.win : ""}>{money(x.real, cur)}</span>
                 <span data-l="Hire made by" className={x.hireBy === lowest.hireBy ? styles.win : ""}>{day(addWeeks(x.hireBy))}</span>
                 <span data-l="Team hours" className={x.hours === lowest.hours ? styles.win : ""}>{x.hours}h</span>
                 <span data-l="Interviews" className={x.r.interviews === lowest.interviews ? styles.win : ""}>{x.r.interviews}</span>
@@ -83,7 +84,7 @@ export function Results({ input, christmas = false, slots = 0 }: { input: Compar
                 <div className={styles.detail}>
                   <p>{x.r.how}.</p>
                   <ul>
-                    <li><b>Fee:</b> {gbp(x.fee)} ({x.r.feeNote}), plus {gbp(x.hours * HOURLY)} of team time at {gbp(HOURLY)} an hour.</li>
+                    <li><b>Fee:</b> {money(x.fee, cur)} ({x.r.feeNote}), plus {money(x.hours * HOURLY, cur)} of team time at {money(HOURLY, cur)} an hour.</li>
                     <li><b>Speed:</b> first shortlist in {x.r.shortlist}, an accepted offer in {wks(x.r.hireWeeks)}, then about {NOTICE_WEEKS} weeks&apos; notice before they start (around {day(addWeeks(x.startWeeks))}).</li>
                     <li><b>What you get:</b> {x.r.get}, about {x.r.interviews} interviews to make the hire.</li>
                     <li><b>Team hours:</b> {x.r.hours.map((h) => `${h.label} ${h.h}h`).join(", ")}.</li>
@@ -101,12 +102,12 @@ export function Results({ input, christmas = false, slots = 0 }: { input: Compar
           <Link href="/start" className={styles.go}>Start a search week →</Link>
         </div>
 
-        {giftOn && <GiftBox lid={input.lid} slots={slots} />}
+        {giftOn && <GiftBox lid={input.lid} slots={slots} cur={cur} />}
 
         <details className={styles.how}>
           <summary>How we worked these out</summary>
           <p>
-            Cost is the fee plus your team&apos;s hours at {gbp(HOURLY)} an hour. &ldquo;Hire made by&rdquo; is when an offer is
+            Cost is the fee plus your team&apos;s hours at {money(HOURLY, cur)} an hour. &ldquo;Hire made by&rdquo; is when an offer is
             usually accepted; they then typically work a {NOTICE_WEEKS}-week notice period before starting. Interviews is how many it usually takes to make one
             hire. 
           </p>

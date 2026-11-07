@@ -2,7 +2,8 @@
 
 import { useRef, useState } from "react";
 import Link from "next/link";
-import { DROPS, gbp } from "@/lib/compare";
+import { DROPS, money } from "@/lib/compare";
+import type { Currency } from "@/lib/currency";
 import styles from "./gift.module.css";
 
 type Prize = { pct: number; rarity: string; color: string; code: string; expiresAt: string; used: boolean };
@@ -11,7 +12,7 @@ type Prize = { pct: number; rarity: string; color: string; code: string; expires
    Tap it, it spins up, slows down, bursts open: 5%, 10% or 15% off. The
    prize is drawn and kept on the server (api/compare/gift); opening starts
    the code's 24 hours. The ⓘ shows the drop rates, like a mobile game. */
-export function GiftBox({ lid, slots }: { lid: string; slots: number }) {
+export function GiftBox({ lid, slots, cur = "GBP" }: { lid: string; slots: number; cur?: Currency }) {
   const [open, setOpen] = useState(false);
   const [phase, setPhase] = useState<"idle" | "spin" | "shake" | "burst" | "done" | "soldout">("idle");
   const [odds, setOdds] = useState(false);
@@ -133,7 +134,7 @@ export function GiftBox({ lid, slots }: { lid: string; slots: number }) {
                 <div className={styles.reveal}>
                   <span className={styles.rarity} style={{ color: prize.color }}>{prize.rarity}</span>
                   <span className={styles.prize}>{prize.pct}% off</span>
-                  <p>your first hire: {gbp(12000 * (1 - prize.pct / 100))} instead of {gbp(12000)}.</p>
+                  <p>your first hire: {money(12000 * (1 - prize.pct / 100), cur)} instead of {money(12000, cur)}.</p>
                   <div className={styles.code}>{prize.code}</div>
                   <div className={styles.perk}>
                     <b>+ Priority search</b>

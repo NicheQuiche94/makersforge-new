@@ -115,6 +115,8 @@ export const ROUTES: Route[] = [
   },
 ];
 
+import { CURRENCY_SYMBOLS, RATES, type Currency } from "@/lib/currency";
+
 export type Priority = "balanced" | "cost" | "speed" | "hours";
 /** What the visitor told us. Travels in the result link (mockup; the real build stores it and links by id). */
 export type CompareInput = {
@@ -126,10 +128,14 @@ export type CompareInput = {
   name?: string;
   company?: string;
   hook: number; // which headline they saw (A/B)
+  cur?: Currency; // the currency they gave the salary in; salary itself is stored in GBP
   lid: string; // this request's id
 };
 
 export const gbp = (n: number) => `£${Math.round(n).toLocaleString("en-GB")}`;
+/** A GBP amount shown in their currency (to the nearest 10). */
+export const money = (gbpAmount: number, cur: Currency = "GBP") =>
+  `${CURRENCY_SYMBOLS[cur]}${(cur === "GBP" ? Math.round(gbpAmount) : Math.round((gbpAmount * RATES[cur]) / 10) * 10).toLocaleString("en-GB")}`;
 export const wks = ([a, b]: [number, number]) => (a === b ? `${a} weeks` : `${a}–${b} weeks`);
 export const day = (d: Date) => d.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
 export const addWeeks = (w: number, from = Date.now()) => new Date(from + w * 7 * 864e5);
