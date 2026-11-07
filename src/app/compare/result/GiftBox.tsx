@@ -2,22 +2,34 @@
 
 import { useRef, useState } from "react";
 import Link from "next/link";
-import { DROPS, money } from "@/lib/compare";
+import { money } from "@/lib/compare";
+import { activePromo, dropsFor } from "@/lib/promos";
 import type { Currency } from "@/lib/currency";
 import styles from "./gift.module.css";
 
 type Prize = { pct: number; rarity: string; color: string; code: string; expiresAt: string; used: boolean };
 
-/* The Christmas pack (Andre 2026-11-07): priority search plus a loot box.
-   Tap it, it spins up, slows down, bursts open: 5%, 10% or 15% off. The
-   prize is drawn and kept on the server (api/compare/gift); opening starts
-   the code's 24 hours. The ⓘ shows the drop rates, like a mobile game. */
-export function GiftBox({ lid, slots, cur = "GBP" }: { lid: string; slots: number; cur?: Currency }) {
+/* The offer box (Andre 2026-11-07). One mechanic, any skin (lib/promos):
+   Christmas gift, Easter egg, Halloween pumpkin, Hump Day. Tap it, it spins
+   up, slows down, bursts open: 5%, 10% or 15% off. The prize is drawn and
+   kept on the server; opening starts the code's 24 hours. Hires needed by
+   the special date get better odds plus priority search. The ⓘ shows the
+   drop rates, like a mobile game. */
+export function GiftBox({ lid, special, slots, cur = "GBP" }: { lid: string; special: boolean; slots: number; cur?: Currency }) {
+  const promo = activePromo();
   const [open, setOpen] = useState(false);
   const [phase, setPhase] = useState<"idle" | "spin" | "shake" | "burst" | "done" | "soldout">("idle");
   const [odds, setOdds] = useState(false);
   const [prize, setPrize] = useState<Prize | null>(null);
   const cube = useRef<HTMLDivElement>(null);
+  if (!promo) return null;
+  const tier = special ? promo.special : promo.standard;
+  const priorityGone = special && slots <= 0;
+  const skin = {
+    ["--box" as string]: promo.colors.box,
+    ["--boxDark" as string]: promo.colors.boxDark,
+    ["--ribbon" as string]: promo.colors.ribbon,
+  };
 
   // Opening the overlay: if the box was opened before, go straight to the prize.
   const show = async () => {
@@ -65,58 +77,56 @@ export function GiftBox({ lid, slots, cur = "GBP" }: { lid: string; slots: numbe
   };
 
   const expired = prize ? Date.now() > Date.parse(prize.expiresAt) : false;
-  const glow = prize?.color ?? "#ff8a00";
+  const glow = prize?.color ?? promo.colors.glow;
 
   return (
     <>
-      <div className={styles.teaser}>
+      <div className={styles.teaser} style={skin}>
         <div className={styles.miniBox} aria-hidden="true">
           <span />
         </div>
         <div>
-          <strong>Hiring before Christmas? Here&apos;s your Christmas pack</strong>
+          <strong>{special ? `Your ${promo.name} pack` : `A ${promo.name} for you`}</strong>
           <p>
-            Priority on our next search week, plus a gift box with money off.{" "}
-            {slots > 0 ? `Only ${slots} of 3 Christmas priority slots left.` : "All 3 Christmas priority slots are taken."}
+            {tier.teaser}
+            {special && (priorityGone ? ` All ${promo.special.cap} priority slots are taken, but your box is still yours.` : ` Only ${slots} of ${promo.special.cap} priority slots left.`)}
           </p>
         </div>
-        {(slots > 0 || prize) && (
-          <button type="button" className={styles.openBtn} onClick={show}>
-            {phase === "done" ? "See your gift" : "Open your Christmas gift"}
-          </button>
-        )}
+        <button type="button" className={styles.openBtn} onClick={show}>
+          {phase === "done" ? "See your gift" : `Open your ${promo.item}`}
+        </button>
       </div>
 
       {open && (
-        <div className={styles.overlay} role="dialog" aria-modal="true" aria-label="Your Christmas gift">
+        <div className={styles.overlay} role="dialog" aria-modal="true" aria-label={`Your ${promo.name}`} style={skin}>
           <div className={styles.sheet} style={{ ["--glow" as string]: glow }}>
             <button type="button" className={styles.close} onClick={() => setOpen(false)} aria-label="Close">×</button>
             <button type="button" className={styles.info} onClick={() => setOdds(!odds)} aria-label="Drop rates">i</button>
 
             {odds && (
               <div className={styles.odds}>
-                <strong>Drop rates</strong>
-                {DROPS.map((d) => (
+                <strong>Drop rates{special ? " (priority pack)" : ""}</strong>
+                {dropsFor(promo, special).map((d) => (
                   <div key={d.pct} className={styles.oddRow}>
                     <span style={{ color: d.color }}>{d.rarity}</span>
                     <span>{d.pct}% off</span>
                     <span>{d.odds}%</span>
                   </div>
                 ))}
-                <p>One box per comparison, for hires needed before 24 December. Off your first hire&apos;s fee.</p>
+                <p>One {promo.item} per comparison. Off your first hire&apos;s fee when you book a search week{promo.until ? ` by ${new Date(promo.until).toLocaleDateString("en-GB", { day: "numeric", month: "long" })}` : ""}.</p>
               </div>
             )}
 
             {phase === "soldout" ? (
               <div className={styles.reveal}>
                 <span className={styles.prize}>Sold out</span>
-                <p>All 3 Christmas priority slots have just been taken, sorry. You can still book a search week as normal.</p>
+                <p>All the priority slots have just been taken, sorry. You can still book a search week as normal.</p>
                 <Link href="/start" className={styles.claim}>Book a search week →</Link>
               </div>
             ) : phase !== "done" ? (
               <>
-                <p className={styles.tapHint}>{phase === "idle" ? "Tap the box" : phase === "burst" ? "!!!" : "…"}</p>
-                <button type="button" className={`${styles.stage} ${phase === "shake" ? styles.shake : ""} ${phase === "burst" ? styles.bursting : ""}`} onClick={unbox} aria-label="Open the gift box">
+                <p className={styles.tapHint}>{phase === "idle" ? `Tap the ${promo.item}` : phase === "burst" ? "!!!" : "…"}</p>
+                <button type="button" className={`${styles.stage} ${phase === "shake" ? styles.shake : ""} ${phase === "burst" ? styles.bursting : ""}`} onClick={unbox} aria-label={`Open the ${promo.item}`}>
                   <div className={styles.cube} ref={cube}>
                     <i className={`${styles.face} ${styles.front}`} />
                     <i className={`${styles.face} ${styles.back}`} />
@@ -136,10 +146,12 @@ export function GiftBox({ lid, slots, cur = "GBP" }: { lid: string; slots: numbe
                   <span className={styles.prize}>{prize.pct}% off</span>
                   <p>your first hire: {money(12000 * (1 - prize.pct / 100), cur)} instead of {money(12000, cur)}.</p>
                   <div className={styles.code}>{prize.code}</div>
-                  <div className={styles.perk}>
-                    <b>+ Priority search</b>
-                    <span>Your search goes into our first available week, and we&apos;ll put every effort into getting your hire made before 24 December.</span>
-                  </div>
+                  {special && !priorityGone && (
+                    <div className={styles.perk}>
+                      <b>+ Priority search</b>
+                      <span>{promo.special.perk}</span>
+                    </div>
+                  )}
                   <p className={styles.small}>
                     {prize.used
                       ? "You've used this code on your booking."

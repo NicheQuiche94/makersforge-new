@@ -57,14 +57,14 @@ export function StartFlow() {
   const person = ROSTER.find((p) => p.id === params.get("candidate"));
   const preset = planById(params.get("plan"))?.id as PlanId | undefined;
   // A Christmas gift code from the hiring comparison (/compare): checked on the server, applied to the first hire.
-  const [discount, setDiscount] = useState<{ pct: number; code: string; expiresAt: string } | null>(null);
+  const [discount, setDiscount] = useState<{ pct: number; code: string; expiresAt: string; special: boolean } | null>(null);
   const [discountError, setDiscountError] = useState("");
   useEffect(() => {
     const c = params.get("code");
     if (!c) return;
     fetch(`/api/compare/code?c=${encodeURIComponent(c)}`)
       .then((r) => r.json())
-      .then((d) => (d.ok ? setDiscount({ pct: d.pct, code: d.code, expiresAt: d.expiresAt }) : setDiscountError(d.error || "That code can't be used.")))
+      .then((d) => (d.ok ? setDiscount({ pct: d.pct, code: d.code, expiresAt: d.expiresAt, special: !!d.special }) : setDiscountError(d.error || "That code can't be used.")))
       .catch(() => {});
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -306,7 +306,7 @@ export function StartFlow() {
       {(discount || discountError) && (
         <div className={discount ? styles.codeOk : styles.codeBad}>
           {discount
-            ? `🎁 ${discount.code} applied: ${discount.pct}% off your first ${plan === "contract" ? "month" : "hire"}, plus Christmas priority. Valid until ${new Date(discount.expiresAt).toLocaleString("en-GB", { weekday: "short", hour: "2-digit", minute: "2-digit" })}.`
+            ? `🎁 ${discount.code} applied: ${discount.pct}% off your first ${plan === "contract" ? "month" : "hire"}${discount.special ? ", plus priority search" : ""}. Valid until ${new Date(discount.expiresAt).toLocaleString("en-GB", { weekday: "short", hour: "2-digit", minute: "2-digit" })}.`
             : discountError}
         </div>
       )}

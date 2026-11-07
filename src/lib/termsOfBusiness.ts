@@ -173,8 +173,8 @@ export function buildTerms(v: TermsVars): { parties: Clause[]; sections: Section
     ? [
         {
           text: v.variant === "contract"
-            ? `The Fee for the first calendar month of the first Engagement is reduced by ${v.discount.pct}% (Christmas offer, code ${v.discount.code}).`
-            : `The Fee for the first Engagement includes a ${v.discount.pct}% discount (Christmas offer, code ${v.discount.code}).`,
+            ? `The Fee for the first calendar month of the first Engagement is reduced by ${v.discount.pct}% (offer code ${v.discount.code}).`
+            : `The Fee for the first Engagement includes a ${v.discount.pct}% discount (offer code ${v.discount.code}).`,
           kind: "new",
           note: "Gift-box discount from the hiring comparison, applied automatically.",
         },

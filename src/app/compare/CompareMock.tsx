@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { HOOKS, ROLES, GIFT_UNTIL, type Priority } from "@/lib/compare";
+import { HOOKS, ROLES, type Priority } from "@/lib/compare";
+import { activePromo } from "@/lib/promos";
 import { CURRENCIES, CURRENCY_SYMBOLS, RATES, readStoredCurrency, writeStoredCurrency, type Currency } from "@/lib/currency";
 import { DatePicker } from "./DatePicker";
 import { setPageVariant } from "@/lib/analytics";
@@ -41,14 +42,15 @@ export function CompareMock() {
 
   const [cur, setCur] = useState<Currency>("GBP");
   const [role, setRole] = useState("senior-ua");
-  const [salary, setSalary] = useState(70000);
+  // Kept as typed (a string, so the box can be empty while typing). Switching currency
+  // keeps the number: they mean euros when they pick €, not a conversion (Andre).
+  const [salary, setSalary] = useState("70000");
   useEffect(() => {
     const c = readStoredCurrency();
     setCur(c);
-    setSalary(inCur(70000, c));
+    setSalary(String(inCur(70000, c)));
   }, []);
   const pickCur = (c: Currency) => {
-    setSalary(Math.round((salary / RATES[cur]) * RATES[c] / 1000) * 1000);
     setCur(c);
     writeStoredCurrency(c);
   };
@@ -59,9 +61,10 @@ export function CompareMock() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
 
+  const promo = activePromo();
   const soon = (weeks: number) => iso(new Date(Date.now() + weeks * 7 * 864e5));
   const quick = [
-    ...(Date.now() < Date.parse(GIFT_UNTIL) ? [{ label: "Before Christmas", value: GIFT_UNTIL }] : []),
+    ...(promo?.id === "christmas" && promo.special.needBy ? [{ label: "Before Christmas", value: promo.special.needBy }] : []),
     { label: "In 4 weeks", value: soon(4) },
     { label: "In 8 weeks", value: soon(8) },
     { label: "In 3 months", value: soon(13) },
@@ -73,7 +76,7 @@ export function CompareMock() {
     const r = await fetch("/api/compare", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ role, salary, cur, start, p, email, name, hook }),
+      body: JSON.stringify({ role, salary: Number(salary) || 0, cur, start, p, email, name, hook }),
     })
       .then((x) => x.json())
       .catch(() => ({ error: "That didn't go through. Please try again." }));
@@ -81,7 +84,7 @@ export function CompareMock() {
       setBusy(false);
       return setError(r.error);
     }
-    const q = new URLSearchParams({ gift: start && start <= GIFT_UNTIL ? "1" : "0" });
+    const q = new URLSearchParams({ gift: r.gift ? (r.special ? "2" : "1") : "0" });
     if (r.devLink) q.set("dev", r.devLink);
     router.push(`/compare/sent?${q}`);
   };
@@ -108,7 +111,7 @@ export function CompareMock() {
           <div className={styles.formGrid}>
             <label className={styles.wide}>
               <span className={styles.lbl}>Role</span>
-              <select value={role} onChange={(e) => { setRole(e.target.value); setSalary(inCur(ROLES.find((r) => r.id === e.target.value)!.salary, cur)); }}>
+              <select value={role} onChange={(e) => { setRole(e.target.value); setSalary(String(inCur(ROLES.find((r) => r.id === e.target.value)!.salary, cur))); }}>
                 {ROLES.map((r) => <option key={r.id} value={r.id}>{r.label}</option>)}
               </select>
             </label>
@@ -123,7 +126,7 @@ export function CompareMock() {
                   ))}
                 </span>
               </span>
-              <input type="number" step={1000} aria-label={`Salary in ${cur}`} value={salary} onChange={(e) => setSalary(Number(e.target.value) || 0)} />
+              <input type="text" inputMode="numeric" aria-label={`Salary in ${cur}`} placeholder="e.g. 70000" value={salary} onChange={(e) => setSalary(e.target.value.replace(/[^0-9]/g, ""))} />
             </div>
             <div className={`${styles.half} ${styles.field}`}>
               <span className={styles.lbl}>Need the hire made by</span>

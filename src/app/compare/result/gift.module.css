@@ -3,7 +3,7 @@
 .teaser strong { font-size: 18px; }
 .teaser p { margin: 4px 0 0; color: rgba(255, 255, 255, 0.75); font-size: 14px; }
 .openBtn { border: 0; border-radius: 999px; padding: 12px 20px; font: inherit; font-weight: 800; color: #1a0b00; background: linear-gradient(135deg, #ffd36b, #ff8a00); cursor: pointer; box-shadow: 0 6px 20px rgba(255, 138, 0, 0.35); }
-.miniBox { position: relative; width: 52px; height: 46px; border-radius: 8px; background: linear-gradient(135deg, #ff5d00, #c72e00); box-shadow: inset 0 -6px 0 rgba(0, 0, 0, 0.18); }
+.miniBox { position: relative; width: 52px; height: 46px; border-radius: 8px; background: linear-gradient(135deg, var(--box, #ff5d00), var(--boxDark, #c72e00)); box-shadow: inset 0 -6px 0 rgba(0, 0, 0, 0.18); }
 .miniBox::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 9px; transform: translateX(-50%); background: #ffd36b; }
 .miniBox span { position: absolute; left: -4px; right: -4px; top: -8px; height: 14px; border-radius: 6px; background: linear-gradient(135deg, #ff7a2b, #e14b00); }
 .miniBox span::before, .miniBox span::after { content: ""; position: absolute; top: -12px; width: 16px; height: 14px; border: 4px solid #ffd36b; border-radius: 50% 50% 0 50%; }
@@ -29,17 +29,17 @@
 .cube { position: absolute; left: 50%; top: 50%; width: 140px; height: 140px; margin: -80px 0 0 -70px; transform-style: preserve-3d; transform: rotateX(-18deg) rotateY(30deg); animation: bob 2.4s ease-in-out infinite; }
 @keyframes bob { 50% { margin-top: -92px; } }
 .face { position: absolute; inset: 0; border-radius: 10px; background:
-  linear-gradient(90deg, transparent 43%, #ffd36b 43% 57%, transparent 57%),
-  linear-gradient(135deg, #ff7a2b, #c72e00); box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.12); }
+  linear-gradient(90deg, transparent 43%, var(--ribbon, #ffd36b) 43% 57%, transparent 57%),
+  linear-gradient(135deg, var(--box, #ff7a2b), var(--boxDark, #c72e00)); box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.12); }
 .front { transform: translateZ(70px); }
 .back { transform: rotateY(180deg) translateZ(70px); }
 .right { transform: rotateY(90deg) translateZ(70px); }
 .left { transform: rotateY(-90deg) translateZ(70px); }
 .bottom { transform: rotateX(-90deg) translateZ(70px); }
 .top { transform: rotateX(90deg) translateZ(74px) scale(1.08); background:
-  linear-gradient(90deg, transparent 43%, #ffd36b 43% 57%, transparent 57%),
-  linear-gradient(0deg, transparent 43%, #ffd36b 43% 57%, transparent 57%),
-  linear-gradient(135deg, #ff9a4d, #e14b00); transition: transform 600ms cubic-bezier(.2, .8, .2, 1), opacity 600ms; }
+  linear-gradient(90deg, transparent 43%, var(--ribbon, #ffd36b) 43% 57%, transparent 57%),
+  linear-gradient(0deg, transparent 43%, var(--ribbon, #ffd36b) 43% 57%, transparent 57%),
+  linear-gradient(135deg, var(--box, #ff9a4d), var(--boxDark, #e14b00)); transition: transform 600ms cubic-bezier(.2, .8, .2, 1), opacity 600ms; }
 .lidOff { transform: rotateX(90deg) translateZ(260px) rotateZ(40deg) scale(1.08); opacity: 0; }
 .shadow { position: absolute; left: 50%; bottom: 18px; width: 150px; height: 22px; margin-left: -75px; border-radius: 50%; background: rgba(0, 0, 0, 0.45); filter: blur(6px); }
 .shake .cube { animation: shake 90ms linear infinite; }

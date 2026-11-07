@@ -1,5 +1,5 @@
 import { createAdminClient } from "@/lib/supabase/admin";
-import { dropFor, slotsLeft } from "@/lib/compareGifts";
+import { activePromo, dropFor } from "@/lib/promos";
 
 /**
  * POST { lid } → the Christmas gift for this comparison. The first call opens
@@ -13,14 +13,14 @@ export async function POST(req: Request) {
   if (!/^[a-f0-9]{10}$/.test(String(lid || ""))) return Response.json({ error: "Not found." }, { status: 404 });
   const db = createAdminClient();
   const { data: row } = await db.from("compare_requests").select("christmas, gift_pct, gift_code, gift_opened_at, gift_used_at").eq("lid", lid).maybeSingle();
-  if (!row || !row.christmas || !row.gift_pct) return Response.json({ error: "Not found." }, { status: 404 });
+  const promo = activePromo();
+  if (!row || !row.gift_pct || !promo) return Response.json({ error: "Not found." }, { status: 404 });
   let openedAt = row.gift_opened_at as string | null;
   if (!openedAt) {
-    if ((await slotsLeft(db)) <= 0) return Response.json({ soldOut: true });
     openedAt = new Date().toISOString();
     await db.from("compare_requests").update({ gift_opened_at: openedAt }).eq("lid", lid).is("gift_opened_at", null);
   }
-  const d = dropFor(row.gift_pct);
+  const d = dropFor(promo, !!row.christmas, row.gift_pct);
   return Response.json({
     pct: d.pct,
     rarity: d.rarity,
@@ -37,9 +37,10 @@ export async function GET(req: Request) {
   const lid = new URL(req.url).searchParams.get("lid") || "";
   if (!/^[a-f0-9]{10}$/.test(lid)) return Response.json({ error: "Not found." }, { status: 404 });
   const { data: row } = await createAdminClient().from("compare_requests").select("christmas, gift_pct, gift_code, gift_opened_at, gift_used_at").eq("lid", lid).maybeSingle();
-  if (!row || !row.christmas || !row.gift_pct) return Response.json({ error: "Not found." }, { status: 404 });
+  const promo = activePromo();
+  if (!row || !row.gift_pct || !promo) return Response.json({ error: "Not found." }, { status: 404 });
   if (!row.gift_opened_at) return Response.json({ opened: false });
-  const d = dropFor(row.gift_pct);
+  const d = dropFor(promo, !!row.christmas, row.gift_pct);
   return Response.json({
     opened: true,
     pct: d.pct,

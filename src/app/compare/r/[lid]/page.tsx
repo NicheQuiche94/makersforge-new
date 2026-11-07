@@ -29,5 +29,5 @@ export default async function ComparisonPage({ params }: { params: Promise<{ lid
     hook: row.hook,
     cur: isCurrency(row.currency) ? row.currency : "GBP",
   };
-  return <Results input={input} christmas={row.christmas} slots={row.christmas ? await slotsLeft(db) : 0} />;
+  return <Results input={input} special={row.christmas} slots={row.christmas ? await slotsLeft(db) : 0} />;
 }

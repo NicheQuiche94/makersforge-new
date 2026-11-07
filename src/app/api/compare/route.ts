@@ -4,7 +4,8 @@ import { layout } from "@/lib/clientEmails";
 import { toAndre } from "@/lib/chat/telegram";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { drawPrize, giftCode } from "@/lib/compareGifts";
-import { compare, gbp, day, roleLabel, wantsChristmasHire, ROLES, HOOKS, type CompareInput, type Priority } from "@/lib/compare";
+import { compare, gbp, day, roleLabel, ROLES, HOOKS, type CompareInput, type Priority } from "@/lib/compare";
+import { activePromo, isSpecial, dropsFor } from "@/lib/promos";
 import { RATES, isCurrency, type Currency } from "@/lib/currency";
 
 /**
@@ -38,8 +39,10 @@ export async function POST(req: Request) {
     lid: randomBytes(5).toString("hex"),
   };
   const { best } = compare(input);
-  const christmas = wantsChristmasHire(input);
-  const prize = christmas ? drawPrize() : null;
+  // While an offer runs, everyone gets a box; hires needed by the special date get the special one.
+  const promo = activePromo();
+  const special = isSpecial(promo, input.start);
+  const prize = promo ? drawPrize(dropsFor(promo, special)) : null;
 
   const { error } = await createAdminClient()
     .from("compare_requests")
@@ -55,9 +58,9 @@ export async function POST(req: Request) {
       priority: input.p,
       hook: input.hook,
       best: best.r.id,
-      christmas,
+      christmas: special,
       gift_pct: prize?.pct ?? null,
-      gift_code: prize ? giftCode(input.lid, prize.pct) : null,
+      gift_code: promo && prize ? giftCode(promo, input.lid, prize.pct) : null,
     });
   if (error) {
     console.error("compare save", error);
@@ -74,7 +77,7 @@ export async function POST(req: Request) {
 <table role="presentation" cellpadding="0" cellspacing="0" style="margin:6px 0 20px"><tr><td bgcolor="#ff5d00" style="border-radius:999px">
 <a href="${link}" style="display:inline-block;padding:13px 24px;font-weight:700;font-size:15px;color:#fff;text-decoration:none;border-radius:999px">See your comparison →</a>
 </td></tr></table>
-${christmas ? `<p style="margin:0 0 14px">You need this hire made before Christmas, so there's a Christmas pack waiting at the bottom: priority on our next search week, plus a gift. 🎁</p>` : ""}
+${promo ? `<p style="margin:0 0 14px">${special ? `You need this hire made soon, so there's a priority pack waiting at the bottom: priority on our next search week, plus a ${promo.item} with better odds.` : `There's a ${promo.item} waiting for you at the bottom too.`} ${promo.emoji}</p>` : ""}
 <p style="margin:0 0 14px">Hope it's helpful. Any questions, just reply: it comes straight to me.</p>
 <p style="margin:0 0 14px">Andre<br><span style="color:#5b5f69;font-size:14px">Founder, MakersForge</span></p>`,
     `Your ${role} hiring comparison`,
@@ -84,10 +87,10 @@ ${christmas ? `<p style="margin:0 0 14px">You need this hire made before Christm
 
   if (process.env.VERCEL_ENV === "production") {
     await toAndre(
-      `📊 Comparison requested: ${role}, ${gbp(input.salary)}${cur !== "GBP" ? ` (entered in ${cur})` : ""}${input.start ? `, hire needed by ${day(new Date(input.start))}` : ""}${christmas ? ` 🎄 (${prize!.pct}% box)` : ""}\n` +
+      `📊 Comparison requested: ${role}, ${gbp(input.salary)}${cur !== "GBP" ? ` (entered in ${cur})` : ""}${input.start ? `, hire needed by ${day(new Date(input.start))}` : ""}${prize ? ` ${promo!.emoji} ${prize.pct}%${special ? " (priority)" : ""}` : ""}\n` +
         `${input.name || "No name"} · ${email}\n` +
         `Best fit for them: ${best.r.name} · headline "${HOOKS[input.hook].accent}"`,
     ).catch(() => {});
   }
-  return Response.json({ ok: true, christmas, ...(sent.dev ? { devLink: link } : {}) });
+  return Response.json({ ok: true, gift: !!prize, special, ...(sent.dev ? { devLink: link } : {}) });
 }

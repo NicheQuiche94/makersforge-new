@@ -64,6 +64,7 @@ export async function POST(req: Request) {
   const gift = d.code ? await checkCode(createAdminClient(), String(d.code)) : null;
   if (gift && !gift.ok) return bad(`${gift.error} Remove the code from the link to book without it.`, 409);
   const discount = gift?.ok ? { pct: gift.pct, code: gift.code } : undefined;
+  const priority = gift?.ok && gift.special;
   const deal = priceDeal(plan, !!d.retained, roles, discount?.pct);
   const weeks = await availability();
   const slots = schedule(weeks, String(d.start), Math.max(briefs.length, 1));
@@ -140,8 +141,8 @@ export async function POST(req: Request) {
   const ref = booking!.ref as string;
   if (discount) {
     await claimCode(db, discount.code, bookingId as string);
-    await db.from("booking_events").insert({ booking_id: bookingId, kind: "christmas_code", detail: { code: discount.code, pct: discount.pct, firstFee: deal.fees[0] } });
-    await toAndre(`🎁 ${you.company} booked with Christmas code ${discount.code} (${discount.pct}% off the first fee, now ${deal.fees[0].toLocaleString("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 0 })}). Ref ${ref}. Priority search promised.`).catch(() => {});
+    await db.from("booking_events").insert({ booking_id: bookingId, kind: "christmas_code", detail: { code: discount.code, pct: discount.pct, firstFee: deal.fees[0], priority } });
+    await toAndre(`🎁 ${you.company} booked with gift code ${discount.code} (${discount.pct}% off the first fee, now ${deal.fees[0].toLocaleString("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 0 })}). Ref ${ref}.${priority ? " Priority search promised." : ""}`).catch(() => {});
   }
 
   // ---- emails need these details either way

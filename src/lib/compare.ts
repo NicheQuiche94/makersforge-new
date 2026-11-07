@@ -34,7 +34,8 @@ export type Route = {
   shortlist: string;
   hireWeeks: [number, number];
   get: string;
-  interviews: number;
+  interviews: number; // first interviews typically needed to find someone worth hiring
+  speedNote?: string;
   hours: { label: string; h: number }[];
   tips: string[];
   us?: boolean;
@@ -48,9 +49,10 @@ export const ROUTES: Route[] = [
     fee: () => 12000,
     feeNote: "£12,000 flat, paid only if you hire",
     shortlist: "1 week",
-    hireWeeks: [3, 5],
-    get: "5 vetted people",
-    interviews: 4,
+    hireWeeks: [2, 4],
+    get: "About 5 vetted people, plus more batches should you need them",
+    interviews: 5,
+    speedNote: "We can prioritise people with shorter notice periods or who are available now.",
     hours: [
       { label: "Brief", h: 1 },
       { label: "Interviews", h: 6 },
@@ -158,12 +160,15 @@ export function compare(input: CompareInput, now = Date.now()) {
   const score = (x: (typeof base)[number]) =>
     input.p === "cost" ? x.real : input.p === "speed" ? x.startWeeks : input.p === "hours" ? x.hours
       : x.real / mR + x.startWeeks / mW + x.hours / mH + x.r.interviews / mI;
-  // Options that fit the budget and start date first, then by what matters most.
-  const rows = base.slice().sort((a, b) => Number(a.overBudget || a.tooSlow) - Number(b.overBudget || b.tooSlow) || score(a) - score(b));
+  // Best fit: options that fit the date first, then by what matters most.
+  const best = base.slice().sort((a, b) => Number(a.overBudget || a.tooSlow) - Number(b.overBudget || b.tooSlow) || score(a) - score(b))[0];
+  // Shown in a fixed order (Andre): us, then the job ad (the route most people take), then the agencies.
+  const ORDER = ["mf", "ads", "games20", "tech25"];
+  const rows = base.slice().sort((a, b) => ORDER.indexOf(a.r.id) - ORDER.indexOf(b.r.id));
   const lo = (f: (x: (typeof rows)[number]) => number) => Math.min(...rows.map(f));
   return {
     rows,
-    best: rows[0],
+    best,
     lowest: { real: lo((x) => x.real), start: lo((x) => x.startWeeks), hireBy: lo((x) => x.hireBy), hours: lo((x) => x.hours), interviews: lo((x) => x.r.interviews) },
   };
 }
@@ -181,13 +186,3 @@ export function decodeInput(s: string): CompareInput | null {
     return null;
   }
 }
-
-/* ---- The Christmas gift box (DRAFT: Andre to confirm the rewards and odds) ---- */
-export const GIFT_UNTIL = "2026-12-24";
-/** The Christmas pack is for people who need the hire made on or before 24 December. */
-export const wantsChristmasHire = (i: CompareInput) => !!i.start && i.start <= GIFT_UNTIL && Date.now() < Date.parse(GIFT_UNTIL + "T23:59:59");
-export const DROPS = [
-  { pct: 5, rarity: "Common", odds: 60, color: "#ffb347" },
-  { pct: 10, rarity: "Rare", odds: 30, color: "#ff5d00" },
-  { pct: 15, rarity: "Legendary", odds: 10, color: "#ffd700" },
-];

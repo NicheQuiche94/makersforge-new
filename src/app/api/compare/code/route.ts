@@ -7,5 +7,5 @@ export const runtime = "nodejs";
 export async function GET(req: Request) {
   const c = new URL(req.url).searchParams.get("c") || "";
   const r = await checkCode(createAdminClient(), c);
-  return Response.json(r.ok ? { ok: true, pct: r.pct, code: r.code, expiresAt: r.expiresAt } : r);
+  return Response.json(r.ok ? { ok: true, pct: r.pct, code: r.code, expiresAt: r.expiresAt, special: r.special } : r);
 }
