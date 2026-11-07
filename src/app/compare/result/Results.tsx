@@ -35,19 +35,20 @@ export function Results({ input }: { input: CompareInput | null }) {
     <section className={styles.wrap}>
       <div className="container">
         <p className={styles.mock}>Mockup for Andre · not live · draft numbers and wording</p>
-        <span className="kicker">Your hiring comparison</span>
-        <h1 className={styles.h1}>
-          {role}
-          {input.company ? ` at ${input.company}` : ""}
+        <div className={styles.resultHead}>
+        <h1 className={styles.display}>
+          Your comparison for a <span className={`gr ${styles.accent}`}>{role}</span>
         </h1>
-        <p className={styles.summary}>
+        <p className={styles.summaryCenter}>
+          {input.company ? `${input.company} · ` : ""}
           {gbp(input.salary)}
           {input.start ? ` · hire needed by ${day(new Date(input.start))}` : ""}
           {input.budget ? ` · budget ${gbp(input.budget)}` : ""} ·{" "}
           {{ balanced: "a balance of everything", cost: "lowest cost first", speed: "starting soonest first", hours: "saving team time first" }[input.p]}
         </p>
+        </div>
 
-        <div className={`${styles.best} ${best.r.us ? styles.bestUs : ""}`}>
+        <div className={`${styles.best} ${styles.bestCenter} ${best.r.us ? styles.bestUs : ""}`}>
           <span className={styles.bestLabel}>Best fit for you</span>
           <strong>{best.r.name}</strong>
           <span>
