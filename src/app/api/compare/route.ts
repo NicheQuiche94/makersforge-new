@@ -2,7 +2,7 @@ import { randomBytes } from "node:crypto";
 import { sendMail } from "@/lib/onboarding/mail";
 import { layout } from "@/lib/clientEmails";
 import { toAndre } from "@/lib/chat/telegram";
-import { compare, encodeInput, gbp, day, addWeeks, roleLabel, wantsChristmasHire, ROLES, type CompareInput, type Priority } from "@/lib/compare";
+import { compare, encodeInput, gbp, day, addWeeks, roleLabel, wantsChristmasHire, ROLES, HOOKS, type CompareInput, type Priority } from "@/lib/compare";
 
 /**
  * POST the /compare form → emails them a link to their comparison (MOCKUP,
@@ -30,11 +30,11 @@ export async function POST(req: Request) {
     p: P.includes(b.p) ? b.p : "balanced",
     name: String(b.name || "").trim().slice(0, 80) || undefined,
     company: String(b.company || "").trim().slice(0, 80) || undefined,
-    hook: Number(b.hook) || 0,
+    hook: Math.min(Math.max(Number(b.hook) || 0, 0), HOOKS.length - 1),
     lid: randomBytes(5).toString("hex"),
   };
   const origin = process.env.RESEND_API_KEY ? SITE : new URL(req.url).origin;
-  const link = `${origin}/compare/result?d=${encodeInput(input)}&utm_source=email&utm_medium=compare&utm_campaign=hook-${input.hook + 1}`;
+  const link = `${origin}/compare/result?d=${encodeInput(input)}&utm_source=email&utm_medium=compare&utm_campaign=${HOOKS[input.hook]?.accent ?? "hook"}`;
   const role = roleLabel(input.role);
   const { best } = compare(input);
 
@@ -57,7 +57,7 @@ ${wantsChristmasHire(input) ? `<p style="margin:0 0 14px">You need this hire mad
     await toAndre(
       `📊 Comparison requested: ${role}, ${gbp(input.salary)}${input.start ? `, hire needed by ${day(new Date(input.start))}` : ""}${wantsChristmasHire(input) ? " 🎄" : ""}\n` +
         `${input.name || "No name"}${input.company ? ` (${input.company})` : ""} · ${email}\n` +
-        `Best fit for them: ${best.r.name} · headline ${input.hook + 1}`,
+        `Best fit for them: ${best.r.name} · headline "${HOOKS[input.hook]?.accent ?? "?"}"`,
     ).catch(() => {});
   }
   return Response.json({ ok: true, ...(sent.dev ? { devLink: link } : {}), startHint: day(addWeeks(best.startWeeks)) });

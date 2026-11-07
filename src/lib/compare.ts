@@ -5,10 +5,11 @@
  * Andre to set.
  */
 
+/** Headline A/B test (Andre 2026-11-07): the orange words are what changes. */
 export const HOOKS = [
-  { h: "Hiring, but not sure which route is most cost-effective?", g: "We'll compare them for your role." },
-  { h: "Which way of hiring is most efficient for your team?", g: "Compare every route for your role." },
-  { h: "How much team time will this hire really cost you?", g: "See every route side by side." },
+  { pre: "Hiring, but not sure which route is most ", accent: "cost-effective", post: "?", g: "We'll compare every route for your role." },
+  { pre: "Hiring, but not sure which route is most ", accent: "time-efficient", post: "?", g: "We'll compare every route for your role, including the hours it takes your team." },
+  { pre: "Hiring, and it's ", accent: "time-sensitive", post: "?", g: "We'll show you which route gets someone in fastest." },
 ];
 
 export const ROLES = [

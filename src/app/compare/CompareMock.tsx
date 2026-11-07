@@ -11,9 +11,20 @@ import styles from "./compare.module.css";
 export function CompareMock() {
   const router = useRouter();
   const [hook, setHook] = useState(0);
+  // Each visitor gets one headline at random and keeps it; ?hook=1|2|3 forces one for previews.
   useEffect(() => {
     const n = Number(new URLSearchParams(window.location.search).get("hook"));
-    if (n >= 1 && n <= HOOKS.length) setHook(n - 1);
+    if (n >= 1 && n <= HOOKS.length) return setHook(n - 1);
+    try {
+      let v = Number(localStorage.getItem("mf-compare-hook"));
+      if (!(v >= 1 && v <= HOOKS.length)) {
+        v = 1 + Math.floor(Math.random() * HOOKS.length);
+        localStorage.setItem("mf-compare-hook", String(v));
+      }
+      setHook(v - 1);
+    } catch {
+      setHook(Math.floor(Math.random() * HOOKS.length));
+    }
   }, []);
 
   const [role, setRole] = useState("senior-ua");
@@ -49,8 +60,11 @@ export function CompareMock() {
     <section className={styles.hero}>
       <div className={styles.heroInner}>
         <p className={styles.mock}>Mockup · draft wording · headline {hook + 1} of {HOOKS.length} (?hook=1, 2 or 3)</p>
-        <span className="kicker">Hiring for a role?</span>
-        <h1 className={styles.display}>{HOOKS[hook].h}</h1>
+        <h1 className={styles.display}>
+          {HOOKS[hook].pre}
+          <span className={`gr ${styles.accent}`}>{HOOKS[hook].accent}</span>
+          {HOOKS[hook].post}
+        </h1>
         <p className={styles.heroLede}>
           {HOOKS[hook].g} Cost, speed, accuracy and team hours, compared honestly, including when we&apos;re not the best option.
         </p>

@@ -99,3 +99,6 @@
 }
 
 .fine { margin: -6px 0 0; text-align: center; font-size: 13px; color: var(--mute); }
+
+/* .gr pads the orange words so glyph edges are not clipped; pull the punctuation back in */
+.accent { margin-inline: -0.08em; }
