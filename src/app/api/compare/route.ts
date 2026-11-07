@@ -33,7 +33,8 @@ export async function POST(req: Request) {
     hook: Math.min(Math.max(Number(b.hook) || 0, 0), HOOKS.length - 1),
     lid: randomBytes(5).toString("hex"),
   };
-  const origin = process.env.RESEND_API_KEY ? SITE : new URL(req.url).origin;
+  // Live site links to makersforge.gg; previews and local dev link back to themselves.
+  const origin = process.env.VERCEL_ENV === "production" ? SITE : new URL(req.url).origin;
   const link = `${origin}/compare/result?d=${encodeInput(input)}&utm_source=email&utm_medium=compare&utm_campaign=${HOOKS[input.hook]?.accent ?? "hook"}`;
   const role = roleLabel(input.role);
   const { best } = compare(input);
@@ -53,7 +54,7 @@ ${wantsChristmasHire(input) ? `<p style="margin:0 0 14px">You need this hire mad
   const sent = await sendMail({ to: email, subject: `Your hiring comparison: ${role}`, html });
   if (!sent.ok) return Response.json({ error: "We couldn't send that. Please try again." }, { status: 502 });
 
-  if (process.env.RESEND_API_KEY) {
+  if (process.env.VERCEL_ENV === "production") {
     await toAndre(
       `📊 Comparison requested: ${role}, ${gbp(input.salary)}${input.start ? `, hire needed by ${day(new Date(input.start))}` : ""}${wantsChristmasHire(input) ? " 🎄" : ""}\n` +
         `${input.name || "No name"}${input.company ? ` (${input.company})` : ""} · ${email}\n` +
