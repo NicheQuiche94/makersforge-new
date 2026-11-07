@@ -17,6 +17,7 @@ export type TermsInput = {
   client: string;
   clientNumber: string;
   clientAddress: string;
+  discount?: { pct: number; code: string }; // Christmas gift code (lib/compareGifts)
 };
 
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -35,6 +36,7 @@ export function termsDoc(v: TermsInput) {
     client: v.client,
     clientNumber: v.clientNumber,
     clientAddress: v.clientAddress,
+    discount: v.discount,
     contractFee: "£1,000",
     cancelFee: TERMS.cancelFee,
     cancelHours: TERMS.cancelHours,

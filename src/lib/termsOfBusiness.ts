@@ -33,6 +33,7 @@ export type TermsVars = {
   cancelFee: string; // "£1,500"
   cancelHours: number; // 48
   guarantee?: boolean; // Andre's replacement guarantee, off unless negotiated
+  discount?: { pct: number; code: string }; // a Christmas gift code, off the first Engagement's Fee
 };
 
 export type Clause = { n?: string; text: string; kind: "original" | "fixed" | "new"; note?: string; sub?: Clause[] };
@@ -47,7 +48,8 @@ export function buildTerms(v: TermsVars): { parties: Clause[]; sections: Section
   const retained = !!v.retained && v.variant !== "contract";
   const n = v.variant === "batch" ? Math.min(Math.max(v.roles ?? 2, 2), BATCH_STEPS.length) : 1;
   const k = retained ? 1 - RETAINED_OFF : 1;
-  const steps = (v.variant === "batch" ? BATCH_STEPS.slice(0, n) : [SINGLE_FEE]).map((x) => x * k);
+  const off = 1 - (v.discount?.pct ?? 0) / 100;
+  const steps = (v.variant === "batch" ? BATCH_STEPS.slice(0, n) : [SINGLE_FEE]).map((x, i) => Math.round((i === 0 ? x * off : x) * k));
   const retainer = retainedPrice(steps.reduce((a, b) => a + b, 0) / k).upfront;
   const ORD = ["first", "second", "third", "fourth", "fifth"];
 
@@ -167,8 +169,20 @@ export function buildTerms(v: TermsVars): { parties: Clause[]; sections: Section
     note: "Confirmed: you absorb VAT, so a UK client still sees £12,000.",
   };
 
+  const discountClauses: Clause[] = v.discount
+    ? [
+        {
+          text: v.variant === "contract"
+            ? `The Fee for the first calendar month of the first Engagement is reduced by ${v.discount.pct}% (Christmas offer, code ${v.discount.code}).`
+            : `The Fee for the first Engagement includes a ${v.discount.pct}% discount (Christmas offer, code ${v.discount.code}).`,
+          kind: "new",
+          note: "Gift-box discount from the hiring comparison, applied automatically.",
+        },
+      ]
+    : [];
   const fees: Clause[] = [
     ...feeClauses,
+    ...discountClauses,
     ...retainerClauses,
     vat,
     {

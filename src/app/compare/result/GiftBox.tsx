@@ -1,51 +1,41 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
-import { DROPS, rollGift, gbp } from "@/lib/compare";
+import { DROPS, gbp } from "@/lib/compare";
 import styles from "./gift.module.css";
 
-/* MOCKUP (Andre 2026-11-07): a pre-Christmas loot box. Tap it, it spins up,
-   slows down, bursts open: 5%, 10% or 15% off a search week. The prize is
-   fixed per comparison (seeded), and the code runs 24 hours from opening.
-   The ⓘ shows the drop rates, like a mobile game would. */
-export function GiftBox({ lid }: { lid: string }) {
-  const prize = rollGift(lid);
+type Prize = { pct: number; rarity: string; color: string; code: string; expiresAt: string; used: boolean };
+
+/* The Christmas pack (Andre 2026-11-07): priority search plus a loot box.
+   Tap it, it spins up, slows down, bursts open: 5%, 10% or 15% off. The
+   prize is drawn and kept on the server (api/compare/gift); opening starts
+   the code's 24 hours. The ⓘ shows the drop rates, like a mobile game. */
+export function GiftBox({ lid, slots }: { lid: string; slots: number }) {
   const [open, setOpen] = useState(false);
-  const [phase, setPhase] = useState<"idle" | "spin" | "shake" | "burst" | "done">("idle");
+  const [phase, setPhase] = useState<"idle" | "spin" | "shake" | "burst" | "done" | "soldout">("idle");
   const [odds, setOdds] = useState(false);
-  const [openedAt, setOpenedAt] = useState<number | null>(null);
+  const [prize, setPrize] = useState<Prize | null>(null);
   const cube = useRef<HTMLDivElement>(null);
-  const key = `mf-gift-${lid}`;
 
-  useEffect(() => {
-    try {
-      const t = Number(localStorage.getItem(key));
-      if (t) {
-        setOpenedAt(t);
-        setPhase("done");
-      }
-    } catch {}
-  }, [key]);
-
-  // Mockup only: replay the opening.
-  const reset = () => {
-    try {
-      localStorage.removeItem(key);
-    } catch {}
-    setOpenedAt(null);
-    setPhase("idle");
-    if (cube.current) {
-      cube.current.style.transition = "";
-      cube.current.style.transform = "";
+  // Opening the overlay: if the box was opened before, go straight to the prize.
+  const show = async () => {
+    setOpen(true);
+    if (prize) return;
+    const r = await fetch(`/api/compare/gift?lid=${lid}`).then((x) => x.json()).catch(() => null);
+    if (r?.opened) {
+      setPrize(r);
+      setPhase("done");
     }
   };
 
   const unbox = () => {
     if (phase !== "idle") return;
     setPhase("spin");
+    const claim = fetch("/api/compare/gift", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ lid }) })
+      .then((x) => x.json())
+      .catch(() => null);
     let angle = 0;
-    let tilt = -18;
     const t0 = performance.now();
     const UP = 1300, DOWN = 1500;
     const frame = (now: number) => {
@@ -53,7 +43,7 @@ export function GiftBox({ lid }: { lid: string }) {
       // Speeds up, then slows to a stop facing the front.
       const speed = t < UP ? 2 + 34 * (t / UP) ** 2 : Math.max(0, 36 * (1 - (t - UP) / DOWN) ** 2);
       angle += speed;
-      tilt = -18 + Math.sin(t / 90) * Math.min(speed, 20) * 0.4;
+      const tilt = -18 + Math.sin(t / 90) * Math.min(speed, 20) * 0.4;
       if (cube.current) cube.current.style.transform = `rotateX(${tilt}deg) rotateY(${angle}deg)`;
       if (t < UP + DOWN) return void requestAnimationFrame(frame);
       const settle = Math.ceil(angle / 360) * 360 + 30;
@@ -61,23 +51,20 @@ export function GiftBox({ lid }: { lid: string }) {
         cube.current.style.transition = "transform 450ms cubic-bezier(.2,.9,.3,1.2)";
         cube.current.style.transform = `rotateX(-18deg) rotateY(${settle}deg)`;
       }
-      setTimeout(() => setPhase("shake"), 450);
-      setTimeout(() => setPhase("burst"), 1150);
-      setTimeout(() => {
-        const now2 = Date.now();
-        try {
-          localStorage.setItem(key, String(now2));
-        } catch {}
-        setOpenedAt(now2);
-        setPhase("done");
-      }, 1900);
+      claim.then((r) => {
+        if (r?.soldOut) return setPhase("soldout");
+        if (!r?.code) return setPhase("idle");
+        setPrize(r);
+        setTimeout(() => setPhase("shake"), 450);
+        setTimeout(() => setPhase("burst"), 1150);
+        setTimeout(() => setPhase("done"), 1900);
+      });
     };
     requestAnimationFrame(frame);
   };
 
-  const expires = openedAt ? new Date(openedAt + 864e5) : null;
-  const expired = expires ? Date.now() > expires.getTime() : false;
-  const price = 12000 * (1 - prize.pct / 100);
+  const expired = prize ? Date.now() > Date.parse(prize.expiresAt) : false;
+  const glow = prize?.color ?? "#ff8a00";
 
   return (
     <>
@@ -87,16 +74,21 @@ export function GiftBox({ lid }: { lid: string }) {
         </div>
         <div>
           <strong>Hiring before Christmas? Here&apos;s your Christmas pack</strong>
-          <p>Priority on our next search week, plus a gift box with money off.</p>
+          <p>
+            Priority on our next search week, plus a gift box with money off.{" "}
+            {slots > 0 ? `Only ${slots} of 3 Christmas priority slots left.` : "All 3 Christmas priority slots are taken."}
+          </p>
         </div>
-        <button type="button" className={styles.openBtn} onClick={() => setOpen(true)}>
-          {phase === "done" ? "See your gift" : "Open your Christmas gift"}
-        </button>
+        {(slots > 0 || prize) && (
+          <button type="button" className={styles.openBtn} onClick={show}>
+            {phase === "done" ? "See your gift" : "Open your Christmas gift"}
+          </button>
+        )}
       </div>
 
       {open && (
         <div className={styles.overlay} role="dialog" aria-modal="true" aria-label="Your Christmas gift">
-          <div className={styles.sheet} style={{ ["--glow" as string]: prize.color }}>
+          <div className={styles.sheet} style={{ ["--glow" as string]: glow }}>
             <button type="button" className={styles.close} onClick={() => setOpen(false)} aria-label="Close">×</button>
             <button type="button" className={styles.info} onClick={() => setOdds(!odds)} aria-label="Drop rates">i</button>
 
@@ -110,11 +102,17 @@ export function GiftBox({ lid }: { lid: string }) {
                     <span>{d.odds}%</span>
                   </div>
                 ))}
-                <p>One box per comparison, for hires needed before 24 December. Off one search week.</p>
+                <p>One box per comparison, for hires needed before 24 December. Off your first hire&apos;s fee.</p>
               </div>
             )}
 
-            {phase !== "done" ? (
+            {phase === "soldout" ? (
+              <div className={styles.reveal}>
+                <span className={styles.prize}>Sold out</span>
+                <p>All 3 Christmas priority slots have just been taken, sorry. You can still book a search week as normal.</p>
+                <Link href="/start" className={styles.claim}>Book a search week →</Link>
+              </div>
+            ) : phase !== "done" ? (
               <>
                 <p className={styles.tapHint}>{phase === "idle" ? "Tap the box" : phase === "burst" ? "!!!" : "…"}</p>
                 <button type="button" className={`${styles.stage} ${phase === "shake" ? styles.shake : ""} ${phase === "burst" ? styles.bursting : ""}`} onClick={unbox} aria-label="Open the gift box">
@@ -131,27 +129,26 @@ export function GiftBox({ lid }: { lid: string }) {
                 </button>
               </>
             ) : (
-              <div className={styles.reveal}>
-                <span className={styles.rarity} style={{ color: prize.color }}>{prize.rarity}</span>
-                <span className={styles.prize}>{prize.pct}% off</span>
-                <p>
-                  your search week: {gbp(price)} instead of {gbp(12000)}.
-                </p>
-                <div className={styles.code}>{prize.code}</div>
-                <div className={styles.perk}>
-                  <b>+ Priority search</b>
-                  <span>Your search goes into our first available week, and we&apos;ll put every effort into getting your hire made before 24 December.</span>
+              prize && (
+                <div className={styles.reveal}>
+                  <span className={styles.rarity} style={{ color: prize.color }}>{prize.rarity}</span>
+                  <span className={styles.prize}>{prize.pct}% off</span>
+                  <p>your first hire: {gbp(12000 * (1 - prize.pct / 100))} instead of {gbp(12000)}.</p>
+                  <div className={styles.code}>{prize.code}</div>
+                  <div className={styles.perk}>
+                    <b>+ Priority search</b>
+                    <span>Your search goes into our first available week, and we&apos;ll put every effort into getting your hire made before 24 December.</span>
+                  </div>
+                  <p className={styles.small}>
+                    {prize.used
+                      ? "You've used this code on your booking."
+                      : expired
+                        ? "This code has expired."
+                        : `Valid until ${new Date(prize.expiresAt).toLocaleString("en-GB", { weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}. It's applied automatically when you book.`}
+                  </p>
+                  {!expired && !prize.used && <Link href={`/start?code=${prize.code}`} className={styles.claim}>Book a search week →</Link>}
                 </div>
-                <p className={styles.small}>
-                  {expired
-                    ? "This code has expired."
-                    : `Valid until ${expires?.toLocaleString("en-GB", { weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}. Enter it when you book.`}
-                </p>
-                {!expired && <Link href={`/start?code=${prize.code}`} className={styles.claim}>Book a search week →</Link>}
-                <button type="button" className={styles.reset} onClick={reset}>
-                  Mockup: reset the box
-                </button>
-              </div>
+              )
             )}
           </div>
         </div>

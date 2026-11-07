@@ -3,6 +3,8 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { sessionEmail } from "@/lib/onboarding/auth";
 import { availability, schedule } from "@/lib/onboarding/db";
 import { priceDeal } from "@/lib/onboarding/pricing";
+import { checkCode, claimCode } from "@/lib/compareGifts";
+import { toAndre } from "@/lib/chat/telegram";
 import { termsDoc, termsHtml } from "@/lib/onboarding/terms";
 import { htmlToPdf } from "@/lib/onboarding/pdf";
 import { ANDRE, sendMail } from "@/lib/onboarding/mail";
@@ -58,7 +60,11 @@ export async function POST(req: Request) {
 
   // ---- price and schedule on the server (never trust the browser's numbers)
   const roles = plan === "batch" ? Math.max(Number(d.roles) || 2, briefs.length) : briefs.length;
-  const deal = priceDeal(plan, !!d.retained, roles);
+  // A Christmas gift code (from /compare): checked here, never trusted from the browser.
+  const gift = d.code ? await checkCode(createAdminClient(), String(d.code)) : null;
+  if (gift && !gift.ok) return bad(`${gift.error} Remove the code from the link to book without it.`, 409);
+  const discount = gift?.ok ? { pct: gift.pct, code: gift.code } : undefined;
+  const deal = priceDeal(plan, !!d.retained, roles, discount?.pct);
   const weeks = await availability();
   const slots = schedule(weeks, String(d.start), Math.max(briefs.length, 1));
   if (!slots) return bad("Sorry, those search weeks have just filled up. Please pick another week.", 409);
@@ -105,7 +111,7 @@ export async function POST(req: Request) {
   // ---- book every role in one go (the database refuses if a week just filled)
   const today = new Date();
   const dateLong = today.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
-  const termsIn = { variant: plan, retained: deal.retained, roles: deal.roles, date: dateLong, client: bill.legal || you.company, clientNumber: bill.number, clientAddress: bill.address };
+  const termsIn = { variant: plan, retained: deal.retained, roles: deal.roles, date: dateLong, client: bill.legal || you.company, clientNumber: bill.number, clientAddress: bill.address, discount };
   const { hash } = termsDoc(termsIn);
   const { data: bookingId, error: bErr } = await db.rpc("create_booking", {
     p_account: accountId,
@@ -132,6 +138,11 @@ export async function POST(req: Request) {
   }
   const { data: booking } = await db.from("bookings").select("id, ref").eq("id", bookingId).single();
   const ref = booking!.ref as string;
+  if (discount) {
+    await claimCode(db, discount.code, bookingId as string);
+    await db.from("booking_events").insert({ booking_id: bookingId, kind: "christmas_code", detail: { code: discount.code, pct: discount.pct, firstFee: deal.fees[0] } });
+    await toAndre(`🎁 ${you.company} booked with Christmas code ${discount.code} (${discount.pct}% off the first fee, now ${deal.fees[0].toLocaleString("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 0 })}). Ref ${ref}. Priority search promised.`).catch(() => {});
+  }
 
   // ---- emails need these details either way
   const roleNames = briefs.map((b: (typeof briefs)[number], i: number) => b.title || `Role ${i + 1}`);

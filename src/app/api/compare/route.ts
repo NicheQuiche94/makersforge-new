@@ -2,13 +2,15 @@ import { randomBytes } from "node:crypto";
 import { sendMail } from "@/lib/onboarding/mail";
 import { layout } from "@/lib/clientEmails";
 import { toAndre } from "@/lib/chat/telegram";
-import { compare, encodeInput, gbp, day, addWeeks, roleLabel, wantsChristmasHire, ROLES, HOOKS, type CompareInput, type Priority } from "@/lib/compare";
+import { createAdminClient } from "@/lib/supabase/admin";
+import { drawPrize, giftCode } from "@/lib/compareGifts";
+import { compare, gbp, day, roleLabel, wantsChristmasHire, ROLES, HOOKS, type CompareInput, type Priority } from "@/lib/compare";
 
 /**
- * POST the /compare form → emails them a link to their comparison (MOCKUP,
- * Andre 2026-11-07). Locally (no RESEND_API_KEY) the email lands in
- * .onboarding-outbox/ instead of being sent, and Andre isn't pinged.
- * Not yet: storing the request, adding them to Folk.
+ * POST the /compare form (Andre 2026-11-07): saves the request (and draws its
+ * Christmas prize if the hire is needed before 24 Dec), emails them a short
+ * link to their comparison, and pings Andre on the live site. Locally (no
+ * RESEND_API_KEY) the email lands in .onboarding-outbox/ instead.
  */
 export const runtime = "nodejs";
 
@@ -18,7 +20,7 @@ const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replac
 
 export async function POST(req: Request) {
   const b = await req.json().catch(() => ({}));
-  const email = String(b.email || "").trim();
+  const email = String(b.email || "").trim().toLowerCase();
   if (!/^\S+@\S+\.\S+$/.test(email) || email.length > 200) return Response.json({ error: "Please enter your work email." }, { status: 400 });
   if (!ROLES.some((r) => r.id === b.role)) return Response.json({ error: "Pick a role." }, { status: 400 });
 
@@ -26,27 +28,49 @@ export async function POST(req: Request) {
     role: b.role,
     salary: Math.max(10000, Math.min(Number(b.salary) || 0, 500000)),
     start: /^\d{4}-\d{2}-\d{2}$/.test(b.start || "") ? b.start : undefined,
-    budget: Number(b.budget) > 0 ? Number(b.budget) : undefined,
+    budget: Number(b.budget) > 0 ? Math.round(Number(b.budget)) : undefined,
     p: P.includes(b.p) ? b.p : "balanced",
     name: String(b.name || "").trim().slice(0, 80) || undefined,
-    company: String(b.company || "").trim().slice(0, 80) || undefined,
     hook: Math.min(Math.max(Number(b.hook) || 0, 0), HOOKS.length - 1),
     lid: randomBytes(5).toString("hex"),
   };
+  const { best } = compare(input);
+  const christmas = wantsChristmasHire(input);
+  const prize = christmas ? drawPrize() : null;
+
+  const { error } = await createAdminClient()
+    .from("compare_requests")
+    .insert({
+      lid: input.lid,
+      email,
+      name: input.name ?? null,
+      role: input.role,
+      salary: input.salary,
+      need_by: input.start ?? null,
+      budget: input.budget ?? null,
+      priority: input.p,
+      hook: input.hook,
+      best: best.r.id,
+      christmas,
+      gift_pct: prize?.pct ?? null,
+      gift_code: prize ? giftCode(input.lid, prize.pct) : null,
+    });
+  if (error) {
+    console.error("compare save", error);
+    return Response.json({ error: "That didn't go through. Please try again." }, { status: 500 });
+  }
+
   // Live site links to makersforge.gg; previews and local dev link back to themselves.
   const origin = process.env.VERCEL_ENV === "production" ? SITE : new URL(req.url).origin;
-  const link = `${origin}/compare/result?d=${encodeInput(input)}&utm_source=email&utm_medium=compare&utm_campaign=${HOOKS[input.hook]?.accent ?? "hook"}`;
+  const link = `${origin}/compare/r/${input.lid}?utm_source=email&utm_medium=compare&utm_campaign=${HOOKS[input.hook].accent}`;
   const role = roleLabel(input.role);
-  const { best } = compare(input);
-
-  // DRAFT copy for Andre.
   const html = layout(
     `<p style="margin:0 0 14px">Hi ${esc(input.name?.split(" ")[0] || "there")},</p>
-<p style="margin:0 0 14px">Here's your comparison for the ${esc(role)} role${input.company ? ` at ${esc(input.company)}` : ""}: every way to hire it, side by side on cost, speed, interviews and your team's hours.</p>
+<p style="margin:0 0 14px">Here's your comparison for the ${esc(role)} role: every way to hire it, side by side on cost, speed, interviews and your team's hours.</p>
 <table role="presentation" cellpadding="0" cellspacing="0" style="margin:6px 0 20px"><tr><td bgcolor="#ff5d00" style="border-radius:999px">
 <a href="${link}" style="display:inline-block;padding:13px 24px;font-weight:700;font-size:15px;color:#fff;text-decoration:none;border-radius:999px">See your comparison →</a>
 </td></tr></table>
-${wantsChristmasHire(input) ? `<p style="margin:0 0 14px">You need this hire made before Christmas, so there's a Christmas pack waiting at the bottom: priority on our next search week, plus a gift. 🎁</p>` : ""}
+${christmas ? `<p style="margin:0 0 14px">You need this hire made before Christmas, so there's a Christmas pack waiting at the bottom: priority on our next search week, plus a gift. 🎁</p>` : ""}
 <p style="margin:0 0 14px">Hope it's helpful. Any questions, just reply: it comes straight to me.</p>
 <p style="margin:0 0 14px">Andre<br><span style="color:#5b5f69;font-size:14px">Founder, MakersForge</span></p>`,
     `Your ${role} hiring comparison`,
@@ -56,10 +80,10 @@ ${wantsChristmasHire(input) ? `<p style="margin:0 0 14px">You need this hire mad
 
   if (process.env.VERCEL_ENV === "production") {
     await toAndre(
-      `📊 Comparison requested: ${role}, ${gbp(input.salary)}${input.start ? `, hire needed by ${day(new Date(input.start))}` : ""}${wantsChristmasHire(input) ? " 🎄" : ""}\n` +
-        `${input.name || "No name"}${input.company ? ` (${input.company})` : ""} · ${email}\n` +
-        `Best fit for them: ${best.r.name} · headline "${HOOKS[input.hook]?.accent ?? "?"}"`,
+      `📊 Comparison requested: ${role}, ${gbp(input.salary)}${input.start ? `, hire needed by ${day(new Date(input.start))}` : ""}${christmas ? ` 🎄 (${prize!.pct}% box)` : ""}\n` +
+        `${input.name || "No name"} · ${email}\n` +
+        `Best fit for them: ${best.r.name} · headline "${HOOKS[input.hook].accent}"`,
     ).catch(() => {});
   }
-  return Response.json({ ok: true, ...(sent.dev ? { devLink: link } : {}), startHint: day(addWeeks(best.startWeeks)) });
+  return Response.json({ ok: true, christmas, ...(sent.dev ? { devLink: link } : {}) });
 }

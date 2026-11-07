@@ -56,6 +56,18 @@ export function StartFlow() {
   const params = useSearchParams();
   const person = ROSTER.find((p) => p.id === params.get("candidate"));
   const preset = planById(params.get("plan"))?.id as PlanId | undefined;
+  // A Christmas gift code from the hiring comparison (/compare): checked on the server, applied to the first hire.
+  const [discount, setDiscount] = useState<{ pct: number; code: string; expiresAt: string } | null>(null);
+  const [discountError, setDiscountError] = useState("");
+  useEffect(() => {
+    const c = params.get("code");
+    if (!c) return;
+    fetch(`/api/compare/code?c=${encodeURIComponent(c)}`)
+      .then((r) => r.json())
+      .then((d) => (d.ok ? setDiscount({ pct: d.pct, code: d.code, expiresAt: d.expiresAt }) : setDiscountError(d.error || "That code can't be used.")))
+      .catch(() => {});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   // Live search weeks from the database (slots left after other bookings and blocked weeks).
   const [weeks, setWeeks] = useState<{ start: string; open: number }[] | null>(null);
   const [weeksError, setWeeksError] = useState(false);
@@ -249,6 +261,7 @@ export function StartFlow() {
         bill,
         sign,
         changeRequest: opts.changeRequest,
+        code: discount?.code,
       }),
     );
     files.current.forEach((fl, i) => fl && body.set(`spec-${i}`, fl));
@@ -290,6 +303,13 @@ export function StartFlow() {
 
   return (
     <div className={styles.page}>
+      {(discount || discountError) && (
+        <div className={discount ? styles.codeOk : styles.codeBad}>
+          {discount
+            ? `🎁 ${discount.code} applied: ${discount.pct}% off your first ${plan === "contract" ? "month" : "hire"}, plus Christmas priority. Valid until ${new Date(discount.expiresAt).toLocaleString("en-GB", { weekday: "short", hour: "2-digit", minute: "2-digit" })}.`
+            : discountError}
+        </div>
+      )}
       <div className={styles.layout}>
         <div className={styles.mainCol}>
           <ol className={styles.progress} aria-label="Steps">
@@ -533,12 +553,12 @@ export function StartFlow() {
                 <iframe
                   className={styles.termsFrame}
                   title="Terms of Business"
-                  src={`/api/onboarding/terms-pdf?${new URLSearchParams({ html: "1", plan: plan ?? "permanent", retained: isRetained ? "1" : "0", roles: String(plan === "batch" ? roles : briefs.length) })}`}
+                  src={`/api/onboarding/terms-pdf?${new URLSearchParams({ html: "1", plan: plan ?? "permanent", retained: isRetained ? "1" : "0", roles: String(plan === "batch" ? roles : briefs.length), ...(discount && { code: discount.code }) })}`}
                 />
                 {billingOk ? (
                   <a
                     className={styles.download}
-                    href={`/api/onboarding/terms-pdf?${new URLSearchParams({ plan: plan ?? "permanent", retained: isRetained ? "1" : "0", roles: String(plan === "batch" ? roles : briefs.length), client: bill.legal, number: bill.number, address: bill.address })}`}
+                    href={`/api/onboarding/terms-pdf?${new URLSearchParams({ plan: plan ?? "permanent", retained: isRetained ? "1" : "0", roles: String(plan === "batch" ? roles : briefs.length), client: bill.legal, number: bill.number, address: bill.address, ...(discount && { code: discount.code }) })}`}
                   >
                     ↓ Download your terms (PDF), made out to {bill.legal}
                   </a>
@@ -728,6 +748,11 @@ export function StartFlow() {
                 <strong>{price.total}</strong>
                 <em>{price.note}</em>
               </div>
+            )}
+            {price && discount && (
+              <p className={styles.sumDiscount}>
+                {discount.code}: −{gbp(((plan === "contract" ? 1_000 : fees[0] * (isRetained ? 0.85 : 1)) * discount.pct) / 100)} off your first {plan === "contract" ? "month" : "hire"}
+              </p>
             )}
             <p className={styles.sumCall}>
               Questions? <CallLink className={styles.callBtn}>Book 15 minutes with Andre</CallLink>

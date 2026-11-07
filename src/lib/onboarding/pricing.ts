@@ -15,11 +15,18 @@ export type Deal = {
   retainer: number;
 };
 
-export function priceDeal(plan: PlanId, retainedAsked: boolean, rolesAsked: number): Deal {
+/** discountPct: a Christmas gift code (lib/compareGifts), taken off the first hire's fee (contract: the first month). */
+export function priceDeal(plan: PlanId, retainedAsked: boolean, rolesAsked: number, discountPct = 0): Deal {
   const retained = retainedAsked && plan !== "contract";
-  if (plan === "contract") return { plan, retained: false, roles: Math.max(1, rolesAsked), fees: Array(Math.max(1, rolesAsked)).fill(1_000), retainer: 0 };
+  const off = (f: number) => Math.round(f * (1 - discountPct / 100));
+  if (plan === "contract") {
+    const fees = Array(Math.max(1, rolesAsked)).fill(1_000);
+    fees[0] = off(fees[0]);
+    return { plan, retained: false, roles: fees.length, fees, retainer: 0 };
+  }
   const roles = plan === "batch" ? Math.min(Math.max(rolesAsked, 2), BATCH_MAX) : Math.max(1, rolesAsked);
   const full = plan === "batch" ? batchSteps(roles) : Array(roles).fill(SINGLE_FEE);
+  full[0] = off(full[0]);
   const total = full.reduce((a, b) => a + b, 0);
   return {
     plan,

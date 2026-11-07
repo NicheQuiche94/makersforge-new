@@ -59,7 +59,6 @@ export function CompareMock() {
   return (
     <section className={styles.hero}>
       <div className={styles.heroInner}>
-        <p className={styles.mock}>Mockup · draft wording · headline {hook + 1} of {HOOKS.length} (?hook=1, 2 or 3)</p>
         <h1 className={styles.display}>
           {HOOKS[hook].pre}
           <span className={`gr ${styles.accent}`}>{HOOKS[hook].accent}</span>

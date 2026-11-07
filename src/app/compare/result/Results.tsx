@@ -7,7 +7,7 @@ import { setMailRef } from "@/lib/analytics";
 import { GiftBox } from "./GiftBox";
 import styles from "../compare.module.css";
 
-export function Results({ input }: { input: CompareInput | null }) {
+export function Results({ input, christmas = false, slots = 0 }: { input: CompareInput | null; christmas?: boolean; slots?: number }) {
   const [open, setOpen] = useState<string | null>(null);
   // With cookies accepted, PostHog files this visit (and its recording) under the request.
   useEffect(() => {
@@ -29,12 +29,11 @@ export function Results({ input }: { input: CompareInput | null }) {
   }
   const { rows, best, lowest } = data;
   const role = roleLabel(input.role);
-  const giftOn = wantsChristmasHire(input);
+  const giftOn = christmas && wantsChristmasHire(input);
 
   return (
     <section className={styles.wrap}>
       <div className="container">
-        <p className={styles.mock}>Mockup for Andre · not live · draft numbers and wording</p>
         <div className={styles.resultHead}>
         <h1 className={styles.display}>
           Your comparison for a <span className={`gr ${styles.accent}`}>{role}</span>
@@ -102,14 +101,14 @@ export function Results({ input }: { input: CompareInput | null }) {
           <Link href="/start" className={styles.go}>Start a search week →</Link>
         </div>
 
-        {giftOn && <GiftBox lid={input.lid} />}
+        {giftOn && <GiftBox lid={input.lid} slots={slots} />}
 
         <details className={styles.how}>
           <summary>How we worked these out</summary>
           <p>
             Cost is the fee plus your team&apos;s hours at {gbp(HOURLY)} an hour. &ldquo;Hire made by&rdquo; is when an offer is
             usually accepted; they then typically work a {NOTICE_WEEKS}-week notice period before starting. Interviews is how many it usually takes to make one
-            hire. [Andre: replace with your real figures and sources.]
+            hire. 
           </p>
         </details>
       </div>

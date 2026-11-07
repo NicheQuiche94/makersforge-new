@@ -1,6 +1,8 @@
 import { termsHtml } from "@/lib/onboarding/terms";
 import { htmlToPdf } from "@/lib/onboarding/pdf";
 import { priceDeal } from "@/lib/onboarding/pricing";
+import { createAdminClient } from "@/lib/supabase/admin";
+import { checkCode } from "@/lib/compareGifts";
 import type { PlanId } from "@/lib/plans";
 
 /**
@@ -15,11 +17,14 @@ export const maxDuration = 60;
 export async function GET(req: Request) {
   const q = new URL(req.url).searchParams;
   const plan = (["permanent", "contract", "batch"].includes(q.get("plan") || "") ? q.get("plan") : "permanent") as PlanId;
-  const deal = priceDeal(plan, q.get("retained") === "1", Number(q.get("roles")) || 1);
+  // A Christmas code (from /compare) is checked here too, so the preview shows the discounted fee.
+  const gift = q.get("code") ? await checkCode(createAdminClient(), q.get("code")!) : null;
+  const discount = gift?.ok ? { pct: gift.pct, code: gift.code } : undefined;
+  const deal = priceDeal(plan, q.get("retained") === "1", Number(q.get("roles")) || 1, discount?.pct);
   const client = (q.get("client") || "").slice(0, 200);
   const date = new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
   const { html } = termsHtml(
-    { variant: plan, retained: deal.retained, roles: deal.roles, date, client, clientNumber: (q.get("number") || "").slice(0, 40), clientAddress: (q.get("address") || "").slice(0, 500) },
+    { variant: plan, retained: deal.retained, roles: deal.roles, date, client, clientNumber: (q.get("number") || "").slice(0, 40), clientAddress: (q.get("address") || "").slice(0, 500), discount },
     { name: "(to be signed)", title: "", email: "", signedAt: "not yet signed", ip: "-", ref: "draft" },
   );
   // ?html=1 returns the same document as a web page (for checking the layout quickly).

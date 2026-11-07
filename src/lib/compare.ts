@@ -185,13 +185,3 @@ export const DROPS = [
   { pct: 10, rarity: "Rare", odds: 30, color: "#ff5d00" },
   { pct: 15, rarity: "Legendary", odds: 10, color: "#ffd700" },
 ];
-/** Same request, same prize: the roll is seeded by the request id, so reopening never rerolls. */
-export function rollGift(lid: string) {
-  let h = 2166136261;
-  for (const c of lid) h = Math.imul(h ^ c.charCodeAt(0), 16777619);
-  const n = (h >>> 0) % 100;
-  let acc = 0;
-  const drop = DROPS.find((d) => (acc += d.odds) > n) ?? DROPS[0];
-  const code = `XMAS${drop.pct}-${((h >>> 8) & 0xffff).toString(36).toUpperCase().padStart(4, "0")}`;
-  return { ...drop, code };
-}
