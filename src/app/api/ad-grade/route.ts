@@ -1,6 +1,8 @@
 import { randomBytes } from "node:crypto";
 import { sendMail } from "@/lib/onboarding/mail";
-import { layout } from "@/lib/clientEmails";
+import { gradeEmail, gradePdfHtml } from "@/lib/adGradeReport";
+import { boardScores } from "@/lib/adGraderBench";
+import { htmlToPdf } from "@/lib/onboarding/pdf";
 import { toAndre } from "@/lib/chat/telegram";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { grade, readAd } from "@/lib/adGrader";
@@ -16,7 +18,6 @@ export const runtime = "nodejs";
 export const maxDuration = 60;
 
 const SITE = process.env.NEXT_PUBLIC_SITE_URL || "https://www.makersforge.gg";
-const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 export async function POST(req: Request) {
   const form = await req.formData().catch(() => null);
@@ -54,21 +55,21 @@ export async function POST(req: Request) {
   const prod = process.env.VERCEL_ENV === "production";
   const origin = prod ? SITE : new URL(req.url).origin;
   const link = `${origin}/job-ad-grading-tool/r/${id}?utm_source=email&utm_medium=ad-grade`;
-  const html = layout(
-    `<p style="margin:0 0 14px">Hi there,</p>
-<p style="margin:0 0 6px">Your job ad scored</p>
-<p style="margin:0 0 6px;font-size:44px;font-weight:800;line-height:1">${result.score}<span style="font-size:18px;color:#5b5f69">/100</span></p>
-<p style="margin:0 0 18px;font-weight:700">${esc(result.band.label)}</p>
-<p style="margin:0 0 8px;font-weight:700">The fixes that would make the biggest difference:</p>
-<ol style="margin:0 0 18px;padding-left:20px">${result.fixes.map((f) => `<li style="margin:0 0 6px"><b>${esc(f.label)}</b> (+${f.lost})<br><span style="color:#5b5f69">${esc(f.fix)}</span></li>`).join("")}</ol>
-<table role="presentation" cellpadding="0" cellspacing="0" style="margin:6px 0 20px"><tr><td bgcolor="#ff5d00" style="border-radius:999px">
-<a href="${link}" style="display:inline-block;padding:13px 24px;font-weight:700;font-size:15px;color:#fff;text-decoration:none;border-radius:999px">See the full analysis →</a>
-</td></tr></table>
-<p style="margin:0 0 14px">If you'd rather not do the edits yourself, I'll rewrite it for you by hand and get it to 90+. There's a button for that on your analysis, or just reply to this email.</p>
-<p style="margin:0 0 14px">Andre<br><span style="color:#5b5f69;font-size:14px">Founder, MakersForge</span></p>`,
-    `Your job ad scored ${result.score}/100`,
-  );
-  const sent = await sendMail({ to: email, subject: `Your job ad scored ${result.score}/100`, html });
+  const docTitle = readAd(text, title).title || undefined;
+  const bench = boardScores().bench;
+  const html = gradeEmail(result, docTitle, bench, { online: link, rewrite: `${link}&rewrite=1` });
+  // The full breakdown as a PDF to keep or forward; the email still goes if the PDF can't be made.
+  const pdf = await htmlToPdf(gradePdfHtml(result, docTitle, bench)).catch((e) => {
+    console.error("ad grade pdf", e);
+    return null;
+  });
+  const fileName = `Job ad analysis - ${(docTitle || "your ad").replace(/[^\w ()-]+/g, "").slice(0, 60)}.pdf`;
+  const sent = await sendMail({
+    to: email,
+    subject: `Your job ad scored ${result.score}/100`,
+    html,
+    attachments: pdf ? [{ filename: fileName, content: pdf }] : undefined,
+  });
   if (!sent.ok) return Response.json({ error: "We couldn't send that. Please try again." }, { status: 502 });
 
   if (prod) await toAndre(`📝 Job ad graded: ${result.score}/100 · ${title || "untitled"}\n${email} · ${source}\n${link.split("?")[0]}`).catch(() => {});

@@ -72,7 +72,9 @@ const count = (s: string, res: RegExp[]) => res.filter((r) => r.test(s)).length;
 const quote = (ad: Ad, re: RegExp) => {
   const m = ad.text.match(new RegExp(`[^.\\n]{0,60}${re.source}[^.\\n]{0,60}`, re.flags.replace("g", "")));
   // Start the quote on a whole word.
-  const q = m ? (m.index ? m[0].replace(/^\S*\s/, "") : m[0]) : "";
+  let q = m ? (m.index ? m[0].replace(/^\S*\s/, "") : m[0]) : "";
+  // ...and end on one: drop a word cut off mid-way.
+  if (m && /\w/.test(ad.text[(m.index ?? 0) + m[0].length] ?? "")) q = q.replace(/\s+\S*$/, "");
   return q ? `“${q.trim().replace(/[*#]/g, "")}”` : "";
 };
 

@@ -76,3 +76,4 @@ src/data/ats-resolved.json
 
 # local copies of onboarding emails when no Resend key is set
 .onboarding-outbox/
+public/_mock/
