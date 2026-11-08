@@ -34,3 +34,5 @@
   .options { grid-template-columns: 1fr; }
   .facts { grid-template-columns: 1fr 1fr; }
 }
+.understood { margin: 0; padding: 12px 14px; border-radius: 12px; background: #fff7ef; border: 1px solid rgba(255, 138, 0, 0.35); font-weight: 600; }
+.disclaimer { margin: 6px 0 0; padding-top: 12px; border-top: 1px solid var(--hair); font-size: 13.5px; color: var(--mute); line-height: 1.5; }

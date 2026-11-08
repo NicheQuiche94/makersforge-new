@@ -184,3 +184,34 @@ export function draftAd(b: Extract<Brief, { kind: "hire" }>, a: Answers) {
     "Three stages: a 30-minute intro call, [a practical task or case study], and a final interview with [who]. We'll get back to you within [X] working days.",
   ].join("\n");
 }
+
+/** Keyword fallback for the skills question (no API key, or the call failed). */
+const KEYWORDS: Record<string, RegExp> = {
+  ua: /\b(ua|user acquisition|installs?|cpi|roas|paid|ad spend|scale spend|meta|tiktok|google ads|players?)\b/i,
+  creative: /\b(creatives?|ad (videos?|concepts?)|hooks?|creative testing)\b/i,
+  admon: /\b(ad revenue|ad monetis|ad monetiz|mediation|waterfall|arpdau|ads? revenue)\b/i,
+  aso: /\b(aso|store (page|listing)|app store|organic|keywords?|ratings?)\b/i,
+  data: /\b(data|analytics|dashboards?|sql|tracking|attribution|insights?)\b/i,
+  liveops: /\b(liveops|live ops|events?|crm|push|retention|engagement|churn)\b/i,
+  concept: /\b(concept art|concepts?|art direction|visual style)\b/i,
+  ui: /\b(ui|ux|interface|menus?|hud)\b/i,
+  "3d": /\b(3d|models?|modell?ing|assets?)\b/i,
+  anim: /\b(animation|animator|vfx|effects)\b/i,
+  mktart: /\b(marketing art|ad art|store art|screenshots|trailers?)\b/i,
+  design: /\b(game design|features?|core loop|gameplay|meta game|fun)\b/i,
+  economy: /\b(economy|monetis|monetiz|iap|in-app purchases?|pricing|offers?|arppu|ltv)\b/i,
+  level: /\b(levels?|level design|puzzles?|content)\b/i,
+  pm: /\b(roadmap|product|priorit|a\/b|ab tests?|launch)\b/i,
+  unity: /\b(unity|c#|client|build|performance|crash)\b/i,
+  unreal: /\b(unreal|blueprints?|c\+\+)\b/i,
+  backend: /\b(backend|back-end|server|live services|multiplayer|scal(e|ing) (the )?servers?)\b/i,
+};
+export function guessSkills(text: string) {
+  const hits = Object.entries(KEYWORDS)
+    .map(([id, re]) => ({ id, n: (text.match(new RegExp(re.source, "gi")) || []).length }))
+    .filter((x) => x.n > 0)
+    .sort((a, b) => b.n - a.n)
+    .slice(0, 3)
+    .map((x) => x.id);
+  return hits;
+}

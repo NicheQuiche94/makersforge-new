@@ -1,26 +1,31 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import Link from "next/link";
-import { grade, GROUPS, type Result } from "@/lib/adGrader";
+import { grade, type Result } from "@/lib/adGrader";
+import { arrivalUtm } from "@/lib/analytics";
+import { AdResult } from "./AdResult";
 import styles from "./grader.module.css";
 
 export type Sample = { id: string; label: string; title: string; text: string };
 
-/* MOCKUP (Andre 2026-11-08). One step: paste the ad, leave an email, get the
-   score. In the live version the result arrives by email (like /compare);
-   here it shows straight away so the weights can be tried on real ads. */
+/* MOCKUP (Andre 2026-11-08). One step: drop in the PDF (or paste the ad),
+   leave an email, and the analysis arrives by email. The score is never
+   shown here, so every use is a lead and Andre can offer the rewrite. */
 export function GradingTool({ samples, bench }: { samples: Sample[]; bench: { avg: number; n: number; withPay: number } }) {
   const [text, setText] = useState("");
+  const [file, setFile] = useState<File | null>(null);
+  const [drag, setDrag] = useState(false);
   const [title, setTitle] = useState("");
   const [email, setEmail] = useState("");
-  const [result, setResult] = useState<Result | null>(null);
-  const [open, setOpen] = useState<string | null>(null);
-  const [asked, setAsked] = useState(false);
+  const [state, setState] = useState<"idle" | "sending" | "sent">("idle");
+  const [err, setErr] = useState("");
+  const [devLink, setDevLink] = useState("");
+  const [preview, setPreview] = useState<Result | null>(null);
+  const [fromBrief, setFromBrief] = useState(false);
+  const pick = useRef<HTMLInputElement>(null);
   const out = useRef<HTMLDivElement>(null);
 
   // Arriving from "What am I hiring for?": start from the draft built from their brief.
-  const [fromBrief, setFromBrief] = useState(false);
   useEffect(() => {
     try {
       const d = JSON.parse(sessionStorage.getItem("mf-draft-ad") || "null");
@@ -34,24 +39,42 @@ export function GradingTool({ samples, bench }: { samples: Sample[]; bench: { av
   }, []);
 
   const words = useMemo(() => text.split(/\s+/).filter(Boolean).length, [text]);
-  const ready = words >= 40 && /^\S+@\S+\.\S+$/.test(email);
+  const ready = (!!file || words >= 40) && /^\S+@\S+\.\S+$/.test(email);
 
-  const run = (e?: React.FormEvent) => {
-    e?.preventDefault();
+  const takeFile = (f?: File | null) => {
+    if (!f) return;
+    setErr("");
+    if (!/\.(pdf|txt|md)$/i.test(f.name)) return setErr("Drop in a PDF, or paste the text.");
+    setFile(f);
+  };
+
+  const send = async (e: React.FormEvent) => {
+    e.preventDefault();
     if (!ready) return;
-    setResult(grade(text, title || undefined));
-    setAsked(false);
-    setTimeout(() => out.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
+    setErr("");
+    setState("sending");
+    const fd = new FormData();
+    fd.set("email", email);
+    if (title) fd.set("title", title);
+    if (file) fd.set("file", file);
+    else fd.set("text", text);
+    fd.set("utm", JSON.stringify(arrivalUtm() ?? null));
+    const r = await fetch("/api/ad-grade", { method: "POST", body: fd })
+      .then((x) => x.json())
+      .catch(() => ({ error: "That didn't go through. Please try again." }));
+    if (r.error) {
+      setErr(r.error);
+      setState("idle");
+    } else {
+      setDevLink(r.devLink || "");
+      setState("sent");
+    }
   };
 
   const trySample = (id: string) => {
     const s = samples.find((x) => x.id === id);
     if (!s) return;
-    setText(s.text);
-    setTitle(s.title);
-    if (!email) setEmail("mock@makersforge.gg");
-    setResult(grade(s.text, s.title));
-    setAsked(false);
+    setPreview(grade(s.text, s.title));
     setTimeout(() => out.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
   };
 
@@ -63,143 +86,84 @@ export function GradingTool({ samples, bench }: { samples: Sample[]; bench: { av
           <h1 className={styles.display}>
             Is your job ad <span className="gr">losing</span> you good candidates?
           </h1>
-          <p className={styles.lede}>Paste your job ad and get a score out of 100, with the fixes that will make the biggest difference. Free, in under a minute.</p>
+          <p className={styles.lede}>Drop in your job ad and get a score out of 100, with the fixes that will make the biggest difference. Free, straight to your inbox.</p>
         </header>
 
-        <form className={styles.card} onSubmit={run}>
-          {fromBrief && (
-            <p className={styles.fromBrief}>
-              Here&apos;s a draft built from your brief. Fill in everything in [square brackets], then grade it.
-            </p>
-          )}
-          <label className={styles.field}>
-            <span>Your job ad</span>
-            <textarea value={text} onChange={(e) => setText(e.target.value)} placeholder="Paste the whole ad here: title, location, salary, the lot." rows={10} />
-            <small>{words ? `${words} words` : "Paste the full text for the most accurate score."}</small>
-          </label>
-          <div className={styles.row}>
-            <label className={styles.field}>
-              <span>Job title <i>(if it isn&apos;t the first line)</i></span>
-              <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="e.g. Senior UA Manager" />
-            </label>
-            <label className={styles.field}>
-              <span>Work email</span>
-              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@studio.com" />
-            </label>
+        {state === "sent" ? (
+          <div className={`${styles.card} ${styles.sent}`}>
+            <h2>Check your inbox</h2>
+            <p>Your score and the full analysis are on their way to <b>{email}</b>. It usually takes a minute.</p>
+            {devLink && (
+              <p className={styles.devLink}>
+                Local test (no email sent): <a href={devLink}>open the analysis</a>
+              </p>
+            )}
           </div>
-          <div className={styles.actions}>
-            <button type="submit" className={styles.go} disabled={!ready}>Grade my ad →</button>
-            <span className={styles.hint}>We&apos;ll email you your score and fixes.</span>
-          </div>
-          <div className={styles.samples}>
-            <span>Mockup only: try a real ad from our job board</span>
-            <select value="" onChange={(e) => trySample(e.target.value)}>
-              <option value="">Pick one…</option>
-              {samples.map((s) => (
-                <option key={s.id} value={s.id}>{s.label}</option>
-              ))}
-            </select>
-          </div>
-        </form>
+        ) : (
+          <form className={styles.card} onSubmit={send}>
+            {fromBrief && <p className={styles.fromBrief}>Here&apos;s a draft built from your brief. Fill in everything in [square brackets], then send it for grading.</p>}
 
-        {result && (
-          <div ref={out} className={styles.result}>
-            <p className={styles.mockNote}>In the live version this arrives by email, with a link back to this page.</p>
-
-            <div className={styles.scoreHead}>
-              <div className={`${styles.ring} ${styles[result.band.tone]}`} style={{ ["--p" as string]: `${result.score}` }}>
-                <strong>{result.score}</strong>
-                <span>/ 100</span>
+            {!file && !fromBrief && (
+              <div
+                className={`${styles.drop} ${drag ? styles.dragging : ""}`}
+                onDragOver={(e) => { e.preventDefault(); setDrag(true); }}
+                onDragLeave={() => setDrag(false)}
+                onDrop={(e) => { e.preventDefault(); setDrag(false); takeFile(e.dataTransfer.files?.[0]); }}
+                onClick={() => pick.current?.click()}
+                role="button"
+                tabIndex={0}
+              >
+                <strong>Drop your job ad here</strong>
+                <span>PDF, or click to choose a file</span>
+                <input ref={pick} type="file" accept=".pdf,.txt,.md,application/pdf" hidden onChange={(e) => takeFile(e.target.files?.[0])} />
               </div>
-              <div className={styles.scoreText}>
-                <h2>{result.band.label}</h2>
-                <p>{result.band.line}</p>
-                <p className={styles.bench}>
-                  The average mobile games ad on our job board scores <b>{bench.avg}</b>. Only {bench.withPay}% publish a salary.
-                </p>
-              </div>
-            </div>
-
-            <div className={styles.groups}>
-              {result.groups.map((g) => (
-                <div key={g.id} className={styles.group}>
-                  <div className={styles.groupTop}>
-                    <span>{g.title}</span>
-                    <b>{g.got}/{g.max}</b>
-                  </div>
-                  <div className={styles.bar}><i style={{ width: `${(g.got / g.max) * 100}%` }} /></div>
-                </div>
-              ))}
-            </div>
-
-            {result.fixes.length > 0 && (
-              <div className={styles.fixes}>
-                <h3>Your biggest fixes</h3>
-                <ol>
-                  {result.fixes.map((f) => (
-                    <li key={f.label}>
-                      <div>
-                        <strong>{f.label}</strong>
-                        <p>{f.fix}</p>
-                      </div>
-                      <em>+{f.lost}</em>
-                    </li>
-                  ))}
-                </ol>
+            )}
+            {file && (
+              <div className={styles.fileRow}>
+                <span>📄 {file.name}</span>
+                <button type="button" onClick={() => setFile(null)}>Remove</button>
               </div>
             )}
 
-            <div className={styles.offer}>
-              <div>
-                <h3>Want it at 90+? I&apos;ll rewrite it for you.</h3>
-                <p>
-                  Send it over and I&apos;ll edit it myself, by hand, and send it back within 2 working days. If it doesn&apos;t score 90 or more,
-                  I&apos;ll keep going until it does.
-                </p>
-                <p className={styles.sig}>Andre, Founder, MakersForge</p>
-              </div>
-              {asked ? (
-                <p className={styles.done}>Got it. I&apos;ll be in touch at {email || "your email"}.</p>
-              ) : (
-                <button type="button" className={styles.goLight} onClick={() => setAsked(true)}>Rewrite my ad →</button>
-              )}
-            </div>
+            {!file && (
+              <label className={styles.field}>
+                <span>{fromBrief ? "Your draft" : "Or paste the text"}</span>
+                <textarea value={text} onChange={(e) => setText(e.target.value)} placeholder="Paste the whole ad here: title, location, salary, the lot." rows={fromBrief ? 12 : 5} />
+                {words > 0 && <small>{words} words</small>}
+              </label>
+            )}
 
-            <div className={styles.breakdown}>
-              <h3>The full breakdown</h3>
-              {GROUPS.map((g) => (
-                <div key={g.id} className={styles.bGroup}>
-                  <p className={styles.bHead}>
-                    {g.title} <span>{g.blurb}</span>
-                  </p>
-                  {result.items
-                    .filter((i) => i.group === g.id)
-                    .map((i) => (
-                      <div key={i.id} className={styles.item}>
-                        <button type="button" onClick={() => setOpen(open === i.id ? null : i.id)} aria-expanded={open === i.id}>
-                          <span className={`${styles.mark} ${styles[i.status]}`}>{i.status === "yes" ? "✓" : i.status === "partly" ? "~" : "✗"}</span>
-                          <span className={styles.itemLabel}>{i.label}</span>
-                          <span className={styles.pts}>{i.got}/{i.weight}</span>
-                        </button>
-                        {open === i.id && (
-                          <div className={styles.itemBody}>
-                            {i.note && <p>{i.note}</p>}
-                            {i.got < i.weight && <p><b>Fix:</b> {i.fix}</p>}
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                </div>
-              ))}
+            <div className={styles.row}>
+              <label className={styles.field}>
+                <span>Job title <i>(if it isn&apos;t the first line)</i></span>
+                <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="e.g. Senior UA Manager" />
+              </label>
+              <label className={styles.field}>
+                <span>Work email</span>
+                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@studio.com" />
+              </label>
             </div>
+            {err && <p className={styles.errLine}>{err}</p>}
+            <div className={styles.actions}>
+              <button type="submit" className={styles.go} disabled={!ready || state === "sending"}>{state === "sending" ? "Grading…" : "Email me my score →"}</button>
+              <span className={styles.hint}>Your analysis arrives by email in about a minute.</span>
+            </div>
+            <div className={styles.samples}>
+              <span>Mockup only: preview the scoring on a real ad from our job board</span>
+              <select value="" onChange={(e) => trySample(e.target.value)}>
+                <option value="">Pick one…</option>
+                {samples.map((s) => (
+                  <option key={s.id} value={s.id}>{s.label}</option>
+                ))}
+              </select>
+            </div>
+          </form>
+        )}
 
-            <div className={styles.bridge}>
-              <p>
-                A great ad still only reaches people who are actively looking. The best candidates usually aren&apos;t. See how every way to
-                hire compares for your role.
-              </p>
-              <Link href="/compare" className={styles.go}>Compare hiring routes →</Link>
-            </div>
+        {preview && (
+          <div ref={out} className={styles.previewWrap}>
+            <p className={styles.mockNote}>Mockup preview: visitors only ever see this through the link in their email.</p>
+            <AdResult result={preview} bench={bench} />
           </div>
         )}
       </div>

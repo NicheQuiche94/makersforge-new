@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { AREAS, GENRES, HAVE, HOURS, LENGTH, MODELS, PROBLEMS, SKILLS, brief, draftAd, type Answers } from "@/lib/hiringNeeds";
+import { AREAS, GENRES, HAVE, HOURS, LENGTH, MODELS, SKILLS, brief, draftAd, type Answers } from "@/lib/hiringNeeds";
 import g from "../job-ad-grading-tool/grader.module.css";
 import s from "./needs.module.css";
 
@@ -11,7 +11,7 @@ import s from "./needs.module.css";
    are you trying to fix → what would fix it → what skills does that take →
    does your team have them, with room → how much work is there → what kind
    of game. Email, then the brief, which can become a job ad. */
-const START: Answers = { problem: "", problemText: "", outcome: "", by: "", skills: [], have: {}, hours: 40, length: "ongoing", model: "", genres: [] };
+const START: Answers = { problem: "own", problemText: "", outcome: "", by: "", skills: [], have: {}, hours: 40, length: "ongoing", model: "", genres: [] };
 const STEPS = ["problem", "outcome", "skills", "have", "amount", "game", "email"] as const;
 
 export function NeedsTool() {
@@ -23,8 +23,23 @@ export function NeedsTool() {
   const set = (p: Partial<Answers>) => setA((x) => ({ ...x, ...p }));
   const toggle = <T,>(list: T[], v: T) => (list.includes(v) ? list.filter((x) => x !== v) : [...list, v]);
 
+  const [summary, setSummary] = useState("");
+  const [thinking, setThinking] = useState(false);
+
+  // After the outcome: read their words and suggest the skills it takes.
+  const suggest = async () => {
+    setThinking(true);
+    const r = await fetch("/api/hiring-needs/skills", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ problem: a.problemText, outcome: a.outcome }) })
+      .then((x) => x.json())
+      .catch(() => null);
+    setThinking(false);
+    if (r?.skills) set({ skills: r.skills, have: {} });
+    setSummary(r?.summary || "");
+    setStep(2);
+  };
+
   const can = [
-    !!a.problem && (a.problem !== "other" || a.problemText.trim().length > 3),
+    a.problemText.trim().length > 10,
     a.outcome.trim().length > 5,
     a.skills.length > 0,
     a.skills.every((k) => a.have[k]),
@@ -33,7 +48,7 @@ export function NeedsTool() {
     /^\S+@\S+\.\S+$/.test(email),
   ][step];
 
-  const next = () => (step < STEPS.length - 1 ? setStep(step + 1) : setDone(true));
+  const next = () => (step === 1 ? suggest() : step < STEPS.length - 1 ? setStep(step + 1) : setDone(true));
   const b = done ? brief(a) : null;
 
   const toAd = () => {
@@ -63,20 +78,15 @@ export function NeedsTool() {
             {step === 0 && (
               <>
                 <h2 className={s.q}>What are you trying to fix?</h2>
-                <p className={s.sub}>Start with the problem, not the job title.</p>
-                <div className={s.options}>
-                  {PROBLEMS.map((p) => (
-                    <button key={p.id} type="button" className={`${s.opt} ${a.problem === p.id ? s.on : ""}`} onClick={() => set({ problem: p.id, skills: a.skills.length ? a.skills : p.skills })}>
-                      {p.label}
-                    </button>
-                  ))}
-                </div>
-                {a.problem && (
-                  <label className={g.field}>
-                    <span>In your words {a.problem !== "other" && <i>(optional)</i>}</span>
-                    <input value={a.problemText} onChange={(e) => set({ problemText: e.target.value })} placeholder="e.g. Our CPIs doubled after iOS changes and we can't scale past £5k a day" />
-                  </label>
-                )}
+                <p className={s.sub}>Start with the problem, not the job title. In your own words: a sentence or two is plenty.</p>
+                <label className={g.field}>
+                  <textarea
+                    value={a.problemText}
+                    onChange={(e) => set({ problemText: e.target.value })}
+                    rows={4}
+                    placeholder="e.g. Our CPIs doubled this year and we can't scale spend past £5k a day without losing money. Or: our art team can't keep up with the content our live events need."
+                  />
+                </label>
               </>
             )}
 
@@ -98,7 +108,8 @@ export function NeedsTool() {
             {step === 2 && (
               <>
                 <h2 className={s.q}>What skills does getting there take?</h2>
-                <p className={s.sub}>We&apos;ve picked some from your answer. Add or remove any.</p>
+                {summary && <p className={s.understood}>{summary}</p>}
+                <p className={s.sub}>{a.skills.length ? "We've picked the ones it most needs. Add or remove any." : "Pick the ones it needs."}</p>
                 {AREAS.map((ar) => (
                   <div key={ar.id} className={s.area}>
                     <p>{ar.label}</p>
@@ -184,8 +195,8 @@ export function NeedsTool() {
 
             <div className={s.nav}>
               {step > 0 ? <button type="button" className={s.back} onClick={() => setStep(step - 1)}>← Back</button> : <span />}
-              <button type="button" className={g.go} disabled={!can} onClick={next}>
-                {step === 6 ? "See my hire →" : "Next →"}
+              <button type="button" className={g.go} disabled={!can || thinking} onClick={next}>
+                {thinking ? "Reading that…" : step === 6 ? "See my hire →" : "Next →"}
               </button>
             </div>
           </div>
@@ -222,6 +233,10 @@ export function NeedsTool() {
                     <p className={s.label}>The must-haves</p>
                     <ul className={s.musts}>{b.musts.map((m) => <li key={m}>{m}</li>)}</ul>
                     {b.more.length > 0 && <p className={s.more}>You also have gaps in: {b.more.join(", ")}. Hire for the outcome above first; it&apos;s the one the rest depends on.</p>}
+                    <p className={s.disclaimer}>
+                      This is where first principles lead, based only on what you&apos;ve told us. You know your studio, your team and your budget
+                      better than any tool can, so treat it as a starting point and use your own judgement before you hire.
+                    </p>
                   </div>
 
                   <div className={g.offer}>
