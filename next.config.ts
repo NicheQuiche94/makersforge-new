@@ -47,6 +47,12 @@ const nextConfig: NextConfig = {
         destination: "/line-up?d=ua",
         permanent: false,
       },
+      /* Short link for ads and posts (2026-11-08); the query (UTMs) carries over. */
+      {
+        source: "/grade",
+        destination: "/job-ad-grading-tool",
+        permanent: false,
+      },
       {
         source: "/roster/:path*",
         destination: "/line-up/:path*",
