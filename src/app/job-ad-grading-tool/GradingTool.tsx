@@ -11,7 +11,7 @@ export type Sample = { id: string; label: string; title: string; text: string };
 /* MOCKUP (Andre 2026-11-08). One step: drop in the PDF (or paste the ad),
    leave an email, and the analysis arrives by email. The score is never
    shown here, so every use is a lead and Andre can offer the rewrite. */
-export function GradingTool({ samples, bench }: { samples: Sample[]; bench: { avg: number; n: number; withPay: number } }) {
+export function GradingTool({ samples }: { samples: Sample[] }) {
   const [text, setText] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [drag, setDrag] = useState(false);
@@ -149,7 +149,7 @@ export function GradingTool({ samples, bench }: { samples: Sample[]; bench: { av
               <span className={styles.hint}>Your analysis arrives by email in about a minute.</span>
             </div>
             <div className={styles.samples}>
-              <span>Mockup only: preview the scoring on a real ad from our job board</span>
+              <span>Mockup only (removed before launch): preview the scoring on a real ad</span>
               <select value="" onChange={(e) => trySample(e.target.value)}>
                 <option value="">Pick one…</option>
                 {samples.map((s) => (
@@ -163,7 +163,7 @@ export function GradingTool({ samples, bench }: { samples: Sample[]; bench: { av
         {preview && (
           <div ref={out} className={styles.previewWrap}>
             <p className={styles.mockNote}>Mockup preview: visitors only ever see this through the link in their email.</p>
-            <AdResult result={preview} bench={bench} />
+            <AdResult result={preview} />
           </div>
         )}
       </div>

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
    Step two in a chain of free tools (what am I hiring for → the ad →
    compare routes → a search week). Weights and copy are drafts. */
 export default function GradingToolPage() {
-  const { scored, bench } = boardScores();
+  const { scored } = boardScores();
   // A spread of real ads to preview the scoring on: the best, the middle and the weakest.
   const mid = scored.length >> 1;
   const pick = [...scored.slice(0, 3), ...scored.slice(mid - 2, mid + 1), ...scored.slice(-3)];
@@ -22,5 +22,5 @@ export default function GradingToolPage() {
     title: x.title,
     text: boardAdText(x),
   }));
-  return <GradingTool samples={samples} bench={bench} />;
+  return <GradingTool samples={samples} />;
 }

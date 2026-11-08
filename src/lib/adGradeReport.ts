@@ -25,10 +25,9 @@ const MARK: Record<string, [string, string, string]> = {
 const esc = (s: string) => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 export type Links = { online: string; rewrite: string };
-export type Bench = { avg: number; withPay: number };
 
 /* ---------- the email ---------- */
-export function gradeEmail(r: Result, title: string | undefined, bench: Bench, links: Links) {
+export function gradeEmail(r: Result, title: string | undefined, links: Links) {
   const tone = TONE[r.band.tone];
   const bars = r.groups
     .map((g) => {
@@ -59,8 +58,7 @@ export function gradeEmail(r: Result, title: string | undefined, bench: Bench, l
 <div style="padding-top:22px;font-size:38px;font-weight:800;line-height:1;color:${INK}">${r.score}</div><div style="font-size:12px;color:${DIM};margin-top:4px">/ 100</div>
 </div></td>
 <td valign="middle" style="padding-left:18px"><div style="font-size:22px;font-weight:800;line-height:1.2;color:${INK}">${esc(r.band.label)}</div>
-<div style="color:${DIM};font-size:14.5px;line-height:1.5;margin-top:4px">${esc(r.band.line)}</div>
-<div style="color:${DIM};font-size:13px;margin-top:8px">The average mobile games ad on our job board scores <b>${bench.avg}</b>.</div></td>
+<div style="color:${DIM};font-size:14.5px;line-height:1.5;margin-top:4px">${esc(r.band.line)}</div></td>
 </tr></table>
 
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 24px">${bars}</table>
@@ -82,7 +80,7 @@ export function gradeEmail(r: Result, title: string | undefined, bench: Bench, l
 }
 
 /* ---------- the PDF report ---------- */
-export function gradePdfHtml(r: Result, title: string | undefined, bench: Bench, date = new Date()) {
+export function gradePdfHtml(r: Result, title: string | undefined, date = new Date()) {
   const tone = TONE[r.band.tone];
   const groups = GROUPS.map((g) => {
     const items = r.items.filter((i) => i.group === g.id);
@@ -147,7 +145,7 @@ h1 { font-family: "Cal Sans", Figtree, sans-serif; font-weight: 400; font-size: 
 <p class="sub">Scored against what strong candidates look for before they apply.</p>
 <div class="hero">
   <div class="ring"><b>${r.score}</b><span>/ 100</span></div>
-  <div><h2>${esc(r.band.label)}</h2><p>${esc(r.band.line)}</p><p style="font-size:11.5px">The average mobile games ad on our job board scores <b>${bench.avg}</b>. Only ${bench.withPay}% publish a salary.</p></div>
+  <div><h2>${esc(r.band.label)}</h2><p>${esc(r.band.line)}</p></div>
 </div>
 <div class="bars">${r.groups.map((g) => `<div class="bar"><div><span>${esc(g.title)}</span><span>${g.got}/${g.max}</span></div><i><em style="width:${(g.got / g.max) * 100}%"></em></i></div>`).join("")}</div>
 ${r.fixes.length ? `<div class="fixes"><h3>Your biggest fixes</h3><ol>${r.fixes.map((f) => `<li><b>${esc(f.label)}</b> <span>(+${f.lost})</span><br><span>${esc(f.fix)}</span></li>`).join("")}</ol></div>` : ""}

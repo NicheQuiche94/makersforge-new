@@ -1,7 +1,6 @@
 import { randomBytes } from "node:crypto";
 import { sendMail } from "@/lib/onboarding/mail";
 import { gradeEmail, gradePdfHtml } from "@/lib/adGradeReport";
-import { boardScores } from "@/lib/adGraderBench";
 import { htmlToPdf } from "@/lib/onboarding/pdf";
 import { toAndre } from "@/lib/chat/telegram";
 import { createAdminClient } from "@/lib/supabase/admin";
@@ -56,10 +55,9 @@ export async function POST(req: Request) {
   const origin = prod ? SITE : new URL(req.url).origin;
   const link = `${origin}/job-ad-grading-tool/r/${id}?utm_source=email&utm_medium=ad-grade`;
   const docTitle = readAd(text, title).title || undefined;
-  const bench = boardScores().bench;
-  const html = gradeEmail(result, docTitle, bench, { online: link, rewrite: `${link}&rewrite=1` });
+  const html = gradeEmail(result, docTitle, { online: link, rewrite: `${link}&rewrite=1` });
   // The full breakdown as a PDF to keep or forward; the email still goes if the PDF can't be made.
-  const pdf = await htmlToPdf(gradePdfHtml(result, docTitle, bench)).catch((e) => {
+  const pdf = await htmlToPdf(gradePdfHtml(result, docTitle)).catch((e) => {
     console.error("ad grade pdf", e);
     return null;
   });
