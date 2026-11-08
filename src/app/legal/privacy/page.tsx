@@ -414,6 +414,12 @@ export default function PrivacyPage() {
               you stayed. We don&apos;t store your IP address or anything that
               identifies you.
             </p>
+            <p className={styles.p}>
+              If you give us your email to receive a free tool&apos;s result, we
+              remember it in your browser so you don&apos;t have to enter it
+              again. Click &ldquo;Not you?&rdquo; to clear it. While it&apos;s
+              remembered, our visit count above is linked to it.
+            </p>
           </Section>
 
           <Section num="12" title="changes to this policy">
