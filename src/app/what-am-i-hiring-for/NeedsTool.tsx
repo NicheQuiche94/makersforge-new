@@ -1,9 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { AREAS, GENRES, HAVE, HOURS, LENGTH, MODELS, SKILLS, brief, draftAd, type Answers } from "@/lib/hiringNeeds";
+import { AREAS, GENRES, HAVE, HOURS, LENGTH, MODELS, SKILLS, type Answers } from "@/lib/hiringNeeds";
+import { arrivalUtm } from "@/lib/analytics";
 import g from "../job-ad-grading-tool/grader.module.css";
 import s from "./needs.module.css";
 
@@ -15,11 +14,12 @@ const START: Answers = { problem: "own", problemText: "", outcome: "", by: "", s
 const STEPS = ["problem", "outcome", "skills", "have", "amount", "game", "email"] as const;
 
 export function NeedsTool() {
-  const router = useRouter();
   const [a, setA] = useState<Answers>(START);
   const [step, setStep] = useState(0);
   const [email, setEmail] = useState("");
-  const [done, setDone] = useState(false);
+  const [sent, setSent] = useState<"" | "sending" | "sent">("");
+  const [err, setErr] = useState("");
+  const [devLink, setDevLink] = useState("");
   const set = (p: Partial<Answers>) => setA((x) => ({ ...x, ...p }));
   const toggle = <T,>(list: T[], v: T) => (list.includes(v) ? list.filter((x) => x !== v) : [...list, v]);
 
@@ -48,16 +48,22 @@ export function NeedsTool() {
     /^\S+@\S+\.\S+$/.test(email),
   ][step];
 
-  const next = () => (step === 1 ? suggest() : step < STEPS.length - 1 ? setStep(step + 1) : setDone(true));
-  const b = done ? brief(a) : null;
-
-  const toAd = () => {
-    if (!b || b.kind !== "hire") return;
-    try {
-      sessionStorage.setItem("mf-draft-ad", JSON.stringify({ title: b.title, text: draftAd(b, a), email }));
-    } catch {}
-    router.push("/job-ad-grading-tool?from=brief");
+  // The brief only arrives by email: giving an email is what gets you the result.
+  const send = async () => {
+    setErr("");
+    setSent("sending");
+    const r = await fetch("/api/hiring-needs/brief", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ answers: a, email, utm: arrivalUtm() ?? null }) })
+      .then((x) => x.json())
+      .catch(() => ({ error: "That didn't go through. Please try again." }));
+    if (r.error) {
+      setErr(r.error);
+      setSent("");
+    } else {
+      setDevLink(r.devLink || "");
+      setSent("sent");
+    }
   };
+  const next = () => (step === 1 ? suggest() : step < STEPS.length - 1 ? setStep(step + 1) : send());
 
   return (
     <section className={g.wrap}>
@@ -70,7 +76,7 @@ export function NeedsTool() {
           <p className={g.lede}>Six quick questions from first principles. You&apos;ll get the hire you need, written up as a role brief you can turn into a job ad.</p>
         </header>
 
-        {!done ? (
+        {sent !== "sent" ? (
           <div className={`${g.card} ${s.quiz}`}>
             <div className={s.progress}><i style={{ width: `${((step + 1) / STEPS.length) * 100}%` }} /></div>
             <p className={s.count}>Question {Math.min(step + 1, 6)} of 6{step === 6 ? ": nearly there" : ""}</p>
@@ -193,68 +199,24 @@ export function NeedsTool() {
               </>
             )}
 
+            {err && <p className={g.errLine}>{err}</p>}
             <div className={s.nav}>
               {step > 0 ? <button type="button" className={s.back} onClick={() => setStep(step - 1)}>← Back</button> : <span />}
-              <button type="button" className={g.go} disabled={!can || thinking} onClick={next}>
-                {thinking ? "Reading that…" : step === 6 ? "See my hire →" : "Next →"}
+              <button type="button" className={g.go} disabled={!can || thinking || sent === "sending"} onClick={next}>
+                {thinking ? "Reading that…" : sent === "sending" ? "Sending…" : step === 6 ? "Email me my brief →" : "Next →"}
               </button>
             </div>
           </div>
         ) : (
-          b && (
-            <div className={g.result}>
-              <p className={g.mockNote}>In the live version this arrives by email, with a link back to this page.</p>
-              {b.kind === "none" ? (
-                <div className={s.brief}>
-                  <h2>You might not need to hire</h2>
-                  <p>{b.reason}</p>
-                  <button type="button" className={s.back} onClick={() => { setDone(false); setStep(0); }}>Start again</button>
-                </div>
-              ) : (
-                <>
-                  <div className={s.brief}>
-                    <p className={s.kicker}>Your next hire</p>
-                    <h2>{b.sentence}</h2>
-                    <p className={s.why}>{b.why}</p>
-                    <dl className={s.facts}>
-                      <div><dt>Role</dt><dd>{b.title}</dd></div>
-                      <div><dt>Type</dt><dd>{b.type}</dd></div>
-                      <div><dt>Time</dt><dd>{b.hours}</dd></div>
-                      <div><dt>For</dt><dd>{b.length}</dd></div>
-                      <div><dt>Level</dt><dd>{b.level}</dd></div>
-                      <div><dt>Focus</dt><dd>{b.focus}</dd></div>
-                    </dl>
-                    {b.outcome && (
-                      <p className={s.outcome}>
-                        <b>Hired to:</b> {b.outcome}
-                        {a.by ? `, by ${a.by}` : ""}
-                      </p>
-                    )}
-                    <p className={s.label}>The must-haves</p>
-                    <ul className={s.musts}>{b.musts.map((m) => <li key={m}>{m}</li>)}</ul>
-                    {b.more.length > 0 && <p className={s.more}>You also have gaps in: {b.more.join(", ")}. Hire for the outcome above first; it&apos;s the one the rest depends on.</p>}
-                    <p className={s.disclaimer}>
-                      This is where first principles lead, based only on what you&apos;ve told us. You know your studio, your team and your budget
-                      better than any tool can, so treat it as a starting point and use your own judgement before you hire.
-                    </p>
-                  </div>
-
-                  <div className={g.offer}>
-                    <div>
-                      <h3>Turn this into a job ad</h3>
-                      <p>We&apos;ll write a draft from your brief, with gaps marked for you to fill, then grade it so it scores well first time.</p>
-                    </div>
-                    <button type="button" className={g.goLight} onClick={toAd}>Draft my job ad →</button>
-                  </div>
-
-                  <div className={g.bridge}>
-                    <p>Or skip the ad: see how every way to hire this role compares on cost, speed and your team&apos;s hours.</p>
-                    <Link href="/compare" className={g.go}>Compare hiring routes →</Link>
-                  </div>
-                </>
-              )}
-            </div>
-          )
+          <div className={`${g.card} ${g.sent}`}>
+            <h2>Check your inbox</h2>
+            <p>Your hiring brief is on its way to <b>{email}</b>, with a draft job ad ready to fill in.</p>
+            {devLink && (
+              <p className={g.devLink}>
+                Local test (no email sent): <a href={devLink}>open the brief</a>
+              </p>
+            )}
+          </div>
         )}
       </div>
     </section>
