@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/atoms/Button";
-import { BATCH_STEPS, COMPARE, PLANS, RETAINED_OFF, gbpK, retainedFee, type PayWhen, type Plan } from "@/lib/plans";
+import { COMPARE, PLANS, RETAINED_OFF, TIER_NAME, gbpK, ladder, retainedFee, type PayWhen, type Plan } from "@/lib/plans";
 import styles from "./PlanCards.module.css";
 
 /** Where a plan's button goes: the flow (week first), with the plan and how they pay pre-picked. */
@@ -73,17 +73,18 @@ function Card({ plan, pay, candidate }: { plan: Plan; pay: PayWhen; candidate?: 
   );
 }
 
-/** The batch ladder: what each hire costs, 1st to 5th. */
+/** The batch ladder, one row per tier: what each hire costs, 1st to 5th. */
 function BatchSteps({ pay }: { pay: PayWhen }) {
+  const k = (fee: number) => gbpK(pay === "retained" ? retainedFee(fee) : fee);
   return (
-    <ol className={styles.steps}>
-      {BATCH_STEPS.map((fee, i) => (
-        <li key={fee}>
-          <span>{["1st", "2nd", "3rd", "4th", "5th"][i]} hire</span>
-          <strong>{gbpK(pay === "retained" ? retainedFee(fee) : fee)}</strong>
-        </li>
+    <div className={styles.ladders}>
+      {(["generalist", "specialist"] as const).map((t) => (
+        <div key={t} className={styles.ladderRow}>
+          <span className={styles.ladderName}>{TIER_NAME[t]}</span>
+          <span className={styles.ladderFees}>{ladder(t).map(k).join(" → ")}</span>
+        </div>
       ))}
-    </ol>
+    </div>
   );
 }
 

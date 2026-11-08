@@ -15,7 +15,7 @@ type Prize = { pct: number; rarity: string; color: string; code: string; expires
    kept on the server; opening starts the code's 24 hours. Hires needed by
    the special date get better odds plus priority search. The ⓘ shows the
    drop rates, like a mobile game. */
-export function GiftBox({ lid, special, slots, cur = "GBP" }: { lid: string; special: boolean; slots: number; cur?: Currency }) {
+export function GiftBox({ lid, special, slots, cur = "GBP", fee = 9000 }: { lid: string; special: boolean; slots: number; cur?: Currency; fee?: number }) {
   const promo = activePromo();
   const [open, setOpen] = useState(false);
   const [phase, setPhase] = useState<"idle" | "spin" | "shake" | "burst" | "done" | "soldout">("idle");
@@ -144,7 +144,7 @@ export function GiftBox({ lid, special, slots, cur = "GBP" }: { lid: string; spe
                 <div className={styles.reveal}>
                   <span className={styles.rarity} style={{ color: prize.color }}>{prize.rarity}</span>
                   <span className={styles.prize}>{prize.pct}% off</span>
-                  <p>your first hire: {money(12000 * (1 - prize.pct / 100), cur)} instead of {money(12000, cur)}.</p>
+                  <p>your first hire: {money(fee * (1 - prize.pct / 100), cur)} instead of {money(fee, cur)}.</p>
                   <div className={styles.code}>{prize.code}</div>
                   {special && !priorityGone && (
                     <div className={styles.perk}>

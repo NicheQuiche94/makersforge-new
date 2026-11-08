@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sessionEmail } from "@/lib/onboarding/auth";
 import { availability, schedule } from "@/lib/onboarding/db";
-import { priceDeal } from "@/lib/onboarding/pricing";
+import { priceDeal, tiersFromBriefs } from "@/lib/onboarding/pricing";
 import { checkCode, claimCode } from "@/lib/compareGifts";
 import { toAndre } from "@/lib/chat/telegram";
 import { termsDoc, termsHtml } from "@/lib/onboarding/terms";
@@ -65,7 +65,8 @@ export async function POST(req: Request) {
   if (gift && !gift.ok) return bad(`${gift.error} Remove the code from the link to book without it.`, 409);
   const discount = gift?.ok ? { pct: gift.pct, code: gift.code } : undefined;
   const priority = gift?.ok && gift.special;
-  const deal = priceDeal(plan, !!d.retained, roles, discount?.pct);
+  // Each role's tier comes from its brief, worked out here (never trusted from the browser).
+  const deal = priceDeal(plan, !!d.retained, roles, discount?.pct, tiersFromBriefs(briefs, roles));
   const weeks = await availability();
   const slots = schedule(weeks, String(d.start), Math.max(briefs.length, 1));
   if (!slots) return bad("Sorry, those search weeks have just filled up. Please pick another week.", 409);
@@ -112,7 +113,7 @@ export async function POST(req: Request) {
   // ---- book every role in one go (the database refuses if a week just filled)
   const today = new Date();
   const dateLong = today.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
-  const termsIn = { variant: plan, retained: deal.retained, roles: deal.roles, date: dateLong, client: bill.legal || you.company, clientNumber: bill.number, clientAddress: bill.address, discount };
+  const termsIn = { variant: plan, retained: deal.retained, roles: deal.roles, tiers: deal.tiers, date: dateLong, client: bill.legal || you.company, clientNumber: bill.number, clientAddress: bill.address, discount };
   const { hash } = termsDoc(termsIn);
   const { data: bookingId, error: bErr } = await db.rpc("create_booking", {
     p_account: accountId,

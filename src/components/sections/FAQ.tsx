@@ -46,7 +46,7 @@ const ITEMS: Item[] = [
     q: "How much does it cost?",
     a: (
       <p>
-        A flat £12,000 per permanent hire, not 20–30% of salary. Contractors
+        A flat £9,000 per permanent hire, or from £15,000 for specialist and senior roles (revenue-critical roles at Lead level and above, Head and above in any discipline, or £70k+), never 20–30% of salary. Contractors
         are a flat monthly fee per person, and you pay their rate directly
         with no markup. You only pay when someone is hired.
       </p>

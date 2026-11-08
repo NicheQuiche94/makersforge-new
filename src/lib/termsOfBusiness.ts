@@ -17,7 +17,7 @@
  * kept word for word but OFF: not offered self-serve, only by request on a
  * negotiated deal, at a price.
  */
-import { BATCH_STEPS, RETAINED_OFF, SINGLE_FEE, gbp, retainedPrice } from "@/lib/plans";
+import { BATCH_MAX, RETAINED_OFF, TIER_NAME, feesFor, gbp, retainedPrice, type Tier } from "@/lib/plans";
 
 export type TermsVariant = "permanent" | "contract" | "batch";
 
@@ -34,6 +34,7 @@ export type TermsVars = {
   cancelHours: number; // 48
   guarantee?: boolean; // Andre's replacement guarantee, off unless negotiated
   discount?: { pct: number; code: string }; // a Christmas gift code, off the first Engagement's Fee
+  tiers?: Tier[]; // one per role, from the briefs (generalist / specialist)
 };
 
 export type Clause = { n?: string; text: string; kind: "original" | "fixed" | "new"; note?: string; sub?: Clause[] };
@@ -46,10 +47,11 @@ export const MF_OFFICE = "Second Floor, 2 The Waterhouse, Waterhouse Street, Hem
 export function buildTerms(v: TermsVars): { parties: Clause[]; sections: Section[] } {
   const C = v.client || "[CLIENT]";
   const retained = !!v.retained && v.variant !== "contract";
-  const n = v.variant === "batch" ? Math.min(Math.max(v.roles ?? 2, 2), BATCH_STEPS.length) : 1;
+  const n = v.variant === "batch" ? Math.min(Math.max(v.roles ?? 2, 2), BATCH_MAX) : 1;
+  const tiers = Array.from({ length: n }, (_, i) => v.tiers?.[i] ?? "generalist");
   const k = retained ? 1 - RETAINED_OFF : 1;
   const off = 1 - (v.discount?.pct ?? 0) / 100;
-  const steps = (v.variant === "batch" ? BATCH_STEPS.slice(0, n) : [SINGLE_FEE]).map((x, i) => Math.round((i === 0 ? x * off : x) * k));
+  const steps = feesFor(tiers, v.variant === "batch").map((x, i) => Math.round((i === 0 ? x * off : x) * k));
   const retainer = retainedPrice(steps.reduce((a, b) => a + b, 0) / k).upfront;
   const ORD = ["first", "second", "third", "fourth", "fifth"];
 
@@ -137,16 +139,16 @@ export function buildTerms(v: TermsVars): { parties: Clause[]; sections: Section
       : v.variant === "permanent"
         ? [
             {
-              text: `${C} shall pay the Fees to MakersForge in respect of each Candidate engaged by ${C}. The Fees are fixed at ${gbp(steps[0])}.`,
-              kind: retained ? "new" : "original",
-              note: retained ? `Your 3.1 at the retained price (${RETAINED_OFF * 100}% off £12,000).` : "Your clause; the figure is now a variable (was £10,000).",
+              text: `${C} shall pay the Fees to MakersForge in respect of each Candidate engaged by ${C}. The Role is a ${TIER_NAME[tiers[0]]} role and the Fees are fixed at ${gbp(steps[0])}.`,
+              kind: "new",
+              note: `Your 3.1 with the tier named (generalist £9,000, specialist £15,000)${retained ? `, ${RETAINED_OFF * 100}% off as it's retained` : ""}.`,
             },
           ]
         : [
             {
-              text: `${C} shall pay the Fees to MakersForge in respect of each Candidate engaged by ${C} for a vacancy in the Batch. The Fees are fixed per Engagement, in the order the Engagements are made: ${steps.map((x, i) => `${gbp(x)} for the ${ORD[i]}`).join(", ")}. Fees are payable only for Engagements made.`,
+              text: `${C} shall pay the Fees to MakersForge in respect of each Candidate engaged by ${C} for a vacancy in the Batch. The Fees are fixed per Engagement, in the order the Engagements are made: ${steps.map((x, i) => `${gbp(x)} for the ${ORD[i]} (${TIER_NAME[tiers[i]]} role)`).join(", ")}. Fees are payable only for Engagements made.`,
               kind: "new",
-              note: `Your 3.1 for a batch: each hire £1,000 less than the last${retained ? `, ${RETAINED_OFF * 100}% off as it's retained` : ""}. Releasing ${n} roles and filling fewer only costs the hires made.`,
+              note: `Your 3.1 for a batch: each hire is its tier's fee less £1,000 for every hire before it, down to £7,000 generalist / £12,000 specialist${retained ? `, ${RETAINED_OFF * 100}% off as it's retained` : ""}. Releasing ${n} roles and filling fewer only costs the hires made.`,
             },
           ];
   const retainerClauses: Clause[] = retained
@@ -166,7 +168,7 @@ export function buildTerms(v: TermsVars): { parties: Clause[]; sections: Section
   const vat: Clause = {
     text: `All Fees are inclusive of VAT where VAT applies.`,
     kind: "new",
-    note: "Confirmed: you absorb VAT, so a UK client still sees £12,000.",
+    note: "Confirmed: you absorb VAT, so a UK client still sees the flat fee.",
   };
 
   const discountClauses: Clause[] = v.discount

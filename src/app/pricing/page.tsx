@@ -3,13 +3,14 @@ import type { Metadata } from "next";
 import { BOOKING_URL } from "@/lib/site";
 import { ROSTER } from "@/data/roster";
 import { Compare, PlanGrid } from "@/components/onboard/PlanCards";
+import { TierChecker } from "@/components/onboard/TierChecker";
 import { slotsLeftThisMonth } from "@/lib/plans";
 import styles from "./plans.module.css";
 
 export const metadata: Metadata = {
   title: "Plans & pricing · MakersForge",
   description:
-    "£12,000 per permanent hire, £1,000 a month per contractor, and less per hire when you give us several roles. No lock-in. Start online in five minutes.",
+    "£9,000 per permanent hire, from £15,000 for specialist and senior roles, £1,000 a month per contractor, and less per hire when you give us several roles. No lock-in. Start online in five minutes.",
 };
 
 /* PROTOTYPE 2026-11-02: Plans & pricing is the main self-onboarding page
@@ -50,6 +51,7 @@ export default async function PricingPage({ searchParams }: { searchParams: Prom
       <section className={styles.body} id="plans">
         <div className="container">
           <PlanGrid candidate={person?.id} />
+          <TierChecker />
           <div className={styles.week}>
             <h2>What&apos;s a search week?</h2>
             <p>

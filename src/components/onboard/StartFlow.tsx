@@ -20,7 +20,7 @@ import { useEffect, useRef, useState, type DragEvent } from "react";
 import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/atoms/Button";
 import { ROSTER } from "@/data/roster";
-import { BATCH_MAX, BATCH_SIZES, PLANS, scheduleRoles, SINGLE_FEE, TERMS, batchSteps, batchTotal, fiveDays as fiveDaysOf, gbp, gbpK, planById, retainedPrice, shortDate as shortDateOf, shortlistDate as shortlistDateOf, type PayWhen, type PlanId } from "@/lib/plans";
+import { BATCH_MAX, BATCH_SIZES, PLANS, scheduleRoles, TERMS, TIER_NAME, feesFor, ladder as tierLadder, fiveDays as fiveDaysOf, gbp, gbpK, planById, retainedPrice, shortDate as shortDateOf, shortlistDate as shortlistDateOf, type PayWhen, type PlanId } from "@/lib/plans";
 
 // Dates show "…" until the live calendar has loaded and a week is picked.
 const fiveDays = (w?: string) => (w ? fiveDaysOf(w) : "…");
@@ -30,6 +30,7 @@ import { track } from "@/lib/analytics";
 import { CallLink } from "./Bits";
 import { PayToggle } from "./PlanCards";
 import { WeekCalendar } from "./WeekCalendar";
+import { tierFor, type Tier } from "@/lib/tier";
 import styles from "./StartFlow.module.css";
 
 type Step = "week" | "brief" | "you" | "plan" | "terms" | "requested" | "review" | "pay" | "done";
@@ -138,9 +139,10 @@ export function StartFlow() {
   const isRetained = canRetain && when === "retained";
   // How many roles they're paying for, and the fee per hire at that size.
   const n = plan === "batch" ? roles : briefs.length;
-  // A batch steps down £1,000 a hire; separate single hires are £12,000 each.
-  const fees = plan === "batch" ? batchSteps(roles) : Array(n).fill(SINGLE_FEE);
-  const full = plan === "batch" ? batchTotal(roles) : SINGLE_FEE * n;
+  // Each role's tier comes from its brief (lib/tier); a batch takes £1,000 off for each hire before it, down to a floor.
+  const tiers: Tier[] = Array.from({ length: n }, (_, i) => (briefs[i] ? tierFor(briefs[i].f.role, briefs[i].f.budget).tier : "generalist"));
+  const fees = feesFor(tiers, plan === "batch");
+  const full = fees.reduce((a, b) => a + b, 0);
   const ret = retainedPrice(full);
   // Each role gets its own search slot; the panel, review and confirmation show when each runs.
   const roleNames = Array.from({ length: n }, (_, i) => (briefs[i] && briefed(briefs[i]) ? roleName(briefs[i], i) : `Role ${i + 1}`));
@@ -154,7 +156,7 @@ export function StartFlow() {
       ? { each: "£1,000 a month per contractor", total: `${gbp(1_000 * n)} a month`, note: n === 1 ? "While they're engaged." : `While ${n === 2 ? "both are" : `all ${n} are`} engaged.` }
       : isRetained
         ? { each: n > 1 ? `${ladder(0.85)} per hire, retained` : `${gbp(ret.total)} per hire, retained`, total: gbp(ret.total), note: `${n > 1 ? `If ${allFilled.replace(" if ", "")}. ` : ""}${gbp(ret.upfront)} when you sign, counted towards your first ${n > 1 ? "hires" : "hire"}.` }
-        : { each: plan === "batch" ? `${ladder()} per hire` : `${gbp(SINGLE_FEE)} per hire`, total: gbp(full), note: n === 1 ? "Nothing up front. Invoiced when your hire starts." : `If ${allFilled.replace(" if ", "")}. Nothing up front.` };
+        : { each: n > 1 ? `${ladder()} per hire` : `${gbp(fees[0])} per hire (${TIER_NAME[tiers[0]].toLowerCase()} role)`, total: gbp(full), note: n === 1 ? "Nothing up front. Invoiced when your hire starts." : `If ${allFilled.replace(" if ", "")}. Nothing up front.` };
   const order: Step[] = ["week", "brief", "you", "plan", "terms", "review", ...(isRetained ? (["pay"] as Step[]) : []), "done"];
   const at = order.indexOf(step === "requested" ? "terms" : step);
   const go = (s: Step) => {
@@ -289,8 +291,8 @@ export function StartFlow() {
       : isRetained
         ? `Retainer of ${gbp(ret.upfront)} when you sign (non-refundable), credited against your first hires; then each hire is invoiced at its fee, 15% off`
         : plan === "batch"
-          ? "Nothing up front: £12,000 for your first hire, then £1,000 less for each one after, invoiced as each hire starts"
-          : "Nothing up front: £12,000, invoiced when your hire starts";
+          ? `Nothing up front: each hire at its role's fee (${fees.map((x, i) => `${gbp(x)} ${TIER_NAME[tiers[i]].toLowerCase()}`).join(", ")}), invoiced as each hire starts`
+          : `Nothing up front: ${gbp(fees[0])} for a ${TIER_NAME[tiers[0]].toLowerCase()} role, invoiced when your hire starts`;
   const termLines: string[] = !p
     ? []
     : [
@@ -414,6 +416,7 @@ export function StartFlow() {
                     placeholder="The 2 or 3 things that matter most"
                   />
                 </div>
+                <TierNote role={f.role} budget={f.budget} />
                 {briefs.length < BATCH_MAX && (
                   <button type="button" className={styles.addRole} onClick={addRole}>
                     + Add another role
@@ -478,7 +481,7 @@ export function StartFlow() {
                 <PayToggle pay={when} setPay={setWhen} />
                 <div className={styles.planList}>
                   {PLANS.map((x) => (
-                    <PlanOption key={x.id} x={x} pay={when} on={plan === x.id} pick={() => setPlan(x.id)} />
+                    <PlanOption key={x.id} x={x} tiers={tiers} pay={when} on={plan === x.id} pick={() => setPlan(x.id)} />
                   ))}
                 </div>
 
@@ -553,12 +556,12 @@ export function StartFlow() {
                 <iframe
                   className={styles.termsFrame}
                   title="Terms of Business"
-                  src={`/api/onboarding/terms-pdf?${new URLSearchParams({ html: "1", plan: plan ?? "permanent", retained: isRetained ? "1" : "0", roles: String(plan === "batch" ? roles : briefs.length), ...(discount && { code: discount.code }) })}`}
+                  src={`/api/onboarding/terms-pdf?${new URLSearchParams({ html: "1", plan: plan ?? "permanent", retained: isRetained ? "1" : "0", roles: String(plan === "batch" ? roles : briefs.length), tiers: tiers.map((t) => t[0]).join(","), ...(discount && { code: discount.code }) })}`}
                 />
                 {billingOk ? (
                   <a
                     className={styles.download}
-                    href={`/api/onboarding/terms-pdf?${new URLSearchParams({ plan: plan ?? "permanent", retained: isRetained ? "1" : "0", roles: String(plan === "batch" ? roles : briefs.length), client: bill.legal, number: bill.number, address: bill.address, ...(discount && { code: discount.code }) })}`}
+                    href={`/api/onboarding/terms-pdf?${new URLSearchParams({ plan: plan ?? "permanent", retained: isRetained ? "1" : "0", roles: String(plan === "batch" ? roles : briefs.length), tiers: tiers.map((t) => t[0]).join(","), client: bill.legal, number: bill.number, address: bill.address, ...(discount && { code: discount.code }) })}`}
                   >
                     ↓ Download your terms (PDF), made out to {bill.legal}
                   </a>
@@ -765,12 +768,17 @@ export function StartFlow() {
 }
 
 /** One plan in the picker; its price follows the On success / Retained switch. */
-function PlanOption({ x, pay, on, pick }: { x: (typeof PLANS)[number]; pay: PayWhen; on: boolean; pick: () => void }) {
+function PlanOption({ x, pay, on, pick, tiers }: { x: (typeof PLANS)[number]; pay: PayWhen; on: boolean; pick: () => void; tiers: Tier[] }) {
   const base = pay === "retained" && x.retained ? x.retained : x;
   const k = pay === "retained" ? 0.85 : 1;
-  // Batch shows its first fee and the step-down itself, not a range (Ashley's QA).
-  const ladder = x.id === "batch" ? batchSteps(BATCH_MAX).map((s) => s * k) : null;
-  const face = ladder ? { price: gbp(ladder[0]), per: `first hire, then ${gbp(1000 * k)} less each` } : base;
+  // Batch shows its fees in order for the roles briefed (or the generalist ladder before any), not a range (Ashley's QA).
+  const ladder = x.id === "batch" ? (tiers.length > 1 ? feesFor(tiers, true) : tierLadder(tiers[0] ?? "generalist")).map((s) => s * k) : null;
+  const first = tiers[0] ?? "generalist";
+  const face = ladder
+    ? { price: gbp(ladder[0]), per: `first hire, then ${gbp(1000 * k)} less each` }
+    : x.id === "permanent"
+      ? { price: gbp(feesFor([first], false)[0] * k), per: `per hire · ${TIER_NAME[first].toLowerCase()} role` }
+      : base;
   const line = pay === "retained" && !x.retained ? "Paid monthly, so there's no retainer" : x.blurb;
   return (
     <button type="button" className={`${styles.planOpt} ${on ? styles.planOn : ""}`} onClick={pick}>
@@ -850,5 +858,19 @@ function Nav({
         </Button>
       </div>
     </div>
+  );
+}
+
+/** Under the brief: which tier this role is, its fee, and why (lib/tier). Senior searches get the fee confirmed first. */
+function TierNote({ role, budget }: { role: string; budget: string }) {
+  if (!role.trim()) return null;
+  const t = tierFor(role, budget);
+  const fee = t.tier === "specialist" ? "£15,000" : "£9,000";
+  const senior = t.tier === "specialist" && (/\b(head|director|vp|vice president|chief|c-level)\b/i.test(role) || (t.salaryGBP ?? 0) >= 120_000);
+  return (
+    <p className={`${styles.tierNote} ${t.tier === "specialist" ? styles.tierSpec : ""}`}>
+      <b>{TIER_NAME[t.tier]} role · {fee}</b> <span>{t.reason}.</span>
+      {senior && <em> Senior search: we&apos;ll confirm the fee within one working day, before you sign.</em>}
+    </p>
   );
 }

@@ -121,7 +121,7 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
           <Link href="/start" className={styles.go}>Start a search week →</Link>
         </div>
 
-        {promo && <GiftBox lid={input.lid} special={special} slots={slots} cur={cur} />}
+        {promo && <GiftBox lid={input.lid} special={special} slots={slots} cur={cur} fee={rows.find((x) => x.r.us)?.fee} />}
 
         <details className={styles.how}>
           <summary>How we worked these out</summary>

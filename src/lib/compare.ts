@@ -4,6 +4,8 @@
  * comparison the email links to). Every number is a draft assumption for
  * Andre to set.
  */
+import { TIER_FEE } from "@/lib/plans";
+import { tierFor } from "@/lib/tier";
 
 /** Headline A/B test (Andre 2026-11-07): the orange words are what changes. */
 export const HOOKS = [
@@ -29,7 +31,7 @@ export type Route = {
   id: string;
   name: string;
   how: string;
-  fee: (salary: number) => number;
+  fee: (salary: number, role?: string) => number;
   feeNote: string;
   shortlist: string;
   hireWeeks: [number, number];
@@ -48,8 +50,8 @@ export const ROUTES: Route[] = [
     id: "mf",
     name: "MakersForge",
     how: "Mobile games and apps specialists, flat fee",
-    fee: () => 12000,
-    feeNote: "£12,000 flat, paid only if you hire",
+    fee: (s, role) => (tierFor(role ?? "", `£${s}`).tier === "specialist" ? TIER_FEE.specialist : TIER_FEE.generalist),
+    feeNote: "£9,000 generalist or £15,000 specialist, flat, paid only if you hire",
     shortlist: "1 week",
     hireWeeks: [2, 4],
     get: "About 5 vetted people, plus more batches should you need them",
@@ -152,7 +154,7 @@ export const roleLabel = (id: string) => ROLES.find((r) => r.id === id)?.label ?
 export function compare(input: CompareInput, now = Date.now()) {
   const weeksToStart = input.start ? Math.max(0, (Date.parse(input.start) - now) / (7 * 864e5)) : null;
   const base = ROUTES.map((r) => {
-    const fee = r.fee(input.salary);
+    const fee = r.fee(input.salary, roleLabel(input.role));
     const hours = r.hours.reduce((n, x) => n + x.h, 0);
     const real = fee + hours * HOURLY;
     const startWeeks = r.hireWeeks[1] + NOTICE_WEEKS;

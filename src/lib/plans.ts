@@ -40,24 +40,38 @@ export type Plan = Face & {
 const SHORTLIST = "5 candidates the Monday after your search week";
 
 /**
- * Batch fees (Andre 2026-11-02): each hire £1,000 less than the one before:
- * 1st £12,000, 2nd £11,000, 3rd £10,000, 4th £9,000, 5th £8,000. They only pay
- * for hires made, so releasing 5 roles and filling 3 costs the same as a batch of 3.
+ * Two tiers (Andre 2026-11-08): generalist £9,000, specialist from £15,000
+ * (higher by agreement for senior searches). Which tier a hire is comes from
+ * lib/tier (fixed rules, never the client's pick). Batches: each hire is its
+ * tier's fee less £1,000 for every hire before it, down to a floor. They only
+ * pay for hires made.
  */
-export const SINGLE_FEE = 12_000;
-export const BATCH_STEPS = [12_000, 11_000, 10_000, 9_000, 8_000];
+export type { Tier } from "@/lib/tier";
+import type { Tier } from "@/lib/tier";
+export const TIER_FEE: Record<Tier, number> = { generalist: 9_000, specialist: 15_000 };
+export const TIER_FLOOR: Record<Tier, number> = { generalist: 7_000, specialist: 12_000 };
+export const TIER_NAME: Record<Tier, string> = { generalist: "Generalist", specialist: "Specialist" };
+export const BATCH_STEP = 1_000;
 export const BATCH_SIZES = [2, 3, 4, 5];
-export const BATCH_MAX = BATCH_STEPS.length;
+export const BATCH_MAX = 5;
 export const RETAINED_OFF = 0.15;
+/** Kept for older callers: the generalist fee. */
+export const SINGLE_FEE = TIER_FEE.generalist;
 
 export const gbp = (n: number) => `£${Math.round(n).toLocaleString("en-GB")}`;
 /** "£9,350" → "£9.35k" style, for the batch ladder. */
 export const gbpK = (n: number) => `£${+(n / 1000).toFixed(2)}k`;
 export const retainedFee = (fee: number) => fee * (1 - RETAINED_OFF);
-/** The fees for the first n hires, in order. */
-export const batchSteps = (roles: number) => BATCH_STEPS.slice(0, Math.max(1, roles));
-/** What a batch costs if every role is filled. */
-export const batchTotal = (roles: number) => batchSteps(roles).reduce((a, b) => a + b, 0);
+/** A hire's fee: its tier, less £1,000 for each hire before it in a batch, never below the floor. */
+export const tierFee = (tier: Tier, position = 0) => Math.max(TIER_FLOOR[tier], TIER_FEE[tier] - BATCH_STEP * position);
+/** The fees for a set of hires, in order (one tier per role). */
+export const feesFor = (tiers: Tier[], batch: boolean) => tiers.map((t, i) => tierFee(t, batch ? i : 0));
+/** The ladder for one tier, 1st to 5th hire. */
+export const ladder = (tier: Tier) => Array.from({ length: BATCH_MAX }, (_, i) => tierFee(tier, i));
+/** Kept for older callers: the generalist ladder. */
+export const BATCH_STEPS = ladder("generalist");
+export const batchSteps = (roles: number, tier: Tier = "generalist") => ladder(tier).slice(0, Math.max(1, roles));
+export const batchTotal = (roles: number, tier: Tier = "generalist") => batchSteps(roles, tier).reduce((a, b) => a + b, 0);
 /**
  * Retained: 15% off every hire. A third of the total for the roles released is
  * paid up front (rounded to £100) and credited against the first hires' fees,
@@ -69,21 +83,21 @@ export function retainedPrice(fullPrice: number) {
   return { total, upfront, rest: total - upfront };
 }
 
-const one = retainedPrice(SINGLE_FEE);
-const low = BATCH_STEPS[BATCH_MAX - 1];
+const G = TIER_FEE.generalist;
+const S = TIER_FEE.specialist;
 
 export const PLANS: Plan[] = [
   {
     id: "permanent",
     name: "Permanent hire",
-    price: "£12,000",
-    per: "per hire, on success",
-    blurb: "One flat fee for your hire. No percentage of salary.",
-    points: [SHORTLIST, "Nothing up front"],
+    price: `${gbp(G)}`,
+    per: `per hire · specialists from ${gbp(S)}`,
+    blurb: "One flat fee per hire, set by the role, not a percentage of salary.",
+    points: [SHORTLIST, "Nothing up front", "Specialist: revenue-critical or senior roles, or £70k+"],
     retained: {
-      price: gbp(one.total),
-      per: "per hire, retained",
-      points: [SHORTLIST, `${gbp(one.upfront)} up front, ${gbp(one.rest)} when your hire starts`],
+      price: gbp(retainedFee(G)),
+      per: `per hire · specialists from ${gbp(retainedFee(S))}`,
+      points: [SHORTLIST, "A third up front, the rest when your hire starts", "Specialist: revenue-critical or senior roles, or £70k+"],
     },
     cta: "Start a brief",
   },
@@ -100,12 +114,12 @@ export const PLANS: Plan[] = [
     id: "batch",
     name: "Batch",
     badge: "Best value",
-    price: `${gbp(SINGLE_FEE)} to ${gbp(low)}`,
+    price: `from ${gbp(TIER_FLOOR.generalist)}`,
     per: "per hire",
-    blurb: `Give us 2 to ${BATCH_MAX} permanent roles at once. Each hire costs £1,000 less than the last.`,
+    blurb: `Give us 2 to ${BATCH_MAX} permanent roles at once. Each hire costs £1,000 less than the one before, down to a floor.`,
     points: ["Each role gets its own search week and 5 candidates", "Pay only for the hires you make"],
     retained: {
-      price: `${gbp(retainedFee(SINGLE_FEE))} to ${gbp(retainedFee(low))}`,
+      price: `from ${gbp(retainedFee(TIER_FLOOR.generalist))}`,
       per: "per hire",
       points: ["Each role gets its own search week and 5 candidates", "A third up front, counted towards your first hires"],
     },
@@ -177,8 +191,8 @@ export const TERMS = {
 const all = (v: string) => ({ permanent: v, contract: v, batch: v });
 export const COMPARE: { row: string; cells: Record<PlanId, string> }[] = [
   { row: "Roles", cells: { permanent: "One", contract: "One", batch: `2 to ${BATCH_MAX}` } },
-  { row: "On success", cells: { permanent: "£12,000 when they start", contract: "£1,000 a month while engaged", batch: `£12,000, then £1,000 less each hire, down to ${gbp(low)}` } },
-  { row: "Retained (15% off)", cells: { permanent: `${gbp(one.total)}: ${gbp(one.upfront)} up front, ${gbp(one.rest)} on hire`, contract: "Monthly, so no retainer", batch: `${gbp(retainedFee(SINGLE_FEE))} down to ${gbp(retainedFee(low))}: a third up front, counted towards your first hires` } },
+  { row: "On success", cells: { permanent: `${gbp(G)} generalist, from ${gbp(S)} specialist`, contract: "£1,000 a month while engaged", batch: `Each hire £1,000 less, down to ${gbp(TIER_FLOOR.generalist)} / ${gbp(TIER_FLOOR.specialist)}` } },
+  { row: "Retained (15% off)", cells: { permanent: `${gbp(retainedFee(G))} generalist, from ${gbp(retainedFee(S))} specialist`, contract: "Monthly, so no retainer", batch: "15% off each hire: a third up front, counted towards your first hires" } },
   { row: "Search week", cells: all("Dedicated search time for your role") },
   { row: "Shortlist", cells: all("5, the Monday after your search week") },
   { row: "Interviews to offer", cells: all("We book the interviews and run the process") },

@@ -964,3 +964,10 @@
 .codeOk { background: #14161b; color: #fff; box-shadow: 0 10px 26px rgba(14, 15, 17, 0.18); }
 .codeBad { background: rgba(225, 75, 0, 0.1); color: #c2410c; }
 .sumDiscount { margin: 8px 0 0; padding: 8px 10px; border-radius: 10px; background: rgba(34, 197, 94, 0.12); color: #15803d; font-weight: 700; font-size: 13.5px; }
+
+/* Tier under the brief (two-tier pricing, 2026-11-08) */
+.tierNote { margin: 10px 0 0; padding: 10px 14px; border-radius: 12px; background: var(--paper, #faf7f2); border: 1px solid var(--hair, #ece7df); font-size: 14px; line-height: 1.5; }
+.tierNote b { color: var(--ink, #0e0f11); }
+.tierNote span { color: var(--dim, #5b5f69); }
+.tierNote em { display: block; font-style: normal; color: #b45309; font-weight: 600; margin-top: 2px; }
+.tierSpec { background: #fff7ef; border-color: rgba(255, 138, 0, 0.4); }

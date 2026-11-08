@@ -18,6 +18,7 @@ export type TermsInput = {
   clientNumber: string;
   clientAddress: string;
   discount?: { pct: number; code: string }; // Christmas gift code (lib/compareGifts)
+  tiers?: import("@/lib/tier").Tier[]; // one per role (generalist / specialist)
 };
 
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -37,6 +38,7 @@ export function termsDoc(v: TermsInput) {
     clientNumber: v.clientNumber,
     clientAddress: v.clientAddress,
     discount: v.discount,
+    tiers: v.tiers,
     contractFee: "£1,000",
     cancelFee: TERMS.cancelFee,
     cancelHours: TERMS.cancelHours,

@@ -428,3 +428,9 @@
   color: var(--dim);
   margin: 12px 0 36px;
 }
+
+/* Batch ladder per tier (two-tier pricing, 2026-11-08) */
+.ladders { display: grid; gap: 6px; margin: 4px 0 12px; }
+.ladderRow { display: grid; gap: 2px; padding: 8px 10px; border-radius: 10px; background: rgba(14, 15, 17, 0.04); font-size: 13px; }
+.ladderName { font-weight: 800; }
+.ladderFees { font-variant-numeric: tabular-nums; color: var(--dim, #5b5f69); }
