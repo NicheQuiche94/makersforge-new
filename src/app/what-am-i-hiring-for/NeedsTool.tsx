@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { AREAS, GENRES, HAVE, HOURS, LENGTH, MODELS, SKILLS, type Answers } from "@/lib/hiringNeeds";
 import { arrivalUtm } from "@/lib/analytics";
+import { setLead } from "@/lib/lead";
+import { EmailField } from "@/components/lead/EmailField";
 import g from "../job-ad-grading-tool/grader.module.css";
 import s from "./needs.module.css";
 
@@ -59,6 +61,7 @@ export function NeedsTool() {
       setErr(r.error);
       setSent("");
     } else {
+      setLead(r.lead);
       setDevLink(r.devLink || "");
       setSent("sent");
     }
@@ -194,7 +197,9 @@ export function NeedsTool() {
                 <p className={s.sub}>You&apos;ll get your role brief by email, with a draft job ad ready to fill in.</p>
                 <label className={g.field}>
                   <span>Work email</span>
-                  <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@studio.com" />
+                  <EmailField value={email} onChange={setEmail}>
+                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@studio.com" />
+                  </EmailField>
                 </label>
               </>
             )}

@@ -68,6 +68,7 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
             <span>Hire made by</span>
             <span>Your team&apos;s hours</span>
             <span>First interviews</span>
+            <span>Who you reach</span>
           </div>
           {rows.map((x) => (
             <div key={x.r.id} className={`${styles.item} ${x.r.us ? styles.itemUs : ""}`}>
@@ -81,6 +82,7 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
                 <span data-l="Hire made by" className={x.hireBy === lowest.hireBy ? styles.win : ""}>{day(addWeeks(x.hireBy))}</span>
                 <span data-l="Your team's hours" className={x.hours === lowest.hours ? styles.win : ""}>{x.hours}h</span>
                 <span data-l="First interviews" className={x.r.interviews === lowest.interviews ? styles.win : ""}>{x.r.interviews}</span>
+                <span data-l="Who you reach" className={x.r.reach.passive ? styles.win : styles.lose}>{x.r.reach.label}</span>
               </button>
               {open === x.r.id && (
                 <div className={styles.detail}>
@@ -97,6 +99,9 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
                       <b>What you get:</b> {x.r.get}.
                     </li>
                     <li>
+                      <b>Who you reach:</b> {x.r.reach.detail}.
+                    </li>
+                    <li>
                       <b>Your team&apos;s hours:</b> {x.r.hours.map((h) => `${h.label} ${h.label === "Interviews" ? "~" : ""}${h.h}h`).join(", ")}.
                     </li>
                   </ul>
@@ -108,7 +113,7 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
           ))}
           <p className={styles.hint}>
             Tap any route for the detail. Green marks the best on each measure. First interviews: how many you&apos;d typically run to find
-            someone worth hiring.
+            someone worth hiring. Who you reach: whether you only see people actively job hunting, or also the people who aren&apos;t looking.
           </p>
         </div>
 

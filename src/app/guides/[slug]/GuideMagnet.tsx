@@ -3,6 +3,8 @@
 import { useState } from "react";
 import type { Magnet } from "@/lib/guides";
 import { arrivalUtm } from "@/lib/analytics";
+import { setLead } from "@/lib/lead";
+import { EmailField } from "@/components/lead/EmailField";
 import styles from "../guides.module.css";
 
 /* The takeaway on a guide (Andre 2026-11-08): a blueprint, checklist or
@@ -26,7 +28,10 @@ export function GuideMagnet({ slug, magnet }: { slug: string; magnet: Magnet }) 
     if (r.error) {
       setErr(r.error);
       setState("idle");
-    } else setState("sent");
+    } else {
+      setLead(r.lead);
+      setState("sent");
+    }
   };
 
   return (
@@ -39,7 +44,9 @@ export function GuideMagnet({ slug, magnet }: { slug: string; magnet: Magnet }) 
         </p>
       ) : (
         <form className={styles.magnetForm} onSubmit={send}>
-          <input type="email" required placeholder="Your work email" value={email} onChange={(e) => setEmail(e.target.value)} aria-label="Your work email" />
+          <EmailField value={email} onChange={setEmail} className={styles.known}>
+            <input type="email" required placeholder="Your work email" value={email} onChange={(e) => setEmail(e.target.value)} aria-label="Your work email" />
+          </EmailField>
           <button type="submit" className={styles.go} disabled={state === "sending"}>
             {state === "sending" ? "Sending…" : "Send it to me →"}
           </button>

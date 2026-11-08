@@ -4,6 +4,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { grade, type Result } from "@/lib/adGrader";
 import { arrivalUtm } from "@/lib/analytics";
 import { AdResult } from "./AdResult";
+import { EmailField } from "@/components/lead/EmailField";
+import { setLead } from "@/lib/lead";
 import styles from "./grader.module.css";
 
 export type Sample = { id: string; label: string; title: string; text: string };
@@ -66,6 +68,7 @@ export function GradingTool({ samples }: { samples: Sample[] }) {
       setErr(r.error);
       setState("idle");
     } else {
+      setLead(r.lead);
       setDevLink(r.devLink || "");
       setState("sent");
     }
@@ -140,7 +143,9 @@ export function GradingTool({ samples }: { samples: Sample[] }) {
               </label>
               <label className={styles.field}>
                 <span>Work email</span>
-                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@studio.com" />
+                <EmailField value={email} onChange={setEmail}>
+                  <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@studio.com" />
+                </EmailField>
               </label>
             </div>
             {err && <p className={styles.errLine}>{err}</p>}

@@ -2,6 +2,7 @@ import { sendMail } from "@/lib/onboarding/mail";
 import { layout } from "@/lib/clientEmails";
 import { toAndre } from "@/lib/chat/telegram";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { leadToken, withLead } from "@/lib/leadToken";
 import { GUIDES, isLive } from "@/lib/guides";
 
 /**
@@ -31,7 +32,7 @@ export async function POST(req: Request) {
 
   const origin = prod ? SITE : new URL(req.url).origin;
   const file = `${origin}${g.magnet.file}`;
-  const article = `${origin}/guides/${g.slug}?utm_source=email&utm_medium=guide&utm_campaign=${g.slug}`;
+  const article = withLead(`${origin}/guides/${g.slug}?utm_source=email&utm_medium=guide&utm_campaign=${g.slug}`, email);
   const html = layout(
     `<p style="margin:0 0 14px">Hi there,</p>
 <p style="margin:0 0 14px">Here's ${esc(g.magnet.name)}, as promised.</p>
@@ -47,5 +48,5 @@ export async function POST(req: Request) {
   if (!sent.ok) return Response.json({ error: "We couldn't send that. Please try again." }, { status: 502 });
 
   if (prod) await toAndre(`📘 Guide download: ${g.magnet.name}\n${email} · from "${g.q}"`).catch(() => {});
-  return Response.json({ ok: true });
+  return Response.json({ ok: true, lead: leadToken(email) });
 }

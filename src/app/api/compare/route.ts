@@ -3,6 +3,7 @@ import { sendMail } from "@/lib/onboarding/mail";
 import { layout } from "@/lib/clientEmails";
 import { toAndre } from "@/lib/chat/telegram";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { leadToken, withLead } from "@/lib/leadToken";
 import { drawPrize, giftCode } from "@/lib/compareGifts";
 import { compare, gbp, day, roleLabel, ROLES, HOOKS, type CompareInput, type Priority } from "@/lib/compare";
 import { activePromo, isSpecial, dropsFor } from "@/lib/promos";
@@ -69,7 +70,7 @@ export async function POST(req: Request) {
 
   // Live site links to makersforge.gg; previews and local dev link back to themselves.
   const origin = process.env.VERCEL_ENV === "production" ? SITE : new URL(req.url).origin;
-  const link = `${origin}/compare/r/${input.lid}?utm_source=email&utm_medium=compare&utm_campaign=${HOOKS[input.hook].accent}`;
+  const link = withLead(`${origin}/compare/r/${input.lid}?utm_source=email&utm_medium=compare&utm_campaign=${HOOKS[input.hook].accent}`, email);
   const role = roleLabel(input.role);
   const html = layout(
     `<p style="margin:0 0 14px">Hi ${esc(input.name?.split(" ")[0] || "there")},</p>
@@ -92,5 +93,5 @@ ${promo ? `<p style="margin:0 0 14px">${special ? `You need this hire made soon,
         `Best fit for them: ${best.r.name} · headline "${HOOKS[input.hook].accent}"`,
     ).catch(() => {});
   }
-  return Response.json({ ok: true, gift: !!prize, special, ...(sent.dev ? { devLink: link } : {}) });
+  return Response.json({ ok: true, gift: !!prize, special, lead: leadToken(email), ...(sent.dev ? { devLink: link } : {}) });
 }

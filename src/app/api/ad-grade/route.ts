@@ -4,6 +4,7 @@ import { gradeEmail, gradePdfHtml } from "@/lib/adGradeReport";
 import { htmlToPdf } from "@/lib/onboarding/pdf";
 import { toAndre } from "@/lib/chat/telegram";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { leadToken, withLead } from "@/lib/leadToken";
 import { grade, readAd } from "@/lib/adGrader";
 import { gradeWithClaude } from "@/lib/adGraderAI";
 import { readUpload, MAX_TEXT } from "@/lib/readDoc";
@@ -57,7 +58,7 @@ export async function POST(req: Request) {
 
   const prod = process.env.VERCEL_ENV === "production";
   const origin = prod ? SITE : new URL(req.url).origin;
-  const link = `${origin}/job-ad-grading-tool/r/${id}?utm_source=email&utm_medium=ad-grade`;
+  const link = withLead(`${origin}/job-ad-grading-tool/r/${id}?utm_source=email&utm_medium=ad-grade`, email);
   const html = gradeEmail(result, docTitle, { online: link, rewrite: `${link}&rewrite=1` });
   // The full breakdown as a PDF to keep or forward; the email still goes if the PDF can't be made.
   const pdf = await htmlToPdf(gradePdfHtml(result, docTitle)).catch((e) => {
@@ -74,5 +75,5 @@ export async function POST(req: Request) {
   if (!sent.ok) return Response.json({ error: "We couldn't send that. Please try again." }, { status: 502 });
 
   if (prod) await toAndre(`📝 Job ad graded: ${result.score}/100 · ${title || "untitled"}\n${email} · ${source}\n${link.split("?")[0]}`).catch(() => {});
-  return Response.json({ ok: true, ...(sent.dev ? { devLink: link } : {}) });
+  return Response.json({ ok: true, lead: leadToken(email), ...(sent.dev ? { devLink: link } : {}) });
 }
