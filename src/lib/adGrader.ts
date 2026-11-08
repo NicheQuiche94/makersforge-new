@@ -19,7 +19,7 @@ export const GROUPS: { id: GroupId; title: string; blurb: string }[] = [
   { id: "experience", title: "Candidate experience", blurb: "Easy to read, clear what happens next." },
 ];
 
-type Check = { status: Status; note: string };
+export type Check = { status: Status; note: string };
 export type Criterion = {
   id: string;
   group: GroupId;
@@ -232,24 +232,30 @@ export function readAd(raw: string, title?: string): Ad {
   return { text, title: guess, lines, lower: text.toLowerCase() };
 }
 
-export function grade(raw: string, title?: string): Result {
-  const ad = readAd(raw, title);
+/** Build the result from an answer per criterion, however it was read. */
+export function scoreFrom(checks: Record<string, Check>): Result {
   const items = CRITERIA.map((c) => {
-    const r = c.check(ad);
+    const r = checks[c.id] ?? { status: "no" as Status, note: "" };
     const got = r.status === "yes" ? c.weight : r.status === "partly" ? Math.round(c.weight / 2) : 0;
     return { ...r, id: c.id, group: c.group, label: c.label, weight: c.weight, got, fix: c.fix };
   });
-  const score = Math.round((items.reduce((a, i) => a + i.got, 0) / MAX) * 100);
+  const score = Math.round((items.reduce((x, i) => x + i.got, 0) / MAX) * 100);
   const groups = GROUPS.map((g) => ({
     id: g.id,
     title: g.title,
-    got: items.filter((i) => i.group === g.id).reduce((a, i) => a + i.got, 0),
-    max: items.filter((i) => i.group === g.id).reduce((a, i) => a + i.weight, 0),
+    got: items.filter((i) => i.group === g.id).reduce((x, i) => x + i.got, 0),
+    max: items.filter((i) => i.group === g.id).reduce((x, i) => x + i.weight, 0),
   }));
   const fixes = items
     .filter((i) => i.got < i.weight)
     .map((i) => ({ label: i.label, fix: i.fix, lost: i.weight - i.got }))
-    .sort((a, b) => b.lost - a.lost)
+    .sort((x, y) => y.lost - x.lost)
     .slice(0, 3);
   return { score, band: bandFor(score), items, groups, fixes };
+}
+
+/** The rule-based reader (fallback when Claude isn't available). */
+export function grade(raw: string, title?: string): Result {
+  const ad = readAd(raw, title);
+  return scoreFrom(Object.fromEntries(CRITERIA.map((c) => [c.id, c.check(ad)])));
 }

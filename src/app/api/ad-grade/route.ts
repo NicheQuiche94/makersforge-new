@@ -5,6 +5,7 @@ import { htmlToPdf } from "@/lib/onboarding/pdf";
 import { toAndre } from "@/lib/chat/telegram";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { grade, readAd } from "@/lib/adGrader";
+import { gradeWithClaude } from "@/lib/adGraderAI";
 import { readUpload, MAX_TEXT } from "@/lib/readDoc";
 
 /**
@@ -36,7 +37,10 @@ export async function POST(req: Request) {
   if (text.split(/\s+/).filter(Boolean).length < 40) return Response.json({ error: "Paste the whole ad, or drop in the PDF." }, { status: 400 });
 
   const title = String(form.get("title") || "").trim().slice(0, 120) || undefined;
-  const result = grade(text, title);
+  // Claude reads it against the scorecard; the rule reader steps in if that fails.
+  const ai = await gradeWithClaude(text, title);
+  const result = ai?.result ?? grade(text, title);
+  const docTitle = ai?.title || readAd(text, title).title || undefined;
   const id = randomBytes(5).toString("hex");
   let utm: unknown = null;
   try {
@@ -45,7 +49,7 @@ export async function POST(req: Request) {
 
   const { error } = await createAdminClient()
     .from("ad_grades")
-    .insert({ id, email, title: readAd(text, title).title || null, ad_text: text, score: result.score, result, source, utm });
+    .insert({ id, email, title: docTitle ?? null, ad_text: text, score: result.score, result, source: `${source}·${ai ? "claude" : "rules"}`, utm });
   if (error) {
     console.error("ad grade save", error);
     return Response.json({ error: "That didn't go through. Please try again." }, { status: 500 });
@@ -54,7 +58,6 @@ export async function POST(req: Request) {
   const prod = process.env.VERCEL_ENV === "production";
   const origin = prod ? SITE : new URL(req.url).origin;
   const link = `${origin}/job-ad-grading-tool/r/${id}?utm_source=email&utm_medium=ad-grade`;
-  const docTitle = readAd(text, title).title || undefined;
   const html = gradeEmail(result, docTitle, { online: link, rewrite: `${link}&rewrite=1` });
   // The full breakdown as a PDF to keep or forward; the email still goes if the PDF can't be made.
   const pdf = await htmlToPdf(gradePdfHtml(result, docTitle)).catch((e) => {
