@@ -8,7 +8,7 @@ import styles from "./guides.module.css";
    each opening its own article. Hidden on the live site until the first
    guide is published. Headline and lede are DRAFT copy for Andre. */
 export const metadata: Metadata = {
-  title: "Hiring guides for mobile games and apps · MakersForge",
+  title: "The Hiring Playbook: hiring in mobile games and apps · MakersForge",
   description: "Practical answers to the questions studios ask about hiring in mobile games and apps: when to hire, how to hire faster, and how to get it right.",
   alternates: { canonical: "/guides" },
 };
@@ -22,6 +22,7 @@ export default function GuidesPage() {
       <div className="container">
         <header className={styles.head}>
           {showDrafts() && <span className={styles.draftNote}>Preview: drafts show here, only published guides show on the live site</span>}
+          <p className={styles.kicker}>The Hiring Playbook</p>
           <h1 className={styles.display}>
             Hiring in mobile games, <span className="gr">answered</span>
           </h1>

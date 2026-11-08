@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const g = guideBySlug((await params).slug);
   if (!g) return {};
   return {
-    title: `${g.q} · MakersForge`,
+    title: `${g.q} · The Hiring Playbook · MakersForge`,
     description: g.short || g.teaser,
     alternates: { canonical: `/guides/${g.slug}` },
     openGraph: { title: g.q, description: g.short || g.teaser, type: "article" },
@@ -70,7 +70,7 @@ export default async function GuidePage({ params }: Props) {
       ))}
       <div className="container">
         <article className={styles.article}>
-          <Link href="/guides" className={styles.back}>← All hiring guides</Link>
+          <Link href="/guides" className={styles.back}>← The Hiring Playbook</Link>
           {!live && <p className={styles.draftNote}>Draft: only visible on previews until it&apos;s published</p>}
           <h1 className={styles.title}>{g.q}</h1>
           <p className={styles.meta}>
@@ -116,7 +116,7 @@ export default async function GuidePage({ params }: Props) {
           </div>
 
           {others.length > 0 && (
-            <nav className={styles.next} aria-label="More hiring guides">
+            <nav className={styles.next} aria-label="More from The Hiring Playbook">
               <h2>More questions</h2>
               <div className={styles.list}>
                 {others.map((x) => (

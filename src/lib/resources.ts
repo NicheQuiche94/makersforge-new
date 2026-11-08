@@ -14,6 +14,6 @@ export const TOOLS: Resource[] = [
 ];
 
 /** Guides only appear once at least one is published. */
-export const GUIDES_LINK: Resource = { href: "/guides", title: "Hiring guides", blurb: "Practical answers to the questions studios ask about hiring, written by Andre.", tag: "Guides" };
+export const GUIDES_LINK: Resource = { href: "/guides", title: "The Hiring Playbook", blurb: "Practical answers to the questions studios ask about hiring, written by Andre.", tag: "Playbook" };
 
 export const menuResources = () => [...TOOLS, ...(liveGuides().length ? [GUIDES_LINK] : [])];

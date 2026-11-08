@@ -27,6 +27,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/pricing`, changeFrequency: "monthly", priority: 0.8 },
     { url: `${SITE_URL}/compare`, changeFrequency: "monthly", priority: 0.9 },
     { url: `${SITE_URL}/job-ad-grading-tool`, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${SITE_URL}/resources`, changeFrequency: "weekly", priority: 0.8 },
   ];
 
   // Every talent profile (anonymised, consented) and the hiring guides once published.

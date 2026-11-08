@@ -39,7 +39,7 @@ export async function POST(req: Request) {
 <table role="presentation" cellpadding="0" cellspacing="0" style="margin:6px 0 20px"><tr><td bgcolor="#ff5d00" style="border-radius:999px">
 <a href="${file}" style="display:inline-block;padding:13px 24px;font-weight:700;font-size:15px;color:#fff;text-decoration:none;border-radius:999px">Download it →</a>
 </td></tr></table>
-<p style="margin:0 0 14px">It goes with my guide, <a href="${article}" style="color:#e14b00;font-weight:700">${esc(g.q)}</a>, if you want the thinking behind it.</p>
+<p style="margin:0 0 14px">It goes with my Hiring Playbook article, <a href="${article}" style="color:#e14b00;font-weight:700">${esc(g.q)}</a>, if you want the thinking behind it.</p>
 <p style="margin:0 0 14px">Any questions, just reply: it comes straight to me.</p>
 <p style="margin:0 0 14px">Andre<br><span style="color:#5b5f69;font-size:14px">Founder, MakersForge</span></p>`,
     g.magnet.name,
