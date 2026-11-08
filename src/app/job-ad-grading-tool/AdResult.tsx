@@ -8,7 +8,7 @@ import styles from "./grader.module.css";
 /* The analysis (Andre 2026-11-08): score, sections, biggest fixes, Andre's
    rewrite offer, the full breakdown and the bridge to /compare. Shown on the
    page the email links to; `id` set means the rewrite button is real. */
-export function AdResult({ result, bench, id, title, requested = false, autoRewrite = false }: { result: Result; bench: { avg: number; withPay: number }; id?: string; title?: string; requested?: boolean; autoRewrite?: boolean }) {
+export function AdResult({ result, id, title, requested = false, autoRewrite = false }: { result: Result; id?: string; title?: string; requested?: boolean; autoRewrite?: boolean }) {
   const [open, setOpen] = useState<string | null>(null);
   const [asked, setAsked] = useState(requested);
   const [note, setNote] = useState("");
@@ -48,9 +48,6 @@ export function AdResult({ result, bench, id, title, requested = false, autoRewr
         <div className={styles.scoreText}>
           <h2>{result.band.label}</h2>
           <p>{result.band.line}</p>
-          <p className={styles.bench}>
-            The average mobile games ad on our job board scores <b>{bench.avg}</b>. Only {bench.withPay}% publish a salary.
-          </p>
         </div>
       </div>
 

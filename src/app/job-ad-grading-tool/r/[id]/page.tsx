@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { boardScores } from "@/lib/adGraderBench";
 import type { Result } from "@/lib/adGrader";
 import { AdResult } from "../../AdResult";
 import styles from "../../grader.module.css";
@@ -30,7 +29,7 @@ export default async function AnalysisPage({ params, searchParams }: { params: P
                 Your job ad, <span className="gr">graded</span>
               </h1>
             </header>
-            <AdResult result={row.result as Result} bench={boardScores().bench} id={row.id} title={row.title ?? undefined} requested={!!row.rewrite_requested_at} autoRewrite={rewrite === "1"} />
+            <AdResult result={row.result as Result} id={row.id} title={row.title ?? undefined} requested={!!row.rewrite_requested_at} autoRewrite={rewrite === "1"} />
           </>
         ) : (
           <header className={styles.head}>
