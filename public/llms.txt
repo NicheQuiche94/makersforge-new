@@ -1,19 +1,23 @@
 # MakersForge
 
-> MakersForge is a talent agency and job board for user acquisition, growth and marketing-art specialists in mobile games and consumer apps.
+> MakersForge is a recruitment service for mobile games and consumer apps. We headhunt and screen candidates, then hand a studio a shortlist of about 5 vetted people within one search week. A permanent hire costs a flat £12,000, paid only if you hire, not a percentage of salary.
 
-MakersForge represents vetted UA, growth and marketing-art talent, helps studios and app companies hire them, and runs a free, hand-curated job board dedicated to those roles. Talent is hosted in front of hiring studios and contracts directly with them, keeping their full rate; studios pay a flat monthly fee. Focused on mobile games and consumer apps across EMEA and remote.
+MakersForge works only with mobile games and consumer-app companies (not PC/console, iGaming or B2B software). The roles we hire for include user acquisition (UA), growth, product, game design, art, creative production and engineering. Studios book a search week online, with no sales call: we brief, headhunt the people who usually never see a job ad, interview them ourselves, and deliver about 5 candidates the Monday after the search week, with more batches if needed. In our searches over the past two and a half years, an offer is typically accepted 2–4 weeks after the brief. We run at most two searches a week, so each one gets full attention. Based in the UK, hiring across Europe and remote.
+
+## Pricing
+- Permanent hire: £12,000 flat per hire, paid on success, nothing up front. Or retained: 15% off, with a third paid up front.
+- Contractor: £1,000 per month while the contractor is engaged. The studio pays the specialist directly, with no markup on their rate.
+- Batch of 2–5 permanent roles: each hire costs £1,000 less than the one before (£12,000, £11,000, £10,000, £9,000, £8,000). You pay only for the hires you make.
+- For comparison: UK recruitment agencies typically charge 15–25% of first-year salary (£11,000–£14,000 on a £55,000 UA manager).
 
 ## Key pages
-- [Job board](https://makersforge.gg/jobs): Hand-curated, weekly-updated board of UA, growth and marketing-art roles in games and apps. Free to post a role.
-- [For talent](https://makersforge.gg/talent): How representation works for growth specialists — hosted in front of studios, interviews come to you, you contract directly and keep your full rate.
-- [The line-up](https://makersforge.gg/line-up): The roster of represented specialists.
-- [Pricing](https://makersforge.gg/pricing): Flat monthly fee, paid by the studio, not a percentage of salary.
-- [Apply](https://makersforge.gg/apply): Join the line-up.
-- [Post a role](https://makersforge.gg/jobs/post): Free job posting for hiring teams.
-
-## What we cover
-User acquisition, growth marketing, app store optimization (ASO), marketing art, motion design, creative strategy and production, for mobile games and consumer apps.
+- [Compare hiring routes](https://www.makersforge.gg/compare): Free tool that compares MakersForge, a job ad, a games agency and a tech agency for your role: cost, weeks to hire and your team's hours.
+- [Pricing](https://www.makersforge.gg/pricing): Plans and fees in full.
+- [Book a search week](https://www.makersforge.gg/start): Brief us, pick a week and sign terms online.
+- [The line-up](https://www.makersforge.gg/line-up): Anonymised profiles of vetted specialists available now.
+- [UA talent](https://www.makersforge.gg/ua) and [growth talent](https://www.makersforge.gg/growth): The line-up filtered by discipline.
+- [Mobile games](https://www.makersforge.gg/games) and [consumer apps](https://www.makersforge.gg/apps): How we hire for each.
+- [Job board](https://www.makersforge.gg/jobs): Hand-curated, weekly-updated board of UA, growth and marketing-art roles in games and apps. Free to post a role.
 
 ## Contact
 andre@makersforge.gg
