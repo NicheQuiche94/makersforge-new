@@ -156,7 +156,7 @@ export const CRITERIA: Criterion[] = [
     fix: "Name the game(s) they'd work on, or say it's unannounced. Candidates want to know what they'd be building.",
     check: (ad) => {
       if (/\b(unannounced|under nda|confidential (project|title)|stealth)\b/i.test(ad.text)) return { status: "yes", note: "Unannounced project, said openly." };
-      const named = /(games?|titles?|portfolio|franchise)\s+(like|such as|including|include)\s+[A-Z]|working on\s+[A-Z][\w']+|our (hit |flagship )?(game|title)s?\s+[A-Z][\w']+/;
+      const named = /(games?|titles?|portfolio|franchise)\s+(like|such as|including|include)\s+[A-Z]|working on\s+[A-Z][\w']+|[Oo]ur (hit |flagship |new )?(game|title)s?,?\s+[A-Z][\w']+/;
       if (named.test(ad.text)) return { status: "yes", note: quote(ad, named) };
       return /\bour (games|titles|portfolio)\b/i.test(ad.text) ? { status: "partly", note: "Mentions 'our games' without saying which." } : { status: "no", note: "No games named." };
     },
