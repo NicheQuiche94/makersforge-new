@@ -93,7 +93,7 @@ export const CRITERIA: Criterion[] = [
   },
   {
     id: "where", group: "basics", label: "Location and remote policy, specific", weight: 8,
-    fix: "Say where the role is based and exactly how remote it is: days in the office, or which countries and time zones work.",
+    fix: "Spell out the real working pattern in the ad itself, as many job boards only let you pick on-site or remote. If it's hybrid, say how many days in the office (and which); if remote, which countries and time zones; if on-site, where.",
     check: (ad) => {
       const place = /\b(location|based in|london|paris|berlin|helsinki|barcelona|amsterdam|dublin|istanbul|stockholm|uk|europe|emea|usa|remote|anywhere)\b/i.test(ad.text);
       const policy = /\b(remote|hybrid|on-?site|in[- ]office|office-based|work from home|wfh)\b/i.test(ad.text);
