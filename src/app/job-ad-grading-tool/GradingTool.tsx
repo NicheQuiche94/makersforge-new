@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { grade, GROUPS, type Result } from "@/lib/adGrader";
 import styles from "./grader.module.css";
@@ -18,6 +18,20 @@ export function GradingTool({ samples, bench }: { samples: Sample[]; bench: { av
   const [open, setOpen] = useState<string | null>(null);
   const [asked, setAsked] = useState(false);
   const out = useRef<HTMLDivElement>(null);
+
+  // Arriving from "What am I hiring for?": start from the draft built from their brief.
+  const [fromBrief, setFromBrief] = useState(false);
+  useEffect(() => {
+    try {
+      const d = JSON.parse(sessionStorage.getItem("mf-draft-ad") || "null");
+      if (!d?.text || !new URLSearchParams(location.search).has("from")) return;
+      setText(d.text);
+      setTitle(d.title || "");
+      if (d.email) setEmail(d.email);
+      setFromBrief(true);
+      sessionStorage.removeItem("mf-draft-ad");
+    } catch {}
+  }, []);
 
   const words = useMemo(() => text.split(/\s+/).filter(Boolean).length, [text]);
   const ready = words >= 40 && /^\S+@\S+\.\S+$/.test(email);
@@ -53,6 +67,11 @@ export function GradingTool({ samples, bench }: { samples: Sample[]; bench: { av
         </header>
 
         <form className={styles.card} onSubmit={run}>
+          {fromBrief && (
+            <p className={styles.fromBrief}>
+              Here&apos;s a draft built from your brief. Fill in everything in [square brackets], then grade it.
+            </p>
+          )}
           <label className={styles.field}>
             <span>Your job ad</span>
             <textarea value={text} onChange={(e) => setText(e.target.value)} placeholder="Paste the whole ad here: title, location, salary, the lot." rows={10} />
