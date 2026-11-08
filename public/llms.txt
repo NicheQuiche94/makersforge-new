@@ -17,7 +17,6 @@ MakersForge works only with mobile games and consumer-app companies (not PC/cons
 - [The line-up](https://www.makersforge.gg/line-up): Anonymised profiles of vetted specialists available now.
 - [UA talent](https://www.makersforge.gg/ua) and [growth talent](https://www.makersforge.gg/growth): The line-up filtered by discipline.
 - [Mobile games](https://www.makersforge.gg/games) and [consumer apps](https://www.makersforge.gg/apps): How we hire for each.
-- [Job board](https://www.makersforge.gg/jobs): Hand-curated, weekly-updated board of UA, growth and marketing-art roles in games and apps. Free to post a role.
 
 ## Contact
 andre@makersforge.gg
