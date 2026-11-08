@@ -20,11 +20,11 @@ export async function POST(req: Request) {
   if (!row) return Response.json({ error: "That analysis wasn't found." }, { status: 404 });
   if (row.rewrite_requested_at) return Response.json({ ok: true, already: true });
 
-  await db.from("ad_grades").update({ rewrite_requested_at: new Date().toISOString(), rewrite_note: String(note || "").slice(0, 1000) || null }).eq("id", id);
-
   const origin = new URL(req.url).origin;
-  await sendMail({
+  // Andre's copy is the one that matters: if it can't be sent, say so rather than pretend.
+  const toAndreMail = await sendMail({
     to: ANDRE,
+    replyTo: row.email,
     subject: `Rewrite request: ${row.title || "job ad"} (${row.score}/100)`,
     html: layout(
       `<p style="margin:0 0 10px"><b>${esc(row.email)}</b> wants their job ad rewritten.</p>
@@ -33,7 +33,9 @@ ${note ? `<p style="margin:0 0 10px"><b>Their note:</b> ${esc(String(note))}</p>
 <pre style="white-space:pre-wrap;font:13px/1.5 ui-monospace,monospace;background:#f6f6f6;padding:14px;border-radius:8px">${esc(row.ad_text)}</pre>`,
       "Rewrite request",
     ),
-  }).catch(() => {});
+  }).catch(() => ({ ok: false as const }));
+  if (!toAndreMail.ok) return Response.json({ error: "That didn't go through. Please try again, or reply to your analysis email." }, { status: 502 });
+  await db.from("ad_grades").update({ rewrite_requested_at: new Date().toISOString(), rewrite_note: String(note || "").slice(0, 1000) || null }).eq("id", id);
   await sendMail({
     to: row.email,
     subject: "I'll rewrite your job ad",

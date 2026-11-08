@@ -15,7 +15,7 @@ export const ANDRE = "andre@makersforge.gg";
 
 type Attachment = { filename: string; content: Buffer };
 
-export async function sendMail({ to, subject, html, attachments }: { to: string; subject: string; html: string; attachments?: Attachment[] }) {
+export async function sendMail({ to, subject, html, attachments, replyTo }: { to: string; subject: string; html: string; attachments?: Attachment[]; replyTo?: string }) {
   const override = process.env.ONBOARDING_EMAIL_TO;
   const realTo = override || to;
   const realSubject = override ? `[to ${to}] ${subject}` : subject;
@@ -36,7 +36,7 @@ export async function sendMail({ to, subject, html, attachments }: { to: string;
     to: realTo,
     subject: realSubject,
     html,
-    replyTo: ANDRE,
+    replyTo: replyTo || ANDRE,
     attachments: attachments?.map((a) => ({ filename: a.filename, content: a.content })),
   });
   if (error) {
