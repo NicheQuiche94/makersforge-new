@@ -223,7 +223,8 @@ export type Result = {
 };
 
 export function readAd(raw: string, title?: string): Ad {
-  const text = raw.replace(/\r/g, "").replace(/ /g, " ").trim();
+  // Unfilled [placeholders] (from a draft built by "What am I hiring for?") count for nothing.
+  const text = raw.replace(/\r/g, "").replace(/\u00a0/g, " ").replace(/\[[^\]\n]*\]/g, "").trim();
   const lines = text.split("\n").map((l) => l.trimEnd()).filter((l) => l.trim());
   const guess = title || (lines[0] || "").replace(/[*#]/g, "").trim().slice(0, 80);
   return { text, title: guess, lines, lower: text.toLowerCase() };
