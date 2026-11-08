@@ -145,7 +145,7 @@ export function brief(a: Answers): Brief {
     title: permanent ? title : `${sk.title} (contract)`,
     level,
     type,
-    hours: hoursTxt,
+    hours: hoursTxt === "full-time" ? "Full-time" : hoursTxt,
     length: permanent ? "Ongoing" : len.label,
     focus,
     outcome: a.outcome,
