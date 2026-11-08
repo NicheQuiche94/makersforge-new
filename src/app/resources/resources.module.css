@@ -1,0 +1,7 @@
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 16px; max-width: 860px; margin: 0 auto; }
+.card { display: grid; gap: 8px; align-content: start; padding: 26px; background: var(--paper); border: 1px solid var(--hair); border-radius: 20px; color: inherit; text-decoration: none; transition: border-color 0.15s, transform 0.15s; }
+.card:hover { border-color: #ff8a00; transform: translateY(-2px); }
+.card strong { font-family: "Cal Sans", system-ui, sans-serif; font-weight: 400; font-size: 28px; letter-spacing: -0.02em; line-height: 1.1; }
+.card p { margin: 0; color: var(--dim); line-height: 1.5; }
+.card em { font-style: normal; font-weight: 800; color: #e14b00; margin-top: 6px; }
+.tag { justify-self: start; font-size: 12px; font-weight: 700; color: #c2410c; background: #fff1e6; border-radius: 999px; padding: 4px 10px; }

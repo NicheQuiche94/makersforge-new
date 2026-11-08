@@ -301,3 +301,20 @@
     border-left: 0;
   }
 }
+
+/* ============================================================
+   RESOURCES MENU (Andre 2026-11-08)
+   ============================================================ */
+.menuItem { position: relative; }
+.menuBtn { border: 0; background: none; padding: 0; font: inherit; color: rgba(14, 15, 17, 0.7); cursor: pointer; display: inline-flex; align-items: center; gap: 4px; line-height: 1.2; }
+.menuBtn:hover { color: var(--ink); }
+.menuBtn span { font-size: 10px; }
+.menu { position: absolute; top: 100%; right: -60px; padding-top: 14px; width: 340px; z-index: 50; }
+.menu::before { content: ""; position: absolute; inset: 14px 0 0; background: #fff; border: 1px solid rgba(14, 15, 17, 0.1); border-radius: 18px; box-shadow: 0 18px 50px rgba(14, 15, 17, 0.14); }
+.menuLink, .menuAll { position: relative; display: grid; gap: 3px; padding: 12px 16px; margin: 0 6px; border-radius: 12px; text-decoration: none; line-height: 1.35; }
+.menuLink:first-of-type { margin-top: 6px; }
+.menuLink:hover { background: #fff4ea; }
+.menuLink strong { color: var(--ink); font-size: 14px; font-weight: 700; }
+.menuLink span { color: var(--dim); font-size: 12.5px; font-weight: 500; }
+.links .menuAll { color: #e14b00; font-weight: 700; font-size: 13px; margin-bottom: 6px; border-top: 1px solid rgba(14, 15, 17, 0.08); border-radius: 0 0 12px 12px; }
+.modeLight .links .menuAll, .modeGradient .links .menuAll { color: #e14b00; }

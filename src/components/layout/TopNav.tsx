@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Logo } from "@/components/atoms/Logo";
+import { menuResources } from "@/lib/resources";
 import styles from "./TopNav.module.css";
 
 const LINKS = [
@@ -10,7 +11,6 @@ const LINKS = [
   { href: "/#proof", label: "Case study" },
   { href: "/line-up", label: "Talent directory" },
   { href: "/pricing", label: "Plans & pricing" },
-  { href: "/compare", label: "Compare routes" },
 ];
 
 /**
@@ -42,6 +42,23 @@ const LINKS = [
  */
 export function TopNav({ activeHref }: { activeHref?: string }) {
   const [mode, setMode] = useState<"gradient" | "light">("light");
+  // Resources menu (Andre 2026-11-08): the free tools and guides under one item.
+  const [open, setOpen] = useState(false);
+  const menu = useRef<HTMLLIElement>(null);
+  useEffect(() => {
+    if (!open) return;
+    const close = (e: MouseEvent | KeyboardEvent) => {
+      if (e instanceof KeyboardEvent ? e.key === "Escape" : !menu.current?.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", close);
+    document.addEventListener("keydown", close);
+    return () => {
+      document.removeEventListener("mousedown", close);
+      document.removeEventListener("keydown", close);
+    };
+  }, [open]);
+  const resources = menuResources();
+  const inResources = !!activeHref && (activeHref === "/resources" || resources.some((r) => r.href === activeHref));
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -105,6 +122,22 @@ export function TopNav({ activeHref }: { activeHref?: string }) {
                   </Link>
                 </li>
               ))}
+              <li ref={menu} className={styles.menuItem} onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
+                <button type="button" className={`${styles.menuBtn} ${inResources ? styles.activeLink : ""}`} aria-expanded={open} onClick={() => setOpen(!open)}>
+                  Resources <span aria-hidden="true">▾</span>
+                </button>
+                {open && (
+                  <div className={styles.menu}>
+                    {resources.map((r) => (
+                      <Link key={r.href} href={r.href} className={styles.menuLink} onClick={() => setOpen(false)}>
+                        <strong>{r.title}</strong>
+                        <span>{r.blurb}</span>
+                      </Link>
+                    ))}
+                    <Link href="/resources" className={styles.menuAll} onClick={() => setOpen(false)}>All resources →</Link>
+                  </div>
+                )}
+              </li>
             </ul>
             {/* The way back into the client portal (Andre 2026-11-04); stays visible on phones. */}
             <Link href="/account" className={`${styles.login} ${activeHref === "/account" ? styles.activeLink : ""}`}>
