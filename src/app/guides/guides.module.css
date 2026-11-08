@@ -57,3 +57,4 @@
   .q em { display: none; }
   .body { font-size: 17px; }
 }
+.known { color: rgba(255,255,255,0.85) !important; }

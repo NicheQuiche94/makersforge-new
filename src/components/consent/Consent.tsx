@@ -9,7 +9,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Script from "next/script";
-import { applyInternalFlag, captureAndCleanUtm, denyAnalytics, grantAnalytics, isInternal } from "@/lib/analytics";
+import { applyInternalFlag, captureAndCleanUtm, currentMailRef, denyAnalytics, grantAnalytics, isInternal, setMailRef } from "@/lib/analytics";
+import { captureLeadParam, getLead } from "@/lib/lead";
 import styles from "./Consent.module.css";
 
 const KEY = "mf-consent";
@@ -34,6 +35,10 @@ export function Consent() {
   useEffect(() => {
     applyInternalFlag();
     captureAndCleanUtm();
+    // Someone who's given us their email before (lib/lead): count their visits under it.
+    captureLeadParam();
+    const lead = getLead();
+    if (lead) setTimeout(() => !currentMailRef() && setMailRef(`lead-${lead.id}`), 0);
     setInternal(isInternal());
     const c = readChoice();
     setChoice(c);

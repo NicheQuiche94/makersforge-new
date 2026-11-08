@@ -31,7 +31,7 @@
 .offer .go { margin-top: 6px; }
 
 .table { margin-top: 22px; display: grid; gap: 8px; }
-.tr { display: grid; grid-template-columns: 2.2fr repeat(4, 1fr); gap: 10px; align-items: center; width: 100%; padding: 14px 16px; border: 0; background: none; font: inherit; text-align: left; color: inherit; cursor: pointer; }
+.tr { display: grid; grid-template-columns: 2fr repeat(5, 1fr); gap: 10px; align-items: center; width: 100%; padding: 14px 16px; border: 0; background: none; font: inherit; text-align: left; color: inherit; cursor: pointer; }
 .th { cursor: default; padding-top: 0; padding-bottom: 0; font-size: 12px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--mute); }
 .item { background: var(--paper); border: 1px solid var(--hair); border-radius: 14px; overflow: hidden; }
 .itemUs { border: 2px solid #ff8a00; }
@@ -41,6 +41,8 @@
 .warn { font-style: normal; font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 999px; background: rgba(225, 75, 0, 0.12); color: #c2410c; }
 .win { color: #15803d; }
 .win::after { content: " ✓"; }
+.lose { color: #b91c1c; }
+.lose::after { content: " ✗"; }
 .detail { padding: 0 16px 16px 52px; color: var(--dim); font-size: 14.5px; line-height: 1.55; }
 .detail p { margin: 0 0 6px; }
 .detail ul { margin: 0 0 10px; padding-left: 18px; }

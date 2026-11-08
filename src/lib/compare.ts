@@ -38,6 +38,8 @@ export type Route = {
   speedNote?: string;
   hours: { label: string; h: number }[];
   tips: string[];
+  /** Who the route can reach: passive = people not looking, who never see a job ad. */
+  reach: { passive: boolean; label: string; detail: string };
   us?: boolean;
 };
 
@@ -58,6 +60,7 @@ export const ROUTES: Route[] = [
       { label: "Interviews", h: 6 },
       { label: "Coordination", h: 1 },
     ],
+    reach: { passive: true, label: "Active + passive", detail: "We headhunt, so you see people who aren't looking and would never see your ad, as well as those who are" },
     tips: ["Book a search week online, no sales call.", "You get 5 people in about 5 working days, each already interviewed by us.", "If nobody fits, you pay nothing."],
     us: true,
   },
@@ -77,6 +80,7 @@ export const ROUTES: Route[] = [
       { label: "Interviews", h: 9 },
       { label: "Coordination", h: 3 },
     ],
+    reach: { passive: true, label: "Active + passive", detail: "A good agency headhunts too, so they can reach people who aren't looking" },
     tips: ["Ask how many hires they've made for this exact role in the last year.", "Ask for a replacement guarantee if the hire leaves early.", "Agree up front how many CVs you'll see."],
   },
   {
@@ -95,6 +99,7 @@ export const ROUTES: Route[] = [
       { label: "Interviews", h: 12 },
       { label: "Coordination", h: 4 },
     ],
+    reach: { passive: true, label: "Active + passive", detail: "They can headhunt, though their network is wider than games and apps" },
     tips: ["Check they understand mobile metrics (ROAS, LTV, retention) before you brief them.", "Expect to filter more CVs that aren't from games or apps."],
   },
   {
@@ -113,6 +118,7 @@ export const ROUTES: Route[] = [
       { label: "Interviews", h: 15 },
       { label: "Coordination", h: 6 },
     ],
+    reach: { passive: false, label: "Active only", detail: "Only people actively looking for a job will see it. The many strong people who are happy where they are never will" },
     tips: ["Post on Games Jobs Direct, Hitmarker and LinkedIn Jobs.", "Add 2–3 screening questions to cut the pile down fast.", "Block out screening time every day, or the good applicants go elsewhere."],
   },
 ];

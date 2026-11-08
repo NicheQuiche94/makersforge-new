@@ -8,6 +8,8 @@ import { CURRENCIES, CURRENCY_SYMBOLS, RATES, readStoredCurrency, writeStoredCur
 import { DatePicker } from "./DatePicker";
 import { setPageVariant } from "@/lib/analytics";
 import styles from "./compare.module.css";
+import { EmailField } from "@/components/lead/EmailField";
+import { setLead } from "@/lib/lead";
 
 /* /compare (Andre 2026-11-07): one form, one click, the role and their email
    together, then a thank-you page. Every extra click is a place to lose them.
@@ -84,6 +86,7 @@ export function CompareMock() {
       setBusy(false);
       return setError(r.error);
     }
+    setLead(r.lead);
     const q = new URLSearchParams({ gift: r.gift ? (r.special ? "2" : "1") : "0" });
     if (r.devLink) q.set("dev", r.devLink);
     router.push(`/compare/sent?${q}`);
@@ -143,7 +146,9 @@ export function CompareMock() {
             </label>
             <label className={styles.wide}>
               <span className={styles.lbl}>Work email</span>
-              <input type="email" required placeholder="you@studio.com" value={email} onChange={(e) => setEmail(e.target.value)} />
+              <EmailField value={email} onChange={setEmail}>
+                <input type="email" required placeholder="you@studio.com" value={email} onChange={(e) => setEmail(e.target.value)} />
+              </EmailField>
             </label>
             <label className={styles.narrow}>
               <span className={styles.lbl}>First name <i>optional</i></span>

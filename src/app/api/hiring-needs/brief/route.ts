@@ -3,6 +3,7 @@ import { sendMail } from "@/lib/onboarding/mail";
 import { layout } from "@/lib/clientEmails";
 import { toAndre } from "@/lib/chat/telegram";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { leadToken, withLead } from "@/lib/leadToken";
 import { brief, type Answers } from "@/lib/hiringNeeds";
 
 /**
@@ -35,7 +36,7 @@ export async function POST(req: Request) {
 
   const prod = process.env.VERCEL_ENV === "production";
   const origin = prod ? SITE : new URL(req.url).origin;
-  const link = `${origin}/what-am-i-hiring-for/r/${id}?utm_source=email&utm_medium=hiring-brief`;
+  const link = withLead(`${origin}/what-am-i-hiring-for/r/${id}?utm_source=email&utm_medium=hiring-brief`, email);
   const disclaimer = `<p style="margin:16px 0 0;padding-top:12px;border-top:1px solid ${HAIR};font-size:12.5px;color:${DIM};line-height:1.5">This is where first principles lead, based only on what you told us. You know your studio, your team and your budget better than any tool can, so treat it as a starting point and use your own judgement before you hire.</p>`;
 
   const body =
@@ -74,5 +75,5 @@ ${out.more.length ? `<p style="margin:0 0 16px;font-size:14px;color:${DIM}">You 
   const sent = await sendMail({ to: email, subject, html: layout(body, out.kind === "hire" ? out.sentence : "You might not need to hire.") });
   if (!sent.ok) return Response.json({ error: "We couldn't send that. Please try again." }, { status: 502 });
   if (prod) await toAndre(`🧭 Hiring brief: ${out.kind === "hire" ? out.sentence : "no hire needed"}\n${email}`).catch(() => {});
-  return Response.json({ ok: true, ...(sent.dev ? { devLink: link } : {}) });
+  return Response.json({ ok: true, lead: leadToken(email), ...(sent.dev ? { devLink: link } : {}) });
 }

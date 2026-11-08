@@ -50,7 +50,7 @@ const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replac
 
 /** The shared frame: dark band with the mark, a white card, the company footer. */
 export function layout(body: string, preheader: string) {
-  return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"></head>
+  return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><meta name="color-scheme" content="light only"><meta name="supported-color-schemes" content="light only"><style>:root{color-scheme:light only;supported-color-schemes:light only}</style></head>
 <body style="margin:0;padding:0;background:#f4efe8;font-family:Helvetica,Arial,sans-serif;color:${INK}">
 <span style="display:none;max-height:0;overflow:hidden">${esc(preheader)}</span>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4efe8"><tr><td align="center" style="padding:28px 14px">
