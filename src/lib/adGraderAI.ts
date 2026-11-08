@@ -13,7 +13,7 @@ import { CRITERIA, scoreFrom, type Result } from "@/lib/adGrader";
 /* What yes / partly / no mean for each point, in Andre's terms. */
 const RUBRIC: Record<string, string> = {
   title: "YES: a standard, searchable job title that states the level (e.g. Senior UA Manager). PARTLY: clear title but no level, or unusual wording. NO: missing, or a gimmick title (rockstar, ninja, guru).",
-  where: "YES: where the role is based AND exactly how remote it is (fully remote with which countries/time zones, or hybrid with how many office days, or fully on-site). PARTLY: location or a remote/hybrid word, but not the detail. NO: neither.",
+  where: "Many job boards only offer an on-site or remote dropdown (often no hybrid option), so the ad text itself must spell out the real working pattern. YES: says where the role is based AND the exact arrangement in the text: if hybrid, how many days in the office (ideally which days); if remote, which countries or time zones; if on-site, the office location. PARTLY: a location or a remote/hybrid/on-site word without that detail, OR the labels contradict each other (e.g. a header says on-site but the text says hybrid) without the text making the real arrangement clear. NO: nothing on location or working pattern.",
   pay: "YES: a salary or day-rate range with numbers. PARTLY: a single figure, or 'up to X'. NO: no pay, or only 'competitive' / 'DOE'.",
   contract: "YES: says whether it's permanent, fixed-term or freelance/contract, and full- or part-time. PARTLY: only one of those. NO: neither.",
   team: "YES: who they report to AND the team around them (size, roles). PARTLY: only one of those, or vague ('a great team'). NO: nothing about the team. Note: 'build reports to share with stakeholders' is not a reporting line.",
