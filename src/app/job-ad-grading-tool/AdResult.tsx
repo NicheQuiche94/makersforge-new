@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { GROUPS, type Result } from "@/lib/adGrader";
 import styles from "./grader.module.css";
@@ -8,7 +8,7 @@ import styles from "./grader.module.css";
 /* The analysis (Andre 2026-11-08): score, sections, biggest fixes, Andre's
    rewrite offer, the full breakdown and the bridge to /compare. Shown on the
    page the email links to; `id` set means the rewrite button is real. */
-export function AdResult({ result, bench, id, title, requested = false }: { result: Result; bench: { avg: number; withPay: number }; id?: string; title?: string; requested?: boolean }) {
+export function AdResult({ result, bench, id, title, requested = false, autoRewrite = false }: { result: Result; bench: { avg: number; withPay: number }; id?: string; title?: string; requested?: boolean; autoRewrite?: boolean }) {
   const [open, setOpen] = useState<string | null>(null);
   const [asked, setAsked] = useState(requested);
   const [note, setNote] = useState("");
@@ -26,6 +26,16 @@ export function AdResult({ result, bench, id, title, requested = false }: { resu
     if (r.error) setErr(r.error);
     else setAsked(true);
   };
+
+  // "Rewrite my ad for me" in the email lands here with ?rewrite=1: one click, done.
+  const fired = useRef(false);
+  useEffect(() => {
+    if (autoRewrite && id && !requested && !fired.current) {
+      fired.current = true;
+      void ask();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoRewrite, id, requested]);
 
   return (
     <div className={styles.result}>
