@@ -1,19 +1,15 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { grade, type Result } from "@/lib/adGrader";
 import { arrivalUtm } from "@/lib/analytics";
-import { AdResult } from "./AdResult";
 import { EmailField } from "@/components/lead/EmailField";
 import { setLead } from "@/lib/lead";
 import styles from "./grader.module.css";
 
-export type Sample = { id: string; label: string; title: string; text: string };
-
-/* MOCKUP (Andre 2026-11-08). One step: drop in the PDF (or paste the ad),
+/* (Andre 2026-11-08). One step: drop in the PDF (or paste the ad),
    leave an email, and the analysis arrives by email. The score is never
    shown here, so every use is a lead and Andre can offer the rewrite. */
-export function GradingTool({ samples }: { samples: Sample[] }) {
+export function GradingTool() {
   const [text, setText] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [drag, setDrag] = useState(false);
@@ -22,10 +18,8 @@ export function GradingTool({ samples }: { samples: Sample[] }) {
   const [state, setState] = useState<"idle" | "sending" | "sent">("idle");
   const [err, setErr] = useState("");
   const [devLink, setDevLink] = useState("");
-  const [preview, setPreview] = useState<Result | null>(null);
   const [fromBrief, setFromBrief] = useState(false);
   const pick = useRef<HTMLInputElement>(null);
-  const out = useRef<HTMLDivElement>(null);
 
   // Arriving from "What am I hiring for?": start from the draft built from their brief.
   useEffect(() => {
@@ -74,18 +68,10 @@ export function GradingTool({ samples }: { samples: Sample[] }) {
     }
   };
 
-  const trySample = (id: string) => {
-    const s = samples.find((x) => x.id === id);
-    if (!s) return;
-    setPreview(grade(s.text, s.title));
-    setTimeout(() => out.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
-  };
-
   return (
     <section className={styles.wrap}>
       <div className="container">
         <header className={styles.head}>
-          <span className={styles.mock}>Mockup: scoring rules and wording are drafts</span>
           <h1 className={styles.display}>
             Is your job ad <span className="gr">losing</span> you good candidates?
           </h1>
@@ -153,24 +139,9 @@ export function GradingTool({ samples }: { samples: Sample[] }) {
               <button type="submit" className={styles.go} disabled={!ready || state === "sending"}>{state === "sending" ? "Grading…" : "Email me my score →"}</button>
               <span className={styles.hint}>Your analysis arrives by email in about a minute.</span>
             </div>
-            <div className={styles.samples}>
-              <span>Mockup only (removed before launch): preview the scoring on a real ad</span>
-              <select value="" onChange={(e) => trySample(e.target.value)}>
-                <option value="">Pick one…</option>
-                {samples.map((s) => (
-                  <option key={s.id} value={s.id}>{s.label}</option>
-                ))}
-              </select>
-            </div>
           </form>
         )}
 
-        {preview && (
-          <div ref={out} className={styles.previewWrap}>
-            <p className={styles.mockNote}>Mockup preview: visitors only ever see this through the link in their email.</p>
-            <AdResult result={preview} />
-          </div>
-        )}
       </div>
     </section>
   );

@@ -1,26 +1,17 @@
 import type { Metadata } from "next";
-import { boardScores, boardAdText } from "@/lib/adGraderBench";
-import { GradingTool, type Sample } from "./GradingTool";
+import { GradingTool } from "./GradingTool";
 
 export const metadata: Metadata = {
   title: "Job ad grading tool · MakersForge",
-  robots: { index: false, follow: false },
+  description:
+    "Drop in your job ad and get a score out of 100, with the fixes that will make the biggest difference to who applies. Free, for mobile games and app studios.",
+  alternates: { canonical: "/job-ad-grading-tool" },
 };
 
-/* MOCKUP 2026-11-08 (Andre): drop in a job ad, get a score out of 100 and
-   the fixes that matter most, by email; Andre offers to rewrite it by hand.
-   Step two in a chain of free tools (what am I hiring for → the ad →
-   compare routes → a search week). Weights and copy are drafts. */
+/* Job ad grading tool (Andre 2026-11-08): drop in a job ad, get a score out
+   of 100 and the fixes that matter most, by email (designed email + PDF);
+   Andre offers to rewrite it by hand. Claude reads the ad against Andre's
+   scorecard (lib/adGraderAI), with the rule reader as a fallback. */
 export default function GradingToolPage() {
-  const { scored } = boardScores();
-  // A spread of real ads to preview the scoring on: the best, the middle and the weakest.
-  const mid = scored.length >> 1;
-  const pick = [...scored.slice(0, 3), ...scored.slice(mid - 2, mid + 1), ...scored.slice(-3)];
-  const samples: Sample[] = pick.map(({ x, s }) => ({
-    id: x.slug,
-    label: `${typeof x.company === "string" ? x.company : x.company?.name ?? ""}: ${x.title} (${s})`,
-    title: x.title,
-    text: boardAdText(x),
-  }));
-  return <GradingTool samples={samples} />;
+  return <GradingTool />;
 }
