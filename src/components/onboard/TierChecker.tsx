@@ -13,24 +13,6 @@ export function TierChecker() {
   const t = role.trim() ? tierFor(role, salary) : null;
   return (
     <section className={styles.wrap} aria-labelledby="tiers">
-      <div className={styles.tiers}>
-        <div className={styles.tier}>
-          <p className={styles.name}>Generalist</p>
-          <p className={styles.fee}>{gbp(TIER_FEE.generalist)}</p>
-          <p className={styles.what}>Most hires: art, design, engineering, product, data and marketing roles below Head level, up to £70k.</p>
-        </div>
-        <div className={`${styles.tier} ${styles.spec}`}>
-          <p className={styles.name}>Specialist</p>
-          <p className={styles.fee}>from {gbp(TIER_FEE.specialist)}</p>
-          <p className={styles.what}>The hires that move revenue, and senior hires. A specialist role is any one of:</p>
-          <ul>
-            <li>a salary of £70,000 or more</li>
-            <li>Head, Director, VP or C-level, in any discipline</li>
-            <li>Lead level or above in UA and growth, monetisation, live-ops and retention, or economy design</li>
-          </ul>
-        </div>
-      </div>
-
       <div className={styles.check}>
         <h2 id="tiers">Which tier is my role?</h2>
         <div className={styles.inputs}>

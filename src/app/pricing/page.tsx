@@ -2,7 +2,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { BOOKING_URL } from "@/lib/site";
 import { ROSTER } from "@/data/roster";
-import { Compare, PlanGrid } from "@/components/onboard/PlanCards";
+import { Compare } from "@/components/onboard/PlanCards";
+import { PricingCards } from "@/components/onboard/PricingCards";
 import { TierChecker } from "@/components/onboard/TierChecker";
 import { slotsLeftThisMonth } from "@/lib/plans";
 import styles from "./plans.module.css";
@@ -50,7 +51,7 @@ export default async function PricingPage({ searchParams }: { searchParams: Prom
       </section>
       <section className={styles.body} id="plans">
         <div className="container">
-          <PlanGrid candidate={person?.id} />
+          <PricingCards candidate={person?.id} />
           <TierChecker />
           <div className={styles.week}>
             <h2>What&apos;s a search week?</h2>
