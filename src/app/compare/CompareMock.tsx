@@ -44,7 +44,7 @@ export function CompareMock() {
   }, []);
 
   const [cur, setCur] = useState<Currency>("GBP");
-  const [role, setRole] = useState("senior-ua");
+  const [role, setRole] = useState("Senior UA Manager");
   // Kept as typed (a string, so the box can be empty while typing). Switching currency
   // keeps the number: they mean euros when they pick €, not a conversion (Andre).
   const [salary, setSalary] = useState("70000");
@@ -116,9 +116,23 @@ export function CompareMock() {
           <div className={styles.formGrid}>
             <label className={styles.wide}>
               <span className={styles.lbl}>Role</span>
-              <select value={role} onChange={(e) => { setRole(e.target.value); setSalary(String(inCur(ROLES.find((r) => r.id === e.target.value)!.salary, cur))); }}>
-                {ROLES.map((r) => <option key={r.id} value={r.id}>{r.label}</option>)}
-              </select>
+              {/* Any job title (Andre 2026-11-09: most roles weren't in the old dropdown).
+                  The common ones are suggestions that also fill in a typical salary. */}
+              <input
+                list="compare-roles"
+                value={role}
+                placeholder="e.g. Senior UA Manager"
+                onChange={(e) => {
+                  setRole(e.target.value);
+                  const known = ROLES.find((r) => r.label.toLowerCase() === e.target.value.trim().toLowerCase());
+                  if (known) setSalary(String(inCur(known.salary, cur)));
+                }}
+              />
+              <datalist id="compare-roles">
+                {ROLES.map((r) => (
+                  <option key={r.id} value={r.label} />
+                ))}
+              </datalist>
             </label>
             <div className={`${styles.narrow} ${styles.field}`}>
               <span className={styles.lblRow}>
@@ -158,7 +172,7 @@ export function CompareMock() {
             </label>
           </div>
           {error && <p className={styles.err}>{error}</p>}
-          <button type="submit" className={styles.bigGo} disabled={busy || !/^\S+@\S+\.\S+$/.test(email)}>
+          <button type="submit" className={styles.bigGo} disabled={busy || !role.trim() || !/^\S+@\S+\.\S+$/.test(email)}>
             {busy ? "Sending…" : "Email me my comparison →"}
           </button>
           <p className={styles.fine}>We&apos;ll email you a link to your comparison to share with your team. One email, no spam.</p>

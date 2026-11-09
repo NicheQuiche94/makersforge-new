@@ -71,7 +71,7 @@ export function TimelineResult({ input, slots, lid }: { input: TimelineInput; sl
     <section className={styles.wrap}>
       <div className="container">
         <p className={own.kicker}>
-          {input.title} · {tier} level · based in {inCountry(t.country.label)}
+          {input.title} · {tier} level · {t.country.id === "XX" ? "based elsewhere" : `based in ${inCountry(t.country.label)}`}
           {t.need ? ` · needed by ${fmtDay(t.need)}` : ""}
         </p>
 

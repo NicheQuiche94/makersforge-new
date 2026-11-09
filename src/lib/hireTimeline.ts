@@ -81,13 +81,16 @@ export const COUNTRIES: { id: string; label: string; notice: Record<Tier, number
   { id: "IE", label: "Ireland", notice: { team: 4, senior: 13, executive: 13 } },
   { id: "PT", label: "Portugal", notice: { team: 4, senior: 9, executive: 17 } },
   { id: "US", label: "United States", notice: { team: 2, senior: 2, executive: 6 } },
+  // Anywhere not listed (Andre 2026-11-09: nobody should be stuck on the form). A middle-of-the-road
+  // European norm: a month, more for senior and executive hires. Our estimate, not a sourced figure.
+  { id: "XX", label: "Somewhere else", notice: { team: 4, senior: 8, executive: 13 } },
 ];
 
 /** Gem 2026: 82% of offers are accepted, so about 1 in 5 isn't. */
 export const OFFER_DECLINE = 0.18;
 
 /** "the United Kingdom", "Germany": for use after "in". */
-export const inCountry = (label: string) => (/^(United|Netherlands)/.test(label) ? `the ${label}` : label);
+export const inCountry = (label: string) => (label === "Somewhere else" ? "most countries" : /^(United|Netherlands)/.test(label) ? `the ${label}` : label);
 
 export const countryById = (id: string) => COUNTRIES.find((c) => c.id === id) ?? COUNTRIES[0];
 

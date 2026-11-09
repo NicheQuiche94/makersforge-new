@@ -149,7 +149,8 @@ export const money = (gbpAmount: number, cur: Currency = "GBP") =>
 export const wks = ([a, b]: [number, number]) => (a === b ? `${a} weeks` : `${a}–${b} weeks`);
 export const day = (d: Date) => d.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
 export const addWeeks = (w: number, from = Date.now()) => new Date(from + w * 7 * 864e5);
-export const roleLabel = (id: string) => ROLES.find((r) => r.id === id)?.label ?? "this role";
+/** A saved role: an old dropdown id ("senior-ua") or, since 2026-11-09, the job title as typed. */
+export const roleLabel = (role: string) => ROLES.find((r) => r.id === role)?.label ?? (role.trim() || "this role");
 
 export function compare(input: CompareInput, now = Date.now()) {
   const weeksToStart = input.start ? Math.max(0, (Date.parse(input.start) - now) / (7 * 864e5)) : null;

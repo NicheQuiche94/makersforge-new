@@ -5,7 +5,7 @@ import { toAndre } from "@/lib/chat/telegram";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { leadToken, withLead } from "@/lib/leadToken";
 import { drawPrize, giftCode } from "@/lib/compareGifts";
-import { compare, gbp, day, roleLabel, ROLES, HOOKS, type CompareInput, type Priority } from "@/lib/compare";
+import { compare, gbp, day, roleLabel, HOOKS, type CompareInput, type Priority } from "@/lib/compare";
 import { activePromo, isSpecial, dropsFor } from "@/lib/promos";
 import { RATES, isCurrency, type Currency } from "@/lib/currency";
 
@@ -25,11 +25,13 @@ export async function POST(req: Request) {
   const b = await req.json().catch(() => ({}));
   const email = String(b.email || "").trim().toLowerCase();
   if (!/^\S+@\S+\.\S+$/.test(email) || email.length > 200) return Response.json({ error: "Please enter your work email." }, { status: 400 });
-  if (!ROLES.some((r) => r.id === b.role)) return Response.json({ error: "Pick a role." }, { status: 400 });
+  // Any job title; old links may still send a dropdown id, which roleLabel reads.
+  const roleIn = String(b.role || "").trim().slice(0, 120);
+  if (!roleIn) return Response.json({ error: "Add the job title." }, { status: 400 });
 
   const cur: Currency = isCurrency(b.cur) ? b.cur : "GBP";
   const input: CompareInput = {
-    role: b.role,
+    role: roleIn,
     salary: Math.round(Math.max(10000, Math.min((Number(b.salary) || 0) / RATES[cur], 500000))),
     cur,
     start: /^\d{4}-\d{2}-\d{2}$/.test(b.start || "") ? b.start : undefined,
