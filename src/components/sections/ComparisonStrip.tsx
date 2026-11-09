@@ -1,4 +1,6 @@
 import { Logo } from "@/components/atoms/Logo";
+import type { ReactNode } from "react";
+import { Money } from "@/components/atoms/Money";
 import styles from "./ComparisonStrip.module.css";
 
 /**
@@ -10,7 +12,7 @@ import styles from "./ComparisonStrip.module.css";
  *   - "Here's how it stacks up" intro sentence dropped — felt AI.
  */
 
-type Row = { label: string; us: string; them: string };
+type Row = { label: string; us: ReactNode; them: string };
 
 const ROWS: Row[] = [
   {
@@ -20,7 +22,11 @@ const ROWS: Row[] = [
   },
   {
     label: "Permanent placement",
-    us: "Flat fee by level, from £9,000",
+    us: (
+      <>
+        Flat fee by level, from <Money gbp={9000} />
+      </>
+    ),
     them: "20–30% of first-year salary",
   },
   {

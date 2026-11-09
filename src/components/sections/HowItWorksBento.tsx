@@ -1,4 +1,6 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
+import { Money } from "@/components/atoms/Money";
 import styles from "./HowItWorksBento.module.css";
 import { CornerGlow } from "./CornerGlow";
 
@@ -14,7 +16,7 @@ import { CornerGlow } from "./CornerGlow";
 
 type Stage = {
   title: string;
-  body: string;
+  body: ReactNode;
 };
 
 // 2026-10-27: back to the service Andre sells and the emails pitch —
@@ -38,7 +40,11 @@ const STAGES: Stage[] = [
   },
   {
     title: "One flat fee.",
-    body: "A flat fee per permanent hire by level, from £9,000, not a percentage of salary. Contractors on a flat monthly fee.",
+    body: (
+      <>
+        A flat fee per permanent hire by level, from <Money gbp={9000} />, not a percentage of salary. Contractors on a flat monthly fee.
+      </>
+    ),
   },
 ];
 

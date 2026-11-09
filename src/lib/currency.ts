@@ -38,15 +38,50 @@ export function isCurrency(v: unknown): v is Currency {
   return v === "GBP" || v === "EUR" || v === "USD";
 }
 
+/**
+ * Default currency (Andre 2026-11-09, Europe first): euros, unless we can
+ * tell the visitor is in the UK (pounds) or the US (dollars). Their own pick
+ * on any toggle always wins. GEO_KEY caches the guess from /api/geo.
+ */
+export const DEFAULT_CURRENCY: Currency = "EUR";
+const GEO_KEY = "makersforge-currency-geo";
+/** Fired on window whenever the currency changes, so every price on the page follows. */
+export const CURRENCY_EVENT = "mf-currency";
+
+export const currencyForCountry = (cc?: string | null): Currency => (cc === "GB" || cc === "UK" ? "GBP" : cc === "US" ? "USD" : "EUR");
+
+function safeGet(k: string) {
+  try {
+    return window.localStorage.getItem(k);
+  } catch {
+    return null;
+  }
+}
+
 export function readStoredCurrency(): Currency {
-  if (typeof window === "undefined") return "GBP";
-  const saved = window.localStorage.getItem(STORAGE_KEY);
-  return isCurrency(saved) ? saved : "GBP";
+  if (typeof window === "undefined") return DEFAULT_CURRENCY;
+  const saved = safeGet(STORAGE_KEY);
+  if (isCurrency(saved)) return saved;
+  const geo = safeGet(GEO_KEY);
+  return isCurrency(geo) ? geo : DEFAULT_CURRENCY;
+}
+
+/** True once we know the visitor's currency (their pick or the location guess). */
+export const currencyKnown = () => typeof window !== "undefined" && (isCurrency(safeGet(STORAGE_KEY)) || isCurrency(safeGet(GEO_KEY)));
+
+export function writeGeoCurrency(c: Currency): void {
+  try {
+    window.localStorage.setItem(GEO_KEY, c);
+  } catch {}
+  window.dispatchEvent(new Event(CURRENCY_EVENT));
 }
 
 export function writeStoredCurrency(c: Currency): void {
   if (typeof window === "undefined") return;
-  window.localStorage.setItem(STORAGE_KEY, c);
+  try {
+    window.localStorage.setItem(STORAGE_KEY, c);
+  } catch {}
+  window.dispatchEvent(new Event(CURRENCY_EVENT));
 }
 
 /**

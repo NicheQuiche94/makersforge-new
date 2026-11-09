@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
+import { Money } from "@/components/atoms/Money";
 import styles from "./FAQ.module.css";
 
 type Item = {
@@ -46,7 +47,7 @@ const ITEMS: Item[] = [
     q: "How much does it cost?",
     a: (
       <p>
-        A flat fee per permanent hire, set by the level in the job title: £9,000 for junior to mid-level roles, £14,000 for Senior and Lead roles, £20,000 for Head, Director and above. Never 20–30% of salary. Contractors
+        A flat fee per permanent hire, set by the level in the job title: <Money gbp={9000} /> for junior to mid-level roles, <Money gbp={14000} /> for Senior and Lead roles, <Money gbp={20000} /> for Head, Director and above. Never 20–30% of salary. Contractors
         are a flat monthly fee per person, and you pay their rate directly
         with no markup. You only pay when someone is hired.
       </p>
@@ -82,7 +83,7 @@ const ITEMS: Item[] = [
     a: (
       <p>
         Cancel free up to 48 hours before it starts. After that there&apos;s a
-        £1,500 fee, because by then we&apos;ve already done the prep to deliver
+        <Money gbp={1500} unit={100} /> fee, because by then we&apos;ve already done the prep to deliver
         your shortlist on time.
       </p>
     ),

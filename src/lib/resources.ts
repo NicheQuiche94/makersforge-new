@@ -10,6 +10,7 @@ export type Resource = { href: string; title: string; blurb: string; tag: string
 
 export const TOOLS: Resource[] = [
   { href: "/job-ad-grading-tool", title: "Job ad grading tool", blurb: "Score your job ad out of 100, with the fixes that will make the biggest difference.", tag: "Free tool" },
+  { href: "/hire-timeline", title: "When will your hire start?", blurb: "Your likely start date, stage by stage, with the notice period in their country, against the date you need them.", tag: "Free tool" },
   { href: "/compare", title: "Compare hiring routes", blurb: "Every way to hire your role side by side: cost, weeks to hire, your team's hours and who you reach.", tag: "Free tool" },
 ];
 

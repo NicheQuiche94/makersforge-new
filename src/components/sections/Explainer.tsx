@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+import { Money } from "@/components/atoms/Money";
 import styles from "./Explainer.module.css";
 import { CornerGlow } from "./CornerGlow";
 
@@ -11,11 +13,11 @@ import { CornerGlow } from "./CornerGlow";
  * paragraph + two-card comparison.
  */
 
-const COMPARISON: { them: string; us: string }[] = [
+const COMPARISON: { them: string; us: ReactNode }[] = [
   { them: "Most of them a no", us: "Every one worth a call" },
   { them: "The best people never see it", us: "We approach the people who aren't looking" },
   { them: "Weeks of sifting and first calls", us: "Hours of your time, not weeks" },
-  { them: "Or an agency at 20–30% of salary", us: "One flat fee by level: from £9,000 per hire" },
+  { them: "Or an agency at 20–30% of salary", us: <>One flat fee by level: from <Money gbp={9000} /> per hire</> },
 ];
 
 export function Explainer() {
@@ -45,7 +47,7 @@ export function Explainer() {
             <p className={styles.vsLabel}>candidates from a MakersForge brief</p>
             <ul className={styles.vsList}>
               {COMPARISON.map((row) => (
-                <li key={row.us} className={styles.vsItemUs}>
+                <li key={row.them} className={styles.vsItemUs}>
                   {row.us}
                 </li>
               ))}

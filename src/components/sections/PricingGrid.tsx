@@ -1,5 +1,6 @@
 import { BOOKING_URL } from "@/lib/site";
 import { Button } from "@/components/atoms/Button";
+import { Money } from "@/components/atoms/Money";
 import styles from "./PricingGrid.module.css";
 
 /**
@@ -47,7 +48,9 @@ export function PricingGrid() {
               place them for a single flat fee. No percentage of salary, ever.
             </p>
             <ul className={styles.points}>
-              <li>Flat fee by level, from £9,000</li>
+              <li>
+                Flat fee by level, from <Money gbp={9000} />
+              </li>
               <li>Same fee from the lineup or a targeted search</li>
               <li>No percentage of salary</li>
               <li>Growth, UA, Product, Design, Engineering, Art, Data</li>
