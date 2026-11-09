@@ -81,7 +81,7 @@ export function Button(props: ButtonProps) {
   const cls = classes({ variant, size, className });
 
   if ("href" in props && props.href) {
-    const { href, external, variant: _variant, size: _size, arrow: _arrow, ...rest } = props as AsLink;
+    const { href, external, variant: _variant, size: _size, arrow: _arrow, className: _className, children: _children, ...rest } = props as AsLink;
     if (external || href.startsWith("mailto:") || href.startsWith("http")) {
       return (
         <a

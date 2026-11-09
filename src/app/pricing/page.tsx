@@ -4,7 +4,6 @@ import { BOOKING_URL } from "@/lib/site";
 import { ROSTER } from "@/data/roster";
 import { Compare } from "@/components/onboard/PlanCards";
 import { PricingCards } from "@/components/onboard/PricingCards";
-import { TierChecker } from "@/components/onboard/TierChecker";
 import { slotsLeftThisMonth } from "@/lib/plans";
 import styles from "./plans.module.css";
 
@@ -52,7 +51,6 @@ export default async function PricingPage({ searchParams }: { searchParams: Prom
       <section className={styles.body} id="plans">
         <div className="container">
           <PricingCards candidate={person?.id} />
-          <TierChecker />
           <div className={styles.week}>
             <h2>What&apos;s a search week?</h2>
             <p>

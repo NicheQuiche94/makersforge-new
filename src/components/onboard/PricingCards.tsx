@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/atoms/Button";
 import { BATCH_MAX, CONTRACT_FEE, FEE_FLOOR, RETAINED_OFF, TIER_FEE, TIER_NAME, gbp, hireFee, type PayWhen, type Tier } from "@/lib/plans";
+import { BOOKING_URL } from "@/lib/site";
 import { startHref } from "./PlanCards";
 import base from "./PlanCards.module.css";
 import styles from "./PricingCards.module.css";
@@ -102,67 +103,72 @@ export function PricingCards({ candidate }: { candidate?: string }) {
 
 const ORD = ["1st", "2nd", "3rd", "4th", "5th"];
 
-/** Batch: the rule in one sentence, then "how many hires?" and the sums for that many. */
+/** Batch: the rule in one sentence, a "how many hires?" toggle and the breakdown, in the site's card and table style. */
 function BatchCalc({ retained, candidate }: { retained: boolean; candidate?: string }) {
-  const [n, setN] = useState<number | null>(null);
-  const row = (t: Tier) => Array.from({ length: n ?? 0 }, (_, i) => hireFee(t, i, { batch: true, retained }));
+  const [n, setN] = useState(3);
+  const row = (t: Tier) => Array.from({ length: n }, (_, i) => hireFee(t, i, { batch: true, retained }));
   const team = row("team");
   const senior = row("senior");
   const sum = (xs: number[]) => xs.reduce((a, b) => a + b, 0);
   return (
-    <section className={`card-shadow ${styles.batch}`} aria-labelledby="batch">
-      <div className={styles.calc}>
-        <h3 id="batch" className={base.name}>
-          Hiring several?
-        </h3>
-        <p className={styles.rule}>
-          Give us 2 to {BATCH_MAX} Team or Senior roles at once: your first hire is full price, and each one after is £1,000 less than the one before, never below {gbp(FEE_FLOOR)}.
-        </p>
-        <div className={styles.howMany}>
-          <span>How many hires?</span>
-          {[2, 3, 4, 5].map((x) => (
-            <button key={x} type="button" className={n === x ? styles.howOn : ""} onClick={() => setN(n === x ? null : x)} aria-pressed={n === x}>
-              {x}
-            </button>
-          ))}
-        </div>
-        {n && (
-          <div className={styles.pop} role="status">
-            <p>
-              <b>{n} hires</b>, in the order they're made{retained ? ", retained" : ""}:
-            </p>
-            <table className={styles.popTable}>
-              <thead>
-                <tr>
-                  <th />
-                  <th>All Team</th>
-                  <th>All Senior</th>
-                </tr>
-              </thead>
-              <tbody>
-                {team.map((f, i) => (
-                  <tr key={i}>
-                    <td>{ORD[i]} hire</td>
-                    <td>{gbp(f)}</td>
-                    <td>{gbp(senior[i])}</td>
-                  </tr>
-                ))}
-                <tr className={styles.popSum}>
-                  <td>In all</td>
-                  <td>{gbp(sum(team))}</td>
-                  <td>{gbp(sum(senior))}</td>
-                </tr>
-              </tbody>
-            </table>
-            <p className={styles.popTotal}>A mix steps down the same way, in the order you hire. Executive roles are always {gbp(hireFee("executive", 0, { retained }))}.</p>
+    <>
+      <section className={`card-shadow ${styles.batch}`} aria-labelledby="batch">
+        <div className={styles.batchText}>
+          <h3 id="batch" className={base.name}>
+            Hiring several?
+          </h3>
+          <p className={styles.rule}>
+            Give us 2 to {BATCH_MAX} Team or Senior roles at once. Your first hire is full price, and each one after is £1,000 less than the one before, never below {gbp(FEE_FLOOR)}.
+          </p>
+          <p className={styles.howLabel}>How many hires?</p>
+          <div className={`${base.payToggle} ${styles.howMany}`} role="group" aria-label="How many hires">
+            {[2, 3, 4, 5].map((x) => (
+              <button key={x} type="button" className={n === x ? base.payOn : ""} aria-pressed={n === x} onClick={() => setN(x)}>
+                {x}
+              </button>
+            ))}
           </div>
-        )}
-        <div className={base.ctaRow}>
-          <Button href={startHref("batch", candidate, retained ? "retained" : "success")} variant="ghost" arrow className={base.cta}>
-            Start a batch
-          </Button>
+          <div className={base.ctaRow}>
+            <Button href={startHref("batch", candidate, retained ? "retained" : "success")} variant="ghost" arrow className={base.cta}>
+              Start a batch
+            </Button>
+          </div>
         </div>
+        <table className={styles.batchTable}>
+          <thead>
+            <tr>
+              <th>{n} hires{retained ? ", retained" : ""}</th>
+              <th>All Team</th>
+              <th>All Senior</th>
+            </tr>
+          </thead>
+          <tbody>
+            {team.map((f, i) => (
+              <tr key={i}>
+                <td>{ORD[i]} hire</td>
+                <td>{gbp(f)}</td>
+                <td>{gbp(senior[i])}</td>
+              </tr>
+            ))}
+          </tbody>
+          <tfoot>
+            <tr>
+              <td>In all</td>
+              <td>{gbp(sum(team))}</td>
+              <td>{gbp(sum(senior))}</td>
+            </tr>
+          </tfoot>
+          <caption>A mix steps down the same way, in the order you hire. Executive roles are always {gbp(hireFee("executive", 0, { retained }))}.</caption>
+        </table>
+      </section>
+      <div className={styles.team}>
+        <p>
+          <b>Hiring a complete team?</b> Talk to us about a custom package, with payment over time available.
+        </p>
+        <Button href={BOOKING_URL} external variant="ghost" arrow className={base.cta}>
+          Book a call
+        </Button>
       </div>
-    </section>
+    </>
   );
 }
