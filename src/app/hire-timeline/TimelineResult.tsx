@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Button } from "@/components/atoms/Button";
 import { TIER_NAME } from "@/lib/plans";
 import { inCountry, METHODS, OFFER_DECLINE, SOURCES, fmtDay, fmtShort, timeline, weeksText, type Bar, type TimelineInput } from "@/lib/hireTimeline";
 import base from "@/components/onboard/PlanCards.module.css";
@@ -24,7 +23,7 @@ type Route = "theirs" | "ours";
    MakersForge; typical notice or available now) and one summary that
    changes with them. The timeline sits under it; on the MakersForge route
    it shows both, so the difference is plain. */
-export function TimelineResult({ input, mock }: { input: TimelineInput; mock?: boolean }) {
+export function TimelineResult({ input, slots, mock }: { input: TimelineInput; slots: { left: number; month: string }; mock?: boolean }) {
   const [route, setRoute] = useState<Route>("theirs");
   const [noNotice, setNoNotice] = useState(false);
   const t = timeline(input, noNotice);
@@ -109,24 +108,29 @@ export function TimelineResult({ input, mock }: { input: TimelineInput; mock?: b
           )}
           {ours && noticeIsTheBlocker && !noNotice && (
             <p className={own.nudge}>
-              Only the notice period puts you past your date. We can put people who can start straight away at the front of your shortlist:{" "}
+              Only notice puts you past your date. We can shortlist people who can start now:{" "}
               <button type="button" className={own.nudgeLink} onClick={() => setNoNotice(true)}>
                 see it with no notice
               </button>
               .
             </p>
           )}
-          {ours && noticeIsTheBlocker && noNotice && <p className={own.nudge}>To make your date, we&apos;ll put people with no notice period at the front of your shortlist.</p>}
+          {ours && noticeIsTheBlocker && noNotice && <p className={own.nudge}>To make your date, we&apos;ll shortlist people with no notice first.</p>}
           {ours ? (
             <div className={own.summaryCta}>
-              <Button href={searchHref} variant="primary" arrow>
-                Book a search week
-              </Button>
+              <Link href={searchHref} className={own.bookBtn}>
+                Book a search week <span aria-hidden="true">→</span>
+              </Link>
+              {slots.left > 0 && (
+                <span className={own.scarce}>
+                  <i aria-hidden="true" /> {slots.left} left in {slots.month}
+                </span>
+              )}
             </div>
           ) : (
             <button type="button" className={own.sooner} onClick={() => setRoute("ours")}>
-              {/* Not "need them sooner?": they already told us they do (Andre). */}
-              <span>{(t.late ?? 0) > 0 ? `See how to close the ${Math.round(t.late!)}-week gap` : "See how to get them in sooner"}</span>
+              {/* Short and plain (Andre): they already know they need them sooner. */}
+              <span>{(t.late ?? 0) > 0 ? "Close the gap" : "Bring it forward"}</span>
               <i aria-hidden="true">→</i>
             </button>
           )}
