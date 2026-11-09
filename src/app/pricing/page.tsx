@@ -66,7 +66,7 @@ export default async function PricingPage({ searchParams }: { searchParams: Prom
           <div className={styles.close}>
             <Link href="/compare" className={`${styles.door} ${styles.doorDark}`}>
               <h2>Not sure we&apos;re the right fit?</h2>
-              <p>Compare every way to hire for your role: agencies, job boards, in-house and us, on cost and who you reach.</p>
+              <p>Compare every way to hire for your role: games and tech agencies, running a job ad yourself, and us, on cost and who you reach.</p>
               <span className={styles.doorCta}>
                 Compare hiring routes <span aria-hidden="true">→</span>
               </span>
