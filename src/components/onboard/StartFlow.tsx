@@ -20,7 +20,7 @@ import { useEffect, useRef, useState, type DragEvent } from "react";
 import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/atoms/Button";
 import { ROSTER } from "@/data/roster";
-import { BATCH_MAX, BATCH_SIZES, PLANS, scheduleRoles, TERMS, TIER_NAME, feesFor, ladder as tierLadder, fiveDays as fiveDaysOf, gbp, gbpK, planById, retainedPrice, shortDate as shortDateOf, shortlistDate as shortlistDateOf, type PayWhen, type PlanId } from "@/lib/plans";
+import { BATCH_MAX, BATCH_SIZES, PLANS, scheduleRoles, TERMS, TIER_NAME, TIER_FEE, feesFor, ladder as tierLadder, fiveDays as fiveDaysOf, gbp, gbpK, planById, retainedPrice, shortDate as shortDateOf, shortlistDate as shortlistDateOf, type PayWhen, type PlanId } from "@/lib/plans";
 
 // Dates show "…" until the live calendar has loaded and a week is picked.
 const fiveDays = (w?: string) => (w ? fiveDaysOf(w) : "…");
@@ -140,14 +140,17 @@ export function StartFlow() {
   // How many roles they're paying for, and the fee per hire at that size.
   const n = plan === "batch" ? roles : briefs.length;
   // Each role's tier comes from its brief (lib/tier); a batch takes £1,000 off for each hire before it, down to a floor.
-  const tiers: Tier[] = Array.from({ length: n }, (_, i) => (briefs[i] ? tierFor(briefs[i].f.role, briefs[i].f.budget).tier : "generalist"));
+  const tiers: Tier[] = Array.from({ length: n }, (_, i) => (briefs[i] ? tierFor(briefs[i].f.role).tier : "team"));
   const fees = feesFor(tiers, plan === "batch");
   const full = fees.reduce((a, b) => a + b, 0);
-  const ret = retainedPrice(full);
+  // Retained: 15% off each hire, never below £7,000; a third of that total up front.
+  const retFees = feesFor(tiers, plan === "batch", true);
+  const retTotal = retFees.reduce((a, b) => a + b, 0);
+  const ret = { total: retTotal, upfront: Math.round(retTotal / 3 / 100) * 100 };
   // Each role gets its own search slot; the panel, review and confirmation show when each runs.
   const roleNames = Array.from({ length: n }, (_, i) => (briefs[i] && briefed(briefs[i]) ? roleName(briefs[i], i) : `Role ${i + 1}`));
   const sched = start && weeks ? scheduleRoles(start, Math.max(1, n), weeks) : [];
-  const ladder = (k = 1) => fees.map((x) => gbpK(x * k)).join(", ");
+  const ladder = (retained = false) => (retained ? retFees : fees).map((x) => gbpK(x)).join(", ");
   const allFilled = n === 1 ? "" : n === 2 ? " if both are filled" : ` if all ${n} are filled`;
   // The running total in "Your booking": price per role, then what it comes to.
   const price = !p
@@ -155,7 +158,7 @@ export function StartFlow() {
     : plan === "contract"
       ? { each: "£1,000 a month per contractor", total: `${gbp(1_000 * n)} a month`, note: n === 1 ? "While they're engaged." : `While ${n === 2 ? "both are" : `all ${n} are`} engaged.` }
       : isRetained
-        ? { each: n > 1 ? `${ladder(0.85)} per hire, retained` : `${gbp(ret.total)} per hire, retained`, total: gbp(ret.total), note: `${n > 1 ? `If ${allFilled.replace(" if ", "")}. ` : ""}${gbp(ret.upfront)} when you sign, counted towards your first ${n > 1 ? "hires" : "hire"}.` }
+        ? { each: n > 1 ? `${ladder(true)} per hire, retained` : `${gbp(ret.total)} per hire, retained`, total: gbp(ret.total), note: `${n > 1 ? `If ${allFilled.replace(" if ", "")}. ` : ""}${gbp(ret.upfront)} when you sign, counted towards your first ${n > 1 ? "hires" : "hire"}.` }
         : { each: n > 1 ? `${ladder()} per hire` : `${gbp(fees[0])} per hire (${TIER_NAME[tiers[0]].toLowerCase()} role)`, total: gbp(full), note: n === 1 ? "Nothing up front. Invoiced when your hire starts." : `If ${allFilled.replace(" if ", "")}. Nothing up front.` };
   const order: Step[] = ["week", "brief", "you", "plan", "terms", "review", ...(isRetained ? (["pay"] as Step[]) : []), "done"];
   const at = order.indexOf(step === "requested" ? "terms" : step);
@@ -772,12 +775,13 @@ function PlanOption({ x, pay, on, pick, tiers }: { x: (typeof PLANS)[number]; pa
   const base = pay === "retained" && x.retained ? x.retained : x;
   const k = pay === "retained" ? 0.85 : 1;
   // Batch shows its fees in order for the roles briefed (or the generalist ladder before any), not a range (Ashley's QA).
-  const ladder = x.id === "batch" ? (tiers.length > 1 ? feesFor(tiers, true) : tierLadder(tiers[0] ?? "generalist")).map((s) => s * k) : null;
-  const first = tiers[0] ?? "generalist";
+  const ret = pay === "retained";
+  const ladder = x.id === "batch" ? (tiers.length > 1 ? feesFor(tiers, true, ret) : tierLadder(tiers[0] ?? "team", ret)) : null;
+  const first = tiers[0] ?? "team";
   const face = ladder
-    ? { price: gbp(ladder[0]), per: `first hire, then ${gbp(1000 * k)} less each` }
+    ? { price: gbp(ladder[0]), per: "first hire, then £1,000 less each, never below £7,000" }
     : x.id === "permanent"
-      ? { price: gbp(feesFor([first], false)[0] * k), per: `per hire · ${TIER_NAME[first].toLowerCase()} role` }
+      ? { price: gbp(feesFor([first], false, ret)[0]), per: `per hire · ${TIER_NAME[first]} role` }
       : base;
   const line = pay === "retained" && !x.retained ? "Paid monthly, so there's no retainer" : x.blurb;
   return (
@@ -861,16 +865,16 @@ function Nav({
   );
 }
 
-/** Under the brief: which tier this role is, its fee, and why (lib/tier). Senior searches get the fee confirmed first. */
-function TierNote({ role, budget }: { role: string; budget: string }) {
+/** Under the brief: which tier this role is (the level in the title), and its fee. */
+function TierNote({ role }: { role: string; budget?: string }) {
   if (!role.trim()) return null;
-  const t = tierFor(role, budget);
-  const fee = t.tier === "specialist" ? "£15,000" : "£9,000";
-  const senior = t.tier === "specialist" && (/\b(head|director|vp|vice president|chief|c-level)\b/i.test(role) || (t.salaryGBP ?? 0) >= 120_000);
+  const t = tierFor(role);
   return (
-    <p className={`${styles.tierNote} ${t.tier === "specialist" ? styles.tierSpec : ""}`}>
-      <b>{TIER_NAME[t.tier]} role · {fee}</b> <span>{t.reason}.</span>
-      {senior && <em> Senior search: we&apos;ll confirm the fee within one working day, before you sign.</em>}
+    <p className={`${styles.tierNote} ${t.tier !== "team" ? styles.tierSpec : ""}`}>
+      <b>
+        {TIER_NAME[t.tier]} role · {gbp(TIER_FEE[t.tier])}
+      </b>{" "}
+      <span>{t.reason}.</span>
     </p>
   );
 }

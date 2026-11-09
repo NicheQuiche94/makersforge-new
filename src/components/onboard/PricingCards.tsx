@@ -2,20 +2,18 @@
 
 import { useState } from "react";
 import { Button } from "@/components/atoms/Button";
-import { RETAINED_OFF, TIER_FEE, TIER_FLOOR, gbp, gbpK, ladder, retainedFee, type PayWhen } from "@/lib/plans";
+import { BATCH_MAX, CONTRACT_FEE, FEE_FLOOR, RETAINED_OFF, TIER_FEE, TIER_NAME, gbp, hireFee, type PayWhen, type Tier } from "@/lib/plans";
 import { startHref } from "./PlanCards";
 import base from "./PlanCards.module.css";
 import styles from "./PricingCards.module.css";
 
-/* /pricing (Andre 2026-11-09, MOCKUP): three cards, Generalist, Specialist
-   and Batch, that all follow two switches: Permanent / Contractor and On
-   success / Retained (retained is permanent-only). SaaS-style "what's
-   included" bullets. Contractor tier prices are DRAFT numbers for Andre. */
+/* /pricing (Andre 2026-11-09, MOCKUP): three cards, Team, Senior and
+   Executive, set by the level in the job title. Two switches: Permanent /
+   Contractor and On success / Retained (retained is permanent-only).
+   Contractors are a flat £1,000 a month, not tiered. Batch is a sentence
+   and a "how many hires?" picker under the cards. No hire below £7,000. */
 
 type Kind = "permanent" | "contract";
-
-const CONTRACT_FEE = { generalist: 1_000, specialist: 1_500 }; // DRAFT: £ per contractor per month
-const CONTRACT_BATCH_OFF = 0.1; // DRAFT: 10% off each month for 2–5 contractors
 
 const INCLUDED = [
   "A search week set aside just for your role",
@@ -25,97 +23,20 @@ const INCLUDED = [
   "Flat fee, never a percentage of salary",
 ];
 
-type CardData = {
-  id: string;
-  name: string;
-  who: string;
-  price: string;
-  per: string;
-  note?: string;
-  extraTitle?: string;
-  points: string[];
-  cta: { label: string; plan: string };
-  featured?: string;
+const WHO: Record<Tier, string> = {
+  team: "Junior, Associate and mid-level roles, or no level in the title.",
+  senior: "Senior, Lead, Principal and Staff roles.",
+  executive: "Head, Director, VP, C-level and GM roles.",
 };
-
-function cards(kind: Kind, pay: PayWhen): CardData[] {
-  const ret = kind === "permanent" && pay === "retained";
-  const k = (n: number) => (ret ? retainedFee(n) : n);
-  const payLine = kind === "contract" ? "Monthly while they're engaged, stop any month" : ret ? `${RETAINED_OFF * 100}% off: a third up front, the rest when your hire starts` : "Nothing up front: pay when your hire starts";
-
-  if (kind === "contract") {
-    return [
-      {
-        id: "generalist",
-        name: "Generalist",
-        who: "Contractors for most roles: art, design, engineering, product, marketing.",
-        price: gbp(CONTRACT_FEE.generalist),
-        per: "per contractor, per month",
-        points: [...INCLUDED.slice(0, 4), "You pay the contractor directly, no markup on their rate", payLine],
-        cta: { label: "Start a brief", plan: "contract" },
-      },
-      {
-        id: "specialist",
-        name: "Specialist",
-        who: "Senior or revenue-critical contractors: UA, growth, monetisation, live-ops, economy, Head level and up.",
-        price: gbp(CONTRACT_FEE.specialist),
-        per: "per contractor, per month",
-        extraTitle: "Everything in Generalist, plus",
-        points: ["[What makes a specialist search different: to agree]", "You pay the contractor directly, no markup on their rate", payLine],
-        cta: { label: "Start a brief", plan: "contract" },
-        featured: "For the hires that move revenue",
-      },
-      {
-        id: "batch",
-        name: "Batch",
-        who: "2 to 5 contractors at once, any mix of generalist and specialist.",
-        price: `${CONTRACT_BATCH_OFF * 100}% off`,
-        per: "every contractor, every month",
-        note: `${gbp(CONTRACT_FEE.generalist * (1 - CONTRACT_BATCH_OFF))} generalist · ${gbp(CONTRACT_FEE.specialist * (1 - CONTRACT_BATCH_OFF))} specialist, per month`,
-        points: ["Each role gets its own search week and 5 candidates", "Mix generalist and specialist roles", "One contract and one point of contact for all of them", "Scale up or down month to month"],
-        cta: { label: "Start a batch", plan: "contract" },
-      },
-    ];
-  }
-
-  return [
-    {
-      id: "generalist",
-      name: "Generalist",
-      who: "Most hires: art, design, engineering, product, data and marketing, below Head level, up to £70k.",
-      price: gbp(k(TIER_FEE.generalist)),
-      per: ret ? "per hire, retained" : "per hire",
-      points: [...INCLUDED, payLine],
-      cta: { label: "Start a brief", plan: "permanent" },
-    },
-    {
-      id: "specialist",
-      name: "Specialist",
-      who: "The hires that move revenue, and senior hires: UA, growth, monetisation, live-ops and economy at Lead level and up, any Head+ role, or £70k+.",
-      price: `from ${gbp(k(TIER_FEE.specialist))}`,
-      per: ret ? "per hire, retained" : "per hire",
-      extraTitle: "Everything in Generalist, plus",
-      points: ["[What makes a specialist search different: to agree]", payLine],
-      cta: { label: "Start a brief", plan: "permanent" },
-      featured: "For the hires that move revenue",
-    },
-    {
-      id: "batch",
-      name: "Batch",
-      who: "2 to 5 permanent roles at once, any mix of generalist and specialist.",
-      price: `from ${gbp(k(TIER_FLOOR.generalist))}`,
-      per: ret ? "per hire, retained" : "per hire",
-      points: ["Each role gets its own search week and 5 candidates", "Mix generalist and specialist roles", "Pay only for the hires you make", payLine],
-      cta: { label: "Start a batch", plan: "batch" },
-    },
-  ];
-}
 
 export function PricingCards({ candidate }: { candidate?: string }) {
   const [kind, setKind] = useState<Kind>("permanent");
   const [pay, setPay] = useState<PayWhen>("success");
   const retainedOk = kind === "permanent";
   const shown = retainedOk ? pay : "success";
+  const ret = shown === "retained";
+  const payLine =
+    kind === "contract" ? "Monthly while they're engaged, stop any month" : ret ? `${RETAINED_OFF * 100}% off: a third up front, the rest when your hire starts` : "Nothing up front: pay when your hire starts";
 
   return (
     <>
@@ -138,78 +59,110 @@ export function PricingCards({ candidate }: { candidate?: string }) {
       </div>
       <p className={base.payNote}>
         {kind === "contract"
-          ? "Contractors are billed monthly while they're engaged, so there's no retainer."
-          : shown === "success"
-            ? "Nothing up front. You pay when your hire starts."
-            : `A third up front when you sign, the rest as each hire starts, and ${RETAINED_OFF * 100}% off.`}
+          ? `One flat ${gbp(CONTRACT_FEE)} a month per contractor, whatever the level. You pay them directly, with no markup on their rate.`
+          : ret
+            ? `A third up front when you sign, the rest as each hire starts, and ${RETAINED_OFF * 100}% off.`
+            : "Nothing up front. You pay when your hire starts."}
       </p>
 
       <div className={`${base.grid} ${base.grid3}`}>
-        {cards(kind, shown).map((c) => (
-          <article key={c.id} className={`card-shadow ${base.card} ${c.featured ? base.featured : ""}`}>
-            {c.featured && <span className={base.badge}>{c.featured}</span>}
-            <h3 className={base.name}>{c.name}</h3>
-            <p className={base.price}>
-              {c.price}
-              <span className={base.per}> {c.per}</span>
-            </p>
-            {c.note && <p className={styles.note}>{c.note}</p>}
-            <p className={base.blurb}>{c.who}</p>
-            {c.id === "batch" && kind === "permanent" && <BatchCalc retained={shown === "retained"} />}
-            {c.extraTitle && <p className={styles.extraTitle}>{c.extraTitle}</p>}
-            <ul className={base.points}>
-              {c.points.map((p) => (
-                <li key={p}>{p}</li>
-              ))}
-            </ul>
-            <div className={base.ctaRow}>
-              <Button href={startHref(c.cta.plan, candidate, retainedOk ? shown : undefined)} variant={c.featured ? "primary" : "ghost"} arrow className={base.cta}>
-                {c.cta.label}
-              </Button>
-            </div>
-          </article>
-        ))}
+        {(["team", "senior", "executive"] as const).map((t) => {
+          const featured = t === "senior" ? "Most hires that move revenue" : undefined;
+          return (
+            <article key={t} className={`card-shadow ${base.card} ${featured ? base.featured : ""}`}>
+              {featured && <span className={base.badge}>{featured}</span>}
+              <h3 className={base.name}>{TIER_NAME[t]}</h3>
+              <p className={base.price}>
+                {kind === "contract" ? gbp(CONTRACT_FEE) : gbp(hireFee(t, 0, { retained: ret }))}
+                <span className={base.per}> {kind === "contract" ? "per contractor, per month" : ret ? "per hire, retained" : "per hire"}</span>
+              </p>
+              {ret && <p className={styles.note}>was {gbp(TIER_FEE[t])}</p>}
+              <p className={base.blurb}>{WHO[t]}</p>
+              <ul className={base.points}>
+                {(kind === "contract" ? INCLUDED.slice(0, 4) : INCLUDED).map((p) => (
+                  <li key={p}>{p}</li>
+                ))}
+                <li>{payLine}</li>
+              </ul>
+              <div className={base.ctaRow}>
+                <Button href={startHref(kind === "contract" ? "contract" : "permanent", candidate, retainedOk ? shown : undefined)} variant={featured ? "primary" : "ghost"} arrow className={base.cta}>
+                  Start a brief
+                </Button>
+              </div>
+            </article>
+          );
+        })}
       </div>
-      <p className={styles.draft}>Mockup: contractor prices (£1,000 / £1,500 a month, 10% off in a batch) and the specialist extras are drafts.</p>
+
+      {kind === "permanent" && <BatchCalc retained={ret} candidate={candidate} />}
+      <p className={styles.draft}>Mockup: copy to be approved before this goes live.</p>
     </>
   );
 }
 
+const ORD = ["1st", "2nd", "3rd", "4th", "5th"];
+
 /** Batch: the rule in one sentence, then "how many hires?" and the sums for that many. */
-function BatchCalc({ retained }: { retained: boolean }) {
+function BatchCalc({ retained, candidate }: { retained: boolean; candidate?: string }) {
   const [n, setN] = useState<number | null>(null);
-  const k = (f: number) => (retained ? retainedFee(f) : f);
-  const sum = (t: "generalist" | "specialist") => ladder(t).slice(0, n ?? 0).reduce((a, b) => a + k(b), 0);
+  const row = (t: Tier) => Array.from({ length: n ?? 0 }, (_, i) => hireFee(t, i, { batch: true, retained }));
+  const team = row("team");
+  const senior = row("senior");
+  const sum = (xs: number[]) => xs.reduce((a, b) => a + b, 0);
   return (
-    <div className={styles.calc}>
-      <p className={styles.rule}>Your first hire is full price. Each one after is £1,000 less than the one before, down to a floor.</p>
-      <div className={styles.howMany}>
-        <span>How many hires?</span>
-        {[2, 3, 4, 5].map((x) => (
-          <button key={x} type="button" className={n === x ? styles.howOn : ""} onClick={() => setN(n === x ? null : x)} aria-pressed={n === x}>
-            {x}
-          </button>
-        ))}
-      </div>
-      {n && (
-        <div className={styles.pop} role="status">
-          <p>
-            <b>{n} hires</b>, in the order they're made:
-          </p>
-          <ul>
-            {ladder("generalist")
-              .slice(0, n)
-              .map((f, i) => (
-                <li key={i}>
-                  {["1st", "2nd", "3rd", "4th", "5th"][i]} hire <span>{gbp(k(f))}</span>
-                </li>
-              ))}
-          </ul>
-          <p className={styles.popTotal}>
-            {gbp(sum("generalist"))} in all if every role is generalist. A specialist role starts from {gbp(k(TIER_FEE.specialist))} and steps down the same way ({gbp(sum("specialist"))} for {n} specialists).
-          </p>
+    <section className={`card-shadow ${styles.batch}`} aria-labelledby="batch">
+      <div className={styles.calc}>
+        <h3 id="batch" className={base.name}>
+          Hiring several?
+        </h3>
+        <p className={styles.rule}>
+          Give us 2 to {BATCH_MAX} Team or Senior roles at once: your first hire is full price, and each one after is £1,000 less than the one before, never below {gbp(FEE_FLOOR)}.
+        </p>
+        <div className={styles.howMany}>
+          <span>How many hires?</span>
+          {[2, 3, 4, 5].map((x) => (
+            <button key={x} type="button" className={n === x ? styles.howOn : ""} onClick={() => setN(n === x ? null : x)} aria-pressed={n === x}>
+              {x}
+            </button>
+          ))}
         </div>
-      )}
-    </div>
+        {n && (
+          <div className={styles.pop} role="status">
+            <p>
+              <b>{n} hires</b>, in the order they're made{retained ? ", retained" : ""}:
+            </p>
+            <table className={styles.popTable}>
+              <thead>
+                <tr>
+                  <th />
+                  <th>All Team</th>
+                  <th>All Senior</th>
+                </tr>
+              </thead>
+              <tbody>
+                {team.map((f, i) => (
+                  <tr key={i}>
+                    <td>{ORD[i]} hire</td>
+                    <td>{gbp(f)}</td>
+                    <td>{gbp(senior[i])}</td>
+                  </tr>
+                ))}
+                <tr className={styles.popSum}>
+                  <td>In all</td>
+                  <td>{gbp(sum(team))}</td>
+                  <td>{gbp(sum(senior))}</td>
+                </tr>
+              </tbody>
+            </table>
+            <p className={styles.popTotal}>A mix steps down the same way, in the order you hire. Executive roles are always {gbp(hireFee("executive", 0, { retained }))}.</p>
+          </div>
+        )}
+        <div className={base.ctaRow}>
+          <Button href={startHref("batch", candidate, retained ? "retained" : "success")} variant="ghost" arrow className={base.cta}>
+            Start a batch
+          </Button>
+        </div>
+      </div>
+    </section>
   );
 }

@@ -78,7 +78,7 @@ function BatchSteps({ pay }: { pay: PayWhen }) {
   const k = (fee: number) => gbpK(pay === "retained" ? retainedFee(fee) : fee);
   return (
     <div className={styles.ladders}>
-      {(["generalist", "specialist"] as const).map((t) => (
+      {(["team", "senior"] as const).map((t) => (
         <div key={t} className={styles.ladderRow}>
           <span className={styles.ladderName}>{TIER_NAME[t]}</span>
           <span className={styles.ladderFees}>{ladder(t).map(k).join(" → ")}</span>

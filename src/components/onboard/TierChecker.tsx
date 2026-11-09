@@ -5,37 +5,30 @@ import { TIER_FEE, TIER_NAME, gbp } from "@/lib/plans";
 import { tierFor } from "@/lib/tier";
 import styles from "./TierChecker.module.css";
 
-/* /pricing: "Which tier is my role?" (Andre 2026-11-08, two-tier pricing
-   MOCKUP). The fixed rules, written out, and a checker that applies them. */
+/* /pricing: "Which tier is my role?" (Andre 2026-11-09, MOCKUP). The tier is
+   the level in the job title, nothing else. */
 export function TierChecker() {
   const [role, setRole] = useState("");
-  const [salary, setSalary] = useState("");
-  const t = role.trim() ? tierFor(role, salary) : null;
+  const t = role.trim() ? tierFor(role) : null;
   return (
     <section className={styles.wrap} aria-labelledby="tiers">
       <div className={styles.check}>
         <h2 id="tiers">Which tier is my role?</h2>
         <div className={styles.inputs}>
           <label>
-            <span>Role</span>
+            <span>Job title</span>
             <input value={role} onChange={(e) => setRole(e.target.value)} placeholder="e.g. Senior UA Manager" />
-          </label>
-          <label>
-            <span>Salary</span>
-            <input value={salary} onChange={(e) => setSalary(e.target.value)} placeholder="e.g. £65k, or €80,000" />
           </label>
         </div>
         {t && (
-          <p className={`${styles.result} ${t.tier === "specialist" ? styles.resultSpec : ""}`}>
+          <p className={`${styles.result} ${t.tier !== "team" ? styles.resultSpec : ""}`}>
             <b>
-              {TIER_NAME[t.tier]} · {t.tier === "specialist" ? `from ${gbp(TIER_FEE.specialist)}` : gbp(TIER_FEE.generalist)}
+              {TIER_NAME[t.tier]} · {gbp(TIER_FEE[t.tier])}
             </b>{" "}
             {t.reason}.
           </p>
         )}
-        <p className={styles.small}>
-          The tier comes from the role, never from a negotiation. For Head, VP and C-level searches we confirm the fee within one working day, before you sign.
-        </p>
+        <p className={styles.small}>The tier is the level in the job title, never years of experience or a negotiation.</p>
       </div>
     </section>
   );

@@ -11,7 +11,7 @@ import styles from "./plans.module.css";
 export const metadata: Metadata = {
   title: "Plans & pricing · MakersForge",
   description:
-    "£9,000 per permanent hire, from £15,000 for specialist and senior roles, £1,000 a month per contractor, and less per hire when you give us several roles. No lock-in. Start online in five minutes.",
+    "A flat fee per hire by level: £9,000 Team, £14,000 Senior, £20,000 Executive. £1,000 a month per contractor, and less per hire when you give us several roles. No lock-in.",
 };
 
 /* PROTOTYPE 2026-11-02: Plans & pricing is the main self-onboarding page

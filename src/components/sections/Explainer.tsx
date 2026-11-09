@@ -15,7 +15,7 @@ const COMPARISON: { them: string; us: string }[] = [
   { them: "Most of them a no", us: "Every one worth a call" },
   { them: "The best people never see it", us: "We approach the people who aren't looking" },
   { them: "Weeks of sifting and first calls", us: "Hours of your time, not weeks" },
-  { them: "Or an agency at 20–30% of salary", us: "One flat fee: £9,000 per hire, specialists from £15,000" },
+  { them: "Or an agency at 20–30% of salary", us: "One flat fee by level: from £9,000 per hire" },
 ];
 
 export function Explainer() {

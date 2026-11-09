@@ -22,7 +22,7 @@ export async function GET(req: Request) {
   const gift = q.get("code") ? await checkCode(createAdminClient(), q.get("code")!) : null;
   const discount = gift?.ok ? { pct: gift.pct, code: gift.code } : undefined;
   // ?tiers=g,s,g: each role's tier for the preview (the booking itself re-derives them from the briefs).
-  const tiers = (q.get("tiers") || "").split(",").map((t): Tier => (t === "s" ? "specialist" : "generalist"));
+  const tiers = (q.get("tiers") || "").split(",").map((t): Tier => (t === "e" ? "executive" : t === "s" ? "senior" : "team"));
   const deal = priceDeal(plan, q.get("retained") === "1", Number(q.get("roles")) || 1, discount?.pct, tiers);
   const client = (q.get("client") || "").slice(0, 200);
   const date = new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
