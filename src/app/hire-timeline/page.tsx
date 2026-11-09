@@ -6,7 +6,6 @@ export const metadata: Metadata = {
   description:
     "Hiring with a job ad? See when your hire is likely to start, stage by stage, with the notice period in their country, against the date you need them. Free, from published benchmarks.",
   alternates: { canonical: "/hire-timeline" },
-  robots: { index: false }, // MOCKUP until Andre signs it off
 };
 
 /* 2026-11-09 (Andre): a lead magnet that reveals a problem (the hire won't

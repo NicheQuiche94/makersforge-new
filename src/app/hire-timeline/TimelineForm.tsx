@@ -6,14 +6,17 @@ import { DatePicker } from "../compare/DatePicker";
 import { EmailField } from "@/components/lead/EmailField";
 import { COUNTRIES, METHODS, type Method } from "@/lib/hireTimeline";
 import { tierFor } from "@/lib/tier";
+import { setLead } from "@/lib/lead";
+import { trackLinkedIn } from "@/lib/linkedin";
 import { TIER_NAME } from "@/lib/plans";
 import styles from "../compare/compare.module.css";
 import own from "./timeline.module.css";
 
 const iso = (d: Date) => d.toISOString().slice(0, 10);
 
-/* MOCKUP: the real version emails the timeline (same pattern as /compare);
-   here the button goes straight to the result so Andre can review it. */
+/* /hire-timeline (Andre 2026-11-09): one form with their email; the
+   timeline goes by email (same pattern as /compare), with the headline on
+   the next page as a teaser. */
 export function TimelineForm() {
   const router = useRouter();
   const [title, setTitle] = useState("Senior UA Manager");
@@ -31,15 +34,28 @@ export function TimelineForm() {
     { label: "In 4 months", value: soon(17) },
   ];
 
-  const go = () => {
-    const q = new URLSearchParams({ t: title, c: country, m: method, ...(needBy && { by: needBy }), mock: "1" });
-    router.push(`/hire-timeline/r?${q}`);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  const go = async () => {
+    setBusy(true);
+    setError("");
+    const r = await fetch("/api/hire-timeline", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ title, country, method, needBy, email, name }) })
+      .then((x) => x.json())
+      .catch(() => ({ error: "That didn't go through. Please try again." }));
+    if (r.error) {
+      setBusy(false);
+      return setError(r.error);
+    }
+    setLead(r.lead);
+    trackLinkedIn("timeline_requested");
+    const q = new URLSearchParams({ start: r.start, late: String(r.late ?? "") });
+    if (r.devLink) q.set("dev", r.devLink);
+    router.push(`/hire-timeline/sent?${q}`);
   };
 
   return (
     <section className={styles.hero}>
       <div className={styles.heroInner}>
-        <span className={styles.mock}>Mockup: not live yet</span>
         <h1 className={styles.display}>
           When will your hire <span className={`gr ${styles.accent}`}>actually start?</span>
         </h1>
@@ -51,7 +67,7 @@ export function TimelineForm() {
           className={styles.formCard}
           onSubmit={(e) => {
             e.preventDefault();
-            go();
+            if (!busy) go();
           }}
         >
           <div className={styles.formGrid}>
@@ -91,7 +107,7 @@ export function TimelineForm() {
             <label className={styles.wide}>
               <span className={styles.lbl}>Work email</span>
               <EmailField value={email} onChange={setEmail}>
-                <input type="email" placeholder="you@studio.com" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <input type="email" required placeholder="you@studio.com" value={email} onChange={(e) => setEmail(e.target.value)} />
               </EmailField>
             </label>
             <label className={styles.narrow}>
@@ -101,10 +117,11 @@ export function TimelineForm() {
               <input value={name} onChange={(e) => setName(e.target.value)} />
             </label>
           </div>
-          <button type="submit" className={styles.bigGo} disabled={!title.trim()}>
-            Email me my timeline →
+          {error && <p className={styles.err}>{error}</p>}
+          <button type="submit" className={styles.bigGo} disabled={busy || !title.trim() || !/^\S+@\S+\.\S+$/.test(email)}>
+            {busy ? "Sending…" : "Email me my timeline →"}
           </button>
-          <p className={styles.fine}>Mockup: this goes straight to the result. The live version emails it to you first, to share with your team.</p>
+          <p className={styles.fine}>We&apos;ll email you a link to share with your team. One email, no spam.</p>
         </form>
       </div>
     </section>

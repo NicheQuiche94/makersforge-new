@@ -9,11 +9,12 @@ export const LINKEDIN_PARTNER_ID = "10072226";
 
 const CONVERSIONS: Record<LinkedInEvent, number | null> = {
   compare_requested: null, // /compare: "Email me my comparison"
+  timeline_requested: null, // /hire-timeline: "Email me my timeline"
   ad_graded: null, // /job-ad-grading-tool: "Email me my score"
   booking_started: null, // /start: a search week reserved
   booking_completed: null, // /start: terms signed and booked
 };
-export type LinkedInEvent = "compare_requested" | "ad_graded" | "booking_started" | "booking_completed";
+export type LinkedInEvent = "compare_requested" | "timeline_requested" | "ad_graded" | "booking_started" | "booking_completed";
 
 type Lintrk = (action: "track", data: { conversion_id: number }) => void;
 

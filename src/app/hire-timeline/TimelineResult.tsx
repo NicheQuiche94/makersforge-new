@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { setMailRef } from "@/lib/analytics";
 import Link from "next/link";
 import { TIER_NAME } from "@/lib/plans";
 import { inCountry, METHODS, OFFER_DECLINE, SOURCES, fmtDay, fmtShort, timeline, weeksText, type Bar, type TimelineInput } from "@/lib/hireTimeline";
@@ -20,7 +21,11 @@ const SLOTS_SHOWN = 3;
    MakersForge; typical notice or available now) and one summary that
    changes with them. The timeline sits under it; on the MakersForge route
    it shows both, so the difference is plain. */
-export function TimelineResult({ input, slots, mock }: { input: TimelineInput; slots: { left: number; month: string }; mock?: boolean }) {
+export function TimelineResult({ input, slots, lid }: { input: TimelineInput; slots: { left: number; month: string }; lid?: string }) {
+  // With cookies accepted, PostHog files this visit (and its recording) under the request.
+  useEffect(() => {
+    if (lid) setMailRef(`tl-${lid}`);
+  }, [lid]);
   const [route, setRoute] = useState<Route>("theirs");
   const [noNotice, setNoNotice] = useState(false);
   const t = timeline(input, noNotice);
@@ -65,7 +70,6 @@ export function TimelineResult({ input, slots, mock }: { input: TimelineInput; s
   return (
     <section className={styles.wrap}>
       <div className="container">
-        {mock && <span className={styles.mock}>Mockup: the live version arrives by email</span>}
         <p className={own.kicker}>
           {input.title} · {tier} level · based in {inCountry(t.country.label)}
           {t.need ? ` · needed by ${fmtDay(t.need)}` : ""}
