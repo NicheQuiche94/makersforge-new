@@ -1,4 +1,4 @@
-.band { padding: 56px 0 40px; text-align: center; }
+.band { padding: 90px 0 40px; text-align: center; } /* top = the gap below the button to "Where we've placed hires" (Andre 2026-11-09) */
 .band :global(.container) { display: grid; justify-items: center; gap: 22px; }
 .h { margin: 0; max-width: 18ch; font-family: "Cal Sans", system-ui, sans-serif; font-weight: 400; font-size: clamp(32px, 4.4vw, 56px); line-height: 1; letter-spacing: -0.03em; text-wrap: balance; }
 /* .gr pads the orange words so glyph edges are not clipped; pull the punctuation back in */
