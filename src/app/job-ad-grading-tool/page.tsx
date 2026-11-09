@@ -12,7 +12,6 @@ export const metadata: Metadata = {
    of 100 and the fixes that matter most, by email (designed email + PDF);
    Andre offers to rewrite it by hand. Claude reads the ad against Andre's
    scorecard (lib/adGraderAI), with the rule reader as a fallback. */
-export default async function GradingToolPage({ searchParams }: { searchParams: Promise<{ ad?: string }> }) {
-  const { ad } = await searchParams;
-  return <GradingTool fromAd={ad === "1"} />;
+export default function GradingToolPage() {
+  return <GradingTool />;
 }

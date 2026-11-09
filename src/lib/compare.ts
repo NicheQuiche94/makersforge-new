@@ -13,7 +13,7 @@ export const HOOKS = [
   { pre: "Hiring, but not sure which route is most ", accent: "time-efficient", post: "?", g: "We'll compare every route for your role, including the hours it takes your team." },
   { pre: "Hiring, and it's ", accent: "time-sensitive", post: "?", g: "We'll show you which route gets someone in fastest." },
   // The LinkedIn ad's headline (2026-11-09): shown for ?ad=1 only, never at random.
-  { pre: "Hiring? But don't know ", accent: "where to start", post: "?", g: "Every way to hire your role, side by side." },
+  { pre: "Hiring, but don't know ", accent: "where to start", post: "?", g: "Every way to hire your role, side by side." },
 ];
 /** Headlines in the random A/B rotation (the ones after these are ad-only). */
 export const ROTATING_HOOKS = 3;
