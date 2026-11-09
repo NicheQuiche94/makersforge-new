@@ -1,3 +1,4 @@
+import { CURRENCY_SYMBOLS, RATES, type Currency } from "@/lib/currency";
 /**
  * Plans & capacity (PROTOTYPE 2026-11-02, Andre's self-onboarding brief).
  * One source for the homepage section, /pricing and the /start flow.
@@ -230,4 +231,47 @@ export function slotsLeftThisMonth() {
   const month = WEEKS[0].start.slice(0, 7);
   const left = WEEKS.filter((w) => w.start.slice(0, 7) === month).reduce((n, w) => n + w.open, 0);
   return { month: monthOf(WEEKS[0].start).split(" ")[0], left };
+}
+
+/**
+ * Prices in other currencies (Andre 2026-11-09). Each list price is the
+ * pound price converted at lib/currency's fixed rates and rounded to the
+ * nearest 1,000 (contractor monthly fees to the nearest 100). Everything
+ * else is worked out from those round numbers in that currency, the same
+ * way as in pounds: batch steps of 1,000, retained 15% off, and the floor.
+ */
+export type PriceList = {
+  cur: Currency;
+  fmt: (n: number) => string;
+  fee: (tier: Tier, position?: number, o?: { batch?: boolean; retained?: boolean }) => number;
+  base: Record<Tier, number>;
+  floor: number;
+  step: number;
+  contract: Record<Tier, number>;
+  salary: Record<Tier, number>;
+  /** A typical agency fee for the tier: salary × its rate (rounded to 1,000 outside pounds). */
+  agency: (tier: Tier) => number;
+};
+export function priceList(cur: Currency = "GBP"): PriceList {
+  const r = RATES[cur];
+  const to = (n: number, unit: number) => (cur === "GBP" ? n : Math.round((n * r) / unit) * unit);
+  const each = (rec: Record<Tier, number>, unit: number) => ({ team: to(rec.team, unit), senior: to(rec.senior, unit), executive: to(rec.executive, unit) });
+  const base = each(TIER_FEE, 1000);
+  const floor = to(FEE_FLOOR, 1000);
+  const step = BATCH_STEP;
+  return {
+    cur,
+    fmt: (n) => `${CURRENCY_SYMBOLS[cur]}${Math.round(n).toLocaleString("en-GB")}`,
+    base,
+    floor,
+    step,
+    contract: each(CONTRACT_TIER_FEE, 100),
+    salary: { team: to(AGENCY_BENCH.team.salary, 1000), senior: to(AGENCY_BENCH.senior.salary, 1000), executive: to(AGENCY_BENCH.executive.salary, 1000) },
+    agency: (t) => to(AGENCY_BENCH[t].salary * AGENCY_BENCH[t].pct, 1000),
+    fee: (tier, position = 0, o = {}) => {
+      let f = base[tier] - (o.batch && tier !== "executive" ? step * position : 0);
+      if (o.retained) f *= 1 - RETAINED_OFF;
+      return Math.max(floor, Math.round(f));
+    },
+  };
 }

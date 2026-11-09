@@ -44,3 +44,7 @@
 
 .savePoint { color: #e14b00; font-weight: 800; }
 .vs { scroll-margin-top: 110px; }
+
+.curNote { margin: 12px 0 -6px; text-align: center; font-family: var(--font-figtree), "Figtree", system-ui, sans-serif; font-size: 13.5px; color: var(--dim); }
+/* Selected currency in the brand orange, not ink (Andre 2026-11-09). */
+.curToggle button[aria-pressed="true"] { background: var(--tone-heat); color: #fff; }

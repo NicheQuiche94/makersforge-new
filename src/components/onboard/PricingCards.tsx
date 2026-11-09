@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { CURRENCIES, CURRENCY_SYMBOLS, readStoredCurrency, writeStoredCurrency, type Currency } from "@/lib/currency";
 import { Button } from "@/components/atoms/Button";
-import { AGENCY_BENCH, BATCH_MAX, CONTRACT_TIER_FEE, FEE_FLOOR, RETAINED_OFF, TIER_FEE, TIER_NAME, gbp, hireFee, type PayWhen, type Tier } from "@/lib/plans";
+import { AGENCY_BENCH, BATCH_MAX, RETAINED_OFF, TIER_NAME, priceList, type PayWhen, type PriceList, type Tier } from "@/lib/plans";
 import { BOOKING_URL } from "@/lib/site";
 import { startHref } from "./PlanCards";
 import base from "./PlanCards.module.css";
@@ -33,6 +34,15 @@ const WHO: Record<Tier, string> = {
 export function PricingCards({ candidate }: { candidate?: string }) {
   const [kind, setKind] = useState<Kind>("permanent");
   const [pay, setPay] = useState<PayWhen>("success");
+  const [cur, setCur] = useState<Currency>("GBP");
+  // The saved currency is only readable in the browser, after hydration.
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  useEffect(() => setCur(readStoredCurrency()), []);
+  const pickCur = (c: Currency) => {
+    setCur(c);
+    writeStoredCurrency(c);
+  };
+  const L = priceList(cur);
   const retainedOk = kind === "permanent";
   const shown = retainedOk ? pay : "success";
   const ret = shown === "retained";
@@ -57,7 +67,15 @@ export function PricingCards({ candidate }: { candidate?: string }) {
             </button>
           ))}
         </div>
+        <div className={`${base.payToggle} ${styles.curToggle}`} role="group" aria-label="Currency">
+          {CURRENCIES.map((c) => (
+            <button key={c} type="button" className={cur === c ? base.payOn : ""} aria-pressed={cur === c} onClick={() => pickCur(c)} title={c}>
+              {CURRENCY_SYMBOLS[c]}
+            </button>
+          ))}
+        </div>
       </div>
+      {cur !== "GBP" && <p className={styles.curNote}>Prices in {cur === "EUR" ? "euros" : "US dollars"}, converted from pounds and rounded to the nearest {cur === "EUR" ? "€" : "$"}1,000.</p>}
       <p className={base.payNote}>
         {kind === "contract"
           ? "A flat monthly fee per contractor, by level. You pay them directly, with no markup on their rate."
@@ -69,21 +87,21 @@ export function PricingCards({ candidate }: { candidate?: string }) {
       <div className={`${base.grid} ${base.grid3}`}>
         {(["team", "senior", "executive"] as const).map((t) => {
           const featured = t === "senior" ? "Most used" : undefined;
-          const save = AGENCY_BENCH[t].salary * AGENCY_BENCH[t].pct - hireFee(t, 0, { retained: ret });
+          const save = L.agency(t) - L.fee(t, 0, { retained: ret });
           return (
             <article key={t} className={`card-shadow ${base.card} ${featured ? base.featured : ""}`}>
               {featured && <span className={base.badge}>{featured}</span>}
               <h3 className={base.name}>{TIER_NAME[t]}</h3>
               <p className={base.price}>
-                {kind === "contract" ? gbp(CONTRACT_TIER_FEE[t]) : gbp(hireFee(t, 0, { retained: ret }))}
+                {kind === "contract" ? L.fmt(L.contract[t]) : L.fmt(L.fee(t, 0, { retained: ret }))}
                 <span className={base.per}> {kind === "contract" ? "per contractor, per month" : ret ? "per hire, retained" : "per hire"}</span>
               </p>
-              {ret && <p className={styles.note}>was {gbp(TIER_FEE[t])}</p>}
+              {ret && <p className={styles.note}>was {L.fmt(L.base[t])}</p>}
               <p className={base.blurb}>{WHO[t]}</p>
               <ul className={base.points}>
                 {kind === "permanent" && (
                   <li className={styles.savePoint}>
-                    Save {gbp(save)} vs a typical agency*
+                    Save {L.fmt(save)} vs a typical agency*
                   </li>
                 )}
                 {(kind === "contract" ? INCLUDED.slice(0, 4) : INCLUDED).map((p) => (
@@ -101,15 +119,15 @@ export function PricingCards({ candidate }: { candidate?: string }) {
         })}
       </div>
 
-      {kind === "permanent" && <VsAgency retained={ret} />}
-      {kind === "permanent" && <BatchCalc retained={ret} candidate={candidate} />}
+      {kind === "permanent" && <VsAgency retained={ret} L={L} />}
+      {kind === "permanent" && <BatchCalc retained={ret} candidate={candidate} L={L} />}
       <p className={styles.draft}>Mockup: copy to be approved before this goes live.</p>
     </>
   );
 }
 
 /** "*Compared with a typical agency": three rows, one per tier, right under the cards. */
-function VsAgency({ retained }: { retained: boolean }) {
+function VsAgency({ retained, L }: { retained: boolean; L: PriceList }) {
   return (
     <section className={styles.vs} id="vs-agency" aria-labelledby="vs-h">
       <h3 id="vs-h" className={styles.vsH}>
@@ -128,17 +146,17 @@ function VsAgency({ retained }: { retained: boolean }) {
         <tbody>
           {(["team", "senior", "executive"] as const).map((t) => {
             const a = AGENCY_BENCH[t];
-            const agency = a.salary * a.pct;
-            const us = hireFee(t, 0, { retained });
+            const agency = L.agency(t);
+            const us = L.fee(t, 0, { retained });
             return (
               <tr key={t}>
                 <td>{TIER_NAME[t]}</td>
-                <td>{gbp(a.salary)}</td>
+                <td>{L.fmt(L.salary[t])}</td>
                 <td>
-                  {gbp(agency)} <span>({a.pct * 100}%)</span>
+                  {L.fmt(agency)} <span>({a.pct * 100}%)</span>
                 </td>
-                <td>{gbp(us)}</td>
-                <td className={styles.vsSave}>{gbp(agency - us)}</td>
+                <td>{L.fmt(us)}</td>
+                <td className={styles.vsSave}>{L.fmt(agency - us)}</td>
               </tr>
             );
           })}
@@ -152,9 +170,9 @@ function VsAgency({ retained }: { retained: boolean }) {
 const ORD = ["1st", "2nd", "3rd", "4th", "5th"];
 
 /** Batch: the rule in one sentence, a "how many hires?" toggle and the breakdown, in the site's card and table style. */
-function BatchCalc({ retained, candidate }: { retained: boolean; candidate?: string }) {
+function BatchCalc({ retained, candidate, L }: { retained: boolean; candidate?: string; L: PriceList }) {
   const [n, setN] = useState(3);
-  const row = (t: Tier) => Array.from({ length: n }, (_, i) => hireFee(t, i, { batch: true, retained }));
+  const row = (t: Tier) => Array.from({ length: n }, (_, i) => L.fee(t, i, { batch: true, retained }));
   const team = row("team");
   const senior = row("senior");
   const sum = (xs: number[]) => xs.reduce((a, b) => a + b, 0);
@@ -166,7 +184,7 @@ function BatchCalc({ retained, candidate }: { retained: boolean; candidate?: str
             Hiring several?
           </h3>
           <p className={styles.rule}>
-            Give us 2 to {BATCH_MAX} Team or Senior roles at once. Your first hire is full price, and each one after is £1,000 less than the one before, never below {gbp(FEE_FLOOR)}.
+            Give us 2 to {BATCH_MAX} Team or Senior roles at once. Your first hire is full price, and each one after is {L.fmt(L.step)} less than the one before, never below {L.fmt(L.floor)}.
           </p>
           <p className={styles.howLabel}>How many hires?</p>
           <div className={`${base.payToggle} ${styles.howMany}`} role="group" aria-label="How many hires">
@@ -194,19 +212,19 @@ function BatchCalc({ retained, candidate }: { retained: boolean; candidate?: str
             {team.map((f, i) => (
               <tr key={i}>
                 <td>{ORD[i]} hire</td>
-                <td>{gbp(f)}</td>
-                <td>{gbp(senior[i])}</td>
+                <td>{L.fmt(f)}</td>
+                <td>{L.fmt(senior[i])}</td>
               </tr>
             ))}
           </tbody>
           <tfoot>
             <tr>
               <td>In all</td>
-              <td>{gbp(sum(team))}</td>
-              <td>{gbp(sum(senior))}</td>
+              <td>{L.fmt(sum(team))}</td>
+              <td>{L.fmt(sum(senior))}</td>
             </tr>
           </tfoot>
-          <caption>A mix steps down the same way, in the order you hire. Executive roles are always {gbp(hireFee("executive", 0, { retained }))}.</caption>
+          <caption>A mix steps down the same way, in the order you hire. Executive roles are always {L.fmt(L.fee("executive", 0, { retained }))}.</caption>
         </table>
       </section>
       <div className={`heat-glow ${styles.team}`}>
