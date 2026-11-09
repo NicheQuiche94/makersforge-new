@@ -58,7 +58,7 @@ export const STAGES: Record<Method, Stage[]> = { jobad: stagesFor(1), recruiter:
  * about 2 weeks of interviews we book and run, and a quick offer.
  */
 export const OUR_STAGES: Stage[] = [
-  { label: "Your search week", short: "Search", weeks: { team: 1, senior: 1, executive: 1 }, note: "We headhunt and call all week; your 5 land the Monday after." },
+  { label: "Headhunting and screening", short: "Headhunting", weeks: { team: 1, senior: 1, executive: 1 }, note: "Your search week: we headhunt and call all week, and your shortlist of 5 lands the Monday after." },
   { label: "Interview rounds", short: "Interviews", weeks: { team: 2, senior: 2, executive: 3 }, note: "We book the interviews and run the feedback, so rounds don't stall." },
   { label: "Offer and acceptance", short: "Offer", weeks: { team: 0.5, senior: 0.5, executive: 1 }, note: "We negotiate the offer through to a signed contract." },
 ];
@@ -69,7 +69,7 @@ export const OUR_STAGES: Stage[] = [
  * Medium confidence; senior figures in NL and IT are low confidence.
  */
 export const COUNTRIES: { id: string; label: string; notice: Record<Tier, number> }[] = [
-  { id: "GB", label: "United Kingdom", notice: { team: 4, senior: 13, executive: 13 } },
+  { id: "GB", label: "United Kingdom", notice: { team: 4, senior: 4, executive: 13 } }, // Andre: UK is normally 4 weeks
   { id: "DE", label: "Germany", notice: { team: 13, senior: 13, executive: 17 } },
   { id: "NL", label: "Netherlands", notice: { team: 4, senior: 9, executive: 13 } },
   { id: "FR", label: "France", notice: { team: 6, senior: 13, executive: 13 } },
@@ -126,7 +126,7 @@ export function timeline(i: TimelineInput, noNotice = false) {
   const notice = noNotice ? 0 : typicalNotice;
   const theirs = lane(STAGES[i.method], i.tier, notice, today);
   const week = i.nextWeek ? new Date(i.nextWeek + "T00:00:00") : addWeeks(today, 1);
-  const ours = lane(OUR_STAGES, i.tier, notice, today, { to: week, label: "Until your search week" });
+  const ours = lane(OUR_STAGES, i.tier, notice, today, { to: week, label: "Until your search week starts" });
   const need = i.needBy ? new Date(i.needBy + "T00:00:00") : null;
   const late = need ? Math.round(weeksBetween(need, theirs.start)) : null; // + = weeks late
   const oursLate = need ? Math.round(weeksBetween(need, ours.start)) : null;
