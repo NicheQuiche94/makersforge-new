@@ -53,11 +53,14 @@ const stagesFor = (k: number): Stage[] => [
 /** Typical weeks per stage, by tier. */
 export const STAGES: Record<Method, Stage[]> = { jobad: stagesFor(1), recruiter: stagesFor(RECRUITER) };
 
-/** Ours: the search week, the shortlist the Monday after, then the same interviews and offer. */
+/**
+ * Ours (Andre 2026-11-09): the search week, your 5 the Monday after, then
+ * about 2 weeks of interviews we book and run, and a quick offer.
+ */
 export const OUR_STAGES: Stage[] = [
   { label: "Your search week", short: "Search", weeks: { team: 1, senior: 1, executive: 1 }, note: "We headhunt and call all week; your 5 land the Monday after." },
-  { label: "Interview rounds", short: "Interviews", weeks: { team: d(INTERVIEWS), senior: d(INTERVIEWS), executive: d(INTERVIEWS + 7) }, note: "The same interviews; we book them and run the feedback." },
-  { label: "Offer and acceptance", short: "Offer", weeks: { team: d(OFFER), senior: d(OFFER), executive: d(OFFER + 3) }, note: "We negotiate the offer through to a signed contract." },
+  { label: "Interview rounds", short: "Interviews", weeks: { team: 2, senior: 2, executive: 3 }, note: "We book the interviews and run the feedback, so rounds don't stall." },
+  { label: "Offer and acceptance", short: "Offer", weeks: { team: 0.5, senior: 0.5, executive: 1 }, note: "We negotiate the offer through to a signed contract." },
 ];
 
 /**
@@ -108,17 +111,19 @@ function lane(stages: Stage[], tier: Tier, notice: number, from: Date, wait?: { 
     at = to;
   }
   const start = addWeeks(at, notice);
-  bars.push({ label: "Notice period", short: "Notice period", from: at, to: start, note: "", kind: "notice" });
+  if (notice > 0) bars.push({ label: "Notice period", short: "Notice period", from: at, to: start, note: "", kind: "notice" });
   return { bars, start };
 }
 
-export type TimelineInput = { title: string; tier: Tier; country: string; method: Method; needBy?: string; today?: Date; nextWeek?: string };
+export type TimelineInput = { title: string; tier: Tier; country: string; method: Method; needBy?: string; today?: string; nextWeek?: string };
 
 /** Their route and ours, from today, to a likely start date each. */
-export function timeline(i: TimelineInput) {
-  const today = i.today ?? new Date();
+/** noNotice: the hire is available now (between jobs, or we put people with no notice first). */
+export function timeline(i: TimelineInput, noNotice = false) {
+  const today = i.today ? new Date(i.today) : new Date();
   const c = countryById(i.country);
-  const notice = c.notice[i.tier];
+  const typicalNotice = c.notice[i.tier];
+  const notice = noNotice ? 0 : typicalNotice;
   const theirs = lane(STAGES[i.method], i.tier, notice, today);
   const week = i.nextWeek ? new Date(i.nextWeek + "T00:00:00") : addWeeks(today, 1);
   const ours = lane(OUR_STAGES, i.tier, notice, today, { to: week, label: "Until your search week" });
@@ -128,7 +133,7 @@ export function timeline(i: TimelineInput) {
   const saved = Math.round(weeksBetween(ours.start, theirs.start));
   // The latest day a search could start and still land on their date, with notice.
   const startBy = need ? addWeeks(need, -(notice + OUR_STAGES.reduce((a, s) => a + s.weeks[i.tier], 0))) : null;
-  return { today, country: c, notice, theirs, ours, need, late, oursLate, saved, startBy };
+  return { today, country: c, notice, typicalNotice, theirs, ours, need, late, oursLate, saved, startBy };
 }
 
 export const fmtDay = (dt: Date) => dt.toLocaleDateString("en-GB", { day: "numeric", month: "long" });

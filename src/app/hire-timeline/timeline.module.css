@@ -29,7 +29,27 @@
 .point h3 { margin: 0 0 6px; font-family: "Cal Sans", system-ui, sans-serif; font-weight: 400; font-size: 21px; letter-spacing: -0.01em; }
 .point p { margin: 0; color: var(--dim); font-size: 15px; line-height: 1.55; }
 
-.cta { display: flex; align-items: center; justify-content: space-between; gap: 22px; flex-wrap: wrap; max-width: 1080px; margin: 22px auto 0; padding: 28px 30px; border-radius: 20px; }
-.cta h2 { margin: 0 0 6px; font-family: "Cal Sans", system-ui, sans-serif; font-weight: 400; font-size: clamp(22px, 2.6vw, 30px); line-height: 1.1; letter-spacing: -0.02em; color: #fff; max-width: 32ch; }
-.cta p { margin: 0; color: rgba(255, 255, 255, 0.9); font-size: 15.5px; max-width: 60ch; }
 .how { max-width: 1080px; margin-left: auto !important; margin-right: auto !important; box-sizing: border-box; }
+
+/* Notice toggle (Andre 2026-11-09): redraws both timelines. */
+.noticeToggle { margin-top: 26px !important; }
+.toggleNote { text-align: center; margin: 10px 0 0; font-size: 14px; color: var(--dim); }
+.laneUs .laneLabel { color: #e14b00; }
+
+/* The reveal: a centred question with the round arrow (the pricing page's old Compare all plans treatment). */
+.reveal { display: grid; justify-items: center; gap: 18px; max-width: 1080px; margin: 48px auto 0; }
+.revealBtn { display: grid; justify-items: center; gap: 12px; border: 0; background: none; cursor: pointer; font: inherit; color: var(--ink); }
+.revealQ { font-family: "Cal Sans", system-ui, sans-serif; font-size: clamp(34px, 4.2vw, 52px); line-height: 1; letter-spacing: -0.03em; }
+.revealArrow { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 999px; background: var(--tone-heat); color: #fff; font-size: 22px; font-weight: 700; box-shadow: 0 12px 28px rgba(255, 61, 0, 0.3); transition: transform 0.25s ease; animation: nudge 1.8s ease-in-out infinite; }
+.revealBtn:hover .revealArrow { transform: translateY(3px); }
+.revealBtn[aria-expanded="true"] .revealArrow { transform: rotate(180deg); animation: none; }
+@keyframes nudge { 0%, 100% { translate: 0 0; } 50% { translate: 0 4px; } }
+@media (prefers-reduced-motion: reduce) { .revealArrow { animation: none; } }
+.answer { width: 100%; box-sizing: border-box; display: grid; justify-items: center; gap: 10px; padding: 30px 28px; text-align: center; background: var(--paper); border: 1px solid var(--hair); border-radius: 20px; box-shadow: 0 18px 44px rgba(14, 15, 17, 0.07); }
+.answerKicker { margin: 0; font-size: 15px; font-weight: 700; color: var(--dim); }
+.answerDate { margin: 0; font-family: "Cal Sans", system-ui, sans-serif; font-size: clamp(32px, 4vw, 48px); line-height: 1.05; letter-spacing: -0.03em; }
+.nudge { margin: 4px 0 0; max-width: 60ch; font-size: 15.5px; line-height: 1.5; font-weight: 600; }
+.nudgeLink { border: 0; background: none; padding: 0; font: inherit; color: #e14b00; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.steps { list-style: none; margin: 8px 0 4px; padding: 0; display: grid; gap: 6px; max-width: 640px; text-align: left; font-size: 14.5px; color: var(--dim); line-height: 1.5; }
+.steps b { color: var(--ink); }
+.answerCta { display: grid; justify-items: center; gap: 8px; margin-top: 8px; font-size: 14px; color: var(--dim); }

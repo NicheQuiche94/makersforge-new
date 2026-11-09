@@ -20,7 +20,7 @@ export default async function TimelineResultPage({ searchParams }: { searchParam
   const left = weeks.filter((w) => w.start.slice(0, 7) === month).reduce((n, w) => n + w.open, 0);
   return (
     <TimelineResult
-      input={{ title, tier: tierFor(title).tier, country: q.c || "GB", method, needBy: q.by, nextWeek: next?.start }}
+      input={{ title, tier: tierFor(title).tier, country: q.c || "GB", method, needBy: q.by, nextWeek: next?.start, today: new Date().toISOString() }}
       slots={{ left, month: next ? new Date(next.start + "T00:00:00").toLocaleDateString("en-GB", { month: "long" }) : "" }}
       mock={q.mock === "1"}
     />
