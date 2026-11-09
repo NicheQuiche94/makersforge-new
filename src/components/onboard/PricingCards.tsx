@@ -115,10 +115,12 @@ export function PricingCards({ candidate }: { candidate?: string }) {
 /** "*Compared with a typical agency": three rows, one per tier, right under the cards. */
 function VsAgency({ retained, L }: { retained: boolean; L: PriceList }) {
   return (
-    <section className={styles.vs} id="vs-agency" aria-labelledby="vs-h">
-      <h3 id="vs-h" className={styles.vsH}>
-        *Compared with a typical agency
-      </h3>
+    // Folded away under the cards (Andre 2026-11-09), like "Hiring several?" below it.
+    <details className={`card-shadow ${styles.fold}`} id="vs-agency">
+      <summary className={styles.foldHead}>
+        <span className={styles.vsH}>*Compared with a typical agency</span>
+      </summary>
+      <div className={styles.vs}>
       <table className={styles.vsTable}>
         <thead>
           <tr>
@@ -149,7 +151,8 @@ function VsAgency({ retained, L }: { retained: boolean; L: PriceList }) {
         </tbody>
       </table>
       <p className={styles.vsNote}>Agencies usually charge 20–30% of first-year salary, more for senior roles. Salaries are the benchmarks we use on our compare tool.</p>
-    </section>
+      </div>
+    </details>
   );
 }
 
@@ -164,11 +167,12 @@ function BatchCalc({ retained, candidate, L }: { retained: boolean; candidate?: 
   const sum = (xs: number[]) => xs.reduce((a, b) => a + b, 0);
   return (
     <>
-      <section className={`card-shadow ${styles.batch}`} aria-labelledby="batch">
+      <details className={`card-shadow ${styles.fold}`}>
+        <summary className={styles.foldHead}>
+          <span className={styles.foldTitle}>Hiring several?</span>
+        </summary>
+      <div className={styles.batch}>
         <div className={styles.batchText}>
-          <h3 id="batch" className={base.name}>
-            Hiring several?
-          </h3>
           <p className={styles.rule}>
             Give us 2 to {BATCH_MAX} Team or Senior roles at once. Your first hire is full price, and each one after is {L.fmt(L.step)} less than the one before, never below {L.fmt(L.floor)}.
           </p>
@@ -212,7 +216,8 @@ function BatchCalc({ retained, candidate, L }: { retained: boolean; candidate?: 
           </tfoot>
           <caption>A mix steps down the same way, in the order you hire. Executive roles are always {L.fmt(L.fee("executive", 0, { retained }))}.</caption>
         </table>
-      </section>
+      </div>
+      </details>
       <div className={`heat-glow ${styles.team}`}>
         <p>
           <b>Hiring a complete team?</b> Talk to us about a custom package, with payment over time available.
