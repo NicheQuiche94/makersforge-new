@@ -125,7 +125,8 @@ export function TimelineResult({ input, mock }: { input: TimelineInput; mock?: b
             </div>
           ) : (
             <button type="button" className={own.sooner} onClick={() => setRoute("ours")}>
-              Need them sooner? <span>See it with MakersForge</span>
+              {/* Not "need them sooner?": they already told us they do (Andre). */}
+              <span>{(t.late ?? 0) > 0 ? `See how to close the ${Math.round(t.late!)}-week gap` : "See how to get them in sooner"}</span>
               <i aria-hidden="true">→</i>
             </button>
           )}

@@ -41,6 +41,7 @@
 .summaryCta { display: grid; justify-items: center; gap: 8px; margin-top: 6px; font-size: 14px; color: var(--dim); }
 .sooner { display: inline-flex; align-items: center; gap: 10px; margin-top: 6px; border: 0; background: none; padding: 0; font: inherit; cursor: pointer; font-family: "Cal Sans", system-ui, sans-serif; font-size: clamp(22px, 2.6vw, 30px); letter-spacing: -0.02em; color: var(--ink); }
 .sooner span { color: #e14b00; }
+.sooner { text-align: left; }
 .sooner i { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 999px; background: var(--tone-heat); color: #fff; font-style: normal; font-family: var(--font-figtree), "Figtree", system-ui, sans-serif; font-size: 18px; font-weight: 700; box-shadow: 0 10px 24px rgba(255, 61, 0, 0.28); transition: transform 0.2s ease; }
 .sooner:hover i { transform: translateX(3px); }
 .facts { list-style: none; max-width: 1080px; margin: 18px auto 0; padding: 0; display: grid; gap: 6px; font-size: 15px; line-height: 1.5; color: var(--dim); }
