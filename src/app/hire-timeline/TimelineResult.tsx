@@ -24,7 +24,7 @@ type Route = "theirs" | "ours";
    MakersForge; typical notice or available now) and one summary that
    changes with them. The timeline sits under it; on the MakersForge route
    it shows both, so the difference is plain. */
-export function TimelineResult({ input, slots, mock }: { input: TimelineInput; slots: { left: number; month: string }; mock?: boolean }) {
+export function TimelineResult({ input, mock }: { input: TimelineInput; mock?: boolean }) {
   const [route, setRoute] = useState<Route>("theirs");
   const [noNotice, setNoNotice] = useState(false);
   const t = timeline(input, noNotice);
@@ -122,9 +122,6 @@ export function TimelineResult({ input, slots, mock }: { input: TimelineInput; s
               <Button href={searchHref} variant="primary" arrow>
                 Book a search week
               </Button>
-              <span>
-                Your 5 the Monday after. We run 2 searches a week{slots.left > 0 ? `; ${slots.left === 1 ? "1 left" : `${slots.left} left`} in ${slots.month}` : ""}.
-              </span>
             </div>
           ) : (
             <button type="button" className={own.sooner} onClick={() => setRoute("ours")}>
