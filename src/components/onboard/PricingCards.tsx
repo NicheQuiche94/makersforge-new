@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/atoms/Button";
-import { BATCH_MAX, CONTRACT_FEE, FEE_FLOOR, RETAINED_OFF, TIER_FEE, TIER_NAME, gbp, hireFee, type PayWhen, type Tier } from "@/lib/plans";
+import { AGENCY_BENCH, BATCH_MAX, CONTRACT_TIER_FEE, FEE_FLOOR, RETAINED_OFF, TIER_FEE, TIER_NAME, gbp, hireFee, type PayWhen, type Tier } from "@/lib/plans";
 import { BOOKING_URL } from "@/lib/site";
 import { startHref } from "./PlanCards";
 import base from "./PlanCards.module.css";
@@ -11,7 +11,7 @@ import styles from "./PricingCards.module.css";
 /* /pricing (Andre 2026-11-09, MOCKUP): three cards, Team, Senior and
    Executive, set by the level in the job title. Two switches: Permanent /
    Contractor and On success / Retained (retained is permanent-only).
-   Contractors are a flat £1,000 a month, not tiered. Batch is a sentence
+   Contractors £800 / £1,200 / £2,000 a month by tier. Batch is a sentence
    and a "how many hires?" picker under the cards. No hire below £7,000. */
 
 type Kind = "permanent" | "contract";
@@ -60,7 +60,7 @@ export function PricingCards({ candidate }: { candidate?: string }) {
       </div>
       <p className={base.payNote}>
         {kind === "contract"
-          ? `One flat ${gbp(CONTRACT_FEE)} a month per contractor, whatever the level. You pay them directly, with no markup on their rate.`
+          ? "A flat monthly fee per contractor, by level. You pay them directly, with no markup on their rate."
           : ret
             ? `A third up front when you sign, the rest as each hire starts, and ${RETAINED_OFF * 100}% off.`
             : "Nothing up front. You pay when your hire starts."}
@@ -68,13 +68,13 @@ export function PricingCards({ candidate }: { candidate?: string }) {
 
       <div className={`${base.grid} ${base.grid3}`}>
         {(["team", "senior", "executive"] as const).map((t) => {
-          const featured = t === "senior" ? "Most hires that move revenue" : undefined;
+          const featured = kind === "permanent" && t === "executive" ? "Best value*" : undefined;
           return (
             <article key={t} className={`card-shadow ${base.card} ${featured ? base.featured : ""}`}>
               {featured && <span className={base.badge}>{featured}</span>}
               <h3 className={base.name}>{TIER_NAME[t]}</h3>
               <p className={base.price}>
-                {kind === "contract" ? gbp(CONTRACT_FEE) : gbp(hireFee(t, 0, { retained: ret }))}
+                {kind === "contract" ? gbp(CONTRACT_TIER_FEE[t]) : gbp(hireFee(t, 0, { retained: ret }))}
                 <span className={base.per}> {kind === "contract" ? "per contractor, per month" : ret ? "per hire, retained" : "per hire"}</span>
               </p>
               {ret && <p className={styles.note}>was {gbp(TIER_FEE[t])}</p>}
@@ -95,9 +95,51 @@ export function PricingCards({ candidate }: { candidate?: string }) {
         })}
       </div>
 
+      {kind === "permanent" && <VsAgency retained={ret} />}
       {kind === "permanent" && <BatchCalc retained={ret} candidate={candidate} />}
       <p className={styles.draft}>Mockup: copy to be approved before this goes live.</p>
     </>
+  );
+}
+
+/** "*Compared with a typical agency": three rows, one per tier, right under the cards. */
+function VsAgency({ retained }: { retained: boolean }) {
+  return (
+    <section className={styles.vs} id="vs-agency" aria-labelledby="vs-h">
+      <h3 id="vs-h" className={styles.vsH}>
+        *Compared with a typical agency
+      </h3>
+      <table className={styles.vsTable}>
+        <thead>
+          <tr>
+            <th>Tier</th>
+            <th>Typical salary</th>
+            <th>Agency fee</th>
+            <th>MakersForge</th>
+            <th>You save</th>
+          </tr>
+        </thead>
+        <tbody>
+          {(["team", "senior", "executive"] as const).map((t) => {
+            const a = AGENCY_BENCH[t];
+            const agency = a.salary * a.pct;
+            const us = hireFee(t, 0, { retained });
+            return (
+              <tr key={t}>
+                <td>{TIER_NAME[t]}</td>
+                <td>{gbp(a.salary)}</td>
+                <td>
+                  {gbp(agency)} <span>({a.pct * 100}%)</span>
+                </td>
+                <td>{gbp(us)}</td>
+                <td className={styles.vsSave}>{gbp(agency - us)}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+      <p className={styles.vsNote}>Agencies usually charge 20–30% of first-year salary, more for senior roles. Salaries are the benchmarks we use on our compare tool.</p>
+    </section>
   );
 }
 

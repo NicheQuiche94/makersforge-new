@@ -20,7 +20,7 @@ import { useEffect, useRef, useState, type DragEvent } from "react";
 import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/atoms/Button";
 import { ROSTER } from "@/data/roster";
-import { BATCH_MAX, BATCH_SIZES, PLANS, scheduleRoles, TERMS, TIER_NAME, TIER_FEE, feesFor, ladder as tierLadder, fiveDays as fiveDaysOf, gbp, gbpK, planById, retainedPrice, shortDate as shortDateOf, shortlistDate as shortlistDateOf, type PayWhen, type PlanId } from "@/lib/plans";
+import { BATCH_MAX, BATCH_SIZES, PLANS, scheduleRoles, TERMS, TIER_NAME, TIER_FEE, CONTRACT_TIER_FEE, feesFor, ladder as tierLadder, fiveDays as fiveDaysOf, gbp, gbpK, planById, retainedPrice, shortDate as shortDateOf, shortlistDate as shortlistDateOf, type PayWhen, type PlanId } from "@/lib/plans";
 
 // Dates show "…" until the live calendar has loaded and a week is picked.
 const fiveDays = (w?: string) => (w ? fiveDaysOf(w) : "…");
@@ -156,7 +156,7 @@ export function StartFlow() {
   const price = !p
     ? null
     : plan === "contract"
-      ? { each: "£1,000 a month per contractor", total: `${gbp(1_000 * n)} a month`, note: n === 1 ? "While they're engaged." : `While ${n === 2 ? "both are" : `all ${n} are`} engaged.` }
+      ? { each: n > 1 ? `${tiers.map((t) => gbp(CONTRACT_TIER_FEE[t])).join(", ")} a month` : `${gbp(CONTRACT_TIER_FEE[tiers[0]])} a month (${TIER_NAME[tiers[0]]} role)`, total: `${gbp(tiers.reduce((a, t) => a + CONTRACT_TIER_FEE[t], 0))} a month`, note: n === 1 ? "While they're engaged." : `While ${n === 2 ? "both are" : `all ${n} are`} engaged.` }
       : isRetained
         ? { each: n > 1 ? `${ladder(true)} per hire, retained` : `${gbp(ret.total)} per hire, retained`, total: gbp(ret.total), note: `${n > 1 ? `If ${allFilled.replace(" if ", "")}. ` : ""}${gbp(ret.upfront)} when you sign, counted towards your first ${n > 1 ? "hires" : "hire"}.` }
         : { each: n > 1 ? `${ladder()} per hire` : `${gbp(fees[0])} per hire (${TIER_NAME[tiers[0]].toLowerCase()} role)`, total: gbp(full), note: n === 1 ? "Nothing up front. Invoiced when your hire starts." : `If ${allFilled.replace(" if ", "")}. Nothing up front.` };
@@ -290,7 +290,7 @@ export function StartFlow() {
   // The five lines change with the deal (on hire vs retained).
   const feeLine =
     plan === "contract"
-      ? "Nothing up front: £1,000 a month per contractor, invoiced while they're engaged"
+      ? `Nothing up front: ${tiers.map((t) => gbp(CONTRACT_TIER_FEE[t])).join(", ")} a month per contractor, invoiced while they're engaged`
       : isRetained
         ? `Retainer of ${gbp(ret.upfront)} when you sign (non-refundable), credited against your first hires; then each hire is invoiced at its fee, 15% off`
         : plan === "batch"
@@ -757,7 +757,7 @@ export function StartFlow() {
             )}
             {price && discount && (
               <p className={styles.sumDiscount}>
-                {discount.code}: −{gbp(((plan === "contract" ? 1_000 : fees[0] * (isRetained ? 0.85 : 1)) * discount.pct) / 100)} off your first {plan === "contract" ? "month" : "hire"}
+                {discount.code}: −{gbp(((plan === "contract" ? CONTRACT_TIER_FEE[tiers[0]] : fees[0] * (isRetained ? 0.85 : 1)) * discount.pct) / 100)} off your first {plan === "contract" ? "month" : "hire"}
               </p>
             )}
             <p className={styles.sumCall}>

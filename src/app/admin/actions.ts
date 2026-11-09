@@ -76,9 +76,10 @@ export async function markHired(bookingId: string, roleId: string) {
   const hiresBefore = b.roles.filter((r) => r.hired_at).length;
 
   if (b.plan === "contract") {
-    await db().from("booking_roles").update({ hired_at: new Date().toISOString(), fee: 1000, invoice_amount: 1000 }).eq("id", roleId);
-    await event(bookingId, "hired", { role: role.title, monthly: 1000 });
-    const { mail } = await mailFor(bookingId, { hire: { role: role.title || "Contractor", nth: hiresBefore + 1, fee: "£1,000 a month", note: "while engaged, invoiced monthly", amount: "£1,000 (first month)" } });
+    const monthly = b.fees[b.roles.indexOf(role)] ?? b.fees[0] ?? 1000;
+    await db().from("booking_roles").update({ hired_at: new Date().toISOString(), fee: monthly, invoice_amount: monthly }).eq("id", roleId);
+    await event(bookingId, "hired", { role: role.title, monthly });
+    const { mail } = await mailFor(bookingId, { hire: { role: role.title || "Contractor", nth: hiresBefore + 1, fee: `£${monthly.toLocaleString("en-GB")} a month`, note: "while engaged, invoiced monthly", amount: `£${monthly.toLocaleString("en-GB")} (first month)` } });
     await sendMail({ to: ANDRE, subject: mail["invoice-hire"].subject, html: mail["invoice-hire"].html });
   } else {
     const inv = hireInvoice(b, hiresBefore);

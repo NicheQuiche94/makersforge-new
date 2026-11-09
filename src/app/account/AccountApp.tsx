@@ -102,7 +102,7 @@ export function AccountApp({ email, bookings, slotsLeft, month }: { email: strin
               <p className={styles.big}>{planLabel(latest)}</p>
               <p className={styles.meta}>
                 {latest.plan === "contract"
-                  ? "£1,000 a month per contractor while they're engaged."
+                  ? `${latest.fees.map(gbp).join(", ")} a month per contractor while they're engaged.`
                   : latest.retained
                     ? `Retainer ${gbp(latest.retainer)} ${latest.retainer_paid_at ? "paid" : "invoiced"} · credited against your first hires.`
                     : `${latest.fees.map(gbp).join(", ")} per hire · nothing up front.`}

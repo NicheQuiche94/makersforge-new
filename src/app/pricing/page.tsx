@@ -10,7 +10,7 @@ import styles from "./plans.module.css";
 export const metadata: Metadata = {
   title: "Plans & pricing · MakersForge",
   description:
-    "A flat fee per hire by level: £9,000 Team, £14,000 Senior, £20,000 Executive. £1,000 a month per contractor, and less per hire when you give us several roles. No lock-in.",
+    "A flat fee per hire by level: £9,000 Team, £14,000 Senior, £20,000 Executive. contractors from £800 a month, and less per hire when you give us several roles. No lock-in.",
 };
 
 /* PROTOTYPE 2026-11-02: Plans & pricing is the main self-onboarding page
@@ -58,11 +58,7 @@ export default async function PricingPage({ searchParams }: { searchParams: Prom
               land the Monday after. From there we book the interviews and run the process with you until you hire.
             </p>
           </div>
-          <div className={styles.compareAll}>
-            <h2>Compare all plans</h2>
-            <p>Everything side by side, including payment terms and cancellations.</p>
-            <Compare open />
-          </div>
+          <Compare />
           <div className={styles.close}>
             <Link href="/compare" className={`${styles.door} ${styles.doorDark}`}>
               <h2>Not sure we&apos;re the right fit?</h2>

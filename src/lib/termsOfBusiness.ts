@@ -17,7 +17,7 @@
  * kept word for word but OFF: not offered self-serve, only by request on a
  * negotiated deal, at a price.
  */
-import { BATCH_MAX, FEE_FLOOR, RETAINED_OFF, TIER_NAME, hireFee, gbp, type Tier } from "@/lib/plans";
+import { BATCH_MAX, FEE_FLOOR, contractFeesText, RETAINED_OFF, TIER_NAME, hireFee, gbp, type Tier } from "@/lib/plans";
 
 export type TermsVariant = "permanent" | "contract" | "batch";
 
@@ -130,9 +130,9 @@ export function buildTerms(v: TermsVars): { parties: Clause[]; sections: Section
     v.variant === "contract"
       ? [
           {
-            text: `${C} shall pay the Fees to MakersForge in respect of each Candidate engaged by ${C}. The Fees are fixed at ${v.contractFee} per calendar month, or part month, for each month the Candidate is Engaged, and are invoiced monthly.`,
+            text: `${C} shall pay the Fees to MakersForge in respect of each Candidate engaged by ${C}. The Fees are fixed per calendar month, or part month, for each month the Candidate is Engaged, by the level of the role: ${contractFeesText()}. They are invoiced monthly.`,
             kind: "new",
-            note: "Contractor version of your 3.1: flat monthly fee while engaged.",
+            note: "Contractor version of your 3.1: a flat monthly fee by tier while engaged.",
           },
         ]
       : v.variant === "permanent"

@@ -7,16 +7,16 @@
  * (lib/tier), worked out here again on the server, never taken from the
  * browser. No hire is ever below £7,000, whatever discounts apply.
  */
-import { BATCH_MAX, CONTRACT_FEE, FEE_FLOOR, hireFee, type PlanId } from "@/lib/plans";
+import { BATCH_MAX, CONTRACT_TIER_FEE, FEE_FLOOR, hireFee, type PlanId } from "@/lib/plans";
 import { tierFor, type Tier } from "@/lib/tier";
 
 export type Deal = {
   plan: PlanId;
   retained: boolean;
   roles: number;
-  /** One per role, in order (contract roles are not tiered). */
+  /** One per role, in order. */
   tiers: Tier[];
-  /** £ per hire in the order hires are made (contract: £ per month per contractor). */
+  /** £ per hire in the order hires are made (contract: £ per month per contractor, by tier). */
   fees: number[];
   /** £ due on signing, 0 unless retained. */
   retainer: number;
@@ -30,9 +30,10 @@ export const tiersFromBriefs = (briefs: { title?: string }[], roles: number): Ti
 export function priceDeal(plan: PlanId, retainedAsked: boolean, rolesAsked: number, discountPct = 0, tiersAsked: Tier[] = []): Deal {
   const retained = retainedAsked && plan !== "contract";
   if (plan === "contract") {
-    const fees = Array(Math.max(1, rolesAsked)).fill(CONTRACT_FEE);
+    const tiers = Array.from({ length: Math.max(1, rolesAsked) }, (_, i): Tier => tiersAsked[i] ?? "team");
+    const fees = tiers.map((t) => CONTRACT_TIER_FEE[t]);
     fees[0] = Math.round(fees[0] * (1 - discountPct / 100));
-    return { plan, retained: false, roles: fees.length, tiers: [], fees, retainer: 0 };
+    return { plan, retained: false, roles: fees.length, tiers, fees, retainer: 0 };
   }
   const batch = plan === "batch";
   const roles = batch ? Math.min(Math.max(rolesAsked, 2), BATCH_MAX) : Math.max(1, rolesAsked);

@@ -129,7 +129,7 @@ export function AdminApp({ bookings, weeks }: { bookings: BookingRow[]; weeks: W
                       {b.retained ? " · retained" : ""}
                     </td>
                     <td>{fiveDays(b.roles[0]?.search_week)}</td>
-                    <td>{b.plan === "contract" ? `${gbp(1000 * b.roles.length)}/mo` : gbp(b.fees.reduce((a, x) => a + x, 0))}</td>
+                    <td>{b.plan === "contract" ? `${gbp(b.fees.reduce((a, x) => a + x, 0))}/mo` : gbp(b.fees.reduce((a, x) => a + x, 0))}</td>
                     <td>
                       <span className={styles.pill}>{stage(b)}</span>
                     </td>
@@ -225,7 +225,7 @@ export function AdminApp({ bookings, weeks }: { bookings: BookingRow[]; weeks: W
                 {ob.retained ? " · retained, 15% off" : " · on success"}
               </dd>
               <dt>Fees</dt>
-              <dd>{ob.plan === "contract" ? "£1,000 a month per contractor" : ob.fees.map(gbp).join(", ")}</dd>
+              <dd>{ob.plan === "contract" ? `${ob.fees.map(gbp).join(", ")} a month per contractor` : ob.fees.map(gbp).join(", ")}</dd>
               {ob.retained && (
                 <>
                   <dt>Retainer</dt>

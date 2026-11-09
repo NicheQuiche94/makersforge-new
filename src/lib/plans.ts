@@ -56,7 +56,22 @@ export const BATCH_STEP = 1_000;
 export const BATCH_SIZES = [2, 3, 4, 5];
 export const BATCH_MAX = 5;
 export const RETAINED_OFF = 0.15;
-export const CONTRACT_FEE = 1_000;
+/** Contractors: £ per month per contractor, by tier (Andre 2026-11-09). */
+export const CONTRACT_TIER_FEE: Record<Tier, number> = { team: 800, senior: 1_200, executive: 2_000 };
+/** Kept for older callers: the Team monthly fee. */
+export const CONTRACT_FEE = CONTRACT_TIER_FEE.team;
+/** Contractor fees in words, for terms and summaries. */
+export const contractFeesText = () => `£800 a month for a Team role, £1,200 for Senior and £2,000 for Executive`;
+/**
+ * "Compared with a typical agency" (Andre 2026-11-09): a typical salary per
+ * tier (the same benchmarks as /compare) and a usual agency rate, which
+ * climbs with seniority.
+ */
+export const AGENCY_BENCH: Record<Tier, { salary: number; pct: number }> = {
+  team: { salary: 55_000, pct: 0.2 },
+  senior: { salary: 70_000, pct: 0.25 },
+  executive: { salary: 100_000, pct: 0.3 },
+};
 /** Kept for older callers: the Team fee. */
 export const SINGLE_FEE = TIER_FEE.team;
 
@@ -113,8 +128,8 @@ export const PLANS: Plan[] = [
   {
     id: "contract",
     name: "Contractor",
-    price: gbp(CONTRACT_FEE),
-    per: "per contractor, per month engaged",
+    price: `from ${gbp(CONTRACT_TIER_FEE.team)}`,
+    per: `per contractor, per month engaged · Senior ${gbp(CONTRACT_TIER_FEE.senior)} · Executive ${gbp(CONTRACT_TIER_FEE.executive)}`,
     blurb: "You pay the specialist directly. No markup on their rate.",
     points: [SHORTLIST, "Stops the month the engagement ends", "Scale up or down month to month"],
     cta: "Start a brief",
@@ -200,7 +215,7 @@ export const TERMS = {
 const all = (v: string) => ({ permanent: v, contract: v, batch: v });
 export const COMPARE: { row: string; cells: Record<PlanId, string> }[] = [
   { row: "Roles", cells: { permanent: "One", contract: "One", batch: `2 to ${BATCH_MAX}` } },
-  { row: "On success", cells: { permanent: `Team ${gbp(TIER_FEE.team)} · Senior ${gbp(TIER_FEE.senior)} · Executive ${gbp(TIER_FEE.executive)}`, contract: "£1,000 a month while engaged", batch: `Each hire £1,000 less, never below ${gbp(FEE_FLOOR)}` } },
+  { row: "On success", cells: { permanent: `Team ${gbp(TIER_FEE.team)} · Senior ${gbp(TIER_FEE.senior)} · Executive ${gbp(TIER_FEE.executive)}`, contract: `Team ${gbp(CONTRACT_TIER_FEE.team)} · Senior ${gbp(CONTRACT_TIER_FEE.senior)} · Executive ${gbp(CONTRACT_TIER_FEE.executive)} a month while engaged`, batch: `Each hire £1,000 less, never below ${gbp(FEE_FLOOR)}` } },
   { row: "Retained (15% off)", cells: { permanent: `Team ${gbp(retainedFee(TIER_FEE.team))} · Senior ${gbp(retainedFee(TIER_FEE.senior))} · Executive ${gbp(retainedFee(TIER_FEE.executive))}`, contract: "Monthly, so no retainer", batch: "15% off each hire, never below £7,000" } },
   { row: "Search week", cells: all("Dedicated search time for your role") },
   { row: "Shortlist", cells: all("5, the Monday after your search week") },
