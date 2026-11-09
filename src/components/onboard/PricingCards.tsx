@@ -108,7 +108,6 @@ export function PricingCards({ candidate }: { candidate?: string }) {
 
       {kind === "permanent" && <VsAgency retained={ret} L={L} />}
       {kind === "permanent" && <BatchCalc retained={ret} candidate={candidate} L={L} />}
-      <p className={styles.draft}>Mockup: copy to be approved before this goes live.</p>
     </>
   );
 }
