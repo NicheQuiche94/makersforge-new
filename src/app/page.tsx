@@ -28,7 +28,22 @@ export const metadata: Metadata = {
 };
 
 /* MOCKUP 2026-11-09 (Andre): the hero never said mobile games and apps. ?hero=1..4 previews options; no param = today's live hero. */
-const HERO_OPTIONS: Record<string, { ledeLead: string; lede: string; badge?: string; chips?: string[] }> = {
+const HERO_OPTIONS: Record<string, { headline?: string[]; ledeLead: string; lede: string; badge?: string; chips?: string[] }> = {
+  // Andre's variations (2026-11-09): option 1 tied to 500→5, and a headline that says what we do.
+  "5": {
+    ledeLead: "Hiring for mobile games and apps?",
+    lede: "We headhunt UA, growth, product, design, art and engineering talent. You get 5 worth hiring, not 500 CVs to sift.",
+  },
+  "6": {
+    headline: ["Headhunting for", "mobile apps & games."],
+    ledeLead: "Skip the 500 CVs from a job ad.",
+    lede: "Get 5 people who fit the role, within 5 working days.",
+  },
+  "7": {
+    headline: ["Headhunting for", "mobile apps & games."],
+    ledeLead: "500 CVs to 5 worth hiring.",
+    lede: "UA, growth, product, design, art and engineering, within 5 working days.",
+  },
   "1": {
     ledeLead: "Hiring for mobile games and apps?",
     lede: "We headhunt UA, growth, product, design and engineering talent, and hand you 5 you'd want to hire within 5 working days.",
@@ -55,7 +70,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
   return (
     <>
       <HeroPanel
-        headline={["500 candidates to 5."]}
+        headline={opt?.headline ?? ["500 candidates to 5."]}
         ledeLead={opt?.ledeLead ?? "A job ad gets you 500 CVs to sift through."}
         lede={opt?.lede ?? "Brief us instead: we headhunt, call and screen, then hand you a shortlist of 5 you'd want to hire, within 5 working days."}
         badge={opt?.badge}
