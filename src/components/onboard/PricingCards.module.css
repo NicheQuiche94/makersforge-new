@@ -24,6 +24,6 @@
 .batchTable tbody td + td { font-weight: 700; }
 .batchTable tfoot td { border-bottom: 0; font-weight: 800; color: var(--ink) !important; }
 .batchTable caption { text-align: left; padding-top: 10px; font-size: 13.5px; color: var(--dim); }
-.team { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: 16px; padding: 18px 28px; border-radius: 16px; border: 1px solid var(--hair); background: var(--paper); font-family: var(--font-figtree), "Figtree", system-ui, sans-serif; }
-.team p { margin: 0; font-size: 15.5px; line-height: 1.5; color: var(--dim); }
-.team b { color: var(--ink); }
+.team { display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; margin-top: 16px; padding: 22px 28px; border-radius: 16px; font-family: var(--font-figtree), "Figtree", system-ui, sans-serif; }
+.team p { margin: 0; font-size: 17px; line-height: 1.45; color: rgba(255, 255, 255, 0.92); }
+.team b { color: #fff; font-weight: 700; }

@@ -161,11 +161,11 @@ function BatchCalc({ retained, candidate }: { retained: boolean; candidate?: str
           <caption>A mix steps down the same way, in the order you hire. Executive roles are always {gbp(hireFee("executive", 0, { retained }))}.</caption>
         </table>
       </section>
-      <div className={styles.team}>
+      <div className={`heat-glow ${styles.team}`}>
         <p>
           <b>Hiring a complete team?</b> Talk to us about a custom package, with payment over time available.
         </p>
-        <Button href={BOOKING_URL} external variant="ghost" arrow className={base.cta}>
+        <Button href={BOOKING_URL} external variant="light" arrow>
           Book a call
         </Button>
       </div>

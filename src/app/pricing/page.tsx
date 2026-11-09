@@ -58,16 +58,27 @@ export default async function PricingPage({ searchParams }: { searchParams: Prom
               land the Monday after. From there we book the interviews and run the process with you until you hire.
             </p>
           </div>
-          <Compare />
-          <p className={styles.talk}>
-            Not sure we&apos;re the right fit? <Link href="/compare">Compare every way to hire for your role</Link>.
-          </p>
-          <p className={styles.talk}>
-            Prefer to talk first?{" "}
-            <a href={BOOKING_URL} target="_blank" rel="noreferrer">
-              Book a 15-minute call
+          <div className={styles.compareAll}>
+            <h2>Compare all plans</h2>
+            <p>Everything side by side, including payment terms and cancellations.</p>
+            <Compare open />
+          </div>
+          <div className={styles.close}>
+            <Link href="/compare" className={`${styles.door} ${styles.doorDark}`}>
+              <h2>Not sure we&apos;re the right fit?</h2>
+              <p>Compare every way to hire for your role: agencies, job boards, in-house and us, on cost and who you reach.</p>
+              <span className={styles.doorCta}>
+                Compare hiring routes <span aria-hidden="true">→</span>
+              </span>
+            </Link>
+            <a href={BOOKING_URL} target="_blank" rel="noreferrer" className={`card-shadow ${styles.door} ${styles.doorLight}`}>
+              <h2>Prefer to talk first?</h2>
+              <p>Book 15 minutes with Andre. Bring the role and we&apos;ll tell you straight whether we&apos;re the right route for it.</p>
+              <span className={styles.doorCta}>
+                Book a 15-minute call <span aria-hidden="true">→</span>
+              </span>
             </a>
-          </p>
+          </div>
         </div>
       </section>
     </>
