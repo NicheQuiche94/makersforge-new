@@ -802,3 +802,33 @@ html {
     display: none !important;
   }
 }
+
+/* =========================================================
+   DROPDOWNS (Andre 2026-11-09): rounded list with the orange
+   highlight, not the browser's sharp blue one. Uses the
+   customisable select where the browser supports it (Chrome
+   and Edge 135+); elsewhere the native list, with an orange
+   focus ring.
+   ========================================================= */
+select { accent-color: #ff5d00; }
+select:focus-visible { outline: 2px solid #ff8a00; outline-offset: 2px; }
+@supports (appearance: base-select) {
+  select,
+  ::picker(select) { appearance: base-select; }
+  select { display: inline-flex; align-items: center; justify-content: space-between; gap: 10px; cursor: pointer; }
+  select::picker-icon { color: var(--dim); transition: rotate 0.2s ease; }
+  select:open::picker-icon { rotate: 180deg; }
+  ::picker(select) {
+    margin-top: 6px;
+    padding: 6px;
+    border: 1px solid var(--hair);
+    border-radius: 14px;
+    background: var(--paper, #fff);
+    box-shadow: 0 18px 44px rgba(14, 15, 17, 0.14);
+  }
+  select option { padding: 10px 12px; border-radius: 10px; font: inherit; color: var(--ink); }
+  select option:hover,
+  select option:focus-visible { background: rgba(255, 138, 0, 0.12); outline: none; }
+  select option:checked { background: rgba(255, 138, 0, 0.18); font-weight: 700; }
+  select option::checkmark { color: #e14b00; }
+}
