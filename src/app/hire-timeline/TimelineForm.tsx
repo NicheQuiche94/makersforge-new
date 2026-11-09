@@ -57,7 +57,7 @@ export function TimelineForm() {
     <section className={styles.hero}>
       <div className={styles.heroInner}>
         <h1 className={styles.display}>
-          Will your job ad hire <span className={`gr ${styles.accent}`}>in time?</span>
+          Will your <span className={own.nowrap}>job ad</span> hire <span className={`gr ${styles.accent}`}>in time?</span>
         </h1>
         <p className={styles.heroLede}>
           See when a job ad hire is likely to start, notice period included, against the date you need them.
