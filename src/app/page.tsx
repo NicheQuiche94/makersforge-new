@@ -27,13 +27,39 @@ export const metadata: Metadata = {
   },
 };
 
-export default function HomePage() {
+/* MOCKUP 2026-11-09 (Andre): the hero never said mobile games and apps. ?hero=1..4 previews options; no param = today's live hero. */
+const HERO_OPTIONS: Record<string, { ledeLead: string; lede: string; badge?: string; chips?: string[] }> = {
+  "1": {
+    ledeLead: "Hiring for mobile games and apps?",
+    lede: "We headhunt UA, growth, product, design and engineering talent, and hand you 5 you'd want to hire within 5 working days.",
+  },
+  "2": {
+    ledeLead: "Hiring for mobile games and apps?",
+    lede: "We headhunt the people who never see your job ad, and hand you 5 within 5 working days.",
+    chips: ["UA & Growth", "Product", "Game design", "Art", "Engineering", "LiveOps"],
+  },
+  "3": {
+    ledeLead: "All vetted, all worth interviewing.",
+    lede: "Hiring for mobile games and consumer apps.",
+  },
+  "4": {
+    badge: "Mobile games & consumer apps",
+    ledeLead: "A job ad gets you 500 CVs to sift through.",
+    lede: "Brief us instead: we headhunt, call and screen, then hand you a shortlist of 5 you'd want to hire, within 5 working days.",
+  },
+};
+
+export default async function HomePage({ searchParams }: { searchParams: Promise<{ hero?: string }> }) {
+  const { hero } = await searchParams;
+  const opt = hero ? HERO_OPTIONS[hero] : undefined;
   return (
     <>
       <HeroPanel
         headline={["500 candidates to 5."]}
-        ledeLead="A job ad gets you 500 CVs to sift through."
-        lede="Brief us instead: we headhunt, call and screen, then hand you a shortlist of 5 you'd want to hire, within 5 working days."
+        ledeLead={opt?.ledeLead ?? "A job ad gets you 500 CVs to sift through."}
+        lede={opt?.lede ?? "Brief us instead: we headhunt, call and screen, then hand you a shortlist of 5 you'd want to hire, within 5 working days."}
+        badge={opt?.badge}
+        chips={opt?.chips}
         ctas={{
           // 2026-11-09 (Andre): a 63% bounce rate; a free tool to click first, not "talk to us".
           primary: { href: "/hire-timeline", label: "Will your job ad hire in time?" },

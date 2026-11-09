@@ -53,6 +53,10 @@ type HeroPanelProps = {
   ctas?: { primary: HeroCta; secondary: HeroCta };
   /** Quiet text links under the CTAs (e.g. studio / apps / talent). */
   links?: HeroCta[];
+  /** Small pill above the headline (e.g. who we hire for). */
+  badge?: string;
+  /** Small chips under the CTAs (e.g. the disciplines). */
+  chips?: string[];
 };
 
 export function HeroPanel({
@@ -62,6 +66,8 @@ export function HeroPanel({
   ledeLead,
   ctas,
   links,
+  badge,
+  chips,
 }: HeroPanelProps = {}) {
   return (
     <section className={`heat-glow ${styles.hero}`} data-nav-gradient>
@@ -83,6 +89,7 @@ export function HeroPanel({
         ) : null}
 
         <div className={styles.main}>
+          {badge ? <p className={styles.badge}>{badge}</p> : null}
           <h1 className={styles.headline}>
             {headline.map((line) => (
               <span key={line} className={styles.headlineLine}>
@@ -104,6 +111,13 @@ export function HeroPanel({
               <Button href={ctas.secondary.href} variant="on-dark">
                 {ctas.secondary.label}
               </Button>
+              {chips?.length ? (
+                <ul className={styles.chips} aria-label="Who we hire">
+                  {chips.map((c) => (
+                    <li key={c}>{c}</li>
+                  ))}
+                </ul>
+              ) : null}
               {links?.length ? (
                 <nav className={styles.heroLinks} aria-label="More">
                   {links.map((l) => (

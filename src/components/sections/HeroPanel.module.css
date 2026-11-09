@@ -356,3 +356,8 @@
     linear-gradient(var(--ink), var(--ink)) padding-box,
     conic-gradient(from 0deg, #ff5d00, #f5b300, #22c55e, #3b82f6, #8b5cf6, #ec4899, #ff5d00) border-box !important;
 }
+
+/* Hero options (Andre 2026-11-09): who we hire for, visible on landing. */
+.badge { display: inline-flex; align-items: center; margin: 0 0 18px; padding: 7px 14px; border-radius: 999px; background: rgba(255, 255, 255, 0.16); border: 1px solid rgba(255, 255, 255, 0.35); color: #fff; font-weight: 700; font-size: 15px; }
+.chips { flex-basis: 100%; display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 0; padding: 0; list-style: none; }
+.chips li { padding: 6px 12px; border-radius: 999px; background: rgba(255, 255, 255, 0.14); border: 1px solid rgba(255, 255, 255, 0.3); color: #fff; font-size: 14px; font-weight: 600; }
