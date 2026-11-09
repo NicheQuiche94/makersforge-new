@@ -45,3 +45,11 @@
 .sooner:hover i { transform: translateX(3px); }
 .facts { list-style: none; max-width: 1080px; margin: 18px auto 0; padding: 0; display: grid; gap: 6px; font-size: 15px; line-height: 1.5; color: var(--dim); }
 .facts b { color: var(--ink); }
+
+/* "How we worked this out": essential, but folded away (Andre 2026-11-09). */
+.howBox { max-width: 1080px; margin: 18px auto 0; font-size: 14px; color: var(--dim); }
+.howBox summary { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; list-style: none; font-weight: 700; color: var(--ink); }
+.howBox summary::-webkit-details-marker { display: none; }
+.howBox summary::after { content: "+"; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 999px; background: rgba(14, 15, 17, 0.06); color: #e14b00; font-weight: 800; }
+.howBox[open] summary::after { content: "−"; }
+.howBox p { margin: 10px 0 0; padding: 14px 18px; background: var(--paper); border: 1px solid var(--hair); border-radius: 14px; line-height: 1.55; }

@@ -175,8 +175,9 @@ export function TimelineResult({ input, slots, mock }: { input: TimelineInput; s
           </li>
         </ul>
 
-        <div className={`${styles.how} ${own.how}`}>
-          <strong>How we worked this out.</strong> Stage lengths for a job ad or a recruiter are medians from published hiring data, using the mid-level figure for Team roles; the Executive figure is our estimate from the same trend. Notice periods are common practice for professional roles in each country, not legal minimums, and vary by contract. The MakersForge timeline is from our own searches. Sources:{" "}
+        <details className={own.howBox}>
+          <summary>How we worked this out</summary>
+          <p>Stage lengths for a job ad or a recruiter are medians from published hiring data, using the mid-level figure for Team roles; the Executive figure is our estimate from the same trend. Notice periods are common practice for professional roles in each country, not legal minimums, and vary by contract. The MakersForge timeline is from our own searches. Sources:{" "}
           {Object.values(SOURCES).map((s, i) => (
             <span key={s.url}>
               {i > 0 && "; "}
@@ -186,7 +187,8 @@ export function TimelineResult({ input, slots, mock }: { input: TimelineInput; s
             </span>
           ))}
           . <Link href="/compare">Compare the cost of every route →</Link>
-        </div>
+          </p>
+        </details>
       </div>
     </section>
   );
