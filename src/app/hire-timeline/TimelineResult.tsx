@@ -106,6 +106,9 @@ export function TimelineResult({ input, slots, lid }: { input: TimelineInput; sl
               {ours && t.saved > 0 ? `, ${weeksText(t.saved)} sooner than ${method.short}` : ""}
             </p>
           )}
+          {/* Hopeful, not doom (Ashley's QA, Andre 2026-11-09). */}
+          {!ours && (late ?? 0) > 0 && <p className={own.nudge}>We don&apos;t recommend this timeline. {method.id === "jobad" ? "A job ad could fill in a week or take months, and you can't plan around that." : "Searches like this vary a lot, and you can't plan around that."}</p>}
+          {ours && !noticeIsTheBlocker && <p className={own.nudge}>Your 5 candidates land the Monday after your search week. A plan, not an estimate.</p>}
           {ours && noticeIsTheBlocker && !noNotice && (
             <p className={own.nudge}>
               Only notice puts you past your date. We can shortlist people who can start now:{" "}
@@ -179,7 +182,7 @@ export function TimelineResult({ input, slots, lid }: { input: TimelineInput; sl
 
         <details className={own.howBox}>
           <summary>How we worked this out</summary>
-          <p>Stage lengths for a job ad or a recruiter are medians from published hiring data, using the mid-level figure for Team roles; the Executive figure is our estimate from the same trend. Notice periods are common practice for professional roles in each country, not legal minimums, and vary by contract. The MakersForge timeline is from our own searches. Sources:{" "}
+          <p>Stage lengths for a job ad or a recruiter use the faster end of published hiring data (averages of about 6 to 9 weeks from job ad to hire, by level), so your real timeline may well be longer. Notice periods are common practice for professional roles in each country, not legal minimums, and vary by contract. The MakersForge timeline is from our own searches. Sources:{" "}
           {Object.values(SOURCES).map((s, i) => (
             <span key={s.url}>
               {i > 0 && "; "}

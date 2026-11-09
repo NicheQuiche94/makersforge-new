@@ -131,3 +131,6 @@
 /* Role is free text with suggestions (2026-11-09): hide Chrome's dropdown arrow so it doesn't look like a select. */
 .formGrid input[list]::-webkit-calendar-picker-indicator { display: none !important; }
 .formGrid input[list]::-webkit-list-button { display: none !important; }
+
+/* What the extra fee buys, under the verdict (Andre 2026-11-09). */
+.trade { display: block; margin-top: 6px; font-weight: 700; color: var(--ink); }

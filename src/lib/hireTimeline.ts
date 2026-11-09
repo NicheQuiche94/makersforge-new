@@ -29,29 +29,35 @@ export const METHODS: { id: Method; label: string; short: string }[] = [
 ];
 
 const d = (days: number) => Math.round((days / 7) * 10) / 10;
-/* Ashby 2026: job open → first hire, median days: junior 52, mid 63, senior 71.
-   Team takes the mid figure; Executive (~85 days) is our extrapolation from the
-   seniority trend, flagged as an estimate. First → last interview ≈ 18 days
-   (technical roles). Offer to signed contract ≈ 1 week (our estimate). */
-const TOTAL: Record<Tier, number> = { team: 63, senior: 71, executive: 85 };
+/* The faster end of the published range (Andre 2026-11-09, after Ashley's QA:
+   the medians read as an extreme case). Job open → hire: Gem's 41-day average
+   and SHRM's ~44 days, stepped up for seniority: Team 42, Senior 49,
+   Executive 63 days. (Ashby's medians run 52–71 days; that's the slow end.)
+   First → last interview ≈ 18 days (Ashby, technical roles). Offer to signed
+   contract ≈ 1 week (our estimate). A recruiter saves about a week on finding
+   people (Ashby: startups hire faster with a recruiter involved). */
+const TOTAL: Record<Tier, number> = { team: 42, senior: 49, executive: 63 };
 const INTERVIEWS = 18;
 const OFFER = 7;
-/* Ashby 2026, companies under 25 people: 42 days with a recruiter involved vs 62 without. */
-const RECRUITER = 42 / 62;
+const RECRUITER_SAVES = 7;
 
-const stagesFor = (k: number): Stage[] => [
+const stagesFor = (recruiter: boolean): Stage[] => [
   {
-    label: k === 1 ? "Advertising and screening" : "Sourcing and screening",
-    short: k === 1 ? "Ad and screening" : "Sourcing",
-    weeks: { team: d(TOTAL.team * k - INTERVIEWS - OFFER), senior: d(TOTAL.senior * k - INTERVIEWS - OFFER), executive: d(TOTAL.executive * k - INTERVIEWS - OFFER) },
-    note: k === 1 ? "From the ad going live to a shortlist worth interviewing." : "From the brief to a shortlist worth interviewing.",
+    label: recruiter ? "Sourcing and screening" : "Advertising and screening",
+    short: recruiter ? "Sourcing" : "Ad and screening",
+    weeks: {
+      team: d(Math.max(7, TOTAL.team - INTERVIEWS - OFFER - (recruiter ? RECRUITER_SAVES : 0))),
+      senior: d(Math.max(7, TOTAL.senior - INTERVIEWS - OFFER - (recruiter ? RECRUITER_SAVES : 0))),
+      executive: d(Math.max(7, TOTAL.executive - INTERVIEWS - 7 - OFFER - 3 - (recruiter ? RECRUITER_SAVES : 0))),
+    },
+    note: recruiter ? "From the brief to a shortlist worth interviewing." : "From the ad going live to a shortlist worth interviewing.",
   },
   { label: "Interview rounds", short: "Interviews", weeks: { team: d(INTERVIEWS), senior: d(INTERVIEWS), executive: d(INTERVIEWS + 7) }, note: "First interview to last, typically about 18 days." },
   { label: "Offer and acceptance", short: "Offer", weeks: { team: d(OFFER), senior: d(OFFER), executive: d(OFFER + 3) }, note: "Offer, negotiation and a signed contract." },
 ];
 
 /** Typical weeks per stage, by tier. */
-export const STAGES: Record<Method, Stage[]> = { jobad: stagesFor(1), recruiter: stagesFor(RECRUITER) };
+export const STAGES: Record<Method, Stage[]> = { jobad: stagesFor(false), recruiter: stagesFor(true) };
 
 /**
  * Ours (Andre 2026-11-09): the search week, your 5 the Monday after, then

@@ -43,6 +43,10 @@ export type Route = {
   hireWeeks: [number, number];
   get: string;
   interviews: number; // first interviews typically needed to find someone worth hiring
+  /** What the interviews figure is based on, shown in the detail. */
+  interviewsNote?: string;
+  /** What you have to do yourself on this route (the white-glove difference, Andre 2026-11-09). */
+  youDo: string;
   speedNote?: string;
   hours: { label: string; h: number }[];
   tips: string[];
@@ -57,11 +61,13 @@ export const ROUTES: Route[] = [
     name: "MakersForge",
     how: "Mobile games and apps specialists, flat fee",
     fee: (_s, role) => TIER_FEE[tierFor(role ?? "").tier],
-    feeNote: "flat by level (Team £9,000, Senior £14,000, Executive £20,000), paid only if you hire",
+    feeNote: "flat by level, paid only if you hire",
     shortlist: "1 week",
     hireWeeks: [2, 4],
     get: "About 5 vetted people, plus more batches should you need them",
     interviews: 5,
+    interviewsNote: "6 in 10 of our hires come from the first 5 candidates, 9 in 10 within the first 9",
+    youDo: "Brief us in 30 minutes, then interview the people you like. We headhunt, screen, book every interview, run the feedback and negotiate the offer",
     speedNote: "We can prioritise people with shorter notice periods or who are available now.",
     hours: [
       { label: "Brief", h: 1 },
@@ -82,6 +88,7 @@ export const ROUTES: Route[] = [
     hireWeeks: [5, 8],
     get: "8–12 CVs",
     interviews: 6,
+    youDo: "Brief them, read 8–12 CVs, interview, give feedback and negotiate the offer, often with the agency in the middle",
     hours: [
       { label: "Brief", h: 1 },
       { label: "Reviewing CVs", h: 2 },
@@ -101,6 +108,7 @@ export const ROUTES: Route[] = [
     hireWeeks: [6, 10],
     get: "10–20 CVs",
     interviews: 8,
+    youDo: "Brief them, filter 10–20 CVs (many from outside games and apps), interview and run the rest of the process",
     hours: [
       { label: "Brief", h: 1 },
       { label: "Reviewing CVs", h: 4 },
@@ -120,6 +128,7 @@ export const ROUTES: Route[] = [
     hireWeeks: [6, 12],
     get: "100–250 applications",
     interviews: 10,
+    youDo: "Write and post the ad, read every application, screen, book and chase interviews, give feedback and make the offer",
     hours: [
       { label: "Writing and posting the ad", h: 3 },
       { label: "Screening applications", h: 6 },
@@ -176,7 +185,8 @@ export function compare(input: CompareInput, now = Date.now()) {
     input.p === "cost" ? x.real : input.p === "speed" ? x.startWeeks : input.p === "hours" ? x.hours
       : x.real / mR + x.startWeeks / mW + x.hours / mH + x.r.interviews / mI;
   // Best fit: options that fit the date first, then by what matters most.
-  const best = base.slice().sort((a, b) => Number(a.overBudget || a.tooSlow) - Number(b.overBudget || b.tooSlow) || score(a) - score(b))[0];
+  const ranked = base.slice().sort((a, b) => Number(a.overBudget || a.tooSlow) - Number(b.overBudget || b.tooSlow) || score(a) - score(b));
+  const best = ranked[0];
   // Shown in a fixed order (Andre): us, then the job ad (the route most people take), then the agencies.
   const ORDER = ["mf", "ads", "games20", "tech25"];
   const rows = base.slice().sort((a, b) => ORDER.indexOf(a.r.id) - ORDER.indexOf(b.r.id));
@@ -184,7 +194,8 @@ export function compare(input: CompareInput, now = Date.now()) {
   return {
     rows,
     best,
-    lowest: { real: lo((x) => x.real), start: lo((x) => x.startWeeks), hireBy: lo((x) => x.hireBy), hours: lo((x) => x.hours), interviews: lo((x) => x.r.interviews) },
+    next: ranked[1],
+    lowest: { fee: lo((x) => x.fee), real: lo((x) => x.real), start: lo((x) => x.startWeeks), hireBy: lo((x) => x.hireBy), hours: lo((x) => x.hours), interviews: lo((x) => x.r.interviews) },
   };
 }
 
