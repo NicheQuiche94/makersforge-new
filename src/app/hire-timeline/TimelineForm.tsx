@@ -17,7 +17,7 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
 /* /hire-timeline (Andre 2026-11-09): one form with their email; the
    timeline goes by email (same pattern as /compare), with the headline on
    the next page as a teaser. */
-export function TimelineForm() {
+export function TimelineForm({ fromAd = false }: { fromAd?: boolean }) {
   const router = useRouter();
   const [title, setTitle] = useState("Senior UA Manager");
   const [country, setCountry] = useState("DE");
@@ -56,11 +56,20 @@ export function TimelineForm() {
   return (
     <section className={styles.hero}>
       <div className={styles.heroInner}>
+        {/* From the LinkedIn ad (?ad=1): the ad's own headline, so the page matches what they clicked. */}
         <h1 className={styles.display}>
-          Will your <span className={own.nowrap}>job ad</span> hire <span className={`gr ${styles.accent}`}>in time?</span>
+          {fromAd ? (
+            <>
+              Got a hiring <span className={`gr ${styles.accent}`}>deadline?</span>
+            </>
+          ) : (
+            <>
+              Will your <span className={own.nowrap}>job ad</span> hire <span className={`gr ${styles.accent}`}>in time?</span>
+            </>
+          )}
         </h1>
         <p className={styles.heroLede}>
-          See when a job ad hire is likely to start, notice period included, against the date you need them.
+          {fromAd ? "Check if your job ad will hire in time, notice period included." : "See when a job ad hire is likely to start, notice period included, against the date you need them."}
         </p>
 
         <form

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { HOOKS, ROLES, type Priority } from "@/lib/compare";
+import { AD_HOOK, HOOKS, ROLES, ROTATING_HOOKS, type Priority } from "@/lib/compare";
 import { activePromo } from "@/lib/promos";
 import { CURRENCIES, CURRENCY_SYMBOLS, RATES, readStoredCurrency, writeStoredCurrency, type Currency } from "@/lib/currency";
 import { DatePicker } from "./DatePicker";
@@ -19,28 +19,34 @@ import { trackLinkedIn } from "@/lib/linkedin";
 const inCur = (gbp: number, c: Currency) => Math.round((gbp * RATES[c]) / 1000) * 1000;
 const iso = (d: Date) => d.toISOString().slice(0, 10);
 
-export function CompareMock() {
+export function CompareMock({ fromAd = false }: { fromAd?: boolean }) {
   const router = useRouter();
   // Each visitor gets one headline at random and keeps it; ?hook=1|2|3 forces one for previews.
-  const [hook, setHook] = useState(0);
+  // From the LinkedIn ad (?ad=1) the page leads with the ad's own headline, from the first paint.
+  const [hook, setHook] = useState(fromAd ? AD_HOOK : 0);
   useEffect(() => {
     // Our counter records the headline each visitor saw (runs before it in the same render).
     const show = (i: number) => {
       setHook(i);
       setPageVariant(HOOKS[i].accent);
     };
+    if (fromAd) {
+      setPageVariant(HOOKS[AD_HOOK].accent);
+      return;
+    }
     const n = Number(new URLSearchParams(window.location.search).get("hook"));
     if (n >= 1 && n <= HOOKS.length) return show(n - 1);
     try {
       let v = Number(localStorage.getItem("mf-compare-hook"));
-      if (!(v >= 1 && v <= HOOKS.length)) {
-        v = 1 + Math.floor(Math.random() * HOOKS.length);
+      if (!(v >= 1 && v <= ROTATING_HOOKS)) {
+        v = 1 + Math.floor(Math.random() * ROTATING_HOOKS);
         localStorage.setItem("mf-compare-hook", String(v));
       }
       show(v - 1);
     } catch {
-      show(Math.floor(Math.random() * HOOKS.length));
+      show(Math.floor(Math.random() * ROTATING_HOOKS));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [cur, setCur] = useState<Currency>("GBP");

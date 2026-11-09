@@ -10,7 +10,7 @@ import styles from "./grader.module.css";
 /* (Andre 2026-11-08). One step: drop in the PDF (or paste the ad),
    leave an email, and the analysis arrives by email. The score is never
    shown here, so every use is a lead and Andre can offer the rewrite. */
-export function GradingTool() {
+export function GradingTool({ fromAd = false }: { fromAd?: boolean }) {
   const [text, setText] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [drag, setDrag] = useState(false);
@@ -75,9 +75,20 @@ export function GradingTool() {
       <div className="container">
         <header className={styles.head}>
           <h1 className={styles.display}>
-            Is your job ad <span className="gr">losing</span> you good candidates?
+            {/* From the LinkedIn ad (?ad=1): the ad's own headline. */}
+            {fromAd ? (
+              <>
+                Getting the wrong <span className="gr">applicants?</span>
+              </>
+            ) : (
+              <>
+                Is your job ad <span className="gr">losing</span> you good candidates?
+              </>
+            )}
           </h1>
-          <p className={styles.lede}>Drop in your job ad and get a score out of 100, with the fixes that will make the biggest difference. Free, straight to your inbox.</p>
+          <p className={styles.lede}>
+            {fromAd ? "Your job ad might be why. " : ""}Drop in your job ad and get a score out of 100, with the fixes that will make the biggest difference. Free, straight to your inbox.
+          </p>
         </header>
 
         {state === "sent" ? (

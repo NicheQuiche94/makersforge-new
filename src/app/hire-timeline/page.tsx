@@ -11,6 +11,7 @@ export const metadata: Metadata = {
 /* 2026-11-09 (Andre): a lead magnet that reveals a problem (the hire won't
    start in time) before offering the fix (a search week). Sister tool to
    /compare; both run as ads and compete. */
-export default function HireTimelinePage() {
-  return <TimelineForm />;
+export default async function HireTimelinePage({ searchParams }: { searchParams: Promise<{ ad?: string }> }) {
+  const { ad } = await searchParams;
+  return <TimelineForm fromAd={ad === "1"} />;
 }
