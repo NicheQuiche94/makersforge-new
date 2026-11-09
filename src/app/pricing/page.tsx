@@ -51,14 +51,7 @@ export default async function PricingPage({ searchParams }: { searchParams: Prom
       <section className={styles.body} id="plans">
         <div className="container">
           <PricingCards candidate={person?.id} />
-          <div className={styles.week}>
-            <h2>What&apos;s a search week?</h2>
-            <p>
-              It&apos;s time we set aside just for your role. We headhunt and call candidates all week, and your 5
-              land the Monday after. From there we book the interviews and run the process with you until you hire.
-            </p>
-          </div>
-          <Compare />
+          <Compare big />
           <div className={styles.close}>
             <Link href="/compare" className={`${styles.door} ${styles.doorDark}`}>
               <h2>Not sure we&apos;re the right fit?</h2>

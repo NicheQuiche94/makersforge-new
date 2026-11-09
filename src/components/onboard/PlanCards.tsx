@@ -16,11 +16,18 @@ export function startHref(plan?: string, candidate?: string, pay?: PayWhen) {
 }
 
 /** Every plan side by side, collapsed by default (normal SaaS pricing pattern). */
-export function Compare({ open = false }: { open?: boolean }) {
+export function Compare({ open = false, big = false }: { open?: boolean; big?: boolean }) {
   if (open) return <div className={styles.tableWrap}>{compareTable()}</div>;
   return (
-    <details className={styles.compare}>
-      <summary>Compare all plans</summary>
+    <details className={`${styles.compare} ${big ? styles.compareBig : ""}`}>
+      <summary>
+        Compare all plans
+        {big && (
+          <span className={styles.compareArrow} aria-hidden="true">
+            ↓
+          </span>
+        )}
+      </summary>
       <div className={styles.tableWrap}>{compareTable()}</div>
     </details>
   );

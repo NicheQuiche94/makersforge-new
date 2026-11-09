@@ -68,7 +68,8 @@ export function PricingCards({ candidate }: { candidate?: string }) {
 
       <div className={`${base.grid} ${base.grid3}`}>
         {(["team", "senior", "executive"] as const).map((t) => {
-          const featured = kind === "permanent" && t === "executive" ? "Best value*" : undefined;
+          const featured = t === "senior" ? "Most used" : undefined;
+          const save = AGENCY_BENCH[t].salary * AGENCY_BENCH[t].pct - hireFee(t, 0, { retained: ret });
           return (
             <article key={t} className={`card-shadow ${base.card} ${featured ? base.featured : ""}`}>
               {featured && <span className={base.badge}>{featured}</span>}
@@ -80,6 +81,11 @@ export function PricingCards({ candidate }: { candidate?: string }) {
               {ret && <p className={styles.note}>was {gbp(TIER_FEE[t])}</p>}
               <p className={base.blurb}>{WHO[t]}</p>
               <ul className={base.points}>
+                {kind === "permanent" && (
+                  <li className={styles.savePoint}>
+                    <a href="#vs-agency">Save {gbp(save)} vs a typical agency*</a>
+                  </li>
+                )}
                 {(kind === "contract" ? INCLUDED.slice(0, 4) : INCLUDED).map((p) => (
                   <li key={p}>{p}</li>
                 ))}

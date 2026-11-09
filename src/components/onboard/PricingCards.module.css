@@ -41,3 +41,6 @@
 .vsSave { color: #e14b00; font-weight: 800; }
 .vsNote { margin: 8px 0 0; font-size: 13px; color: var(--dim); text-align: center; }
 @media (max-width: 560px) { .vsTable th:nth-child(2), .vsTable td:nth-child(2) { display: none; } .vsTable th, .vsTable td { padding: 9px 4px; } }
+
+.savePoint a { color: #e14b00; font-weight: 800; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.vs { scroll-margin-top: 110px; }
