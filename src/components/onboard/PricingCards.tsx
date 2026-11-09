@@ -61,7 +61,7 @@ function cards(kind: Kind, pay: PayWhen): CardData[] {
         price: gbp(CONTRACT_FEE.specialist),
         per: "per contractor, per month",
         extraTitle: "Everything in Generalist, plus",
-        points: ["A short market map of who's out there, with the shortlist", "Shortlist calibrated with you before outreach starts", "You pay the contractor directly, no markup on their rate", payLine],
+        points: ["[What makes a specialist search different: to agree]", "You pay the contractor directly, no markup on their rate", payLine],
         cta: { label: "Start a brief", plan: "contract" },
         featured: "For the hires that move revenue",
       },
@@ -95,7 +95,7 @@ function cards(kind: Kind, pay: PayWhen): CardData[] {
       price: `from ${gbp(k(TIER_FEE.specialist))}`,
       per: ret ? "per hire, retained" : "per hire",
       extraTitle: "Everything in Generalist, plus",
-      points: ["A short market map of who's out there, with the shortlist", "Shortlist calibrated with you before outreach starts", "Salary benchmarking for the role", "Head, VP and C-level: fee confirmed within one working day", payLine],
+      points: ["[What makes a specialist search different: to agree]", payLine],
       cta: { label: "Start a brief", plan: "permanent" },
       featured: "For the hires that move revenue",
     },
@@ -105,7 +105,7 @@ function cards(kind: Kind, pay: PayWhen): CardData[] {
       who: "2 to 5 permanent roles at once, any mix of generalist and specialist.",
       price: `from ${gbp(k(TIER_FLOOR.generalist))}`,
       per: ret ? "per hire, retained" : "per hire",
-      points: ["Each hire £1,000 less than the one before, down to a floor", "Each role gets its own search week and 5 candidates", "Mix generalist and specialist roles", "Pay only for the hires you make", payLine],
+      points: ["Each role gets its own search week and 5 candidates", "Mix generalist and specialist roles", "Pay only for the hires you make", payLine],
       cta: { label: "Start a batch", plan: "batch" },
     },
   ];
@@ -155,16 +155,7 @@ export function PricingCards({ candidate }: { candidate?: string }) {
             </p>
             {c.note && <p className={styles.note}>{c.note}</p>}
             <p className={base.blurb}>{c.who}</p>
-            {c.id === "batch" && kind === "permanent" && (
-              <div className={styles.ladders}>
-                {(["generalist", "specialist"] as const).map((t) => (
-                  <div key={t} className={styles.ladderRow}>
-                    <span>{t === "generalist" ? "Generalist" : "Specialist"}</span>
-                    <b>{ladder(t).map((f) => gbpK(shown === "retained" ? retainedFee(f) : f)).join(" → ")}</b>
-                  </div>
-                ))}
-              </div>
-            )}
+            {c.id === "batch" && kind === "permanent" && <BatchCalc retained={shown === "retained"} />}
             {c.extraTitle && <p className={styles.extraTitle}>{c.extraTitle}</p>}
             <ul className={base.points}>
               {c.points.map((p) => (
@@ -181,5 +172,44 @@ export function PricingCards({ candidate }: { candidate?: string }) {
       </div>
       <p className={styles.draft}>Mockup: contractor prices (£1,000 / £1,500 a month, 10% off in a batch) and the specialist extras are drafts.</p>
     </>
+  );
+}
+
+/** Batch: the rule in one sentence, then "how many hires?" and the sums for that many. */
+function BatchCalc({ retained }: { retained: boolean }) {
+  const [n, setN] = useState<number | null>(null);
+  const k = (f: number) => (retained ? retainedFee(f) : f);
+  const sum = (t: "generalist" | "specialist") => ladder(t).slice(0, n ?? 0).reduce((a, b) => a + k(b), 0);
+  return (
+    <div className={styles.calc}>
+      <p className={styles.rule}>Your first hire is full price. Each one after is £1,000 less than the one before, down to a floor.</p>
+      <div className={styles.howMany}>
+        <span>How many hires?</span>
+        {[2, 3, 4, 5].map((x) => (
+          <button key={x} type="button" className={n === x ? styles.howOn : ""} onClick={() => setN(n === x ? null : x)} aria-pressed={n === x}>
+            {x}
+          </button>
+        ))}
+      </div>
+      {n && (
+        <div className={styles.pop} role="status">
+          <p>
+            <b>{n} hires</b>, in the order they're made:
+          </p>
+          <ul>
+            {ladder("generalist")
+              .slice(0, n)
+              .map((f, i) => (
+                <li key={i}>
+                  {["1st", "2nd", "3rd", "4th", "5th"][i]} hire <span>{gbp(k(f))}</span>
+                </li>
+              ))}
+          </ul>
+          <p className={styles.popTotal}>
+            {gbp(sum("generalist"))} in all if every role is generalist. A specialist role starts from {gbp(k(TIER_FEE.specialist))} and steps down the same way ({gbp(sum("specialist"))} for {n} specialists).
+          </p>
+        </div>
+      )}
+    </div>
   );
 }

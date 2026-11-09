@@ -9,3 +9,16 @@
 .ladderRow span { font-weight: 800; }
 .ladderRow b { font-weight: 600; font-variant-numeric: tabular-nums; color: var(--dim, #5b5f69); }
 .draft { margin: 14px 0 0; text-align: center; font-size: 12.5px; font-weight: 700; color: #7a5600; }
+
+.calc { display: grid; gap: 10px; margin: 2px 0 12px; }
+.rule { margin: 0; font-size: 14px; line-height: 1.5; color: var(--ink, #0e0f11); font-weight: 600; }
+.howMany { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 13px; font-weight: 700; }
+.howMany span { margin-right: 4px; }
+.howMany button { width: 36px; height: 36px; border-radius: 999px; border: 1px solid var(--hair-strong, #ddd5ca); background: #fff; font: inherit; font-weight: 800; cursor: pointer; }
+.howMany .howOn { background: var(--ink, #0e0f11); color: #fff; border-color: var(--ink, #0e0f11); }
+.pop { padding: 12px 14px; border-radius: 12px; background: #fff7ef; border: 1px solid rgba(255, 138, 0, 0.4); font-size: 13.5px; line-height: 1.45; }
+.pop p { margin: 0 0 6px; }
+.pop ul { margin: 0 0 8px; padding: 0; list-style: none; display: grid; gap: 3px; }
+.pop li { display: flex; justify-content: space-between; }
+.pop li span { font-weight: 800; font-variant-numeric: tabular-nums; }
+.popTotal { color: var(--dim, #5b5f69); margin: 0 !important; }
