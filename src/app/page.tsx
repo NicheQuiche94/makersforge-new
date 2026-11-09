@@ -33,7 +33,7 @@ export default function HomePage() {
       <HeroPanel
         headline={["500 candidates to 5."]}
         // 2026-11-09 (Andre): say mobile games and apps up front, and tie it to 500 to 5.
-        ledeLead="Hiring for mobile games and apps?"
+        ledeLead="Hiring in Mobile Games and Apps?"
         lede="We headhunt UA, growth, product, design, art and engineering talent. You get 5 worth hiring, not 500 CVs to sift."
         ctas={{
           // 2026-11-09 (Andre): a 63% bounce rate; a free tool to click first, not "talk to us".
