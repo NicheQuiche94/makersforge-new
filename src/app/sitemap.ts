@@ -1,23 +1,17 @@
 import type { MetadataRoute } from "next";
-import {
-  getAllJobs,
-  getAllCompanySlugs,
-  CATEGORY_ORDER,
-  isExpired,
-} from "@/lib/jobs";
 import { SITE_URL } from "@/lib/site";
 import { ROSTER } from "@/data/roster";
 import { liveGuides } from "@/lib/guides";
 
 /**
- * Site sitemap, regenerated at every build (brief §5). Covers the core
- * marketing pages plus every job, company and category-landing URL so the
- * whole board is discoverable. Expired job pages stay in the sitemap — they
- * keep ranking for us after the role dies (brief §3).
+ * Site sitemap, regenerated at every build. The job board (/jobs, its job,
+ * company and category pages) is left out while it's on hold (Andre
+ * 2026-11-09: "take it out the site map until we re-build"). The pages still
+ * load for anyone with a link. To bring it back, restore the board, category,
+ * job and company entries from git history (getAllJobs, getAllCompanySlugs,
+ * CATEGORY_ORDER in lib/jobs).
  */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
-
   const core: MetadataRoute.Sitemap = [
     { url: `${SITE_URL}/`, changeFrequency: "weekly", priority: 1 },
     { url: `${SITE_URL}/games`, changeFrequency: "monthly", priority: 0.9 },
@@ -40,30 +34,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
       ]
     : [];
 
-  const board: MetadataRoute.Sitemap = [
-    { url: `${SITE_URL}/jobs`, changeFrequency: "daily", priority: 0.9 },
-    { url: `${SITE_URL}/jobs/post`, changeFrequency: "monthly", priority: 0.5 },
-    { url: `${SITE_URL}/jobs/standard`, changeFrequency: "monthly", priority: 0.6 },
-  ];
-
-  const categories: MetadataRoute.Sitemap = CATEGORY_ORDER.map((c) => ({
-    url: `${SITE_URL}/jobs/categories/${c}`,
-    changeFrequency: "daily",
-    priority: 0.7,
-  }));
-
-  const jobs: MetadataRoute.Sitemap = getAllJobs().map((job) => ({
-    url: `${SITE_URL}/jobs/${job.slug}`,
-    lastModified: job.posted_at,
-    changeFrequency: isExpired(job, now) ? "monthly" : "weekly",
-    priority: isExpired(job, now) ? 0.3 : 0.8,
-  }));
-
-  const companies: MetadataRoute.Sitemap = getAllCompanySlugs().map((slug) => ({
-    url: `${SITE_URL}/jobs/companies/${slug}`,
-    changeFrequency: "weekly",
-    priority: 0.6,
-  }));
-
-  return [...core, ...profiles, ...guides, ...board, ...categories, ...jobs, ...companies];
+  return [...core, ...profiles, ...guides];
 }
