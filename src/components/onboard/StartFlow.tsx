@@ -30,6 +30,7 @@ import { track } from "@/lib/analytics";
 import { CallLink } from "./Bits";
 import { PayToggle } from "./PlanCards";
 import { WeekCalendar } from "./WeekCalendar";
+import { trackLinkedIn } from "@/lib/linkedin";
 import styles from "./StartFlow.module.css";
 
 type Step = "week" | "brief" | "you" | "plan" | "terms" | "requested" | "review" | "pay" | "done";
@@ -166,6 +167,9 @@ export function StartFlow() {
   // Funnel: which step a visitor reaches (no personal details, just the step and plan).
   useEffect(() => {
     track("booking_step", { step, plan: plan ?? "none", retained: isRetained, roles: briefs.length });
+    // LinkedIn ad conversions: a week reserved (the brief step opens), and a booking made.
+    if (step === "brief") trackLinkedIn("booking_started");
+    if (step === "done") trackLinkedIn("booking_completed");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step]);
   // Several roles briefed: default to a batch of exactly that many (contractors stay contractors).

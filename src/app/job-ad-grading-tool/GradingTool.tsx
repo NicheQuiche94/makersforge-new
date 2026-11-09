@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { arrivalUtm } from "@/lib/analytics";
 import { EmailField } from "@/components/lead/EmailField";
 import { setLead } from "@/lib/lead";
+import { trackLinkedIn } from "@/lib/linkedin";
 import styles from "./grader.module.css";
 
 /* (Andre 2026-11-08). One step: drop in the PDF (or paste the ad),
@@ -63,6 +64,7 @@ export function GradingTool() {
       setState("idle");
     } else {
       setLead(r.lead);
+      trackLinkedIn("ad_graded");
       setDevLink(r.devLink || "");
       setState("sent");
     }

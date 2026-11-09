@@ -252,7 +252,7 @@ export default function PrivacyPage() {
                 <strong>Telegram.</strong> Delivers chat messages from the site to Andre so he can reply.
               </li>
               <li>
-                <strong>Analytics providers (Google Analytics, PostHog, Apollo).</strong> Site usage statistics, page recordings with form entries hidden, and identifying the companies visiting the site from IP address. Only if you accept cookies. PostHog stores its data in the EU.
+                <strong>Analytics and advertising providers (Google Analytics, PostHog, Apollo, LinkedIn).</strong> Site usage statistics, page recordings with form entries hidden, identifying the companies visiting the site from IP address, and measuring our LinkedIn ads. Only if you accept cookies. PostHog stores its data in the EU.
               </li>
               <li>
                 <strong>Studios with confirmed briefs.</strong> When a studio briefs us and a shortlist is generated, the matched specialists&apos; real identities and detailed profiles are shared with that studio for the purpose of interview and engagement.
@@ -393,6 +393,14 @@ export default function PrivacyPage() {
                 IP address to identify the company you&apos;re browsing
                 from, not you as a person, so we can see which studios
                 are interested.
+              </li>
+              <li>
+                <strong>LinkedIn ads measurement</strong> (the LinkedIn
+                Insight Tag), to see whether our LinkedIn ads lead to visits
+                and enquiries, to show our ads again to people who visited,
+                and to give us anonymous totals of visitors&apos; job titles
+                and company sizes. LinkedIn may link this to your LinkedIn
+                account under its own privacy policy.
               </li>
             </ul>
             <p className={styles.p}>
