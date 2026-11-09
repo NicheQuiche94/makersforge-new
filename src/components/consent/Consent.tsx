@@ -76,13 +76,17 @@ export function Consent() {
           <Script id="apollo-tracker" strategy="afterInteractive">
             {`function initApollo(){var n=Math.random().toString(36).substring(7),o=document.createElement("script");o.src="https://assets.apollo.io/micro/website-tracker/tracker.iife.js?nocache="+n,o.async=!0,o.defer=!0,o.onload=function(){window.trackingFunctions.onLoad({appId:"6a5c8f7c1a24a200202b16d8"})},document.head.appendChild(o)}initApollo();`}
           </Script>
+          {/* LinkedIn Insight Tag (2026-11-09): ad conversions, retargeting and visitor demographics. Partner 10072226. */}
+          <Script id="linkedin-insight" strategy="afterInteractive">
+            {`window._linkedin_partner_id="10072226";window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(window._linkedin_partner_id);(function(l){if(!l){window.lintrk=function(a,b){window.lintrk.q.push([a,b])};window.lintrk.q=[]}var s=document.getElementsByTagName("script")[0];var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src="https://snap.licdn.com/li.lms-analytics/insight.min.js";s.parentNode.insertBefore(b,s)})(window.lintrk);`}
+          </Script>
         </>
       )}
 
       {open && (
         <div className={styles.banner} role="dialog" aria-live="polite" aria-label="Cookie choices">
           <p className={styles.text}>
-            We&apos;d like to use cookies to understand how you use our site and improve it. Nothing loads
+            We&apos;d like to use cookies to understand how you use our site, improve it and measure our ads. Nothing loads
             unless you accept.{" "}
             <Link href="/legal/privacy#cookies" className={styles.link}>
               Privacy policy
