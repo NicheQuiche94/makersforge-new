@@ -36,7 +36,7 @@ export default function HomePage() {
         lede="Brief us instead: we headhunt, call and screen, then hand you a shortlist of 5 you'd want to hire, within 5 working days."
         ctas={{
           // 2026-11-09 (Andre): a 63% bounce rate; a free tool to click first, not "talk to us".
-          primary: { href: "/hire-timeline", label: "When will your hire start?" },
+          primary: { href: "/hire-timeline", label: "Will your job ad hire in time?" },
           // PROTOTYPE 2026-11-02: self-onboarding replaces the call; the hero links go (Andre).
           secondary: { href: "/start", label: "Get started" },
         }}

@@ -57,10 +57,10 @@ export function TimelineForm() {
     <section className={styles.hero}>
       <div className={styles.heroInner}>
         <h1 className={styles.display}>
-          When will your hire <span className={`gr ${styles.accent}`}>actually start?</span>
+          Will your job ad hire <span className={`gr ${styles.accent}`}>in time?</span>
         </h1>
         <p className={styles.heroLede}>
-          Hiring with a job ad? See how long each stage usually takes, add the notice period in their country, and find out if they&apos;ll be in by the date you need them. From published hiring benchmarks.
+          See when a job ad hire is likely to start, notice period included, against the date you need them.
         </p>
 
         <form

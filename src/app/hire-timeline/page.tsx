@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { TimelineForm } from "./TimelineForm";
 
 export const metadata: Metadata = {
-  title: "When will your hire actually start? · MakersForge",
+  title: "Will your job ad hire in time? · MakersForge",
   description:
-    "Hiring with a job ad? See when your hire is likely to start, stage by stage, with the notice period in their country, against the date you need them. Free, from published benchmarks.",
+    "See when a job ad hire is likely to start, notice period included, against the date you need them. Free, from published hiring benchmarks.",
   alternates: { canonical: "/hire-timeline" },
 };
 

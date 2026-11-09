@@ -1,5 +1,5 @@
 /**
- * "When will your hire actually start?" (Andre 2026-11-09, MOCKUP).
+ * "Will your job ad hire in time?" (Andre 2026-11-09; live 2026-11-09).
  *
  * A lead magnet that shows a problem, not a pitch: how long their current
  * way of hiring usually takes, plus the notice period in the candidate's

@@ -2,16 +2,16 @@
 
 Two single-image ads in one campaign, same audience and budget, so they compete on cost per lead. Europe first. Both land on a free tool with the email gate, and each URL is tagged so PostHog and the LinkedIn conversion show which one brought the lead.
 
-## Ad A: When will your hire actually start? → /hire-timeline
+## Ad A: Will your job ad hire in time? → /hire-timeline
 
 - **URL:** `https://www.makersforge.gg/hire-timeline?utm_source=linkedin&utm_campaign=tools-nov&utm_content=timeline`
 - **Intro text:**
   Hiring a senior role in Germany with a job ad? The median job ad takes about 10 weeks to get to a hire. Then they work 3 months' notice.
   If you need them by spring, the search starts now. See your likely start date, free:
-- **Headline:** When will your hire actually start?
+- **Headline:** Will your job ad hire in time?
 - **Image text:** Job ad + notice period = later than you think.
 - **CTA button:** Learn more
-- **Variant intro for the UK:** Hiring a Senior or Lead with a job ad? Allow about 10 weeks to hire, then up to 3 months' notice. Check your likely start date, free:
+- **Variant intro for the UK:** Hiring a Senior or Lead with a job ad? Allow about 10 weeks to hire, then a month's notice. Check your likely start date, free:
 
 ## Ad B: Every way to hire, compared → /compare
 
