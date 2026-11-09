@@ -83,7 +83,7 @@ export function PricingCards({ candidate }: { candidate?: string }) {
               <ul className={base.points}>
                 {kind === "permanent" && (
                   <li className={styles.savePoint}>
-                    <a href="#vs-agency">Save {gbp(save)} vs a typical agency*</a>
+                    Save {gbp(save)} vs a typical agency*
                   </li>
                 )}
                 {(kind === "contract" ? INCLUDED.slice(0, 4) : INCLUDED).map((p) => (

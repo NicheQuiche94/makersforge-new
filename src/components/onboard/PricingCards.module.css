@@ -30,7 +30,7 @@
 
 /* vs a typical agency: quiet, right under the cards (Andre 2026-11-09). */
 .vs { margin: 20px auto 0; max-width: 820px; font-family: var(--font-figtree), "Figtree", system-ui, sans-serif; }
-.vsH { margin: 0 0 6px; font-size: 15px; font-weight: 700; color: var(--ink); text-align: center; }
+.vsH { margin: 0 0 6px; font-size: 15px; font-weight: 800; color: #e14b00; text-align: center; }
 .vsTable { width: 100%; border-collapse: collapse; font-size: 14.5px; font-variant-numeric: tabular-nums; }
 .vsTable th, .vsTable td { padding: 9px 10px; border-bottom: 1px solid var(--hair); text-align: right; }
 .vsTable th:first-child, .vsTable td:first-child { text-align: left; }
@@ -42,5 +42,5 @@
 .vsNote { margin: 8px 0 0; font-size: 13px; color: var(--dim); text-align: center; }
 @media (max-width: 560px) { .vsTable th:nth-child(2), .vsTable td:nth-child(2) { display: none; } .vsTable th, .vsTable td { padding: 9px 4px; } }
 
-.savePoint a { color: #e14b00; font-weight: 800; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.savePoint { color: #e14b00; font-weight: 800; }
 .vs { scroll-margin-top: 110px; }

@@ -2,7 +2,6 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { BOOKING_URL } from "@/lib/site";
 import { ROSTER } from "@/data/roster";
-import { Compare } from "@/components/onboard/PlanCards";
 import { PricingCards } from "@/components/onboard/PricingCards";
 import { slotsLeftThisMonth } from "@/lib/plans";
 import styles from "./plans.module.css";
@@ -51,7 +50,6 @@ export default async function PricingPage({ searchParams }: { searchParams: Prom
       <section className={styles.body} id="plans">
         <div className="container">
           <PricingCards candidate={person?.id} />
-          <Compare big />
           <div className={styles.close}>
             <Link href="/compare" className={`${styles.door} ${styles.doorDark}`}>
               <h2>Not sure we&apos;re the right fit?</h2>
