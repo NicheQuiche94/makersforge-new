@@ -36,7 +36,7 @@ const d = (days: number) => Math.round((days / 7) * 10) / 10;
    First → last interview ≈ 18 days (Ashby, technical roles). Offer to signed
    contract ≈ 1 week (our estimate). A recruiter saves about a week on finding
    people (Ashby: startups hire faster with a recruiter involved). */
-const TOTAL: Record<Tier, number> = { team: 42, senior: 49, executive: 63 };
+const TOTAL: Record<Tier, number> = { team: 42, senior: 46, executive: 49 }; // Andre 2026-11-09: 6–7 weeks to hire at every level; notice is the long part
 const INTERVIEWS = 18;
 const OFFER = 7;
 const RECRUITER_SAVES = 7;

@@ -2,10 +2,17 @@
 
 import { useRef, useState } from "react";
 import Link from "next/link";
-import { money } from "@/lib/compare";
+import { priceList } from "@/lib/plans";
 import { activePromo, dropsFor } from "@/lib/promos";
 import type { Currency } from "@/lib/currency";
 import styles from "./gift.module.css";
+
+/** "23 hours", "40 minutes": what's left before the code expires. */
+function hoursLeft(expiresAt: string) {
+  const ms = Math.max(0, Date.parse(expiresAt) - Date.now());
+  const h = Math.ceil(ms / 36e5 - 0.02);
+  return h >= 1 ? `${h} hour${h === 1 ? "" : "s"}` : `${Math.max(1, Math.round(ms / 6e4))} minutes`;
+}
 
 type Prize = { pct: number; rarity: string; color: string; code: string; expiresAt: string; used: boolean };
 
@@ -15,8 +22,11 @@ type Prize = { pct: number; rarity: string; color: string; code: string; expires
    kept on the server; opening starts the code's 24 hours. Hires needed by
    the special date get better odds plus priority search. The ⓘ shows the
    drop rates, like a mobile game. */
-export function GiftBox({ lid, special, slots, cur = "GBP", fee = 9000 }: { lid: string; special: boolean; slots: number; cur?: Currency; fee?: number }) {
+export function GiftBox({ lid, special, slots, cur = "GBP", fee = 9000, role }: { lid: string; special: boolean; slots: number; cur?: Currency; fee?: number; role?: string }) {
   const promo = activePromo();
+  // Our list price in their currency, as on the pricing page.
+  const L = priceList(cur);
+  const list = L.convert(fee, 1000);
   const [open, setOpen] = useState(false);
   const [phase, setPhase] = useState<"idle" | "spin" | "shake" | "burst" | "done" | "soldout">("idle");
   const [odds, setOdds] = useState(false);
@@ -144,7 +154,15 @@ export function GiftBox({ lid, special, slots, cur = "GBP", fee = 9000 }: { lid:
                 <div className={styles.reveal}>
                   <span className={styles.rarity} style={{ color: prize.color }}>{prize.rarity}</span>
                   <span className={styles.prize}>{prize.pct}% off</span>
-                  <p>your first hire: {money(fee * (1 - prize.pct / 100), cur)} instead of {money(fee, cur)}.</p>
+                  {/* The locked-in price for their role, and the clock (Andre 2026-11-09). */}
+                  <p className={styles.lockIn}>
+                    Your {role ?? "hire"} for <b>{L.fmt(Math.round((list * (1 - prize.pct / 100)) / 10) * 10)}</b> <s>{L.fmt(list)}</s>
+                  </p>
+                  {!expired && !prize.used && (
+                    <p className={styles.clock}>
+                      Locked in for {hoursLeft(prize.expiresAt)}. Book a search week to keep it.
+                    </p>
+                  )}
                   <div className={styles.code}>{prize.code}</div>
                   {special && !priorityGone && (
                     <div className={styles.perk}>
@@ -157,9 +175,9 @@ export function GiftBox({ lid, special, slots, cur = "GBP", fee = 9000 }: { lid:
                       ? "You've used this code on your booking."
                       : expired
                         ? "This code has expired."
-                        : `Valid until ${new Date(prize.expiresAt).toLocaleString("en-GB", { weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}. It's applied automatically when you book.`}
+                        : `Until ${new Date(prize.expiresAt).toLocaleString("en-GB", { weekday: "short", hour: "2-digit", minute: "2-digit" })}. Applied automatically when you book.`}
                   </p>
-                  {!expired && !prize.used && <Link href={`/start?code=${prize.code}`} className={styles.claim}>Book a search week →</Link>}
+                  {!expired && !prize.used && <Link href={`/start?code=${prize.code}`} className={styles.claim}>Lock it in: book a search week →</Link>}
                 </div>
               )
             )}

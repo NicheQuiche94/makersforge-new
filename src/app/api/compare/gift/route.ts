@@ -8,8 +8,18 @@ import { activePromo, dropFor } from "@/lib/promos";
  */
 export const runtime = "nodejs";
 
+const DEMO = "0000000000";
+const demo = () => {
+  const promo = activePromo();
+  if (!promo || process.env.VERCEL_ENV === "production") return null;
+  const d = dropFor(promo, true, 10);
+  const openedAt = new Date().toISOString();
+  return { opened: true, pct: d.pct, rarity: d.rarity, color: d.color, code: "XMAS-DEMO-10", openedAt, expiresAt: new Date(Date.now() + 864e5).toISOString(), used: false };
+};
+
 export async function POST(req: Request) {
   const { lid } = await req.json().catch(() => ({}));
+  if (lid === DEMO && demo()) return Response.json(demo());
   if (!/^[a-f0-9]{10}$/.test(String(lid || ""))) return Response.json({ error: "Not found." }, { status: 404 });
   const db = createAdminClient();
   const { data: row } = await db.from("compare_requests").select("christmas, gift_pct, gift_code, gift_opened_at, gift_used_at").eq("lid", lid).maybeSingle();

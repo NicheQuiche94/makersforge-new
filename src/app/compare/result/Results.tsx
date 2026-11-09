@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { priceList } from "@/lib/plans";
+import { RATES } from "@/lib/currency";
 import { compare, money, wks, day, addWeeks, roleLabel, NOTICE_WEEKS, type CompareInput } from "@/lib/compare";
 import { activePromo } from "@/lib/promos";
 import { setMailRef } from "@/lib/analytics";
@@ -33,11 +35,14 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
   }
   const { rows, best, next, lowest } = data;
   const cur = input.cur ?? "GBP";
+  // Our fee as the pricing page shows it (rounded list price in their currency); others converted.
+  const L = priceList(cur);
+  const feeIn = (x: { fee: number; r: { us?: boolean } }) => (x.r.us ? L.convert(x.fee, 1000) : cur === "GBP" ? Math.round(x.fee) : Math.round((x.fee * RATES[cur]) / 10) * 10);
   // The trade in one line, against the next-best option (Andre 2026-11-09: show what the extra fee buys).
   const trade = (() => {
     if (!next) return "";
     const parts: string[] = [];
-    const feeDiff = best.fee - next.fee;
+    const feeDiff = feeIn(best) - feeIn(next);
     const weeks = next.hireBy - best.hireBy;
     const interviews = next.r.interviews - best.r.interviews;
     const hours = next.hours - best.hours;
@@ -46,7 +51,7 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
     if (hours > 0) parts.push(`${hours} fewer hours of your team's time`);
     if (!parts.length) return "";
     const them = ({ ads: "a job ad", games20: "a games-specialist agency", tech25: "a general tech agency", mf: "MakersForge" } as Record<string, string>)[next.r.id] ?? next.r.name;
-    const lead = feeDiff > 0 ? `${money(feeDiff, cur)} more than ${them}` : feeDiff < 0 ? `${money(-feeDiff, cur)} less than ${them}` : `The same fee as ${them}`;
+    const lead = feeDiff > 0 ? `${L.fmt(feeDiff)} more than ${them}` : feeDiff < 0 ? `${L.fmt(-feeDiff)} less than ${them}` : `The same fee as ${them}`;
     return `${lead}: ${parts.join(", ").replace(/, ([^,]*)$/, " and $1")}.`;
   })();
   const role = roleLabel(input.role);
@@ -71,7 +76,7 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
             Best fit for you: <strong>{best.r.name}</strong>
           </p>
           <span>
-            {money(best.fee, cur)} fee, hire made by around {day(addWeeks(best.hireBy))}.
+            {L.fmt(feeIn(best))} fee, hire made by around {day(addWeeks(best.hireBy))}.
             {!best.r.us && " That's not us, and that's fine: it's the better fit here."}
             {best.tooSlow && " Nothing fits your date, so this is the closest."}
           </span>
@@ -79,7 +84,7 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
         </div>
 
         {/* The gift sits right under the verdict, open (Ashley's QA: it was easy to miss). */}
-        {promo && <GiftBox lid={input.lid} special={special} slots={slots} cur={cur} fee={rows.find((x) => x.r.us)?.fee} />}
+        {promo && <GiftBox lid={input.lid} special={special} slots={slots} cur={cur} fee={rows.find((x) => x.r.us)?.fee} role={role} />}
 
         <div className={styles.table}>
           <div className={`${styles.tr} ${styles.th}`}>
@@ -98,7 +103,7 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
                   {x.r.id === best.r.id && <em className={styles.bestTag}>Best fit</em>}
                   {x.tooSlow && <em className={styles.warn}>Too late for your date</em>}
                 </span>
-                <span data-l="Fee" className={x.fee === lowest.fee ? styles.win : ""}>{money(x.fee, cur)}</span>
+                <span data-l="Fee" className={x.fee === lowest.fee ? styles.win : ""}>{L.fmt(feeIn(x))}</span>
                 <span data-l="Hire made by" className={x.hireBy === lowest.hireBy ? styles.win : ""}>{day(addWeeks(x.hireBy))}</span>
                 <span data-l="Your team's hours" className={x.hours === lowest.hours ? styles.win : ""}>{x.hours}h</span>
                 <span data-l="Interviews per hire" className={x.r.interviews === lowest.interviews ? styles.win : ""}>{x.r.interviews}</span>
@@ -112,7 +117,7 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
                       <b>What you do:</b> {x.r.youDo}.
                     </li>
                     <li>
-                      <b>Fee:</b> {money(x.fee, cur)} ({x.r.feeNote}).
+                      <b>Fee:</b> {L.fmt(feeIn(x))} ({x.r.feeNote}).
                     </li>
                     <li>
                       <b>Speed:</b> first shortlist in {x.r.shortlist}, an accepted offer in {wks(x.r.hireWeeks)}, then up to {NOTICE_WEEKS} weeks&apos; notice.

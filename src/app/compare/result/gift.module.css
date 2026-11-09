@@ -64,3 +64,9 @@
 
 .perk { display: grid; gap: 2px; max-width: 320px; margin-top: 6px; padding: 10px 14px; border-radius: 12px; background: rgba(255, 138, 0, 0.14); border: 1px solid rgba(255, 179, 71, 0.4); font-size: 13.5px; text-align: left; }
 .perk b { color: #ffb347; }
+
+/* The locked-in price and the clock (Andre 2026-11-09). */
+.lockIn { font-size: 18px; color: #fff !important; }
+.lockIn b { font-size: 26px; }
+.lockIn s { opacity: 0.6; margin-left: 6px; }
+.clock { font-weight: 800; color: #ffd36b !important; }

@@ -182,7 +182,7 @@ export function TimelineResult({ input, slots, lid }: { input: TimelineInput; sl
 
         <details className={own.howBox}>
           <summary>How we worked this out</summary>
-          <p>Stage lengths for a job ad or a recruiter use the faster end of published hiring data (averages of about 6 to 9 weeks from job ad to hire, by level), so your real timeline may well be longer. Notice periods are common practice for professional roles in each country, not legal minimums, and vary by contract. The MakersForge timeline is from our own searches. Sources:{" "}
+          <p>Stage lengths for a job ad or a recruiter use the faster end of published hiring data (about 6 to 7 weeks from job ad to hire, at any level), so your real timeline may well be longer. Notice periods are common practice for professional roles in each country, not legal minimums, and vary by contract. The MakersForge timeline is from our own searches. Sources:{" "}
           {Object.values(SOURCES).map((s, i) => (
             <span key={s.url}>
               {i > 0 && "; "}
