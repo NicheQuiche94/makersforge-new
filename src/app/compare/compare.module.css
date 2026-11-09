@@ -128,3 +128,6 @@
 .bestTag { font-style: normal; font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 999px; background: rgba(255, 138, 0, 0.16); color: #c2410c; }
 /* Column headings in normal case */
 .table .th { text-transform: none; letter-spacing: 0; font-size: 13px; }
+/* Role is free text with suggestions (2026-11-09): hide Chrome's dropdown arrow so it doesn't look like a select. */
+.formGrid input[list]::-webkit-calendar-picker-indicator { display: none !important; }
+.formGrid input[list]::-webkit-list-button { display: none !important; }
