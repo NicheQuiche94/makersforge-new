@@ -42,9 +42,15 @@ export async function slotsLeft(db: SupabaseClient, promo = activePromo()) {
 
 export type CodeCheck = { ok: true; pct: number; code: string; expiresAt: string; lid: string; special: boolean } | { ok: false; error: string };
 
+/** The demo code a local preview's gift box gives out (never valid on the live site). */
+export const demoCode = (prefix: string) => `${prefix}10-DEMO1`;
+
 export async function checkCode(db: SupabaseClient, raw: string): Promise<CodeCheck> {
   const code = String(raw || "").trim().toUpperCase();
   const promo = activePromo();
+  if (promo && process.env.VERCEL_ENV !== "production" && code === demoCode(promo.codePrefix)) {
+    return { ok: true, pct: 10, code, expiresAt: new Date(Date.now() + VALID_MS).toISOString(), lid: "0000000000", special: true };
+  }
   if (!/^[A-Z]{2,6}(5|10|15)-[A-Z0-9]{5}$/.test(code)) return { ok: false, error: "That code isn't one of ours." };
   if (!promo || !code.startsWith(promo.codePrefix)) return { ok: false, error: "That offer has finished." };
   const { data: row } = await db.from("compare_requests").select("lid, gift_pct, gift_opened_at, gift_used_at, christmas").eq("gift_code", code).maybeSingle();

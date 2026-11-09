@@ -1,5 +1,6 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 import { activePromo, dropFor } from "@/lib/promos";
+import { demoCode } from "@/lib/compareGifts";
 
 /**
  * POST { lid } → the Christmas gift for this comparison. The first call opens
@@ -14,7 +15,7 @@ const demo = () => {
   if (!promo || process.env.VERCEL_ENV === "production") return null;
   const d = dropFor(promo, true, 10);
   const openedAt = new Date().toISOString();
-  return { opened: true, pct: d.pct, rarity: d.rarity, color: d.color, code: "XMAS-DEMO-10", openedAt, expiresAt: new Date(Date.now() + 864e5).toISOString(), used: false };
+  return { opened: true, pct: d.pct, rarity: d.rarity, color: d.color, code: demoCode(promo.codePrefix), openedAt, expiresAt: new Date(Date.now() + 864e5).toISOString(), used: false };
 };
 
 export async function POST(req: Request) {
