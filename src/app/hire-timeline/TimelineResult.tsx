@@ -8,16 +8,13 @@ import base from "@/components/onboard/PlanCards.module.css";
 import styles from "../compare/compare.module.css";
 import own from "./timeline.module.css";
 
+/** "8 weeks late", "2 weeks early", "Right on time" (Andre: fewest words). */
 const verdictText = (late: number | null, need: Date | null) =>
-  need && late !== null
-    ? late > 0
-      ? `${weeksText(late)} after the ${fmtDay(need)} you need them`
-      : late === 0
-        ? `right on your ${fmtDay(need)} deadline`
-        : `${weeksText(-late)} before your ${fmtDay(need)} deadline`
-    : "";
+  need && late !== null ? (late > 0 ? `${weeksText(late)} late` : late === 0 ? "Right on time" : `${weeksText(-late)} early`) : "";
 
 type Route = "theirs" | "ours";
+/** Andre 2026-11-09: show at most 3 left this month, allowing for the time between seeing it and starting. */
+const SLOTS_SHOWN = 3;
 
 /* The result (Andre 2026-11-09, v3): two switches up top (their route or
    MakersForge; typical notice or available now) and one summary that
@@ -101,9 +98,8 @@ export function TimelineResult({ input, slots, mock }: { input: TimelineInput; s
           </h1>
           {t.need && (
             <p className={`${own.verdict} ${(late ?? 0) > 0 ? own.late : own.ok}`}>
-              {(late ?? 0) <= 0 ? "In time: " : "That's "}
               {verdictText(late, t.need)}
-              {ours && t.saved > 0 ? `, ${weeksText(t.saved)} sooner than ${method.short}.` : "."}
+              {ours && t.saved > 0 ? `, ${weeksText(t.saved)} sooner than ${method.short}` : ""}
             </p>
           )}
           {ours && noticeIsTheBlocker && !noNotice && (
@@ -123,7 +119,7 @@ export function TimelineResult({ input, slots, mock }: { input: TimelineInput; s
               </Link>
               {slots.left > 0 && (
                 <span className={own.scarce}>
-                  <i aria-hidden="true" /> {slots.left} left in {slots.month}
+                  <i aria-hidden="true" /> {Math.min(slots.left, SLOTS_SHOWN)} searches left in {slots.month}
                 </span>
               )}
             </div>
