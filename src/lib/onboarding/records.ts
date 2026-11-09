@@ -5,7 +5,8 @@
  */
 import { createAdminClient } from "@/lib/supabase/admin";
 import type { EmailData } from "@/lib/clientEmails";
-import { fiveDays, gbp, shortDate, shortlistDate } from "@/lib/plans";
+import { fiveDays, money, shortDate, shortlistDate } from "@/lib/plans";
+import type { Currency } from "@/lib/currency";
 
 export type RoleRow = {
   id: string;
@@ -27,6 +28,8 @@ export type BookingRow = {
   ref: string;
   plan: "permanent" | "contract" | "batch";
   retained: boolean;
+  /** Every amount on the booking is in this currency. */
+  currency: Currency;
   fees: number[];
   retainer: number;
   retainer_paid_at: string | null;
@@ -51,7 +54,7 @@ export type BookingRow = {
   signature: { name: string; title: string; email: string; ip: string | null; signed_at: string; terms_hash: string } | null;
 };
 
-const SELECT = `id, ref, plan, retained, fees, retainer, retainer_paid_at, brief_confirmed_at, status, terms_pdf_path, change_request, created_at,
+const SELECT = `id, ref, plan, retained, currency, fees, retainer, retainer_paid_at, brief_confirmed_at, status, terms_pdf_path, change_request, created_at,
   account:client_accounts(id, company, legal_name, company_number, address, vat_number, po_number, accounts_email, tracker_url),
   user:client_users(email, name, title),
   roles:booking_roles(id, position, title, location, budget, musts, spec_text, spec_file_path, search_week, shortlist_sent_at, hired_at, fee, invoice_amount),
@@ -116,7 +119,7 @@ export function emailData(b: BookingRow): EmailData {
     week: fiveDays(first),
     weekStart: shortDate(first),
     shortlist: shortlistDate(first),
-    retainer: b.retained ? gbp(b.retainer) : undefined,
+    retainer: b.retained ? money(b.retainer, b.currency) : undefined,
     signedBy: b.signature ? `${b.signature.name}, ${b.signature.title}` : "",
     signedAt: b.signature ? new Date(b.signature.signed_at).toLocaleString("en-GB", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit", timeZone: "Europe/London" }) : "",
     ukClient: UK.test(b.account.address || "") || /^GB/i.test(b.account.vat_number || ""),

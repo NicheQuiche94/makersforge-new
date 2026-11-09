@@ -7,7 +7,7 @@
  * weeks). Every button calls a server action that checks he's an admin.
  */
 import { useState, useTransition } from "react";
-import { fiveDays, gbp, shortDate, shortlistDate } from "@/lib/plans";
+import { fiveDays, money, shortDate, shortlistDate } from "@/lib/plans";
 import type { BookingRow } from "@/lib/onboarding/records";
 import { confirmBrief, fileLink, markHired, markRetainerPaid, sendShortlist, setWeekBlocked } from "./actions";
 import styles from "./admin.module.css";
@@ -46,7 +46,7 @@ export function AdminApp({ bookings, weeks }: { bookings: BookingRow[]; weeks: W
     if (!b.brief_confirmed_at)
       return [{ b, what: "Confirm the brief", detail: `${b.roles.length > 1 ? `${b.roles.length} roles, first search week` : `${b.roles[0]?.title || "1 role"} · search week`} ${fiveDays(b.roles[0]?.search_week)}`, cta: "Review and confirm", act: () => setOpen(b.id) }];
     if (b.retained && !b.retainer_paid_at)
-      return [{ b, what: "Retainer not paid yet", detail: `${gbp(b.retainer)} for ${b.account.accounts_email} · due before ${shortDate(b.roles[0]?.search_week)}`, cta: "Mark as paid", act: () => run(() => markRetainerPaid(b.id)) }];
+      return [{ b, what: "Retainer not paid yet", detail: `${money(b.retainer, b.currency)} for ${b.account.accounts_email} · due before ${shortDate(b.roles[0]?.search_week)}`, cta: "Mark as paid", act: () => run(() => markRetainerPaid(b.id)) }];
     const due = b.roles.find((r) => !r.shortlist_sent_at);
     if (due)
       return [{ b, what: "Shortlist due", detail: `${due.title || `Role ${due.position}`}: 5 candidates by ${shortlistDate(due.search_week)}${b.account.tracker_url ? "" : " · build their tracker, add the candidates, then send"}`, cta: "Send shortlist", act: () => (b.account.tracker_url ? run(() => sendShortlist(b.id, due.id)) : setOpen(b.id)) }];
@@ -129,7 +129,7 @@ export function AdminApp({ bookings, weeks }: { bookings: BookingRow[]; weeks: W
                       {b.retained ? " · retained" : ""}
                     </td>
                     <td>{fiveDays(b.roles[0]?.search_week)}</td>
-                    <td>{b.plan === "contract" ? `${gbp(b.fees.reduce((a, x) => a + x, 0))}/mo` : gbp(b.fees.reduce((a, x) => a + x, 0))}</td>
+                    <td>{b.plan === "contract" ? `${money(b.fees.reduce((a, x) => a + x, 0), b.currency)}/mo` : money(b.fees.reduce((a, x) => a + x, 0), b.currency)}</td>
                     <td>
                       <span className={styles.pill}>{stage(b)}</span>
                     </td>
@@ -207,7 +207,7 @@ export function AdminApp({ bookings, weeks }: { bookings: BookingRow[]; weeks: W
                     )}
                   </div>
                   {r.hired_at ? (
-                    <em>Hired{r.invoice_amount !== null ? ` · ${gbp(r.invoice_amount)}` : ""}</em>
+                    <em>Hired{r.invoice_amount !== null ? ` · ${money(r.invoice_amount, ob.currency)}` : ""}</em>
                   ) : r.shortlist_sent_at ? (
                     <button type="button" className={styles.link} disabled={pending} onClick={() => run(() => markHired(ob.id, r.id))}>
                       Mark hired
@@ -225,12 +225,12 @@ export function AdminApp({ bookings, weeks }: { bookings: BookingRow[]; weeks: W
                 {ob.retained ? " · retained, 15% off" : " · on success"}
               </dd>
               <dt>Fees</dt>
-              <dd>{ob.plan === "contract" ? `${ob.fees.map(gbp).join(", ")} a month per contractor` : ob.fees.map(gbp).join(", ")}</dd>
+              <dd>{ob.plan === "contract" ? `${ob.fees.map((x) => money(x, ob.currency)).join(", ")} a month per contractor` : ob.fees.map((x) => money(x, ob.currency)).join(", ")}</dd>
               {ob.retained && (
                 <>
                   <dt>Retainer</dt>
                   <dd>
-                    {gbp(ob.retainer)} · {ob.retainer_paid_at ? "paid" : "not paid yet"}
+                    {money(ob.retainer, ob.currency)} · {ob.retainer_paid_at ? "paid" : "not paid yet"}
                   </dd>
                 </>
               )}

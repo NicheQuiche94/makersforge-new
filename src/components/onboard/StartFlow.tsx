@@ -20,7 +20,7 @@ import { useEffect, useRef, useState, type DragEvent } from "react";
 import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/atoms/Button";
 import { ROSTER } from "@/data/roster";
-import { BATCH_MAX, BATCH_SIZES, PLANS, scheduleRoles, TERMS, TIER_NAME, TIER_FEE, CONTRACT_TIER_FEE, feesFor, ladder as tierLadder, fiveDays as fiveDaysOf, gbp, gbpK, planById, retainedPrice, shortDate as shortDateOf, shortlistDate as shortlistDateOf, type PayWhen, type PlanId } from "@/lib/plans";
+import { BATCH_MAX, BATCH_SIZES, PLANS, scheduleRoles, TERMS, TIER_NAME, priceList, fiveDays as fiveDaysOf, planById, type PriceList, shortDate as shortDateOf, shortlistDate as shortlistDateOf, type PayWhen, type PlanId } from "@/lib/plans";
 
 // Dates show "…" until the live calendar has loaded and a week is picked.
 const fiveDays = (w?: string) => (w ? fiveDaysOf(w) : "…");
@@ -28,6 +28,7 @@ const shortDate = (w?: string) => (w ? shortDateOf(w) : "…");
 const shortlistDate = (w?: string) => (w ? shortlistDateOf(w) : "…");
 import { track } from "@/lib/analytics";
 import { CallLink } from "./Bits";
+import { CurrencyToggle, useCurrency } from "./CurrencyToggle";
 import { PayToggle } from "./PlanCards";
 import { WeekCalendar } from "./WeekCalendar";
 import { tierFor, type Tier } from "@/lib/tier";
@@ -134,6 +135,10 @@ export function StartFlow() {
   }, [start, briefs, you, bill]);
 
   const p = plan ? planById(plan) : undefined;
+  // Prices follow the site-wide £ / € / $ choice; the booking is made in it.
+  const [money, setMoney] = useCurrency();
+  const L = priceList(money);
+  const gbp = L.fmt;
   // Retained only applies to permanent roles (one or a batch); the retainer is the one thing paid up front.
   const canRetain = plan === "permanent" || plan === "batch";
   const isRetained = canRetain && when === "retained";
@@ -141,22 +146,22 @@ export function StartFlow() {
   const n = plan === "batch" ? roles : briefs.length;
   // Each role's tier comes from its brief (lib/tier); a batch takes £1,000 off for each hire before it, down to a floor.
   const tiers: Tier[] = Array.from({ length: n }, (_, i) => (briefs[i] ? tierFor(briefs[i].f.role).tier : "team"));
-  const fees = feesFor(tiers, plan === "batch");
+  const fees = L.feesFor(tiers, plan === "batch");
   const full = fees.reduce((a, b) => a + b, 0);
   // Retained: 15% off each hire, never below £7,000; a third of that total up front.
-  const retFees = feesFor(tiers, plan === "batch", true);
+  const retFees = L.feesFor(tiers, plan === "batch", true);
   const retTotal = retFees.reduce((a, b) => a + b, 0);
   const ret = { total: retTotal, upfront: Math.round(retTotal / 3 / 100) * 100 };
   // Each role gets its own search slot; the panel, review and confirmation show when each runs.
   const roleNames = Array.from({ length: n }, (_, i) => (briefs[i] && briefed(briefs[i]) ? roleName(briefs[i], i) : `Role ${i + 1}`));
   const sched = start && weeks ? scheduleRoles(start, Math.max(1, n), weeks) : [];
-  const ladder = (retained = false) => (retained ? retFees : fees).map((x) => gbpK(x)).join(", ");
+  const ladder = (retained = false) => (retained ? retFees : fees).map((x) => L.fmtK(x)).join(", ");
   const allFilled = n === 1 ? "" : n === 2 ? " if both are filled" : ` if all ${n} are filled`;
   // The running total in "Your booking": price per role, then what it comes to.
   const price = !p
     ? null
     : plan === "contract"
-      ? { each: n > 1 ? `${tiers.map((t) => gbp(CONTRACT_TIER_FEE[t])).join(", ")} a month` : `${gbp(CONTRACT_TIER_FEE[tiers[0]])} a month (${TIER_NAME[tiers[0]]} role)`, total: `${gbp(tiers.reduce((a, t) => a + CONTRACT_TIER_FEE[t], 0))} a month`, note: n === 1 ? "While they're engaged." : `While ${n === 2 ? "both are" : `all ${n} are`} engaged.` }
+      ? { each: n > 1 ? `${tiers.map((t) => gbp(L.contract[t])).join(", ")} a month` : `${gbp(L.contract[tiers[0]])} a month (${TIER_NAME[tiers[0]]} role)`, total: `${gbp(tiers.reduce((a, t) => a + L.contract[t], 0))} a month`, note: n === 1 ? "While they're engaged." : `While ${n === 2 ? "both are" : `all ${n} are`} engaged.` }
       : isRetained
         ? { each: n > 1 ? `${ladder(true)} per hire, retained` : `${gbp(ret.total)} per hire, retained`, total: gbp(ret.total), note: `${n > 1 ? `If ${allFilled.replace(" if ", "")}. ` : ""}${gbp(ret.upfront)} when you sign, counted towards your first ${n > 1 ? "hires" : "hire"}.` }
         : { each: n > 1 ? `${ladder()} per hire` : `${gbp(fees[0])} per hire (${TIER_NAME[tiers[0]].toLowerCase()} role)`, total: gbp(full), note: n === 1 ? "Nothing up front. Invoiced when your hire starts." : `If ${allFilled.replace(" if ", "")}. Nothing up front.` };
@@ -267,6 +272,7 @@ export function StartFlow() {
         sign,
         changeRequest: opts.changeRequest,
         code: discount?.code,
+        currency: money,
       }),
     );
     files.current.forEach((fl, i) => fl && body.set(`spec-${i}`, fl));
@@ -290,7 +296,7 @@ export function StartFlow() {
   // The five lines change with the deal (on hire vs retained).
   const feeLine =
     plan === "contract"
-      ? `Nothing up front: ${tiers.map((t) => gbp(CONTRACT_TIER_FEE[t])).join(", ")} a month per contractor, invoiced while they're engaged`
+      ? `Nothing up front: ${tiers.map((t) => gbp(L.contract[t])).join(", ")} a month per contractor, invoiced while they're engaged`
       : isRetained
         ? `Retainer of ${gbp(ret.upfront)} when you sign (non-refundable), credited against your first hires; then each hire is invoiced at its fee, 15% off`
         : plan === "batch"
@@ -419,7 +425,7 @@ export function StartFlow() {
                     placeholder="The 2 or 3 things that matter most"
                   />
                 </div>
-                <TierNote role={f.role} budget={f.budget} />
+                <TierNote role={f.role} budget={f.budget} L={L} />
                 {briefs.length < BATCH_MAX && (
                   <button type="button" className={styles.addRole} onClick={addRole}>
                     + Add another role
@@ -481,10 +487,11 @@ export function StartFlow() {
                   {briefs.length < 2 && <p className={styles.sub}>Most teams start with one role and see how we work.</p>}
                 </div>
 
+                <CurrencyToggle cur={money} setCur={setMoney} className={styles.curRow} />
                 <PayToggle pay={when} setPay={setWhen} />
                 <div className={styles.planList}>
                   {PLANS.map((x) => (
-                    <PlanOption key={x.id} x={x} tiers={tiers} pay={when} on={plan === x.id} pick={() => setPlan(x.id)} />
+                    <PlanOption key={x.id} x={x} tiers={tiers} L={L} pay={when} on={plan === x.id} pick={() => setPlan(x.id)} />
                   ))}
                 </div>
 
@@ -559,12 +566,12 @@ export function StartFlow() {
                 <iframe
                   className={styles.termsFrame}
                   title="Terms of Business"
-                  src={`/api/onboarding/terms-pdf?${new URLSearchParams({ html: "1", plan: plan ?? "permanent", retained: isRetained ? "1" : "0", roles: String(plan === "batch" ? roles : briefs.length), tiers: tiers.map((t) => t[0]).join(","), ...(discount && { code: discount.code }) })}`}
+                  src={`/api/onboarding/terms-pdf?${new URLSearchParams({ html: "1", plan: plan ?? "permanent", retained: isRetained ? "1" : "0", roles: String(plan === "batch" ? roles : briefs.length), tiers: tiers.map((t) => t[0]).join(","), cur: money, ...(discount && { code: discount.code }) })}`}
                 />
                 {billingOk ? (
                   <a
                     className={styles.download}
-                    href={`/api/onboarding/terms-pdf?${new URLSearchParams({ plan: plan ?? "permanent", retained: isRetained ? "1" : "0", roles: String(plan === "batch" ? roles : briefs.length), tiers: tiers.map((t) => t[0]).join(","), client: bill.legal, number: bill.number, address: bill.address, ...(discount && { code: discount.code }) })}`}
+                    href={`/api/onboarding/terms-pdf?${new URLSearchParams({ plan: plan ?? "permanent", retained: isRetained ? "1" : "0", roles: String(plan === "batch" ? roles : briefs.length), tiers: tiers.map((t) => t[0]).join(","), cur: money, client: bill.legal, number: bill.number, address: bill.address, ...(discount && { code: discount.code }) })}`}
                   >
                     ↓ Download your terms (PDF), made out to {bill.legal}
                   </a>
@@ -757,7 +764,7 @@ export function StartFlow() {
             )}
             {price && discount && (
               <p className={styles.sumDiscount}>
-                {discount.code}: −{gbp(((plan === "contract" ? CONTRACT_TIER_FEE[tiers[0]] : fees[0] * (isRetained ? 0.85 : 1)) * discount.pct) / 100)} off your first {plan === "contract" ? "month" : "hire"}
+                {discount.code}: −{gbp(((plan === "contract" ? L.contract[tiers[0]] : fees[0] * (isRetained ? 0.85 : 1)) * discount.pct) / 100)} off your first {plan === "contract" ? "month" : "hire"}
               </p>
             )}
             <p className={styles.sumCall}>
@@ -771,18 +778,19 @@ export function StartFlow() {
 }
 
 /** One plan in the picker; its price follows the On success / Retained switch. */
-function PlanOption({ x, pay, on, pick, tiers }: { x: (typeof PLANS)[number]; pay: PayWhen; on: boolean; pick: () => void; tiers: Tier[] }) {
+function PlanOption({ x, pay, on, pick, tiers, L }: { x: (typeof PLANS)[number]; pay: PayWhen; on: boolean; pick: () => void; tiers: Tier[]; L: PriceList }) {
   const base = pay === "retained" && x.retained ? x.retained : x;
-  const k = pay === "retained" ? 0.85 : 1;
   // Batch shows its fees in order for the roles briefed (or the generalist ladder before any), not a range (Ashley's QA).
   const ret = pay === "retained";
-  const ladder = x.id === "batch" ? (tiers.length > 1 ? feesFor(tiers, true, ret) : tierLadder(tiers[0] ?? "team", ret)) : null;
+  const ladder = x.id === "batch" ? (tiers.length > 1 ? L.feesFor(tiers, true, ret) : L.ladder(tiers[0] ?? "team", ret)) : null;
   const first = tiers[0] ?? "team";
   const face = ladder
-    ? { price: gbp(ladder[0]), per: "first hire, then £1,000 less each, never below £7,000" }
+    ? { price: L.fmt(ladder[0]), per: `first hire, then ${L.fmt(L.step)} less each, never below ${L.fmt(L.floor)}` }
     : x.id === "permanent"
-      ? { price: gbp(feesFor([first], false, ret)[0]), per: `per hire · ${TIER_NAME[first]} role` }
-      : base;
+      ? { price: L.fmt(L.fee(first, 0, { retained: ret })), per: `per hire · ${TIER_NAME[first]} role` }
+      : x.id === "contract"
+        ? { price: L.fmt(L.contract[first]), per: `per contractor, per month · ${TIER_NAME[first]} role` }
+        : base;
   const line = pay === "retained" && !x.retained ? "Paid monthly, so there's no retainer" : x.blurb;
   return (
     <button type="button" className={`${styles.planOpt} ${on ? styles.planOn : ""}`} onClick={pick}>
@@ -797,7 +805,7 @@ function PlanOption({ x, pay, on, pick, tiers }: { x: (typeof PLANS)[number]; pa
           {ladder.map((s, i) => (
             <span key={i}>
               {i > 0 && <i aria-hidden="true">→</i>}
-              {gbpK(s)}
+              {L.fmtK(s)}
             </span>
           ))}
         </span>
@@ -866,13 +874,13 @@ function Nav({
 }
 
 /** Under the brief: which tier this role is (the level in the title), and its fee. */
-function TierNote({ role }: { role: string; budget?: string }) {
+function TierNote({ role, L }: { role: string; budget?: string; L: PriceList }) {
   if (!role.trim()) return null;
   const t = tierFor(role);
   return (
     <p className={`${styles.tierNote} ${t.tier !== "team" ? styles.tierSpec : ""}`}>
       <b>
-        {TIER_NAME[t.tier]} role · {gbp(TIER_FEE[t.tier])}
+        {TIER_NAME[t.tier]} role · {L.fmt(L.base[t.tier])}
       </b>{" "}
       <span>{t.reason}.</span>
     </p>

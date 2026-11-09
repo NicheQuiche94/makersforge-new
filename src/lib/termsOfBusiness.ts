@@ -17,7 +17,8 @@
  * kept word for word but OFF: not offered self-serve, only by request on a
  * negotiated deal, at a price.
  */
-import { BATCH_MAX, FEE_FLOOR, contractFeesText, RETAINED_OFF, TIER_NAME, hireFee, gbp, type Tier } from "@/lib/plans";
+import { BATCH_MAX, RETAINED_OFF, TIER_NAME, priceList, type Tier } from "@/lib/plans";
+import type { Currency } from "@/lib/currency";
 
 export type TermsVariant = "permanent" | "contract" | "batch";
 
@@ -29,8 +30,10 @@ export type TermsVars = {
   clientAddress: string;
   roles?: number; // batch size, 2 to 5
   retained?: boolean; // permanent and batch only
-  contractFee: string; // "£1,000"
-  cancelFee: string; // "£1,500"
+  /** Fees are written in this currency (default pounds). */
+  currency?: Currency;
+  contractFee?: string; // unused since tiered contractor fees (2026-11-09)
+  cancelFee?: string; // overrides the converted £1,500
   cancelHours: number; // 48
   guarantee?: boolean; // Andre's replacement guarantee, off unless negotiated
   discount?: { pct: number; code: string }; // a Christmas gift code, off the first Engagement's Fee
@@ -50,7 +53,10 @@ export function buildTerms(v: TermsVars): { parties: Clause[]; sections: Section
   const n = v.variant === "batch" ? Math.min(Math.max(v.roles ?? 2, 2), BATCH_MAX) : 1;
   const tiers: Tier[] = Array.from({ length: n }, (_, i) => v.tiers?.[i] ?? "team");
   const batch = v.variant === "batch";
-  const steps = tiers.map((t, i) => hireFee(t, batch ? i : 0, { batch, retained, discountPct: i === 0 ? v.discount?.pct : 0 }));
+  const L = priceList(v.currency ?? "GBP");
+  const gbp = L.fmt;
+  const cancelFee = v.cancelFee ?? L.fmt(L.cancelFee);
+  const steps = tiers.map((t, i) => L.fee(t, batch ? i : 0, { batch, retained, discountPct: i === 0 ? v.discount?.pct : 0 }));
   const retainer = Math.round(steps.reduce((a, b) => a + b, 0) / 3 / 100) * 100;
   const ORD = ["first", "second", "third", "fourth", "fifth"];
 
@@ -130,7 +136,7 @@ export function buildTerms(v: TermsVars): { parties: Clause[]; sections: Section
     v.variant === "contract"
       ? [
           {
-            text: `${C} shall pay the Fees to MakersForge in respect of each Candidate engaged by ${C}. The Fees are fixed per calendar month, or part month, for each month the Candidate is Engaged, by the level of the role: ${contractFeesText()}. They are invoiced monthly.`,
+            text: `${C} shall pay the Fees to MakersForge in respect of each Candidate engaged by ${C}. The Fees are fixed per calendar month, or part month, for each month the Candidate is Engaged, by the level of the role: ${L.contractText}. They are invoiced monthly.`,
             kind: "new",
             note: "Contractor version of your 3.1: a flat monthly fee by tier while engaged.",
           },
@@ -140,14 +146,14 @@ export function buildTerms(v: TermsVars): { parties: Clause[]; sections: Section
             {
               text: `${C} shall pay the Fees to MakersForge in respect of each Candidate engaged by ${C}. The Role is a ${TIER_NAME[tiers[0]]} role and the Fees are fixed at ${gbp(steps[0])}.`,
               kind: "new",
-              note: `Your 3.1 with the tier named (Team £9,000, Senior £14,000, Executive £20,000; never below ${gbp(FEE_FLOOR)})${retained ? `, ${RETAINED_OFF * 100}% off as it's retained` : ""}.`,
+              note: `Your 3.1 with the tier named (Team ${gbp(L.base.team)}, Senior ${gbp(L.base.senior)}, Executive ${gbp(L.base.executive)}; never below ${gbp(L.floor)})${retained ? `, ${RETAINED_OFF * 100}% off as it's retained` : ""}.`,
             },
           ]
         : [
             {
               text: `${C} shall pay the Fees to MakersForge in respect of each Candidate engaged by ${C} for a vacancy in the Batch. The Fees are fixed per Engagement, in the order the Engagements are made: ${steps.map((x, i) => `${gbp(x)} for the ${ORD[i]} (${TIER_NAME[tiers[i]]} role)`).join(", ")}. Fees are payable only for Engagements made.`,
               kind: "new",
-              note: `Your 3.1 for a batch: each hire is its tier's fee less £1,000 for every hire before it, never below ${gbp(FEE_FLOOR)}, and Executive roles aren't stepped down${retained ? `, ${RETAINED_OFF * 100}% off as it's retained` : ""}. Releasing ${n} roles and filling fewer only costs the hires made.`,
+              note: `Your 3.1 for a batch: each hire is its tier's fee less ${gbp(L.step)} for every hire before it, never below ${gbp(L.floor)}, and Executive roles aren't stepped down${retained ? `, ${RETAINED_OFF * 100}% off as it's retained` : ""}. Releasing ${n} roles and filling fewer only costs the hires made.`,
             },
           ];
   const retainerClauses: Clause[] = retained
@@ -203,7 +209,7 @@ export function buildTerms(v: TermsVars): { parties: Clause[]; sections: Section
     },
     { text: `then ${C} shall be liable to pay the Fees for the Introduction as though the Candidate was Engaged by ${C} as a result of the Introduction.`, kind: "original" },
     {
-      text: `${C} may cancel or rearrange a Search Week free of charge by giving written notice at least ${v.cancelHours} hours before it starts. If ${C} cancels within ${v.cancelHours} hours of the start of a Search Week, or after it has started, ${C} shall pay a cancellation fee of ${v.cancelFee}.`,
+      text: `${C} may cancel or rearrange a Search Week free of charge by giving written notice at least ${v.cancelHours} hours before it starts. If ${C} cancels within ${v.cancelHours} hours of the start of a Search Week, or after it has started, ${C} shall pay a cancellation fee of ${cancelFee}.`,
       kind: "new",
       note: "The late-cancellation fee (in the full terms and FAQ, not the five-line summary).",
     },

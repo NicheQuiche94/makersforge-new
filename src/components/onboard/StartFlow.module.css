@@ -971,3 +971,6 @@
 .tierNote span { color: var(--dim, #5b5f69); }
 .tierNote em { display: block; font-style: normal; color: #b45309; font-weight: 600; margin-top: 2px; }
 .tierSpec { background: #fff7ef; border-color: rgba(255, 138, 0, 0.4); }
+
+/* Currency (site-wide choice) above the pay switch, 2026-11-09 */
+.curRow { margin-bottom: 12px !important; }

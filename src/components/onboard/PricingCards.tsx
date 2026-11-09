@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { CURRENCIES, CURRENCY_SYMBOLS, readStoredCurrency, writeStoredCurrency, type Currency } from "@/lib/currency";
+import { useState } from "react";
+import { CurrencyToggle, useCurrency } from "./CurrencyToggle";
 import { Button } from "@/components/atoms/Button";
 import { AGENCY_BENCH, BATCH_MAX, RETAINED_OFF, TIER_NAME, priceList, type PayWhen, type PriceList, type Tier } from "@/lib/plans";
 import { BOOKING_URL } from "@/lib/site";
@@ -34,14 +34,7 @@ const WHO: Record<Tier, string> = {
 export function PricingCards({ candidate }: { candidate?: string }) {
   const [kind, setKind] = useState<Kind>("permanent");
   const [pay, setPay] = useState<PayWhen>("success");
-  const [cur, setCur] = useState<Currency>("GBP");
-  // The saved currency is only readable in the browser, after hydration.
-  // eslint-disable-next-line react-hooks/set-state-in-effect
-  useEffect(() => setCur(readStoredCurrency()), []);
-  const pickCur = (c: Currency) => {
-    setCur(c);
-    writeStoredCurrency(c);
-  };
+  const [cur, pickCur] = useCurrency();
   const L = priceList(cur);
   const retainedOk = kind === "permanent";
   const shown = retainedOk ? pay : "success";
@@ -67,13 +60,7 @@ export function PricingCards({ candidate }: { candidate?: string }) {
             </button>
           ))}
         </div>
-        <div className={`${base.payToggle} ${styles.curToggle}`} role="group" aria-label="Currency">
-          {CURRENCIES.map((c) => (
-            <button key={c} type="button" className={cur === c ? base.payOn : ""} aria-pressed={cur === c} onClick={() => pickCur(c)} title={c}>
-              {CURRENCY_SYMBOLS[c]}
-            </button>
-          ))}
-        </div>
+        <CurrencyToggle cur={cur} setCur={pickCur} />
       </div>
       {cur !== "GBP" && <p className={styles.curNote}>Prices in {cur === "EUR" ? "euros" : "US dollars"}, converted from pounds and rounded to the nearest {cur === "EUR" ? "€" : "$"}1,000.</p>}
       <p className={base.payNote}>

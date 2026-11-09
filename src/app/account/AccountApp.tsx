@@ -10,7 +10,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/atoms/Button";
-import { fiveDays, gbp, shortDate, shortlistDate } from "@/lib/plans";
+import { fiveDays, money, shortDate, shortlistDate } from "@/lib/plans";
 import { planLabel, type BookingRow, type RoleRow } from "@/lib/onboarding/records";
 import { signOut, termsLink } from "./actions";
 import styles from "./account.module.css";
@@ -102,10 +102,10 @@ export function AccountApp({ email, bookings, slotsLeft, month }: { email: strin
               <p className={styles.big}>{planLabel(latest)}</p>
               <p className={styles.meta}>
                 {latest.plan === "contract"
-                  ? `${latest.fees.map(gbp).join(", ")} a month per contractor while they're engaged.`
+                  ? `${latest.fees.map((x) => money(x, latest.currency)).join(", ")} a month per contractor while they're engaged.`
                   : latest.retained
-                    ? `Retainer ${gbp(latest.retainer)} ${latest.retainer_paid_at ? "paid" : "invoiced"} · credited against your first hires.`
-                    : `${latest.fees.map(gbp).join(", ")} per hire · nothing up front.`}
+                    ? `Retainer ${money(latest.retainer, latest.currency)} ${latest.retainer_paid_at ? "paid" : "invoiced"} · credited against your first hires.`
+                    : `${latest.fees.map((x) => money(x, latest.currency)).join(", ")} per hire · nothing up front.`}
               </p>
             </section>
             <section className={`card-shadow ${styles.card}`}>
@@ -179,7 +179,7 @@ export function AccountApp({ email, bookings, slotsLeft, month }: { email: strin
                             {new Date(b.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })} · Retainer, {planLabel(b).toLowerCase()}
                           </span>
                           <strong>
-                            {gbp(b.retainer)} · {b.retainer_paid_at ? "Paid" : "Due"}
+                            {money(b.retainer, b.currency)} · {b.retainer_paid_at ? "Paid" : "Due"}
                           </strong>
                         </li>,
                       ]
@@ -191,7 +191,7 @@ export function AccountApp({ email, bookings, slotsLeft, month }: { email: strin
                         <span>
                           {new Date(r.hired_at!).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })} · Hire: {r.title || `Role ${r.position}`}
                         </span>
-                        <strong>{r.invoice_amount ? gbp(r.invoice_amount) : "Covered by your retainer"}</strong>
+                        <strong>{r.invoice_amount ? money(r.invoice_amount, b.currency) : "Covered by your retainer"}</strong>
                       </li>
                     )),
                 ])}

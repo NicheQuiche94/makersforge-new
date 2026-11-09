@@ -242,36 +242,60 @@ export function slotsLeftThisMonth() {
  */
 export type PriceList = {
   cur: Currency;
+  /** "€11,000" */
   fmt: (n: number) => string;
-  fee: (tier: Tier, position?: number, o?: { batch?: boolean; retained?: boolean }) => number;
+  /** "€10.4k" style, for ladders. */
+  fmtK: (n: number) => string;
+  /** A pound amount in this currency, rounded to unit (1,000 for list prices, 100 for small fees). */
+  convert: (gbpAmount: number, unit: number) => number;
+  fee: (tier: Tier, position?: number, o?: { batch?: boolean; retained?: boolean; discountPct?: number }) => number;
+  feesFor: (tiers: Tier[], batch: boolean, retained?: boolean) => number[];
+  ladder: (tier: Tier, retained?: boolean) => number[];
   base: Record<Tier, number>;
   floor: number;
   step: number;
   contract: Record<Tier, number>;
+  /** Contractor fees in words, for terms and summaries. */
+  contractText: string;
+  cancelFee: number;
   salary: Record<Tier, number>;
   /** A typical agency fee for the tier: salary × its rate (rounded to 1,000 outside pounds). */
   agency: (tier: Tier) => number;
 };
+export const CANCEL_FEE = 1_500;
 export function priceList(cur: Currency = "GBP"): PriceList {
   const r = RATES[cur];
   const to = (n: number, unit: number) => (cur === "GBP" ? n : Math.round((n * r) / unit) * unit);
   const each = (rec: Record<Tier, number>, unit: number) => ({ team: to(rec.team, unit), senior: to(rec.senior, unit), executive: to(rec.executive, unit) });
+  const sym = CURRENCY_SYMBOLS[cur];
+  const fmt = (n: number) => `${n < 0 ? "−" : ""}${sym}${Math.abs(Math.round(n)).toLocaleString("en-GB")}`;
   const base = each(TIER_FEE, 1000);
   const floor = to(FEE_FLOOR, 1000);
   const step = BATCH_STEP;
+  const contract = each(CONTRACT_TIER_FEE, 100);
+  const fee: PriceList["fee"] = (tier, position = 0, o = {}) => {
+    let f = base[tier] - (o.batch && tier !== "executive" ? step * position : 0);
+    if (position === 0 && o.discountPct) f *= 1 - o.discountPct / 100;
+    if (o.retained) f *= 1 - RETAINED_OFF;
+    return Math.max(floor, Math.round(f));
+  };
   return {
     cur,
-    fmt: (n) => `${CURRENCY_SYMBOLS[cur]}${Math.round(n).toLocaleString("en-GB")}`,
+    fmt,
+    fmtK: (n) => `${sym}${+(n / 1000).toFixed(2)}k`,
+    convert: to,
+    fee,
+    feesFor: (tiers, batch, retained = false) => tiers.map((t, i) => fee(t, batch ? i : 0, { batch, retained })),
+    ladder: (tier, retained = false) => Array.from({ length: BATCH_MAX }, (_, i) => fee(tier, i, { batch: true, retained })),
     base,
     floor,
     step,
-    contract: each(CONTRACT_TIER_FEE, 100),
-    salary: { team: to(AGENCY_BENCH.team.salary, 1000), senior: to(AGENCY_BENCH.senior.salary, 1000), executive: to(AGENCY_BENCH.executive.salary, 1000) },
+    contract,
+    contractText: `${fmt(contract.team)} a month for a Team role, ${fmt(contract.senior)} for Senior and ${fmt(contract.executive)} for Executive`,
+    cancelFee: to(CANCEL_FEE, 100),
+    salary: each({ team: AGENCY_BENCH.team.salary, senior: AGENCY_BENCH.senior.salary, executive: AGENCY_BENCH.executive.salary }, 1000),
     agency: (t) => to(AGENCY_BENCH[t].salary * AGENCY_BENCH[t].pct, 1000),
-    fee: (tier, position = 0, o = {}) => {
-      let f = base[tier] - (o.batch && tier !== "executive" ? step * position : 0);
-      if (o.retained) f *= 1 - RETAINED_OFF;
-      return Math.max(floor, Math.round(f));
-    },
   };
 }
+/** Format an amount already in a booking's currency. */
+export const money = (n: number, cur: Currency = "GBP") => priceList(cur).fmt(n);

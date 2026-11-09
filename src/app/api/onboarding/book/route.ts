@@ -9,7 +9,8 @@ import { termsDoc, termsHtml } from "@/lib/onboarding/terms";
 import { htmlToPdf } from "@/lib/onboarding/pdf";
 import { ANDRE, sendMail } from "@/lib/onboarding/mail";
 import { clientEmails, type EmailData } from "@/lib/clientEmails";
-import { fiveDays, gbp, shortDate, shortlistDate, type PlanId } from "@/lib/plans";
+import { fiveDays, money, shortDate, shortlistDate, type PlanId } from "@/lib/plans";
+import { isCurrency } from "@/lib/currency";
 
 /**
  * POST multipart/form-data: `data` (JSON, below) + `spec-<n>` files.
@@ -66,7 +67,9 @@ export async function POST(req: Request) {
   const discount = gift?.ok ? { pct: gift.pct, code: gift.code } : undefined;
   const priority = gift?.ok && gift.special;
   // Each role's tier comes from its brief, worked out here (never trusted from the browser).
-  const deal = priceDeal(plan, !!d.retained, roles, discount?.pct, tiersFromBriefs(briefs, roles));
+  // Their currency (the site-wide £ / € / $ choice): every amount on the booking is in it.
+  const currency = isCurrency(d.currency) ? d.currency : "GBP";
+  const deal = priceDeal(plan, !!d.retained, roles, discount?.pct, tiersFromBriefs(briefs, roles), currency);
   const weeks = await availability();
   const slots = schedule(weeks, String(d.start), Math.max(briefs.length, 1));
   if (!slots) return bad("Sorry, those search weeks have just filled up. Please pick another week.", 409);
@@ -113,7 +116,7 @@ export async function POST(req: Request) {
   // ---- book every role in one go (the database refuses if a week just filled)
   const today = new Date();
   const dateLong = today.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
-  const termsIn = { variant: plan, retained: deal.retained, roles: deal.roles, tiers: deal.tiers, date: dateLong, client: bill.legal || you.company, clientNumber: bill.number, clientAddress: bill.address, discount };
+  const termsIn = { variant: plan, retained: deal.retained, roles: deal.roles, tiers: deal.tiers, currency, date: dateLong, client: bill.legal || you.company, clientNumber: bill.number, clientAddress: bill.address, discount };
   const { hash } = termsDoc(termsIn);
   const { data: bookingId, error: bErr } = await db.rpc("create_booking", {
     p_account: accountId,
@@ -138,12 +141,13 @@ export async function POST(req: Request) {
     if (/week_full/.test(bErr.message)) return bad("Sorry, those search weeks have just filled up. Please pick another week.", 409);
     throw bErr;
   }
+  if (currency !== "GBP") await db.from("bookings").update({ currency }).eq("id", bookingId);
   const { data: booking } = await db.from("bookings").select("id, ref").eq("id", bookingId).single();
   const ref = booking!.ref as string;
   if (discount) {
     await claimCode(db, discount.code, bookingId as string);
     await db.from("booking_events").insert({ booking_id: bookingId, kind: "christmas_code", detail: { code: discount.code, pct: discount.pct, firstFee: deal.fees[0], priority } });
-    await toAndre(`🎁 ${you.company} booked with gift code ${discount.code} (${discount.pct}% off the first fee, now ${deal.fees[0].toLocaleString("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 0 })}). Ref ${ref}.${priority ? " Priority search promised." : ""}`).catch(() => {});
+    await toAndre(`🎁 ${you.company} booked with gift code ${discount.code} (${discount.pct}% off the first fee, now ${money(deal.fees[0], currency)}). Ref ${ref}.${priority ? " Priority search promised." : ""}`).catch(() => {});
   }
 
   // ---- emails need these details either way
@@ -168,7 +172,7 @@ export async function POST(req: Request) {
     week: fiveDays(slots[0]),
     weekStart: shortDate(slots[0]),
     shortlist: shortlistDate(slots[0]),
-    retainer: deal.retained ? gbp(deal.retainer) : undefined,
+    retainer: deal.retained ? money(deal.retainer, currency) : undefined,
     signedBy: `${sign.name}, ${sign.title}`,
     signedAt,
     ukClient: UK.test(bill.address) || /^GB/i.test(bill.vat),

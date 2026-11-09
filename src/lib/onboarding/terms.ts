@@ -18,7 +18,8 @@ export type TermsInput = {
   clientNumber: string;
   clientAddress: string;
   discount?: { pct: number; code: string }; // Christmas gift code (lib/compareGifts)
-  tiers?: import("@/lib/tier").Tier[]; // one per role (generalist / specialist)
+  tiers?: import("@/lib/tier").Tier[]; // one per role (Team / Senior / Executive)
+  currency?: import("@/lib/currency").Currency; // fees written in this currency
 };
 
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -39,8 +40,7 @@ export function termsDoc(v: TermsInput) {
     clientAddress: v.clientAddress,
     discount: v.discount,
     tiers: v.tiers,
-    contractFee: "£1,000",
-    cancelFee: TERMS.cancelFee,
+    currency: v.currency,
     cancelHours: TERMS.cancelHours,
   });
   const lines: string[] = [];

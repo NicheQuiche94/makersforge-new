@@ -12,7 +12,7 @@ import { bookingById, emailData } from "@/lib/onboarding/records";
 import { hireInvoice } from "@/lib/onboarding/pricing";
 import { clientEmails } from "@/lib/clientEmails";
 import { ANDRE, sendMail } from "@/lib/onboarding/mail";
-import { gbp } from "@/lib/plans";
+import { money } from "@/lib/plans";
 
 async function requireAdmin() {
   const email = await sessionEmail();
@@ -79,7 +79,7 @@ export async function markHired(bookingId: string, roleId: string) {
     const monthly = b.fees[b.roles.indexOf(role)] ?? b.fees[0] ?? 1000;
     await db().from("booking_roles").update({ hired_at: new Date().toISOString(), fee: monthly, invoice_amount: monthly }).eq("id", roleId);
     await event(bookingId, "hired", { role: role.title, monthly });
-    const { mail } = await mailFor(bookingId, { hire: { role: role.title || "Contractor", nth: hiresBefore + 1, fee: `£${monthly.toLocaleString("en-GB")} a month`, note: "while engaged, invoiced monthly", amount: `£${monthly.toLocaleString("en-GB")} (first month)` } });
+    const { mail } = await mailFor(bookingId, { hire: { role: role.title || "Contractor", nth: hiresBefore + 1, fee: `${money(monthly, b.currency)} a month`, note: "while engaged, invoiced monthly", amount: `${money(monthly, b.currency)} (first month)` } });
     await sendMail({ to: ANDRE, subject: mail["invoice-hire"].subject, html: mail["invoice-hire"].html });
   } else {
     const inv = hireInvoice(b, hiresBefore);
@@ -89,10 +89,10 @@ export async function markHired(bookingId: string, roleId: string) {
       hire: {
         role: role.title || `Role ${role.position}`,
         nth: hiresBefore + 1,
-        fee: gbp(inv.fee),
+        fee: money(inv.fee, b.currency),
         note: b.retained ? "15% retained discount" : undefined,
-        credit: inv.credit ? `−${gbp(inv.credit)}` : undefined,
-        amount: inv.invoice ? gbp(inv.invoice) : "£0 (covered by the retainer)",
+        credit: inv.credit ? `−${money(inv.credit, b.currency)}` : undefined,
+        amount: inv.invoice ? money(inv.invoice, b.currency) : `${money(0, b.currency)} (covered by the retainer)`,
       },
     });
     await sendMail({ to: ANDRE, subject: mail["invoice-hire"].subject, html: mail["invoice-hire"].html });
