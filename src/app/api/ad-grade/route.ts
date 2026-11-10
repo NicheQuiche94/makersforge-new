@@ -59,7 +59,12 @@ export async function POST(req: Request) {
   const prod = process.env.VERCEL_ENV === "production";
   const origin = prod ? SITE : new URL(req.url).origin;
   const link = withLead(`${origin}/job-ad-grading-tool/r/${id}?utm_source=email&utm_medium=ad-grade`, email);
-  const html = gradeEmail(result, docTitle, { online: link, rewrite: `${link}&rewrite=1` });
+  const html = gradeEmail(result, docTitle, {
+    online: link,
+    rewrite: `${link}&rewrite=1`,
+    pdf: `${origin}/api/ad-grade/pdf?id=${id}`,
+    ring: `${origin}/api/ad-grade/ring?s=${result.score}&t=${result.band.tone}`,
+  });
   // The full breakdown as a PDF to keep or forward; the email still goes if the PDF can't be made.
   const pdf = await htmlToPdf(gradePdfHtml(result, docTitle)).catch((e) => {
     console.error("ad grade pdf", e);

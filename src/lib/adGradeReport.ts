@@ -24,10 +24,40 @@ const MARK: Record<string, [string, string, string]> = {
 };
 const esc = (s: string) => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-export type Links = { online: string; rewrite: string };
+export type Links = { online: string; rewrite: string; pdf: string; ring: string };
 
-/* ---------- the email ---------- */
+/* ---------- the email ----------
+ * Ashley's QA (2026-11-10): fewer sections, one direct flow. The ring like the
+ * PDF, the score, the single biggest gap with its fix, then two buttons
+ * (full report / fix it for me). No extra subtext to skim past. */
 export function gradeEmail(r: Result, title: string | undefined, links: Links) {
+  const top = r.fixes[0];
+  const item = top && r.items.find((i) => i.label === top.label);
+  const btn = (label: string, href: string, solid: boolean) =>
+    `<table role="presentation" cellpadding="0" cellspacing="0" style="display:inline-block;margin:0 10px 10px 0;vertical-align:top"><tr><td ${solid ? `bgcolor="${ORANGE}"` : ""} style="border-radius:999px;${solid ? "" : `border:2px solid ${INK};`}">
+<a href="${href}" style="display:inline-block;padding:${solid ? "13px 22px" : "11px 20px"};font-weight:800;font-size:15px;color:${solid ? "#fff" : INK};text-decoration:none;border-radius:999px">${label}</a></td></tr></table>`;
+  const body = `
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 22px"><tr>
+<td width="132" valign="middle"><img src="${links.ring}" width="120" height="120" alt="${r.score}/100" style="display:block;border:0"></td>
+<td valign="middle" style="padding-left:12px"><div style="font-size:24px;font-weight:800;line-height:1.25;color:${INK}">Your job ad scored ${r.score}/100</div>${title ? `<div style="color:${DIM};font-size:14px;margin-top:4px">${esc(title)}</div>` : ""}</td>
+</tr></table>
+${
+  top
+    ? `<p style="margin:0 0 8px;font-size:17px;font-weight:800">One way to improve it</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 24px;border:1px solid ${HAIR};border-radius:12px"><tr><td style="padding:16px 18px">
+<div style="font-size:15.5px;font-weight:800">${esc(top.label)}</div>
+${item?.note ? `<div style="color:${DIM};font-size:14px;margin-top:2px">${esc(item.note)}</div>` : ""}
+<div style="margin-top:10px;padding:10px 12px;background:#fff1e6;border-radius:8px;font-size:14.5px;line-height:1.5"><b>Fix:</b> ${esc(top.fix)}</div>
+</td></tr></table>`
+    : ""
+}
+<div style="margin:0 0 18px">${btn("Download the full report", links.pdf, false)}${btn("Fix it for me →", links.rewrite, true)}</div>
+<p style="margin:0">Andre<br><span style="color:${DIM};font-size:14px">Founder, MakersForge</span></p>`;
+  return layout(body, `Your job ad scored ${r.score}/100. One way to improve it inside.`);
+}
+
+/* The previous, fuller email (before Ashley's QA), kept for reference. */
+export function gradeEmailFull(r: Result, title: string | undefined, links: Links) {
   const tone = TONE[r.band.tone];
   const bars = r.groups
     .map((g) => {
