@@ -785,6 +785,8 @@ export const ROSTER: Profile[] = [
     salaryAnnualMax: 46610,
     available: true,
     availableFor: ["permanent", "contract"],
+    // Claudio consented to posting 2026-11-10. The posted cut (CapCut music), compressed for the web.
+    video: { src: "/video/talent/gd-02.mp4", poster: "/video/talent/gd-02.jpg" },
     favourites: {
       song: "Dancing Mad (Final Fantasy VI)",
       colour: "Green",
