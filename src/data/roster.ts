@@ -847,6 +847,8 @@ export const ROSTER: Profile[] = [
     salaryAnnual: 31729,
     available: true,
     availableFor: ["contract", "permanent"],
+    // The posted cut (Andre added the music), compressed for the web; candidate signed off 2026-11-11.
+    video: { src: "/video/talent/gd-03.mp4", poster: "/video/talent/gd-03.jpg" },
     favourites: {
       song: "Jump (Van Halen)",
       colour: "Mint green",
