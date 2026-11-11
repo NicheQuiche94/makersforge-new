@@ -33,7 +33,7 @@ export function NotificationStack({ notes }: { notes: Note[] }) {
         return (
           <div key={k} className={styles.note} data-depth={depth} style={{ ["--d" as string]: depth }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            {n.icon ? <img src={n.icon} alt="" /> : <span className={styles.noteMark}>A</span>}
+            {n.icon ? <img src={n.icon} alt="" /> : <span className={styles.noteMark} />}
             <div>
               <p className={styles.noteTop}>
                 <b>{n.title}</b>

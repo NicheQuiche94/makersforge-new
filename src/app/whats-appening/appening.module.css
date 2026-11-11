@@ -339,3 +339,6 @@ span.floater:nth-child(4n) { background: var(--tone-green); }
 /* Landing "Launching something?" box in heat glow too: text left, white button right. */
 .lane .bandHeat { display: flex; align-items: center; justify-content: space-between; }
 .bandHeat > a.go { background: #fff; color: #e14b00; box-shadow: 0 8px 20px rgba(120, 30, 0, 0.18); }
+/* Placeholder tiles are all heat glow (no multicolour, no letter). */
+span.floater, span.floater:nth-child(n) { background: radial-gradient(circle at 30% 25%, #ffb347, #ff5d00 55%, #e03d00); opacity: 0.22; }
+.noteMark { background: radial-gradient(circle at 30% 25%, #ffb347, #ff5d00 55%, #e03d00); }

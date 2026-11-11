@@ -73,15 +73,17 @@ export default async function AppeningPage({ searchParams }: { searchParams: Pro
     <>
       <section className={styles.hero}>
         <div className={styles.heroGlow} aria-hidden="true" />
-        {/* Floating icons only once there are issues to take them from (Andre 2026-11-11). */}
-        {icons.length > 0 && (
-          <div className={styles.floaters} aria-hidden="true">
-            {Array.from({ length: 8 }, (_, n) => (
+        {/* Floating icons: plain heat-glow tiles until there are issue icons to fill them (Andre 2026-11-11). */}
+        <div className={styles.floaters} aria-hidden="true">
+          {Array.from({ length: 8 }, (_, n) =>
+            icons.length ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img key={n} src={art(icons[n % icons.length], 128)} alt="" className={styles.floater} style={{ ["--n" as string]: n }} />
-            ))}
-          </div>
-        )}
+            ) : (
+              <span key={n} className={styles.floater} style={{ ["--n" as string]: n }} />
+            ),
+          )}
+        </div>
         <div className={`container ${styles.heroInner} ${styles.lane}`}>
           <div className={styles.heroCopy}>
             {drafts && (
