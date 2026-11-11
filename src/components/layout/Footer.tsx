@@ -53,7 +53,7 @@ export function Footer() {
               <Logo size={52} />
             </Link>
             <p className={styles.tagline}>
-              The teams behind mobile games and consumer apps.
+              Hiring the teams behind mobile games and consumer apps.
             </p>
             <div className={styles.socials}>
               <a
@@ -123,7 +123,7 @@ export function Footer() {
         <div className={styles.bottom}>
           <span className={styles.copy}>
             © {new Date().getFullYear()} MakersForge{" "}
-            <span className={styles.dim}>· the teams behind games and apps.</span>
+            <span className={styles.dim}>· hiring the teams behind games and apps.</span>
           </span>
           <span className={styles.legal}>
             <Link href="/legal/privacy">privacy</Link>
