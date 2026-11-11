@@ -39,6 +39,8 @@ const STUDIO_LINKS = [
 
 const COMPANY_LINKS = [
   { href: "/talent", label: "For talent" },
+  { href: "/whats-appening", label: "What's Appening" },
+  { href: "/whats-appening/apply", label: "Launching something? Put it forward" },
 ];
 
 export function Footer() {

@@ -66,6 +66,9 @@ export function AdminApp({ bookings, weeks }: { bookings: BookingRow[]; weeks: W
       <header className={styles.top}>
         <span className={styles.brand}>MakersForge</span>
         <span className={styles.who}>Admin</span>
+        <a href="/admin/appening" className={styles.link} style={{ marginLeft: "auto" }}>
+          What&apos;s Appening →
+        </a>
       </header>
       <nav className={styles.tabs}>
         {(

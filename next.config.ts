@@ -1,6 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  /* What's Appening: store art goes through the image optimiser (Google's CDN
+     refuses some direct browser loads, and raw screenshots are ~600KB PNGs). */
+  images: {
+    remotePatterns: [
+      { protocol: "https", hostname: "play-lh.googleusercontent.com" },
+      { protocol: "https", hostname: "*.mzstatic.com" },
+      { protocol: "https", hostname: "i.ytimg.com" },
+    ],
+  },
   /* Headless Chrome for the one-click spec PDF; keep it out of the bundle. */
   serverExternalPackages: ["@sparticuz/chromium-min", "puppeteer-core"],
   /* /roster renamed to /line-up 2026-07-02 to match the nav label.

@@ -6,11 +6,15 @@ import { Logo } from "@/components/atoms/Logo";
 import { menuResources } from "@/lib/resources";
 import styles from "./TopNav.module.css";
 
-const LINKS = [
-  { href: "/#how", label: "How it works" },
-  { href: "/#proof", label: "Case study" },
+/* `hide`: homepage shortcuts that step aside on smaller laptops so the pill
+   never overflows (2026-11-11, six items since What's Appening joined). */
+const LINKS: { href: string; label: string; hide?: "lg" | "md" }[] = [
+  { href: "/#how", label: "How it works", hide: "md" },
+  { href: "/#proof", label: "Case study", hide: "lg" },
   { href: "/line-up", label: "Talent directory" },
   { href: "/pricing", label: "Plans & pricing" },
+  /* What's Appening (Andre 2026-11-11): its own item, not under Resources (those are hiring tools). */
+  { href: "/whats-appening", label: "What's Appening" },
 ];
 
 /**
@@ -113,7 +117,7 @@ export function TopNav({ activeHref }: { activeHref?: string }) {
           <div className={styles.rightPill}>
             <ul className={styles.links}>
               {LINKS.map((link) => (
-                <li key={link.href}>
+                <li key={link.href} className={link.hide === "lg" ? styles.hideLg : link.hide === "md" ? styles.hideMd : undefined}>
                   <Link
                     href={link.href}
                     className={activeHref === link.href ? styles.activeLink : ""}

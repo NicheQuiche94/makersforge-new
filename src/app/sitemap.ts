@@ -2,6 +2,8 @@ import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/site";
 import { ROSTER } from "@/data/roster";
 import { liveGuides } from "@/lib/guides";
+import { publishedIssues } from "@/lib/appening/data";
+import { issuePath } from "@/lib/appening/emails";
 
 /**
  * Site sitemap, regenerated at every build. The job board (/jobs, its job,
@@ -11,7 +13,10 @@ import { liveGuides } from "@/lib/guides";
  * job and company entries from git history (getAllJobs, getAllCompanySlugs,
  * CATEGORY_ORDER in lib/jobs).
  */
-export default function sitemap(): MetadataRoute.Sitemap {
+/* Refreshes hourly so new What's Appening issues appear without a redeploy. */
+export const revalidate = 3600;
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const core: MetadataRoute.Sitemap = [
     { url: `${SITE_URL}/`, changeFrequency: "weekly", priority: 1 },
     { url: `${SITE_URL}/games`, changeFrequency: "monthly", priority: 0.9 },
@@ -22,6 +27,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/compare`, changeFrequency: "monthly", priority: 0.9 },
     { url: `${SITE_URL}/job-ad-grading-tool`, changeFrequency: "monthly", priority: 0.9 },
     { url: `${SITE_URL}/resources`, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${SITE_URL}/whats-appening`, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${SITE_URL}/whats-appening/apply`, changeFrequency: "monthly", priority: 0.7 },
   ];
 
   // Every talent profile (anonymised, consented) and the hiring guides once published.
@@ -34,5 +41,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       ]
     : [];
 
-  return [...core, ...profiles, ...guides];
+  // What's Appening issues, once they're out (never drafts).
+  const issues: MetadataRoute.Sitemap = (await publishedIssues().catch(() => [])).map((i) => ({ url: `${SITE_URL}${issuePath(i)}`, lastModified: i.published_on!, changeFrequency: "yearly" as const, priority: 0.7 }));
+  return [...core, ...profiles, ...guides, ...issues];
 }
