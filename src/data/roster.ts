@@ -1016,6 +1016,68 @@ export const ROSTER: Profile[] = [
       "Has been the only artist on a small, fast team, so she can carry the whole look of a game, not just a slice of it.",
     ],
   },
+  // Approved by Andre and the candidate 2026-11-12. Listed "In contract" at his request; contract rate on request.
+  {
+    id: "ua-07",
+    discipline: "ua",
+    codename: "ua·07",
+    // Lukasz's edits (2026-11-09): Director of Growth; casual to hardcore; more genres; GTM and AI in marketing; no city.
+    role: "Director of Growth",
+    background:
+      "10+ years in mobile games UA, including first growth hire at a top-grossing social casino publisher, where he scaled spend from a few hundred to 120k a day. Now building AI into the marketing workflow.",
+    location: { code: "pl", label: "Poland · EMEA" },
+    industries: ["games"],
+    gamesCat: ["casual", "midcore", "hardcore"],
+    appsCat: [],
+    genre: ["casino", "puzzle", "rpg", "strategy", "cards"],
+    monetisation: ["iap", "hybrid"],
+    channels: ["meta", "google", "programmatic"],
+    budget: 3,
+    expertise: ["scaling", "audience"],
+    dayRateLabel: "On request",
+    dayRateBand: 2,
+    rateMin: 0,
+    available: false,
+    availableFor: ["contract"],
+    favourites: {
+      song: "Acid Test (The Chemical Brothers)",
+      colour: "Blue",
+      colourHex: "#2563eb",
+      game: "Heroes of Might and Magic III",
+    },
+    summary:
+      "A hands-on UA lead who has scaled mobile games from zero to six-figure daily spend and is just as comfortable running growth alone across a whole portfolio. Was the first growth hire at a top-grossing social casino publisher and built its UA from a few hundred a day to 120k a day, and before that built the growth strategy behind one of the most successful hidden-object games to come out of Poland. Has worked across casino, puzzle, RPG, strategy, board, hidden object, word and trivia, idle and blends of them, and now uses AI throughout his marketing: predictions, creative analysis and faster workflows.",
+    skills: [
+      "User acquisition",
+      "Scaling paid spend",
+      "Go-to-market",
+      "AI in marketing",
+      "Creative strategy",
+      "Meta & Google",
+      "Ad networks & rewarded",
+      "Programmatic & DSPs",
+      "Campaign optimisation",
+      "Data flows & attribution",
+      "Fraud prevention",
+      "ASO",
+      "SEO",
+      "Team building",
+    ],
+    experience: [
+      "10+ years in mobile games UA since 2014, across new launches and titles already at scale, at both start-ups and industry leaders.",
+      "First hire in the growth team at a top-grossing social casino publisher. Scaled spend from a few hundred to 120k a day, led creative strategy for that growth and built out the team.",
+      "Earlier, at a premium hidden-object games studio, owned the full creative and growth strategy from the ground up and hired the team, making its flagship one of the most successful games to come out of Poland.",
+      "Now the entire growth function at a mobile games studio, running UA, ASO, SEO and some creative production across ten games, with prototypes shipping every two weeks.",
+      "Works across Meta, Google, programmatic and SDK networks, rewarded and DSPs, mostly single-handed: campaign builds, data flows, optimisation, new-channel discovery and fraud prevention.",
+      "Uses AI across the marketing workflow: building performance predictions, analysing creatives at scale and automating the repetitive parts of running UA.",
+    ],
+    motivations:
+      "Sees UA as a mix of chaos, data and creativity, and thrives wearing many hats. Money isn't the main driver: he wants to believe in a studio's long-term plan.",
+    recruiterNotes: [
+      "Proven at both ends of the curve: built UA at a top-grossing publisher to six-figure daily spend, and runs a ten-game portfolio's growth on his own today.",
+      "Currently in contract and happy where he is, but open to talking about contract work.",
+    ],
+  },
 ];
 
 /** How a profile's availability reads: "Available now", "Available with 1 month's notice" or "In contract".
