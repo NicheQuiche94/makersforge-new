@@ -1039,6 +1039,8 @@ export const ROSTER: Profile[] = [
     rateMin: 0,
     available: false,
     availableFor: ["contract"],
+    // The posted cut (Andre added the music), compressed for the web; candidate signed off 2026-11-19.
+    video: { src: "/video/talent/ua-07.mp4", poster: "/video/talent/ua-07.jpg" },
     favourites: {
       song: "Acid Test (The Chemical Brothers)",
       colour: "Blue",
