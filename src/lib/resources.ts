@@ -14,6 +14,21 @@ export const TOOLS: Resource[] = [
   { href: "/compare", title: "Compare hiring routes", blurb: "Every way to hire your role side by side: cost, weeks to hire, your team's hours and who you reach.", tag: "Free tool" },
 ];
 
+/** Downloadable guides and reports (Andre 2026-11-24). They sit behind the
+    one-email unlock on /resources. Add a file to public/resources/ and a row here. */
+export type Download = { file: string; cover: string; title: string; blurb: string; inside: string[]; tag: string; meta: string };
+export const DOWNLOADS: Download[] = [
+  {
+    file: "/resources/makersforge-the-4-ways-to-find-talent.pdf",
+    cover: "/resources/covers/four-ways.png",
+    title: "The 4 ways to find talent",
+    blurb: "What each method costs, what it risks, and which roles suit it.",
+    inside: ["Referrals, job ads, D2C and talent communities, side by side", "Risk, cost and effort, scored for each", "How to set each one up, with tools and prices"],
+    tag: "Guide",
+    meta: "PDF · 31 pages",
+  },
+];
+
 /** Guides only appear once at least one is published. */
 export const GUIDES_LINK: Resource = { href: "/guides", title: "The Hiring Playbook", blurb: "Practical answers to the questions studios ask about hiring, written by Andre.", tag: "Playbook" };
 

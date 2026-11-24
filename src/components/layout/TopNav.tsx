@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Logo } from "@/components/atoms/Logo";
 import { menuResources } from "@/lib/resources";
@@ -46,21 +46,6 @@ const LINKS: { href: string; label: string; hide?: "lg" | "md" }[] = [
  */
 export function TopNav({ activeHref }: { activeHref?: string }) {
   const [mode, setMode] = useState<"gradient" | "light">("light");
-  // Resources menu (Andre 2026-11-08): the free tools and guides under one item.
-  const [open, setOpen] = useState(false);
-  const menu = useRef<HTMLLIElement>(null);
-  useEffect(() => {
-    if (!open) return;
-    const close = (e: MouseEvent | KeyboardEvent) => {
-      if (e instanceof KeyboardEvent ? e.key === "Escape" : !menu.current?.contains(e.target as Node)) setOpen(false);
-    };
-    document.addEventListener("mousedown", close);
-    document.addEventListener("keydown", close);
-    return () => {
-      document.removeEventListener("mousedown", close);
-      document.removeEventListener("keydown", close);
-    };
-  }, [open]);
   const resources = menuResources();
   const inResources = !!activeHref && (activeHref === "/resources" || resources.some((r) => r.href === activeHref));
 
@@ -126,21 +111,11 @@ export function TopNav({ activeHref }: { activeHref?: string }) {
                   </Link>
                 </li>
               ))}
-              <li ref={menu} className={styles.menuItem} onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
-                <button type="button" className={`${styles.menuBtn} ${inResources ? styles.activeLink : ""}`} aria-expanded={open} onClick={() => setOpen(!open)}>
-                  Resources <span aria-hidden="true">▾</span>
-                </button>
-                {open && (
-                  <div className={styles.menu}>
-                    {resources.map((r) => (
-                      <Link key={r.href} href={r.href} className={styles.menuLink} onClick={() => setOpen(false)}>
-                        <strong>{r.title}</strong>
-                        <span>{r.blurb}</span>
-                      </Link>
-                    ))}
-                    <Link href="/resources" className={styles.menuAll} onClick={() => setOpen(false)}>All resources →</Link>
-                  </div>
-                )}
+              {/* Resources goes straight to the hub, which asks for one email for everything (Andre 2026-11-24). */}
+              <li>
+                <Link href="/resources" className={inResources ? styles.activeLink : ""}>
+                  Resources
+                </Link>
               </li>
             </ul>
             {/* The way back into the client portal (Andre 2026-11-04); stays visible on phones. */}
