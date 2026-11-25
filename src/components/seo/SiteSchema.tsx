@@ -8,7 +8,7 @@ import { SITE_URL } from "@/lib/site";
  * in the root layout, so it's on every page.
  */
 const DESCRIPTION =
-  "MakersForge is a talent agency and recruiter for growth, product, design, engineering and art specialists in mobile games and consumer apps.";
+  "Direct-to-candidate recruitment for mobile game studios and app companies. We target and engage the right people directly.";
 
 export function SiteSchema() {
   const graph = {
