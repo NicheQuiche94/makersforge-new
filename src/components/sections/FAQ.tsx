@@ -87,17 +87,7 @@ const ITEMS: Item[] = [
       </p>
     ),
   },
-  {
-    q: "Can we see candidates before agreeing terms?",
-    a: (
-      <p>
-        Yes. Send us the role or a job spec and we&apos;ll send 3 anonymised
-        profiles, free, with no obligation to interview. If you&apos;d like to
-        meet anyone, we agree terms and run the full search: 5 candidates in 5
-        working days.
-      </p>
-    ),
-  },
+  // 2026-11-25 (Andre): the free-profiles offer is retired; never say "try us free".
   {
     q: "How much does it cost?",
     a: (
