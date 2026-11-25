@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { TOOLS, GUIDES_LINK, DOWNLOADS } from "@/lib/resources";
 import { GROUPS, liveGuides } from "@/lib/guides";
-import { ResourcesGate } from "./ResourcesGate";
+import { GuideDownload } from "./GuideDownload";
 import styles from "../guides/guides.module.css";
 import r from "./resources.module.css";
 
@@ -29,7 +29,8 @@ const TOOL_STYLE: Record<string, { tone: string; icon: React.ReactNode }> = {
 };
 
 /* The Resources hub (Andre 2026-11-08, redesigned 2026-11-24 in the guide
-   style). One email unlocks everything. DRAFT copy for Andre. */
+   style). 2026-11-25: the hub is open; only a guide download asks for an email.
+   The tools ask for one inside, to send the result. DRAFT copy for Andre. */
 export default function ResourcesPage() {
   const guides = liveGuides();
   return (
@@ -42,29 +43,9 @@ export default function ResourcesPage() {
           <p>Guides, reports and tools for hiring in mobile games and apps.</p>
         </header>
 
-        <ResourcesGate>
+        <>
           {DOWNLOADS.map((d) => (
-            <article key={d.file} className={r.feature}>
-              <a href={d.file} target="_blank" rel="noopener" className={r.cover} aria-label={`Open ${d.title}`}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={d.cover} alt="" width={794} height={1123} />
-              </a>
-              <div className={r.featureBody}>
-                <h2>{d.title}</h2>
-                <p className={r.blurb}>{d.blurb}</p>
-                <ul className={r.inside}>
-                  {d.inside.map((x) => (
-                    <li key={x}>{x}</li>
-                  ))}
-                </ul>
-                <div className={r.actions}>
-                  <a href={d.file} target="_blank" rel="noopener" className={r.download}>
-                    Download the guide
-                  </a>
-                  <span className={r.meta}>{d.meta}</span>
-                </div>
-              </div>
-            </article>
+            <GuideDownload key={d.file} d={d} />
           ))}
 
           <h2 className={r.section}>
@@ -112,7 +93,7 @@ export default function ResourcesPage() {
               More guides and reports <span className="gr">on the way.</span>
             </p>
           </div>
-        </ResourcesGate>
+        </>
       </div>
     </section>
   );
