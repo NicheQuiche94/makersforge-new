@@ -83,7 +83,7 @@ export function NotAlways() {
             </div>
           ))}
         </div>
-        <p className={styles.after}>You can have low cost or low risk, but rarely both. Start with referrals.</p>
+        <p className={styles.after}>Referrals give you both, when someone has a name. After that, you trade cost against risk.</p>
 
         <div className={styles.links}>
           <Link href="/compare" className={styles.primary}>
