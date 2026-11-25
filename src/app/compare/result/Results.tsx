@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { priceList } from "@/lib/plans";
 import { RATES } from "@/lib/currency";
-import { compare, money, wks, day, addWeeks, roleLabel, levelOf, LEVELS, NOTICE_WEEKS, type CompareInput, type Kind, type Lane } from "@/lib/compare";
+import { compare, money, day, addWeeks, roleLabel, levelOf, LEVELS, NOTICE_WEEKS, type CompareInput, type Kind, type Lane } from "@/lib/compare";
 import { activePromo } from "@/lib/promos";
 import { setMailRef } from "@/lib/analytics";
 import { GiftBox } from "./GiftBox";
@@ -14,7 +14,6 @@ import styles from "../compare.module.css";
    the job ad most people use, then the agencies); the best fit for what they
    said matters most is flagged, and it isn't always us. */
 export function Results({ input, special = false, slots = 0 }: { input: CompareInput | null; special?: boolean; slots?: number }) {
-  const [open, setOpen] = useState<string | null>(null);
   const [kind, setKind] = useState<Kind>("recommended");
   // With cookies accepted, PostHog files this visit (and its recording) under the request.
   useEffect(() => {
@@ -34,7 +33,7 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
       </section>
     );
   }
-  const { rows, best, lowest, routes } = data;
+  const { rows, best, routes } = data;
   const cur = input.cur ?? "GBP";
   // Our fee as the pricing page shows it (rounded list price in their currency); others converted.
   const L = priceList(cur);
@@ -71,7 +70,7 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
         <div className={styles.designer}>
           <div className={styles.kinds} role="tablist" aria-label="Hiring routes">
             {routes.map((k) => (
-              <button key={k.id} type="button" role="tab" aria-selected={k.id === kind} className={`${styles.kind} ${k.id === kind ? styles.kindOn : ""}`} onClick={() => setKind(k.id)}>
+              <button key={k.id} type="button" role="tab" aria-selected={k.id === kind} className={`${styles.kind} ${k.id === kind ? `${styles.kindOn} heat-glow` : ""}`} onClick={() => setKind(k.id)}>
                 <span className={styles.kindName}>{k.label}</span>
                 <span className={`${styles.kindDate} ${k.plan.onTime ? styles.dateOk : styles.dateLate}`}>
                   Hire by {day(new Date(k.plan.hire))} {k.plan.onTime ? "✓" : "· late"}
@@ -135,91 +134,90 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
         </div>
         </div>
 
+        <div className={styles.narrow}>
         {/* The gift sits right under the verdict, open (Ashley's QA: it was easy to miss). */}
         {promo && <GiftBox lid={input.lid} special={special} slots={slots} cur={cur} fee={rows.find((x) => x.r.us)?.fee} role={role} />}
 
+        {/* Every route side by side, like a pricing table (Andre 2026-11-25): one column per route, our pick lit. */}
         <details className={styles.fullCompare}>
           <summary>See the full comparison ▾</summary>
-        <div className={styles.table}>
-          <div className={`${styles.tr} ${styles.th}`}>
-            <span>Route</span>
-            <span>Fee</span>
-            <span>Hire made by</span>
-            <span>Your team&apos;s hours</span>
-            <span>Interviews per hire</span>
-            <span>Candidates per hire</span>
-            <span>Finds people not looking</span>
+          <div className={styles.cmpScroll}>
+            <table className={styles.cmp}>
+              <thead>
+                <tr>
+                  <th />
+                  {rows.map((x) => (
+                    <th key={x.r.id} className={x.r.id === best.r.id ? `${styles.cmpPick} heat-glow` : ""}>
+                      <span className={styles.cmpName}>{x.r.name}</span>
+                      <span className={styles.cmpFee}>{L.fmt(feeIn(x))}</span>
+                      <span className={styles.cmpFeeNote}>{x.r.feeNote}</span>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>Hire made by</th>
+                  {rows.map((x) => (
+                    <td key={x.r.id} className={`${x.r.id === best.r.id ? styles.cmpPickCell : ""} ${x.tooSlow ? styles.late : styles.ok}`}>{day(addWeeks(x.hireBy))}</td>
+                  ))}
+                </tr>
+                <tr>
+                  <th>Your team&apos;s hours</th>
+                  {rows.map((x) => (
+                    <td key={x.r.id} className={x.r.id === best.r.id ? styles.cmpPickCell : ""}>{x.hours}h</td>
+                  ))}
+                </tr>
+                <tr>
+                  <th>Interviews per hire</th>
+                  {rows.map((x) => (
+                    <td key={x.r.id} className={x.r.id === best.r.id ? styles.cmpPickCell : ""}>{x.r.interviews}</td>
+                  ))}
+                </tr>
+                <tr>
+                  <th>Candidates per hire</th>
+                  {rows.map((x) => (
+                    <td key={x.r.id} className={x.r.id === best.r.id ? styles.cmpPickCell : ""}>1 in {x.r.perHire}</td>
+                  ))}
+                </tr>
+                <tr>
+                  <th>Finds people not looking</th>
+                  {rows.map((x) => (
+                    <td key={x.r.id} className={`${x.r.id === best.r.id ? styles.cmpPickCell : ""} ${x.r.reach.passive ? styles.ok : styles.late}`}>{x.r.reach.passive ? "✓" : "✕"}</td>
+                  ))}
+                </tr>
+                <tr className={styles.cmpWhat}>
+                  <th>What you do</th>
+                  {rows.map((x) => (
+                    <td key={x.r.id} className={x.r.id === best.r.id ? styles.cmpPickCell : ""}>{x.r.youDo}.</td>
+                  ))}
+                </tr>
+              </tbody>
+            </table>
           </div>
-          {rows.map((x) => (
-            <div key={x.r.id} className={`${styles.item} ${x.r.us ? styles.itemUs : ""}`}>
-              <button type="button" className={styles.tr} onClick={() => setOpen(open === x.r.id ? null : x.r.id)} aria-expanded={open === x.r.id}>
-                <span className={styles.name}>
-                  {x.r.name}
-                  {x.r.id === best.r.id && <em className={styles.bestTag}>Best fit</em>}
-                  {x.tooSlow && !x.r.noRank && <em className={styles.warn}>Too late for your date</em>}
-                  {x.r.noRank && <em className={styles.warn}>{x.r.noRank}</em>}
-                </span>
-                <span data-l="Fee" className={x.fee === lowest.fee ? styles.win : ""}>{L.fmt(feeIn(x))}</span>
-                <span data-l="Hire made by" className={x.hireBy === lowest.hireBy ? styles.win : ""}>{day(addWeeks(x.hireBy))}</span>
-                <span data-l="Your team's hours" className={x.hours === lowest.hours ? styles.win : ""}>{x.hours}h</span>
-                <span data-l="Interviews per hire" className={x.r.interviews === lowest.interviews ? styles.win : ""}>{x.r.interviews}</span>
-                <span data-l="Candidates per hire" className={x.r.perHire === lowest.perHire ? styles.win : ""}>1 in {x.r.perHire}</span>
-                <span data-l="Finds people not looking" className={x.r.reach.passive ? styles.win : styles.lose}>{x.r.reach.passive ? "Yes" : "No"}</span>
-              </button>
-              {open === x.r.id && (
-                <div className={styles.detail}>
-                  <p>{x.r.how}.</p>
-                  <ul>
-                    <li>
-                      <b>What you do:</b> {x.r.youDo}.
-                    </li>
-                    <li>
-                      <b>Fee:</b> {L.fmt(feeIn(x))} ({x.r.feeNote}).
-                    </li>
-                    <li>
-                      <b>Speed:</b> first shortlist in {x.r.shortlist}, an accepted offer in {wks(x.r.hireWeeks)}, then up to {NOTICE_WEEKS} weeks&apos; notice.
-                      {x.r.speedNote && ` (${x.r.speedNote})`}
-                    </li>
-                    <li>
-                      <b>What you get:</b> {x.r.get}.
-                    </li>
-                    {x.r.interviewsNote && (
-                      <li>
-                        <b>Interviews per hire:</b> {x.r.interviewsNote}.
-                      </li>
-                    )}
-                    <li>
-                      <b>Candidates per hire:</b> {x.r.perHireNote}.
-                    </li>
-                    <li>
-                      <b>Who you reach:</b> {x.r.reach.detail}.
-                    </li>
-                    <li>
-                      <b>Your team&apos;s hours:</b> {x.r.hours.map((h) => `${h.label} ${h.label === "Interviews" ? "~" : ""}${h.h}h`).join(", ")}.
-                    </li>
-                  </ul>
-                  <p className={styles.tipsHead}>{x.r.us ? "What happens next" : "If you go this way"}</p>
-                  <ul>{x.r.tips.map((t) => <li key={t}>{t}</li>)}</ul>
-                </div>
-              )}
-            </div>
-          ))}
           <p className={styles.hint}>
-            Each route on its own, starting today. Tap any route to see what you&apos;d do yourself. Green marks the best on each measure. Interviews per hire: how many first
-            interviews it typically takes to make one hire. Candidates per hire: how many candidates you see, on average, for each one
-            hired.
+            Each route on its own, starting today. Green makes your date, red doesn&apos;t. Candidates per hire: how many candidates you see,
+            on average, for each one hired.
           </p>
-        </div>
         </details>
 
-        {plan.steps.some((s) => s.id === "mf") && (
-          <div className={styles.ctas}>
-            <Link href="/start" className={styles.go}>Start a search week →</Link>
+        {plan.steps.some((st) => st.id === "mf") && (
+          <div className={styles.bigCta}>
+            <Link href="/start" className="heat-glow">Start a search week →</Link>
+            <span>£0 until you hire someone we found</span>
           </div>
         )}
-        <p className={styles.guideLink}>
-          Want the thinking behind this? <Link href="/resources">Get the free guide: The 4 ways to find talent →</Link>
-        </p>
+
+        {/* The guide behind it, with its real cover (as on /resources). */}
+        <Link href="/resources" className={styles.guideCard}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/resources/covers/four-ways.png" alt="" width={794} height={1123} />
+          <span>
+            <small>The thinking behind this</small>
+            <strong>The 4 ways to find talent</strong>
+            <em>Get the free guide →</em>
+          </span>
+        </Link>
 
         <details className={styles.how}>
           <summary>How we worked these out</summary>
@@ -246,6 +244,7 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
             for an ad.
           </p>
         </details>
+        </div>
       </div>
     </section>
   );

@@ -294,3 +294,41 @@
 .plan .stage ul li::before { content: none; }
 .stage ul { list-style: disc; }
 .stage[open] .stageLine::after { content: none; }
+
+/* v8 (Andre 2026-11-25): route list as lines with a heat-glow pick; pricing-style table; one content width */
+.narrow { max-width: 1040px; margin: 0 auto; }
+.kinds { gap: 0; }
+.kind { border: 0; border-bottom: 1px solid var(--hair); border-radius: 16px; background: none; padding: 16px 18px; }
+.kind:hover { border-color: var(--hair); background: rgba(255, 138, 0, 0.06); }
+.kindOn, .kindOn:hover { border-bottom-color: transparent; box-shadow: 0 1px 0 rgba(14,15,17,.02), 0 8px 20px rgba(255,61,0,.18), 0 24px 40px rgba(255,61,0,.12); }
+.kindOn .kindName, .kindOn .kindCost, .kindOn .kindDate { color: #fff; }
+.fullCompare > summary { font-size: 17px; }
+.cmpScroll { overflow-x: auto; margin-top: 8px; border-radius: 16px; }
+.cmp { width: 100%; min-width: 860px; border-collapse: separate; border-spacing: 0; background: var(--paper); border-radius: 16px; font-size: 14.5px; }
+.cmp th, .cmp td { padding: 12px 12px; text-align: center; vertical-align: middle; border-bottom: 1px solid var(--hair); }
+.cmp tbody th { text-align: left; font-weight: 700; color: var(--dim); white-space: nowrap; position: sticky; left: 0; background: var(--paper); z-index: 1; }
+.cmp thead th { vertical-align: bottom; padding: 18px 12px; }
+.cmp thead th:first-child { background: var(--paper); position: sticky; left: 0; z-index: 1; }
+.cmpName { display: block; font-family: "Cal Sans", system-ui, sans-serif; font-weight: 400; font-size: 18px; line-height: 1.1; }
+.cmpFee { display: block; margin-top: 8px; font-family: "Cal Sans", system-ui, sans-serif; font-weight: 400; font-size: 24px; }
+.cmpFeeNote { display: block; margin-top: 4px; font-size: 11.5px; font-weight: 600; line-height: 1.35; color: var(--mute); }
+.cmpPick { border-radius: 14px 14px 0 0; }
+.cmpPick .cmpFeeNote { color: rgba(255,255,255,.85); }
+.cmpPickCell { background: #fff7ef; font-weight: 800; }
+.cmp td.ok { color: #15803d; font-weight: 800; }
+.cmp td.late { color: #b42318; font-weight: 800; }
+.cmpWhat td { font-size: 12.5px; line-height: 1.45; color: var(--dim); text-align: left; vertical-align: top; }
+.bigCta { display: grid; justify-items: center; gap: 10px; margin: 40px 0 8px; }
+.bigCta a { display: inline-block; padding: 22px 44px; border-radius: 999px; color: #fff; font-family: "Cal Sans", system-ui, sans-serif; font-size: clamp(22px, 2.6vw, 30px); text-decoration: none; box-shadow: 0 14px 34px -10px rgba(255,61,0,.55); transition: transform .15s; }
+.bigCta a:hover { transform: translateY(-2px); }
+.bigCta span { color: var(--dim); font-weight: 700; }
+.guideCard { display: grid; grid-template-columns: 110px 1fr; gap: 22px; align-items: center; max-width: 560px; margin: 36px auto 0; padding: 18px 22px; border-radius: 16px; background: var(--paper); text-decoration: none; color: inherit; transition: transform .15s; }
+.guideCard:hover { transform: translateY(-2px); }
+.guideCard img { width: 110px; height: auto; border-radius: 8px; transform: rotate(-3deg); box-shadow: 0 16px 30px -12px rgba(255,61,0,.45); }
+.guideCard small { display: block; font-size: 14px; font-weight: 700; color: var(--dim); }
+.guideCard strong { display: block; margin: 4px 0 8px; font-family: "Cal Sans", system-ui, sans-serif; font-weight: 400; font-size: clamp(24px, 2.6vw, 32px); line-height: 1.05; }
+.guideCard em { font-style: normal; font-weight: 800; color: #e14b00; font-size: 16px; }
+.how { max-width: 1040px; margin-left: auto; margin-right: auto; }
+.kinds .kindOn { background: var(--heat-deep); }
+.kindOn .kindDate { color: #fff; opacity: .95; }
+.wrap .narrow .fullCompare, .wrap .narrow .how, .wrap .how { max-width: 1040px; }
