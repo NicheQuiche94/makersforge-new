@@ -6,7 +6,7 @@ export function RosterHero() {
       <div className="container">
         <div className={styles.inner}>
           <h1 className={styles.headline}>
-            Talent <em className={styles.em}>Directory.</em>
+            Talent <span className="gr">directory.</span>
           </h1>
         </div>
       </div>
