@@ -51,8 +51,8 @@ export function OddsStrip() {
 
 /* Cost and risk per method, 1 to 5, from the guide's scores. */
 const WAYS = [
-  { name: "Referrals", line: "Cheap and low risk, if someone has a name", cost: 1, risk: 1, tone: "linear-gradient(135deg, #22c55e, #15803d)" },
-  { name: "Job ads", line: "Cheap to post, but a gamble", cost: 2, risk: 5, tone: "linear-gradient(135deg, #3b82f6, #1d4ed8)" },
+  { name: "Referrals", line: "Inexpensive and low risk, but you're relying on luck", cost: 1, risk: 1, tone: "linear-gradient(135deg, #22c55e, #15803d)" },
+  { name: "Job ads", line: "Inexpensive to post, but it's a gamble", cost: 2, risk: 5, tone: "linear-gradient(135deg, #3b82f6, #1d4ed8)" },
   { name: "Talent communities", line: "Low risk once it runs, but slow to build", cost: 3, risk: 2, tone: "linear-gradient(135deg, #8b5cf6, #5b21b6)" },
   { name: "D2C", line: "Targets and engages the right people directly", cost: 5, risk: 1, tone: "var(--heat-deep)", us: true },
 ];
