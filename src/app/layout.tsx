@@ -24,10 +24,11 @@ const figtree = Figtree({
 });
 
 const SITE_NAME = "MakersForge";
+// Updated 2026-11-25 to the D2C positioning (the share defaults for every page without its own).
 const DEFAULT_TITLE =
-  "MakersForge: Hiring for mobile games & consumer apps";
+  "MakersForge: D2C recruitment in mobile games and apps";
 const DEFAULT_DESC =
-  "A live lineup of vetted growth, product, design, engineering and art talent for mobile apps and games, plus targeted search. Flat fees, no percentage games.";
+  "Direct-to-candidate recruitment for mobile game studios and app companies. We target and engage the right people directly.";
 
 export const metadata: Metadata = {
   // Resolves every relative URL (per-page canonicals, the OG image) to an
