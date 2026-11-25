@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { priceList } from "@/lib/plans";
 import { RATES } from "@/lib/currency";
-import { compare, money, wks, day, addWeeks, roleLabel, NOTICE_WEEKS, type CompareInput } from "@/lib/compare";
+import { compare, money, wks, day, addWeeks, roleLabel, levelOf, LEVELS, NOTICE_WEEKS, type CompareInput } from "@/lib/compare";
 import { activePromo } from "@/lib/promos";
 import { setMailRef } from "@/lib/analytics";
 import { GiftBox } from "./GiftBox";
@@ -33,7 +33,7 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
       </section>
     );
   }
-  const { rows, best, next, lowest } = data;
+  const { rows, best, next, lowest, plan } = data;
   const cur = input.cur ?? "GBP";
   // Our fee as the pricing page shows it (rounded list price in their currency); others converted.
   const L = priceList(cur);
@@ -50,8 +50,6 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
     if (interviews > 0) parts.push(`${interviews} fewer interview${interviews === 1 ? "" : "s"}`);
     if (hours > 0) parts.push(`${hours} fewer hours of your team's time`);
     if (!parts.length) return "";
-    const fewer = next.r.perHire - best.r.perHire;
-    if (fewer > 0) parts.push(`${fewer} fewer candidates to see for each hire`);
     const them = ({ ads: "a job ad", games20: "a games-specialist agency", tech25: "a general tech agency", inhouse: "sourcing it yourself", mf: "MakersForge" } as Record<string, string>)[next.r.id] ?? next.r.name;
     const lead = feeDiff > 0 ? `${L.fmt(feeDiff)} more than ${them}` : feeDiff < 0 ? `${L.fmt(-feeDiff)} less than ${them}` : `The same fee as ${them}`;
     return `${lead}: ${parts.join(", ").replace(/, ([^,]*)$/, " and $1")}.`;
@@ -69,20 +67,24 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
           <p className={styles.summaryCenter}>
             {money(input.salary, cur)}
             {input.start ? ` · hire needed by ${day(new Date(input.start))}` : ""} ·{" "}
-            {{ balanced: "a balance of everything", cost: "lowest cost first", speed: "hiring fast first", hours: "saving team time first" }[input.p]}
+            {LEVELS.find((l) => l.id === levelOf(input))?.label} level
           </p>
         </div>
 
-        <div className={`${styles.best} ${styles.bestCenter} ${best.r.us ? styles.bestUs : ""}`}>
-          <p className={styles.bestLine}>
-            Best fit for you: <strong>{best.r.name}</strong>
-          </p>
-          <span>
-            {L.fmt(feeIn(best))} fee, hire made by around {day(addWeeks(best.hireBy))}.
-            {!best.r.us && " That's not us, and that's fine: it's the better fit here."}
-            {best.tooSlow && " Nothing fits your date, so this is the closest."}
-          </span>
-          {trade && <span className={styles.trade}>{trade}</span>}
+        {/* The suggested order (Andre 2026-11-25): referrals first, and us only when we're genuinely the right next step. */}
+        <div className={styles.plan}>
+          <p className={styles.planHead}>What we&apos;d do, in order</p>
+          <ol>
+            {plan.steps.map((s) => (
+              <li key={s.id} className={s.id === best.r.id ? styles.planMain : ""}>
+                <span className={styles.planWhen}>{s.when}</span>
+                <strong>{s.title}</strong>
+                <p>{s.why}.</p>
+              </li>
+            ))}
+          </ol>
+          {!best.r.us && <p className={styles.planNote}>That&apos;s not us first, and that&apos;s fine: it&apos;s the better fit here.</p>}
+          {best.r.us && trade && <p className={styles.planNote}>{trade}</p>}
         </div>
 
         {/* The gift sits right under the verdict, open (Ashley's QA: it was easy to miss). */}
@@ -159,9 +161,11 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
           </p>
         </div>
 
-        <div className={styles.ctas}>
-          <Link href="/start" className={styles.go}>Start a search week →</Link>
-        </div>
+        {plan.steps.some((s) => s.id === "mf") && (
+          <div className={styles.ctas}>
+            <Link href="/start" className={styles.go}>Start a search week →</Link>
+          </div>
+        )}
         <p className={styles.guideLink}>
           Want the thinking behind this? <Link href="/resources">Get the free guide: The 4 ways to find talent →</Link>
         </p>
@@ -181,7 +185,13 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
           <p>
             Candidates per hire for agencies, job ads, sourcing and referrals come from Lever&apos;s study of 4 million candidates
             across about 1,000 employers (2016), the largest published breakdown by source. Ours is from our own record with one
-            client since January 2025. Screening assumes about 5 minutes a CV, cover letter included.
+            client since January 2025. Screening assumes about 5 minutes a CV, cover letter included. The hours and weeks for
+            sourcing it yourself and for referrals are our estimates.
+          </p>
+          <p>
+            The order is honest first. If a referral can fill it, it should. A job ad comes before us when lots of people could
+            do a junior or mid-level role, or when a fee isn&apos;t possible. We come first only for senior or specialist roles, or
+            when your date doesn&apos;t leave time for an ad.
           </p>
         </details>
       </div>

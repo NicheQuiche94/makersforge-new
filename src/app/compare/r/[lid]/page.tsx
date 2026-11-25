@@ -16,7 +16,7 @@ export default async function ComparisonPage({ params }: { params: Promise<{ lid
   const { lid } = await params;
   if (!/^[a-f0-9]{10}$/.test(lid)) return <Results input={null} />;
   const db = createAdminClient();
-  const { data: row } = await db.from("compare_requests").select("lid, name, role, salary, currency, need_by, budget, priority, hook, christmas").eq("lid", lid).maybeSingle();
+  const { data: row } = await db.from("compare_requests").select("lid, name, role, salary, currency, need_by, budget, priority, hook, christmas, answers").eq("lid", lid).maybeSingle();
   if (!row) return <Results input={null} />;
   const input: CompareInput = {
     lid: row.lid,
@@ -28,6 +28,9 @@ export default async function ComparisonPage({ params }: { params: Promise<{ lid
     name: row.name ?? undefined,
     hook: row.hook,
     cur: isCurrency(row.currency) ? row.currency : "GBP",
+    ...((row.answers ?? {}) as Pick<CompareInput, "level" | "pool" | "ta" | "fee" | "asked">),
   };
+  // Saved answers use null for "not answered"; the plan reads undefined.
+  for (const k of ["level", "pool", "ta", "fee", "asked"] as const) if (input[k] === null) delete input[k];
   return <Results input={input} special={row.christmas} slots={row.christmas ? await slotsLeft(db) : 0} />;
 }

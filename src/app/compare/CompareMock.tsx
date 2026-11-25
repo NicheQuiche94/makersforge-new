@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { AD_HOOK, HOOKS, ROLES, ROTATING_HOOKS, type Priority } from "@/lib/compare";
+import { AD_HOOK, HOOKS, LEVELS, ROLES, ROTATING_HOOKS, type Level, type Pool } from "@/lib/compare";
+import { tierFor } from "@/lib/tier";
 import { activePromo } from "@/lib/promos";
 import { CURRENCIES, CURRENCY_SYMBOLS, RATES, readStoredCurrency, writeStoredCurrency, type Currency } from "@/lib/currency";
 import { DatePicker } from "./DatePicker";
@@ -18,6 +19,19 @@ import { trackLinkedIn } from "@/lib/linkedin";
    was being mistaken for the salary). */
 const inCur = (gbp: number, c: Currency) => Math.round((gbp * RATES[c]) / 1000) * 1000;
 const iso = (d: Date) => d.toISOString().slice(0, 10);
+
+/** A row of pill buttons: one answer, tap again to change. */
+function Seg<T extends string | boolean>({ value, set, options }: { value: T | null; set: (v: T) => void; options: [T, string][] }) {
+  return (
+    <span className={styles.seg} role="group">
+      {options.map(([v, label]) => (
+        <button key={String(v)} type="button" aria-pressed={value === v} onClick={() => set(v)}>
+          {label}
+        </button>
+      ))}
+    </span>
+  );
+}
 
 export function CompareMock({ fromAd = false }: { fromAd?: boolean }) {
   const router = useRouter();
@@ -64,7 +78,14 @@ export function CompareMock({ fromAd = false }: { fromAd?: boolean }) {
     writeStoredCurrency(c);
   };
   const [start, setStart] = useState("");
-  const [p, setP] = useState<Priority>("balanced");
+  // The questions behind the suggested order (Andre 2026-11-25). Level follows the title until they pick one.
+  const [level, setLevel] = useState<Level | null>(null);
+  const [pool, setPool] = useState<Pool | null>(null);
+  const [ta, setTa] = useState<boolean | null>(null);
+  const [fee, setFee] = useState<boolean | null>(null);
+  const [asked, setAsked] = useState<boolean | null>(null);
+  const titleLevel: Level = { executive: "lead", senior: "senior", team: "mid" }[tierFor(role).tier] as Level;
+  const lvl = level ?? titleLevel;
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [busy, setBusy] = useState(false);
@@ -85,7 +106,7 @@ export function CompareMock({ fromAd = false }: { fromAd?: boolean }) {
     const r = await fetch("/api/compare", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ role, salary: Number(salary) || 0, cur, start, p, email, name, hook }),
+      body: JSON.stringify({ role, salary: Number(salary) || 0, cur, start, p: "balanced", level: lvl, pool, ta, fee, asked, email, name, hook }),
     })
       .then((x) => x.json())
       .catch(() => ({ error: "That didn't go through. Please try again." }));
@@ -157,15 +178,26 @@ export function CompareMock({ fromAd = false }: { fromAd?: boolean }) {
               <span className={styles.lbl}>Need the hire made by</span>
               <DatePicker value={start} onChange={setStart} placeholder="Pick a date" quick={quick} />
             </div>
-            <label className={styles.half}>
-              <span className={styles.lbl}>What matters most</span>
-              <select value={p} onChange={(e) => setP(e.target.value as Priority)}>
-                <option value="balanced">A balance of everything</option>
-                <option value="cost">Lowest cost</option>
-                <option value="speed">Hiring fast</option>
-                <option value="hours">Saving my team&apos;s time</option>
-              </select>
-            </label>
+            <div className={`${styles.half} ${styles.field}`}>
+              <span className={styles.lbl}>Level</span>
+              <Seg value={lvl} set={setLevel} options={LEVELS.map((l) => [l.id, l.label])} />
+            </div>
+            <div className={`${styles.half} ${styles.field}`}>
+              <span className={styles.lbl}>How many people could do this role?</span>
+              <Seg value={pool} set={setPool} options={[["common", "Lots of people"], ["specialist", "A small, specialist pool"]]} />
+            </div>
+            <div className={`${styles.half} ${styles.field}`}>
+              <span className={styles.lbl}>Who would run the hiring?</span>
+              <Seg value={ta} set={setTa} options={[[true, "An in-house recruiter or TA"], [false, "The hiring manager"]]} />
+            </div>
+            <div className={`${styles.half} ${styles.field}`}>
+              <span className={styles.lbl}>Could you pay a recruitment fee?</span>
+              <Seg value={fee} set={setFee} options={[[true, "Yes"], [false, "Not for this role"]]} />
+            </div>
+            <div className={`${styles.half} ${styles.field}`}>
+              <span className={styles.lbl}>Asked your team for referrals yet?</span>
+              <Seg value={asked} set={setAsked} options={[[false, "Not yet"], [true, "Yes, no luck"]]} />
+            </div>
             <label className={styles.wide}>
               <span className={styles.lbl}>Work email</span>
               <EmailField value={email} onChange={setEmail}>

@@ -228,7 +228,71 @@ export type CompareInput = {
   hook: number; // which headline they saw (A/B)
   cur?: Currency; // the currency they gave the salary in; salary itself is stored in GBP
   lid: string; // this request's id
+  /** The questions behind the plan (Andre 2026-11-25). Missing on older links: the plan falls back to the job title. */
+  level?: Level;
+  pool?: Pool;
+  ta?: boolean; // someone in-house recruits (TA, a recruiter or HR who screens)
+  fee?: boolean; // a recruitment fee is possible for this role
+  asked?: boolean; // they've already asked the team for referrals
 };
+
+export type Level = "junior" | "mid" | "senior" | "lead";
+export type Pool = "common" | "specialist";
+export const LEVELS: { id: Level; label: string }[] = [
+  { id: "junior", label: "Junior" },
+  { id: "mid", label: "Mid-level" },
+  { id: "senior", label: "Senior" },
+  { id: "lead", label: "Lead, Head or above" },
+];
+/** Level from the form, or from the job title on older links. */
+export function levelOf(input: CompareInput): Level {
+  if (input.level) return input.level;
+  const t = tierFor(roleLabel(input.role)).tier;
+  return t === "executive" ? "lead" : t === "senior" ? "senior" : "mid";
+}
+
+/** One step of the suggested order: what to do, when, and why. */
+export type Step = { id: string; title: string; when: string; why: string };
+
+/**
+ * The suggested order (Andre 2026-11-25): honest first. Referrals for a week
+ * unless they've asked already; a capped job ad when lots of people could do
+ * a junior or mid role, or when there's no budget for a fee; MakersForge first
+ * only for senior or specialist roles, or when the date leaves no time for an
+ * ad to run. DRAFT copy for Andre.
+ */
+export function planFor(input: CompareInput, now = Date.now()) {
+  const level = levelOf(input);
+  const specialist = input.pool ? input.pool === "specialist" : level === "senior" || level === "lead";
+  const fee = input.fee ?? true;
+  const ta = input.ta ?? false;
+  const weeks = input.start ? Math.max(0, (Date.parse(input.start) - now) / (7 * 864e5)) : null;
+  const adFits = weeks == null || weeks >= 9;
+  const steps: Step[] = [];
+  if (!input.asked)
+    steps.push({ id: "referral", title: "Ask for referrals", when: "Week 1", why: "Ask your team and network for a specific person. 1 in 16 referred candidates get hired. If someone fits, hire them: nothing is cheaper or lower risk" });
+  const next = steps.length ? "From week 2" : "Now";
+  const cap = ta ? "Your in-house team can screen it. Cap it at what they can read properly: about 150 applicants" : "Cap it at what you can read properly: 150 CVs at 5 minutes each is about 12 hours";
+  let main: string;
+  if (!fee) {
+    main = "ads";
+    steps.push({ id: "ads", title: "Post a job ad, with a cap", when: next, why: `It's the lowest-cost route. ${cap}` });
+    if (ta) steps.push({ id: "inhouse", title: "Then message people directly", when: "If the ad doesn't land", why: "Search LinkedIn for people who aren't looking. 1 in 72 sourced candidates get hired, so expect to message a lot of people" });
+  } else if (!specialist && (level === "junior" || level === "mid") && adFits) {
+    main = "ads";
+    steps.push({ id: "ads", title: "Post a job ad, with a cap", when: next, why: `Plenty of people could do this role, so an ad is worth a go. ${cap}` });
+    steps.push({ id: "mf", title: "Then MakersForge, if the ad doesn't land", when: "If the cap fills or 4 weeks pass", why: `We go direct to the people who didn't apply. 1 in ${MF_PER_HIRE} of the candidates we send get hired` });
+  } else {
+    main = "mf";
+    const reason = !adFits
+      ? "Your date doesn't leave time for a job ad to run"
+      : level === "senior" || level === "lead"
+        ? "Senior people rarely apply to ads. They get approached"
+        : "The pool is small, so you need to reach people who aren't looking";
+    steps.push({ id: "mf", title: "MakersForge", when: next, why: `${reason}. 1 in ${MF_PER_HIRE} of the candidates we send get hired` });
+  }
+  return { steps, main };
+}
 
 export const gbp = (n: number) => `£${Math.round(n).toLocaleString("en-GB")}`;
 /** A GBP amount shown in their currency (to the nearest 10). */
@@ -259,7 +323,8 @@ export function compare(input: CompareInput, now = Date.now()) {
       : x.real / mR + x.startWeeks / mW + x.hours / mH + x.r.interviews / mI;
   // Best fit: options that fit the date first, then by what matters most.
   const ranked = base.filter((x) => !x.r.noRank).sort((a, b) => Number(a.overBudget || a.tooSlow) - Number(b.overBudget || b.tooSlow) || score(a) - score(b));
-  const best = ranked[0];
+  const plan = planFor(input, now);
+  const best = base.find((x) => x.r.id === plan.main) ?? ranked[0];
   // Shown in a fixed order (Andre): us, then the job ad (the route most people take), then the agencies.
   const ORDER = ["mf", "ads", "games20", "tech25", "inhouse", "referral"];
   const rows = base.slice().sort((a, b) => ORDER.indexOf(a.r.id) - ORDER.indexOf(b.r.id));
@@ -267,7 +332,8 @@ export function compare(input: CompareInput, now = Date.now()) {
   return {
     rows,
     best,
-    next: ranked[1],
+    next: ranked.find((x) => x.r.id !== best.r.id),
+    plan,
     lowest: { fee: lo((x) => x.fee), real: lo((x) => x.real), start: lo((x) => x.startWeeks), hireBy: lo((x) => x.hireBy), hours: lo((x) => x.hours), interviews: lo((x) => x.r.interviews), perHire: lo((x) => x.r.perHire) },
   };
 }
