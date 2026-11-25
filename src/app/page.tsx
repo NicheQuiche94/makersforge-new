@@ -1,15 +1,10 @@
 import type { Metadata } from "next";
 import { HeroPanel } from "@/components/sections/HeroPanel";
 import { LogoWall } from "@/components/sections/LogoWall";
-import { CompareBand } from "@/components/sections/CompareBand";
-import { Explainer } from "@/components/sections/Explainer";
-import { WhatWeCover } from "@/components/sections/WhatWeCover";
 import { HowItWorksBento } from "@/components/sections/HowItWorksBento";
-import { HeatBreak } from "@/components/sections/HeatBreak";
 import { FAQ } from "@/components/sections/FAQ";
-import { CaseStudy, TalentDirectory, Testimonials } from "@/components/sections/ProofSections";
-import { QuickBrief } from "@/components/sections/QuickBrief";
-import { GetStarted } from "@/components/onboard/GetStarted";
+import { CaseStudy, TalentDirectory } from "@/components/sections/ProofSections";
+import { OddsStrip, NotAlways, HomeClose } from "@/components/sections/HomeRefresh";
 
 // 2026-10-27: home rebuilt around the service Andre sells and the outreach
 // pitches — "From 500 candidates to 5" — so a click from an email lands on
@@ -30,32 +25,25 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
+      {/* Homepage refresh (Andre 2026-11-25, MOCK, DRAFT copy): D2C positioning.
+          Flow: promise → the odds → proof → how → the honest bit → bench → close → doubts. */}
       <HeroPanel
-        headline={["500 candidates to 5."]}
-        // 2026-11-09 (Andre): say mobile games and apps up front, and tie it to 500 to 5.
-        ledeLead="Hiring in Mobile Games and Apps?"
-        lede="We headhunt UA, growth, product, design, art and engineering talent. You get 5 worth hiring, not 500 CVs to sift."
+        headline={["D2C recruitment for mobile games and apps."]}
+        ledeLead="Job ads reach whoever's nearby."
+        lede="We reach the person you actually want, and engage them directly."
         ctas={{
           // 2026-11-09 (Andre): a 63% bounce rate; a free tool to click first, not "talk to us".
           primary: { href: "/compare", label: "Design your hiring route" },
-          // PROTOTYPE 2026-11-02: self-onboarding replaces the call; the hero links go (Andre).
           secondary: { href: "/start", label: "Get started" },
         }}
       />
-      {/* 2026-10-27 flow: outcome → how → proof → why not an ad → bench
-          → roles → doubts → brief. Comparison table lives on /pricing. */}
-      <CompareBand />
+      <OddsStrip />
       <LogoWall />
-      <HowItWorksBento />
       <CaseStudy />
-      <Testimonials />
-      <HeatBreak />
-      <Explainer />
+      <HowItWorksBento />
+      <NotAlways />
       <TalentDirectory />
-      <WhatWeCover title="Who we hire for." />
-      <HeatBreak />
-      <QuickBrief />
-      <GetStarted />
+      <HomeClose />
       <FAQ />
     </>
   );
