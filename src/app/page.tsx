@@ -9,7 +9,7 @@ import { NotAlways, GuideFeature, HomeClose } from "@/components/sections/HomeRe
 // pitches — "From 500 candidates to 5" — so a click from an email lands on
 // page two of that email: promise → proof → how → bench → brief.
 const DESCRIPTION =
-  "Direct-to-candidate recruitment for mobile game studios and app companies. We target and engage the right people directly: 5 candidates in 5 working days, from £9,000 per hire, paid only when you hire.";
+  "Direct-to-candidate recruitment for mobile game studios and app companies. We target and engage the right people directly: 5 candidates in 5 working days, from £9,000 per hire.";
 
 export const metadata: Metadata = {
   title: "MakersForge: D2C recruitment in mobile games and apps",

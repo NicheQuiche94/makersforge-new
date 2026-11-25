@@ -9,9 +9,9 @@ import styles from "./TopNav.module.css";
 /* `hide`: homepage shortcuts that step aside on smaller laptops so the pill
    never overflows (2026-11-11). */
 const LINKS: { href: string; label: string; hide?: "lg" | "md" }[] = [
-  { href: "/#how", label: "How it works", hide: "md" },
-  { href: "/#proof", label: "Case study", hide: "lg" },
+  { href: "/resources", label: "Resources" },
   { href: "/line-up", label: "Talent directory" },
+  { href: "/#proof", label: "Case study", hide: "md" },
   { href: "/pricing", label: "Plans & pricing" },
 ];
 
@@ -103,18 +103,12 @@ export function TopNav({ activeHref }: { activeHref?: string }) {
                 <li key={link.href} className={link.hide === "lg" ? styles.hideLg : link.hide === "md" ? styles.hideMd : undefined}>
                   <Link
                     href={link.href}
-                    className={activeHref === link.href ? styles.activeLink : ""}
+                    className={activeHref === link.href || (link.href === "/resources" && inResources) ? styles.activeLink : ""}
                   >
                     {link.label}
                   </Link>
                 </li>
               ))}
-              {/* Resources goes straight to the hub, which asks for one email for everything (Andre 2026-11-24). */}
-              <li>
-                <Link href="/resources" className={inResources ? styles.activeLink : ""}>
-                  Resources
-                </Link>
-              </li>
             </ul>
             {/* The way back into the client portal (Andre 2026-11-04); stays visible on phones. */}
             <Link href="/account" className={`${styles.login} ${activeHref === "/account" ? styles.activeLink : ""}`}>

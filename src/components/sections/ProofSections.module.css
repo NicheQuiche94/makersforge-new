@@ -479,3 +479,6 @@
 
 /* 2026-11-25 (Andre): no small-caps labels; the studio's games as a plain line */
 .caseKicker { text-transform: none !important; letter-spacing: 0 !important; font-size: 15px !important; font-weight: 600 !important; color: var(--dim) !important; }
+
+/* 2026-11-25 (Andre): the case subhead in the body font; Cal Sans looked jagged at this size */
+.caseTitle { font-family: var(--font-figtree), "Figtree", system-ui, sans-serif !important; font-weight: 800 !important; letter-spacing: -0.01em !important; }
