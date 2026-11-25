@@ -43,7 +43,7 @@ export default function PrivacyPage() {
           <div className={styles.meta}>
             <span className={styles.metaItem}>
               <span className={styles.metaLabel}>Last updated</span>
-              <span className={styles.metaValue}>5 November 2026</span>
+              <span className={styles.metaValue}>25 November 2026</span>
             </span>
             <span className={styles.metaItem}>
               <span className={styles.metaLabel}>Data controller</span>
@@ -134,6 +134,22 @@ export default function PrivacyPage() {
               reach Andre through Telegram.
             </p>
 
+            <h3 className={styles.subH}>free resources &amp; tools</h3>
+            <p className={styles.p}>
+              If you enter your email to unlock our resources or use one of
+              our free tools, we keep your email, when you signed up and the
+              link that brought you. We use it to send you the link, to email
+              you new tools and guides when they release, and to follow up
+              about your experience with the resources and your hiring. Every
+              email lets you opt out, or just reply and ask.
+            </p>
+
+            <h3 className={styles.subH}>alerts</h3>
+            <p className={styles.p}>
+              If you sign up for job or talent alerts, we keep your email and
+              the choices you made, and email you alerts until you opt out.
+            </p>
+
             <h3 className={styles.subH}>links in our emails</h3>
             <p className={styles.p}>
               Links in emails we send you can carry a short code, so we know
@@ -221,6 +237,11 @@ export default function PrivacyPage() {
                 prevention, security monitoring. Minimised collection.
               </li>
               <li>
+                <strong>Legitimate interests (resources and tools).</strong>{" "}
+                Emailing people who used our free resources or tools about new
+                resources and their hiring. You can opt out at any time.
+              </li>
+              <li>
                 <strong>Consent.</strong> Optional features, including
                 analytics and company-level visitor identification, only
                 with your agreement. Withdrawable at any time.
@@ -288,6 +309,12 @@ export default function PrivacyPage() {
             <p className={styles.p}>
               <strong>Engagement and financial records:</strong> kept
               for as long as UK tax law requires (currently six years).
+            </p>
+            <p className={styles.p}>
+              <strong>Resource and tool sign-ups:</strong> kept for two
+              years after you last heard from or engaged with us, or until
+              you opt out. If you opt out, we keep just your email on a
+              do-not-contact list so we never email you again.
             </p>
             <p className={styles.p}>
               Technical logs rotate automatically within 30 days.

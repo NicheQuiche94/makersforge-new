@@ -9,7 +9,7 @@
  * Email HTML sticks to tables and inline styles so it holds up in Gmail and
  * Outlook.
  */
-import { layout } from "@/lib/clientEmails";
+import { leadLayout as layout } from "@/lib/clientEmails";
 import { GROUPS, type Result } from "@/lib/adGrader";
 
 const INK = "#0e0f11";

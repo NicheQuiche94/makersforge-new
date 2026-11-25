@@ -1,4 +1,5 @@
 "use client";
+import { EmailNotice } from "@/components/legal/EmailNotice";
 
 import { useState } from "react";
 import { AREAS, GENRES, HAVE, HOURS, LENGTH, MODELS, SKILLS, type Answers } from "@/lib/hiringNeeds";
@@ -201,6 +202,7 @@ export function NeedsTool() {
                     <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@studio.com" />
                   </EmailField>
                 </label>
+                <EmailNotice deliver="your brief" about="the tool" />
               </>
             )}
 

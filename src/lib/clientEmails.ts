@@ -1,3 +1,4 @@
+import { UNSUB_PLACEHOLDER } from "@/lib/unsubPlaceholder";
 /**
  * Client emails for self-onboarding (PROTOTYPE 2026-11-02). Every email the
  * booking flow, the admin and the portal send, as { to, subject, html }.
@@ -49,6 +50,14 @@ const ORANGE = "#ff5d00";
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 /** The shared frame: dark band with the mark, a white card, the company footer. */
+/** Layout for emails to people who used a free resource or tool: same frame, plus an opt-out line (2026-11-25). */
+export function leadLayout(body: string, preheader: string) {
+  return layout(body, preheader).replace(
+    `<a href="${SITE}" style="color:#8a8e97">makersforge.gg</a> · <a href="${SITE}/account" style="color:#8a8e97">Your client portal</a>`,
+    `You're getting this because you used a free MakersForge resource or tool. <a href="${UNSUB_PLACEHOLDER}" style="color:#8a8e97">Unsubscribe</a> · <a href="${SITE}/legal/privacy" style="color:#8a8e97">Privacy policy</a><br><a href="${SITE}" style="color:#8a8e97">makersforge.gg</a>`,
+  );
+}
+
 export function layout(body: string, preheader: string) {
   return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><meta name="color-scheme" content="light only"><meta name="supported-color-schemes" content="light only"><style>:root{color-scheme:light only;supported-color-schemes:light only}</style></head>
 <body style="margin:0;padding:0;background:#f4efe8;font-family:Helvetica,Arial,sans-serif;color:${INK}">

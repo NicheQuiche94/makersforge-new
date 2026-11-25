@@ -1,4 +1,5 @@
 "use client";
+import { EmailNotice } from "@/components/legal/EmailNotice";
 
 import { useState, type FormEvent } from "react";
 import { bookingUrl } from "@/lib/site";
@@ -87,6 +88,7 @@ export function InterviewRequest({ codename }: { codename: string }) {
                 />
               </label>
               {error ? <p className={styles.error}>{error}</p> : null}
+              <EmailNotice kind="enquiry" />
               <div className={styles.formFoot}>
                 <button type="submit" className={styles.primary} disabled={state === "sending"}>
                   {state === "sending" ? "Sending…" : "Send request"}

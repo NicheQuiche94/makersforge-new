@@ -1,4 +1,5 @@
 "use client";
+import { EmailNotice } from "@/components/legal/EmailNotice";
 
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { arrivalUtm, track } from "@/lib/analytics";
@@ -74,6 +75,8 @@ export function ResourcesGate({ children }: { children: React.ReactNode }) {
               </button>
             </form>
             {err && <p className={r.err}>{err}</p>}
+            {/* Collection notice (Andre 2026-11-25): covers new tools/guides and follow-up about their hiring. */}
+            <EmailNotice className={r.notice} deliver="the link" about="the resources" />
           </div>
           </div>
         </div>

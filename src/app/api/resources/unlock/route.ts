@@ -1,5 +1,5 @@
 import { sendMail } from "@/lib/onboarding/mail";
-import { layout } from "@/lib/clientEmails";
+import { leadLayout as layout } from "@/lib/clientEmails";
 import { toAndre } from "@/lib/chat/telegram";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { leadToken, withLead } from "@/lib/leadToken";

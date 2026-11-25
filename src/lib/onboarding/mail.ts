@@ -1,3 +1,4 @@
+import { UNSUB_PLACEHOLDER, unsubUrl } from "@/lib/unsubscribe";
 /**
  * Sends the self-onboarding emails (templates in lib/clientEmails.ts) through
  * Resend. Two safety valves while we build and test:
@@ -15,7 +16,12 @@ export const ANDRE = "andre@makersforge.gg";
 
 type Attachment = { filename: string; content: Buffer };
 
-export async function sendMail({ to, subject, html, attachments, replyTo }: { to: string; subject: string; html: string; attachments?: Attachment[]; replyTo?: string }) {
+export async function sendMail({ to, subject, html: rawHtml, attachments, replyTo }: { to: string; subject: string; html: string; attachments?: Attachment[]; replyTo?: string }) {
+  // Lead emails (leadLayout) carry an unsubscribe placeholder: swap in this
+  // recipient's own one-click link and add the List-Unsubscribe headers.
+  const unsub = rawHtml.includes(UNSUB_PLACEHOLDER) ? unsubUrl(to) : null;
+  const html = unsub ? rawHtml.split(UNSUB_PLACEHOLDER).join(unsub) : rawHtml;
+  const headers = unsub ? { "List-Unsubscribe": `<${unsub}>`, "List-Unsubscribe-Post": "List-Unsubscribe=One-Click" } : undefined;
   const override = process.env.ONBOARDING_EMAIL_TO;
   const realTo = override || to;
   const realSubject = override ? `[to ${to}] ${subject}` : subject;
@@ -37,6 +43,7 @@ export async function sendMail({ to, subject, html, attachments, replyTo }: { to
     subject: realSubject,
     html,
     replyTo: replyTo || ANDRE,
+    headers,
     attachments: attachments?.map((a) => ({ filename: a.filename, content: a.content })),
   });
   if (error) {

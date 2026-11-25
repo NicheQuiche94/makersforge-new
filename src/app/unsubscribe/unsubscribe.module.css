@@ -1,0 +1,6 @@
+.page { min-height: 70vh; display: grid; place-items: center; padding: 140px 16px 80px; }
+.card { width: 100%; max-width: 520px; background: #fff; border-radius: 24px; padding: 44px 36px; text-align: center; box-shadow: 0 20px 50px -30px rgba(14, 15, 17, .25); }
+.h { font-family: "Cal Sans", var(--font-figtree), system-ui, sans-serif; font-weight: 400; font-size: 36px; line-height: 1.1; letter-spacing: -0.01em; margin: 0 0 12px; color: #121214; }
+.p { margin: 0; font-size: 16px; line-height: 1.55; color: rgba(18, 18, 20, .7); }
+.p a { color: inherit; text-decoration: underline; }
+.undo { margin-top: 24px; background: none; border: 0; padding: 0; font: inherit; font-size: 14px; color: rgba(18, 18, 20, .55); text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
