@@ -233,8 +233,8 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
           </p>
           <p>
             Candidates per hire for agencies, job ads, sourcing and referrals come from Lever&apos;s study of 4 million candidates
-            across about 1,000 employers (2016), the largest published breakdown by source. Ours is our own record across five
-            clients: 225 candidates sent, 22 hired. Screening assumes about 5 minutes a CV, cover letter included. The hours and weeks for
+            across about 1,000 employers (2016), the largest published breakdown by source. Ours is our own record across seven
+            clients: 232 candidates sent, 26 hired. Screening assumes about 5 minutes a CV, cover letter included. The hours and weeks for
             sourcing it yourself and for referrals are our estimates.
           </p>
           <p>

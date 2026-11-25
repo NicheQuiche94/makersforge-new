@@ -38,12 +38,13 @@ export const HOURLY = 60; // team time, £ an hour
  * to find talent"). Market figures: Lever, Little Grey Book of Recruiting
  * Benchmarks (4M+ candidates, ~1,000 employers, Aug 2015 to Jul 2016).
  * Ours (Andre 2026-11-25), candidates sent vs hires: Lessmore 147/12,
- * Studio 555 55/6, Smile More 10/2, Yallaplay 7/1, Seven Stars 6/1.
- * Pooled 225 sent, 22 hired: 1 in 10 (9.8%; 95% range about 1 in 7 to 1 in 15).
+ * Studio 555 55/6, Smile More 10/2, Yallaplay 7/1, Seven Stars 6/1,
+ * Son of Oak 3/3, Triple Tap Games 4/1.
+ * Pooled 232 sent, 26 hired: 1 in 9 (11.2%; 95% range about 1 in 6 to 1 in 13).
  * Change MF_PER_HIRE and the note together.
  */
-export const MF_PER_HIRE = 10;
-export const MF_PER_HIRE_NOTE = "From our record across five clients: 225 candidates sent, 22 hired";
+export const MF_PER_HIRE = 9;
+export const MF_PER_HIRE_NOTE = "From our record across seven clients: 232 candidates sent, 26 hired";
 export const LEVER_NOTE = "Lever's study of 4 million candidates across about 1,000 employers";
 /** Screening a CV properly, cover letter included (the guide's figure). */
 export const CV_MINUTES = 5;
