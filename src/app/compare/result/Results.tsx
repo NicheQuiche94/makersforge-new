@@ -71,14 +71,10 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
         {/* The route (Andre 2026-11-25): the answer in one glance, then the detail on demand. */}
         {/* The routes to flick between (Andre 2026-11-25): each one redraws the plan beside it. */}
         <div className={styles.designer}>
-          <div className={styles.kinds} role="tablist" aria-label="Hiring routes">
+          <div className={styles.pills} role="tablist" aria-label="Hiring routes">
             {routes.map((k) => (
-              <button key={k.id} type="button" role="tab" aria-selected={k.id === kind} className={`${styles.kind} ${k.id === kind ? `${styles.kindOn} heat-glow` : ""}`} onClick={() => setKind(k.id)}>
-                <span className={styles.kindName}>{k.label}</span>
-                <span className={`${styles.kindDate} ${k.plan.onTime ? styles.dateOk : styles.dateLate}`}>
-                  Hire by {day(new Date(k.plan.hire))} {k.plan.onTime ? "✓" : "· late"}
-                </span>
-                <span className={styles.kindCost}>{cost(k.plan)}</span>
+              <button key={k.id} type="button" role="tab" aria-selected={k.id === kind} className={`${styles.pill} ${k.id === kind ? `${styles.pillOn} heat-glow` : ""}`} onClick={() => setKind(k.id)}>
+                {k.label}
               </button>
             ))}
           </div>
