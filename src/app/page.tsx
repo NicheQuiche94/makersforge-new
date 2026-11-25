@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { HeroPanel } from "@/components/sections/HeroPanel";
 import { LogoWall } from "@/components/sections/LogoWall";
 import { FAQ } from "@/components/sections/FAQ";
-import { CaseStudy, TalentDirectory } from "@/components/sections/ProofSections";
-import { OddsStrip, NotAlways, GuideFeature, HomeClose } from "@/components/sections/HomeRefresh";
+import { CaseStudy } from "@/components/sections/ProofSections";
+import { NotAlways, GuideFeature, HomeClose } from "@/components/sections/HomeRefresh";
 
 // 2026-10-27: home rebuilt around the service Andre sells and the outreach
 // pitches — "From 500 candidates to 5" — so a click from an email lands on
@@ -38,12 +38,10 @@ export default function HomePage() {
       />
       <LogoWall />
       <NotAlways />
-      <OddsStrip />
       <GuideFeature />
       <CaseStudy />
-      <TalentDirectory title="5 people worth hiring, in 5 working days." />
       <HomeClose />
-      <FAQ />
+      <FAQ compact />
     </>
   );
 }

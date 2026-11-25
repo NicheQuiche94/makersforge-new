@@ -96,3 +96,10 @@
   color: var(--ink);
   font-weight: 600;
 }
+
+/* Compact (homepage, 2026-11-25): narrower and lighter */
+.compact { padding: 20px 0 90px; }
+.compact :global(.container) { max-width: 860px; }
+.compact .h3 { font-size: clamp(26px, 3vw, 38px); }
+.compact .top { margin-bottom: 20px; }
+.compact .q { font-size: 18px; padding: 15px 0; }

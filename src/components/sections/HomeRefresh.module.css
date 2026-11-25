@@ -81,3 +81,15 @@
   .ptUs .pill { font-size: 17px; }
   .pt em { font-size: 12px; white-space: normal; max-width: 120px; }
 }
+
+/* v3 (Andre 2026-11-25): axis label off the line; the odds compact, inside the risk section */
+.axY { left: 0; top: -30px; transform: none; }
+.oddsBlock { max-width: 880px; margin: 64px auto 0; display: grid; gap: 10px; justify-items: center; text-align: center; }
+.h3 { margin: 0; font-family: "Cal Sans", system-ui, sans-serif; font-weight: 400; font-size: clamp(26px, 2.8vw, 36px); line-height: 1.05; letter-spacing: -0.02em; }
+.oddsCompact { width: 100%; gap: 6px; margin-top: 10px; }
+.oddsCompact .row { grid-template-columns: 150px 1fr 48px; padding: 9px 16px; border-radius: 12px; text-align: left; }
+.oddsCompact .row b { font-size: 14.5px; }
+.oddsCompact .row strong { font-size: 24px; }
+.oddsCompact .dots { gap: 2px; }
+.oddsCompact .dots i { width: 5px; height: 5px; }
+.oddsBlock .source { margin-top: 4px; }

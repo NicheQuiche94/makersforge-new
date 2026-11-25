@@ -81,12 +81,12 @@ const ITEMS: Item[] = [
   },
 ];
 
-export function FAQ() {
-  // First item open by default per brief
-  const [openIdx, setOpenIdx] = useState<number | null>(0);
+export function FAQ({ compact = false }: { compact?: boolean } = {}) {
+  // First item open by default per brief; the compact homepage version starts closed (2026-11-25).
+  const [openIdx, setOpenIdx] = useState<number | null>(compact ? null : 0);
 
   return (
-    <section className={styles.section}>
+    <section className={`${styles.section} ${compact ? styles.compact : ""}`}>
       <div className="container">
         <div className={styles.top}>
           <div>
