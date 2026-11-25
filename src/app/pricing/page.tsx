@@ -55,7 +55,7 @@ export default async function PricingPage({ searchParams }: { searchParams: Prom
               <h2>Not sure we&apos;re the right fit?</h2>
               <p>Compare every way to hire for your role: games and tech agencies, running a job ad yourself, and us, on cost and who you reach.</p>
               <span className={styles.doorCta}>
-                Compare hiring routes <span aria-hidden="true">→</span>
+                Design your hiring route <span aria-hidden="true">→</span>
               </span>
             </Link>
             <a href={BOOKING_URL} target="_blank" rel="noreferrer" className={`card-shadow ${styles.door} ${styles.doorLight}`}>

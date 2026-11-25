@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { AD_HOOK, HOOKS, ROLES, ROTATING_HOOKS, type Priority } from "@/lib/compare";
+import { AD_HOOK, HISTORY, HOOKS, LEVELS, PROCESS, ROLES, ROTATING_HOOKS, RUNNERS, STAKES, type History, type Level, type Runner, type Stakes } from "@/lib/compare";
+import { tierFor } from "@/lib/tier";
 import { activePromo } from "@/lib/promos";
 import { CURRENCIES, CURRENCY_SYMBOLS, RATES, readStoredCurrency, writeStoredCurrency, type Currency } from "@/lib/currency";
 import { DatePicker } from "./DatePicker";
@@ -64,7 +65,15 @@ export function CompareMock({ fromAd = false }: { fromAd?: boolean }) {
     writeStoredCurrency(c);
   };
   const [start, setStart] = useState("");
-  const [p, setP] = useState<Priority>("balanced");
+  // The questions behind the suggested order (Andre 2026-11-25). Level follows the title until they pick one.
+  const [level, setLevel] = useState<Level | null>(null);
+  const [history, setHistory] = useState<History | "">("");
+  const [runner, setRunner] = useState<Runner | "">("");
+  const [stakes, setStakes] = useState<Stakes | "">("");
+  const [asked, setAsked] = useState<"" | "no" | "yes">("");
+  const [process, setProcess] = useState("");
+  const titleLevel: Level = { executive: "lead", senior: "senior", team: "mid" }[tierFor(role).tier] as Level;
+  const lvl = level ?? titleLevel;
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [busy, setBusy] = useState(false);
@@ -85,7 +94,7 @@ export function CompareMock({ fromAd = false }: { fromAd?: boolean }) {
     const r = await fetch("/api/compare", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ role, salary: Number(salary) || 0, cur, start, p, email, name, hook }),
+      body: JSON.stringify({ role, salary: Number(salary) || 0, cur, start, p: "balanced", level: lvl, history: history || undefined, runner: runner || undefined, stakes: stakes || undefined, asked: asked ? asked === "yes" : undefined, process: process ? Number(process) : undefined, email, name, hook }),
     })
       .then((x) => x.json())
       .catch(() => ({ error: "That didn't go through. Please try again." }));
@@ -158,12 +167,45 @@ export function CompareMock({ fromAd = false }: { fromAd?: boolean }) {
               <DatePicker value={start} onChange={setStart} placeholder="Pick a date" quick={quick} />
             </div>
             <label className={styles.half}>
-              <span className={styles.lbl}>What matters most</span>
-              <select value={p} onChange={(e) => setP(e.target.value as Priority)}>
-                <option value="balanced">A balance of everything</option>
-                <option value="cost">Lowest cost</option>
-                <option value="speed">Hiring fast</option>
-                <option value="hours">Saving my team&apos;s time</option>
+              <span className={styles.lbl}>Level</span>
+              <select value={lvl} onChange={(e) => setLevel(e.target.value as Level)}>
+                {LEVELS.map((l) => <option key={l.id} value={l.id}>{l.label}</option>)}
+              </select>
+            </label>
+            <label className={styles.half}>
+              <span className={styles.lbl}>Hired for a role like this before?</span>
+              <select value={history} onChange={(e) => setHistory(e.target.value as History)}>
+                <option value="" disabled>Choose one</option>
+                {HISTORY.map((h) => <option key={h.id} value={h.id}>{h.label}</option>)}
+              </select>
+            </label>
+            <label className={styles.half}>
+              <span className={styles.lbl}>Who would run the hiring?</span>
+              <select value={runner} onChange={(e) => setRunner(e.target.value as Runner)}>
+                <option value="" disabled>Choose one</option>
+                {RUNNERS.map((r) => <option key={r.id} value={r.id}>{r.label}</option>)}
+              </select>
+            </label>
+            <label className={styles.half}>
+              <span className={styles.lbl}>How important is this hire?</span>
+              <select value={stakes} onChange={(e) => setStakes(e.target.value as Stakes)}>
+                <option value="" disabled>Choose one</option>
+                {STAKES.map((x) => <option key={x.id} value={x.id}>{x.label}</option>)}
+              </select>
+            </label>
+            <label className={styles.half}>
+              <span className={styles.lbl}>How long is your interview process?</span>
+              <select value={process} onChange={(e) => setProcess(e.target.value)}>
+                <option value="" disabled>Choose one</option>
+                {PROCESS.map((p) => <option key={p.w} value={p.w}>{p.label}</option>)}
+              </select>
+            </label>
+            <label className={styles.half}>
+              <span className={styles.lbl}>Asked for referrals yet?</span>
+              <select value={asked} onChange={(e) => setAsked(e.target.value as "no" | "yes")}>
+                <option value="" disabled>Choose one</option>
+                <option value="no">Not yet</option>
+                <option value="yes">Yes, nothing that fits</option>
               </select>
             </label>
             <label className={styles.wide}>
@@ -179,9 +221,9 @@ export function CompareMock({ fromAd = false }: { fromAd?: boolean }) {
           </div>
           {error && <p className={styles.err}>{error}</p>}
           <button type="submit" className={styles.bigGo} disabled={busy || !role.trim() || !/^\S+@\S+\.\S+$/.test(email)}>
-            {busy ? "Sending…" : "Email me my comparison →"}
+            {busy ? "Sending…" : "Email me my route →"}
           </button>
-          <p className={styles.fine}>We&apos;ll email you a link to your comparison to share with your team. One email, no spam.</p>
+          <p className={styles.fine}>We&apos;ll email you a link to your route to share with your team. One email, no spam.</p>
         </form>
       </div>
     </section>
