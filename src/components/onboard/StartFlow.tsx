@@ -313,7 +313,7 @@ export function StartFlow() {
         feeLine,
         `${TERMS.paymentDays}-day payment terms`,
         `Candidates we introduce remain billable for ${TERMS.billableMonths} months after introduction`,
-        `Cancel your search week free up to ${TERMS.cancelHours} hours before it starts`,
+        "Cancel or move your search week free",
       ];
 
   return (

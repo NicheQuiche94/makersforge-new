@@ -26,9 +26,7 @@ const ITEMS: Item[] = [
     q: "What if none of the 5 are right?",
     a: (
       <p>
-        Tell us why and we go again, sharper for it, at no extra cost. Our fee
-        is tied to the placement, not the process, so you only ever pay when
-        you hire.
+        Tell us why and we go again, sharper for it, at no extra cost.
       </p>
     ),
   },
@@ -49,7 +47,7 @@ const ITEMS: Item[] = [
       <p>
         A flat fee per permanent hire, set by the level in the job title: <Money gbp={9000} /> for junior to mid-level roles, <Money gbp={14000} /> for Senior and Lead roles, <Money gbp={20000} /> for Head, Director and above. Never 20–30% of salary. Contractors
         are a flat monthly fee per person, and you pay their rate directly
-        with no markup. You only pay when someone is hired.
+        with no markup.
       </p>
     ),
   },
@@ -76,17 +74,10 @@ const ITEMS: Item[] = [
       </p>
     ),
   },
-  // PROTOTYPE 2026-11-02 (self-onboarding): the late fee lives here and in the
-  // full terms, not in the five-line summary. Wording awaits Andre's OK.
+  // 2026-11-25 (Andre): no cancellation fee.
   {
     q: "What if we need to cancel our search week?",
-    a: (
-      <p>
-        Cancel free up to 48 hours before it starts. After that there&apos;s a
-        <Money gbp={1500} unit={100} /> fee, because by then we&apos;ve already done the prep to deliver
-        your shortlist on time.
-      </p>
-    ),
+    a: <p>Cancel or move it free, any time before it starts.</p>,
   },
 ];
 

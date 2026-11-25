@@ -6,7 +6,6 @@
  */
 import { createHash } from "node:crypto";
 import { buildTerms, MF_NUMBER, MF_OFFICE, type Clause, type TermsVariant } from "@/lib/termsOfBusiness";
-import { TERMS } from "@/lib/plans";
 import { logoSvg } from "@/lib/brand/logoSvg";
 
 export type TermsInput = {
@@ -41,7 +40,6 @@ export function termsDoc(v: TermsInput) {
     discount: v.discount,
     tiers: v.tiers,
     currency: v.currency,
-    cancelHours: TERMS.cancelHours,
   });
   const lines: string[] = [];
   t.parties.forEach((c) => flat(c, lines));

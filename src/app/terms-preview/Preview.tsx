@@ -16,8 +16,6 @@ const SAMPLE = {
   clientNumber: "12345678",
   clientAddress: "1 Example Street, London EC1A 1AA",
   contractFee: "£1,000",
-  cancelFee: "£1,500",
-  cancelHours: 48,
 };
 
 function ClauseView({ c }: { c: Clause }) {
