@@ -14,10 +14,7 @@ import { liveGuides } from "@/lib/guides";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const core: MetadataRoute.Sitemap = [
     { url: `${SITE_URL}/`, changeFrequency: "weekly", priority: 1 },
-    { url: `${SITE_URL}/games`, changeFrequency: "monthly", priority: 0.9 },
-    { url: `${SITE_URL}/apps`, changeFrequency: "monthly", priority: 0.9 },
     { url: `${SITE_URL}/line-up`, changeFrequency: "weekly", priority: 0.8 },
-    { url: `${SITE_URL}/talent`, changeFrequency: "monthly", priority: 0.6 },
     { url: `${SITE_URL}/pricing`, changeFrequency: "monthly", priority: 0.8 },
     { url: `${SITE_URL}/compare`, changeFrequency: "monthly", priority: 0.9 },
     { url: `${SITE_URL}/job-ad-grading-tool`, changeFrequency: "monthly", priority: 0.9 },

@@ -4,40 +4,25 @@ import { Logo } from "@/components/atoms/Logo";
 import { CookieSettingsLink } from "@/components/consent/Consent";
 import styles from "./Footer.module.css";
 
-/* Condensed 2026-07-02 — the per-discipline deep links were pointing
-   at a legacy ?discipline= URL param that the lineup app retired when
-   the discipline chip row was replaced by the role dropdown inferred
-   from ROSTER. Rather than migrate them to ?role= (roles would need
-   listing here and go stale as new titles land), stripped to just
-   the two links that always make sense: browse the whole lineup,
-   or join it. */
-const ROSTER_LINKS = [
-  { href: "/line-up", label: "Browse the directory" },
-  { href: "mailto:andre@makersforge.gg?subject=Joining%20the%20MakersForge%20directory", label: "Join the directory" },
-];
-
-/* Per cofounder pass FT1–FT4:
-   - "Book a call" goes to the Cal.com booking page (2026-10-27).
-   - Contact email removed from the For studios column; lives with the
-     socials only (and is visible as plain text below the icon row).
-   - About removed from the Company column (the link went to /#about
-     which doesn't exist; if we want a real About page, that's a
-     separate build).
-   - Seedcraft Ventures removed from the Company column — the link
-     already appears in the bottom collab line, having it twice felt
-     off. */
-const STUDIO_LINKS = [
-  { href: "/games", label: "Game studios" },
-  { href: "/apps", label: "App companies" },
-  { href: "/pricing", label: "Pricing" },
-  { href: "/resources", label: "Free resources" },
+/* 2026-11-25 (Andre): the footer only links to the current site, the same
+   pages as the nav. The old segment pages (/games, /apps), /talent, the jobs
+   board and "How it works" were retired and redirect elsewhere. */
+const COMPANY_LINKS = [
+  { href: "/pricing", label: "Plans & pricing" },
+  { href: "/start", label: "Get started" },
   { href: BOOKING_URL, label: "Book a call" },
-  /* Self-onboarding (2026-11-04): the way back into the client portal. */
   { href: "/account", label: "Client login" },
 ];
 
-const COMPANY_LINKS = [
-  { href: "/talent", label: "For talent" },
+const RESOURCE_LINKS = [
+  { href: "/resources", label: "Free resources" },
+  { href: "/compare", label: "Design your hiring route" },
+  { href: "/job-ad-grading-tool", label: "Job ad grading tool" },
+];
+
+const ROSTER_LINKS = [
+  { href: "/line-up", label: "Browse the directory" },
+  { href: "/#proof", label: "Case study" },
 ];
 
 export function Footer() {
@@ -80,9 +65,9 @@ export function Footer() {
           </div>
 
           <div className={styles.col}>
-            <h5>Talent directory</h5>
+            <h5>For companies</h5>
             <ul>
-              {ROSTER_LINKS.map((link) => (
+              {COMPANY_LINKS.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href}>{link.label}</Link>
                 </li>
@@ -91,24 +76,20 @@ export function Footer() {
           </div>
 
           <div className={styles.col}>
-            <h5>For companies</h5>
+            <h5>Free resources</h5>
             <ul>
-              {STUDIO_LINKS.map((link) => (
+              {RESOURCE_LINKS.map((link) => (
                 <li key={link.href}>
-                  {link.href.startsWith("mailto:") || link.href === "#" ? (
-                    <a href={link.href}>{link.label}</a>
-                  ) : (
-                    <Link href={link.href}>{link.label}</Link>
-                  )}
+                  <Link href={link.href}>{link.label}</Link>
                 </li>
               ))}
             </ul>
           </div>
 
           <div className={styles.col}>
-            <h5>Company</h5>
+            <h5>Talent directory</h5>
             <ul>
-              {COMPANY_LINKS.map((link) => (
+              {ROSTER_LINKS.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href}>{link.label}</Link>
                 </li>

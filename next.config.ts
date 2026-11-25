@@ -32,9 +32,26 @@ const nextConfig: NextConfig = {
          reworked. Links to it now email Andre instead. */
       {
         source: "/apply",
-        destination: "/talent",
+        destination: "/",
         permanent: false,
       },
+      /* Retired 2026-11-25 (Andre): nothing that isn't part of the current site
+         stays reachable. Old segment pages, the talent page, the v1 jobs board,
+         the unlinked "What am I hiring for" tool and old test pages. Temporary
+         redirects, so any of them can come back. */
+      { source: "/games", destination: "/", permanent: false },
+      { source: "/apps", destination: "/", permanent: false },
+      { source: "/talent", destination: "/", permanent: false },
+      { source: "/jobs", destination: "/", permanent: false },
+      { source: "/jobs/:path*", destination: "/", permanent: false },
+      { source: "/what-am-i-hiring-for", destination: "/resources", permanent: false },
+      { source: "/what-am-i-hiring-for/:path*", destination: "/resources", permanent: false },
+      { source: "/lab", destination: "/", permanent: false },
+      { source: "/lab/:path*", destination: "/", permanent: false },
+      { source: "/playground", destination: "/", permanent: false },
+      { source: "/playground/:path*", destination: "/", permanent: false },
+      { source: "/sandbox", destination: "/", permanent: false },
+      { source: "/sandbox/:path*", destination: "/", permanent: false },
       /* Short links for mailshots (2026-11-06): plain addresses that open
          the Talent Directory already filtered (?d= picks the discipline). */
       {
