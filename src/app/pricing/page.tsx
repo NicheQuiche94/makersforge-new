@@ -51,21 +51,25 @@ export default async function PricingPage({ searchParams }: { searchParams: Prom
       <section className={styles.body} id="plans">
         <div className="container">
           <PricingCards candidate={person?.id} />
-          <div className={styles.close}>
-            <Link href="/compare" className={`${styles.door} ${styles.doorDark}`}>
-              <h2>Not sure we&apos;re the right fit?</h2>
-              <p>Compare every way to hire for your role: games and tech agencies, running a job ad yourself, and us, on cost and who you reach.</p>
-              <span className={styles.doorCta}>
-                Design your hiring route <span aria-hidden="true">→</span>
-              </span>
-            </Link>
-            <a href={BOOKING_URL} target="_blank" rel="noreferrer" className={`card-shadow ${styles.door} ${styles.doorLight}`}>
+          {/* MOCK 2026-11-25 (DRAFT copy for Andre): one light card in the homepage
+              style, replacing the dark "Not sure" box and its separate white twin. */}
+          <div className={styles.unsure}>
+            <div className={styles.unsureHalf}>
+              <h2>
+                Not sure we&apos;re the <span className="gr">right fit?</span>
+              </h2>
+              <p>Design your hiring route lays out every way to hire for your role, in order and dated, so you can see where we fit and where we don&apos;t.</p>
+              <Link href="/compare" className={styles.unsurePrimary}>
+                <span>Design your hiring route →</span>
+              </Link>
+            </div>
+            <div className={styles.unsureHalf}>
               <h2>Prefer to talk first?</h2>
               <p>Book 15 minutes with Andre. Bring the role and we&apos;ll tell you straight whether we&apos;re the right route for it.</p>
-              <span className={styles.doorCta}>
-                Book a 15-minute call <span aria-hidden="true">→</span>
-              </span>
-            </a>
+              <a href={BOOKING_URL} target="_blank" rel="noreferrer" className={styles.unsureSecondary}>
+                Book a 15-minute call →
+              </a>
+            </div>
           </div>
         </div>
       </section>
