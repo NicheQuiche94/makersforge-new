@@ -53,9 +53,9 @@
 }
 .metaLabel {
   font-weight: 600;
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  font-size: 12.5px;
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--mute);
 }
 .metaValue {
@@ -90,9 +90,9 @@
 .sectionNum {
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-weight: 700;
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  font-size: 12.5px;
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--mute);
 }
 

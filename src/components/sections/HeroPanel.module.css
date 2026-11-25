@@ -39,9 +39,9 @@
   gap: 10px;
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-weight: 600;
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  font-size: 12.5px;
+  letter-spacing: 0;
+  text-transform: none;
   color: rgba(255, 255, 255, 0.78);
   margin: 0;
 }
@@ -54,9 +54,9 @@
   gap: 4px;
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-weight: 600;
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  font-size: 12.5px;
+  letter-spacing: 0;
+  text-transform: none;
   color: rgba(255, 255, 255, 0.62);
 }
 .masthead span:last-child {
@@ -230,9 +230,9 @@
 .doorKicker {
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-weight: 700;
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  font-size: 12.5px;
+  letter-spacing: 0;
+  text-transform: none;
   color: #e14b00;
 }
 .doorTitle {

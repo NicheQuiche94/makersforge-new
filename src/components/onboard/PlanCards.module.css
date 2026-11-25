@@ -58,10 +58,10 @@
   position: absolute;
   top: -12px;
   left: 24px;
-  font-size: 11px;
+  font-size: 12.5px;
   font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
   color: #fff;
   background: linear-gradient(135deg, #ff8a00, #ff3d00);
   border-radius: 999px;
@@ -216,10 +216,10 @@
   vertical-align: middle;
   margin-left: 10px;
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
   color: #fff;
   background: linear-gradient(135deg, #ff8a00, #ff3d00);
   border-radius: 999px;
@@ -324,10 +324,10 @@
 .table thead th span {
   display: block;
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
-  font-size: 11px;
+  font-size: 12.5px;
   font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--mute);
 }
 .table tbody th {
@@ -412,10 +412,10 @@
   color: #fff;
 }
 .save {
-  font-size: 11px;
+  font-size: 12.5px;
   font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
   color: #fff;
   background: linear-gradient(135deg, #ff8a00, #ff3d00);
   border-radius: 999px;

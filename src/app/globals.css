@@ -381,9 +381,9 @@ a {
 .kicker {
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-weight: 600;
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  font-size: 12.5px;
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--mute);
   margin: 0;
 }
@@ -391,9 +391,9 @@ a {
 .meta-label {
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   font-weight: 600;
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font-size: 12.5px;
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--mute);
   margin: 0;
 }
@@ -584,9 +584,9 @@ a {
   align-items: center;
   gap: 7px;
   font-weight: 700;
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-size: 12.5px;
+  letter-spacing: 0;
+  text-transform: none;
   padding: 5px 10px;
   border-radius: 999px;
 }

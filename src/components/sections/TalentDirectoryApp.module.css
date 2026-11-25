@@ -301,10 +301,10 @@
   opacity: 0.6;
 }
 .tag {
-  font-size: 11px;
+  font-size: 12.5px;
   font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
   color: #e14b00;
   border: 1px solid rgba(255, 93, 0, 0.3);
   border-radius: 999px;
@@ -334,10 +334,10 @@
   align-items: center;
   gap: 6px;
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
-  font-size: 11px;
+  font-size: 12.5px;
   font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
   color: #fff;
   background: linear-gradient(135deg, #ff8a00, #ff3d00);
   border-radius: 999px;
@@ -354,10 +354,10 @@
 .avail,
 .unavail {
   font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
-  font-size: 11px;
+  font-size: 12.5px;
   font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
   border-radius: 999px;
   padding: 6px 10px;
   white-space: nowrap;

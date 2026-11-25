@@ -35,7 +35,6 @@ export default function TermsPage() {
       <div className="container">
         {/* HERO */}
         <header className={styles.hero}>
-          <span className={`kicker ${styles.kicker}`}>Legal</span>
           <h1 className={styles.h1}>
             <span className={styles.gr}>Terms.</span>
           </h1>

@@ -174,7 +174,7 @@ export const ROSTER: Profile[] = [
     role: "Head of Growth",
     background:
       "15+ years in growth and performance marketing across mobile games, apps, and AI-driven products. Currently Head of UA & Growth at an AI venture studio (remote contract).",
-    location: { code: "uk", label: "uk" },
+    location: { code: "uk", label: "United Kingdom" },
     industries: ["games", "apps"],
     gamesCat: ["casual", "midcore"],
     appsCat: ["health", "lifestyle", "entertainment"],

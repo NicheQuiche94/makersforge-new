@@ -24,7 +24,6 @@ export default async function PricingPage({ searchParams }: { searchParams: Prom
     <>
       <section className={styles.hero}>
         <div className="container">
-          <span className="kicker">Plans &amp; pricing</span>
           <h1 className={styles.h1}>
             Pick how you hire. <span className="gr">Start today.</span>
           </h1>
