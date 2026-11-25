@@ -153,8 +153,7 @@ export function FAQ({ compact = false, items = ITEMS }: { compact?: boolean; ite
             </h3>
           </div>
           <p className={styles.intro}>
-            If yours isn&apos;t here, drop us a line. We don&apos;t mind a long
-            email.
+            Any other questions? The Message Andre button goes straight to my personal Telegram, and I&apos;ll reply as soon as I can.
           </p>
         </div>
 
