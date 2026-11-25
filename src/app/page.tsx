@@ -37,7 +37,7 @@ export default function HomePage() {
         lede="We headhunt UA, growth, product, design, art and engineering talent. You get 5 worth hiring, not 500 CVs to sift."
         ctas={{
           // 2026-11-09 (Andre): a 63% bounce rate; a free tool to click first, not "talk to us".
-          primary: { href: "/hire-timeline", label: "Will your job ad hire in time?" },
+          primary: { href: "/compare", label: "Design your hiring route" },
           // PROTOTYPE 2026-11-02: self-onboarding replaces the call; the hero links go (Andre).
           secondary: { href: "/start", label: "Get started" },
         }}

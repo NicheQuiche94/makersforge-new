@@ -20,14 +20,8 @@ const TOOL_STYLE: Record<string, { tone: string; icon: React.ReactNode }> = {
       <svg viewBox="0 0 48 48" aria-hidden="true"><rect x="9" y="6" width="30" height="36" rx="5" /><path d="M16 18h16M16 26h16M16 34h9" /></svg>
     ),
   },
-  "/hire-timeline": {
-    tone: "linear-gradient(135deg, #3b82f6, #1d4ed8)",
-    icon: (
-      <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="25" r="16" /><path d="M24 15v10l7 5" /></svg>
-    ),
-  },
   "/compare": {
-    tone: "linear-gradient(135deg, #8b5cf6, #5b21b6)",
+    tone: "linear-gradient(135deg, #3b82f6, #1d4ed8)",
     icon: (
       <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 8v32M10 14h28M10 14l-5 12h10zM38 14l-5 12h10zM16 40h16" /></svg>
     ),

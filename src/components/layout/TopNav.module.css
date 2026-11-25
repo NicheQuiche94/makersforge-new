@@ -319,7 +319,7 @@
 .links .menuAll { color: #e14b00; font-weight: 700; font-size: 13px; margin-bottom: 6px; border-top: 1px solid rgba(14, 15, 17, 0.08); border-radius: 0 0 12px 12px; }
 .modeLight .links .menuAll, .modeGradient .links .menuAll { color: #e14b00; }
 
-/* Six items since What's Appening joined (2026-11-11): keep every label on one
+/* Keep every nav label on one
    line and tighten the spacing on small laptops / tablets. */
 .links a, .menuBtn { white-space: nowrap; }
 @media (max-width: 1180px) and (min-width: 821px) { .hideLg { display: none; } }
