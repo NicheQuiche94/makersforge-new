@@ -52,6 +52,8 @@ export const CV_MINUTES = 5;
 export type Route = {
   id: string;
   name: string;
+  /** One-line name for the comparison table headers. */
+  short: string;
   how: string;
   fee: (salary: number, role?: string) => number;
   feeNote: string;
@@ -80,6 +82,7 @@ export const ROUTES: Route[] = [
   {
     id: "mf",
     name: "MakersForge",
+    short: "MakersForge",
     how: "Mobile games and apps specialists, flat fee",
     fee: (_s, role) => TIER_FEE[tierFor(role ?? "").tier],
     feeNote: "flat by level, paid only if you hire",
@@ -104,6 +107,7 @@ export const ROUTES: Route[] = [
   {
     id: "games20",
     name: "Games-specialist agency",
+    short: "Games agency",
     how: "A mobile games recruiter at 20%",
     fee: (s) => s * 0.2,
     feeNote: "20% of first-year salary",
@@ -126,6 +130,7 @@ export const ROUTES: Route[] = [
   {
     id: "tech25",
     name: "General tech agency",
+    short: "Tech agency",
     how: "A broad tech recruiter at 25%",
     fee: (s) => s * 0.25,
     feeNote: "25% of first-year salary",
@@ -148,6 +153,7 @@ export const ROUTES: Route[] = [
   {
     id: "ads",
     name: "Job ad, hire yourself",
+    short: "Job ad",
     how: "Job boards plus an applicant tracking system",
     fee: () => 400 + 250 * 3,
     feeNote: "About £400 on job boards + about £250 a month for tracking software",
@@ -172,6 +178,7 @@ export const ROUTES: Route[] = [
   {
     id: "inhouse",
     name: "Sourcing it yourself",
+    short: "Sourcing",
     how: "Your own team finds and messages people on LinkedIn",
     fee: () => 135 * 3,
     feeNote: "LinkedIn Recruiter Lite, about $170 a month",
@@ -194,6 +201,7 @@ export const ROUTES: Route[] = [
   {
     id: "referral",
     name: "Referrals",
+    short: "Referrals",
     how: "Your team and network recommend people they know",
     fee: () => 2000,
     feeNote: "a referral bonus, typically €1,500–3,000, paid when the hire starts",

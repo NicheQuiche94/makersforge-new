@@ -173,7 +173,7 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
                   <th />
                   {rows.map((x) => (
                     <th key={x.r.id} className={x.r.id === best.r.id ? `${styles.cmpPick} heat-glow` : ""}>
-                      <span className={styles.cmpName}>{x.r.name}</span>
+                      <span className={styles.cmpName}>{x.r.short}</span>
                       <span className={styles.cmpFee}>{L.fmt(feeIn(x))}</span>
                       <span className={styles.cmpFeeNote}>{x.r.feeNote}</span>
                     </th>
@@ -211,20 +211,12 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
                     <td key={x.r.id} className={`${x.r.id === best.r.id ? styles.cmpPickCell : ""} ${x.r.reach.passive ? styles.ok : styles.late}`}>{x.r.reach.passive ? "✓" : "✕"}</td>
                   ))}
                 </tr>
-                <tr className={styles.cmpWhat}>
-                  <th>What you do</th>
-                  {rows.map((x) => (
-                    <td key={x.r.id} className={x.r.id === best.r.id ? styles.cmpPickCell : ""}>{x.r.youDo}.</td>
-                  ))}
-                </tr>
               </tbody>
             </table>
           </div>
           <p className={styles.hint}>
             * MakersForge: our own data across our seven most recent clients (232 candidates sent, 26 hired). Every other route: Lever,
             Little Grey Book of Recruiting Benchmarks (4 million+ candidates, about 1,000 employers).
-            <br />
-            Each route on its own, starting today. Green makes your date, red doesn&apos;t.
           </p>
         </details>
 

@@ -379,3 +379,8 @@
 .cmp thead th { height: 196px; }
 .cmpName { height: 3.3em; min-height: 0; }
 .cmpFeeNote { -webkit-line-clamp: 4; }
+/* v13: one-line names, so every header lines up exactly */
+.cmpName { height: auto; white-space: nowrap; }
+.cmp thead th { height: 156px; }
+.cmp { table-layout: fixed; }
+.cmp thead th:first-child, .cmp tbody th { width: 190px; }
