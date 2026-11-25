@@ -51,10 +51,10 @@ export function OddsStrip() {
 
 /* Cost and risk per method, 1 to 5, from the guide's scores. */
 const WAYS = [
-  { name: "Referrals", line: "Ask first", cost: 1, risk: 1, tone: "linear-gradient(135deg, #22c55e, #15803d)" },
-  { name: "Job ads", line: "Only reaches whoever's nearby", cost: 2, risk: 5, tone: "linear-gradient(135deg, #3b82f6, #1d4ed8)" },
-  { name: "Talent communities", line: "Slow to build, then compounds", cost: 3, risk: 2, tone: "linear-gradient(135deg, #8b5cf6, #5b21b6)" },
-  { name: "D2C", line: "The exact person you want", cost: 5, risk: 1, tone: "var(--heat-deep)", us: true },
+  { name: "Referrals", line: "Always worth asking first", cost: 1, risk: 1, tone: "linear-gradient(135deg, #22c55e, #15803d)" },
+  { name: "Job ads", line: "Only reaches the people who see it", cost: 2, risk: 5, tone: "linear-gradient(135deg, #3b82f6, #1d4ed8)" },
+  { name: "Talent communities", line: "Slow to build, but it compounds", cost: 3, risk: 2, tone: "linear-gradient(135deg, #8b5cf6, #5b21b6)" },
+  { name: "D2C", line: "Reaches the exact person you want", cost: 5, risk: 1, tone: "var(--heat-deep)", us: true },
 ];
 
 /** The honest bit, as one picture: four ways to hire, each trading cost against risk. */
@@ -69,7 +69,7 @@ export function NotAlways() {
           <h2 className={styles.h2}>
             We&apos;re not always <span className="gr">the answer.</span>
           </h2>
-          <p className={styles.lede}>Four ways to find talent. Each one trades cost against risk.</p>
+          <p className={styles.lede}>There are four ways to find talent, and each one has trade-offs.</p>
         </header>
         <div className={`reveal ${styles.matrix}`}>
           <span className={styles.axY}>Higher risk ↑</span>
@@ -83,7 +83,7 @@ export function NotAlways() {
             </div>
           ))}
         </div>
-        <p className={styles.after}>Low cost or low risk. Pick one, and start with referrals.</p>
+        <p className={styles.after}>You can have low cost or low risk, but rarely both. Start with referrals.</p>
 
         <div className={styles.links}>
           <Link href="/compare" className={styles.primary}>
@@ -137,7 +137,7 @@ export function HomeClose() {
         <h2 className={styles.h2}>
           Don&apos;t leave specific hiring <span className="gr">to chance.</span>
         </h2>
-        <p className={styles.lede}>£0 until you hire someone we found.</p>
+        <p className={styles.lede}>It costs nothing until you hire someone we found.</p>
         <Link href="/start" className={`${styles.primary} heat-glow`}>
           <span>Get started →</span>
         </Link>
