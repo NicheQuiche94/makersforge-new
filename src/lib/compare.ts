@@ -37,12 +37,13 @@ export const HOURLY = 60; // team time, £ an hour
  * Candidates seen for each hire (Andre 2026-11-25, from the guide "The 4 ways
  * to find talent"). Market figures: Lever, Little Grey Book of Recruiting
  * Benchmarks (4M+ candidates, ~1,000 employers, Aug 2015 to Jul 2016).
- * Ours: candidates sent to one client since Jan 2025 vs hires, counting roles
- * that changed partway through. Andre is checking the wider record (likely
- * nearer 1 in 8): change MF_PER_HIRE and the note below together.
+ * Ours (Andre 2026-11-25): candidates sent vs hires across five clients:
+ * Lessmore 1 in 12 (147 sent, 12 hired; skewed by roles that changed partway,
+ * some roles 1 in 4), Yallaplay 1 in 7, Seven Stars 1 in 6, Smile More 1 in 5,
+ * Studio 555 1 in 7. Median 1 in 7, mean 7.4. Change MF_PER_HIRE and the note together.
  */
-export const MF_PER_HIRE = 12;
-export const MF_PER_HIRE_NOTE = "From our record with one client since January 2025: 147 candidates sent, 12 hired, counting roles that changed partway through";
+export const MF_PER_HIRE = 7;
+export const MF_PER_HIRE_NOTE = "From our record across five clients: between 1 in 5 and 1 in 12, typically 1 in 7";
 export const LEVER_NOTE = "Lever's study of 4 million candidates across about 1,000 employers";
 /** Screening a CV properly, cover letter included (the guide's figure). */
 export const CV_MINUTES = 5;
