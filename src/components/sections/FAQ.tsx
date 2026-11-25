@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
+import Link from "next/link";
 import { Money } from "@/components/atoms/Money";
 import styles from "./FAQ.module.css";
 
@@ -27,8 +28,8 @@ export const HOME_FAQ: Item[] = [
     q: "When aren't you the right choice?",
     a: (
       <p>
-        When a referral can fill the role, or when plenty of people could do it and you have time to run a job ad.{" "}
-        <a href="/compare">Design your hiring route</a> shows which route fits your hire.
+        When a referral can fill the role, or when plenty of people could do it and you have time to run a job ad. The{" "}
+        <Link href="/compare">Design your hiring route</Link> tool shows you which route fits your hire.
       </p>
     ),
   },
@@ -36,41 +37,34 @@ export const HOME_FAQ: Item[] = [
     q: "How much does it cost?",
     a: (
       <p>
-        A flat fee per permanent hire, set by the level in the job title: <Money gbp={9000} /> for junior to mid-level roles,{" "}
-        <Money gbp={14000} /> for Senior and Lead roles, <Money gbp={20000} /> for Head, Director and above. You only pay when you hire someone
-        we found.
+        We charge a flat, fixed fee per permanent hire, based on the seniority of the role. <Link href="/pricing">See pricing</Link>.
       </p>
     ),
   },
   {
     q: "How quickly do we see candidates?",
     a: (
-      <p>
-        You book a search week. We headhunt and call that week, and your shortlist of 5 lands the Monday after. Each one has already been
-        interviewed by us, with a written summary of why they fit.
-      </p>
-    ),
-  },
-  {
-    q: "What if none of the 5 are right?",
-    a: (
-      <p>
-        Tell us why and we go again, sharper for it, at no extra cost. Our fee is tied to the hire, not the search.
-      </p>
+      <>
+        <p>
+          You&apos;ll receive the first batch of candidates within one working week. We then keep sending new profiles, a couple at a time,
+          until you have enough to make a hire. Usually, the first 5 are enough for 3 to 4 good interviews.*
+        </p>
+        <p className={styles.note}>* 6 in 10 of our hires come from the first 5 candidates we send, and 9 in 10 from the first 9.</p>
+      </>
     ),
   },
   {
     q: "Can we run referrals or a job ad at the same time?",
-    a: <p>Yes. If a referral or your ad finds the person first, you pay us nothing.</p>,
+    a: (
+      <p>
+        Of course. Just because there are four ways to find talent doesn&apos;t mean you have to pick one and stick to it. You can use them
+        separately or together, depending on the hire. The <Link href="/compare">Design your hiring route</Link> tool shows you how.
+      </p>
+    ),
   },
   {
     q: "Which roles do you hire for?",
-    a: (
-      <p>
-        The whole team at mobile game studios and app companies: UA and growth, art and creative, game design, Unity and mobile engineering,
-        product and data. Permanent or contract.
-      </p>
-    ),
+    a: <p>Engineering, design, art, user acquisition, motion design and creative, product, data and leadership.</p>,
   },
   {
     q: "What if we need to cancel our search week?",
@@ -162,7 +156,7 @@ export function FAQ({ compact = false, items = ITEMS }: { compact?: boolean; ite
       <div className="container">
         <div className={styles.top}>
           <div>
-            <span className="kicker">FAQ</span>
+            {!compact && <span className="kicker">FAQ</span>}
             <h3 className={styles.h3}>
               Questions <span className="gr">studios usually ask.</span>
             </h3>

@@ -39,7 +39,7 @@ export default function HomePage() {
       <LogoWall deep />
       <NotAlways />
       <GuideFeature />
-      <CaseStudy kicker="D2C in practice" />
+      <CaseStudy lead="D2C in practice." />
       <HomeClose />
       <FAQ compact items={HOME_FAQ} />
     </>

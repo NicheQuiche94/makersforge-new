@@ -103,3 +103,5 @@
 .compact .h3 { font-size: clamp(26px, 3vw, 38px); }
 .compact .top { margin-bottom: 20px; }
 .compact .q { font-size: 18px; padding: 15px 0; }
+.note { font-size: 13px; color: var(--mute); margin-top: 8px; }
+.a a { color: #e14b00; font-weight: 700; }
