@@ -226,12 +226,6 @@ export const COMPARE: { row: string; cells: Record<PlanId, string> }[] = [
   { row: "Cancel a search week", cells: all("Free up to 48h before") },
 ];
 
-/** Open search slots left in the current month (the urgency line on /pricing and the homepage). */
-export function slotsLeftThisMonth() {
-  const month = WEEKS[0].start.slice(0, 7);
-  const left = WEEKS.filter((w) => w.start.slice(0, 7) === month).reduce((n, w) => n + w.open, 0);
-  return { month: monthOf(WEEKS[0].start).split(" ")[0], left };
-}
 
 /**
  * Prices in other currencies (Andre 2026-11-09). Each list price is the
