@@ -23,11 +23,12 @@ const HOME_LOGOS: Logo[] = [
   { name: "Triple Tap", src: "/logos/TTG.png" },
 ];
 
-export function LogoWall() {
+/** deep: the darker ground (homepage refresh 2026-11-25, more contrast for the white tiles). */
+export function LogoWall({ deep = false }: { deep?: boolean } = {}) {
   if (HOME_LOGOS.length === 0) return null;
 
   return (
-    <section className={styles.section}>
+    <section className={`${styles.section} ${deep ? styles.deep : ""}`}>
       <div className="container">
         <p className={styles.cap}>Where we&apos;ve placed hires</p>
         <div className={styles.row}>

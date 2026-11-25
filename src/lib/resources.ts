@@ -22,7 +22,7 @@ export const DOWNLOADS: Download[] = [
     cover: "/resources/covers/four-ways.png",
     title: "The 4 ways to find talent",
     blurb: "What each method costs, what it risks, and which roles suit it.",
-    inside: ["Referrals, job ads, D2C and talent communities, side by side", "Risk, cost and effort, scored for each", "How to set each one up, with tools and prices"],
+    inside: ["Referrals, job ads, D2C and talent communities, side by side", "Risk, cost and effort scored for every method", "How to set each one up, with tools and prices"],
     tag: "Guide",
     meta: "PDF · 31 pages",
   },

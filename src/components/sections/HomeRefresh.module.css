@@ -1,0 +1,106 @@
+/* Homepage refresh (Andre 2026-11-25, MOCK). House card language: paper
+   cards, 16px radius, one heat accent, method colours from the guide. */
+.section { position: relative; padding: 96px 0; background: var(--bg); color: var(--ink); }
+.deep { background: var(--bg-deep); }
+.head { max-width: 760px; margin: 0 auto 40px; text-align: center; display: grid; gap: 12px; justify-items: center; }
+.h2 { margin: 0; font-family: "Cal Sans", system-ui, sans-serif; font-weight: 400; font-size: clamp(34px, 4.6vw, 64px); line-height: 1.02; letter-spacing: -0.035em; text-wrap: balance; }
+.lede { margin: 0; max-width: 560px; color: var(--dim); font-size: clamp(17px, 1.5vw, 20px); line-height: 1.55; text-wrap: balance; }
+
+/* The odds */
+.odds { display: grid; gap: 10px; max-width: 880px; margin: 0 auto; }
+.row { display: grid; grid-template-columns: 170px 1fr 64px; gap: 18px; align-items: center; padding: 14px 20px; border-radius: 16px; background: var(--paper); }
+.row b { font-size: 16px; font-weight: 800; }
+.row strong { font-family: "Cal Sans", system-ui, sans-serif; font-weight: 400; font-size: 36px; line-height: 1; text-align: right; }
+.dots { display: flex; flex-wrap: wrap; gap: 3px; }
+.dots i { width: 7px; height: 7px; border-radius: 99px; background: rgba(14, 15, 17, 0.45); }
+.dots i.on { background: #ff5d00; }
+.row.us { color: #fff; background: var(--heat-deep); }
+.us > * { position: relative; z-index: 1; }
+.us .dots i { background: rgba(255, 255, 255, 0.55); }
+.us .dots i.on { background: #fff; }
+.source { max-width: 880px; margin: 14px auto 0; font-size: 13px; color: var(--mute); text-align: center; }
+
+/* The four ways */
+.ways { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; max-width: 1040px; margin: 0 auto; }
+.way { display: grid; gap: 8px; align-content: start; padding: 22px 20px; border-radius: 16px; background: var(--paper); }
+.wayUs { box-shadow: inset 0 0 0 2px #ff8a00; }
+.tab { width: 40px; height: 8px; border-radius: 99px; }
+.way strong { font-family: "Cal Sans", system-ui, sans-serif; font-weight: 400; font-size: 24px; letter-spacing: -0.02em; }
+.way p { margin: 0; color: var(--dim); line-height: 1.5; font-size: 15px; }
+.links { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 22px; margin-top: 36px; }
+.primary { position: relative; overflow: hidden; display: inline-block; padding: 16px 28px; border-radius: 999px; background: var(--tone-heat); color: #fff; font-weight: 800; font-size: 17px; text-decoration: none; box-shadow: 0 12px 28px -10px rgba(255, 61, 0, 0.5); transition: transform 0.15s; }
+.primary > span { position: relative; z-index: 1; color: #fff; }
+.primary:hover { transform: translateY(-2px); }
+.secondary { font-weight: 800; color: #e14b00; text-decoration: none; }
+
+/* The close */
+.close { padding: 110px 0; }
+.closeInner { display: grid; justify-items: center; gap: 16px; text-align: center; }
+.close .primary { padding: 20px 40px; font-family: "Cal Sans", system-ui, sans-serif; font-weight: 400; font-size: clamp(22px, 2.4vw, 28px); }
+.slots { margin: 0; color: var(--dim); font-size: 15px; }
+
+@media (max-width: 900px) { .ways { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) {
+  .ways { grid-template-columns: 1fr; }
+  .row { grid-template-columns: 110px 1fr 44px; gap: 10px; padding: 12px 14px; }
+  .row strong { font-size: 26px; }
+  .dots i { width: 5px; height: 5px; }
+}
+
+/* v2 (Andre 2026-11-25): the four ways as a cost/risk picture */
+.matrix { position: relative; max-width: 880px; height: 380px; margin: 0 auto; border-left: 2px solid var(--hair-strong); border-bottom: 2px solid var(--hair-strong); }
+.axY { position: absolute; left: -10px; top: 0; transform: rotate(-90deg) translateX(-100%); transform-origin: left top; font-size: 13px; font-weight: 800; color: var(--mute); white-space: nowrap; }
+.axX { position: absolute; right: 0; bottom: -26px; font-size: 13px; font-weight: 800; color: var(--mute); }
+.pt { position: absolute; transform: translate(-50%, 50%); display: grid; justify-items: center; gap: 6px; text-align: center; }
+.pill { position: relative; overflow: hidden; padding: 11px 20px; border-radius: 999px; color: #fff; font-family: "Cal Sans", system-ui, sans-serif; font-size: 20px; white-space: nowrap; box-shadow: 0 10px 24px -12px rgba(14, 15, 17, 0.4); }
+.pill > span { position: relative; z-index: 1; }
+.pt em { font-style: normal; font-size: 14px; font-weight: 600; color: var(--dim); white-space: nowrap; }
+.ptUs .pill { font-size: 24px; padding: 13px 26px; }
+.ptUs em { color: var(--ink); font-weight: 800; }
+.after { margin: 44px auto 0; text-align: center; font-size: 18px; font-weight: 700; }
+
+/* The guide */
+.guide { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(28px, 5vw, 72px); align-items: center; max-width: 1040px; margin: 0 auto; padding: clamp(24px, 4vw, 48px); border-radius: 28px; background: var(--paper); }
+.cover { display: block; border-radius: 14px; overflow: hidden; transform: rotate(-2deg); box-shadow: 0 30px 60px -20px rgba(255, 61, 0, 0.35), 0 12px 30px rgba(14, 15, 17, 0.12); transition: transform 0.25s; }
+.cover:hover { transform: rotate(0deg) translateY(-4px); }
+.cover img { display: block; width: 100%; height: auto; }
+.guideBody { display: grid; gap: 18px; justify-items: start; }
+.guideKicker { margin: 0; font-weight: 800; color: #e14b00; }
+.guideBody .h2 { text-align: left; }
+.inside { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.inside li { position: relative; padding-left: 28px; font-size: 16.5px; line-height: 1.45; }
+.inside li::before { content: ""; position: absolute; left: 0; top: 5px; width: 14px; height: 14px; border-radius: 99px; background: var(--tone-heat); }
+.tools { margin: 0; color: var(--dim); font-size: 15px; }
+.tools a { color: #e14b00; font-weight: 800; text-decoration: none; }
+
+@media (max-width: 820px) {
+  .guide { grid-template-columns: 1fr; }
+  .cover { max-width: 280px; margin: 0 auto; }
+  .matrix { height: 340px; }
+  .pill { font-size: 15px; padding: 8px 13px; }
+  .ptUs .pill { font-size: 17px; }
+  .pt em { font-size: 12px; white-space: normal; max-width: 120px; }
+}
+
+/* v3 (Andre 2026-11-25): axis label off the line; the odds compact, inside the risk section */
+.axY { left: 0; top: -30px; transform: none; }
+.oddsBlock { max-width: 880px; margin: 64px auto 0; display: grid; gap: 10px; justify-items: center; text-align: center; }
+.h3 { margin: 0; font-family: "Cal Sans", system-ui, sans-serif; font-weight: 400; font-size: clamp(26px, 2.8vw, 36px); line-height: 1.05; letter-spacing: -0.02em; }
+.oddsCompact { width: 100%; gap: 6px; margin-top: 10px; }
+.oddsCompact .row { grid-template-columns: 150px 1fr 48px; padding: 9px 16px; border-radius: 12px; text-align: left; }
+.oddsCompact .row b { font-size: 14.5px; }
+.oddsCompact .row strong { font-size: 24px; }
+.oddsCompact .dots { gap: 2px; }
+.oddsCompact .dots i { width: 5px; height: 5px; }
+.oddsBlock .source { margin-top: 4px; }
+
+/* v4: the guide on its own ground with a corner glow */
+.guideSection { overflow: hidden; background: var(--bg-deep); }
+.above { position: relative; z-index: 1; }
+
+/* v5: the four ways on the light ground with a corner glow */
+.glowSection { overflow: hidden; background: var(--bg); }
+
+/* v6: the close on the darker shade, so case study, close and FAQ don't run together */
+.close { overflow: hidden; }
+.pt em { white-space: normal; max-width: 200px; line-height: 1.35; }

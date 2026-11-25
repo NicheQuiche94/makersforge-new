@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
+import Link from "next/link";
 import { Money } from "@/components/atoms/Money";
 import styles from "./FAQ.module.css";
 
@@ -11,6 +12,62 @@ type Item = {
 
 // 2026-10-27, from the handbook + Andre: no guarantee; repeat searches free
 // (fee is tied to the placement, not the process); 5 WORKING days to shortlist.
+/* Homepage questions (Andre 2026-11-25, DRAFT): built on D2C, honest about when
+   we're not the answer. The free-profiles offer is gone. */
+export const HOME_FAQ: Item[] = [
+  {
+    q: "What is D2C recruitment?",
+    a: (
+      <p>
+        Direct-to-candidate recruitment. We find the specific people you want, approach them directly and get them interested in your role,
+        instead of waiting for them to see an ad.
+      </p>
+    ),
+  },
+  {
+    q: "When aren't you the right choice?",
+    a: (
+      <p>
+        When a referral can fill the role, or when plenty of people could do it and you have time to run a job ad. The{" "}
+        <Link href="/compare">Design your hiring route</Link> tool shows you which route fits your hire.
+      </p>
+    ),
+  },
+  {
+    q: "How much does it cost?",
+    a: (
+      <p>
+        We charge a flat, fixed fee per permanent hire, based on the seniority of the role. <Link href="/pricing">See pricing</Link>.
+      </p>
+    ),
+  },
+  {
+    q: "How quickly do we see candidates?",
+    a: (
+      <>
+        <p>
+          You&apos;ll receive the first batch of candidates within one working week. We then keep sending new profiles, a couple at a time,
+          until you have enough to make a hire. Usually, the first 5 are enough for 3 to 4 good interviews.*
+        </p>
+        <p className={styles.note}>* 6 in 10 of our hires come from the first 5 candidates we send, and 9 in 10 from the first 9.</p>
+      </>
+    ),
+  },
+  {
+    q: "Can we run referrals or a job ad at the same time?",
+    a: (
+      <p>
+        Of course. Just because there are four ways to find talent doesn&apos;t mean you have to pick one and stick to it. You can use them
+        separately or together, depending on the hire. The <Link href="/compare">Design your hiring route</Link> tool shows you how.
+      </p>
+    ),
+  },
+  {
+    q: "Which roles do you hire for?",
+    a: <p>Engineering, design, art, user acquisition, motion design and creative, product, data and leadership.</p>,
+  },
+];
+
 const ITEMS: Item[] = [
   {
     q: "Why 5 candidates, not more?",
@@ -81,28 +138,27 @@ const ITEMS: Item[] = [
   },
 ];
 
-export function FAQ() {
-  // First item open by default per brief
-  const [openIdx, setOpenIdx] = useState<number | null>(0);
+export function FAQ({ compact = false, items = ITEMS }: { compact?: boolean; items?: Item[] } = {}) {
+  // First item open by default per brief; the compact homepage version starts closed (2026-11-25).
+  const [openIdx, setOpenIdx] = useState<number | null>(compact ? null : 0);
 
   return (
-    <section className={styles.section}>
+    <section className={`${styles.section} ${compact ? styles.compact : ""}`}>
       <div className="container">
         <div className={styles.top}>
           <div>
-            <span className="kicker">FAQ</span>
+            {!compact && <span className="kicker">FAQ</span>}
             <h3 className={styles.h3}>
               Questions <span className="gr">studios usually ask.</span>
             </h3>
           </div>
           <p className={styles.intro}>
-            If yours isn&apos;t here, drop us a line. We don&apos;t mind a long
-            email.
+            Any other questions? The Message Andre button goes straight to my personal Telegram, and I&apos;ll reply as soon as I can.
           </p>
         </div>
 
         <div className={`reveal ${styles.list}`}>
-          {ITEMS.map((item, i) => {
+          {items.map((item, i) => {
             const open = openIdx === i;
             return (
               <div key={i} className={`${styles.item} ${open ? styles.itemOpen : ""}`}>

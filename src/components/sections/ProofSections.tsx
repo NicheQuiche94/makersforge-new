@@ -8,21 +8,30 @@ import { CornerGlow } from "./CornerGlow";
  * testimonials (Lessmore figures + quotes from Andre, 2026-10-27).
  */
 
-export function CaseStudy() {
+/** lead: an orange first line for the headline (homepage refresh 2026-11-25, no eyebrow). */
+export function CaseStudy({ lead }: { lead?: string } = {}) {
   return (
     <section className={styles.section} id="proof">
       <CornerGlow variant="trSoft" />
       <div className={`container ${styles.contentAbove}`}>
         <header className={`reveal ${styles.header}`}>
-          <p className="kicker">Case study</p>
-          <h2 className={styles.h2}>22 hires without the fuss.</h2>
+          {!lead && <p className="kicker">Case study</p>}
+          <h2 className={styles.h2}>
+            {lead && (
+              <>
+                <span className="gr">{lead}</span>
+                <br />
+              </>
+            )}
+            22 hires without the fuss.
+          </h2>
         </header>
 
         <div className={styles.caseGrid}>
           <div className={`reveal card-shadow ${styles.card} ${styles.caseStory}`}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/logos/lessmore.png" alt="Lessmore" className={styles.caseLogo} />
-            <p className={styles.caseKicker}>Forge Master · We Are Warriors</p>
+            <p className={styles.caseKicker}>Forge Master and We Are Warriors</p>
             <h3 className={styles.caseTitle}>No job ads. No 500-CV inbox.</h3>
             <p>
               Over 3.5 years we&apos;ve made 22 hires for Lessmore, the studio
@@ -99,7 +108,8 @@ export function CaseStudy() {
   );
 }
 
-export function TalentDirectory() {
+/** title: the homepage refresh (2026-11-25) leads with the offer. */
+export function TalentDirectory({ title = "How we hit 5 working days." }: { title?: string } = {}) {
   return (
     <section className={`${styles.section} ${styles.sectionAlt}`}>
       <div className={`container ${styles.contentAbove}`}>
@@ -113,7 +123,7 @@ export function TalentDirectory() {
           <div className={styles.directoryText}>
             <p className="kicker">The MakersForge Talent Directory</p>
             <h2 className={styles.h2} style={{ textAlign: "left" }}>
-              How we hit 5 working days.
+              {title}
             </h2>
             <p>
               Every person in our Talent Directory has spent 30 to 90 minutes
