@@ -174,7 +174,7 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
                   {rows.map((x) => (
                     <th key={x.r.id} className={x.r.id === best.r.id ? `${styles.cmpPick} heat-glow` : ""}>
                       <span className={styles.cmpName}>{x.r.short}</span>
-                      <span className={styles.cmpFee}>{L.fmt(feeIn(x))}</span>
+                      <span className={`${styles.cmpFee} ${x.r.feeFrom != null ? styles.cmpFeeRange : ""}`}>{x.r.feeFrom != null ? `${L.fmt(x.r.feeFrom)}–${L.fmt(feeIn(x))}` : L.fmt(feeIn(x))}</span>
                       <span className={styles.cmpFeeNote}>{x.r.feeNote}</span>
                     </th>
                   ))}

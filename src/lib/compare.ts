@@ -57,6 +57,8 @@ export type Route = {
   how: string;
   fee: (salary: number, role?: string) => number;
   feeNote: string;
+  /** The low end when the fee is a range (referrals: most are free). */
+  feeFrom?: number;
   shortlist: string;
   hireWeeks: [number, number];
   get: string;
@@ -205,8 +207,11 @@ export const ROUTES: Route[] = [
     name: "Referrals",
     short: "Referrals",
     how: "Your team and network recommend people they know",
+    // Most referrals are free; only some studios pay a bonus (Andre 2026-11-25). Shown as a range so a
+    // small studio doesn't read referrals as needing a £2,000 budget.
     fee: () => 2000,
-    feeNote: "a referral bonus, typically €1,500–3,000, paid when the hire starts",
+    feeFrom: 0,
+    feeNote: "Most are free; some studios pay a bonus",
     shortlist: "Depends who has a name",
     hireWeeks: [3, 8],
     get: "As many names as your network has",

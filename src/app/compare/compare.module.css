@@ -384,3 +384,4 @@
 .cmp thead th { height: 156px; }
 .cmp { table-layout: fixed; }
 .cmp thead th:first-child, .cmp tbody th { width: 190px; }
+.cmpFeeRange { white-space: nowrap; font-size: 20px; line-height: 36px; }
