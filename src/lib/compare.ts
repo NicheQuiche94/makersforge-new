@@ -87,7 +87,7 @@ export const ROUTES: Route[] = [
     short: "MakersForge",
     how: "Mobile games and apps specialists, flat fee",
     fee: (_s, role) => TIER_FEE[tierFor(role ?? "").tier],
-    feeNote: "flat by level, paid only if you hire",
+    feeNote: "flat by level",
     shortlist: "1 week",
     hireWeeks: [2, 4],
     get: "About 5 vetted people, plus more batches should you need them",
@@ -103,7 +103,7 @@ export const ROUTES: Route[] = [
       { label: "Coordination", h: 1 },
     ],
     reach: { passive: true, label: "Active + passive", detail: "We headhunt, so you see people who aren't looking and would never see your ad, as well as those who are" },
-    tips: ["Book a search week online, no sales call.", "You get 5 people in about 5 working days, each already interviewed by us.", "If nobody fits, you pay nothing."],
+    tips: ["Book a search week online, no sales call.", "You get 5 people in about 5 working days, each already interviewed by us.", "If nobody fits, we go again."],
     us: true,
   },
   {
@@ -419,13 +419,12 @@ export function planFor(input: CompareInput, now = Date.now(), kind: Kind = "rec
       title: input.asked || kind === "safest" ? "Run a MakersForge search" : "Run a MakersForge search alongside",
       chip: "MakersForge",
       link: "parallel",
-      line: "£0 until you hire someone we found",
+      line: "A shortlist of about 5 within a week",
       when: `From ${d(now)}`,
       tips: [
         "We start straight away, so you don't lose a week",
         `A shortlist of about 5 people by ${d(mfShort)}, each already interviewed by us`,
         `1 in ${MF_PER_HIRE} of the candidates we send get hired`,
-        "No fee unless you hire someone we found",
       ],
     });
     lanes.push({ id: "mf", label: "MakersForge", from: now, to: mfShort, free: true });
@@ -462,7 +461,6 @@ export function planFor(input: CompareInput, now = Date.now(), kind: Kind = "rec
           ? `Your ad won't be screened until ${d(screenTo)}, so judge it early: if the first applicants aren't right by ${d(mfLatest)}, start us then`
           : `If nobody's right by ${d(mfLatest)}, start us then: it's the last day that still makes your date`,
         "We go direct to the people who didn't apply, with a shortlist within a week",
-        "No fee unless you hire someone we found",
       ],
     });
     lanes.push({ id: "mf", label: "MakersForge if needed", from: mfLatest, to: mfLatest + T.mfShortlist * WEEK, free: true });
@@ -509,12 +507,12 @@ export function planFor(input: CompareInput, now = Date.now(), kind: Kind = "rec
     kind === "cheapest"
       ? "Time and effort for cost: about 12 hours of screening, and no backup if the ad doesn't land"
       : kind === "quickest"
-        ? "Cost for speed: our fee, but only if you hire someone we found"
+        ? "Cost for speed: our fee buys the earliest hire"
         : kind === "safest"
           ? "Cost and effort for certainty: the ad up front, three things running at once, and our fee if you hire ours"
           : main === "ads"
             ? "Speed for cost: if the ad doesn't land, you start us later, nearer your date"
-            : "Cost for certainty: our fee, but only if you hire someone we found";
+            : "Cost for certainty: our fee buys direct reach to the right people";
   return { kind, steps, lanes, hire, deadline, onTime: fits(hire), main, trade, squeeze, process: P, mfFree: mfNow || mfBackup, usesAd: useAd, usesMf: mfNow || mfBackup, adUpfront: useAd && (kind === "safest" || !!input.asked) };
 }
 

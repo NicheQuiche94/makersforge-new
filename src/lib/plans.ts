@@ -207,8 +207,6 @@ export const shortlistDate = (iso: string) => shortDate(addDays(iso, 7));
 /** Terms that appear in the five-line summary (placeholders Andre still signs off). */
 export const TERMS = {
   paymentDays: 14,
-  cancelHours: 48,
-  cancelFee: "£1,500",
   billableMonths: 12,
 };
 
@@ -223,7 +221,7 @@ export const COMPARE: { row: string; cells: Record<PlanId, string> }[] = [
   { row: "Interviews to offer", cells: all("We book the interviews and run the process") },
   { row: "Percentage of salary", cells: all("Never") },
   { row: "Payment terms", cells: all("14 days") },
-  { row: "Cancel a search week", cells: all("Free up to 48h before") },
+  { row: "Cancel a search week", cells: all("Free") },
 ];
 
 /** Open search slots left in the current month (the urgency line on /pricing and the homepage). */
@@ -257,12 +255,10 @@ export type PriceList = {
   contract: Record<Tier, number>;
   /** Contractor fees in words, for terms and summaries. */
   contractText: string;
-  cancelFee: number;
   salary: Record<Tier, number>;
   /** A typical agency fee for the tier: salary × its rate (rounded to 1,000 outside pounds). */
   agency: (tier: Tier) => number;
 };
-export const CANCEL_FEE = 1_500;
 export function priceList(cur: Currency = "GBP"): PriceList {
   const r = RATES[cur];
   const to = (n: number, unit: number) => (cur === "GBP" ? n : Math.round((n * r) / unit) * unit);
@@ -292,7 +288,6 @@ export function priceList(cur: Currency = "GBP"): PriceList {
     step,
     contract,
     contractText: `${fmt(contract.team)} a month for a Team role, ${fmt(contract.senior)} for Senior and ${fmt(contract.executive)} for Executive`,
-    cancelFee: to(CANCEL_FEE, 100),
     salary: each({ team: AGENCY_BENCH.team.salary, senior: AGENCY_BENCH.senior.salary, executive: AGENCY_BENCH.executive.salary }, 1000),
     agency: (t) => to(AGENCY_BENCH[t].salary * AGENCY_BENCH[t].pct, 1000),
   };

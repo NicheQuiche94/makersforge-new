@@ -33,8 +33,8 @@ export type TermsVars = {
   /** Fees are written in this currency (default pounds). */
   currency?: Currency;
   contractFee?: string; // unused since tiered contractor fees (2026-11-09)
-  cancelFee?: string; // overrides the converted £1,500
-  cancelHours: number; // 48
+  /** No longer used: search weeks cancel free (2026-11-25). Kept optional so older callers still type-check. */
+  cancelHours?: number;
   guarantee?: boolean; // Andre's replacement guarantee, off unless negotiated
   discount?: { pct: number; code: string }; // a Christmas gift code, off the first Engagement's Fee
   tiers?: Tier[]; // one per role, from the briefs (generalist / specialist)
@@ -55,7 +55,6 @@ export function buildTerms(v: TermsVars): { parties: Clause[]; sections: Section
   const batch = v.variant === "batch";
   const L = priceList(v.currency ?? "GBP");
   const gbp = L.fmt;
-  const cancelFee = v.cancelFee ?? L.fmt(L.cancelFee);
   const steps = tiers.map((t, i) => L.fee(t, batch ? i : 0, { batch, retained, discountPct: i === 0 ? v.discount?.pct : 0 }));
   const retainer = Math.round(steps.reduce((a, b) => a + b, 0) / 3 / 100) * 100;
   const ORD = ["first", "second", "third", "fourth", "fifth"];
@@ -83,7 +82,7 @@ export function buildTerms(v: TermsVars): { parties: Clause[]; sections: Section
     {
       text: `"Search Week" - the week, Monday to Friday, booked by ${C} during which ${MF} carries out the search for a vacancy.`,
       kind: "new",
-      note: "Needed for the cancellation clause.",
+      note: "Used in the cancellation clause.",
     },
     ...(v.variant === "batch"
       ? [
@@ -209,9 +208,9 @@ export function buildTerms(v: TermsVars): { parties: Clause[]; sections: Section
     },
     { text: `then ${C} shall be liable to pay the Fees for the Introduction as though the Candidate was Engaged by ${C} as a result of the Introduction.`, kind: "original" },
     {
-      text: `${C} may cancel or rearrange a Search Week free of charge by giving written notice at least ${v.cancelHours} hours before it starts. If ${C} cancels within ${v.cancelHours} hours of the start of a Search Week, or after it has started, ${C} shall pay a cancellation fee of ${cancelFee}.`,
+      text: `${C} may cancel or rearrange a Search Week free of charge by giving written notice before it starts.`,
       kind: "new",
-      note: "The late-cancellation fee (in the full terms and FAQ, not the five-line summary).",
+      note: "No cancellation fee (Andre 2026-11-25).",
     },
   ];
 

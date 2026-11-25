@@ -156,7 +156,6 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
           <div className={styles.diagItem}>
             <span>Cost</span>
             <strong>{cost(plan)}</strong>
-            {plan.mfFree && <p>A search with us is £0 until you hire someone we found.</p>}
           </div>
         </aside>
         </div>
@@ -223,7 +222,6 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
         {plan.steps.some((st) => st.id === "mf") && (
           <div className={styles.bigCta}>
             <Link href="/start" className="heat-glow"><span>Start a search week →</span></Link>
-            <span>£0 until you hire someone we found</span>
           </div>
         )}
 
@@ -294,7 +292,6 @@ function Timeline({ lanes, deadline, hire }: { lanes: Lane[]; deadline: number |
         {lanes.map((l) => (
           <div key={l.id} className={styles.tlRow}>
             <span className={`${styles.tlBar} ${styles["tl_" + l.id]}`} style={{ left: pct(l.from), width: `calc(${pct(l.to)} - ${pct(l.from)})` }}>
-              {l.free && <i>£0</i>}
             </span>
           </div>
         ))}
