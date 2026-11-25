@@ -1,3 +1,4 @@
+import { UNSUB_PLACEHOLDER } from "@/lib/unsubPlaceholder";
 /**
  * Client emails for self-onboarding (PROTOTYPE 2026-11-02). Every email the
  * booking flow, the admin and the portal send, as { to, subject, html }.
@@ -53,7 +54,7 @@ const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replac
 export function leadLayout(body: string, preheader: string) {
   return layout(body, preheader).replace(
     `<a href="${SITE}" style="color:#8a8e97">makersforge.gg</a> · <a href="${SITE}/account" style="color:#8a8e97">Your client portal</a>`,
-    `You're getting this because you used a free MakersForge resource or tool. Don't want more emails? Just reply "stop" and we won't email you again. <a href="${SITE}/legal/privacy" style="color:#8a8e97">Privacy policy</a><br><a href="${SITE}" style="color:#8a8e97">makersforge.gg</a>`,
+    `You're getting this because you used a free MakersForge resource or tool. <a href="${UNSUB_PLACEHOLDER}" style="color:#8a8e97">Unsubscribe</a> · <a href="${SITE}/legal/privacy" style="color:#8a8e97">Privacy policy</a><br><a href="${SITE}" style="color:#8a8e97">makersforge.gg</a>`,
   );
 }
 
