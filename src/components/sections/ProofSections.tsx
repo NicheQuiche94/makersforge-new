@@ -31,7 +31,7 @@ export function CaseStudy({ lead }: { lead?: string } = {}) {
           <div className={`reveal card-shadow ${styles.card} ${styles.caseStory}`}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/logos/lessmore.png" alt="Lessmore" className={styles.caseLogo} />
-            <p className={styles.caseKicker}>Forge Master · We Are Warriors</p>
+            <p className={styles.caseKicker}>The studio behind Forge Master and We Are Warriors</p>
             <h3 className={styles.caseTitle}>No job ads. No 500-CV inbox.</h3>
             <p>
               Over 3.5 years we&apos;ve made 22 hires for Lessmore, the studio

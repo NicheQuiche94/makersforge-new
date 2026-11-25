@@ -66,15 +66,6 @@ export const HOME_FAQ: Item[] = [
     q: "Which roles do you hire for?",
     a: <p>Engineering, design, art, user acquisition, motion design and creative, product, data and leadership.</p>,
   },
-  {
-    q: "What if we need to cancel our search week?",
-    a: (
-      <p>
-        Cancel free up to 48 hours before it starts. After that there&apos;s a <Money gbp={1500} unit={100} /> fee, because by then we&apos;ve
-        already done the prep to deliver your shortlist on time.
-      </p>
-    ),
-  },
 ];
 
 const ITEMS: Item[] = [

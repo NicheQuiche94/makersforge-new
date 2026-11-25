@@ -476,3 +476,6 @@
     linear-gradient(var(--paper), var(--paper)) padding-box,
     conic-gradient(from 0deg, #ff5d00, #f5b300, #22c55e, #3b82f6, #8b5cf6, #ec4899, #ff5d00) border-box;
 }
+
+/* 2026-11-25 (Andre): no small-caps labels; the studio's games as a plain line */
+.caseKicker { text-transform: none !important; letter-spacing: 0 !important; font-size: 15px !important; font-weight: 600 !important; color: var(--dim) !important; }

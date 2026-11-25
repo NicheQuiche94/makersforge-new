@@ -137,7 +137,6 @@ export function HomeClose() {
         <h2 className={styles.h2}>
           Don&apos;t leave specific hiring <span className="gr">to chance.</span>
         </h2>
-        <p className={styles.lede}>It costs nothing until you hire someone we found.</p>
         <Link href="/start" className={`${styles.primary} heat-glow`}>
           <span>Get started →</span>
         </Link>
