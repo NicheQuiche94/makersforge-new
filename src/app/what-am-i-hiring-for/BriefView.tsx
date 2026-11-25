@@ -83,7 +83,7 @@ export function BriefView({ b, a, email, autoDraft = false }: { b: Brief; a: Ans
 
       <div className={g.bridge}>
         <p>Or skip the ad: see how every way to hire this role compares on cost, speed and your team&apos;s hours.</p>
-        <Link href="/compare" className={g.go}>Compare hiring routes →</Link>
+        <Link href="/compare" className={g.go}>Design your hiring route →</Link>
       </div>
     </div>
   );

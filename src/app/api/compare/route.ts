@@ -87,21 +87,21 @@ export async function POST(req: Request) {
   const role = roleLabel(input.role);
   const html = layout(
     `<p style="margin:0 0 14px">Hi ${esc(input.name?.split(" ")[0] || "there")},</p>
-<p style="margin:0 0 14px">Here's your comparison for the ${esc(role)} role: every way to hire it, side by side on cost, speed, interviews and your team's hours.</p>
+<p style="margin:0 0 14px">Here's your hiring route for the ${esc(role)} role: what to do, in what order, and when the hire lands.</p>
 <table role="presentation" cellpadding="0" cellspacing="0" style="margin:6px 0 20px"><tr><td bgcolor="#ff5d00" style="border-radius:999px">
-<a href="${link}" style="display:inline-block;padding:13px 24px;font-weight:700;font-size:15px;color:#fff;text-decoration:none;border-radius:999px">See your comparison →</a>
+<a href="${link}" style="display:inline-block;padding:13px 24px;font-weight:700;font-size:15px;color:#fff;text-decoration:none;border-radius:999px">See your hiring route →</a>
 </td></tr></table>
 ${promo ? `<p style="margin:0 0 14px">${special ? `You need this hire made soon, so there's a priority pack waiting at the bottom: priority on our next search week, plus a ${promo.item} with better odds.` : `There's a ${promo.item} waiting for you at the bottom too.`} ${promo.emoji}</p>` : ""}
 <p style="margin:0 0 14px">Hope it's helpful. Any questions, just reply: it comes straight to me.</p>
 <p style="margin:0 0 14px">Andre<br><span style="color:#5b5f69;font-size:14px">Founder, MakersForge</span></p>`,
-    `Your ${role} hiring comparison`,
+    `Your ${role} hiring route`,
   );
-  const sent = await sendMail({ to: email, subject: `Your hiring comparison: ${role}`, html });
+  const sent = await sendMail({ to: email, subject: `Your hiring route: ${role}`, html });
   if (!sent.ok) return Response.json({ error: "We couldn't send that. Please try again." }, { status: 502 });
 
   if (process.env.VERCEL_ENV === "production") {
     await toAndre(
-      `📊 Comparison requested: ${role}, ${gbp(input.salary)}${cur !== "GBP" ? ` (entered in ${cur})` : ""}${input.start ? `, hire needed by ${day(new Date(input.start))}` : ""}${prize ? ` ${promo!.emoji} ${prize.pct}%${special ? " (priority)" : ""}` : ""}\n` +
+      `📊 Hiring route requested: ${role}, ${gbp(input.salary)}${cur !== "GBP" ? ` (entered in ${cur})` : ""}${input.start ? `, hire needed by ${day(new Date(input.start))}` : ""}${prize ? ` ${promo!.emoji} ${prize.pct}%${special ? " (priority)" : ""}` : ""}\n` +
         `${input.name || "No name"} · ${email}\n` +
         `Suggested: ${plan.steps.map((s) => s.title).join(" → ")} · headline "${HOOKS[input.hook].accent}"`,
     ).catch(() => {});

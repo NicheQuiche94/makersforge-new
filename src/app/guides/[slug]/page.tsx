@@ -112,7 +112,7 @@ export default async function GuidePage({ params }: Props) {
 
           <div className={styles.cta}>
             <p>Hiring for a mobile games or apps role? See how every route compares for yours: cost, weeks to hire and your team&apos;s hours.</p>
-            <Link href="/compare" className={styles.go}>Compare hiring routes →</Link>
+            <Link href="/compare" className={styles.go}>Design your hiring route →</Link>
           </div>
 
           {others.length > 0 && (

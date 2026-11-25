@@ -3,7 +3,7 @@ import { decodeInput } from "@/lib/compare";
 import { Results } from "./Results";
 
 export const metadata: Metadata = {
-  title: "Your hiring comparison · MakersForge",
+  title: "Your hiring route · MakersForge",
   robots: { index: false, follow: false },
 };
 

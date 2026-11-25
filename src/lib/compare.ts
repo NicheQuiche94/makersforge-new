@@ -9,11 +9,11 @@ import { tierFor } from "@/lib/tier";
 
 /** Headline A/B test (Andre 2026-11-07): the orange words are what changes. */
 export const HOOKS = [
-  { pre: "Hiring, but not sure which route is most ", accent: "cost-effective", post: "?", g: "We'll compare every route for your role." },
-  { pre: "Hiring, but not sure which route is most ", accent: "time-efficient", post: "?", g: "We'll compare every route for your role, including the hours it takes your team." },
+  { pre: "Hiring, but not sure which route is most ", accent: "cost-effective", post: "?", g: "We'll design your hiring route." },
+  { pre: "Hiring, but not sure which route is most ", accent: "time-efficient", post: "?", g: "We'll design your hiring route, including the hours it takes your team." },
   { pre: "Hiring, and it's ", accent: "time-sensitive", post: "?", g: "We'll show you which route gets someone in fastest." },
   // The LinkedIn ad's headline (2026-11-09): shown for ?ad=1 only, never at random.
-  { pre: "Hiring, but don't know ", accent: "where to start", post: "?", g: "Every way to hire your role, side by side." },
+  { pre: "Hiring, but don't know ", accent: "where to start", post: "?", g: "We'll design your hiring route." },
 ];
 /** Headlines in the random A/B rotation (the ones after these are ad-only). */
 export const ROTATING_HOOKS = 3;
@@ -307,7 +307,7 @@ const withXmas = (from: number, weeks: number) => {
 
 export type Lane = { id: "referral" | "ads" | "screen" | "mf" | "interviews"; label: string; from: number; to: number; free?: boolean };
 /** One step of the plan: what to do, when, and exactly how. */
-export type Step = { id: string; title: string; when: string; tips: string[] };
+export type Step = { id: string; title: string; when: string; tips: string[]; line: string; chip?: string };
 
 /**
  * The plan (Andre 2026-11-25): honest, dated and tactical. Referrals first,
@@ -349,6 +349,8 @@ export function planFor(input: CompareInput, now = Date.now()) {
     steps.push({
       id: "referral",
       title: "Ask for referrals",
+      chip: "Referrals",
+      line: "Ask for a specific person",
       when: range(refFrom, refTo),
       tips: [
         `Ask for a specific person, not "anyone good": "Who's the best ${role} you've worked with?"`,
@@ -364,6 +366,8 @@ export function planFor(input: CompareInput, now = Date.now()) {
     steps.push({
       id: "ads",
       title: `Post a job ad, capped at ${CAP} applicants`,
+      chip: "Job ad, capped",
+      line: `Take it down at ${CAP} applicants`,
       when: `From ${d(adFrom)}`,
       tips: [
         "Post on Hitmarker, Games Jobs Direct and LinkedIn Jobs",
@@ -379,6 +383,8 @@ export function planFor(input: CompareInput, now = Date.now()) {
       steps.push({
         id: "mf",
         title: "If the ad doesn't land: MakersForge",
+        chip: "MakersForge if needed",
+        line: "£0 until you hire someone we found",
         when: `If nobody's right by ${d(screenTo)}`,
         tips: ["We go direct to the people who didn't apply", `A shortlist of about 5 within a week, and 1 in ${MF_PER_HIRE} of the candidates we send get hired`, "No fee unless you hire someone we found"],
       });
@@ -386,6 +392,8 @@ export function planFor(input: CompareInput, now = Date.now()) {
       steps.push({
         id: "inhouse",
         title: "If the ad doesn't land: message people directly",
+        chip: "Sourcing if needed",
+        line: "Message people who aren't looking",
         when: `If nobody's right by ${d(screenTo)}`,
         tips: ["Search LinkedIn for people who aren't looking", "Expect to message a lot of people: 1 in 72 sourced candidates get hired"],
       });
@@ -393,6 +401,8 @@ export function planFor(input: CompareInput, now = Date.now()) {
     steps.push({
       id: "mf",
       title: input.asked ? "Run a MakersForge search" : "Run a MakersForge search alongside",
+      chip: "MakersForge",
+      line: "£0 until you hire someone we found",
       when: `From ${d(now)}`,
       tips: [
         input.asked ? "We start straight away" : "We start the same day you ask for referrals, so you don't lose the week",
@@ -408,6 +418,7 @@ export function planFor(input: CompareInput, now = Date.now()) {
   steps.push({
     id: "interviews",
     title: "Interview and offer",
+    line: `Accepted offer by ${d(hire)}`,
     when: range(iFrom, hire),
     tips: [`Run your interview process: ${PROCESS.find((p) => p.w === P)?.label.toLowerCase() ?? `${P} weeks`}, by your answer`, `Aim for an accepted offer by ${d(hire)}`],
   });
@@ -452,30 +463,26 @@ export function compare(input: CompareInput, now = Date.now()) {
   const ORDER = ["mf", "ads", "games20", "tech25", "inhouse", "referral"];
   const rows = base.slice().sort((a, b) => ORDER.indexOf(a.r.id) - ORDER.indexOf(b.r.id));
   const lo = (f: (x: (typeof rows)[number]) => number) => Math.min(...rows.map(f));
+  // Each route on its own, with the same interview process: when the hire would be made.
   const P = input.process ?? 3.5;
-  const at = (w: number) => day(new Date(now + w * 7 * 864e5));
-  const why: Record<string, string> = {
-    referral: "You've already asked",
-    mf: "It's a nice-to-have, so a fee isn't worth it. If that changes, we're here",
-    ads: plan.reasons.senior
-      ? "Senior people rarely apply to ads. They get approached"
-      : plan.reasons.small
-        ? "Past hires were hard, so the people you want aren't applying"
-        : !plan.reasons.adSuits
-          ? `It's mission critical, and screening 150 applicants would fall on ${plan.reasons.who}`
-          : `An ad hire would land around ${day(new Date(plan.adHire))}, after your date`,
-    games20: `Shortlist in 1 to 2 weeks, so a hire around ${at(2 + P)}. 1 in 22 agency candidates get hired`,
-    tech25: `Many CVs from outside games and apps, and a hire around ${at(3 + P)}`,
-    inhouse: `About ${rows.find((x) => x.r.id === "inhouse")?.hours ?? 40} hours of your team's time, and 1 in 72 sourced candidates get hired`,
-  };
-  const inPlan = new Set(plan.steps.map((st) => st.id));
-  const whyNot = rows.filter((x) => !inPlan.has(x.r.id) && why[x.r.id]).map((x) => ({ x, reason: why[x.r.id] }));
+  const SHORTLIST: Record<string, number> = { mf: 1, games20: 2, tech25: 3, ads: 3, inhouse: 4, referral: 1.5 };
+  const hireAt = Object.fromEntries(rows.map((x) => [x.r.id, now + ((SHORTLIST[x.r.id] ?? 3) + P) * 7 * 864e5]));
+  // What each route is genuinely best at. Referrals only work if someone has a name, so they don't win speed or cost.
+  const pick = (f: (x: (typeof rows)[number]) => number, skip: string[] = []) =>
+    rows.filter((x) => !skip.includes(x.r.id)).reduce((m, x) => (f(x) < f(m) ? x : m));
+  const bestAt = [
+    { label: "Cheapest", x: pick((x) => x.fee, ["referral"]) },
+    { label: "Fastest", x: pick((x) => hireAt[x.r.id], ["referral"]) },
+    { label: "Lowest risk", x: pick((x) => x.r.perHire, ["mf"]) },
+    { label: "Least team time", x: pick((x) => x.hours, ["referral"]) },
+  ];
   return {
     rows,
     best,
     next: ranked.find((x) => x.r.id !== best.r.id),
     plan,
-    whyNot,
+    hireAt,
+    bestAt,
     lowest: { fee: lo((x) => x.fee), real: lo((x) => x.real), start: lo((x) => x.startWeeks), hireBy: lo((x) => x.hireBy), hours: lo((x) => x.hours), interviews: lo((x) => x.r.interviews), perHire: lo((x) => x.r.perHire) },
   };
 }

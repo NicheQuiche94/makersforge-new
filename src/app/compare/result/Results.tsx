@@ -25,15 +25,15 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
     return (
       <section className={styles.wrap}>
         <div className="container">
-          <h1 className={styles.h1}>This comparison link has expired</h1>
+          <h1 className={styles.h1}>This link has expired</h1>
           <p className={styles.lede}>
-            <Link href="/compare">Run a new comparison →</Link>
+            <Link href="/compare">Design a new hiring route →</Link>
           </p>
         </div>
       </section>
     );
   }
-  const { rows, best, lowest, plan, whyNot } = data;
+  const { rows, best, lowest, plan, hireAt, bestAt } = data;
   const cur = input.cur ?? "GBP";
   // Our fee as the pricing page shows it (rounded list price in their currency); others converted.
   const L = priceList(cur);
@@ -46,71 +46,81 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
       <div className="container">
         <div className={styles.resultHead}>
           <h1 className={styles.display}>
-            Your comparison for a <span className={`gr ${styles.accent}`}>{role}</span>
+            Your hiring route for a <span className={`gr ${styles.accent}`}>{role}</span>
           </h1>
           <p className={styles.summaryCenter}>
             {money(input.salary, cur)}
             {input.start ? ` · hire needed by ${day(new Date(input.start))}` : ""} ·{" "}
-            {LEVELS.find((l) => l.id === levelOf(input))?.label} level
+            {LEVELS.find((l) => l.id === levelOf(input))?.label}
           </p>
         </div>
 
-        {/* The plan (Andre 2026-11-25): dated, tactical, honest. Every line is something they can go and do. */}
+        {/* The route (Andre 2026-11-25): the answer in one glance, then the detail on demand. */}
         <div className={styles.plan}>
-          <p className={styles.planHead}>Your plan</p>
-          <p className={styles.planOutcome}>
-            Hire made by about <strong>{day(new Date(plan.hire))}</strong>
-            {plan.deadline != null &&
-              (plan.onTime
-                ? `, ${Math.max(0, Math.round((plan.deadline - plan.hire) / 864e5))} days before your date.`
-                : `, ${Math.round((plan.hire - plan.deadline) / 864e5)} days after your date. Nothing gets there sooner, so this is the closest.`)}
-            {plan.deadline == null && "."}
-          </p>
+          <div className={styles.routeTop}>
+            <div className={styles.chips}>
+              {plan.steps.filter((st) => st.chip).map((st, i) => (
+                <span key={st.id} className={styles.chipWrap}>
+                  {i > 0 && <i aria-hidden="true">→</i>}
+                  <span className={`${styles.chip} ${styles["chip_" + st.id]}`}>{st.chip}</span>
+                </span>
+              ))}
+            </div>
+            <p className={`${styles.dateCheck} ${plan.onTime ? styles.dateOk : styles.dateLate}`}>
+              Hire by <strong>{day(new Date(plan.hire))}</strong>
+              {plan.deadline != null &&
+                (plan.onTime
+                  ? ` ✓ ${Math.max(0, Math.round((plan.deadline - plan.hire) / 864e5))} days early`
+                  : ` · ${Math.round((plan.hire - plan.deadline) / 864e5)} days late, the closest possible`)}
+            </p>
+          </div>
           <Timeline lanes={plan.lanes} deadline={plan.deadline} hire={plan.hire} />
-          <ol>
-            {plan.steps.map((st) => (
-              <li key={st.id} className={st.id === best.r.id ? styles.planMain : ""}>
-                <span className={styles.planWhen}>{st.when}</span>
-                <strong>{st.title}</strong>
+          <div className={styles.stages}>
+            {plan.steps.map((st, i) => (
+              <details key={st.id} className={`${styles.stage} ${st.id === best.r.id ? styles.stageMain : ""}`}>
+                <summary>
+                  <span className={styles.stageNum}>{i + 1}</span>
+                  <strong>{st.title}</strong>
+                  <span className={styles.stageWhen}>{st.when}</span>
+                  <span className={styles.stageLine}>{st.line}</span>
+                </summary>
                 <ul>
                   {st.tips.map((t) => (
                     <li key={t}>{/[.?!"]$/.test(t) ? t : `${t}.`}</li>
                   ))}
                 </ul>
-              </li>
+              </details>
             ))}
-          </ol>
+          </div>
           {plan.mfFree && (
             <div className={styles.free}>
               <b>{L.fmt(0)}</b>
               <p>
-                <strong>Running a search with us costs nothing until you hire.</strong> You only pay if the person you hire is someone we found. {plan.steps.some((st) => st.id === "ads") ? " If a referral or your ad gets there first, you pay nothing." : " If a referral gets there first, you pay nothing."}
+                <strong>A search with us costs nothing until you hire someone we found.</strong>
+                {plan.steps.some((st) => st.id === "ads") ? " If a referral or your ad gets there first, you pay nothing." : " If a referral gets there first, you pay nothing."}
               </p>
             </div>
           )}
-          {!best.r.us && !plan.steps.some((st) => st.id === "mf") && <p className={styles.planNote}>That&apos;s not us, and that&apos;s fine: it&apos;s the better plan here.</p>}
         </div>
 
-        {whyNot.length > 0 && (
-          <div className={styles.whyNot}>
-            <p className={styles.planHead}>Why not the others</p>
-            <div className={styles.whyGrid}>
-              {whyNot.map(({ x, reason }) => (
-                <div key={x.r.id}>
-                  <span className={styles.whyName}>{x.r.name}</span>
-                  <span className={styles.whyFee}>{L.fmt(feeIn(x))}</span>
-                  <p>{reason}.</p>
-                </div>
-              ))}
-            </div>
+        {/* Every route on one map: cost across, risk up. The honest "best at" for each measure underneath. */}
+        <div className={styles.mapCard}>
+          <p className={styles.planHead}>Every route, mapped</p>
+          <RouteMap rows={rows} mainId={best.r.id} fee={(x) => L.fmt(feeIn(x))} hireAt={hireAt} />
+          <div className={styles.bestAt}>
+            {bestAt.map((b) => (
+              <span key={b.label}>
+                {b.label}: <strong>{b.x.r.name}</strong>
+              </span>
+            ))}
           </div>
-        )}
+        </div>
 
         {/* The gift sits right under the verdict, open (Ashley's QA: it was easy to miss). */}
         {promo && <GiftBox lid={input.lid} special={special} slots={slots} cur={cur} fee={rows.find((x) => x.r.us)?.fee} role={role} />}
 
         <details className={styles.fullCompare}>
-          <summary>See the full comparison</summary>
+          <summary>See the full comparison ▾</summary>
         <div className={styles.table}>
           <div className={`${styles.tr} ${styles.th}`}>
             <span>Route</span>
@@ -254,6 +264,48 @@ function Timeline({ lanes, deadline, hire }: { lanes: Lane[]; deadline: number |
           ))}
         </div>
       </div>
+    </div>
+  );
+}
+
+/* Cost across (log scale), risk up (candidates per hire, log scale). Tap a dot for its numbers. */
+function RouteMap({ rows, mainId, fee, hireAt }: { rows: { r: { id: string; name: string; perHire: number; us?: boolean }; fee: number; hours: number }[]; mainId: string; fee: (x: { fee: number; r: { us?: boolean } }) => string; hireAt: Record<string, number> }) {
+  const [sel, setSel] = useState<string>(mainId);
+  // Both agency types share one risk figure (Lever, all agencies), so they sit as one dot with a fee range.
+  const g = rows.find((x) => x.r.id === "games20"), t = rows.find((x) => x.r.id === "tech25");
+  type Pt = { id: string; name: string; perHire: number; fee: number; feeText: string; hours: number; hire: number };
+  const pts: Pt[] = rows
+    .filter((x) => !(g && t && (x.r.id === "games20" || x.r.id === "tech25")))
+    .map((x) => ({ id: x.r.id, name: x.r.name, perHire: x.r.perHire, fee: x.fee, feeText: fee(x), hours: x.hours, hire: hireAt[x.r.id] }));
+  if (g && t) pts.push({ id: "agencies", name: "Agencies", perHire: g.r.perHire, fee: (g.fee + t.fee) / 2, feeText: `${fee(g)} to ${fee(t)}`, hours: Math.round((g.hours + t.hours) / 2), hire: hireAt.games20 });
+  const fees = pts.map((x) => Math.max(x.fee, 100));
+  const [f0, f1] = [Math.log(Math.min(...fees) * 0.6), Math.log(Math.max(...fees) * 1.6)];
+  const [r0, r1] = [Math.log(8), Math.log(220)];
+  const X = (v: number) => ((Math.log(Math.max(v, 100)) - f0) / (f1 - f0)) * 100;
+  const Y = (v: number) => ((Math.log(v) - r0) / (r1 - r0)) * 100;
+  const s = pts.find((x) => x.id === sel) ?? pts[0];
+  return (
+    <div className={styles.map}>
+      <div className={styles.mapArea}>
+        <span className={styles.axY}>Higher risk ↑</span>
+        <span className={styles.axX}>Higher cost →</span>
+        {pts.map((x) => (
+          <button
+            key={x.id}
+            type="button"
+            className={`${styles.dot} ${x.id === mainId ? styles.dotMain : ""} ${x.id === sel ? styles.dotSel : ""}`}
+            style={{ left: `${X(x.fee)}%`, bottom: `${Y(x.perHire)}%` }}
+            onClick={() => setSel(x.id)}
+            aria-pressed={x.id === sel}
+          >
+            <i />
+            <span>{x.name}</span>
+          </button>
+        ))}
+      </div>
+      <p className={styles.mapSel}>
+        <strong>{s.name}</strong> · {s.feeText} · 1 in {s.perHire} hired · hire around {day(new Date(s.hire))} · {s.hours}h of your team&apos;s time
+      </p>
     </div>
   );
 }

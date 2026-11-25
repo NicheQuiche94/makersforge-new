@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { CompareMock } from "./CompareMock";
 
 export const metadata: Metadata = {
-  title: "Every way to hire, compared · MakersForge",
-  description: "Compare every way to hire a mobile games or apps role: MakersForge, a job ad, agencies, sourcing it yourself and referrals, side by side on cost, weeks to hire, your team's hours and the odds of a hire. Free.",
+  title: "Design your hiring route · MakersForge",
+  description: "A free, dated hiring plan for your mobile games or apps role: referrals, a job ad, agencies or MakersForge, in the right order, with when the hire lands. Free.",
   alternates: { canonical: "/compare" },
 };
 
