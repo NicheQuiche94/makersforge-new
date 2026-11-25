@@ -123,28 +123,28 @@
 
 .toneInk,
 .tone_ink {
-  background: linear-gradient(135deg, #2a2b30, #0e0f11);
+  --tone: linear-gradient(135deg, #2a2b30, #0e0f11);
 }
 .tone_heat {
-  background: linear-gradient(135deg, #ff8a00, #ff3d00);
+  --tone: linear-gradient(135deg, #ff8a00, #ff3d00);
 }
 .tone_violet {
-  background: linear-gradient(135deg, #8b5cf6, #5b21b6);
+  --tone: linear-gradient(135deg, #8b5cf6, #5b21b6);
 }
 .tone_teal {
-  background: linear-gradient(135deg, #14b8a6, #0f766e);
+  --tone: linear-gradient(135deg, #14b8a6, #0f766e);
 }
 .tone_blue {
-  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  --tone: linear-gradient(135deg, #3b82f6, #1d4ed8);
 }
 .tone_pink {
-  background: linear-gradient(135deg, #ec4899, #be185d);
+  --tone: linear-gradient(135deg, #ec4899, #be185d);
 }
 .tone_green {
-  background: linear-gradient(135deg, #22c55e, #15803d);
+  --tone: linear-gradient(135deg, #22c55e, #15803d);
 }
 .tone_amber {
-  background: linear-gradient(135deg, #f59e0b, #b45309);
+  --tone: linear-gradient(135deg, #f59e0b, #b45309);
 }
 
 /* ---- Quick filters ---- */
@@ -420,3 +420,15 @@
     justify-content: space-between;
   }
 }
+
+/* 2026-11-25 style pass: tiles as light cards in the homepage/guide style.
+   The discipline colour is a swatch in the corner and the selected ring. */
+.tile { background: #fff; color: var(--ink); border: 1px solid var(--hair); min-height: 96px; opacity: 1; box-shadow: 0 14px 30px -26px rgba(14, 15, 17, 0.35); }
+.tile:hover { box-shadow: 0 18px 36px -24px rgba(14, 15, 17, 0.38); }
+.tileOn { border-color: transparent; box-shadow: 0 0 0 2px var(--ring, var(--ink)), 0 18px 36px -24px rgba(14, 15, 17, 0.38); }
+.tileLabel { font-size: 20px; }
+.tileCount { color: var(--dim); opacity: 1; }
+.tileShape { right: 16px; top: 16px; bottom: auto; width: 22px; height: 22px; border-radius: 7px; transform: none; background: var(--tone); box-shadow: none; }
+.tileCheck { top: 16px; right: 16px; width: 22px; height: 22px; font-size: 12px; background: var(--tone); color: #fff; z-index: 2; }
+/* Everything else that uses a tone (the row avatars) keeps the full gradient. */
+.toneInk:not(.tile), .tone_ink:not(.tile), .tone_heat:not(.tile), .tone_violet:not(.tile), .tone_teal:not(.tile), .tone_blue:not(.tile), .tone_pink:not(.tile), .tone_green:not(.tile), .tone_amber:not(.tile) { background: var(--tone); }

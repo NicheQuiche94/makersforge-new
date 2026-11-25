@@ -109,7 +109,7 @@ export default function SpecPage() {
     <div className={styles.page}>
       <div className={styles.toolbar}>
         <Link href="/line-up" className={styles.backLink}>
-          ← Back to lineup
+          ← Back to the directory
         </Link>
       </div>
 

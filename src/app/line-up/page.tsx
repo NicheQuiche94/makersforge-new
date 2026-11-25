@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { RosterHero } from "@/components/sections/RosterHero";
 import { TalentDirectoryApp } from "@/components/sections/TalentDirectoryApp";
-import { CTABand } from "@/components/sections/CTABand";
+import Link from "next/link";
+import { BOOKING_URL } from "@/lib/site";
+import styles from "./lineup.module.css";
 
 export const metadata: Metadata = {
-  title: "Talent Directory · MakersForge",
+  title: "Talent directory · MakersForge",
   description:
     "Mobile games and app specialists we've personally interviewed: growth and UA, art, product and more. Profiles anonymised; we make the intro after a brief.",
 };
@@ -19,17 +21,28 @@ export default function RosterPage() {
     <>
       <RosterHero />
       <TalentDirectoryApp />
-      <CTABand
-        compact
-        headline={
-          <>
-            Don&apos;t see the{" "}
-            <em style={{ fontStyle: "italic", color: "#fff" }}>right person?</em>
-          </>
-        }
-        body="These are only the specialists who've opted in to a public profile. Send us the role and we'll send 3 matching profiles from everyone we know, free, so you can judge us before agreeing anything."
-        cta={{ label: "Try us free", href: "/#brief" }}
-      />
+      {/* 2026-11-25 style pass. DRAFT copy for Andre: replaces the retired "3 matching profiles, free" offer. */}
+      <section className={styles.closeWrap}>
+        <div className="container">
+          <div className={styles.close}>
+            <h2>
+              Don&apos;t see the <span className="gr">right person?</span>
+            </h2>
+            <p>
+              These are only the people who&apos;ve opted in to a public profile. Brief us and we&apos;ll go direct
+              to everyone who fits the role, not just the people listed here.
+            </p>
+            <div className={styles.actions}>
+              <Link href="/start" className={styles.primary}>
+                <span>Get started →</span>
+              </Link>
+              <a href={BOOKING_URL} target="_blank" rel="noreferrer" className={styles.secondary}>
+                Book a 15-minute call →
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   );
 }

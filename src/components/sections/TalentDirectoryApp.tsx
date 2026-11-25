@@ -165,8 +165,9 @@ export function TalentDirectoryApp() {
         <p className={styles.honestNote}>
           Profiles go up as people opt in, so new ones land every week. Brief
           us and we search all {INTERVIEWED}, not just the ones live here.{" "}
-          <Link href="/#brief" className={styles.honestLink}>
-            Hiring for a role? Try us: 3 matching profiles, free <span aria-hidden="true">→</span>
+          {/* DRAFT copy for Andre (2026-11-25): replaces the retired "3 matching profiles, free" offer. */}
+          <Link href="/start" className={styles.honestLink}>
+            Hiring for a role? Get started <span aria-hidden="true">→</span>
           </Link>
         </p>
 
@@ -333,12 +334,14 @@ export function TalentDirectoryApp() {
 
         {results.length === 0 ? (
           <div className={styles.empty}>
+            {/* DRAFT copy for Andre (2026-11-25) */}
             <p>
               No public profile matches yet, but that&apos;s only the people
-              who&apos;ve opted in. We&apos;ll search all {INTERVIEWED} for you.
+              who&apos;ve opted in. Brief us and we&apos;ll go direct to
+              everyone who fits, not just the people listed here.
             </p>
-            <Link href="/#brief" className={styles.emptyCta}>
-              Try us free <span aria-hidden="true">→</span>
+            <Link href="/start" className={styles.emptyCta}>
+              Get started <span aria-hidden="true">→</span>
             </Link>
           </div>
         ) : null}

@@ -478,9 +478,8 @@ export default function PrivacyPage() {
           <div className={styles.contactBlock}>
             <h2 className={styles.contactH}>Questions?</h2>
             <p className={styles.contactP}>
-              We&apos;re a small team and we actually read our inbox. If
-              anything in here is unclear, write to us before applying
-              to the lineup or briefing us on a hire.
+              We&apos;re a small team and we read every email. If anything in here
+            is unclear, write to us before you brief us on a hire.
             </p>
             <a href="mailto:andre@makersforge.gg" className={styles.contactEmail}>
               andre@makersforge.gg
