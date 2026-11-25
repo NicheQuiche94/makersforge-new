@@ -29,7 +29,6 @@ const ROSTER_LINKS = [
 const STUDIO_LINKS = [
   { href: "/games", label: "Game studios" },
   { href: "/apps", label: "App companies" },
-  { href: "/#how", label: "How it works" },
   { href: "/pricing", label: "Pricing" },
   { href: "/resources", label: "Free resources" },
   { href: BOOKING_URL, label: "Book a call" },
@@ -124,8 +123,9 @@ export function Footer() {
             <span className={styles.dim}>· hiring the teams behind games and apps.</span>
           </span>
           <span className={styles.legal}>
-            <Link href="/legal/privacy">privacy</Link>
-            <Link href="/legal/terms">terms</Link>
+            <Link href="/legal/privacy">Privacy</Link>
+            <Link href="/legal/terms">Terms</Link>
+            <Link href="/unsubscribe">Unsubscribe</Link>
             <CookieSettingsLink className={styles.legalBtn} />
           </span>
         </div>

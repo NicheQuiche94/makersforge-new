@@ -4,3 +4,9 @@
 .p { margin: 0; font-size: 16px; line-height: 1.55; color: rgba(18, 18, 20, .7); }
 .p a { color: inherit; text-decoration: underline; }
 .undo { margin-top: 24px; background: none; border: 0; padding: 0; font: inherit; font-size: 14px; color: rgba(18, 18, 20, .55); text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
+
+.form { display: flex; gap: 10px; margin-top: 24px; flex-wrap: wrap; }
+.form input { flex: 1 1 220px; min-width: 0; height: 52px; padding: 0 18px; border-radius: 14px; border: 1.5px solid #121214; font: inherit; font-size: 16px; background: #fff; }
+.form button { flex: 0 0 auto; height: 52px; padding: 0 26px; border: 0; border-radius: 999px; font: inherit; font-weight: 700; font-size: 16px; color: #fff; background: linear-gradient(135deg, #ff8a00, #ff4a00); cursor: pointer; }
+.form button:disabled { opacity: .6; cursor: default; }
+.err { margin: 12px 0 0; color: #b42318; font-weight: 600; font-size: 14px; }

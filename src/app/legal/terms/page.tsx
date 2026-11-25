@@ -37,7 +37,7 @@ export default function TermsPage() {
         <header className={styles.hero}>
           <span className={`kicker ${styles.kicker}`}>Legal</span>
           <h1 className={styles.h1}>
-            <span className={styles.gr}>terms.</span>
+            <span className={styles.gr}>Terms.</span>
           </h1>
           <div className={styles.meta}>
             <span className={styles.metaItem}>
@@ -57,7 +57,7 @@ export default function TermsPage() {
 
         {/* BODY */}
         <div className={styles.body}>
-          <Section num="01" title="who we are">
+          <Section num="01" title="Who we are">
             <p className={styles.p}>
               MakersForge is operated by MakersForge Ltd, a company
               registered in England and Wales. References to
@@ -65,7 +65,7 @@ export default function TermsPage() {
               &ldquo;us&rdquo;, or &ldquo;our&rdquo; throughout these
               terms refer to MakersForge Ltd.
             </p>
-            <h3 className={styles.subH}>operated by</h3>
+            <h3 className={styles.subH}>Operated by</h3>
             <p className={styles.p}>
               MakersForge Ltd, registered in England and Wales. Trading
               as <strong>MakersForge</strong>. A Seedcraft Ventures
@@ -77,7 +77,7 @@ export default function TermsPage() {
             </p>
           </Section>
 
-          <Section num="02" title="what makersforge is">
+          <Section num="02" title="What MakersForge is">
             <p className={styles.p}>
               MakersForge is a talent agency. We represent senior
               growth, product, design, engineering and art specialists
@@ -98,7 +98,7 @@ export default function TermsPage() {
             </p>
           </Section>
 
-          <Section num="03" title="your account">
+          <Section num="03" title="Your account">
             <ul className={styles.ul}>
               <li>
                 <strong>Age.</strong> You must be at least 18 to apply to the lineup or to brief us as a studio.
@@ -118,7 +118,7 @@ export default function TermsPage() {
             </ul>
           </Section>
 
-          <Section num="04" title="your profile, your work">
+          <Section num="04" title="Your profile, your work">
             <p className={styles.p}>
               Specialist profile content is yours. You retain full
               ownership of your work history, portfolio assets, written
@@ -141,11 +141,11 @@ export default function TermsPage() {
             </p>
           </Section>
 
-          <Section num="05" title="our commitment to talent">
+          <Section num="05" title="Our commitment to talent">
             <div className={`heat-glow ${styles.commitment}`} style={{ background: "var(--bg-deep)" }}>
-              <p className={styles.commitmentH}>core commitment</p>
+              <p className={styles.commitmentH}>Core commitment</p>
               <blockquote className={styles.commitmentBlockquote}>
-                talent is not a commodity.
+                Talent is not a commodity.
               </blockquote>
               <ul className={styles.commitmentList}>
                 <li>
@@ -192,7 +192,7 @@ export default function TermsPage() {
             </div>
           </Section>
 
-          <Section num="06" title="how engagements work">
+          <Section num="06" title="How engagements work">
             <p className={styles.p}>
               When a studio briefs us, we put forward a shortlist of
               specialists from the lineup who fit the brief. If an
@@ -217,7 +217,7 @@ export default function TermsPage() {
             </ul>
           </Section>
 
-          <Section num="07" title="conduct standards">
+          <Section num="07" title="Conduct standards">
             <p className={styles.p}>
               By being on the lineup or briefing us as a studio you
               agree to:
@@ -241,7 +241,7 @@ export default function TermsPage() {
             </ul>
           </Section>
 
-          <Section num="08" title="what's not allowed">
+          <Section num="08" title="What's not allowed">
             <ul className={styles.ul}>
               <li>
                 <strong>Illegal content.</strong> Anything that violates UK law or the laws of your jurisdiction.
@@ -269,7 +269,7 @@ export default function TermsPage() {
             </p>
           </Section>
 
-          <Section num="09" title="our intellectual property">
+          <Section num="09" title="Our intellectual property">
             <p className={styles.p}>
               The MakersForge name, logo, design, code, and any
               original content we create are owned by MakersForge Ltd
@@ -284,7 +284,7 @@ export default function TermsPage() {
             </p>
           </Section>
 
-          <Section num="10" title="availability and warranties">
+          <Section num="10" title="Availability and warranties">
             <p className={styles.p}>
               MakersForge is provided &ldquo;as is&rdquo; and &ldquo;as
               available&rdquo;. We don&apos;t make any warranties about
@@ -300,7 +300,7 @@ export default function TermsPage() {
             </p>
           </Section>
 
-          <Section num="11" title="limitation of liability">
+          <Section num="11" title="Limitation of liability">
             <p className={styles.p}>
               To the fullest extent permitted by law, MakersForge Ltd
               shall not be liable for any indirect, incidental, special,
@@ -322,7 +322,7 @@ export default function TermsPage() {
             </p>
           </Section>
 
-          <Section num="12" title="termination">
+          <Section num="12" title="Termination">
             <p className={styles.p}>
               Specialists can close their lineup account at any time
               with no explanation needed. Studios can stop briefing us
@@ -342,7 +342,7 @@ export default function TermsPage() {
             </p>
           </Section>
 
-          <Section num="13" title="changes to these terms">
+          <Section num="13" title="Changes to these terms">
             <p className={styles.p}>
               When we make material changes (anything that affects your
               rights or obligations) we&apos;ll notify active
@@ -357,7 +357,7 @@ export default function TermsPage() {
             </p>
           </Section>
 
-          <Section num="14" title="governing law">
+          <Section num="14" title="Governing law">
             <p className={styles.p}>
               These terms are governed by the laws of England and Wales.
               Any disputes shall be subject to the exclusive
@@ -374,7 +374,7 @@ export default function TermsPage() {
 
           {/* CONTACT FOOTER */}
           <div className={styles.contactBlock}>
-            <h2 className={styles.contactH}>questions about these terms?</h2>
+            <h2 className={styles.contactH}>Questions about these terms?</h2>
             <p className={styles.contactP}>
               We&apos;re a small team and we actually read our inbox.
               If anything in here is unclear, write to us before

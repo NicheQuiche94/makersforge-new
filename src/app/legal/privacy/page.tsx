@@ -38,7 +38,7 @@ export default function PrivacyPage() {
         <header className={styles.hero}>
           <span className={`kicker ${styles.kicker}`}>Legal</span>
           <h1 className={styles.h1}>
-            <span className={styles.gr}>privacy.</span>
+            <span className={styles.gr}>Privacy.</span>
           </h1>
           <div className={styles.meta}>
             <span className={styles.metaItem}>
@@ -58,7 +58,7 @@ export default function PrivacyPage() {
 
         {/* BODY */}
         <div className={styles.body}>
-          <Section num="01" title="who is the data controller">
+          <Section num="01" title="Who is the data controller">
             <p className={styles.p}>
               MakersForge Ltd, registered in England and Wales, is the
               legal entity responsible for personal data under UK and
@@ -72,13 +72,13 @@ export default function PrivacyPage() {
             </p>
           </Section>
 
-          <Section num="02" title="what we collect">
+          <Section num="02" title="What we collect">
             <p className={styles.p}>
               We collect only what we need to represent specialists,
               match them to studio briefs, and operate the service.
             </p>
 
-            <h3 className={styles.subH}>specialist account &amp; profile</h3>
+            <h3 className={styles.subH}>Specialist account &amp; profile</h3>
             <p className={styles.p}>
               When a specialist applies to the lineup, we collect:
               full name, professional handle, email address, location,
@@ -90,14 +90,14 @@ export default function PrivacyPage() {
               to a studio only after a brief is confirmed.
             </p>
 
-            <h3 className={styles.subH}>studio briefs</h3>
+            <h3 className={styles.subH}>Studio briefs</h3>
             <p className={styles.p}>
               When a studio briefs us, we capture: role shape, timeline,
               budget, monetisation, channels in scope, internal contact,
               and any related context they choose to share.
             </p>
 
-            <h3 className={styles.subH}>engagement &amp; payment records</h3>
+            <h3 className={styles.subH}>Engagement &amp; payment records</h3>
             <p className={styles.p}>
               For each engagement, we keep: matching notes, start and
               end dates, the flat monthly fee invoiced to the studio,
@@ -106,14 +106,14 @@ export default function PrivacyPage() {
               only record that it happened.
             </p>
 
-            <h3 className={styles.subH}>technical data</h3>
+            <h3 className={styles.subH}>Technical data</h3>
             <p className={styles.p}>
               Browser log data including IP address, browser type,
               pages visited, and timestamps, retained briefly for
               diagnostics and abuse detection.
             </p>
 
-            <h3 className={styles.subH}>analytics (only if you accept)</h3>
+            <h3 className={styles.subH}>Analytics (only if you accept)</h3>
             <p className={styles.p}>
               If you accept cookies, analytics tools record how the site
               is used, and use your IP address to identify the company
@@ -124,7 +124,7 @@ export default function PrivacyPage() {
               from the recording. See section 11.
             </p>
 
-            <h3 className={styles.subH}>chat messages</h3>
+            <h3 className={styles.subH}>Chat messages</h3>
             <p className={styles.p}>
               If you message Andre through the chat on the site, we keep
               your messages, any name and email you give, and the page you
@@ -134,7 +134,7 @@ export default function PrivacyPage() {
               reach Andre through Telegram.
             </p>
 
-            <h3 className={styles.subH}>free resources &amp; tools</h3>
+            <h3 className={styles.subH}>Free resources &amp; tools</h3>
             <p className={styles.p}>
               If you enter your email to unlock our resources or use one of
               our free tools, we keep your email, when you signed up and the
@@ -144,13 +144,13 @@ export default function PrivacyPage() {
               email lets you opt out, or just reply and ask.
             </p>
 
-            <h3 className={styles.subH}>alerts</h3>
+            <h3 className={styles.subH}>Alerts</h3>
             <p className={styles.p}>
               If you sign up for job or talent alerts, we keep your email and
               the choices you made, and email you alerts until you opt out.
             </p>
 
-            <h3 className={styles.subH}>links in our emails</h3>
+            <h3 className={styles.subH}>Links in our emails</h3>
             <p className={styles.p}>
               Links in emails we send you can carry a short code, so we know
               you opened the site from that email and which page you landed
@@ -168,7 +168,7 @@ export default function PrivacyPage() {
             </p>
           </Section>
 
-          <Section num="03" title="how we use it">
+          <Section num="03" title="How we use it">
             <ul className={styles.ul}>
               <li>Represent specialists to studios who brief us</li>
               <li>Generate the matched shortlist that goes to a studio after a brief</li>
@@ -181,7 +181,7 @@ export default function PrivacyPage() {
 
             {/* COMMITMENT PULLOUT */}
             <div className={`heat-glow ${styles.commitment}`} style={{ background: "var(--bg-deep)" }}>
-              <p className={styles.commitmentH}>the part we care most about</p>
+              <p className={styles.commitmentH}>The part we care most about</p>
               <blockquote className={styles.commitmentBlockquote}>
                 &ldquo;talent is not a commodity.&rdquo;
               </blockquote>
@@ -226,7 +226,7 @@ export default function PrivacyPage() {
             </div>
           </Section>
 
-          <Section num="04" title="our legal bases for processing">
+          <Section num="04" title="Our legal bases for processing">
             <ul className={styles.ul}>
               <li>
                 <strong>Contract.</strong> Running the lineup,
@@ -253,7 +253,7 @@ export default function PrivacyPage() {
             </ul>
           </Section>
 
-          <Section num="05" title="who we share it with">
+          <Section num="05" title="Who we share it with">
             <p className={styles.p}>
               Personal data is shared only with infrastructure providers
               under data processing agreements, plus the specific studio
@@ -286,7 +286,7 @@ export default function PrivacyPage() {
             </p>
           </Section>
 
-          <Section num="06" title="international data transfers">
+          <Section num="06" title="International data transfers">
             <p className={styles.p}>
               Data is stored on EU servers via Supabase. For users
               outside the UK or EEA, data may be processed by vendors in
@@ -296,7 +296,7 @@ export default function PrivacyPage() {
             </p>
           </Section>
 
-          <Section num="07" title="how long we keep things">
+          <Section num="07" title="How long we keep things">
             <p className={styles.p}>
               <strong>Active specialist accounts:</strong> data retained
               for as long as the specialist remains on the lineup.
@@ -321,7 +321,7 @@ export default function PrivacyPage() {
             </p>
           </Section>
 
-          <Section num="08" title="how we protect it">
+          <Section num="08" title="How we protect it">
             <p className={styles.p}>
               Security measures include TLS encryption in transit,
               field-level encryption at rest for sensitive fields,
@@ -332,7 +332,7 @@ export default function PrivacyPage() {
             </p>
           </Section>
 
-          <Section num="09" title="your rights">
+          <Section num="09" title="Your rights">
             <p className={styles.p}>
               Depending on where you live, you have a set of rights over
               the personal data we hold. We honour these globally where
@@ -371,7 +371,7 @@ export default function PrivacyPage() {
               </a>{" "}
               receive responses within 30 days at no cost.
             </p>
-            <h3 className={styles.subH}>complaint authorities</h3>
+            <h3 className={styles.subH}>Complaint authorities</h3>
             <ul className={styles.ul}>
               <li>
                 <strong>UK:</strong> Information Commissioner&apos;s Office (
@@ -389,7 +389,7 @@ export default function PrivacyPage() {
             </ul>
           </Section>
 
-          <Section num="10" title="minors">
+          <Section num="10" title="Minors">
             <p className={styles.p}>
               MakersForge is not intended for users under 18. Both
               specialists and studio contacts must be of age. If a child
@@ -398,7 +398,7 @@ export default function PrivacyPage() {
             </p>
           </Section>
 
-          <Section num="11" title="cookies and similar things" id="cookies">
+          <Section num="11" title="Cookies and similar things" id="cookies">
             <p className={styles.p}>
               Essential storage keeps sign-in, your preferences and your
               cookie choice working. It doesn&apos;t need your consent.
@@ -457,7 +457,7 @@ export default function PrivacyPage() {
             </p>
           </Section>
 
-          <Section num="12" title="changes to this policy">
+          <Section num="12" title="Changes to this policy">
             <p className={styles.p}>
               Material changes are communicated by email or in-app
               before taking effect. Acquisition or restructuring of
@@ -466,7 +466,7 @@ export default function PrivacyPage() {
             </p>
           </Section>
 
-          <Section num="13" title="governing law">
+          <Section num="13" title="Governing law">
             <p className={styles.p}>
               Governed by the laws of England and Wales. Disputes are
               subject to the exclusive jurisdiction of the English
@@ -477,7 +477,7 @@ export default function PrivacyPage() {
 
           {/* CONTACT FOOTER */}
           <div className={styles.contactBlock}>
-            <h2 className={styles.contactH}>questions?</h2>
+            <h2 className={styles.contactH}>Questions?</h2>
             <p className={styles.contactP}>
               We&apos;re a small team and we actually read our inbox. If
               anything in here is unclear, write to us before applying

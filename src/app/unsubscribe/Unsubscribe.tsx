@@ -2,10 +2,23 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./unsubscribe.module.css";
 
-type State = "working" | "done" | "undone" | "error";
+type State = "form" | "sending" | "working" | "done" | "undone" | "error";
 
 export function Unsubscribe({ token }: { token: string }) {
-  const [state, setState] = useState<State>(token ? "working" : "error");
+  const [state, setState] = useState<State>(token ? "working" : "form");
+  const [email, setEmail] = useState("");
+  const [err, setErr] = useState("");
+
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErr("");
+    setState("sending");
+    const r = await fetch("/api/unsubscribe", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email }) }).catch(() => null);
+    if (r?.ok) return setState("done");
+    const j = await r?.json().catch(() => null);
+    setErr(j?.error || "That didn't go through. Please try again.");
+    setState("form");
+  };
   const ran = useRef(false);
 
   const call = async (undo: boolean) => {
@@ -20,6 +33,18 @@ export function Unsubscribe({ token }: { token: string }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
+  if (state === "form" || state === "sending")
+    return (
+      <>
+        <h1 className={styles.h}>Unsubscribe</h1>
+        <p className={styles.p}>Enter your email and we won&apos;t email you again.</p>
+        <form className={styles.form} onSubmit={submit}>
+          <input type="email" required placeholder="Your email" value={email} onChange={(e) => setEmail(e.target.value)} aria-label="Your email" />
+          <button type="submit" disabled={state === "sending"}>{state === "sending" ? "One moment…" : "Unsubscribe"}</button>
+        </form>
+        {err && <p className={styles.err}>{err}</p>}
+      </>
+    );
   if (state === "working") return <h1 className={styles.h}>One moment…</h1>;
   if (state === "error")
     return (
@@ -42,9 +67,9 @@ export function Unsubscribe({ token }: { token: string }) {
     <>
       <h1 className={styles.h}>You&apos;re unsubscribed.</h1>
       <p className={styles.p}>We won&apos;t email you again.</p>
-      <button className={styles.undo} onClick={() => call(true).then((ok) => setState(ok ? "undone" : "error"))}>
+      {token && <button className={styles.undo} onClick={() => call(true).then((ok) => setState(ok ? "undone" : "error"))}>
         Unsubscribed by mistake? Resubscribe
-      </button>
+      </button>}
     </>
   );
 }
