@@ -250,3 +250,20 @@
 .wrap .ctas { justify-content: center; }
 .wrap .how, .wrap .fullCompare { max-width: 760px; margin-left: auto; margin-right: auto; }
 .guideLink { max-width: 760px; margin-left: auto; margin-right: auto; }
+
+/* Route designer (Andre 2026-11-25): routes on the left, the chosen plan on the right */
+.designer { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 16px; max-width: 1040px; margin: 0 auto; align-items: start; }
+.designer .plan { max-width: none; margin: 0; }
+.kinds { display: grid; gap: 8px; position: sticky; top: 90px; }
+.kind { display: grid; gap: 3px; text-align: left; padding: 14px 16px; border-radius: 16px; border: 1px solid var(--hair-strong); background: var(--paper); font: inherit; color: inherit; cursor: pointer; transition: border-color .15s, box-shadow .15s; }
+.kind:hover { border-color: #ff8a00; }
+.kindOn { border-color: transparent; box-shadow: inset 0 0 0 2px #ff8a00; background: linear-gradient(180deg, #fff7ef, #fff); }
+.kindName { font-family: "Cal Sans", system-ui, sans-serif; font-size: 21px; letter-spacing: -0.01em; display: flex; align-items: center; gap: 8px; }
+.kindName em { font-family: inherit; font-style: normal; font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 999px; background: var(--tone-heat); color: #fff; font-family: system-ui, sans-serif; }
+.kindBlurb { font-size: 13.5px; color: var(--dim); }
+.kindDate { font-size: 14px; font-weight: 800; margin-top: 4px; }
+.kindCost { font-size: 13.5px; font-weight: 700; color: var(--ink-soft); }
+@media (max-width: 860px) {
+  .designer { grid-template-columns: 1fr; }
+  .kinds { position: static; grid-auto-flow: column; grid-auto-columns: minmax(180px, 1fr); overflow-x: auto; padding-bottom: 4px; }
+}

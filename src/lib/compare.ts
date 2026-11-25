@@ -309,14 +309,36 @@ export type Lane = { id: "referral" | "ads" | "screen" | "mf" | "interviews"; la
 /** One step of the plan: what to do, when, and exactly how. */
 export type Step = { id: string; title: string; when: string; tips: string[]; line: string; chip?: string };
 
+/** The routes a visitor can flick between (Andre 2026-11-25). */
+export type Kind = "recommended" | "cheapest" | "quickest" | "safest";
+export const KINDS: { id: Kind; label: string; blurb: string }[] = [
+  { id: "recommended", label: "Recommended", blurb: "What we'd do" },
+  { id: "cheapest", label: "Cheapest", blurb: "Lowest cost" },
+  { id: "quickest", label: "Quickest", blurb: "Earliest hire" },
+  { id: "safest", label: "Lowest risk", blurb: "Most chances at once" },
+];
+
+/** When a route on its own would make the hire, from today, with their interview process. */
+export function soloHire(id: string, input: CompareInput, now = Date.now()) {
+  const P = input.process ?? 3.5;
+  const screen = (input.runner ?? "manager") === "ta" ? T.screenTA : T.screenOther;
+  const lead: Record<string, number> = { mf: T.mfShortlist, games20: 2, tech25: 3, inhouse: 4, referral: T.referrals + T.review, ads: T.adCollect + screen };
+  return withXmas(withXmas(now, lead[id] ?? 3), P);
+}
+
 /**
- * The plan (Andre 2026-11-25): honest, dated and tactical. Referrals first,
- * unless they've asked already. A capped job ad when it suits the role and
- * still lands before their date. Otherwise a MakersForge search in parallel
- * from day one, which costs nothing unless they hire someone we found.
+ * A hiring route (Andre 2026-11-25): honest, dated and tactical.
+ * - recommended: referrals first; a capped job ad when it suits the role and
+ *   still lands in time, with MakersForge as the backup, started no later than
+ *   the last day that still makes their date; otherwise MakersForge alongside
+ *   referrals from day one.
+ * - cheapest: referrals, a capped job ad, then messaging people yourself. No fees.
+ * - quickest: referrals and a MakersForge search from day one.
+ * - safest: referrals, a capped job ad and a MakersForge search all at once.
+ * A MakersForge search costs nothing unless they hire someone we found.
  * DRAFT copy for Andre.
  */
-export function planFor(input: CompareInput, now = Date.now()) {
+export function planFor(input: CompareInput, now = Date.now(), kind: Kind = "recommended") {
   const level = levelOf(input);
   const senior = level === "senior" || level === "lead";
   const small = input.history ? input.history === "hard" || (input.history === "first" && senior) : senior;
@@ -328,20 +350,32 @@ export function planFor(input: CompareInput, now = Date.now()) {
   const who = runner === "ta" ? "your recruiter" : runner === "founder" ? "you" : "the hiring manager";
   const d = (t: number) => day(new Date(t));
   const range = (a: number, b: number) => `${d(a)} to ${d(b)}`;
+  const fits = (t: number) => deadline == null || t <= deadline;
 
-  // Each route's own timeline.
-  const refFrom = now, refTo = input.asked ? now : now + T.referrals * WEEK;
-  const adFrom = refTo;
+  // The building blocks.
+  const refTo = input.asked ? now : now + T.referrals * WEEK;
+  const refReady = now + (T.referrals + T.review) * WEEK; // a referral could be interviewing by now
+  const adFrom = kind === "safest" ? now : refTo;
   const adFull = adFrom + T.adCollect * WEEK;
   const screenTo = withXmas(adFull, runner === "ta" ? T.screenTA : T.screenOther);
   const adHire = withXmas(screenTo, P);
   const mfShort = withXmas(now, T.mfShortlist);
   const mfHire = withXmas(mfShort, P);
-  const fits = (t: number) => deadline == null || t <= deadline;
+  /** The last day a MakersForge search can start and still make their date. */
+  const mfLatest = (() => {
+    if (deadline == null) return screenTo;
+    let s = deadline - (T.mfShortlist + P) * WEEK;
+    while (s > now && withXmas(withXmas(s, T.mfShortlist), P) > deadline) s -= 864e5;
+    return Math.max(now, s);
+  })();
 
+  // Which pieces this route uses.
   const adSuits = !small && !senior && !(stakes === "critical" && runner !== "ta");
-  const useAd = stakes === "nice" || (adSuits && fits(adHire));
-  const useMf = stakes !== "nice" && !useAd;
+  const recAd = stakes === "nice" || (adSuits && fits(adHire));
+  const useAd = kind === "cheapest" || kind === "safest" || (kind === "recommended" && recAd);
+  const mfNow = kind === "quickest" || kind === "safest" || (kind === "recommended" && !recAd);
+  const mfBackup = kind === "recommended" && recAd && stakes !== "nice";
+  const sourcing = kind === "cheapest" && runner === "ta";
 
   const steps: Step[] = [];
   const lanes: Lane[] = [];
@@ -351,17 +385,32 @@ export function planFor(input: CompareInput, now = Date.now()) {
       title: "Ask for referrals",
       chip: "Referrals",
       line: "Ask for a specific person",
-      when: range(refFrom, refTo),
+      when: range(now, refTo),
       tips: [
         `Ask for a specific person, not "anyone good": "Who's the best ${role} you've worked with?"`,
         "Post the role on LinkedIn and ask your team to share it",
         "Offer a referral bonus for a hire: €1,500 to 3,000 is typical",
-        `Stop on ${d(refTo)}. If someone fits, interview them and hire them: nothing is cheaper or lower risk`,
+        `If someone fits, interview them and hire them: nothing is cheaper or lower risk`,
       ],
     });
-    lanes.push({ id: "referral", label: "Referrals", from: refFrom, to: refTo });
+    lanes.push({ id: "referral", label: "Referrals", from: now, to: refTo });
   }
-  let hire: number;
+  if (mfNow) {
+    steps.push({
+      id: "mf",
+      title: input.asked || kind === "safest" ? "Run a MakersForge search" : "Run a MakersForge search alongside",
+      chip: "MakersForge",
+      line: "£0 until you hire someone we found",
+      when: `From ${d(now)}`,
+      tips: [
+        "We start straight away, so you don't lose a week",
+        `A shortlist of about 5 people by ${d(mfShort)}, each already interviewed by us`,
+        `1 in ${MF_PER_HIRE} of the candidates we send get hired`,
+        "No fee unless you hire someone we found",
+      ],
+    });
+    lanes.push({ id: "mf", label: "MakersForge", from: now, to: mfShort, free: true });
+  }
   if (useAd) {
     steps.push({
       id: "ads",
@@ -373,59 +422,58 @@ export function planFor(input: CompareInput, now = Date.now()) {
         "Post on Hitmarker, Games Jobs Direct and LinkedIn Jobs",
         `Take it down the moment you reach ${CAP} applicants, usually within two weeks`,
         `Screen as they arrive: ${CAP} CVs at 5 minutes each is about 12 hours for ${who}`,
-        `Shortlist 3 to 4 people by ${d(screenTo)}, then start interviews`,
+        `Shortlist 3 to 4 people by ${d(screenTo)}`,
         "Reply to everyone you don't take forward",
       ],
     });
     lanes.push({ id: "ads", label: "Job ad", from: adFrom, to: adFull }, { id: "screen", label: "Screening", from: adFull, to: screenTo });
-    hire = adHire;
-    if (stakes !== "nice")
-      steps.push({
-        id: "mf",
-        title: "If the ad doesn't land: MakersForge",
-        chip: "MakersForge if needed",
-        line: "£0 until you hire someone we found",
-        when: `If nobody's right by ${d(screenTo)}`,
-        tips: ["We go direct to the people who didn't apply", `A shortlist of about 5 within a week, and 1 in ${MF_PER_HIRE} of the candidates we send get hired`, "No fee unless you hire someone we found"],
-      });
-    else if (runner === "ta")
-      steps.push({
-        id: "inhouse",
-        title: "If the ad doesn't land: message people directly",
-        chip: "Sourcing if needed",
-        line: "Message people who aren't looking",
-        when: `If nobody's right by ${d(screenTo)}`,
-        tips: ["Search LinkedIn for people who aren't looking", "Expect to message a lot of people: 1 in 72 sourced candidates get hired"],
-      });
-  } else {
+  }
+  if (mfBackup) {
+    const late = mfLatest < screenTo;
     steps.push({
       id: "mf",
-      title: input.asked ? "Run a MakersForge search" : "Run a MakersForge search alongside",
-      chip: "MakersForge",
-      line: "£0 until you hire someone we found",
-      when: `From ${d(now)}`,
+      title: "MakersForge, if the ad isn't working",
+      chip: "MakersForge if needed",
+      line: `Start us by ${d(mfLatest)} to keep your date`,
+      when: `By ${d(mfLatest)} at the latest`,
       tips: [
-        input.asked ? "We start straight away" : "We start the same day you ask for referrals, so you don't lose the week",
-        `A shortlist of about 5 people by ${d(mfShort)}, each already interviewed by us`,
-        input.asked ? `1 in ${MF_PER_HIRE} of the candidates we send get hired` : "If a referral is right, hire them and pay us nothing",
+        late
+          ? `Your ad won't be screened until ${d(screenTo)}, so judge it early: if the first applicants aren't right by ${d(mfLatest)}, start us then`
+          : `If nobody's right by ${d(mfLatest)}, start us then: it's the last day that still makes your date`,
+        "We go direct to the people who didn't apply, with a shortlist within a week",
         "No fee unless you hire someone we found",
       ],
     });
-    lanes.push({ id: "mf", label: "MakersForge search", from: now, to: mfShort, free: true });
-    hire = input.asked ? mfHire : Math.min(mfHire, withXmas(now + (T.referrals + T.review) * WEEK, P));
+    lanes.push({ id: "mf", label: "MakersForge if needed", from: mfLatest, to: mfLatest + T.mfShortlist * WEEK, free: true });
   }
-  const iFrom = useAd ? screenTo : input.asked ? mfShort : Math.min(mfShort, now + (T.referrals + T.review) * WEEK);
+  if (sourcing)
+    steps.push({
+      id: "inhouse",
+      title: "If the ad doesn't land: message people directly",
+      chip: "Sourcing if needed",
+      line: "Message people who aren't looking",
+      when: `If nobody's right by ${d(screenTo)}`,
+      tips: ["Search LinkedIn for people who aren't looking", "Expect to message a lot of people: 1 in 72 sourced candidates get hired"],
+    });
+
+  // The earliest the hire can land on this route.
+  const candidates: number[] = [];
+  if (useAd) candidates.push(adHire);
+  if (mfNow) candidates.push(mfHire);
+  if (!input.asked && mfNow) candidates.push(withXmas(refReady, P));
+  const hire = candidates.length ? Math.min(...candidates) : adHire;
+  const iFrom = Math.min(...[useAd ? screenTo : Infinity, mfNow ? mfShort : Infinity, !input.asked && mfNow ? refReady : Infinity]);
   steps.push({
     id: "interviews",
     title: "Interview and offer",
     line: `Accepted offer by ${d(hire)}`,
-    when: range(iFrom, hire),
+    when: range(iFrom === Infinity ? screenTo : iFrom, hire),
     tips: [`Run your interview process: ${PROCESS.find((p) => p.w === P)?.label.toLowerCase() ?? `${P} weeks`}, by your answer`, `Aim for an accepted offer by ${d(hire)}`],
   });
-  lanes.push({ id: "interviews", label: "Interviews", from: iFrom, to: hire });
+  lanes.push({ id: "interviews", label: "Interviews", from: iFrom === Infinity ? screenTo : iFrom, to: hire });
 
-  const main = useAd ? "ads" : "mf";
-  return { steps, lanes, hire, deadline, onTime: fits(hire), main, mfFree: useMf || (useAd && stakes !== "nice"), adHire, mfHire, reasons: { senior, small, adSuits, adFits: fits(adHire), stakes, who } };
+  const main = useAd && !mfNow ? "ads" : "mf";
+  return { kind, steps, lanes, hire, deadline, onTime: fits(hire), main, mfFree: mfNow || mfBackup, usesAd: useAd, usesMf: mfNow || mfBackup };
 }
 
 export const gbp = (n: number) => `£${Math.round(n).toLocaleString("en-GB")}`;
@@ -439,15 +487,16 @@ export const addWeeks = (w: number, from = Date.now()) => new Date(from + w * 7 
 export const roleLabel = (role: string) => ROLES.find((r) => r.id === role)?.label ?? (role.trim() || "this role");
 
 export function compare(input: CompareInput, now = Date.now()) {
-  const weeksToStart = input.start ? Math.max(0, (Date.parse(input.start) - now) / (7 * 864e5)) : null;
+  const deadline = input.start ? Date.parse(input.start) : null;
   const base = ROUTES.map((r) => {
     const fee = r.fee(input.salary, roleLabel(input.role));
     const hours = r.hours.reduce((n, x) => n + x.h, 0);
     const real = fee + hours * HOURLY;
-    const startWeeks = r.hireWeeks[1] + NOTICE_WEEKS;
+    const solo = soloHire(r.id, input, now);
+    const hireBy = (solo - now) / (7 * 864e5); // weeks from today, same maths as the plan
+    const startWeeks = hireBy + NOTICE_WEEKS;
     const overBudget = input.budget ? fee > input.budget : false;
-    const hireBy = r.hireWeeks[1];
-    const tooSlow = weeksToStart != null ? hireBy > weeksToStart : false;
+    const tooSlow = deadline != null ? solo > deadline : false;
     return { r, fee, hours, real, startWeeks, hireBy, overBudget, tooSlow };
   });
   const max = (f: (x: (typeof base)[number]) => number) => Math.max(...base.map(f));
@@ -457,32 +506,19 @@ export function compare(input: CompareInput, now = Date.now()) {
       : x.real / mR + x.startWeeks / mW + x.hours / mH + x.r.interviews / mI;
   // Best fit: options that fit the date first, then by what matters most.
   const ranked = base.filter((x) => !x.r.noRank).sort((a, b) => Number(a.overBudget || a.tooSlow) - Number(b.overBudget || b.tooSlow) || score(a) - score(b));
-  const plan = planFor(input, now);
+  const routes = KINDS.map((k) => ({ ...k, plan: planFor(input, now, k.id) }));
+  const plan = routes[0].plan;
   const best = base.find((x) => x.r.id === plan.main) ?? ranked[0];
   // Shown in a fixed order (Andre): us, then the job ad (the route most people take), then the agencies.
   const ORDER = ["mf", "ads", "games20", "tech25", "inhouse", "referral"];
   const rows = base.slice().sort((a, b) => ORDER.indexOf(a.r.id) - ORDER.indexOf(b.r.id));
   const lo = (f: (x: (typeof rows)[number]) => number) => Math.min(...rows.map(f));
-  // Each route on its own, with the same interview process: when the hire would be made.
-  const P = input.process ?? 3.5;
-  const SHORTLIST: Record<string, number> = { mf: 1, games20: 2, tech25: 3, ads: 3, inhouse: 4, referral: 1.5 };
-  const hireAt = Object.fromEntries(rows.map((x) => [x.r.id, now + ((SHORTLIST[x.r.id] ?? 3) + P) * 7 * 864e5]));
-  // What each route is genuinely best at. Referrals only work if someone has a name, so they don't win speed or cost.
-  const pick = (f: (x: (typeof rows)[number]) => number, skip: string[] = []) =>
-    rows.filter((x) => !skip.includes(x.r.id)).reduce((m, x) => (f(x) < f(m) ? x : m));
-  const bestAt = [
-    { label: "Cheapest", x: pick((x) => x.fee, ["referral"]) },
-    { label: "Fastest", x: pick((x) => hireAt[x.r.id], ["referral"]) },
-    { label: "Lowest risk", x: pick((x) => x.r.perHire, ["mf"]) },
-    { label: "Least team time", x: pick((x) => x.hours, ["referral"]) },
-  ];
   return {
     rows,
     best,
     next: ranked.find((x) => x.r.id !== best.r.id),
     plan,
-    hireAt,
-    bestAt,
+    routes,
     lowest: { fee: lo((x) => x.fee), real: lo((x) => x.real), start: lo((x) => x.startWeeks), hireBy: lo((x) => x.hireBy), hours: lo((x) => x.hours), interviews: lo((x) => x.r.interviews), perHire: lo((x) => x.r.perHire) },
   };
 }

@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { priceList } from "@/lib/plans";
 import { RATES } from "@/lib/currency";
-import { compare, money, wks, day, addWeeks, roleLabel, levelOf, LEVELS, NOTICE_WEEKS, type CompareInput, type Lane } from "@/lib/compare";
+import { compare, money, wks, day, addWeeks, roleLabel, levelOf, LEVELS, NOTICE_WEEKS, type CompareInput, type Kind, type Lane } from "@/lib/compare";
 import { activePromo } from "@/lib/promos";
 import { setMailRef } from "@/lib/analytics";
 import { GiftBox } from "./GiftBox";
@@ -15,6 +15,7 @@ import styles from "../compare.module.css";
    said matters most is flagged, and it isn't always us. */
 export function Results({ input, special = false, slots = 0 }: { input: CompareInput | null; special?: boolean; slots?: number }) {
   const [open, setOpen] = useState<string | null>(null);
+  const [kind, setKind] = useState<Kind>("recommended");
   // With cookies accepted, PostHog files this visit (and its recording) under the request.
   useEffect(() => {
     if (input?.lid) setMailRef(`cmp-${input.lid}`);
@@ -33,13 +34,19 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
       </section>
     );
   }
-  const { rows, best, lowest, plan, hireAt, bestAt } = data;
+  const { rows, best, lowest, routes } = data;
   const cur = input.cur ?? "GBP";
   // Our fee as the pricing page shows it (rounded list price in their currency); others converted.
   const L = priceList(cur);
   const feeIn = (x: { fee: number; r: { us?: boolean } }) => (x.r.us ? L.convert(x.fee, 1000) : cur === "GBP" ? Math.round(x.fee) : Math.round((x.fee * RATES[cur]) / 10) * 10);
   const role = roleLabel(input.role);
   const promo = activePromo();
+  const plan = (routes.find((k) => k.id === kind) ?? routes[0]).plan;
+  const adFee = rows.find((x) => x.r.id === "ads");
+  const mfRow = rows.find((x) => x.r.us);
+  /** What a route costs: the ad if it's used, and our fee only if they hire someone we found. */
+  const cost = (p: typeof plan) =>
+    [p.usesAd && adFee ? L.fmt(feeIn(adFee)) : "", p.usesMf && mfRow ? `${L.fmt(feeIn(mfRow))} ${p.usesAd ? "" : "only "}if you hire ours` : ""].filter(Boolean).join(" + ") || L.fmt(0);
 
   return (
     <section className={styles.wrap}>
@@ -56,6 +63,23 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
         </div>
 
         {/* The route (Andre 2026-11-25): the answer in one glance, then the detail on demand. */}
+        {/* The routes to flick between (Andre 2026-11-25): each one redraws the plan beside it. */}
+        <div className={styles.designer}>
+          <div className={styles.kinds} role="tablist" aria-label="Hiring routes">
+            {routes.map((k) => (
+              <button key={k.id} type="button" role="tab" aria-selected={k.id === kind} className={`${styles.kind} ${k.id === kind ? styles.kindOn : ""}`} onClick={() => setKind(k.id)}>
+                <span className={styles.kindName}>
+                  {k.label}
+                  {k.id === "recommended" && <em>Our pick</em>}
+                </span>
+                <span className={styles.kindBlurb}>{k.blurb}</span>
+                <span className={`${styles.kindDate} ${k.plan.onTime ? styles.dateOk : styles.dateLate}`}>
+                  Hire by {day(new Date(k.plan.hire))} {k.plan.onTime ? "✓" : "· late"}
+                </span>
+                <span className={styles.kindCost}>{cost(k.plan)}</span>
+              </button>
+            ))}
+          </div>
         <div className={styles.plan}>
           <div className={styles.routeTop}>
             <div className={styles.chips}>
@@ -77,7 +101,7 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
           <Timeline lanes={plan.lanes} deadline={plan.deadline} hire={plan.hire} />
           <div className={styles.stages}>
             {plan.steps.map((st, i) => (
-              <details key={st.id} className={`${styles.stage} ${st.id === best.r.id ? styles.stageMain : ""}`}>
+              <details key={kind + st.id} className={`${styles.stage} ${st.id === plan.main && kind === "recommended" ? styles.stageMain : ""}`}>
                 <summary>
                   <span className={styles.stageNum}>{i + 1}</span>
                   <strong>{st.title}</strong>
@@ -102,18 +126,6 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
             </div>
           )}
         </div>
-
-        {/* Every route on one map: cost across, risk up. The honest "best at" for each measure underneath. */}
-        <div className={styles.mapCard}>
-          <p className={styles.planHead}>Every route, mapped</p>
-          <RouteMap rows={rows} mainId={best.r.id} fee={(x) => L.fmt(feeIn(x))} hireAt={hireAt} />
-          <div className={styles.bestAt}>
-            {bestAt.map((b) => (
-              <span key={b.label}>
-                {b.label}: <strong>{b.x.r.name}</strong>
-              </span>
-            ))}
-          </div>
         </div>
 
         {/* The gift sits right under the verdict, open (Ashley's QA: it was easy to miss). */}
@@ -186,7 +198,7 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
             </div>
           ))}
           <p className={styles.hint}>
-            Tap any route to see what you&apos;d do yourself. Green marks the best on each measure. Interviews per hire: how many first
+            Each route on its own, starting today. Tap any route to see what you&apos;d do yourself. Green marks the best on each measure. Interviews per hire: how many first
             interviews it typically takes to make one hire. Candidates per hire: how many candidates you see, on average, for each one
             hired.
           </p>
@@ -254,7 +266,7 @@ function Timeline({ lanes, deadline, hire }: { lanes: Lane[]; deadline: number |
         {lanes.map((l) => (
           <div key={l.id} className={styles.tlRow}>
             <span className={`${styles.tlBar} ${styles["tl_" + l.id]}`} style={{ left: pct(l.from), width: `calc(${pct(l.to)} - ${pct(l.from)})` }}>
-              {l.free && <i>Free until you hire</i>}
+              {l.free && <i>£0</i>}
             </span>
           </div>
         ))}
@@ -268,44 +280,3 @@ function Timeline({ lanes, deadline, hire }: { lanes: Lane[]; deadline: number |
   );
 }
 
-/* Cost across (log scale), risk up (candidates per hire, log scale). Tap a dot for its numbers. */
-function RouteMap({ rows, mainId, fee, hireAt }: { rows: { r: { id: string; name: string; perHire: number; us?: boolean }; fee: number; hours: number }[]; mainId: string; fee: (x: { fee: number; r: { us?: boolean } }) => string; hireAt: Record<string, number> }) {
-  const [sel, setSel] = useState<string>(mainId);
-  // Both agency types share one risk figure (Lever, all agencies), so they sit as one dot with a fee range.
-  const g = rows.find((x) => x.r.id === "games20"), t = rows.find((x) => x.r.id === "tech25");
-  type Pt = { id: string; name: string; perHire: number; fee: number; feeText: string; hours: number; hire: number };
-  const pts: Pt[] = rows
-    .filter((x) => !(g && t && (x.r.id === "games20" || x.r.id === "tech25")))
-    .map((x) => ({ id: x.r.id, name: x.r.name, perHire: x.r.perHire, fee: x.fee, feeText: fee(x), hours: x.hours, hire: hireAt[x.r.id] }));
-  if (g && t) pts.push({ id: "agencies", name: "Agencies", perHire: g.r.perHire, fee: (g.fee + t.fee) / 2, feeText: `${fee(g)} to ${fee(t)}`, hours: Math.round((g.hours + t.hours) / 2), hire: hireAt.games20 });
-  const fees = pts.map((x) => Math.max(x.fee, 100));
-  const [f0, f1] = [Math.log(Math.min(...fees) * 0.6), Math.log(Math.max(...fees) * 1.6)];
-  const [r0, r1] = [Math.log(8), Math.log(220)];
-  const X = (v: number) => ((Math.log(Math.max(v, 100)) - f0) / (f1 - f0)) * 100;
-  const Y = (v: number) => ((Math.log(v) - r0) / (r1 - r0)) * 100;
-  const s = pts.find((x) => x.id === sel) ?? pts[0];
-  return (
-    <div className={styles.map}>
-      <div className={styles.mapArea}>
-        <span className={styles.axY}>Higher risk ↑</span>
-        <span className={styles.axX}>Higher cost →</span>
-        {pts.map((x) => (
-          <button
-            key={x.id}
-            type="button"
-            className={`${styles.dot} ${x.id === mainId ? styles.dotMain : ""} ${x.id === sel ? styles.dotSel : ""}`}
-            style={{ left: `${X(x.fee)}%`, bottom: `${Y(x.perHire)}%` }}
-            onClick={() => setSel(x.id)}
-            aria-pressed={x.id === sel}
-          >
-            <i />
-            <span>{x.name}</span>
-          </button>
-        ))}
-      </div>
-      <p className={styles.mapSel}>
-        <strong>{s.name}</strong> · {s.feeText} · 1 in {s.perHire} hired · hire around {day(new Date(s.hire))} · {s.hours}h of your team&apos;s time
-      </p>
-    </div>
-  );
-}
