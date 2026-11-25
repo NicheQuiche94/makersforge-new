@@ -28,7 +28,7 @@ export default function HomePage() {
           Flow: promise → the odds → proof → how → the honest bit → bench → close → doubts. */}
       <HeroPanel
         headline={["D2C* recruitment."]}
-        ledeLead="*Direct-to-candidate recruitment for mobile games and apps."
+        ledeLead="*Direct-to-candidate recruitment in mobile games and apps."
         lede=""
         ctas={{
           // 2026-11-09 (Andre): a 63% bounce rate; a free tool to click first, not "talk to us".
@@ -36,7 +36,7 @@ export default function HomePage() {
           secondary: { href: "/start", label: "Get started" },
         }}
       />
-      <LogoWall />
+      <LogoWall deep />
       <NotAlways />
       <GuideFeature />
       <CaseStudy />

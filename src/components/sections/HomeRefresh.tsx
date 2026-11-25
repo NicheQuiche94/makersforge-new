@@ -62,8 +62,9 @@ export function NotAlways() {
   const x = (v: number) => `${14 + ((v - 1) / 4) * 72}%`;
   const y = (v: number) => `${20 + ((v - 1) / 4) * 64}%`;
   return (
-    <section className={`${styles.section} ${styles.deep}`}>
-      <div className="container">
+    <section className={`${styles.section} ${styles.glowSection}`}>
+      <CornerGlow variant="trSoft" />
+      <div className={`container ${styles.above}`}>
         <header className={`reveal ${styles.head}`}>
           <h2 className={styles.h2}>
             We&apos;re not always <span className="gr">the answer.</span>

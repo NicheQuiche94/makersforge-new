@@ -70,3 +70,5 @@
 .chip:hover .invert {
   filter: grayscale(0) invert(1);
 }
+
+.deep { background: var(--bg-deep); }

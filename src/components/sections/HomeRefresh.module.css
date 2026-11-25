@@ -95,5 +95,8 @@
 .oddsBlock .source { margin-top: 4px; }
 
 /* v4: the guide on its own ground with a corner glow */
-.guideSection { overflow: hidden; background: var(--bg); }
+.guideSection { overflow: hidden; background: var(--bg-deep); }
 .above { position: relative; z-index: 1; }
+
+/* v5: the four ways on the light ground with a corner glow */
+.glowSection { overflow: hidden; background: var(--bg); }
