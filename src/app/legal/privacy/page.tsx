@@ -2,26 +2,13 @@ import type { Metadata } from "next";
 import styles from "../legal.module.css";
 
 /**
- * /legal/privacy — MakersForge privacy policy.
+ * /legal/privacy: MakersForge privacy policy.
  *
- * Adapted from the HiddenGem and Escapage privacy templates Andre
- * pointed at (his other Seedcraft products) and reframed for
- * MakersForge as a TALENT AGENCY representing growth specialists
- * for mobile apps & games studios.
- *
- * Key MakersForge-specific data points covered:
- *   - Talent profiles (anonymised on public lineup, revealed after a brief)
- *   - Studio briefs and matching workflow
- *   - Contract & engagement records
- *   - Payment routing (talent paid directly by studios; flat fee to us)
- *
- * Four non-negotiable commitments:
- *   1. No commission on talent pay
- *   2. Indefinite representation
- *   3. No selling profiles
- *   4. No silent changes
- *
- * Copy is a working draft for Andre to legal-review.
+ * Rewritten 2026-11-25 for the current business (Andre): direct-to-candidate
+ * recruitment for mobile game studios and app companies. Covers clients,
+ * candidates we approach, the talent directory, free resources and tools,
+ * chat, analytics and cookies. House style: plain sentences, no unnecessary
+ * punctuation.
  */
 
 export const metadata: Metadata = {
@@ -59,418 +46,349 @@ export default function PrivacyPage() {
         <div className={styles.body}>
           <Section num="01" title="Who is the data controller">
             <p className={styles.p}>
-              MakersForge Ltd, registered in England and Wales, is the
-              legal entity responsible for personal data under UK and
-              EU data protection law.
-            </p>
-            <p className={styles.p}>
-              MakersForge Ltd is a Seedcraft Ventures company. References
-              to &ldquo;MakersForge&rdquo;, &ldquo;we&rdquo;,
-              &ldquo;us&rdquo;, or &ldquo;our&rdquo; throughout this
-              policy refer to MakersForge Ltd.
+              MakersForge Ltd is responsible for the personal data described
+              in this policy under UK and EU data protection law. We are a
+              company registered in England and Wales and part of Seedcraft
+              Ventures. When this policy says MakersForge, we, us or our, it
+              means MakersForge Ltd.
             </p>
           </Section>
 
           <Section num="02" title="What we collect">
             <p className={styles.p}>
-              We collect only what we need to represent specialists,
-              match them to studio briefs, and operate the service.
+              MakersForge is a direct-to-candidate recruitment business for
+              mobile game studios and app companies. We only collect what we
+              need to run searches for our clients and to run this website.
             </p>
 
-            <h3 className={styles.subH}>Specialist account &amp; profile</h3>
+            <h3 className={styles.subH}>Clients</h3>
             <p className={styles.p}>
-              When a specialist applies to the lineup, we collect:
-              full name, professional handle, email address, location,
-              discipline, work history, channels and creative formats,
-              indicative day-rate range, references, and the
-              handwritten summary published on their profile.
-              Profiles on the public lineup are{" "}
-              <strong>anonymised</strong>; real identities are revealed
-              to a studio only after a brief is confirmed.
+              When a company books a search or signs in to the client portal,
+              we keep the contact&apos;s name, work email, job title and
+              company, the details of the role, the plan chosen, the signed
+              terms of business, the billing details we need to invoice and
+              anything else you choose to tell us about the role.
             </p>
 
-            <h3 className={styles.subH}>Studio briefs</h3>
+            <h3 className={styles.subH}>Candidates we approach</h3>
             <p className={styles.p}>
-              When a studio briefs us, we capture: role shape, timeline,
-              budget, monetisation, channels in scope, internal contact,
-              and any related context they choose to share.
+              To find people for a role we look at information professionals
+              have made public about their careers, for example on LinkedIn
+              and company websites. When we contact someone about a role we
+              keep their name, contact details, current and past roles,
+              skills, location and the notes from our conversations. We tell
+              people who we are and why we have their details when we first
+              get in touch, and they can ask us to stop or to delete their
+              details at any time.
+            </p>
+            <p className={styles.p}>
+              We only share a candidate&apos;s details with a client once the
+              candidate has agreed to be put forward for that role.
             </p>
 
-            <h3 className={styles.subH}>Engagement &amp; payment records</h3>
+            <h3 className={styles.subH}>The talent directory</h3>
             <p className={styles.p}>
-              For each engagement, we keep: matching notes, start and
-              end dates, the flat monthly fee invoiced to the studio,
-              and confirmation that the studio paid the specialist
-              directly. We do not handle the specialist&apos;s pay; we
-              only record that it happened.
+              Specialists in the talent directory have chosen to share a
+              profile with us. The public profile shows their role, skills,
+              experience, location, availability and rates but not their
+              name. We only share their identity with a company once they have
+              agreed to an introduction.
             </p>
 
-            <h3 className={styles.subH}>Technical data</h3>
+            <h3 className={styles.subH}>Free resources and tools</h3>
             <p className={styles.p}>
-              Browser log data including IP address, browser type,
-              pages visited, and timestamps, retained briefly for
-              diagnostics and abuse detection.
-            </p>
-
-            <h3 className={styles.subH}>Analytics (only if you accept)</h3>
-            <p className={styles.p}>
-              If you accept cookies, analytics tools record how the site
-              is used, and use your IP address to identify the company
-              you&apos;re browsing from (not you as a person), so we know
-              which studios are interested. We may also record how pages
-              are used (clicks, scrolling, where people drop off), with
-              everything typed into forms and your chat messages hidden
-              from the recording. See section 11.
+              If you enter your email to unlock our resources or use one of
+              our free tools, we keep your email, when you signed up, the link
+              that brought you and the answers you gave the tool. We use it to
+              send you what you asked for, to email you new tools and guides
+              when they release, and to follow up about your experience with
+              the resources and your hiring. Every email has a one-click
+              unsubscribe link.
             </p>
 
             <h3 className={styles.subH}>Chat messages</h3>
             <p className={styles.p}>
-              If you message Andre through the chat on the site, we keep
-              your messages, any name and email you give, and the page you
-              were on, so he can reply in the chat or by email. Your
-              browser keeps a random code so the chat remembers your
-              conversation; it doesn&apos;t track you anywhere else. Messages
-              reach Andre through Telegram.
-            </p>
-
-            <h3 className={styles.subH}>Free resources &amp; tools</h3>
-            <p className={styles.p}>
-              If you enter your email to unlock our resources or use one of
-              our free tools, we keep your email, when you signed up and the
-              link that brought you. We use it to send you the link, to email
-              you new tools and guides when they release, and to follow up
-              about your experience with the resources and your hiring. Every
-              email lets you opt out, or just reply and ask.
-            </p>
-
-            <h3 className={styles.subH}>Alerts</h3>
-            <p className={styles.p}>
-              If you sign up for job or talent alerts, we keep your email and
-              the choices you made, and email you alerts until you opt out.
+              If you message Andre through the chat on the site, we keep your
+              messages, any name and email you give and the page you were on,
+              so he can reply in the chat or by email. Your browser keeps a
+              random code so the chat remembers your conversation. It does not
+              track you anywhere else. Messages reach Andre through Telegram.
             </p>
 
             <h3 className={styles.subH}>Links in our emails</h3>
             <p className={styles.p}>
-              Links in emails we send you can carry a short code, so we know
-              you opened the site from that email and which page you landed
-              on. It&apos;s recorded on our side (nothing is stored on your
-              device) and helps us follow up with something useful rather
-              than chase you. If you accept cookies, the rest of that visit is
-              linked to the code too.
+              Links in emails we send can carry a short code, so we know you
+              opened the site from that email and which page you landed on.
+              It is recorded on our side and nothing is stored on your device.
+              If you accept cookies, the rest of that visit is linked to the
+              code too.
+            </p>
+
+            <h3 className={styles.subH}>Analytics, only if you accept</h3>
+            <p className={styles.p}>
+              If you accept cookies, analytics tools record how the site is
+              used and use your IP address to identify the company you are
+              browsing from, not you as a person. We may also record how pages
+              are used, such as clicks, scrolling and where people leave, with
+              everything typed into forms and your chat messages hidden. See
+              section 11 for the details.
+            </p>
+
+            <h3 className={styles.subH}>Technical data</h3>
+            <p className={styles.p}>
+              Our hosting keeps short-lived logs of requests to the site, such
+              as IP address, browser type, pages visited and times, to fix
+              problems and stop abuse.
             </p>
 
             <p className={styles.p}>
-              <strong>What we don&apos;t collect:</strong> advertising
-              cookies, device fingerprinting, tracking across other
-              websites, or personal details we don&apos;t need to do our
-              job.
+              We do not use advertising cookies or device fingerprinting, and
+              we do not collect personal details we do not need.
             </p>
           </Section>
 
           <Section num="03" title="How we use it">
             <ul className={styles.ul}>
-              <li>Represent specialists to studios who brief us</li>
-              <li>Generate the matched shortlist that goes to a studio after a brief</li>
-              <li>Operate the lineup, the filters, and deep-linked filter views</li>
-              <li>Issue invoices and reconcile fees</li>
-              <li>Fix bugs, prevent spam, and improve features</li>
-              <li>Send essential account notices and security alerts</li>
-              <li>Meet legal obligations</li>
+              <li>Run searches for our clients and put forward candidates who fit</li>
+              <li>Talk to candidates about roles and arrange interviews</li>
+              <li>Run the talent directory, the client portal and the free tools</li>
+              <li>Send what you asked for, and the emails described in section 02</li>
+              <li>Invoice clients and keep financial records</li>
+              <li>Fix problems, prevent spam and improve the website</li>
+              <li>Meet our legal obligations</li>
             </ul>
-
-            {/* COMMITMENT PULLOUT */}
-            <div className={`heat-glow ${styles.commitment}`} style={{ background: "var(--bg-deep)" }}>
-              <p className={styles.commitmentH}>The part we care most about</p>
-              <blockquote className={styles.commitmentBlockquote}>
-                &ldquo;talent is not a commodity.&rdquo;
-              </blockquote>
-              <ul className={styles.commitmentList}>
-                <li>
-                  <span>
-                    <strong>no commission on talent pay.</strong>
-                    Our fee is paid by the studio. We never take a cut
-                    of what the specialist earns.
-                  </span>
-                </li>
-                <li>
-                  <span>
-                    <strong>indefinite representation.</strong>
-                    Once a specialist is on the lineup, they stay on the
-                    lineup. Contract ends, we represent them into the
-                    next one.
-                  </span>
-                </li>
-                <li>
-                  <span>
-                    <strong>no selling profiles.</strong>
-                    Profile data is never sold to brokers or external
-                    parties.
-                  </span>
-                </li>
-                <li>
-                  <span>
-                    <strong>no AI training.</strong>
-                    Profile content is never used to train AI models,
-                    ours or anyone else&apos;s.
-                  </span>
-                </li>
-                <li>
-                  <span>
-                    <strong>no silent changes.</strong>
-                    Material policy changes are announced before they
-                    take effect with an opportunity to opt out.
-                  </span>
-                </li>
-              </ul>
-            </div>
+            <p className={styles.p}>
+              We never sell personal data, and we never use profiles or
+              candidate details to train AI models.
+            </p>
           </Section>
 
           <Section num="04" title="Our legal bases for processing">
             <ul className={styles.ul}>
               <li>
-                <strong>Contract.</strong> Running the lineup,
-                representing specialists, delivering matches to studios.
+                <strong>Contract.</strong> Running a search a client has booked, and the client portal.
               </li>
               <li>
-                <strong>Legitimate interests.</strong> Logging, spam
-                prevention, security monitoring. Minimised collection.
+                <strong>Legitimate interests.</strong> Approaching candidates about roles that fit their experience, following up with people who used our free resources or tools, and keeping the website secure. You can object at any time and we will stop.
               </li>
               <li>
-                <strong>Legitimate interests (resources and tools).</strong>{" "}
-                Emailing people who used our free resources or tools about new
-                resources and their hiring. You can opt out at any time.
+                <strong>Consent.</strong> The talent directory, introductions to clients, and analytics and company identification on the website. You can withdraw consent at any time.
               </li>
               <li>
-                <strong>Consent.</strong> Optional features, including
-                analytics and company-level visitor identification, only
-                with your agreement. Withdrawable at any time.
-              </li>
-              <li>
-                <strong>Legal obligation.</strong> Responding to lawful
-                requests, financial record keeping, tax compliance.
+                <strong>Legal obligation.</strong> Financial records, tax and responding to lawful requests.
               </li>
             </ul>
           </Section>
 
           <Section num="05" title="Who we share it with">
             <p className={styles.p}>
-              Personal data is shared only with infrastructure providers
-              under data processing agreements, plus the specific studio
-              involved in a confirmed brief.
+              We share candidate details with a client only when the candidate
+              has agreed. Otherwise personal data is only handled for us by
+              these service providers under data processing agreements.
             </p>
             <ul className={styles.ul}>
               <li>
-                <strong>Supabase.</strong> Database and storage. EU-hosted.
+                <strong>Supabase.</strong> Our database. Hosted in the EU.
               </li>
               <li>
-                <strong>Vercel.</strong> Website hosting and request logging.
+                <strong>Vercel.</strong> Website hosting and request logs.
               </li>
               <li>
-                <strong>Resend.</strong> Transactional email delivery for application acknowledgements and account notices.
+                <strong>Resend.</strong> Sending the emails the website sends.
               </li>
               <li>
-                <strong>Telegram.</strong> Delivers chat messages from the site to Andre so he can reply.
+                <strong>Folk.</strong> Our contact management system for clients, leads and candidates.
               </li>
               <li>
-                <strong>Analytics and advertising providers (Google Analytics, PostHog, Apollo, LinkedIn).</strong> Site usage statistics, page recordings with form entries hidden, identifying the companies visiting the site from IP address, and measuring our LinkedIn ads. Only if you accept cookies. PostHog stores its data in the EU.
+                <strong>Cal.com.</strong> Booking calls with Andre.
               </li>
               <li>
-                <strong>Studios with confirmed briefs.</strong> When a studio briefs us and a shortlist is generated, the matched specialists&apos; real identities and detailed profiles are shared with that studio for the purpose of interview and engagement.
+                <strong>Telegram.</strong> Delivering chat messages from the site to Andre.
+              </li>
+              <li>
+                <strong>Google Analytics, PostHog, Apollo and LinkedIn.</strong> Website statistics, page recordings with form entries hidden, identifying the companies that visit, and measuring our LinkedIn ads. Only if you accept cookies. PostHog stores its data in the EU.
               </li>
             </ul>
             <p className={styles.p}>
-              Disclosure to anyone else occurs only when legally required.
-              We push back where lawful and notify the person affected
-              where permitted.
+              We only disclose data to anyone else when the law requires it,
+              and we tell the person affected where we are allowed to.
             </p>
           </Section>
 
           <Section num="06" title="International data transfers">
             <p className={styles.p}>
-              Data is stored on EU servers via Supabase. For users
-              outside the UK or EEA, data may be processed by vendors in
-              other jurisdictions including the US. Protection is
-              maintained through Standard Contractual Clauses and the UK
+              Our database is in the EU. Some of our service providers process
+              data in other countries, including the US. Where they do, the
+              transfer is protected by Standard Contractual Clauses and the UK
               International Data Transfer Addendum.
             </p>
           </Section>
 
           <Section num="07" title="How long we keep things">
+            <ul className={styles.ul}>
+              <li>
+                <strong>Clients.</strong> For as long as you have an account with us, and financial records for six years as UK tax law requires.
+              </li>
+              <li>
+                <strong>Candidates.</strong> For two years after we were last in touch, unless you ask us to delete your details sooner.
+              </li>
+              <li>
+                <strong>The talent directory.</strong> Until the specialist asks us to remove their profile.
+              </li>
+              <li>
+                <strong>Resource and tool sign-ups.</strong> For two years after you last heard from or engaged with us, or until you unsubscribe.
+              </li>
+              <li>
+                <strong>Technical logs.</strong> Deleted automatically within 30 days.
+              </li>
+            </ul>
             <p className={styles.p}>
-              <strong>Active specialist accounts:</strong> data retained
-              for as long as the specialist remains on the lineup.
-            </p>
-            <p className={styles.p}>
-              <strong>Closed accounts:</strong> personal data deleted
-              within 30 days, except encrypted backups (up to 60 days)
-              and anonymised analytics (indefinitely).
-            </p>
-            <p className={styles.p}>
-              <strong>Engagement and financial records:</strong> kept
-              for as long as UK tax law requires (currently six years).
-            </p>
-            <p className={styles.p}>
-              <strong>Resource and tool sign-ups:</strong> kept for two
-              years after you last heard from or engaged with us, or until
-              you opt out. If you opt out, we keep just your email on a
-              do-not-contact list so we never email you again.
-            </p>
-            <p className={styles.p}>
-              Technical logs rotate automatically within 30 days.
+              If you unsubscribe or ask us not to contact you, we keep only
+              your email on a do-not-contact list so we never email you again.
             </p>
           </Section>
 
           <Section num="08" title="How we protect it">
             <p className={styles.p}>
-              Security measures include TLS encryption in transit,
-              field-level encryption at rest for sensitive fields,
-              hashed passwords, access controls, and audit logging.
-              Breaches trigger notification to authorities within 72
-              hours and direct notification to affected users when
-              significant risk exists.
+              Data is encrypted in transit and at rest by our providers.
+              Access is limited to the people who need it, and the client
+              portal signs you in with a one-time code sent to your email. If a
+              breach puts your data at risk, we will tell the regulator within
+              72 hours and tell you directly when the risk is significant.
             </p>
           </Section>
 
           <Section num="09" title="Your rights">
             <p className={styles.p}>
-              Depending on where you live, you have a set of rights over
-              the personal data we hold. We honour these globally where
-              we reasonably can.
+              Depending on where you live, you have rights over the personal
+              data we hold. We honour them for everyone wherever we reasonably
+              can.
             </p>
             <ul className={styles.ul}>
               <li>
                 <strong>Access.</strong> See the personal data we hold about you.
               </li>
               <li>
-                <strong>Rectification.</strong> Correct anything that&apos;s wrong or out of date.
+                <strong>Correction.</strong> Fix anything that is wrong or out of date.
               </li>
               <li>
-                <strong>Erasure.</strong> Delete your account and the data we hold.
+                <strong>Deletion.</strong> Ask us to delete your data.
               </li>
               <li>
-                <strong>Restriction.</strong> Pause processing while a dispute is sorted out.
+                <strong>Restriction.</strong> Ask us to pause using your data while a concern is sorted out.
               </li>
               <li>
-                <strong>Portability.</strong> Receive your data in a machine-readable format.
+                <strong>Portability.</strong> Receive your data in a format you can reuse.
               </li>
               <li>
-                <strong>Object.</strong> Challenge processing based on our legitimate interests.
+                <strong>Objection.</strong> Ask us to stop using your data where we rely on legitimate interests.
               </li>
               <li>
-                <strong>Withdraw consent.</strong> Pull back any consent at any time.
+                <strong>Withdrawing consent.</strong> Change your mind about anything you agreed to.
               </li>
               <li>
-                <strong>Complain.</strong> Lodge a complaint with your local data protection authority.
+                <strong>Complaints.</strong> Complain to your data protection authority.
               </li>
             </ul>
             <p className={styles.p}>
-              Requests to{" "}
-              <a href="mailto:andre@makersforge.gg">
-                andre@makersforge.gg
-              </a>{" "}
-              receive responses within 30 days at no cost.
+              Email{" "}
+              <a href="mailto:andre@makersforge.gg">andre@makersforge.gg</a>{" "}
+              and we will respond within 30 days at no cost.
             </p>
             <h3 className={styles.subH}>Complaint authorities</h3>
             <ul className={styles.ul}>
               <li>
-                <strong>UK:</strong> Information Commissioner&apos;s Office (
-                <a href="https://ico.org.uk" target="_blank" rel="noopener noreferrer">
-                  ico.org.uk
-                </a>
-                )
+                <strong>UK.</strong> The Information Commissioner&apos;s Office at{" "}
+                <a href="https://ico.org.uk" target="_blank" rel="noopener noreferrer">ico.org.uk</a>
               </li>
               <li>
-                <strong>EEA:</strong> Your local data protection authority
+                <strong>EEA.</strong> Your local data protection authority
               </li>
               <li>
-                <strong>California:</strong> CCPA / CPRA rights apply. We won&apos;t discriminate for exercising them.
+                <strong>California.</strong> Your CCPA and CPRA rights apply and we will not treat you differently for using them
               </li>
             </ul>
           </Section>
 
           <Section num="10" title="Minors">
             <p className={styles.p}>
-              MakersForge is not intended for users under 18. Both
-              specialists and studio contacts must be of age. If a child
-              account is reported to us, we will close it and contact a
-              parent or guardian as appropriate.
+              MakersForge is for adults. We do not knowingly collect data from
+              anyone under 18, and if we find we have, we will delete it.
             </p>
           </Section>
 
           <Section num="11" title="Cookies and similar things" id="cookies">
             <p className={styles.p}>
               Essential storage keeps sign-in, your preferences and your
-              cookie choice working. It doesn&apos;t need your consent.
+              cookie choice working. It does not need your consent.
             </p>
-            <p className={styles.p}>With your consent only, we also use:</p>
+            <p className={styles.p}>With your consent only, we also use the following.</p>
             <ul className={styles.ul}>
               <li>
-                <strong>Analytics cookies</strong>, to see how the site is
-                used: pages visited, rough location and device type.
+                <strong>Analytics cookies</strong> to see how the site is
+                used, such as pages visited, rough location and device type.
               </li>
               <li>
-                <strong>Page recordings</strong>, to see where the site is
-                confusing: clicks, scrolling and where people leave.
+                <strong>Page recordings</strong> to see where the site is
+                confusing, such as clicks, scrolling and where people leave.
                 Anything you type into a form and your chat messages are
                 hidden, and nothing is recorded in the client portal.
               </li>
               <li>
-                <strong>Company identification</strong>, which uses your
-                IP address to identify the company you&apos;re browsing
-                from, not you as a person, so we can see which studios
-                are interested.
+                <strong>Company identification</strong>, which uses your IP
+                address to identify the company you are browsing from, not you
+                as a person, so we can see which companies are interested.
               </li>
               <li>
-                <strong>LinkedIn ads measurement</strong> (the LinkedIn
-                Insight Tag), to see whether our LinkedIn ads lead to visits
-                and enquiries, to show our ads again to people who visited,
-                and to give us anonymous totals of visitors&apos; job titles
-                and company sizes. LinkedIn may link this to your LinkedIn
-                account under its own privacy policy.
+                <strong>LinkedIn ads measurement</strong> through the LinkedIn
+                Insight Tag, to see whether our LinkedIn ads lead to visits, to
+                show our ads again to people who visited and to give us
+                anonymous totals of visitors&apos; job titles and company
+                sizes. LinkedIn may link this to your LinkedIn account under
+                its own privacy policy.
               </li>
             </ul>
             <p className={styles.p}>
               None of these load until you click Accept on the cookie banner,
-              and you can change your mind at any time from &ldquo;cookie
-              settings&rdquo; in the footer. We don&apos;t use advertising
-              cookies or device fingerprinting.
+              and you can change your mind at any time from Cookie settings in
+              the footer.
             </p>
             <p className={styles.p}>
               We also count visits with Vercel Web Analytics, which uses no
-              cookies and doesn&apos;t identify you; it only gives us totals
-              like page views and where visitors came from.
+              cookies and does not identify you. It only gives us totals such
+              as page views and where visitors came from.
             </p>
             <p className={styles.p}>
-              We also keep our own simple count of visits that uses no
-              cookies and stores nothing on your device: the page, how you
-              arrived (such as the site or link you came from), your
-              approximate country and city, the type of device, and how long
-              you stayed. We don&apos;t store your IP address or anything that
-              identifies you.
+              We keep our own simple count of visits too. It uses no cookies
+              and stores nothing on your device. It records the page, how you
+              arrived, your approximate country and city, the type of device
+              and how long you stayed. We do not store your IP address or
+              anything that identifies you.
             </p>
             <p className={styles.p}>
-              If you give us your email to receive a free tool&apos;s result, we
-              remember it in your browser so you don&apos;t have to enter it
-              again. Click &ldquo;Not you?&rdquo; to clear it. While it&apos;s
-              remembered, our visit count above is linked to it.
+              If you give us your email to unlock our resources or receive a
+              free tool&apos;s result, we remember it in your browser so you do
+              not have to enter it again. Use the Not you link next to the email
+              field to clear it. While it is remembered, our visit count is
+              linked to it.
             </p>
           </Section>
 
           <Section num="12" title="Changes to this policy">
             <p className={styles.p}>
-              Material changes are communicated by email or in-app
-              before taking effect. Acquisition or restructuring of
-              MakersForge Ltd triggers advance notice with the
-              opportunity to close your account first.
+              If we make a change that affects how we use your data, we will
+              email clients with an active account before it takes effect.
+              Every update shows a new last updated date at the top of this
+              page.
             </p>
           </Section>
 
           <Section num="13" title="Governing law">
             <p className={styles.p}>
-              Governed by the laws of England and Wales. Disputes are
-              subject to the exclusive jurisdiction of the English
-              courts, without prejudice to consumer rights in your own
-              jurisdiction.
+              This policy is governed by the laws of England and Wales, and the
+              English courts have exclusive jurisdiction over any dispute. This
+              does not affect any rights you have under the laws of your own
+              country.
             </p>
           </Section>
 
@@ -478,8 +396,8 @@ export default function PrivacyPage() {
           <div className={styles.contactBlock}>
             <h2 className={styles.contactH}>Questions?</h2>
             <p className={styles.contactP}>
-              We&apos;re a small team and we read every email. If anything in here
-            is unclear, write to us before you brief us on a hire.
+              We&apos;re a small team and we read every email. If anything in
+              here is unclear, just write to us.
             </p>
             <a href="mailto:andre@makersforge.gg" className={styles.contactEmail}>
               andre@makersforge.gg
