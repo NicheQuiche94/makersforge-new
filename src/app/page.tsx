@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import { HeroPanel } from "@/components/sections/HeroPanel";
 import { LogoWall } from "@/components/sections/LogoWall";
-import { HowItWorksBento } from "@/components/sections/HowItWorksBento";
 import { FAQ } from "@/components/sections/FAQ";
 import { CaseStudy, TalentDirectory } from "@/components/sections/ProofSections";
-import { OddsStrip, NotAlways, HomeClose } from "@/components/sections/HomeRefresh";
+import { OddsStrip, NotAlways, GuideFeature, HomeClose } from "@/components/sections/HomeRefresh";
 
 // 2026-10-27: home rebuilt around the service Andre sells and the outreach
 // pitches — "From 500 candidates to 5" — so a click from an email lands on
@@ -28,21 +27,21 @@ export default function HomePage() {
       {/* Homepage refresh (Andre 2026-11-25, MOCK, DRAFT copy): D2C positioning.
           Flow: promise → the odds → proof → how → the honest bit → bench → close → doubts. */}
       <HeroPanel
-        headline={["D2C recruitment for mobile games and apps."]}
-        ledeLead="Job ads reach whoever's nearby."
-        lede="We reach the person you actually want, and engage them directly."
+        headline={["D2C recruitment."]}
+        ledeLead="For mobile games and apps."
+        lede="Job ads reach whoever's nearby. We reach the person you want."
         ctas={{
           // 2026-11-09 (Andre): a 63% bounce rate; a free tool to click first, not "talk to us".
           primary: { href: "/compare", label: "Design your hiring route" },
           secondary: { href: "/start", label: "Get started" },
         }}
       />
-      <OddsStrip />
       <LogoWall />
-      <CaseStudy />
-      <HowItWorksBento />
       <NotAlways />
-      <TalentDirectory />
+      <OddsStrip />
+      <GuideFeature />
+      <CaseStudy />
+      <TalentDirectory title="5 people worth hiring, in 5 working days." />
       <HomeClose />
       <FAQ />
     </>

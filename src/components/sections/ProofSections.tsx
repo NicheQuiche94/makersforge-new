@@ -99,7 +99,8 @@ export function CaseStudy() {
   );
 }
 
-export function TalentDirectory() {
+/** title: the homepage refresh (2026-11-25) leads with the offer. */
+export function TalentDirectory({ title = "How we hit 5 working days." }: { title?: string } = {}) {
   return (
     <section className={`${styles.section} ${styles.sectionAlt}`}>
       <div className={`container ${styles.contentAbove}`}>
@@ -113,7 +114,7 @@ export function TalentDirectory() {
           <div className={styles.directoryText}>
             <p className="kicker">The MakersForge Talent Directory</p>
             <h2 className={styles.h2} style={{ textAlign: "left" }}>
-              How we hit 5 working days.
+              {title}
             </h2>
             <p>
               Every person in our Talent Directory has spent 30 to 90 minutes
