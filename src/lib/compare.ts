@@ -33,6 +33,20 @@ export const ROLES = [
 export const NOTICE_WEEKS = 4; // typical notice between an accepted offer and a start date
 export const HOURLY = 60; // team time, £ an hour
 
+/**
+ * Candidates seen for each hire (Andre 2026-11-25, from the guide "The 4 ways
+ * to find talent"). Market figures: Lever, Little Grey Book of Recruiting
+ * Benchmarks (4M+ candidates, ~1,000 employers, Aug 2015 to Jul 2016).
+ * Ours: candidates sent to one client since Jan 2025 vs hires, counting roles
+ * that changed partway through. Andre is checking the wider record (likely
+ * nearer 1 in 8): change MF_PER_HIRE and the note below together.
+ */
+export const MF_PER_HIRE = 12;
+export const MF_PER_HIRE_NOTE = "From our record with one client since January 2025: 147 candidates sent, 12 hired, counting roles that changed partway through";
+export const LEVER_NOTE = "Lever's study of 4 million candidates across about 1,000 employers";
+/** Screening a CV properly, cover letter included (the guide's figure). */
+export const CV_MINUTES = 5;
+
 export type Route = {
   id: string;
   name: string;
@@ -45,6 +59,11 @@ export type Route = {
   interviews: number; // first interviews typically needed to find someone worth hiring
   /** What the interviews figure is based on, shown in the detail. */
   interviewsNote?: string;
+  /** Candidates seen for each hire: the odds behind the risk (1 in N). */
+  perHire: number;
+  perHireNote: string;
+  /** Depends on someone already having a name in mind, so never picked as the best fit. */
+  noRank?: string;
   /** What you have to do yourself on this route (the white-glove difference, Andre 2026-11-09). */
   youDo: string;
   speedNote?: string;
@@ -67,6 +86,8 @@ export const ROUTES: Route[] = [
     get: "About 5 vetted people, plus more batches should you need them",
     interviews: 5,
     interviewsNote: "6 in 10 of our hires come from the first 5 candidates, 9 in 10 within the first 9",
+    perHire: MF_PER_HIRE,
+    perHireNote: MF_PER_HIRE_NOTE,
     youDo: "Brief us in 30 minutes, then interview the people you like. We headhunt, screen, book every interview, run the feedback and negotiate the offer",
     speedNote: "We can prioritise people with shorter notice periods or who are available now.",
     hours: [
@@ -88,6 +109,8 @@ export const ROUTES: Route[] = [
     hireWeeks: [5, 8],
     get: "8–12 CVs",
     interviews: 6,
+    perHire: 22,
+    perHireNote: `1 in 22 agency candidates get hired, from ${LEVER_NOTE}. A specialist may do better on roles they know`,
     youDo: "Brief them, read 8–12 CVs, interview, give feedback and negotiate the offer, often with the agency in the middle",
     hours: [
       { label: "Brief", h: 1 },
@@ -108,6 +131,8 @@ export const ROUTES: Route[] = [
     hireWeeks: [6, 10],
     get: "10–20 CVs",
     interviews: 8,
+    perHire: 22,
+    perHireNote: `1 in 22 agency candidates get hired, from ${LEVER_NOTE}`,
     youDo: "Brief them, filter 10–20 CVs (many from outside games and apps), interview and run the rest of the process",
     hours: [
       { label: "Brief", h: 1 },
@@ -128,15 +153,63 @@ export const ROUTES: Route[] = [
     hireWeeks: [6, 12],
     get: "100–250 applications",
     interviews: 10,
+    perHire: 152,
+    perHireNote: `1 in 152 applicants get hired, from ${LEVER_NOTE}`,
     youDo: "Write and post the ad, read every application, screen, book and chase interviews, give feedback and make the offer",
     hours: [
       { label: "Writing and posting the ad", h: 3 },
-      { label: "Screening applications", h: 6 },
+      { label: `Screening applications (about ${CV_MINUTES} minutes each)`, h: 15 },
       { label: "Interviews", h: 15 },
       { label: "Coordination", h: 6 },
     ],
     reach: { passive: false, label: "Active only", detail: "Only people actively looking for a job will see it. The many strong people who are happy where they are never will" },
-    tips: ["Post on Games Jobs Direct, Hitmarker and LinkedIn Jobs.", "Add 2–3 screening questions to cut the pile down fast.", "Block out screening time every day, or the good applicants go elsewhere."],
+    tips: [
+      "Cap the applicants at what you can properly read. Past about 150, screening outgrows a small team: 900 CVs at 5 minutes each is 75 hours.",
+      "Post on Games Jobs Direct, Hitmarker and LinkedIn Jobs.", "Add 2–3 screening questions to cut the pile down fast.", "Block out screening time every day, or the good applicants go elsewhere."],
+  },
+  {
+    id: "inhouse",
+    name: "Sourcing it yourself",
+    how: "Your own team finds and messages people on LinkedIn",
+    fee: () => 135 * 3,
+    feeNote: "LinkedIn Recruiter Lite, about $170 a month (full Recruiter is about $8–15k a seat a year)",
+    shortlist: "3–5 weeks",
+    hireWeeks: [6, 12],
+    get: "Whoever replies to your messages",
+    interviews: 8,
+    perHire: 72,
+    perHireNote: `1 in 72 candidates sourced by in-house teams get hired, from ${LEVER_NOTE}`,
+    youDo: "Search, write and send every message, chase replies, screen, interview and make the offer",
+    hours: [
+      { label: "Searching and messaging", h: 20 },
+      { label: "Screening calls", h: 6 },
+      { label: "Interviews", h: 12 },
+      { label: "Coordination", h: 4 },
+    ],
+    reach: { passive: true, label: "Active + passive", detail: "You can message anyone, including people who aren't looking, but finding and persuading them takes time" },
+    tips: ["Send 50–100 personal messages for each role; reply rates are low.", "Lead with the role and the pay, not the company story."],
+  },
+  {
+    id: "referral",
+    name: "Referrals",
+    how: "Your team and network recommend people they know",
+    fee: () => 2000,
+    feeNote: "a referral bonus, typically €1,500–3,000, paid when the hire starts",
+    shortlist: "Depends who has a name",
+    hireWeeks: [3, 8],
+    get: "As many names as your network has",
+    interviews: 4,
+    perHire: 16,
+    perHireNote: `1 in 16 referred candidates get hired, from ${LEVER_NOTE}`,
+    noRank: "Only if someone already has a name in mind",
+    youDo: "Ask your team and network, then screen, interview and make the offer",
+    hours: [
+      { label: "Asking around", h: 2 },
+      { label: "Interviews", h: 6 },
+      { label: "Coordination", h: 2 },
+    ],
+    reach: { passive: true, label: "Who your network knows", detail: "Only people someone in your team already knows, but they come vouched for" },
+    tips: ["Ask first, alongside any other route: it costs little.", "Ask for a specific person for a specific role, not 'anyone good'."],
   },
 ];
 
@@ -185,17 +258,17 @@ export function compare(input: CompareInput, now = Date.now()) {
     input.p === "cost" ? x.real : input.p === "speed" ? x.startWeeks : input.p === "hours" ? x.hours
       : x.real / mR + x.startWeeks / mW + x.hours / mH + x.r.interviews / mI;
   // Best fit: options that fit the date first, then by what matters most.
-  const ranked = base.slice().sort((a, b) => Number(a.overBudget || a.tooSlow) - Number(b.overBudget || b.tooSlow) || score(a) - score(b));
+  const ranked = base.filter((x) => !x.r.noRank).sort((a, b) => Number(a.overBudget || a.tooSlow) - Number(b.overBudget || b.tooSlow) || score(a) - score(b));
   const best = ranked[0];
   // Shown in a fixed order (Andre): us, then the job ad (the route most people take), then the agencies.
-  const ORDER = ["mf", "ads", "games20", "tech25"];
+  const ORDER = ["mf", "ads", "games20", "tech25", "inhouse", "referral"];
   const rows = base.slice().sort((a, b) => ORDER.indexOf(a.r.id) - ORDER.indexOf(b.r.id));
   const lo = (f: (x: (typeof rows)[number]) => number) => Math.min(...rows.map(f));
   return {
     rows,
     best,
     next: ranked[1],
-    lowest: { fee: lo((x) => x.fee), real: lo((x) => x.real), start: lo((x) => x.startWeeks), hireBy: lo((x) => x.hireBy), hours: lo((x) => x.hours), interviews: lo((x) => x.r.interviews) },
+    lowest: { fee: lo((x) => x.fee), real: lo((x) => x.real), start: lo((x) => x.startWeeks), hireBy: lo((x) => x.hireBy), hours: lo((x) => x.hours), interviews: lo((x) => x.r.interviews), perHire: lo((x) => x.r.perHire) },
   };
 }
 

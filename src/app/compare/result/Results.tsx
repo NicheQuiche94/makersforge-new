@@ -50,7 +50,9 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
     if (interviews > 0) parts.push(`${interviews} fewer interview${interviews === 1 ? "" : "s"}`);
     if (hours > 0) parts.push(`${hours} fewer hours of your team's time`);
     if (!parts.length) return "";
-    const them = ({ ads: "a job ad", games20: "a games-specialist agency", tech25: "a general tech agency", mf: "MakersForge" } as Record<string, string>)[next.r.id] ?? next.r.name;
+    const fewer = next.r.perHire - best.r.perHire;
+    if (fewer > 0) parts.push(`${fewer} fewer candidates to see for each hire`);
+    const them = ({ ads: "a job ad", games20: "a games-specialist agency", tech25: "a general tech agency", inhouse: "sourcing it yourself", mf: "MakersForge" } as Record<string, string>)[next.r.id] ?? next.r.name;
     const lead = feeDiff > 0 ? `${L.fmt(feeDiff)} more than ${them}` : feeDiff < 0 ? `${L.fmt(-feeDiff)} less than ${them}` : `The same fee as ${them}`;
     return `${lead}: ${parts.join(", ").replace(/, ([^,]*)$/, " and $1")}.`;
   })();
@@ -93,6 +95,7 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
             <span>Hire made by</span>
             <span>Your team&apos;s hours</span>
             <span>Interviews per hire</span>
+            <span>Candidates per hire</span>
             <span>Finds people not looking</span>
           </div>
           {rows.map((x) => (
@@ -101,12 +104,14 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
                 <span className={styles.name}>
                   {x.r.name}
                   {x.r.id === best.r.id && <em className={styles.bestTag}>Best fit</em>}
-                  {x.tooSlow && <em className={styles.warn}>Too late for your date</em>}
+                  {x.tooSlow && !x.r.noRank && <em className={styles.warn}>Too late for your date</em>}
+                  {x.r.noRank && <em className={styles.warn}>{x.r.noRank}</em>}
                 </span>
                 <span data-l="Fee" className={x.fee === lowest.fee ? styles.win : ""}>{L.fmt(feeIn(x))}</span>
                 <span data-l="Hire made by" className={x.hireBy === lowest.hireBy ? styles.win : ""}>{day(addWeeks(x.hireBy))}</span>
                 <span data-l="Your team's hours" className={x.hours === lowest.hours ? styles.win : ""}>{x.hours}h</span>
                 <span data-l="Interviews per hire" className={x.r.interviews === lowest.interviews ? styles.win : ""}>{x.r.interviews}</span>
+                <span data-l="Candidates per hire" className={x.r.perHire === lowest.perHire ? styles.win : ""}>1 in {x.r.perHire}</span>
                 <span data-l="Finds people not looking" className={x.r.reach.passive ? styles.win : styles.lose}>{x.r.reach.passive ? "Yes" : "No"}</span>
               </button>
               {open === x.r.id && (
@@ -132,6 +137,9 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
                       </li>
                     )}
                     <li>
+                      <b>Candidates per hire:</b> {x.r.perHireNote}.
+                    </li>
+                    <li>
                       <b>Who you reach:</b> {x.r.reach.detail}.
                     </li>
                     <li>
@@ -146,13 +154,17 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
           ))}
           <p className={styles.hint}>
             Tap any route to see what you&apos;d do yourself. Green marks the best on each measure. Interviews per hire: how many first
-            interviews it typically takes to make one hire.
+            interviews it typically takes to make one hire. Candidates per hire: how many candidates you see, on average, for each one
+            hired.
           </p>
         </div>
 
         <div className={styles.ctas}>
           <Link href="/start" className={styles.go}>Start a search week →</Link>
         </div>
+        <p className={styles.guideLink}>
+          Want the thinking behind this? <Link href="/resources">Get the free guide: The 4 ways to find talent →</Link>
+        </p>
 
         <details className={styles.how}>
           <summary>How we worked these out</summary>
@@ -165,6 +177,11 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
             target. The agency and job ad figures are typical across the market, from published hiring reports and what agencies
             quote themselves. Some agencies beat them and some fall short, so before you sign with one, ask for their numbers on
             roles like yours.
+          </p>
+          <p>
+            Candidates per hire for agencies, job ads, sourcing and referrals come from Lever&apos;s study of 4 million candidates
+            across about 1,000 employers (2016), the largest published breakdown by source. Ours is from our own record with one
+            client since January 2025. Screening assumes about 5 minutes a CV, cover letter included.
           </p>
         </details>
       </div>
