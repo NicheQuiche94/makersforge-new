@@ -155,8 +155,10 @@ export const ROUTES: Route[] = [
     name: "Job ad, hire yourself",
     short: "Job ad",
     how: "Job boards plus an applicant tracking system",
-    fee: () => 400 + 250 * 3,
-    feeNote: "About £400 on job boards + about £250 a month for tracking software",
+    // One paid games-board post (Games Jobs Direct, about £250 + VAT); Hitmarker and LinkedIn Jobs can be free.
+    // No tracking software: most studios already pay for one, so it is not a new cost (Andre 2026-11-25).
+    fee: () => 250,
+    feeNote: "One games-board post; Hitmarker and LinkedIn are free",
     shortlist: "3–6 weeks",
     hireWeeks: [6, 12],
     get: "100–250 applications",
