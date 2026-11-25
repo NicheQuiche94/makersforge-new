@@ -131,8 +131,9 @@ export function GuideFeature() {
 /** The close: one message, one button. */
 export function HomeClose() {
   return (
-    <section className={`${styles.section} ${styles.close}`}>
-      <div className={`container reveal ${styles.closeInner}`}>
+    <section className={`${styles.section} ${styles.close} ${styles.deep}`}>
+      <CornerGlow variant="tlSoft" />
+      <div className={`container reveal ${styles.closeInner} ${styles.above}`}>
         <h2 className={styles.h2}>
           Don&apos;t leave specific hiring <span className="gr">to chance.</span>
         </h2>

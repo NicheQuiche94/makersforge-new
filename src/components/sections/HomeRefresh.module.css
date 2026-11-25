@@ -100,3 +100,6 @@
 
 /* v5: the four ways on the light ground with a corner glow */
 .glowSection { overflow: hidden; background: var(--bg); }
+
+/* v6: the close on the darker shade, so case study, close and FAQ don't run together */
+.close { overflow: hidden; }
