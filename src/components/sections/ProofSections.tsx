@@ -8,13 +8,14 @@ import { CornerGlow } from "./CornerGlow";
  * testimonials (Lessmore figures + quotes from Andre, 2026-10-27).
  */
 
-export function CaseStudy() {
+/** kicker: the homepage refresh (2026-11-25) labels this as proof of D2C. */
+export function CaseStudy({ kicker = "Case study" }: { kicker?: string } = {}) {
   return (
     <section className={styles.section} id="proof">
       <CornerGlow variant="trSoft" />
       <div className={`container ${styles.contentAbove}`}>
         <header className={`reveal ${styles.header}`}>
-          <p className="kicker">Case study</p>
+          <p className="kicker">{kicker}</p>
           <h2 className={styles.h2}>22 hires without the fuss.</h2>
         </header>
 

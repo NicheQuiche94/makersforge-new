@@ -51,10 +51,10 @@ export function OddsStrip() {
 
 /* Cost and risk per method, 1 to 5, from the guide's scores. */
 const WAYS = [
-  { name: "Referrals", line: "Always worth asking first", cost: 1, risk: 1, tone: "linear-gradient(135deg, #22c55e, #15803d)" },
-  { name: "Job ads", line: "Only reaches the people who see it", cost: 2, risk: 5, tone: "linear-gradient(135deg, #3b82f6, #1d4ed8)" },
-  { name: "Talent communities", line: "Slow to build, but it compounds", cost: 3, risk: 2, tone: "linear-gradient(135deg, #8b5cf6, #5b21b6)" },
-  { name: "D2C", line: "Reaches the exact person you want", cost: 5, risk: 1, tone: "var(--heat-deep)", us: true },
+  { name: "Referrals", line: "Cheap and low risk, if someone has a name", cost: 1, risk: 1, tone: "linear-gradient(135deg, #22c55e, #15803d)" },
+  { name: "Job ads", line: "Cheap to post, but a gamble", cost: 2, risk: 5, tone: "linear-gradient(135deg, #3b82f6, #1d4ed8)" },
+  { name: "Talent communities", line: "Low risk once it runs, but slow to build", cost: 3, risk: 2, tone: "linear-gradient(135deg, #8b5cf6, #5b21b6)" },
+  { name: "D2C", line: "Targets and engages the right people directly", cost: 5, risk: 1, tone: "var(--heat-deep)", us: true },
 ];
 
 /** The honest bit, as one picture: four ways to hire, each trading cost against risk. */
@@ -69,7 +69,7 @@ export function NotAlways() {
           <h2 className={styles.h2}>
             We&apos;re not always <span className="gr">the answer.</span>
           </h2>
-          <p className={styles.lede}>There are four ways to find talent, and each one has trade-offs.</p>
+          <p className={styles.lede}>There are four ways to find talent.</p>
         </header>
         <div className={`reveal ${styles.matrix}`}>
           <span className={styles.axY}>Higher risk ↑</span>
@@ -83,7 +83,7 @@ export function NotAlways() {
             </div>
           ))}
         </div>
-        <p className={styles.after}>Referrals give you both, when someone has a name. After that, you trade cost against risk.</p>
+        <p className={styles.after}>Each one has trade-offs. Find the right route for your next hire.</p>
 
         <div className={styles.links}>
           <Link href="/compare" className={styles.primary}>

@@ -103,3 +103,4 @@
 
 /* v6: the close on the darker shade, so case study, close and FAQ don't run together */
 .close { overflow: hidden; }
+.pt em { white-space: normal; max-width: 200px; line-height: 1.35; }

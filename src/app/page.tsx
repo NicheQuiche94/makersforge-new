@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { HeroPanel } from "@/components/sections/HeroPanel";
 import { LogoWall } from "@/components/sections/LogoWall";
-import { FAQ } from "@/components/sections/FAQ";
+import { FAQ, HOME_FAQ } from "@/components/sections/FAQ";
 import { CaseStudy } from "@/components/sections/ProofSections";
 import { NotAlways, GuideFeature, HomeClose } from "@/components/sections/HomeRefresh";
 
@@ -9,13 +9,13 @@ import { NotAlways, GuideFeature, HomeClose } from "@/components/sections/HomeRe
 // pitches — "From 500 candidates to 5" — so a click from an email lands on
 // page two of that email: promise → proof → how → bench → brief.
 const DESCRIPTION =
-  "Recruitment for mobile games and consumer apps. We headhunt the people who never see your job ad and hand you 5 screened candidates in 5 working days. from £9,000 per hire.";
+  "Direct-to-candidate recruitment for mobile game studios and app companies. We target and engage the right people directly: 5 candidates in 5 working days, from £9,000 per hire, paid only when you hire.";
 
 export const metadata: Metadata = {
-  title: "MakersForge: From 500 candidates to 5 · Mobile games & apps recruitment",
+  title: "MakersForge: D2C recruitment in mobile games and apps",
   description: DESCRIPTION,
   openGraph: {
-    title: "MakersForge: From 500 candidates to 5",
+    title: "MakersForge: D2C recruitment in mobile games and apps",
     description: DESCRIPTION,
     type: "website",
   },
@@ -39,9 +39,9 @@ export default function HomePage() {
       <LogoWall deep />
       <NotAlways />
       <GuideFeature />
-      <CaseStudy />
+      <CaseStudy kicker="D2C in practice" />
       <HomeClose />
-      <FAQ compact />
+      <FAQ compact items={HOME_FAQ} />
     </>
   );
 }

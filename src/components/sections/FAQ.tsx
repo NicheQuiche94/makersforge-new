@@ -11,6 +11,78 @@ type Item = {
 
 // 2026-10-27, from the handbook + Andre: no guarantee; repeat searches free
 // (fee is tied to the placement, not the process); 5 WORKING days to shortlist.
+/* Homepage questions (Andre 2026-11-25, DRAFT): built on D2C, honest about when
+   we're not the answer. The free-profiles offer is gone. */
+export const HOME_FAQ: Item[] = [
+  {
+    q: "What is D2C recruitment?",
+    a: (
+      <p>
+        Direct-to-candidate recruitment. We find the specific people you want, approach them directly and get them interested in your role,
+        instead of waiting for them to see an ad.
+      </p>
+    ),
+  },
+  {
+    q: "When aren't you the right choice?",
+    a: (
+      <p>
+        When a referral can fill the role, or when plenty of people could do it and you have time to run a job ad.{" "}
+        <a href="/compare">Design your hiring route</a> shows which route fits your hire.
+      </p>
+    ),
+  },
+  {
+    q: "How much does it cost?",
+    a: (
+      <p>
+        A flat fee per permanent hire, set by the level in the job title: <Money gbp={9000} /> for junior to mid-level roles,{" "}
+        <Money gbp={14000} /> for Senior and Lead roles, <Money gbp={20000} /> for Head, Director and above. You only pay when you hire someone
+        we found.
+      </p>
+    ),
+  },
+  {
+    q: "How quickly do we see candidates?",
+    a: (
+      <p>
+        You book a search week. We headhunt and call that week, and your shortlist of 5 lands the Monday after. Each one has already been
+        interviewed by us, with a written summary of why they fit.
+      </p>
+    ),
+  },
+  {
+    q: "What if none of the 5 are right?",
+    a: (
+      <p>
+        Tell us why and we go again, sharper for it, at no extra cost. Our fee is tied to the hire, not the search.
+      </p>
+    ),
+  },
+  {
+    q: "Can we run referrals or a job ad at the same time?",
+    a: <p>Yes. If a referral or your ad finds the person first, you pay us nothing.</p>,
+  },
+  {
+    q: "Which roles do you hire for?",
+    a: (
+      <p>
+        The whole team at mobile game studios and app companies: UA and growth, art and creative, game design, Unity and mobile engineering,
+        product and data. Permanent or contract.
+      </p>
+    ),
+  },
+  {
+    q: "What if we need to cancel our search week?",
+    a: (
+      <p>
+        Cancel free up to 48 hours before it starts. After that there&apos;s a <Money gbp={1500} unit={100} /> fee, because by then we&apos;ve
+        already done the prep to deliver your shortlist on time.
+      </p>
+    ),
+  },
+];
+
 const ITEMS: Item[] = [
   {
     q: "Why 5 candidates, not more?",
@@ -81,7 +153,7 @@ const ITEMS: Item[] = [
   },
 ];
 
-export function FAQ({ compact = false }: { compact?: boolean } = {}) {
+export function FAQ({ compact = false, items = ITEMS }: { compact?: boolean; items?: Item[] } = {}) {
   // First item open by default per brief; the compact homepage version starts closed (2026-11-25).
   const [openIdx, setOpenIdx] = useState<number | null>(compact ? null : 0);
 
@@ -102,7 +174,7 @@ export function FAQ({ compact = false }: { compact?: boolean } = {}) {
         </div>
 
         <div className={`reveal ${styles.list}`}>
-          {ITEMS.map((item, i) => {
+          {items.map((item, i) => {
             const open = openIdx === i;
             return (
               <div key={i} className={`${styles.item} ${open ? styles.itemOpen : ""}`}>
