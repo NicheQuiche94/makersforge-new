@@ -234,6 +234,7 @@ export type CompareInput = {
   runner?: Runner;
   stakes?: Stakes;
   asked?: boolean; // they've already asked for referrals (team, network or a post)
+  process?: number; // their interview process, first interview to accepted offer, in weeks
 };
 
 export type Level = "junior" | "mid" | "senior" | "lead";
@@ -265,6 +266,14 @@ export const STAKES: { id: Stakes; label: string }[] = [
   { id: "important", label: "Important, but we can wait for the right person" },
   { id: "nice", label: "Nice to have" },
 ];
+/** Interview process length, first interview to accepted offer, in weeks. */
+export const PROCESS: { w: number; label: string }[] = [
+  { w: 1, label: "About a week" },
+  { w: 2, label: "About 2 weeks" },
+  { w: 3.5, label: "3 to 4 weeks" },
+  { w: 5.5, label: "5 to 6 weeks" },
+  { w: 8, label: "2 months or more" },
+];
 
 /** Level from the form, or from the job title on older links. */
 export function levelOf(input: CompareInput): Level {
@@ -273,18 +282,39 @@ export function levelOf(input: CompareInput): Level {
   return t === "executive" ? "lead" : t === "senior" ? "senior" : "mid";
 }
 
-/** One step of the suggested order: what to do, when, and why. */
-export type Step = { id: string; title: string; when: string; why: string };
+/* Timeline assumptions (Andre 2026-11-25). All in weeks. */
+const WEEK = 7 * 864e5;
+const T = {
+  referrals: 1, // ask around for a week
+  review: 0.5, // a few days to look at who came in
+  adCollect: 2, // an ad usually reaches the 150 cap within about two weeks
+  screenTA: 0.5, // a recruiter gets through 150 CVs (about 12 hours) in a few days
+  screenOther: 1, // a hiring manager or founder fits it around their job
+  mfShortlist: 1, // our shortlist of about 5, in about 5 working days
+  christmas: 1.5, // most studios lose 24 Dec to 2 Jan
+};
+const CAP = 150;
+/** Adds the Christmas break if a stretch of work runs through it. */
+const withXmas = (from: number, weeks: number) => {
+  const to = from + weeks * WEEK;
+  const y = new Date(from).getFullYear();
+  for (const yr of [y, y + 1]) {
+    const a = Date.UTC(yr, 11, 24), b = Date.UTC(yr + 1, 0, 2);
+    if (from < b && to > a) return to + T.christmas * WEEK;
+  }
+  return to;
+};
+
+export type Lane = { id: "referral" | "ads" | "screen" | "mf" | "interviews"; label: string; from: number; to: number; free?: boolean };
+/** One step of the plan: what to do, when, and exactly how. */
+export type Step = { id: string; title: string; when: string; tips: string[] };
 
 /**
- * The suggested order (Andre 2026-11-25): honest first.
- * - Referrals for a week, unless they've asked already (team, network or a LinkedIn post).
- * - A small pool: past hires were hard, or it's a first hire at senior or lead level.
- * - "Nice to have": a capped job ad, never us. Low pain means a fee isn't worth it.
- * - A capped ad first when the pool isn't small, the role is junior or mid, and the
- *   date allows, unless it's mission critical with no recruiter in-house to run it.
- * - Otherwise MakersForge, with the honest reason.
- * We never ask about budget: the stakes stand in for it. DRAFT copy for Andre.
+ * The plan (Andre 2026-11-25): honest, dated and tactical. Referrals first,
+ * unless they've asked already. A capped job ad when it suits the role and
+ * still lands before their date. Otherwise a MakersForge search in parallel
+ * from day one, which costs nothing unless they hire someone we found.
+ * DRAFT copy for Andre.
  */
 export function planFor(input: CompareInput, now = Date.now()) {
   const level = levelOf(input);
@@ -292,41 +322,99 @@ export function planFor(input: CompareInput, now = Date.now()) {
   const small = input.history ? input.history === "hard" || (input.history === "first" && senior) : senior;
   const stakes = input.stakes ?? "important";
   const runner = input.runner ?? "manager";
-  const weeks = input.start ? Math.max(0, (Date.parse(input.start) - now) / (7 * 864e5)) : null;
-  const adFits = weeks == null || weeks >= 9;
+  const P = input.process ?? 3.5;
+  const deadline = input.start ? Date.parse(input.start) : null;
+  const role = roleLabel(input.role);
   const who = runner === "ta" ? "your recruiter" : runner === "founder" ? "you" : "the hiring manager";
-  const cap = runner === "ta"
-    ? "Your recruiter can screen it. Cap it at what they can read properly: about 150 applicants"
-    : `Cap it at what ${who} can read properly: 150 CVs at 5 minutes each is about 12 hours`;
+  const d = (t: number) => day(new Date(t));
+  const range = (a: number, b: number) => `${d(a)} to ${d(b)}`;
+
+  // Each route's own timeline.
+  const refFrom = now, refTo = input.asked ? now : now + T.referrals * WEEK;
+  const adFrom = refTo;
+  const adFull = adFrom + T.adCollect * WEEK;
+  const screenTo = withXmas(adFull, runner === "ta" ? T.screenTA : T.screenOther);
+  const adHire = withXmas(screenTo, P);
+  const mfShort = withXmas(now, T.mfShortlist);
+  const mfHire = withXmas(mfShort, P);
+  const fits = (t: number) => deadline == null || t <= deadline;
+
+  const adSuits = !small && !senior && !(stakes === "critical" && runner !== "ta");
+  const useAd = stakes === "nice" || (adSuits && fits(adHire));
+  const useMf = stakes !== "nice" && !useAd;
 
   const steps: Step[] = [];
-  if (!input.asked)
-    steps.push({ id: "referral", title: "Ask for referrals", when: "Week 1", why: "Ask your team, your network, or put out a LinkedIn post, for a specific person. 1 in 16 referred candidates get hired. If someone fits, hire them: nothing is cheaper or lower risk" });
-  const next = steps.length ? "From week 2" : "Now";
-  const mfWhy = `1 in ${MF_PER_HIRE} of the candidates we send get hired`;
-
-  let main: string;
-  if (stakes === "nice") {
-    main = "ads";
-    steps.push({ id: "ads", title: "Post a job ad, with a cap", when: next, why: `There's no rush, so the lowest-cost route makes sense. ${cap}` });
-    if (runner === "ta") steps.push({ id: "inhouse", title: "Then message people directly", when: "If the ad doesn't land", why: "Search LinkedIn for people who aren't looking. 1 in 72 sourced candidates get hired, so expect to message a lot of people" });
-  } else if (!small && !senior && adFits && !(stakes === "critical" && runner !== "ta")) {
-    main = "ads";
-    steps.push({ id: "ads", title: "Post a job ad, with a cap", when: next, why: `Good people have come through for roles like this before, so an ad is worth a go. ${cap}` });
-    steps.push({ id: "mf", title: "Then MakersForge, if the ad doesn't land", when: "If the cap fills or 4 weeks pass", why: `We go direct to the people who didn't apply. ${mfWhy}` });
-  } else {
-    main = "mf";
-    const reason = !adFits
-      ? "Your date doesn't leave time for a job ad to run"
-      : senior
-        ? "Senior people rarely apply to ads. They get approached"
-        : small
-          ? "The right people are hard to find, so you need to reach the ones who aren't looking"
-          : `It's mission critical, and screening a pile of applicants would fall on ${who}`;
-    steps.push({ id: "mf", title: "MakersForge", when: next, why: `${reason}. ${mfWhy}` });
-    if (!small && !senior && adFits) steps.push({ id: "ads", title: "Or a job ad, if you'd rather keep the cost down", when: "Alongside", why: cap });
+  const lanes: Lane[] = [];
+  if (!input.asked) {
+    steps.push({
+      id: "referral",
+      title: "Ask for referrals",
+      when: range(refFrom, refTo),
+      tips: [
+        `Ask for a specific person, not "anyone good": "Who's the best ${role} you've worked with?"`,
+        "Post the role on LinkedIn and ask your team to share it",
+        "Offer a referral bonus for a hire: €1,500 to 3,000 is typical",
+        `Stop on ${d(refTo)}. If someone fits, interview them and hire them: nothing is cheaper or lower risk`,
+      ],
+    });
+    lanes.push({ id: "referral", label: "Referrals", from: refFrom, to: refTo });
   }
-  return { steps, main };
+  let hire: number;
+  if (useAd) {
+    steps.push({
+      id: "ads",
+      title: `Post a job ad, capped at ${CAP} applicants`,
+      when: `From ${d(adFrom)}`,
+      tips: [
+        "Post on Hitmarker, Games Jobs Direct and LinkedIn Jobs",
+        `Take it down the moment you reach ${CAP} applicants, usually within two weeks`,
+        `Screen as they arrive: ${CAP} CVs at 5 minutes each is about 12 hours for ${who}`,
+        `Shortlist 3 to 4 people by ${d(screenTo)}, then start interviews`,
+        "Reply to everyone you don't take forward",
+      ],
+    });
+    lanes.push({ id: "ads", label: "Job ad", from: adFrom, to: adFull }, { id: "screen", label: "Screening", from: adFull, to: screenTo });
+    hire = adHire;
+    if (stakes !== "nice")
+      steps.push({
+        id: "mf",
+        title: "If the ad doesn't land: MakersForge",
+        when: `If nobody's right by ${d(screenTo)}`,
+        tips: ["We go direct to the people who didn't apply", `A shortlist of about 5 within a week, and 1 in ${MF_PER_HIRE} of the candidates we send get hired`, "No fee unless you hire someone we found"],
+      });
+    else if (runner === "ta")
+      steps.push({
+        id: "inhouse",
+        title: "If the ad doesn't land: message people directly",
+        when: `If nobody's right by ${d(screenTo)}`,
+        tips: ["Search LinkedIn for people who aren't looking", "Expect to message a lot of people: 1 in 72 sourced candidates get hired"],
+      });
+  } else {
+    steps.push({
+      id: "mf",
+      title: input.asked ? "Run a MakersForge search" : "Run a MakersForge search alongside",
+      when: `From ${d(now)}`,
+      tips: [
+        input.asked ? "We start straight away" : "We start the same day you ask for referrals, so you don't lose the week",
+        `A shortlist of about 5 people by ${d(mfShort)}, each already interviewed by us`,
+        input.asked ? `1 in ${MF_PER_HIRE} of the candidates we send get hired` : "If a referral is right, hire them and pay us nothing",
+        "No fee unless you hire someone we found",
+      ],
+    });
+    lanes.push({ id: "mf", label: "MakersForge search", from: now, to: mfShort, free: true });
+    hire = input.asked ? mfHire : Math.min(mfHire, withXmas(now + (T.referrals + T.review) * WEEK, P));
+  }
+  const iFrom = useAd ? screenTo : input.asked ? mfShort : Math.min(mfShort, now + (T.referrals + T.review) * WEEK);
+  steps.push({
+    id: "interviews",
+    title: "Interview and offer",
+    when: range(iFrom, hire),
+    tips: [`Run your interview process: ${PROCESS.find((p) => p.w === P)?.label.toLowerCase() ?? `${P} weeks`}, by your answer`, `Aim for an accepted offer by ${d(hire)}`],
+  });
+  lanes.push({ id: "interviews", label: "Interviews", from: iFrom, to: hire });
+
+  const main = useAd ? "ads" : "mf";
+  return { steps, lanes, hire, deadline, onTime: fits(hire), main, mfFree: useMf || (useAd && stakes !== "nice"), adHire, mfHire, reasons: { senior, small, adSuits, adFits: fits(adHire), stakes, who } };
 }
 
 export const gbp = (n: number) => `£${Math.round(n).toLocaleString("en-GB")}`;
@@ -364,11 +452,30 @@ export function compare(input: CompareInput, now = Date.now()) {
   const ORDER = ["mf", "ads", "games20", "tech25", "inhouse", "referral"];
   const rows = base.slice().sort((a, b) => ORDER.indexOf(a.r.id) - ORDER.indexOf(b.r.id));
   const lo = (f: (x: (typeof rows)[number]) => number) => Math.min(...rows.map(f));
+  const P = input.process ?? 3.5;
+  const at = (w: number) => day(new Date(now + w * 7 * 864e5));
+  const why: Record<string, string> = {
+    referral: "You've already asked",
+    mf: "It's a nice-to-have, so a fee isn't worth it. If that changes, we're here",
+    ads: plan.reasons.senior
+      ? "Senior people rarely apply to ads. They get approached"
+      : plan.reasons.small
+        ? "Past hires were hard, so the people you want aren't applying"
+        : !plan.reasons.adSuits
+          ? `It's mission critical, and screening 150 applicants would fall on ${plan.reasons.who}`
+          : `An ad hire would land around ${day(new Date(plan.adHire))}, after your date`,
+    games20: `Shortlist in 1 to 2 weeks, so a hire around ${at(2 + P)}. 1 in 22 agency candidates get hired`,
+    tech25: `Many CVs from outside games and apps, and a hire around ${at(3 + P)}`,
+    inhouse: `About ${rows.find((x) => x.r.id === "inhouse")?.hours ?? 40} hours of your team's time, and 1 in 72 sourced candidates get hired`,
+  };
+  const inPlan = new Set(plan.steps.map((st) => st.id));
+  const whyNot = rows.filter((x) => !inPlan.has(x.r.id) && why[x.r.id]).map((x) => ({ x, reason: why[x.r.id] }));
   return {
     rows,
     best,
     next: ranked.find((x) => x.r.id !== best.r.id),
     plan,
+    whyNot,
     lowest: { fee: lo((x) => x.fee), real: lo((x) => x.real), start: lo((x) => x.startWeeks), hireBy: lo((x) => x.hireBy), hours: lo((x) => x.hours), interviews: lo((x) => x.r.interviews), perHire: lo((x) => x.r.perHire) },
   };
 }

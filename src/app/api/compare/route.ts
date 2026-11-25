@@ -45,6 +45,7 @@ export async function POST(req: Request) {
     runner: ["ta", "manager", "founder"].includes(b.runner) ? b.runner : undefined,
     stakes: ["critical", "important", "nice"].includes(b.stakes) ? b.stakes : undefined,
     asked: typeof b.asked === "boolean" ? b.asked : undefined,
+    process: [1, 2, 3.5, 5.5, 8].includes(Number(b.process)) ? Number(b.process) : undefined,
   };
   const { best, plan } = compare(input);
   // While an offer runs, everyone gets a box; hires needed by the special date get the special one.
@@ -69,7 +70,7 @@ export async function POST(req: Request) {
       priority: input.p,
       hook: input.hook,
       best: best.r.id,
-      answers: { level: input.level ?? null, history: input.history ?? null, runner: input.runner ?? null, stakes: input.stakes ?? null, asked: input.asked ?? null },
+      answers: { level: input.level ?? null, history: input.history ?? null, runner: input.runner ?? null, stakes: input.stakes ?? null, asked: input.asked ?? null, process: input.process ?? null },
       christmas: special,
       gift_pct: prize?.pct ?? null,
       gift_code: promo && prize ? giftCode(promo, input.lid, prize.pct) : null,

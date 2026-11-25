@@ -151,3 +151,47 @@
 .plan li strong { font-size: 19px; }
 .plan li p { margin: 0; color: var(--dim); line-height: 1.5; }
 .planNote { margin: 14px 0 0; text-align: center; font-weight: 700; }
+
+/* The plan v2 (Andre 2026-11-25): outcome, timeline, dated tactical steps */
+.planOutcome { margin: -4px 0 18px; text-align: center; font-size: 18px; color: var(--dim); }
+.planOutcome strong { color: var(--ink); font-size: 22px; }
+.plan li ul { margin: 6px 0 0; padding-left: 18px; display: grid; gap: 4px; color: var(--dim); line-height: 1.5; }
+.plan li ul li { padding: 0; background: none; counter-increment: none; display: list-item; }
+.plan li ul li::before { content: none; }
+.free { display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: center; margin-top: 16px; padding: 16px 18px; border-radius: 14px; background: linear-gradient(135deg, #ecfdf3, #fff); box-shadow: inset 0 0 0 2px #22c55e; }
+.free b { font-family: "Cal Sans", system-ui, sans-serif; font-weight: 400; font-size: 44px; line-height: 1; color: #15803d; }
+.free p { margin: 0; line-height: 1.5; color: var(--ink-soft); }
+.tl { display: grid; grid-template-columns: 130px 1fr; gap: 10px; margin: 0 0 18px; padding: 14px 0 0; }
+.tlLabels { display: grid; grid-auto-rows: 34px; row-gap: 6px; align-content: start; }
+.tlLabels span { display: flex; align-items: center; font-size: 12.5px; font-weight: 800; color: var(--ink); }
+@media (max-width: 560px) { .tl { grid-template-columns: 92px 1fr; } .tlLabels span { font-size: 11px; } .tlTicks span:nth-child(even) { display: none; } }
+.tlTrack { position: relative; padding-bottom: 26px; }
+.tlRow { position: relative; height: 34px; margin-bottom: 6px; }
+.tlBar { position: absolute; top: 4px; height: 26px; border-radius: 8px; min-width: 6px; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; }
+.tlBar i { font-style: normal; font-size: 11px; font-weight: 800; color: #fff; white-space: nowrap; }
+.tl_referral { background: linear-gradient(135deg, #22c55e, #15803d); }
+.tl_ads { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+.tl_screen { background: rgba(59, 130, 246, 0.35); }
+.tl_mf { background: var(--tone-heat); }
+.tl_interviews { background: var(--ink); }
+.tlXmas { position: absolute; top: 0; bottom: 26px; background: repeating-linear-gradient(135deg, rgba(14,15,17,.06) 0 6px, transparent 6px 12px); border-radius: 6px; }
+.tlDeadline { position: absolute; top: -10px; bottom: 20px; border-left: 2px dashed #e14b00; z-index: 3; }
+.tlDeadline em { position: absolute; top: -8px; right: 4px; font-style: normal; font-size: 11px; font-weight: 800; color: #e14b00; white-space: nowrap; }
+.tlTicks { position: absolute; left: 0; right: 0; bottom: 0; height: 18px; border-top: 1px solid var(--hair); }
+.tlTicks span { position: absolute; top: 4px; transform: translateX(-50%); font-size: 11px; color: var(--mute); white-space: nowrap; }
+.whyNot { max-width: 760px; margin: 18px auto 0; padding: 22px 24px; border-radius: 20px; background: var(--paper); border: 1px solid var(--hair-strong); }
+.whyGrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr)); gap: 10px; }
+.whyGrid > div { display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; padding: 14px; border-radius: 12px; background: var(--bg-card); }
+.whyName { font-weight: 800; }
+.whyFee { font-weight: 800; color: var(--dim); font-variant-numeric: tabular-nums; }
+.whyGrid p { grid-column: 1 / -1; margin: 0; color: var(--dim); font-size: 14.5px; line-height: 1.45; }
+.fullCompare { margin-top: 22px; }
+.fullCompare > summary { cursor: pointer; font-weight: 800; text-align: center; padding: 12px; color: #e14b00; list-style: none; }
+.fullCompare > summary::-webkit-details-marker { display: none; }
+@media (max-width: 560px) {
+  .plan, .whyNot { padding: 18px 14px; }
+  .plan li { padding: 12px 12px 12px 48px; }
+  .plan li::before { left: 12px; top: 12px; }
+  .plan li ul { margin-left: -20px; padding-left: 16px; }
+  .free { grid-template-columns: 1fr; gap: 6px; }
+}

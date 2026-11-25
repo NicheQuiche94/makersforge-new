@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { AD_HOOK, HISTORY, HOOKS, LEVELS, ROLES, ROTATING_HOOKS, RUNNERS, STAKES, type History, type Level, type Runner, type Stakes } from "@/lib/compare";
+import { AD_HOOK, HISTORY, HOOKS, LEVELS, PROCESS, ROLES, ROTATING_HOOKS, RUNNERS, STAKES, type History, type Level, type Runner, type Stakes } from "@/lib/compare";
 import { tierFor } from "@/lib/tier";
 import { activePromo } from "@/lib/promos";
 import { CURRENCIES, CURRENCY_SYMBOLS, RATES, readStoredCurrency, writeStoredCurrency, type Currency } from "@/lib/currency";
@@ -71,6 +71,7 @@ export function CompareMock({ fromAd = false }: { fromAd?: boolean }) {
   const [runner, setRunner] = useState<Runner | "">("");
   const [stakes, setStakes] = useState<Stakes | "">("");
   const [asked, setAsked] = useState<"" | "no" | "yes">("");
+  const [process, setProcess] = useState("");
   const titleLevel: Level = { executive: "lead", senior: "senior", team: "mid" }[tierFor(role).tier] as Level;
   const lvl = level ?? titleLevel;
   const [email, setEmail] = useState("");
@@ -93,7 +94,7 @@ export function CompareMock({ fromAd = false }: { fromAd?: boolean }) {
     const r = await fetch("/api/compare", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ role, salary: Number(salary) || 0, cur, start, p: "balanced", level: lvl, history: history || undefined, runner: runner || undefined, stakes: stakes || undefined, asked: asked ? asked === "yes" : undefined, email, name, hook }),
+      body: JSON.stringify({ role, salary: Number(salary) || 0, cur, start, p: "balanced", level: lvl, history: history || undefined, runner: runner || undefined, stakes: stakes || undefined, asked: asked ? asked === "yes" : undefined, process: process ? Number(process) : undefined, email, name, hook }),
     })
       .then((x) => x.json())
       .catch(() => ({ error: "That didn't go through. Please try again." }));
@@ -190,6 +191,13 @@ export function CompareMock({ fromAd = false }: { fromAd?: boolean }) {
               <select value={stakes} onChange={(e) => setStakes(e.target.value as Stakes)}>
                 <option value="" disabled>Choose one</option>
                 {STAKES.map((x) => <option key={x.id} value={x.id}>{x.label}</option>)}
+              </select>
+            </label>
+            <label className={styles.half}>
+              <span className={styles.lbl}>How long is your interview process?</span>
+              <select value={process} onChange={(e) => setProcess(e.target.value)}>
+                <option value="" disabled>Choose one</option>
+                {PROCESS.map((p) => <option key={p.w} value={p.w}>{p.label}</option>)}
               </select>
             </label>
             <label className={styles.half}>

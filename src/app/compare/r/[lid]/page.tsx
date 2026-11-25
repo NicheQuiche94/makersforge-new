@@ -28,9 +28,9 @@ export default async function ComparisonPage({ params }: { params: Promise<{ lid
     name: row.name ?? undefined,
     hook: row.hook,
     cur: isCurrency(row.currency) ? row.currency : "GBP",
-    ...((row.answers ?? {}) as Pick<CompareInput, "level" | "history" | "runner" | "stakes" | "asked">),
+    ...((row.answers ?? {}) as Pick<CompareInput, "level" | "history" | "runner" | "stakes" | "asked" | "process">),
   };
   // Saved answers use null for "not answered"; the plan reads undefined.
-  for (const k of ["level", "history", "runner", "stakes", "asked"] as const) if (input[k] === null) delete input[k];
+  for (const k of ["level", "history", "runner", "stakes", "asked", "process"] as const) if (input[k] === null) delete input[k];
   return <Results input={input} special={row.christmas} slots={row.christmas ? await slotsLeft(db) : 0} />;
 }

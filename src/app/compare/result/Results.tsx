@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { priceList } from "@/lib/plans";
 import { RATES } from "@/lib/currency";
-import { compare, money, wks, day, addWeeks, roleLabel, levelOf, LEVELS, NOTICE_WEEKS, type CompareInput } from "@/lib/compare";
+import { compare, money, wks, day, addWeeks, roleLabel, levelOf, LEVELS, NOTICE_WEEKS, type CompareInput, type Lane } from "@/lib/compare";
 import { activePromo } from "@/lib/promos";
 import { setMailRef } from "@/lib/analytics";
 import { GiftBox } from "./GiftBox";
@@ -33,27 +33,11 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
       </section>
     );
   }
-  const { rows, best, next, lowest, plan } = data;
+  const { rows, best, lowest, plan, whyNot } = data;
   const cur = input.cur ?? "GBP";
   // Our fee as the pricing page shows it (rounded list price in their currency); others converted.
   const L = priceList(cur);
   const feeIn = (x: { fee: number; r: { us?: boolean } }) => (x.r.us ? L.convert(x.fee, 1000) : cur === "GBP" ? Math.round(x.fee) : Math.round((x.fee * RATES[cur]) / 10) * 10);
-  // The trade in one line, against the next-best option (Andre 2026-11-09: show what the extra fee buys).
-  const trade = (() => {
-    if (!next) return "";
-    const parts: string[] = [];
-    const feeDiff = feeIn(best) - feeIn(next);
-    const weeks = next.hireBy - best.hireBy;
-    const interviews = next.r.interviews - best.r.interviews;
-    const hours = next.hours - best.hours;
-    if (weeks > 0) parts.push(`${weeks} week${weeks === 1 ? "" : "s"} sooner`);
-    if (interviews > 0) parts.push(`${interviews} fewer interview${interviews === 1 ? "" : "s"}`);
-    if (hours > 0) parts.push(`${hours} fewer hours of your team's time`);
-    if (!parts.length) return "";
-    const them = ({ ads: "a job ad", games20: "a games-specialist agency", tech25: "a general tech agency", inhouse: "sourcing it yourself", mf: "MakersForge" } as Record<string, string>)[next.r.id] ?? next.r.name;
-    const lead = feeDiff > 0 ? `${L.fmt(feeDiff)} more than ${them}` : feeDiff < 0 ? `${L.fmt(-feeDiff)} less than ${them}` : `The same fee as ${them}`;
-    return `${lead}: ${parts.join(", ").replace(/, ([^,]*)$/, " and $1")}.`;
-  })();
   const role = roleLabel(input.role);
   const promo = activePromo();
 
@@ -71,25 +55,62 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
           </p>
         </div>
 
-        {/* The suggested order (Andre 2026-11-25): referrals first, and us only when we're genuinely the right next step. */}
+        {/* The plan (Andre 2026-11-25): dated, tactical, honest. Every line is something they can go and do. */}
         <div className={styles.plan}>
-          <p className={styles.planHead}>What we&apos;d do, in order</p>
+          <p className={styles.planHead}>Your plan</p>
+          <p className={styles.planOutcome}>
+            Hire made by about <strong>{day(new Date(plan.hire))}</strong>
+            {plan.deadline != null &&
+              (plan.onTime
+                ? `, ${Math.max(0, Math.round((plan.deadline - plan.hire) / 864e5))} days before your date.`
+                : `, ${Math.round((plan.hire - plan.deadline) / 864e5)} days after your date. Nothing gets there sooner, so this is the closest.`)}
+            {plan.deadline == null && "."}
+          </p>
+          <Timeline lanes={plan.lanes} deadline={plan.deadline} hire={plan.hire} />
           <ol>
-            {plan.steps.map((s) => (
-              <li key={s.id} className={s.id === best.r.id ? styles.planMain : ""}>
-                <span className={styles.planWhen}>{s.when}</span>
-                <strong>{s.title}</strong>
-                <p>{s.why}.</p>
+            {plan.steps.map((st) => (
+              <li key={st.id} className={st.id === best.r.id ? styles.planMain : ""}>
+                <span className={styles.planWhen}>{st.when}</span>
+                <strong>{st.title}</strong>
+                <ul>
+                  {st.tips.map((t) => (
+                    <li key={t}>{/[.?!"]$/.test(t) ? t : `${t}.`}</li>
+                  ))}
+                </ul>
               </li>
             ))}
           </ol>
-          {!best.r.us && <p className={styles.planNote}>That&apos;s not us first, and that&apos;s fine: it&apos;s the better fit here.</p>}
-          {best.r.us && trade && <p className={styles.planNote}>{trade}</p>}
+          {plan.mfFree && (
+            <div className={styles.free}>
+              <b>{L.fmt(0)}</b>
+              <p>
+                <strong>Running a search with us costs nothing until you hire.</strong> You only pay if the person you hire is someone we found. {plan.steps.some((st) => st.id === "ads") ? " If a referral or your ad gets there first, you pay nothing." : " If a referral gets there first, you pay nothing."}
+              </p>
+            </div>
+          )}
+          {!best.r.us && !plan.steps.some((st) => st.id === "mf") && <p className={styles.planNote}>That&apos;s not us, and that&apos;s fine: it&apos;s the better plan here.</p>}
         </div>
+
+        {whyNot.length > 0 && (
+          <div className={styles.whyNot}>
+            <p className={styles.planHead}>Why not the others</p>
+            <div className={styles.whyGrid}>
+              {whyNot.map(({ x, reason }) => (
+                <div key={x.r.id}>
+                  <span className={styles.whyName}>{x.r.name}</span>
+                  <span className={styles.whyFee}>{L.fmt(feeIn(x))}</span>
+                  <p>{reason}.</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* The gift sits right under the verdict, open (Ashley's QA: it was easy to miss). */}
         {promo && <GiftBox lid={input.lid} special={special} slots={slots} cur={cur} fee={rows.find((x) => x.r.us)?.fee} role={role} />}
 
+        <details className={styles.fullCompare}>
+          <summary>See the full comparison</summary>
         <div className={styles.table}>
           <div className={`${styles.tr} ${styles.th}`}>
             <span>Route</span>
@@ -160,6 +181,7 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
             hired.
           </p>
         </div>
+        </details>
 
         {plan.steps.some((s) => s.id === "mf") && (
           <div className={styles.ctas}>
@@ -197,5 +219,41 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
         </details>
       </div>
     </section>
+  );
+}
+
+/* The plan as a timeline: one row per route, week ticks, their date and Christmas marked. */
+function Timeline({ lanes, deadline, hire }: { lanes: Lane[]; deadline: number | null; hire: number }) {
+  const from = Math.min(...lanes.map((l) => l.from));
+  const to = Math.max(hire, deadline ?? 0, ...lanes.map((l) => l.to)) + 3 * 864e5;
+  const pct = (t: number) => `${(((t - from) / (to - from)) * 100).toFixed(2)}%`;
+  const ticks: number[] = [];
+  for (let t = from; t <= to; t += 7 * 864e5) ticks.push(t);
+  const y = new Date(from).getFullYear();
+  const xmas = [y, y + 1].map((yr) => [Date.UTC(yr, 11, 24), Date.UTC(yr + 1, 0, 2)]).find(([a, b]) => a < to && b > from);
+  return (
+    <div className={styles.tl}>
+      <div className={styles.tlLabels}>
+        {lanes.map((l) => (
+          <span key={l.id}>{l.label}</span>
+        ))}
+      </div>
+      <div className={styles.tlTrack}>
+        {xmas && <span className={styles.tlXmas} style={{ left: pct(Math.max(xmas[0], from)), width: `calc(${pct(Math.min(xmas[1], to))} - ${pct(Math.max(xmas[0], from))})` }} title="Christmas break" />}
+        {deadline != null && <span className={styles.tlDeadline} style={{ left: pct(deadline) }}><em>Your date</em></span>}
+        {lanes.map((l) => (
+          <div key={l.id} className={styles.tlRow}>
+            <span className={`${styles.tlBar} ${styles["tl_" + l.id]}`} style={{ left: pct(l.from), width: `calc(${pct(l.to)} - ${pct(l.from)})` }}>
+              {l.free && <i>Free until you hire</i>}
+            </span>
+          </div>
+        ))}
+        <div className={styles.tlTicks}>
+          {ticks.map((t) => (
+            <span key={t} style={{ left: pct(t) }}>{day(new Date(t))}</span>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
