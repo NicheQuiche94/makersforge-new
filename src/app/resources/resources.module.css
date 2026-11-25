@@ -56,3 +56,9 @@
 /* Collection notice under the unlock form */
 .notice { margin: 16px auto 0; max-width: 440px; font-size: 12.5px; line-height: 1.5; color: rgba(18, 18, 20, .58); }
 .notice a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+
+/* 2026-11-25: the email ask opens from a guide download, so it can be closed */
+.modal { position: relative; }
+.close { position: absolute; top: 12px; right: 14px; width: 36px; height: 36px; border: 0; border-radius: 999px; background: transparent; color: var(--dim); font-size: 26px; line-height: 1; cursor: pointer; }
+.close:hover { background: rgba(14, 15, 17, 0.06); }
+.modal .download { margin-top: 4px; }
