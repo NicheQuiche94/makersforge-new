@@ -332,3 +332,10 @@
 .kinds .kindOn { background: var(--heat-deep); }
 .kindOn .kindDate { color: #fff; opacity: .95; }
 .wrap .narrow .fullCompare, .wrap .narrow .how, .wrap .how { max-width: 1040px; }
+
+/* v9 (Andre 2026-11-25): the gift and the guide side by side; the interview bottleneck note */
+.takeaways { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: 16px; margin-top: 36px; align-items: stretch; }
+.takeaways .guideCard { max-width: none; margin: 0; }
+.squeeze { margin: 0 0 6px; padding: 14px 16px; border-radius: 14px; background: #fff7ef; box-shadow: inset 0 0 0 1px rgba(255, 138, 0, 0.4); text-align: center; }
+.squeeze p { margin: 0 0 6px; color: var(--ink-soft); line-height: 1.5; font-size: 15px; }
+.squeeze a { font-weight: 800; color: #e14b00; text-decoration: none; }

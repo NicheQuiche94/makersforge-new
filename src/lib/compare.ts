@@ -352,7 +352,8 @@ export function planFor(input: CompareInput, now = Date.now(), kind: Kind = "rec
   const who = runner === "ta" ? "your recruiter" : runner === "founder" ? "you" : "the hiring manager";
   const d = (t: number) => day(new Date(t));
   const range = (a: number, b: number) => `${d(a)} to ${d(b)}`;
-  const fits = (t: number) => deadline == null || t <= deadline;
+  // Their date counts as a whole day: a hire made any time on it is on time.
+  const fits = (t: number) => deadline == null || t < deadline + 864e5;
 
   // The building blocks.
   const refTo = input.asked ? now : now + T.referrals * WEEK;
@@ -480,6 +481,15 @@ export function planFor(input: CompareInput, now = Date.now(), kind: Kind = "rec
   lanes.push({ id: "interviews", label: "Interviews", from: iFrom === Infinity ? screenTo : iFrom, to: hire });
 
   const main = useAd && !mfNow ? "ads" : "mf";
+  /** If the route is late only because of the interview process: the length that would make the date, in weeks. */
+  const iStart = iFrom === Infinity ? screenTo : iFrom;
+  const squeeze = (() => {
+    if (deadline == null || fits(hire)) return null;
+    let w = (deadline - iStart) / WEEK;
+    if (withXmas(iStart, w) > deadline) w -= T.christmas;
+    w = Math.floor(w * 2) / 2;
+    return w >= 0.5 && w < P ? w : null;
+  })();
   const trade =
     kind === "cheapest"
       ? "Time and effort for cost: about 12 hours of screening, and no backup if the ad doesn't land"
@@ -490,7 +500,7 @@ export function planFor(input: CompareInput, now = Date.now(), kind: Kind = "rec
           : main === "ads"
             ? "Speed for cost: if the ad doesn't land, you start us later, nearer your date"
             : "Cost for certainty: our fee, but only if you hire someone we found";
-  return { kind, steps, lanes, hire, deadline, onTime: fits(hire), main, trade, mfFree: mfNow || mfBackup, usesAd: useAd, usesMf: mfNow || mfBackup, adUpfront: useAd && (kind === "safest" || !!input.asked) };
+  return { kind, steps, lanes, hire, deadline, onTime: fits(hire), main, trade, squeeze, process: P, mfFree: mfNow || mfBackup, usesAd: useAd, usesMf: mfNow || mfBackup, adUpfront: useAd && (kind === "safest" || !!input.asked) };
 }
 
 export const gbp = (n: number) => `£${Math.round(n).toLocaleString("en-GB")}`;
@@ -513,7 +523,7 @@ export function compare(input: CompareInput, now = Date.now()) {
     const hireBy = (solo - now) / (7 * 864e5); // weeks from today, same maths as the plan
     const startWeeks = hireBy + NOTICE_WEEKS;
     const overBudget = input.budget ? fee > input.budget : false;
-    const tooSlow = deadline != null ? solo > deadline : false;
+    const tooSlow = deadline != null ? solo >= deadline + 864e5 : false;
     return { r, fee, hours, real, startWeeks, hireBy, overBudget, tooSlow };
   });
   const max = (f: (x: (typeof base)[number]) => number) => Math.max(...base.map(f));

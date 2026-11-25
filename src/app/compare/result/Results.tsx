@@ -4,7 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { priceList } from "@/lib/plans";
 import { RATES } from "@/lib/currency";
-import { compare, money, day, addWeeks, roleLabel, levelOf, LEVELS, NOTICE_WEEKS, type CompareInput, type Kind, type Lane } from "@/lib/compare";
+import { BOOKING_URL } from "@/lib/site";
+import { compare, PROCESS, money, day, addWeeks, roleLabel, levelOf, LEVELS, NOTICE_WEEKS, type CompareInput, type Kind, type Lane } from "@/lib/compare";
 import { activePromo } from "@/lib/promos";
 import { setMailRef } from "@/lib/analytics";
 import { GiftBox } from "./GiftBox";
@@ -94,9 +95,18 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
               {plan.deadline != null &&
                 (plan.onTime
                   ? ` ✓ ${Math.max(0, Math.round((plan.deadline - plan.hire) / 864e5))} days early`
-                  : ` · ${Math.round((plan.hire - plan.deadline) / 864e5)} days late, the closest possible`)}
+                  : ` · ${Math.ceil((plan.hire - plan.deadline) / 864e5) - 1 || 1} days late, the closest possible`)}
             </p>
           </div>
+          {plan.squeeze != null && plan.deadline != null && (
+            <div className={styles.squeeze}>
+              <p>
+                <strong>Your interview process is the bottleneck.</strong> At {PROCESS.find((p) => p.w === plan.process)?.label.toLowerCase() ?? `${plan.process} weeks`}, the
+                hire lands {Math.ceil((plan.hire - plan.deadline) / 864e5) - 1 || 1} days after your date. Run it in about {plan.squeeze === 1 ? "a week" : `${plan.squeeze} weeks`} and you&apos;d make it.
+              </p>
+              <a href={BOOKING_URL} target="_blank" rel="noopener">Get a free interview process health check →</a>
+            </div>
+          )}
           <p className={styles.trade2}>
             <b>You trade</b> {plan.trade}.
           </p>
@@ -135,8 +145,6 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
         </div>
 
         <div className={styles.narrow}>
-        {/* The gift sits right under the verdict, open (Ashley's QA: it was easy to miss). */}
-        {promo && <GiftBox lid={input.lid} special={special} slots={slots} cur={cur} fee={rows.find((x) => x.r.us)?.fee} role={role} />}
 
         {/* Every route side by side, like a pricing table (Andre 2026-11-25): one column per route, our pick lit. */}
         <details className={styles.fullCompare}>
@@ -208,7 +216,9 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
           </div>
         )}
 
-        {/* The guide behind it, with its real cover (as on /resources). */}
+        {/* Two things to take away, side by side (Andre 2026-11-25): the gift and the guide. */}
+        <div className={styles.takeaways}>
+        {promo && <GiftBox lid={input.lid} special={special} slots={slots} cur={cur} fee={rows.find((x) => x.r.us)?.fee} role={role} />}
         <Link href="/resources" className={styles.guideCard}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/resources/covers/four-ways.png" alt="" width={794} height={1123} />
@@ -218,6 +228,7 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
             <em>Get the free guide →</em>
           </span>
         </Link>
+        </div>
 
         <details className={styles.how}>
           <summary>How we worked these out</summary>
