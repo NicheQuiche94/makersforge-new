@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { MF_PER_HIRE } from "@/lib/compare";
 import { DOWNLOADS } from "@/lib/resources";
+import { CornerGlow } from "./CornerGlow";
 import styles from "./HomeRefresh.module.css";
 
 /* Homepage refresh (Andre 2026-11-25, MOCK): first paint on the new
@@ -83,29 +84,6 @@ export function NotAlways() {
         </div>
         <p className={styles.after}>Low cost or low risk. Pick one, and start with referrals.</p>
 
-        {/* The odds, in context (Andre 2026-11-25): risk is the chance you miss the person you need. */}
-        <div className={`reveal ${styles.oddsBlock}`}>
-          <h3 className={styles.h3}>How many candidates make one hire?*</h3>
-          <p className={styles.lede}>Risk is the chance you miss the person you need. The less noise, the easier the signal is to find.</p>
-          <div className={`${styles.odds} ${styles.oddsCompact}`}>
-            {ODDS.map((o) => (
-              <div key={o.name} className={`${styles.row} ${o.us ? `${styles.us} heat-glow` : ""}`}>
-                <b>{o.name}</b>
-                <span className={styles.dots}>
-                  {Array.from({ length: o.n }, (_, i) => (
-                    <i key={i} className={i === 0 ? styles.on : ""} />
-                  ))}
-                </span>
-                <strong>{o.n}</strong>
-              </div>
-            ))}
-          </div>
-          <p className={styles.source}>
-            * MakersForge: 232 candidates sent across our seven most recent clients, 26 hired. Everyone else: Lever, Little Grey Book of
-            Recruiting Benchmarks.
-          </p>
-        </div>
-
         <div className={styles.links}>
           <Link href="/compare" className={styles.primary}>
             <span>Design your hiring route →</span>
@@ -120,8 +98,9 @@ export function NotAlways() {
 export function GuideFeature() {
   const g = DOWNLOADS[0];
   return (
-    <section className={`${styles.section} ${styles.deep}`}>
-      <div className="container">
+    <section className={`${styles.section} ${styles.guideSection}`}>
+      <CornerGlow variant="tlSoft" />
+      <div className={`container ${styles.above}`}>
         <div className={`reveal ${styles.guide}`}>
           <Link href="/resources" className={styles.cover} aria-label={`Get ${g.title}`}>
             {/* eslint-disable-next-line @next/next/no-img-element */}

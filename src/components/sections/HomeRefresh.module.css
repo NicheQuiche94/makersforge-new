@@ -93,3 +93,7 @@
 .oddsCompact .dots { gap: 2px; }
 .oddsCompact .dots i { width: 5px; height: 5px; }
 .oddsBlock .source { margin-top: 4px; }
+
+/* v4: the guide on its own ground with a corner glow */
+.guideSection { overflow: hidden; background: var(--bg); }
+.above { position: relative; z-index: 1; }

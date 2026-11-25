@@ -27,9 +27,9 @@ export default function HomePage() {
       {/* Homepage refresh (Andre 2026-11-25, MOCK, DRAFT copy): D2C positioning.
           Flow: promise → the odds → proof → how → the honest bit → bench → close → doubts. */}
       <HeroPanel
-        headline={["D2C recruitment."]}
-        ledeLead="For mobile games and apps."
-        lede="Job ads reach whoever's nearby. We reach the person you want."
+        headline={["D2C* recruitment."]}
+        ledeLead="*Direct-to-candidate recruitment for mobile games and apps."
+        lede=""
         ctas={{
           // 2026-11-09 (Andre): a 63% bounce rate; a free tool to click first, not "talk to us".
           primary: { href: "/compare", label: "Design your hiring route" },
