@@ -120,9 +120,9 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
           </div>
         </div>
 
-        {/* Live check (Andre 2026-11-25): context for the route on screen, and what to do about any bottleneck. */}
+        {/* Overview (Andre 2026-11-25): context for the route on screen, and what to do about any bottleneck. */}
         <aside className={styles.diag}>
-          <p className={styles.diagHead}>Live check</p>
+          <p className={styles.diagHead}>Overview</p>
           <div className={styles.diagItem}>
             <span>Status</span>
             <strong className={plan.onTime ? styles.dateOk : styles.dateLate}>
