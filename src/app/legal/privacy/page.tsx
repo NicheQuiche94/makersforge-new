@@ -76,10 +76,11 @@ export default function PrivacyPage() {
               have made public about their careers, for example on LinkedIn
               and company websites. When we contact someone about a role we
               keep their name, contact details, current and past roles,
-              skills, location and the notes from our conversations. We tell
-              people who we are and why we have their details when we first
-              get in touch, and they can ask us to stop or to delete their
-              details at any time.
+              skills, location and the notes from our conversations. We first
+              get in touch through LinkedIn as MakersForge, about a specific
+              role we are recruiting for on behalf of a client, so people know
+              who we are and why we are contacting them. They can ask us to
+              stop or to delete their details at any time.
             </p>
             <p className={styles.p}>
               We only share a candidate&apos;s details with a client once the
@@ -197,7 +198,10 @@ export default function PrivacyPage() {
                 <strong>Resend.</strong> Sending the emails the website sends.
               </li>
               <li>
-                <strong>Folk.</strong> Our contact management system for clients, leads and candidates.
+                <strong>Folk.</strong> Our contact management system for clients, leads and candidates, and how we send our emails to them.
+              </li>
+              <li>
+                <strong>LinkedIn Recruiter.</strong> Finding candidates and messaging them about roles.
               </li>
               <li>
                 <strong>Cal.com.</strong> Booking calls with Andre.
