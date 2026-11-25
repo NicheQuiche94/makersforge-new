@@ -189,9 +189,10 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
             sourcing it yourself and for referrals are our estimates.
           </p>
           <p>
-            The order is honest first. If a referral can fill it, it should. A job ad comes before us when lots of people could
-            do a junior or mid-level role, or when a fee isn&apos;t possible. We come first only for senior or specialist roles, or
-            when your date doesn&apos;t leave time for an ad.
+            The order is honest first. If a referral can fill it, it should. A job ad comes before us for junior and mid-level
+            roles that have been easy to fill, and for hires that are nice to have. We come first for senior roles, roles that
+            have been hard to fill, mission-critical hires with no recruiter in-house, or when your date doesn&apos;t leave time
+            for an ad.
           </p>
         </details>
       </div>

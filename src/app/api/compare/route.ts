@@ -41,9 +41,9 @@ export async function POST(req: Request) {
     hook: Math.min(Math.max(Number(b.hook) || 0, 0), HOOKS.length - 1),
     lid: randomBytes(5).toString("hex"),
     level: ["junior", "mid", "senior", "lead"].includes(b.level) ? b.level : undefined,
-    pool: b.pool === "common" || b.pool === "specialist" ? b.pool : undefined,
-    ta: typeof b.ta === "boolean" ? b.ta : undefined,
-    fee: typeof b.fee === "boolean" ? b.fee : undefined,
+    history: ["easy", "hard", "first"].includes(b.history) ? b.history : undefined,
+    runner: ["ta", "manager", "founder"].includes(b.runner) ? b.runner : undefined,
+    stakes: ["critical", "important", "nice"].includes(b.stakes) ? b.stakes : undefined,
     asked: typeof b.asked === "boolean" ? b.asked : undefined,
   };
   const { best, plan } = compare(input);
@@ -66,7 +66,7 @@ export async function POST(req: Request) {
       priority: input.p,
       hook: input.hook,
       best: best.r.id,
-      answers: { level: input.level ?? null, pool: input.pool ?? null, ta: input.ta ?? null, fee: input.fee ?? null, asked: input.asked ?? null },
+      answers: { level: input.level ?? null, history: input.history ?? null, runner: input.runner ?? null, stakes: input.stakes ?? null, asked: input.asked ?? null },
       christmas: special,
       gift_pct: prize?.pct ?? null,
       gift_code: promo && prize ? giftCode(promo, input.lid, prize.pct) : null,

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { AD_HOOK, HOOKS, LEVELS, ROLES, ROTATING_HOOKS, type Level, type Pool } from "@/lib/compare";
+import { AD_HOOK, HISTORY, HOOKS, LEVELS, ROLES, ROTATING_HOOKS, RUNNERS, STAKES, type History, type Level, type Runner, type Stakes } from "@/lib/compare";
 import { tierFor } from "@/lib/tier";
 import { activePromo } from "@/lib/promos";
 import { CURRENCIES, CURRENCY_SYMBOLS, RATES, readStoredCurrency, writeStoredCurrency, type Currency } from "@/lib/currency";
@@ -19,19 +19,6 @@ import { trackLinkedIn } from "@/lib/linkedin";
    was being mistaken for the salary). */
 const inCur = (gbp: number, c: Currency) => Math.round((gbp * RATES[c]) / 1000) * 1000;
 const iso = (d: Date) => d.toISOString().slice(0, 10);
-
-/** A row of pill buttons: one answer, tap again to change. */
-function Seg<T extends string | boolean>({ value, set, options }: { value: T | null; set: (v: T) => void; options: [T, string][] }) {
-  return (
-    <span className={styles.seg} role="group">
-      {options.map(([v, label]) => (
-        <button key={String(v)} type="button" aria-pressed={value === v} onClick={() => set(v)}>
-          {label}
-        </button>
-      ))}
-    </span>
-  );
-}
 
 export function CompareMock({ fromAd = false }: { fromAd?: boolean }) {
   const router = useRouter();
@@ -80,10 +67,10 @@ export function CompareMock({ fromAd = false }: { fromAd?: boolean }) {
   const [start, setStart] = useState("");
   // The questions behind the suggested order (Andre 2026-11-25). Level follows the title until they pick one.
   const [level, setLevel] = useState<Level | null>(null);
-  const [pool, setPool] = useState<Pool | null>(null);
-  const [ta, setTa] = useState<boolean | null>(null);
-  const [fee, setFee] = useState<boolean | null>(null);
-  const [asked, setAsked] = useState<boolean | null>(null);
+  const [history, setHistory] = useState<History | "">("");
+  const [runner, setRunner] = useState<Runner | "">("");
+  const [stakes, setStakes] = useState<Stakes | "">("");
+  const [asked, setAsked] = useState<"" | "no" | "yes">("");
   const titleLevel: Level = { executive: "lead", senior: "senior", team: "mid" }[tierFor(role).tier] as Level;
   const lvl = level ?? titleLevel;
   const [email, setEmail] = useState("");
@@ -106,7 +93,7 @@ export function CompareMock({ fromAd = false }: { fromAd?: boolean }) {
     const r = await fetch("/api/compare", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ role, salary: Number(salary) || 0, cur, start, p: "balanced", level: lvl, pool, ta, fee, asked, email, name, hook }),
+      body: JSON.stringify({ role, salary: Number(salary) || 0, cur, start, p: "balanced", level: lvl, history: history || undefined, runner: runner || undefined, stakes: stakes || undefined, asked: asked ? asked === "yes" : undefined, email, name, hook }),
     })
       .then((x) => x.json())
       .catch(() => ({ error: "That didn't go through. Please try again." }));
@@ -178,26 +165,41 @@ export function CompareMock({ fromAd = false }: { fromAd?: boolean }) {
               <span className={styles.lbl}>Need the hire made by</span>
               <DatePicker value={start} onChange={setStart} placeholder="Pick a date" quick={quick} />
             </div>
-            <div className={`${styles.half} ${styles.field}`}>
+            <label className={styles.half}>
               <span className={styles.lbl}>Level</span>
-              <Seg value={lvl} set={setLevel} options={LEVELS.map((l) => [l.id, l.label])} />
-            </div>
-            <div className={`${styles.half} ${styles.field}`}>
-              <span className={styles.lbl}>How many people could do this role?</span>
-              <Seg value={pool} set={setPool} options={[["common", "Lots of people"], ["specialist", "A small, specialist pool"]]} />
-            </div>
-            <div className={`${styles.half} ${styles.field}`}>
+              <select value={lvl} onChange={(e) => setLevel(e.target.value as Level)}>
+                {LEVELS.map((l) => <option key={l.id} value={l.id}>{l.label}</option>)}
+              </select>
+            </label>
+            <label className={styles.half}>
+              <span className={styles.lbl}>Hired for a role like this before?</span>
+              <select value={history} onChange={(e) => setHistory(e.target.value as History)}>
+                <option value="" disabled>Choose one</option>
+                {HISTORY.map((h) => <option key={h.id} value={h.id}>{h.label}</option>)}
+              </select>
+            </label>
+            <label className={styles.half}>
               <span className={styles.lbl}>Who would run the hiring?</span>
-              <Seg value={ta} set={setTa} options={[[true, "An in-house recruiter or TA"], [false, "The hiring manager"]]} />
-            </div>
-            <div className={`${styles.half} ${styles.field}`}>
-              <span className={styles.lbl}>Could you pay a recruitment fee?</span>
-              <Seg value={fee} set={setFee} options={[[true, "Yes"], [false, "Not for this role"]]} />
-            </div>
-            <div className={`${styles.half} ${styles.field}`}>
-              <span className={styles.lbl}>Asked your team for referrals yet?</span>
-              <Seg value={asked} set={setAsked} options={[[false, "Not yet"], [true, "Yes, no luck"]]} />
-            </div>
+              <select value={runner} onChange={(e) => setRunner(e.target.value as Runner)}>
+                <option value="" disabled>Choose one</option>
+                {RUNNERS.map((r) => <option key={r.id} value={r.id}>{r.label}</option>)}
+              </select>
+            </label>
+            <label className={styles.half}>
+              <span className={styles.lbl}>How important is this hire?</span>
+              <select value={stakes} onChange={(e) => setStakes(e.target.value as Stakes)}>
+                <option value="" disabled>Choose one</option>
+                {STAKES.map((x) => <option key={x.id} value={x.id}>{x.label}</option>)}
+              </select>
+            </label>
+            <label className={styles.half}>
+              <span className={styles.lbl}>Asked for referrals yet?</span>
+              <select value={asked} onChange={(e) => setAsked(e.target.value as "no" | "yes")}>
+                <option value="" disabled>Choose one</option>
+                <option value="no">Not yet</option>
+                <option value="yes">Yes, nothing that fits</option>
+              </select>
+            </label>
             <label className={styles.wide}>
               <span className={styles.lbl}>Work email</span>
               <EmailField value={email} onChange={setEmail}>

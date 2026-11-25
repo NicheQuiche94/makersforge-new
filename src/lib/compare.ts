@@ -230,20 +230,42 @@ export type CompareInput = {
   lid: string; // this request's id
   /** The questions behind the plan (Andre 2026-11-25). Missing on older links: the plan falls back to the job title. */
   level?: Level;
-  pool?: Pool;
-  ta?: boolean; // someone in-house recruits (TA, a recruiter or HR who screens)
-  fee?: boolean; // a recruitment fee is possible for this role
-  asked?: boolean; // they've already asked the team for referrals
+  history?: History;
+  runner?: Runner;
+  stakes?: Stakes;
+  asked?: boolean; // they've already asked for referrals (team, network or a post)
 };
 
 export type Level = "junior" | "mid" | "senior" | "lead";
-export type Pool = "common" | "specialist";
+/** How hiring for this kind of role has gone before: a pool size people actually know. */
+export type History = "easy" | "hard" | "first";
+/** Who runs the hiring day to day. */
+export type Runner = "ta" | "manager" | "founder";
+/** How much the hire matters: the pain behind it, which stands in for appetite to pay a fee. */
+export type Stakes = "critical" | "important" | "nice";
+
 export const LEVELS: { id: Level; label: string }[] = [
   { id: "junior", label: "Junior" },
   { id: "mid", label: "Mid-level" },
   { id: "senior", label: "Senior" },
   { id: "lead", label: "Lead, Head or above" },
 ];
+export const HISTORY: { id: History; label: string }[] = [
+  { id: "easy", label: "We found good people quickly" },
+  { id: "hard", label: "It was hard to find the right person" },
+  { id: "first", label: "First time hiring this role" },
+];
+export const RUNNERS: { id: Runner; label: string }[] = [
+  { id: "ta", label: "An in-house recruiter or TA" },
+  { id: "manager", label: "The hiring manager" },
+  { id: "founder", label: "A founder" },
+];
+export const STAKES: { id: Stakes; label: string }[] = [
+  { id: "critical", label: "Mission critical: we're stuck without them" },
+  { id: "important", label: "Important, but we can wait for the right person" },
+  { id: "nice", label: "Nice to have" },
+];
+
 /** Level from the form, or from the job title on older links. */
 export function levelOf(input: CompareInput): Level {
   if (input.level) return input.level;
@@ -255,41 +277,54 @@ export function levelOf(input: CompareInput): Level {
 export type Step = { id: string; title: string; when: string; why: string };
 
 /**
- * The suggested order (Andre 2026-11-25): honest first. Referrals for a week
- * unless they've asked already; a capped job ad when lots of people could do
- * a junior or mid role, or when there's no budget for a fee; MakersForge first
- * only for senior or specialist roles, or when the date leaves no time for an
- * ad to run. DRAFT copy for Andre.
+ * The suggested order (Andre 2026-11-25): honest first.
+ * - Referrals for a week, unless they've asked already (team, network or a LinkedIn post).
+ * - A small pool: past hires were hard, or it's a first hire at senior or lead level.
+ * - "Nice to have": a capped job ad, never us. Low pain means a fee isn't worth it.
+ * - A capped ad first when the pool isn't small, the role is junior or mid, and the
+ *   date allows, unless it's mission critical with no recruiter in-house to run it.
+ * - Otherwise MakersForge, with the honest reason.
+ * We never ask about budget: the stakes stand in for it. DRAFT copy for Andre.
  */
 export function planFor(input: CompareInput, now = Date.now()) {
   const level = levelOf(input);
-  const specialist = input.pool ? input.pool === "specialist" : level === "senior" || level === "lead";
-  const fee = input.fee ?? true;
-  const ta = input.ta ?? false;
+  const senior = level === "senior" || level === "lead";
+  const small = input.history ? input.history === "hard" || (input.history === "first" && senior) : senior;
+  const stakes = input.stakes ?? "important";
+  const runner = input.runner ?? "manager";
   const weeks = input.start ? Math.max(0, (Date.parse(input.start) - now) / (7 * 864e5)) : null;
   const adFits = weeks == null || weeks >= 9;
+  const who = runner === "ta" ? "your recruiter" : runner === "founder" ? "you" : "the hiring manager";
+  const cap = runner === "ta"
+    ? "Your recruiter can screen it. Cap it at what they can read properly: about 150 applicants"
+    : `Cap it at what ${who} can read properly: 150 CVs at 5 minutes each is about 12 hours`;
+
   const steps: Step[] = [];
   if (!input.asked)
-    steps.push({ id: "referral", title: "Ask for referrals", when: "Week 1", why: "Ask your team and network for a specific person. 1 in 16 referred candidates get hired. If someone fits, hire them: nothing is cheaper or lower risk" });
+    steps.push({ id: "referral", title: "Ask for referrals", when: "Week 1", why: "Ask your team, your network, or put out a LinkedIn post, for a specific person. 1 in 16 referred candidates get hired. If someone fits, hire them: nothing is cheaper or lower risk" });
   const next = steps.length ? "From week 2" : "Now";
-  const cap = ta ? "Your in-house team can screen it. Cap it at what they can read properly: about 150 applicants" : "Cap it at what you can read properly: 150 CVs at 5 minutes each is about 12 hours";
+  const mfWhy = `1 in ${MF_PER_HIRE} of the candidates we send get hired`;
+
   let main: string;
-  if (!fee) {
+  if (stakes === "nice") {
     main = "ads";
-    steps.push({ id: "ads", title: "Post a job ad, with a cap", when: next, why: `It's the lowest-cost route. ${cap}` });
-    if (ta) steps.push({ id: "inhouse", title: "Then message people directly", when: "If the ad doesn't land", why: "Search LinkedIn for people who aren't looking. 1 in 72 sourced candidates get hired, so expect to message a lot of people" });
-  } else if (!specialist && (level === "junior" || level === "mid") && adFits) {
+    steps.push({ id: "ads", title: "Post a job ad, with a cap", when: next, why: `There's no rush, so the lowest-cost route makes sense. ${cap}` });
+    if (runner === "ta") steps.push({ id: "inhouse", title: "Then message people directly", when: "If the ad doesn't land", why: "Search LinkedIn for people who aren't looking. 1 in 72 sourced candidates get hired, so expect to message a lot of people" });
+  } else if (!small && !senior && adFits && !(stakes === "critical" && runner !== "ta")) {
     main = "ads";
-    steps.push({ id: "ads", title: "Post a job ad, with a cap", when: next, why: `Plenty of people could do this role, so an ad is worth a go. ${cap}` });
-    steps.push({ id: "mf", title: "Then MakersForge, if the ad doesn't land", when: "If the cap fills or 4 weeks pass", why: `We go direct to the people who didn't apply. 1 in ${MF_PER_HIRE} of the candidates we send get hired` });
+    steps.push({ id: "ads", title: "Post a job ad, with a cap", when: next, why: `Good people have come through for roles like this before, so an ad is worth a go. ${cap}` });
+    steps.push({ id: "mf", title: "Then MakersForge, if the ad doesn't land", when: "If the cap fills or 4 weeks pass", why: `We go direct to the people who didn't apply. ${mfWhy}` });
   } else {
     main = "mf";
     const reason = !adFits
       ? "Your date doesn't leave time for a job ad to run"
-      : level === "senior" || level === "lead"
+      : senior
         ? "Senior people rarely apply to ads. They get approached"
-        : "The pool is small, so you need to reach people who aren't looking";
-    steps.push({ id: "mf", title: "MakersForge", when: next, why: `${reason}. 1 in ${MF_PER_HIRE} of the candidates we send get hired` });
+        : small
+          ? "The right people are hard to find, so you need to reach the ones who aren't looking"
+          : `It's mission critical, and screening a pile of applicants would fall on ${who}`;
+    steps.push({ id: "mf", title: "MakersForge", when: next, why: `${reason}. ${mfWhy}` });
+    if (!small && !senior && adFits) steps.push({ id: "ads", title: "Or a job ad, if you'd rather keep the cost down", when: "Alongside", why: cap });
   }
   return { steps, main };
 }

@@ -151,6 +151,3 @@
 .plan li strong { font-size: 19px; }
 .plan li p { margin: 0; color: var(--dim); line-height: 1.5; }
 .planNote { margin: 14px 0 0; text-align: center; font-weight: 700; }
-.seg { display: flex; flex-wrap: wrap; gap: 6px; }
-.seg button { padding: 9px 12px; border-radius: 999px; border: 1px solid var(--hair-strong); background: #fff; font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; }
-.seg button[aria-pressed="true"] { background: var(--ink); color: #fff; border-color: var(--ink); }
