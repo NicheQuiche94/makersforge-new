@@ -42,6 +42,8 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
   const role = roleLabel(input.role);
   const promo = activePromo();
   const plan = (routes.find((k) => k.id === kind) ?? routes[0]).plan;
+  const late = plan.deadline != null ? Math.max(1, Math.ceil((plan.hire - plan.deadline) / 864e5) - 1) : 0;
+  const spare = plan.deadline != null ? Math.max(0, Math.floor((plan.deadline - plan.hire) / 864e5)) : 0;
   const adFee = rows.find((x) => x.r.id === "ads");
   const mfRow = rows.find((x) => x.r.us);
   /** What a route costs, as a range: nothing if an earlier step works, everything if every step is needed. */
@@ -94,22 +96,10 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
               Hire by <strong>{day(new Date(plan.hire))}</strong>
               {plan.deadline != null &&
                 (plan.onTime
-                  ? ` ✓ ${Math.max(0, Math.round((plan.deadline - plan.hire) / 864e5))} days early`
-                  : ` · ${Math.ceil((plan.hire - plan.deadline) / 864e5) - 1 || 1} days late, the closest possible`)}
+                  ? " ✓ on time"
+                  : ` · ${late} days late`)}
             </p>
           </div>
-          {plan.squeeze != null && plan.deadline != null && (
-            <div className={styles.squeeze}>
-              <p>
-                <strong>Your interview process is the bottleneck.</strong> At {PROCESS.find((p) => p.w === plan.process)?.label.toLowerCase() ?? `${plan.process} weeks`}, the
-                hire lands {Math.ceil((plan.hire - plan.deadline) / 864e5) - 1 || 1} days after your date. Run it in about {plan.squeeze === 1 ? "a week" : `${plan.squeeze} weeks`} and you&apos;d make it.
-              </p>
-              <a href={BOOKING_URL} target="_blank" rel="noopener">Get a free interview process health check →</a>
-            </div>
-          )}
-          <p className={styles.trade2}>
-            <b>You trade</b> {plan.trade}.
-          </p>
           <Timeline lanes={plan.lanes} deadline={plan.deadline} hire={plan.hire} />
           <div className={styles.stages}>
             {plan.steps.map((st, i) => (
@@ -132,16 +122,47 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
               </div>
             ))}
           </div>
-          {plan.mfFree && (
-            <div className={styles.free}>
-              <b>{L.fmt(0)}</b>
-              <p>
-                <strong>A search with us costs nothing until you hire someone we found.</strong>
-                {plan.steps.some((st) => st.id === "ads") ? " If a referral or your ad gets there first, you pay nothing." : " If a referral gets there first, you pay nothing."}
-              </p>
+        </div>
+
+        {/* Live check (Andre 2026-11-25): context for the route on screen, and what to do about any bottleneck. */}
+        <aside className={styles.diag}>
+          <p className={styles.diagHead}>Live check</p>
+          <div className={styles.diagItem}>
+            <span>Status</span>
+            <strong className={plan.onTime ? styles.dateOk : styles.dateLate}>
+              {plan.deadline == null ? `Hire by ${day(new Date(plan.hire))}` : plan.onTime ? `On time, ${spare} days spare` : `${late} days late`}
+            </strong>
+          </div>
+          {plan.deadline != null && !plan.onTime && (
+            <div className={`${styles.diagItem} ${styles.diagAlert}`}>
+              <span>Current bottleneck</span>
+              {plan.squeeze != null ? (
+                <>
+                  <strong>Your interview process</strong>
+                  <p>
+                    At {PROCESS.find((p) => p.w === plan.process)?.label.toLowerCase() ?? `${plan.process} weeks`}, the hire lands after your date. Run it in about{" "}
+                    {plan.squeeze === 1 ? "a week" : `${plan.squeeze} weeks`} to hire on time.
+                  </p>
+                  <a href={BOOKING_URL} target="_blank" rel="noopener">Book a free interview process health check →</a>
+                </>
+              ) : (
+                <>
+                  <strong>Time</strong>
+                  <p>{kind === "quickest" ? "Even the quickest route lands after your date. Start today, and tighten your interview process." : "This route needs more time than you have. Try Quickest."}</p>
+                </>
+              )}
             </div>
           )}
-        </div>
+          <div className={styles.diagItem}>
+            <span>You trade</span>
+            <p>{plan.trade}.</p>
+          </div>
+          <div className={styles.diagItem}>
+            <span>Cost</span>
+            <strong>{cost(plan)}</strong>
+            {plan.mfFree && <p>A search with us is £0 until you hire someone we found.</p>}
+          </div>
+        </aside>
         </div>
 
         <div className={styles.narrow}>
@@ -211,7 +232,7 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
 
         {plan.steps.some((st) => st.id === "mf") && (
           <div className={styles.bigCta}>
-            <Link href="/start" className="heat-glow">Start a search week →</Link>
+            <Link href="/start" className="heat-glow"><span>Start a search week →</span></Link>
             <span>£0 until you hire someone we found</span>
           </div>
         )}
