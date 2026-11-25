@@ -1,4 +1,5 @@
 "use client";
+import { EmailNotice } from "@/components/legal/EmailNotice";
 
 import { useState, type FormEvent, type ReactNode } from "react";
 import { CONTRACT_LABELS } from "@/lib/terms";
@@ -209,6 +210,7 @@ export function ClaimForm({
         <textarea name="notes" rows={3} className={styles.textarea} />
       </Field>
 
+      <EmailNotice kind="enquiry" />
       <div className={styles.submitRow}>
         {status === "error" && errorMsg && (
           <p className={styles.error}>{errorMsg}</p>

@@ -1,4 +1,5 @@
 "use client";
+import { EmailNotice } from "@/components/legal/EmailNotice";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -223,7 +224,7 @@ export function CompareMock({ fromAd = false }: { fromAd?: boolean }) {
           <button type="submit" className={styles.bigGo} disabled={busy || !role.trim() || !/^\S+@\S+\.\S+$/.test(email)}>
             {busy ? "Sending…" : "Email me my route →"}
           </button>
-          <p className={styles.fine}>We&apos;ll email you a link to your route to share with your team. One email, no spam.</p>
+          <EmailNotice className={styles.fine} deliver="a link to your route to share with your team" about="the tool" />
         </form>
       </div>
     </section>

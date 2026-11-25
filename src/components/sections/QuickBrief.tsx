@@ -1,4 +1,5 @@
 "use client";
+import { EmailNotice } from "@/components/legal/EmailNotice";
 
 import { BOOKING_URL } from "@/lib/site";
 import { useRef, useState, type DragEvent, type FormEvent } from "react";
@@ -153,6 +154,7 @@ export function QuickBrief({ industry }: { industry?: "games" | "apps" }) {
               {industry ? <input type="hidden" name="industry" value={industry} /> : null}
               {error ? <p className={styles.error}>{error}</p> : null}
 
+              <EmailNotice kind="enquiry" />
               <div className={styles.foot}>
                 <p className={styles.note}>
                   No terms and no obligation to interview.

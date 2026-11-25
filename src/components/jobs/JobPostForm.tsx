@@ -1,4 +1,5 @@
 "use client";
+import { EmailNotice } from "@/components/legal/EmailNotice";
 
 import { useState, type FormEvent } from "react";
 import { CATEGORY_ORDER, CATEGORY_LABELS } from "@/lib/jobs";
@@ -117,6 +118,7 @@ export function JobPostForm() {
         <textarea name="notes" rows={4} className={styles.textarea} />
       </Field>
 
+      <EmailNotice kind="enquiry" />
       <div className={styles.submitRow}>
         {status === "error" && errorMsg && (
           <p className={styles.error}>{errorMsg}</p>

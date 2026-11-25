@@ -1,4 +1,5 @@
 "use client";
+import { EmailNotice } from "@/components/legal/EmailNotice";
 
 import { useState, type FormEvent } from "react";
 import { CATEGORY_ORDER, CATEGORY_LABELS, type JobCategory } from "@/lib/jobs";
@@ -122,6 +123,7 @@ export function TalentAlertForm({
           {status === "submitting" ? "…" : "Alert me"}
         </button>
       </div>
+      <EmailNotice kind="alerts" deliver="when someone matching your brief joins the line-up" />
 
       {status === "error" && errorMsg && (
         <p className={styles.error}>{errorMsg}</p>

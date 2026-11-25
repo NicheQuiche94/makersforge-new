@@ -219,3 +219,7 @@
 .dark .okBody {
   color: rgba(255, 255, 255, 0.82);
 }
+
+/* Collection notice under the email field (2026-11-25) */
+.notice { margin: 12px 0 0; font-size: 12.5px; line-height: 1.5; opacity: .62; }
+.dark .notice { color: #fff; }

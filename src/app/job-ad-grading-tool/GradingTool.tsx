@@ -1,4 +1,5 @@
 "use client";
+import { EmailNotice } from "@/components/legal/EmailNotice";
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { arrivalUtm } from "@/lib/analytics";
@@ -142,6 +143,7 @@ export function GradingTool() {
               <button type="submit" className={styles.go} disabled={!ready || state === "sending"}>{state === "sending" ? "Grading…" : "Email me my score →"}</button>
               <span className={styles.hint}>Your analysis arrives by email in about a minute.</span>
             </div>
+            <EmailNotice deliver="your score" about="the tool" />
           </form>
         )}
 
