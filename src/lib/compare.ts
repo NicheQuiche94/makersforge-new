@@ -174,7 +174,7 @@ export const ROUTES: Route[] = [
     name: "Sourcing it yourself",
     how: "Your own team finds and messages people on LinkedIn",
     fee: () => 135 * 3,
-    feeNote: "LinkedIn Recruiter Lite, about $170 a month (full Recruiter is about $8–15k a seat a year)",
+    feeNote: "LinkedIn Recruiter Lite, about $170 a month",
     shortlist: "3–5 weeks",
     hireWeeks: [6, 12],
     get: "Whoever replies to your messages",

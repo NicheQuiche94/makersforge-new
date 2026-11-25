@@ -372,3 +372,10 @@
 @media (max-width: 1100px) { .diag { grid-template-columns: 1fr; } .pills { position: static; } }
 @media (max-width: 860px) { .pills { grid-auto-flow: column; overflow-x: auto; } .pill { white-space: nowrap; text-align: center; } }
 .pills, .diag { position: static; }
+/* v12: every header cell the same height (name 2 lines, fee, note clamped to 3 lines) */
+.cmp thead th { vertical-align: top; height: 168px; box-sizing: border-box; }
+.cmpName { min-height: 2.2em; display: flex; align-items: flex-end; justify-content: center; }
+.cmpFeeNote { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.cmp thead th { height: 196px; }
+.cmpName { height: 3.3em; min-height: 0; }
+.cmpFeeNote { -webkit-line-clamp: 4; }

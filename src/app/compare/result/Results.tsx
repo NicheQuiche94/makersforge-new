@@ -200,7 +200,7 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
                   ))}
                 </tr>
                 <tr>
-                  <th>Candidates per hire</th>
+                  <th>Candidates per hire*</th>
                   {rows.map((x) => (
                     <td key={x.r.id} className={x.r.id === best.r.id ? styles.cmpPickCell : ""}>1 in {x.r.perHire}</td>
                   ))}
@@ -221,8 +221,10 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
             </table>
           </div>
           <p className={styles.hint}>
-            Each route on its own, starting today. Green makes your date, red doesn&apos;t. Candidates per hire: how many candidates you see,
-            on average, for each one hired.
+            * MakersForge: our own data across our seven most recent clients (232 candidates sent, 26 hired). Every other route: Lever,
+            Little Grey Book of Recruiting Benchmarks (4 million+ candidates, about 1,000 employers).
+            <br />
+            Each route on its own, starting today. Green makes your date, red doesn&apos;t.
           </p>
         </details>
 
