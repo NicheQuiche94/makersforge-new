@@ -41,7 +41,7 @@ export default function TermsPage() {
           <div className={styles.meta}>
             <span className={styles.metaItem}>
               <span className={styles.metaLabel}>Last updated</span>
-              <span className={styles.metaValue}>30 May 2026</span>
+              <span className={styles.metaValue}>25 November 2026</span>
             </span>
             <span className={styles.metaItem}>
               <span className={styles.metaLabel}>Contact</span>
@@ -78,22 +78,26 @@ export default function TermsPage() {
 
           <Section num="02" title="What MakersForge is">
             <p className={styles.p}>
-              MakersForge is a talent agency. We represent senior
-              growth, product, design, engineering and art specialists
-              working in mobile apps and games. When a studio briefs us
-              on a hire, we put the specialists we already represent
-              forward.
+              MakersForge is a direct-to-candidate recruitment business for
+              mobile game studios and app companies. We find the right people
+              for a role and engage them directly, including people who are
+              not looking for a new job and would never see a job ad.
             </p>
             <p className={styles.p}>
-              MakersForge is built around a core commitment:{" "}
-              <strong>talent is not a commodity</strong>. We never take
-              a cut of what specialists earn, we don&apos;t sell access
-              to profiles, and once a specialist is on the lineup, we
-              represent them indefinitely. See §05 for the full set.
+              Companies book a search through our website and agree our terms
+              of business when they do. Those terms cover fees, timings and
+              everything else about a search, and they take priority over
+              these terms for that work.
             </p>
             <p className={styles.p}>
-              The MakersForge website and lineup are provided as-is and
-              may change as the business evolves.
+              We also publish a talent directory of specialists who have chosen
+              to share a public profile, along with free guides, reports and
+              tools. The free resources are general guidance to help you hire
+              and are not professional advice.
+            </p>
+            <p className={styles.p}>
+              The website and everything on it are provided as is and may
+              change as the business grows.
             </p>
           </Section>
 
