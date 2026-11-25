@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { BOOKING_URL } from "@/lib/site";
 import { ROSTER } from "@/data/roster";
 import { PricingCards } from "@/components/onboard/PricingCards";
-import { slotsLeftThisMonth } from "@/lib/plans";
+import { liveSlots } from "@/lib/onboarding/db";
 import styles from "./plans.module.css";
 
 export const metadata: Metadata = {
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 export default async function PricingPage({ searchParams }: { searchParams: Promise<{ candidate?: string }> }) {
   const { candidate } = await searchParams;
   const person = ROSTER.find((p) => p.id === candidate);
-  const { month, left } = slotsLeftThisMonth();
+  const slots = await liveSlots();
   return (
     <>
       <section className={styles.hero}>
@@ -32,13 +32,15 @@ export default async function PricingPage({ searchParams }: { searchParams: Prom
             Flat fees, no percentage of salary, no lock-in. Pick how you hire, book your search week and sign
             online. No calls needed, though you can always book one.
           </p>
-          <p className={styles.slots}>
-            <span className={styles.slotDot} aria-hidden="true" />
-            <strong>
-              {left} search {left === 1 ? "slot" : "slots"} left in {month}
-            </strong>
-            · we run 2 searches a week
-          </p>
+          {slots && (
+            <p className={styles.slots}>
+              <span className={styles.slotDot} aria-hidden="true" />
+              <strong>
+                {slots.left} search {slots.left === 1 ? "slot" : "slots"} left in {slots.month}
+              </strong>
+              · we run 2 searches a week
+            </p>
+          )}
           {person && (
             <p className={styles.attached}>
               Requesting an interview with <strong>{person.codename}</strong> ({person.role}). Pick how you&apos;d like

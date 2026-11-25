@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { slotsLeftThisMonth } from "@/lib/plans";
+import { liveSlots } from "@/lib/onboarding/db";
 import styles from "./GetStarted.module.css";
 
 /**
@@ -7,8 +7,8 @@ import styles from "./GetStarted.module.css";
  * one message and one button, styled like the nav's "Get started". Sits
  * after "Try us first", before the FAQ.
  */
-export function GetStarted() {
-  const { month, left } = slotsLeftThisMonth();
+export async function GetStarted() {
+  const slots = await liveSlots();
   return (
     <section className={styles.section} id="get-started">
       <div className={`container reveal ${styles.inner}`}>
@@ -17,12 +17,14 @@ export function GetStarted() {
         <Link href="/start" className={styles.cta}>
           Get started <span aria-hidden="true">→</span>
         </Link>
-        <p className={styles.slots}>
-          <strong>
-            {left} search {left === 1 ? "slot" : "slots"} left in {month}
-          </strong>{" "}
-          · we run 2 searches a week
-        </p>
+        {slots && (
+          <p className={styles.slots}>
+            <strong>
+              {slots.left} search {slots.left === 1 ? "slot" : "slots"} left in {slots.month}
+            </strong>{" "}
+            · we run 2 searches a week
+          </p>
+        )}
       </div>
     </section>
   );

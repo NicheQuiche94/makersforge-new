@@ -15,6 +15,25 @@ export async function availability(): Promise<Week[]> {
   return (data ?? []).map((w) => ({ start: w.week_start as string, open: w.open as number }));
 }
 
+/**
+ * Open search slots in the month of the next bookable week, from the live
+ * availability (2026-11-25: the old count came from a fixed schedule and went
+ * stale). Null when availability can't be read, so callers hide the line
+ * instead of showing a wrong number.
+ */
+export async function liveSlots(): Promise<{ month: string; left: number } | null> {
+  try {
+    const weeks = (await availability()).filter((w) => w.open > 0);
+    if (!weeks.length) return null;
+    const m = weeks[0].start.slice(0, 7);
+    const left = weeks.filter((w) => w.start.slice(0, 7) === m).reduce((n, w) => n + w.open, 0);
+    const month = new Date(`${weeks[0].start}T12:00:00Z`).toLocaleDateString("en-GB", { month: "long" });
+    return { month, left };
+  } catch {
+    return null;
+  }
+}
+
 /** One slot per role from the chosen week on (same rule as plans.ts scheduleRoles). */
 export function schedule(weeks: Week[], start: string, roles: number): string[] | null {
   const out: string[] = [];
