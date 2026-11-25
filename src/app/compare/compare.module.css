@@ -267,3 +267,30 @@
   .designer { grid-template-columns: 1fr; }
   .kinds { position: static; grid-auto-flow: column; grid-auto-columns: minmax(180px, 1fr); overflow-x: auto; padding-bottom: 4px; }
 }
+
+/* v7 (Andre 2026-11-25): single-line stages, trade-off line, plain route names */
+.kindName { font-size: 22px; }
+.trade2 { margin: 2px 0 4px; text-align: center; color: var(--dim); font-size: 15px; }
+.trade2 b { color: var(--ink); }
+.chipWrap i { font-size: 12px; white-space: nowrap; }
+.stages { gap: 0; }
+.stage { background: none; border-radius: 0; border-bottom: 1px solid var(--hair); }
+.stage > summary { grid-template-columns: 26px 1fr auto 16px; padding: 12px 2px; }
+.stageNum { grid-row: auto; width: 26px; height: 26px; background: var(--tone-heat); font-size: 13px; }
+.stage strong { font-size: 16.5px; }
+.stageChev { color: var(--mute); font-size: 12px; transition: transform .15s; }
+.stage[open] .stageChev { transform: rotate(180deg); }
+.stage .stageLine { margin: -4px 0 6px 40px; grid-column: auto; font-size: 14.5px; }
+.stage .stageLine::after { content: none; }
+.stage ul { padding: 0 8px 14px 58px; }
+.stageLink { margin: 0; padding: 6px 0 0 40px; font-size: 12px; font-weight: 800; color: var(--mute); }
+@media (max-width: 560px) {
+  .stage > summary { grid-template-columns: 26px 1fr 16px; }
+  .stageWhen { grid-column: 2; grid-row: 2; }
+  .stage .stageLine { margin-left: 36px; }
+  .stage ul { padding-left: 40px; }
+}
+.plan .stage ul li { position: static; display: list-item; padding: 0; border-radius: 0; background: none; box-shadow: none; counter-increment: none; }
+.plan .stage ul li::before { content: none; }
+.stage ul { list-style: disc; }
+.stage[open] .stageLine::after { content: none; }

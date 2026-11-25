@@ -307,15 +307,15 @@ const withXmas = (from: number, weeks: number) => {
 
 export type Lane = { id: "referral" | "ads" | "screen" | "mf" | "interviews"; label: string; from: number; to: number; free?: boolean };
 /** One step of the plan: what to do, when, and exactly how. */
-export type Step = { id: string; title: string; when: string; tips: string[]; line: string; chip?: string };
+export type Step = { id: string; title: string; when: string; tips: string[]; line: string; chip?: string; link?: "fallback" | "parallel" | "next" };
 
 /** The routes a visitor can flick between (Andre 2026-11-25). */
 export type Kind = "recommended" | "cheapest" | "quickest" | "safest";
-export const KINDS: { id: Kind; label: string; blurb: string }[] = [
-  { id: "recommended", label: "Recommended", blurb: "What we'd do" },
-  { id: "cheapest", label: "Cheapest", blurb: "Lowest cost" },
-  { id: "quickest", label: "Quickest", blurb: "Earliest hire" },
-  { id: "safest", label: "Lowest risk", blurb: "Most chances at once" },
+export const KINDS: { id: Kind; label: string }[] = [
+  { id: "recommended", label: "Recommended" },
+  { id: "quickest", label: "Quickest" },
+  { id: "cheapest", label: "Cheapest" },
+  { id: "safest", label: "Lowest risk" },
 ];
 
 /** When a route on its own would make the hire, from today, with their interview process. */
@@ -400,6 +400,7 @@ export function planFor(input: CompareInput, now = Date.now(), kind: Kind = "rec
       id: "mf",
       title: input.asked || kind === "safest" ? "Run a MakersForge search" : "Run a MakersForge search alongside",
       chip: "MakersForge",
+      link: "parallel",
       line: "£0 until you hire someone we found",
       when: `From ${d(now)}`,
       tips: [
@@ -416,6 +417,7 @@ export function planFor(input: CompareInput, now = Date.now(), kind: Kind = "rec
       id: "ads",
       title: `Post a job ad, capped at ${CAP} applicants`,
       chip: "Job ad, capped",
+      link: kind === "safest" ? "parallel" : "fallback",
       line: `Take it down at ${CAP} applicants`,
       when: `From ${d(adFrom)}`,
       tips: [
@@ -433,7 +435,8 @@ export function planFor(input: CompareInput, now = Date.now(), kind: Kind = "rec
     steps.push({
       id: "mf",
       title: "MakersForge, if the ad isn't working",
-      chip: "MakersForge if needed",
+      chip: "MakersForge",
+      link: "fallback",
       line: `Start us by ${d(mfLatest)} to keep your date`,
       when: `By ${d(mfLatest)} at the latest`,
       tips: [
@@ -449,8 +452,9 @@ export function planFor(input: CompareInput, now = Date.now(), kind: Kind = "rec
   if (sourcing)
     steps.push({
       id: "inhouse",
-      title: "If the ad doesn't land: message people directly",
-      chip: "Sourcing if needed",
+      title: "Message people directly",
+      chip: "Sourcing yourself",
+      link: "fallback",
       line: "Message people who aren't looking",
       when: `If nobody's right by ${d(screenTo)}`,
       tips: ["Search LinkedIn for people who aren't looking", "Expect to message a lot of people: 1 in 72 sourced candidates get hired"],
@@ -466,6 +470,7 @@ export function planFor(input: CompareInput, now = Date.now(), kind: Kind = "rec
   steps.push({
     id: "interviews",
     title: "Interview and offer",
+    link: "next",
     line: `Accepted offer by ${d(hire)}`,
     when: range(iFrom === Infinity ? screenTo : iFrom, hire),
     tips: [`Run your interview process: ${PROCESS.find((p) => p.w === P)?.label.toLowerCase() ?? `${P} weeks`}, by your answer`, `Aim for an accepted offer by ${d(hire)}`],
@@ -473,7 +478,17 @@ export function planFor(input: CompareInput, now = Date.now(), kind: Kind = "rec
   lanes.push({ id: "interviews", label: "Interviews", from: iFrom === Infinity ? screenTo : iFrom, to: hire });
 
   const main = useAd && !mfNow ? "ads" : "mf";
-  return { kind, steps, lanes, hire, deadline, onTime: fits(hire), main, mfFree: mfNow || mfBackup, usesAd: useAd, usesMf: mfNow || mfBackup };
+  const trade =
+    kind === "cheapest"
+      ? "Time and effort for cost: about 12 hours of screening, and no backup if the ad doesn't land"
+      : kind === "quickest"
+        ? "Cost for speed: our fee, but only if you hire someone we found"
+        : kind === "safest"
+          ? "Cost and effort for certainty: the ad up front, three things running at once, and our fee if you hire ours"
+          : main === "ads"
+            ? "Speed for cost: if the ad doesn't land, you start us later, nearer your date"
+            : "Cost for certainty: our fee, but only if you hire someone we found";
+  return { kind, steps, lanes, hire, deadline, onTime: fits(hire), main, trade, mfFree: mfNow || mfBackup, usesAd: useAd, usesMf: mfNow || mfBackup, adUpfront: useAd && (kind === "safest" || !!input.asked) };
 }
 
 export const gbp = (n: number) => `£${Math.round(n).toLocaleString("en-GB")}`;

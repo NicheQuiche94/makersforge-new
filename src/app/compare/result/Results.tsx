@@ -44,9 +44,13 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
   const plan = (routes.find((k) => k.id === kind) ?? routes[0]).plan;
   const adFee = rows.find((x) => x.r.id === "ads");
   const mfRow = rows.find((x) => x.r.us);
-  /** What a route costs: the ad if it's used, and our fee only if they hire someone we found. */
-  const cost = (p: typeof plan) =>
-    [p.usesAd && adFee ? L.fmt(feeIn(adFee)) : "", p.usesMf && mfRow ? `${L.fmt(feeIn(mfRow))} ${p.usesAd ? "" : "only "}if you hire ours` : ""].filter(Boolean).join(" + ") || L.fmt(0);
+  /** What a route costs, as a range: nothing if an earlier step works, everything if every step is needed. */
+  const cost = (p: typeof plan) => {
+    const ad = p.usesAd && adFee ? feeIn(adFee) : 0;
+    const lo = p.adUpfront ? ad : 0;
+    const hi = ad + (p.usesMf && mfRow ? feeIn(mfRow) : 0);
+    return lo === hi ? L.fmt(hi) : `${L.fmt(lo)} to ${L.fmt(hi)}`;
+  };
 
   return (
     <section className={styles.wrap}>
@@ -68,11 +72,7 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
           <div className={styles.kinds} role="tablist" aria-label="Hiring routes">
             {routes.map((k) => (
               <button key={k.id} type="button" role="tab" aria-selected={k.id === kind} className={`${styles.kind} ${k.id === kind ? styles.kindOn : ""}`} onClick={() => setKind(k.id)}>
-                <span className={styles.kindName}>
-                  {k.label}
-                  {k.id === "recommended" && <em>Our pick</em>}
-                </span>
-                <span className={styles.kindBlurb}>{k.blurb}</span>
+                <span className={styles.kindName}>{k.label}</span>
                 <span className={`${styles.kindDate} ${k.plan.onTime ? styles.dateOk : styles.dateLate}`}>
                   Hire by {day(new Date(k.plan.hire))} {k.plan.onTime ? "✓" : "· late"}
                 </span>
@@ -85,7 +85,7 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
             <div className={styles.chips}>
               {plan.steps.filter((st) => st.chip).map((st, i) => (
                 <span key={st.id} className={styles.chipWrap}>
-                  {i > 0 && <i aria-hidden="true">→</i>}
+                  {i > 0 && <i>{st.link === "parallel" ? "+" : "→ if no luck →"}</i>}
                   <span className={`${styles.chip} ${styles["chip_" + st.id]}`}>{st.chip}</span>
                 </span>
               ))}
@@ -98,22 +98,29 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
                   : ` · ${Math.round((plan.hire - plan.deadline) / 864e5)} days late, the closest possible`)}
             </p>
           </div>
+          <p className={styles.trade2}>
+            <b>You trade</b> {plan.trade}.
+          </p>
           <Timeline lanes={plan.lanes} deadline={plan.deadline} hire={plan.hire} />
           <div className={styles.stages}>
             {plan.steps.map((st, i) => (
-              <details key={kind + st.id} className={`${styles.stage} ${st.id === plan.main && kind === "recommended" ? styles.stageMain : ""}`}>
+              <div key={kind + st.id}>
+              {i > 0 && st.link && <p className={styles.stageLink}>{st.link === "parallel" ? "At the same time" : st.link === "fallback" ? "If no luck" : "Then"}</p>}
+              <details className={styles.stage}>
                 <summary>
                   <span className={styles.stageNum}>{i + 1}</span>
                   <strong>{st.title}</strong>
                   <span className={styles.stageWhen}>{st.when}</span>
-                  <span className={styles.stageLine}>{st.line}</span>
+                  <span className={styles.stageChev} aria-hidden="true">▾</span>
                 </summary>
+                <p className={styles.stageLine}>{st.line}.</p>
                 <ul>
                   {st.tips.map((t) => (
                     <li key={t}>{/[.?!"]$/.test(t) ? t : `${t}.`}</li>
                   ))}
                 </ul>
               </details>
+              </div>
             ))}
           </div>
           {plan.mfFree && (
