@@ -5,7 +5,7 @@ import { toAndre } from "@/lib/chat/telegram";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { leadToken, withLead } from "@/lib/leadToken";
 import { drawPrize, giftCode } from "@/lib/compareGifts";
-import { compare, gbp, day, roleLabel, HOOKS, type CompareInput, type Priority } from "@/lib/compare";
+import { compare, encodeInput, gbp, day, roleLabel, HOOKS, type CompareInput, type Priority } from "@/lib/compare";
 import { activePromo, isSpecial, dropsFor } from "@/lib/promos";
 import { RATES, isCurrency, type Currency } from "@/lib/currency";
 
@@ -52,7 +52,10 @@ export async function POST(req: Request) {
   const special = isSpecial(promo, input.start);
   const prize = promo ? drawPrize(dropsFor(promo, special)) : null;
 
-  const { error } = await createAdminClient()
+  // Local dev without the portal Supabase keys: skip the save and link to the self-contained result page.
+  const hasDb = !!process.env.NEXT_PUBLIC_PORTAL_SUPABASE_URL && !!process.env.PORTAL_SUPABASE_SERVICE_ROLE_KEY;
+  const prod = process.env.VERCEL_ENV === "production";
+  const { error } = !hasDb && !prod ? { error: null } : await createAdminClient()
     .from("compare_requests")
     .insert({
       lid: input.lid,
@@ -78,7 +81,8 @@ export async function POST(req: Request) {
 
   // Live site links to makersforge.gg; previews and local dev link back to themselves.
   const origin = process.env.VERCEL_ENV === "production" ? SITE : new URL(req.url).origin;
-  const link = withLead(`${origin}/compare/r/${input.lid}?utm_source=email&utm_medium=compare&utm_campaign=${HOOKS[input.hook].accent}`, email);
+  const utmQ = `utm_source=email&utm_medium=compare&utm_campaign=${HOOKS[input.hook].accent}`;
+  const link = withLead(!hasDb && !prod ? `${origin}/compare/result?d=${encodeInput(input)}&${utmQ}` : `${origin}/compare/r/${input.lid}?${utmQ}`, email);
   const role = roleLabel(input.role);
   const html = layout(
     `<p style="margin:0 0 14px">Hi ${esc(input.name?.split(" ")[0] || "there")},</p>
