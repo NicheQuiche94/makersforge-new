@@ -133,7 +133,7 @@ export function AdResult({ result, id, title, requested = false, autoRewrite = f
           A great ad still only reaches people who are actively looking. The best candidates usually aren&apos;t. See how every way to hire
           compares for your role.
         </p>
-        <Link href="/compare" className={styles.go}>Design your hiring route →</Link>
+        <Link href="/compare" className={styles.go}>Get your hiring plan →</Link>
       </div>
     </div>
   );

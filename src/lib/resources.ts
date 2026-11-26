@@ -10,7 +10,7 @@ export type Resource = { href: string; title: string; blurb: string; tag: string
 
 export const TOOLS: Resource[] = [
   { href: "/job-ad-grading-tool", title: "Job ad grading tool", blurb: "Score your job ad out of 100, with the fixes that will make the biggest difference.", tag: "Free tool" },
-  { href: "/compare", title: "Design your hiring route", blurb: "A dated plan for your role: which route to take, in what order, and when the hire lands.", tag: "Free tool" },
+  { href: "/compare", title: "Your hiring plan", blurb: "A dated plan for your role: which route to take, in what order, and when the hire lands.", tag: "Free tool" },
 ];
 
 /** Downloadable guides and reports (Andre 2026-11-24). They sit behind the

@@ -6,7 +6,7 @@ import { isCurrency } from "@/lib/currency";
 import { Results } from "../../result/Results";
 
 export const metadata: Metadata = {
-  title: "Your hiring route · MakersForge",
+  title: "Your hiring plan · MakersForge",
   robots: { index: false, follow: false },
 };
 export const dynamic = "force-dynamic";

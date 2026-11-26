@@ -16,7 +16,7 @@ const COMPANY_LINKS = [
 
 const RESOURCE_LINKS = [
   { href: "/resources", label: "Free resources" },
-  { href: "/compare", label: "Design your hiring route" },
+  { href: "/compare", label: "Get your hiring plan" },
   { href: "/job-ad-grading-tool", label: "Job ad grading tool" },
 ];
 

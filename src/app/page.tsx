@@ -32,7 +32,7 @@ export default function HomePage() {
         lede=""
         ctas={{
           // 2026-11-09 (Andre): a 63% bounce rate; a free tool to click first, not "talk to us".
-          primary: { href: "/compare", label: "Design your hiring route" },
+          primary: { href: "/compare", label: "Get your hiring plan" },
           secondary: { href: "/start", label: "Get started" },
         }}
       />

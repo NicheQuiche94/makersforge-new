@@ -83,11 +83,11 @@ export function NotAlways() {
             </div>
           ))}
         </div>
-        <p className={styles.after}>Each one has trade-offs. Find the right route for your next hire.</p>
+        <p className={styles.after}>Each one has trade-offs. Find the right plan for your next hire.</p>
 
         <div className={styles.links}>
           <Link href="/compare" className={styles.primary}>
-            <span>Design your hiring route →</span>
+            <span>Get your hiring plan →</span>
           </Link>
         </div>
       </div>
@@ -119,7 +119,7 @@ export function GuideFeature() {
               <span>Get the free guide →</span>
             </Link>
             <p className={styles.tools}>
-              More free tools: <Link href="/compare">Design your hiring route</Link> · <Link href="/job-ad-grading-tool">Job ad grading tool</Link>
+              More free tools: <Link href="/compare">Get your hiring plan</Link> · <Link href="/job-ad-grading-tool">Job ad grading tool</Link>
             </p>
           </div>
         </div>
