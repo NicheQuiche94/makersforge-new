@@ -14,11 +14,16 @@ export const HOOKS = [
   { pre: "Hiring, and it's ", accent: "time-sensitive", post: "?", g: "We'll show you which route gets someone in fastest." },
   // The LinkedIn ad's headline (2026-11-09): shown for ?ad=1 only, never at random.
   { pre: "Hiring, but don't know ", accent: "where to start", post: "?", g: "We'll design your hiring route." },
+  // 2026-11-26 (Andre): the A/B test is over. One short headline for everyone, so people
+  // from the round 3 ads ("Get your hiring plan") know they've landed on the right tool.
+  { pre: "Your ", accent: "hiring plan", post: "", g: "With options to optimise for cost, speed or risk." },
 ];
-/** Headlines in the random A/B rotation (the ones after these are ad-only). */
+/** Headlines in the random A/B rotation (the ones after these are ad-only). Retired 2026-11-26. */
 export const ROTATING_HOOKS = 3;
 /** The headline that matches the LinkedIn ad (index into HOOKS). */
 export const AD_HOOK = 3;
+/** The headline every visitor sees now (index into HOOKS). */
+export const PLAN_HOOK = 4;
 
 export const ROLES = [
   { id: "ua", label: "UA Manager", salary: 55000 },

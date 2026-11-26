@@ -82,7 +82,7 @@ export async function POST(req: Request) {
 
   // Live site links to makersforge.gg; previews and local dev link back to themselves.
   const origin = process.env.VERCEL_ENV === "production" ? SITE : new URL(req.url).origin;
-  const utmQ = `utm_source=email&utm_medium=compare&utm_campaign=${HOOKS[input.hook].accent}`;
+  const utmQ = `utm_source=email&utm_medium=compare&utm_campaign=${HOOKS[input.hook].accent.replace(/ /g, "-")}`;
   const link = withLead(!hasDb && !prod ? `${origin}/compare/result?d=${encodeInput(input)}&${utmQ}` : `${origin}/compare/r/${input.lid}?${utmQ}`, email);
   const role = roleLabel(input.role);
   const html = layout(
