@@ -206,9 +206,9 @@ export function CompareMock({ fromAd = false }: { fromAd?: boolean }) {
           </div>
           {error && <p className={styles.err}>{error}</p>}
           <button type="submit" className={styles.bigGo} disabled={busy || !role.trim() || !/^\S+@\S+\.\S+$/.test(email)}>
-            {busy ? "Sending…" : "Email me my route →"}
+            {busy ? "Sending…" : "Email me my plan →"}
           </button>
-          <EmailNotice className={styles.fine} deliver="a link to your route to share with your team" about="the tool" />
+          <EmailNotice className={styles.fine} deliver="a link to your plan to share with your team" about="the tool" />
         </form>
       </div>
     </section>

@@ -58,9 +58,9 @@ export default async function PricingPage({ searchParams }: { searchParams: Prom
               <h2>
                 Not sure we&apos;re the <span className="gr">right fit?</span>
               </h2>
-              <p>Design your hiring route lays out every way to hire for your role, in order and dated, so you can see where we fit and where we don&apos;t.</p>
+              <p>The hiring plan tool lays out every way to hire for your role, in order and dated, so you can see where we fit and where we don&apos;t.</p>
               <Link href="/compare" className={styles.unsurePrimary}>
-                <span>Design your hiring route →</span>
+                <span>Get your hiring plan →</span>
               </Link>
             </div>
             <div className={styles.unsureHalf}>

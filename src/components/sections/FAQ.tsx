@@ -29,7 +29,7 @@ export const HOME_FAQ: Item[] = [
     a: (
       <p>
         When a referral can fill the role, or when plenty of people could do it and you have time to run a job ad. The{" "}
-        <Link href="/compare">Design your hiring route</Link> tool shows you which route fits your hire.
+        <Link href="/compare">hiring plan tool</Link> shows you which route fits your hire.
       </p>
     ),
   },
@@ -58,7 +58,7 @@ export const HOME_FAQ: Item[] = [
     a: (
       <p>
         Of course. Just because there are four ways to find talent doesn&apos;t mean you have to pick one and stick to it. You can use them
-        separately or together, depending on the hire. The <Link href="/compare">Design your hiring route</Link> tool shows you how.
+        separately or together, depending on the hire. The <Link href="/compare">hiring plan tool</Link> shows you how.
       </p>
     ),
   },

@@ -11,7 +11,7 @@ export function CompareBand() {
           Not sure which way to hire is most <span className={`gr ${styles.accent}`}>cost-effective</span>?
         </h2>
         <Link href="/compare" className={styles.go}>
-          Design your hiring route →
+          Get your hiring plan →
         </Link>
       </div>
     </section>

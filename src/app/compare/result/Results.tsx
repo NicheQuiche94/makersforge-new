@@ -28,7 +28,7 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
         <div className="container">
           <h1 className={styles.h1}>This link has expired</h1>
           <p className={styles.lede}>
-            <Link href="/compare">Design a new hiring route →</Link>
+            <Link href="/compare">Make a new hiring plan →</Link>
           </p>
         </div>
       </section>
@@ -59,7 +59,7 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
       <div className="container">
         <div className={styles.resultHead}>
           <h1 className={styles.display}>
-            Your hiring route for a <span className={`gr ${styles.accent}`}>{role}</span>
+            Your hiring plan for a <span className={`gr ${styles.accent}`}>{role}</span>
           </h1>
           <p className={styles.summaryCenter}>
             {money(input.salary, cur)}
@@ -71,7 +71,7 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
         {/* The route (Andre 2026-11-25): the answer in one glance, then the detail on demand. */}
         {/* The routes to flick between (Andre 2026-11-25): each one redraws the plan beside it. */}
         <div className={styles.designer}>
-          <div className={styles.pills} role="tablist" aria-label="Hiring routes">
+          <div className={styles.pills} role="tablist" aria-label="Hiring plans">
             {routes.map((k) => (
               <button key={k.id} type="button" role="tab" aria-selected={k.id === kind} className={`${styles.pill} ${k.id === kind ? `${styles.pillOn} heat-glow` : ""}`} onClick={() => setKind(k.id)}>
                 {k.label}
@@ -144,7 +144,7 @@ export function Results({ input, special = false, slots = 0 }: { input: CompareI
               ) : (
                 <>
                   <strong>Time</strong>
-                  <p>{kind === "quickest" ? "Even the quickest route lands after your date. Start today, and tighten your interview process." : "This route needs more time than you have. Try Quickest."}</p>
+                  <p>{kind === "quickest" ? "Even the quickest plan lands after your date. Start today, and tighten your interview process." : "This plan needs more time than you have. Try Quickest."}</p>
                 </>
               )}
             </div>

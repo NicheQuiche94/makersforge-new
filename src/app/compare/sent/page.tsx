@@ -19,7 +19,7 @@ export default async function SentPage({ searchParams }: { searchParams: Promise
       <div className={styles.heroInner}>
         <h1 className={styles.display}>It&apos;s on its way.</h1>
         <p className={styles.heroLede}>
-          Your hiring route should land in your inbox in a minute. If it doesn&apos;t, check your spam folder or{" "}
+          Your hiring plan should land in your inbox in a minute. If it doesn&apos;t, check your spam folder or{" "}
           <Link href="/compare">send it again</Link>.
         </p>
         {(gift === "1" || gift === "2") && promo && (
@@ -33,7 +33,7 @@ export default async function SentPage({ searchParams }: { searchParams: Promise
         {local && (
           <p className={styles.dev}>
             Local test: the email was saved to <code>.onboarding-outbox</code> instead of being sent.{" "}
-            <a href={local}>Open the route it links to →</a>
+            <a href={local}>Open the plan it links to →</a>
           </p>
         )}
       </div>
