@@ -1024,7 +1024,7 @@ export const ROSTER: Profile[] = [
     // Lukasz's edits (2026-11-09): Director of Growth; casual to hardcore; more genres; GTM and AI in marketing; no city.
     role: "Director of Growth",
     background:
-      "10+ years in mobile games UA, including first growth hire at a top-grossing social casino publisher, where he scaled spend from a few hundred to 120k a day. Now building AI into the marketing workflow.",
+      "10+ years in mobile games UA, including scaling one game's spend from a few hundred to 120k a day. Now building AI into the marketing workflow.",
     location: { code: "pl", label: "Poland · EMEA" },
     industries: ["games"],
     gamesCat: ["casual", "midcore", "hardcore"],
@@ -1048,7 +1048,7 @@ export const ROSTER: Profile[] = [
       game: "Heroes of Might and Magic III",
     },
     summary:
-      "A hands-on UA lead who has scaled mobile games from zero to six-figure daily spend and is just as comfortable running growth alone across a whole portfolio. Was the first growth hire at a top-grossing social casino publisher and built its UA from a few hundred a day to 120k a day, and before that built the growth strategy behind one of the most successful hidden-object games to come out of Poland. Has worked across casino, puzzle, RPG, strategy, board, hidden object, word and trivia, idle and blends of them, and now uses AI throughout his marketing: predictions, creative analysis and faster workflows.",
+      "A hands-on UA lead who has scaled mobile games from zero to six-figure daily spend and is just as comfortable running growth alone across a whole portfolio. Has built a game's UA from a few hundred a day to 120k a day, and before that built the growth strategy behind one of the most successful hidden-object games to come out of Poland. Has worked across casino, puzzle, RPG, strategy, board, hidden object, word and trivia, idle and blends of them, and now uses AI throughout his marketing: predictions, creative analysis and faster workflows.",
     skills: [
       "User acquisition",
       "Scaling paid spend",
@@ -1067,7 +1067,7 @@ export const ROSTER: Profile[] = [
     ],
     experience: [
       "10+ years in mobile games UA since 2014, across new launches and titles already at scale, at both start-ups and industry leaders.",
-      "First hire in the growth team at a top-grossing social casino publisher. Scaled spend from a few hundred to 120k a day, led creative strategy for that growth and built out the team.",
+      "Scaled one game's spend from a few hundred to 120k a day, led creative strategy for that growth and built out the team.",
       "Earlier, at a premium hidden-object games studio, owned the full creative and growth strategy from the ground up and hired the team, making its flagship one of the most successful games to come out of Poland.",
       "Now the entire growth function at a mobile games studio, running UA, ASO, SEO and some creative production across ten games, with prototypes shipping every two weeks.",
       "Works across Meta, Google, programmatic and SDK networks, rewarded and DSPs, mostly single-handed: campaign builds, data flows, optimisation, new-channel discovery and fraud prevention.",
